@@ -1,0 +1,135 @@
+---
+import "@/styles/global.css";
+import { LANGUAGES } from "@plata-today/shared";
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+  canonicalUrl?: string;
+  alternateUrls?: Record<string, string>;
+}
+
+const {
+  title,
+  description = "AI-powered multilingual news about Argentina",
+  lang = "en",
+  canonicalUrl,
+  alternateUrls,
+} = Astro.props;
+
+const siteUrl = "https://plata.today";
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | plata.today</title>
+    <meta name="description" content={description} />
+
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
+    {
+      alternateUrls &&
+        Object.entries(alternateUrls).map(([hrefLang, url]) => (
+          <link rel="alternate" hreflang={hrefLang} href={url} />
+        ))
+    }
+
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/en/`} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="plata.today" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <a href={`/${lang}/`} class="logo">plata.today</a>
+        <nav class="nav">
+          <a href={`/${lang}/`}>Home</a>
+          <a href={`/${lang}/about`}>About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main">
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <p>
+        &copy; {new Date().getFullYear()} plata.today — AI-powered news about Argentina
+      </p>
+      <p class="disclaimer">
+        Articles are AI-generated based on multiple news sources. Please verify
+        important information with original sources.
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+
+  .header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .logo:hover {
+    text-decoration: none;
+  }
+
+  .nav {
+    display: flex;
+    gap: var(--spacing-lg);
+  }
+
+  .nav a {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    min-height: 60vh;
+  }
+
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .disclaimer {
+    margin-top: var(--spacing-sm);
+    font-size: 0.75rem;
+    font-style: italic;
+  }
+</style>

@@ -1,0 +1,20 @@
+{
+  "name": "@plata-today/pipeline",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "migrate": "wrangler d1 migrations apply plata-today-db --local",
+    "migrate:prod": "wrangler d1 migrations apply plata-today-db --remote"
+  },
+  "dependencies": {
+    "@plata-today/shared": "*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250313.0",
+    "typescript": "^5.8.0",
+    "wrangler": "^4.8.0"
+  }
+}

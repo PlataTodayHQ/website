@@ -1,0 +1,19 @@
+{
+  "name": "@plata-today/web",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.7.0",
+    "@astrojs/cloudflare": "^12.5.0",
+    "@plata-today/shared": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}

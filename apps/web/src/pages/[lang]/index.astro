@@ -1,0 +1,46 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langName = LANGUAGES[lang as keyof typeof LANGUAGES]?.name ?? lang;
+---
+
+<Base title={`Argentina News in ${langName}`} lang={lang}>
+  <section class="hero">
+    <h1>Argentina News in {langName}</h1>
+    <p>AI-powered multilingual news coverage from Argentina's top sources.</p>
+  </section>
+
+  <section class="feed">
+    <p class="placeholder">Articles will appear here once the content pipeline is running.</p>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .hero p {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+  }
+
+  .placeholder {
+    padding: var(--spacing-2xl);
+    text-align: center;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-secondary);
+    border-radius: 8px;
+  }
+</style>

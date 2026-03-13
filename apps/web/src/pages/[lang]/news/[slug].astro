@@ -1,0 +1,17 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+
+export function getStaticPaths() {
+  // Will be populated from D1 at build time
+  return [];
+}
+
+const { lang, slug } = Astro.params;
+---
+
+<Base title="Article" lang={lang}>
+  <article class="article">
+    <p>Article: {slug}</p>
+  </article>
+</Base>

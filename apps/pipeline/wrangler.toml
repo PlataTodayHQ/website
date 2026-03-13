@@ -1,0 +1,15 @@
+name = "plata-today-pipeline"
+main = "src/index.ts"
+compatibility_date = "2025-03-13"
+
+[triggers]
+crons = ["*/30 * * * *"]  # Every 30 minutes
+
+[[d1_databases]]
+binding = "DB"
+database_name = "plata-today-db"
+database_id = "8df484a6-3d5a-4ceb-bb96-3f14da93ec64"
+migrations_dir = "../../db/migrations"
+
+[vars]
+ANTHROPIC_MODEL = "claude-haiku-4-5-20251001"

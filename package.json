@@ -1,0 +1,19 @@
+{
+  "name": "plata-today",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspace=apps/web",
+    "preview": "npm run preview --workspace=apps/web",
+    "pipeline:dev": "npm run dev --workspace=apps/pipeline",
+    "pipeline:deploy": "npm run deploy --workspace=apps/pipeline",
+    "db:migrate": "npm run migrate --workspace=apps/pipeline"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
