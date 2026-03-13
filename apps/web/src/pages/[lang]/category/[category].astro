@@ -1,0 +1,378 @@
+---
+import Base from "@/layouts/Base.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
+import SectionHeader from "@/components/SectionHeader.astro";
+import { LANGUAGES, CATEGORIES, SUBCATEGORIES } from "@plata-today/shared";
+import type { Category } from "@plata-today/shared";
+import { t } from "@/i18n";
+import {
+  getArticlesByCategory,
+  timeAgo,
+  readingTime,
+  type ArticleRow,
+} from "@/lib/db";
+
+export function getStaticPaths() {
+  const langs = Object.keys(LANGUAGES);
+  const cats = Object.keys(CATEGORIES) as Category[];
+  return langs.flatMap((lang) =>
+    cats.map((category) => ({ params: { lang, category } }))
+  );
+}
+
+const { lang, category } = Astro.params;
+const catKey = category as Category;
+const catLabel = t(lang!, `cat.${catKey}` as any) || CATEGORIES[catKey] || category;
+const subcats = SUBCATEGORIES[catKey] ?? {};
+
+// ---------------------------------------------------------------------------
+// Fetch articles from SQLite (build-time)
+// ---------------------------------------------------------------------------
+const dbArticles = getArticlesByCategory(lang!, catKey, 20);
+
+function mapRow(a: ArticleRow) {
+  return {
+    title: a.title,
+    href: `/${lang}/news/${a.slug}`,
+    description: a.meta_description ?? "",
+    imageUrl:
+      a.image_url ??
+      `https://placehold.co/800x450/1e2a3d/e8e6e3?text=${encodeURIComponent(catLabel)}`,
+    timeAgo: timeAgo(a.published_at),
+    subcategory: t(lang!, `cat.${a.category}` as any) || CATEGORIES[a.category as Category] || a.category,
+    readingTime: readingTime(a.word_count),
+  };
+}
+
+const articles = dbArticles.map(mapRow);
+const featured = articles[0] ?? null;
+const latestArticles = articles.slice(1, 5);
+const olderArticles = articles.slice(5);
+---
+
+<Base
+  title={t(lang!, "category.newsTitle" as any).replace("{cat}", catLabel)}
+  description={t(lang!, "category.newsDesc" as any).replace("{cat}", catLabel.toLowerCase())}
+  lang={lang}
+  activeCategory={category}
+  ogType="website"
+  ogImage={featured?.imageUrl ?? `https://placehold.co/800x450/1e2a3d/e8e6e3?text=${encodeURIComponent(catLabel)}`}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: catLabel, url: `/${lang}/category/${category}` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `${catLabel} — Plata`,
+    "description": `Latest ${catLabel.toLowerCase()} news from Argentina`,
+    "url": `https://plata.today/${lang}/category/${category}`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <!-- Category header -->
+  <div class="cat-header">
+    <h1 class="cat-title">{catLabel}</h1>
+    <nav class="cat-subs" aria-label={`${catLabel} subcategories`}>
+      {Object.entries(subcats).map(([subKey, subLabel]) => (
+        <a href={`/${lang}/category/${category}`} class="sub-pill">
+          {subLabel}
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <!-- Featured article -->
+  {featured && (
+    <section class="cat-featured" aria-label={`Featured ${catLabel.toLowerCase()} article`}>
+      <ArticleCard
+        title={featured.title}
+        description={featured.description}
+        href={featured.href}
+        imageUrl={featured.imageUrl}
+        timeAgo={featured.timeAgo}
+        category={featured.subcategory}
+        readingTime={featured.readingTime}
+        variant="hero"
+      />
+    </section>
+  )}
+
+  <!-- Latest in category -->
+  {latestArticles.length > 0 && <SectionHeader title={t(lang!, "category.latestIn" as any).replace("{cat}", catLabel)} />}
+  {latestArticles.length > 0 && (
+    <section class="cat-grid" aria-label={t(lang!, "category.latestIn" as any).replace("{cat}", catLabel)}>
+      {latestArticles.map((a) => (
+        <ArticleCard
+          title={a.title}
+          href={a.href}
+          imageUrl={a.imageUrl}
+          timeAgo={a.timeAgo}
+          category={a.subcategory}
+          readingTime={a.readingTime}
+          variant="compact"
+        />
+      ))}
+    </section>
+  )}
+
+  <!-- Older articles -->
+  {olderArticles.length > 0 && <SectionHeader title={t(lang!, "category.earlier" as any)} />}
+  {olderArticles.length > 0 && (
+    <section class="cat-list" aria-label="Earlier articles">
+      {olderArticles.map((a) => (
+        <article class="cat-list-item">
+          <div class="cat-list-text">
+            <a href={a.href} class="cat-list-link">
+              <h3 class="cat-list-title">{a.title}</h3>
+            </a>
+            <div class="cat-list-meta">
+              <time class="meta-time">{a.timeAgo}</time>
+              <span class="meta-dot" aria-hidden="true"></span>
+              <span class="meta-sub">{a.subcategory}</span>
+            </div>
+          </div>
+          {a.imageUrl && (
+            <a href={a.href} class="cat-list-thumb" aria-hidden="true" tabindex="-1">
+              <img src={a.imageUrl} alt="" loading="lazy" />
+            </a>
+          )}
+        </article>
+      ))}
+    </section>
+  )}
+
+  <!-- Empty state -->
+  {articles.length === 0 && (
+    <div class="cat-empty">
+      <p>{t(lang!, "category.noArticles" as any)}</p>
+    </div>
+  )}
+</Base>
+
+<style>
+  /* ========================= */
+  /* META HELPERS               */
+  /* ========================= */
+  .meta-time {
+    font-size: 0.8rem;
+    color: var(--color-text-meta);
+  }
+
+  .meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-text-meta);
+    flex-shrink: 0;
+  }
+
+  .meta-sub {
+    color: var(--color-gold-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ========================= */
+  /* CATEGORY HEADER            */
+  /* ========================= */
+  .cat-header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .cat-title {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .cat-subs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sub-pill {
+    display: inline-block;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-secondary);
+    border-radius: 100px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .sub-pill:hover {
+    background: var(--color-celeste);
+    color: #fff;
+    text-decoration: none;
+  }
+
+  /* ========================= */
+  /* FEATURED                   */
+  /* ========================= */
+  .cat-featured {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  /* ========================= */
+  /* ARTICLE GRID (compact)     */
+  /* ========================= */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .cat-grid :global(.card--compact) {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cat-grid :global(.card--compact:nth-child(odd)) {
+    padding-right: var(--spacing-xl);
+    border-right: 1px solid var(--color-border);
+  }
+
+  .cat-grid :global(.card--compact:nth-child(even)) {
+    padding-left: var(--spacing-xl);
+  }
+
+  .cat-grid :global(.card--compact:nth-last-child(-n+2)) {
+    border-bottom: none;
+  }
+
+  /* ========================= */
+  /* LIST (text + thumb)        */
+  /* ========================= */
+  .cat-list {
+    max-width: var(--content-width);
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .cat-list-item {
+    display: flex;
+    align-items: start;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cat-list-item:first-child {
+    padding-top: 0;
+  }
+
+  .cat-list-item:last-child {
+    border-bottom: none;
+  }
+
+  .cat-list-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cat-list-link {
+    color: var(--color-text);
+  }
+
+  .cat-list-link:hover {
+    text-decoration: none;
+  }
+
+  .cat-list-link:hover .cat-list-title {
+    text-decoration: underline;
+  }
+
+  .cat-list-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .cat-list-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cat-list-thumb {
+    flex-shrink: 0;
+    width: 160px;
+  }
+
+  .cat-list-thumb img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 2px;
+    transition: transform 0.2s;
+  }
+
+  .cat-list-thumb:hover img {
+    transform: scale(1.03);
+  }
+
+  /* ========================= */
+  /* EMPTY STATE                */
+  /* ========================= */
+  .cat-empty {
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+    color: var(--color-text-meta);
+    font-size: 1.1rem;
+  }
+
+  /* ========================= */
+  /* MOBILE                     */
+  /* ========================= */
+  @media (max-width: 640px) {
+    .cat-title {
+      font-size: 1.6rem;
+    }
+
+    .cat-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cat-grid :global(.card--compact) {
+      padding: 16px 0;
+    }
+
+    .cat-grid :global(.card--compact:nth-child(odd)) {
+      padding-right: 0;
+      border-right: none;
+    }
+
+    .cat-grid :global(.card--compact:nth-child(even)) {
+      padding-left: 0;
+    }
+
+    .cat-grid :global(.card--compact:last-child) {
+      border-bottom: none;
+    }
+
+    .cat-list-thumb {
+      width: 110px;
+    }
+
+    .cat-list-title {
+      font-size: 0.95rem;
+    }
+  }
+</style>

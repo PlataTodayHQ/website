@@ -1,24 +1,26 @@
 :root {
-  --font-sans: Arial, Helvetica, sans-serif;
-  --font-serif: Georgia, "Times New Roman", Times, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
 
-  --color-bg: #ffffff;
-  --color-bg-secondary: #f5f5f0;
+  --color-bg: #fafaf9;
+  --color-bg-secondary: #f2f1ef;
+  --color-bg-content: #fafaf9;
   --color-text: #1a1a1a;
-  --color-text-secondary: #545454;
+  --color-text-secondary: #444;
   --color-text-meta: #6e6e6e;
-  --color-border: #e0e0dc;
+  --color-border: #ddd9d4;
   --color-border-section: #1a1a1a;
-  --color-celeste: #75AADB;
-  --color-celeste-dark: #4a8abf;
+  --color-celeste: #1e2a3d;
+  --color-celeste-dark: #162030;
   --color-gold: #F6B40E;
   --color-gold-dark: #d49c0b;
-  --color-accent: var(--color-celeste);
+  --color-accent: #75AADB;
   --color-accent-secondary: var(--color-gold);
   --color-link: #1a1a1a;
-  --color-link-hover: var(--color-celeste-dark);
+  --color-link-hover: #4a8abf;
 
-  --max-width: 1280px;
+  --max-width: 1080px;
   --content-width: 720px;
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -41,9 +43,10 @@ html {
   font-size: 16px;
   color: var(--color-text);
   background: var(--color-bg);
-  line-height: 1.4;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -69,5 +72,82 @@ img {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Accessibility: screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus indicators — improved for keyboard navigation */
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduced motion — respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dark theme variables */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #1a1a1a;
+    --color-bg-secondary: #242424;
+    --color-bg-content: #1a1a1a;
+    --color-text: #e8e6e3;
+    --color-text-secondary: #b0aca6;
+    --color-text-meta: #8a8680;
+    --color-border: #333330;
+    --color-border-section: #e8e6e3;
+    --color-celeste: #1e2a3d;
+    --color-celeste-dark: #162030;
+    --color-gold: #F6B40E;
+    --color-gold-dark: #f0c040;
+    --color-link: #e8e6e3;
+    --color-link-hover: #75AADB;
+    --color-accent: #75AADB;
+  }
+}
+
+/* Explicit dark mode via toggle */
+[data-theme="dark"] {
+  --color-bg: #1a1a1a;
+  --color-bg-secondary: #242424;
+  --color-bg-content: #1a1a1a;
+  --color-text: #e8e6e3;
+  --color-text-secondary: #b0aca6;
+  --color-text-meta: #8a8680;
+  --color-border: #333330;
+  --color-border-section: #e8e6e3;
+  --color-celeste: #1e2a3d;
+  --color-celeste-dark: #162030;
+  --color-gold: #F6B40E;
+  --color-gold-dark: #f0c040;
+  --color-link: #e8e6e3;
+  --color-link-hover: #75AADB;
+  --color-accent: #75AADB;
 }

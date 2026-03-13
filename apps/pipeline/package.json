@@ -4,17 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "migrate": "wrangler d1 migrations apply plata-today-db --local",
-    "migrate:prod": "wrangler d1 migrations apply plata-today-db --remote"
+    "start": "tsx src/main.ts",
+    "dev": "tsx src/main.ts",
+    "migrate": "tsx src/db/migrate.ts"
   },
   "dependencies": {
-    "@plata-today/shared": "*"
+    "@mozilla/readability": "^0.6.0",
+    "@plata-today/shared": "*",
+    "better-sqlite3": "^11.0.0",
+    "linkedom": "^0.18.12"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250313.0",
-    "typescript": "^5.8.0",
-    "wrangler": "^4.8.0"
+    "@types/better-sqlite3": "^7.6.0",
+    "typescript": "^5.8.0"
   }
 }

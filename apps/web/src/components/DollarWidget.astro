@@ -1,0 +1,288 @@
+---
+// MarketWidget — live ARS rates + Merval index from Bluelytics & BYMA
+import { t } from "@/i18n";
+
+interface Props {
+  lang?: string;
+}
+const { lang = "en" } = Astro.props;
+---
+
+<div class="market-widget" role="complementary" aria-label="Market data" data-market-widget>
+  <a href={`/${lang}/markets/currencies`} class="mw-group" aria-label={t(lang, "dollar.exchangeRates")}>
+    <div class="mw-rate">
+      <span class="mw-label">USD</span>
+      <span class="mw-value" data-mw-official>---</span>
+      <span class="mw-change" data-mw-official-change aria-label=""></span>
+    </div>
+    <span class="mw-sep" aria-hidden="true">/</span>
+    <div class="mw-rate">
+      <span class="mw-label mw-blue-label">Blue</span>
+      <span class="mw-value" data-mw-blue>---</span>
+      <span class="mw-change" data-mw-blue-change aria-label=""></span>
+    </div>
+  </a>
+  <span class="mw-sep mw-sep--outer" aria-hidden="true">/</span>
+  <a href={`/${lang}/markets/merval`} class="mw-group" aria-label={t(lang, "dollar.mervalIndex")}>
+    <div class="mw-rate">
+      <span class="mw-label mw-merval-label">Merval</span>
+      <span class="mw-value" data-mw-merval>---</span>
+      <span class="mw-change" data-mw-merval-change aria-label=""></span>
+    </div>
+  </a>
+</div>
+
+<script is:inline>
+(function() {
+  var CACHE_KEY = 'plata-market-v3';
+  var DOLLAR_URL = 'https://api.bluelytics.com.ar/v2/latest';
+  var EVO_URL = 'https://api.bluelytics.com.ar/v2/evolution.json?days=10';
+  var BYMA_URL = 'https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price';
+  var YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?interval=1d&range=1d';
+  var REFRESH_MS = 5 * 60 * 1000;
+  var lastFetchTime = 0;
+
+  function pct(current, previous) {
+    if (!previous || previous === 0) return null;
+    var p = ((current - previous) / previous) * 100;
+    if (Math.abs(p) < 0.01) return null;
+    return p;
+  }
+
+  function formatMerval(val) {
+    if (val >= 1000000) return (val / 1000000).toFixed(2) + 'M';
+    if (val >= 1000) return (val / 1000).toFixed(0) + 'K';
+    return Math.round(val).toLocaleString('es-AR');
+  }
+
+  function applyItem(valSel, changeSel, displayText, percent) {
+    var el = document.querySelector(valSel);
+    var chEl = document.querySelector(changeSel);
+    if (!el || !chEl) return;
+
+    el.textContent = displayText;
+
+    if (percent != null) {
+      var sign = percent > 0 ? '+' : '';
+      var txt = sign + percent.toFixed(1) + '%';
+      chEl.textContent = txt;
+      chEl.className = 'mw-change ' + (percent >= 0 ? 'mw-up' : 'mw-down');
+      chEl.setAttribute('aria-label', (percent >= 0 ? 'up ' : 'down ') + Math.abs(percent).toFixed(1) + ' percent');
+    } else {
+      chEl.textContent = '';
+      chEl.className = 'mw-change';
+      chEl.setAttribute('aria-label', '');
+    }
+  }
+
+  function render(data) {
+    if (data.oficial) applyItem('[data-mw-official]', '[data-mw-official-change]', Math.round(data.oficial).toLocaleString('es-AR'), data.oficialPct);
+    if (data.blue) applyItem('[data-mw-blue]', '[data-mw-blue-change]', Math.round(data.blue).toLocaleString('es-AR'), data.bluePct);
+    if (data.merval) applyItem('[data-mw-merval]', '[data-mw-merval-change]', formatMerval(data.merval), data.mervalPct);
+  }
+
+  function loadCached() {
+    try {
+      var raw = localStorage.getItem(CACHE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+
+  function saveCache(data) {
+    try {
+      data.ts = Date.now();
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  function parseEvolution(entries) {
+    var bySource = {};
+    for (var i = 0; i < entries.length; i++) {
+      var e = entries[i];
+      var key = e.source.toLowerCase();
+      if (!bySource[key]) bySource[key] = [];
+      bySource[key].push(e);
+    }
+
+    function sortDesc(a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; }
+
+    var result = {};
+    var sources = ['oficial', 'blue'];
+    for (var s = 0; s < sources.length; s++) {
+      var arr = bySource[sources[s]];
+      if (arr && arr.length > 0) {
+        arr.sort(sortDesc);
+        result[sources[s]] = { current: arr[0].value_sell };
+        if (arr.length > 1) {
+          result[sources[s]].previous = arr[1].value_sell;
+        }
+      }
+    }
+    return result;
+  }
+
+  function fetchRates() {
+    var now = Date.now();
+    if (now - lastFetchTime < 60000) return;
+    lastFetchTime = now;
+
+    var cached = loadCached() || {};
+
+    // Fetch dollar rates + evolution + merval in parallel
+    Promise.all([
+      fetch(DOLLAR_URL).then(function(r) { return r.json(); }).catch(function() { return null; }),
+      fetch(EVO_URL).then(function(r) { return r.json(); }).catch(function() { return null; }),
+      fetch(BYMA_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: '{}' })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(data) {
+          if (!data || !data.data) return null;
+          var m = null;
+          for (var i = 0; i < data.data.length; i++) { if (data.data[i].symbol === 'M') { m = data.data[i]; break; } }
+          if (!m) return null;
+          return { price: m.price, previousClose: m.previousClosingPrice, variation: m.variation, source: 'BYMA' };
+        })
+        .catch(function() { return null; })
+        .then(function(byma) {
+          if (byma) return byma;
+          return fetch(YAHOO_URL).then(function(r) { return r.ok ? r.json() : null; }).then(function(d) {
+            var meta = d && d.chart && d.chart.result && d.chart.result[0] && d.chart.result[0].meta;
+            if (!meta) return null;
+            var p = meta.regularMarketPrice, pc = meta.chartPreviousClose;
+            return { price: p, previousClose: pc, variation: pc > 0 ? (p - pc) / pc : null, source: 'Yahoo' };
+          }).catch(function() { return null; });
+        })
+    ]).then(function(results) {
+      var latest = results[0];
+      var evo = results[1];
+      var mervalData = results[2];
+
+      var data = {
+        oficial: cached.oficial || null,
+        blue: cached.blue || null,
+        oficialPct: cached.oficialPct || null,
+        bluePct: cached.bluePct || null,
+        merval: cached.merval || null,
+        mervalPct: cached.mervalPct || null
+      };
+
+      // Dollar rates
+      if (latest && latest.oficial) {
+        data.oficial = latest.oficial.value_sell;
+        data.blue = latest.blue.value_sell;
+
+        if (evo && evo.length > 0) {
+          var parsed = parseEvolution(evo);
+          if (parsed.oficial && parsed.oficial.previous) {
+            data.oficialPct = pct(data.oficial, parsed.oficial.previous);
+          }
+          if (parsed.blue && parsed.blue.previous) {
+            data.bluePct = pct(data.blue, parsed.blue.previous);
+          }
+        }
+      }
+
+      // Merval index (from BYMA via /api/merval proxy)
+      if (mervalData && mervalData.price) {
+        data.merval = mervalData.price;
+        // BYMA returns variation as decimal (e.g. -0.0179 = -1.79%)
+        data.mervalPct = mervalData.variation != null
+          ? mervalData.variation * 100
+          : pct(mervalData.price, mervalData.previousClose);
+      }
+
+      render(data);
+      saveCache(data);
+    }).catch(function() {
+      // On failure keep whatever is on screen
+    });
+  }
+
+  // 1. Show cached data immediately
+  var cached = loadCached();
+  if (cached) render(cached);
+
+  // 2. Fetch live
+  fetchRates();
+
+  // 3. Auto-refresh every 5 min
+  setInterval(fetchRates, REFRESH_MS);
+
+  // 4. Refresh on tab return
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) fetchRates();
+  });
+
+  // 5. Refresh on window focus
+  window.addEventListener('focus', fetchRates);
+})();
+</script>
+
+<style>
+  .market-widget {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-left: var(--spacing-lg);
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-variant-numeric: tabular-nums;
+    margin-top: -4px;
+    margin-bottom: -4px;
+  }
+
+  .mw-group {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 4px;
+    padding: 4px 6px;
+    transition: background 0.15s;
+  }
+
+  .mw-group:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .mw-rate {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+
+  .mw-label {
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.03em;
+  }
+
+  .mw-blue-label { color: var(--color-gold); }
+  .mw-merval-label { color: #60a5fa; }
+
+  .mw-value { font-weight: 700; color: #fff; }
+
+  .mw-change { font-size: 0.55rem; font-weight: 700; }
+  .mw-up { color: #4ade80; }
+  .mw-down { color: #f87171; }
+
+  .mw-sep {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 640px) {
+    .market-widget { display: none; }
+  }
+
+  @media (max-width: 900px) and (min-width: 641px) {
+    .market-widget {
+      font-size: 0.6rem;
+      margin-left: var(--spacing-md);
+      gap: 4px;
+    }
+  }
+</style>

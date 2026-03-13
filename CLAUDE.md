@@ -1,6 +1,6 @@
 # plata.today
 
-Multilingual AI-powered news portal about Argentina. Scrapes Spanish-language sources, rewrites (not translates) into 18 languages via Claude API, publishes as static site.
+Multilingual AI-powered news portal about Argentina. Scrapes Spanish-language sources, rewrites (not translates) into 18 languages via OpenAI API, publishes as static site.
 
 ## Architecture
 
@@ -15,7 +15,7 @@ Monorepo with npm workspaces:
 - **Frontend:** Astro (static), Cloudflare Pages
 - **Pipeline:** Cloudflare Workers (Cron every 30 min)
 - **Database:** Cloudflare D1 (SQLite), ID: `8df484a6-3d5a-4ceb-bb96-3f14da93ec64`
-- **AI:** Claude Haiku 4.5 API for news rewriting
+- **AI:** OpenAI GPT-5 Nano for news rewriting
 - **Images:** Cloudflare R2
 - **Cloudflare Account:** `486c7f61b27b32859cb64ffb573a3eb0`
 
@@ -25,7 +25,7 @@ Monorepo with npm workspaces:
 - URL scheme: `/{lang}/news/{slug}` with hreflang tags
 - Deduplication via Levenshtein similarity (threshold 0.7)
 - RSS-first scraping, fallback to sitemap/HTML
-- JSON response format from Claude for structured article output
+- JSON response format from OpenAI for structured article output
 
 ## Commands
 

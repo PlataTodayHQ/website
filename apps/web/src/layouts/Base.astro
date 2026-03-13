@@ -1,7 +1,16 @@
 ---
 import "@/styles/global.css";
-import { LANGUAGES, CATEGORIES } from "@plata-today/shared";
+import { LANGUAGES, CATEGORIES, SUBCATEGORIES } from "@plata-today/shared";
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
+import BreakingNews from "@/components/BreakingNews.astro";
+import DollarWidget from "@/components/DollarWidget.astro";
+import { t } from "@/i18n";
+import { getBreakingNews } from "@/lib/db";
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
 
 interface Props {
   title: string;
@@ -10,148 +19,624 @@ interface Props {
   canonicalUrl?: string;
   alternateUrls?: Record<string, string>;
   activeCategory?: string;
+  ogImage?: string;
+  ogUrl?: string;
+  ogType?: string;
+  jsonLd?: Record<string, any> | Record<string, any>[];
+  breadcrumbs?: BreadcrumbItem[];
+  articleMeta?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    section?: string;
+    tags?: string[];
+    author?: string;
+  };
 }
 
 const {
   title,
-  description = "AI-powered multilingual news about Argentina",
   lang = "en",
+  description = t(lang, "common.siteDescription"),
   canonicalUrl,
   alternateUrls,
   activeCategory,
+  ogImage,
+  ogUrl,
+  ogType = "website",
+  jsonLd,
+  breadcrumbs,
+  articleMeta,
 } = Astro.props;
 
 const siteUrl = "https://plata.today";
 const currentPath = Astro.url.pathname;
+const fullTitle = `${title} | Plata`;
+const resolvedCanonical = canonicalUrl ?? `${siteUrl}${currentPath}`;
+const resolvedOgUrl = ogUrl ?? resolvedCanonical;
 
+// Generate hreflang for all languages if not explicitly provided
+const resolvedAlternates = alternateUrls ?? Object.fromEntries(
+  Object.keys(LANGUAGES).map((code) => [
+    code,
+    `${siteUrl}${currentPath.replace(`/${lang}/`, `/${code}/`)}`,
+  ])
+);
+
+// Language CTA map for browser language detection
+const langCtaMap = JSON.stringify(
+  Object.fromEntries(
+    Object.entries(LANGUAGES).map(([code, info]) => [
+      code,
+      { flag: info.flag, label: `${info.flag} ${t(code, "langCta.readIn").replace("{lang}", info.nativeName)}` }
+    ])
+  )
+);
+
+const breakingArticle = getBreakingNews(lang);
+
+const catKeys = ["politics", "economy", "sports", "society", "culture", "world", "science"] as const;
 const navItems = [
-  { label: "Home", href: `/${lang}/` },
-  ...Object.entries(CATEGORIES).map(([key, label]) => ({
-    label,
+  { label: t(lang, "nav.home"), href: `/${lang}/` },
+  ...catKeys.map((key) => ({
+    label: t(lang, `cat.${key}` as any),
     href: `/${lang}/category/${key}`,
   })),
 ];
+
+// Build breadcrumb JSON-LD
+const breadcrumbJsonLd = breadcrumbs?.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: breadcrumbs.map((item, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: item.name,
+        item: item.url.startsWith("http") ? item.url : `${siteUrl}${item.url}`,
+      })),
+    }
+  : null;
+
+// Collect all JSON-LD blocks
+const allJsonLd = [
+  breadcrumbJsonLd,
+  ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
+].filter(Boolean);
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} data-lang-map={langCtaMap}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} | plata.today</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#3D6B99" />
+    <meta name="color-scheme" content="light dark" />
 
-    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <link rel="canonical" href={resolvedCanonical} />
+    <link rel="alternate" type="application/rss+xml" title="Plata News" href={`${siteUrl}/rss.xml`} />
 
-    {
-      alternateUrls &&
-        Object.entries(alternateUrls).map(([hrefLang, url]) => (
-          <link rel="alternate" hreflang={hrefLang} href={url} />
-        ))
-    }
-
+    {Object.entries(resolvedAlternates).map(([hrefLang, url]) => (
+      <link rel="alternate" hreflang={hrefLang} href={url} />
+    ))}
     <link rel="alternate" hreflang="x-default" href={`${siteUrl}/en/`} />
 
+    <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="plata.today" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={resolvedOgUrl} />
+    <meta property="og:site_name" content="Plata" />
+    <meta property="og:locale" content={lang} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:width" content="1200" />}
+    {ogImage && <meta property="og:image:height" content="630" />}
 
-    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Article-specific OG tags -->
+    {articleMeta?.publishedTime && <meta property="article:published_time" content={articleMeta.publishedTime} />}
+    {articleMeta?.modifiedTime && <meta property="article:modified_time" content={articleMeta.modifiedTime} />}
+    {articleMeta?.section && <meta property="article:section" content={articleMeta.section} />}
+    {articleMeta?.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <!-- JSON-LD Structured Data -->
+    {allJsonLd.map((ld) => (
+      <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    ))}
+
+    <!-- Google Analytics -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-F100G3G0V9"></script>
+    <script is:inline>
+      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F100G3G0V9');
+    </script>
+
+    <!-- Blocking theme script — prevents flash of wrong theme -->
+    <script is:inline>
+      (function(){var t=localStorage.getItem('plata-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)})();
+    </script>
   </head>
   <body>
-    <header class="header">
-      <div class="header-inner">
-        <div class="header-left">
-          <button class="menu-btn" aria-label="Menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <!-- Skip to content — accessibility -->
+    <a href="#main-content" class="skip-link">{t(lang, "nav.skipToContent")}</a>
+
+    {breakingArticle && (
+      <BreakingNews
+        headline={breakingArticle.title}
+        href={`/${lang}/news/${breakingArticle.slug}`}
+        isLive={true}
+        lang={lang}
+      />
+    )}
+
+    <header class="header" role="banner">
+      <!-- Top bar: brand + actions -->
+      <div class="brand-bar">
+        <div class="brand-inner">
+          <button
+            class="menu-btn"
+            aria-label={t(lang, "nav.openMenu")}
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </button>
-        </div>
-        <a href={`/${lang}/`} class="logo">
-          <span class="logo-text">plata<span class="logo-dot">.</span>today</span>
-        </a>
-        <div class="header-right">
-          <LanguageSwitcher lang={lang} />
+          <a href={`/${lang}/`} class="logo" aria-label="Plata — Home">
+            <span class="logo-text">Plata</span>
+          </a>
+          <DollarWidget lang={lang} />
+          <div class="brand-actions">
+            <button class="header-icon-btn" aria-label={t(lang, "nav.search")} aria-expanded="false" aria-controls="search-overlay" data-search-trigger>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <button class="header-icon-btn" aria-label={t(lang, "theme.toDark")} data-theme-toggle data-label-light={t(lang, "theme.toLight")} data-label-dark={t(lang, "theme.toDark")} data-label-system={t(lang, "theme.toSystem")}>
+              <svg class="theme-icon theme-icon--sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <svg class="theme-icon theme-icon--moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <LanguageSwitcher lang={lang} />
+          </div>
         </div>
       </div>
+      <!-- Nav bar: categories -->
+      <nav class="nav-bar" aria-label="Main navigation">
+        <div class="nav-inner">
+          {navItems.map((item) => {
+            const isActive = currentPath === item.href ||
+              (item.href.includes('/category/') && currentPath.startsWith(item.href));
+            return (
+              <a
+                href={item.href}
+                class:list={["nav-link", { active: isActive }]}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </div>
+      </nav>
     </header>
 
-    <nav class="nav">
-      <div class="nav-inner">
+    <!-- Mobile menu overlay -->
+    <div
+      class="mobile-overlay"
+      id="mobile-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
+      hidden
+    >
+      <div class="overlay-header">
+        <span class="overlay-title" id="mobile-menu-title">{t(lang, "nav.menu")}</span>
+        <button class="overlay-close" aria-label={t(lang, "nav.closeMenu")}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <nav class="overlay-nav" aria-label="Mobile navigation">
         {navItems.map((item) => {
           const isActive = currentPath === item.href ||
             (item.href.includes('/category/') && currentPath.startsWith(item.href));
           return (
-            <a href={item.href} class:list={["nav-link", { active: isActive }]}>
+            <a
+              href={item.href}
+              class:list={["overlay-nav-link", { active: isActive }]}
+              aria-current={isActive ? "page" : undefined}
+            >
               {item.label}
             </a>
           );
         })}
-      </div>
-    </nav>
+      </nav>
+    </div>
 
-    <main class="main">
+    <!-- Mobile language overlay -->
+    <div
+      class="mobile-overlay"
+      id="mobile-langs"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Language selection"
+      hidden
+    >
+      <div class="overlay-header">
+        <span class="overlay-title" id="mobile-langs-title">{t(lang, "nav.language")}</span>
+        <button class="overlay-close" aria-label={t(lang, "nav.closeLangPicker")}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="overlay-langs" role="list" aria-label="Available languages">
+        {Object.entries(LANGUAGES).map(([code, info]) => (
+          <a
+            href={`/${code}/`}
+            class:list={["overlay-lang-option", { active: code === lang }]}
+            role="listitem"
+            lang={code}
+            aria-current={code === lang ? "true" : undefined}
+          >
+            <span class="overlay-lang-flag" aria-hidden="true">{info.flag}</span>
+            <span class="overlay-lang-name">{info.nativeName}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Search overlay -->
+    <div
+      class="mobile-overlay"
+      id="search-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label={t(lang, "nav.search")}
+      hidden
+    >
+      <div class="overlay-header">
+        <span class="overlay-title">{t(lang, "nav.search")}</span>
+        <button class="overlay-close" aria-label={t(lang, "nav.closeSearch")}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="search-body">
+        <div class="search-input-wrap">
+          <svg class="search-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input type="search" class="search-input" placeholder={t(lang, "search.placeholder")} autocomplete="off" aria-label={t(lang, "search.label")} />
+        </div>
+        <p class="search-placeholder-text">{t(lang, "search.comingSoon")}</p>
+      </div>
+    </div>
+
+    <main class="main" id="main-content" role="main">
       <div class="main-inner">
         <slot />
       </div>
     </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
       <div class="footer-inner">
-        <div class="footer-top">
-          <a href={`/${lang}/`} class="footer-logo">plata.today</a>
-          <nav class="footer-nav">
-            <a href={`/${lang}/about`}>About</a>
-            <a href={`/${lang}/about`}>Contact</a>
+        <!-- Logo + tagline -->
+        <div class="footer-brand">
+          <a href={`/${lang}/`} class="footer-logo" aria-label="Plata — Home">Plata</a>
+          <p class="footer-tagline">{t(lang, "footer.tagline")}</p>
+        </div>
+
+        <!-- Categories + subcategories -->
+        <nav class="footer-cats" aria-label={t(lang, "footer.categories")}>
+          {Object.entries(CATEGORIES).map(([catKey, _catLabel]) => (
+            <div class="footer-cat-group">
+              <a href={`/${lang}/category/${catKey}`} class="footer-cat-title">{t(lang, `cat.${catKey}` as any)}</a>
+              <ul class="footer-sub-list">
+                {Object.entries(SUBCATEGORIES[catKey as keyof typeof SUBCATEGORIES]).map(([subKey, _subLabel]) => (
+                  <li>
+                    <a href={`/${lang}/category/${catKey}`} class="footer-sub-link">{t(lang, `sub.${subKey}` as any)}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+
+        <div class="footer-divider" role="separator"></div>
+
+        <!-- Utility links -->
+        <nav class="footer-util" aria-label="Utility links">
+          <a href={`/${lang}/about`}>{t(lang, "footer.about")}</a>
+          <a href={`/${lang}/about#contact`}>{t(lang, "footer.contact")}</a>
+          <a href={`/${lang}/terms`}>{t(lang, "footer.terms")}</a>
+          <a href={`/${lang}/privacy`}>{t(lang, "footer.privacy")}</a>
+        </nav>
+
+        <div class="footer-divider" role="separator"></div>
+
+        <!-- Newsletter -->
+        <div class="footer-newsletter">
+          <p class="footer-newsletter-title">{t(lang, "footer.newsletterTitle")}</p>
+          <form class="footer-newsletter-form" data-newsletter-form aria-label={t(lang, "newsletter.ariaLabel")}>
+            <label for="footer-email" class="sr-only">{t(lang, "newsletter.emailLabel")}</label>
+            <input type="email" id="footer-email" class="footer-newsletter-input" placeholder={t(lang, "newsletter.placeholder")} required autocomplete="email" />
+            <button type="submit" class="footer-newsletter-btn">{t(lang, "newsletter.subscribe")}</button>
+            <p class="footer-newsletter-success" hidden>{t(lang, "newsletter.success")}</p>
+          </form>
+        </div>
+
+        <div class="footer-divider" role="separator"></div>
+
+        <!-- Languages grid -->
+        <div class="footer-langs">
+          <p class="footer-langs-title" id="footer-langs-heading">{t(lang, "footer.otherLanguages")}</p>
+          <nav class="footer-langs-grid" aria-labelledby="footer-langs-heading">
+            {Object.entries(LANGUAGES).map(([code, info]) => (
+              <a
+                href={`/${code}/`}
+                class:list={["footer-lang-link", { active: code === lang }]}
+                lang={code}
+                aria-current={code === lang ? "true" : undefined}
+              >
+                <span class="footer-lang-flag" aria-hidden="true">{info.flag}</span>
+                <span>{info.nativeName}</span>
+              </a>
+            ))}
           </nav>
         </div>
+
+        <div class="footer-divider" role="separator"></div>
+
+        <!-- Disclaimer + copyright -->
         <div class="footer-bottom">
           <p class="disclaimer">
-            Articles are AI-generated based on multiple news sources. While we strive for
-            accuracy, please verify important information with original sources.
+            {t(lang, "footer.disclaimer")}
           </p>
           <p class="copyright">
-            &copy; {new Date().getFullYear()} plata.today
+            {t(lang, "footer.copyright").replace("{year}", String(new Date().getFullYear()))}
           </p>
         </div>
       </div>
     </footer>
+
+    <!-- Language suggestion CTA (mobile) -->
+    <div class="lang-cta" id="lang-cta" hidden role="complementary" aria-label="Language suggestion">
+      <div class="lang-cta-inner">
+        <a href="#" class="lang-cta-link" id="lang-cta-link"></a>
+        <button class="lang-cta-dismiss" aria-label={t(lang, "langCta.dismiss")} data-dismiss-lang-cta>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script is:inline>
+      // --- Overlay system ---
+      const menuBtn = document.querySelector('.menu-btn');
+      const langBtn = document.querySelector('[data-lang-trigger]');
+      const menuOverlay = document.getElementById('mobile-menu');
+      const langOverlay = document.getElementById('mobile-langs');
+      const searchOverlay = document.getElementById('search-overlay');
+      const searchBtn = document.querySelector('[data-search-trigger]');
+      const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+      let lastFocusedElement = null;
+
+      function openOverlay(el, trigger) {
+        lastFocusedElement = trigger || document.activeElement;
+        el.hidden = false;
+        el.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        if (el === menuOverlay && menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+        if (el === searchOverlay && searchBtn) searchBtn.setAttribute('aria-expanded', 'true');
+        const closeBtn = el.querySelector('.overlay-close');
+        if (closeBtn) closeBtn.focus();
+        el.addEventListener('keydown', trapFocus);
+      }
+
+      function closeOverlay(el) {
+        if (!el || el.hidden) return;
+        el.classList.remove('open');
+        el.hidden = true;
+        document.body.style.overflow = '';
+        if (el === menuOverlay && menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+        if (el === searchOverlay && searchBtn) searchBtn.setAttribute('aria-expanded', 'false');
+        el.removeEventListener('keydown', trapFocus);
+        if (lastFocusedElement) {
+          lastFocusedElement.focus();
+          lastFocusedElement = null;
+        }
+      }
+
+      function trapFocus(e) {
+        if (e.key !== 'Tab') return;
+        const overlay = e.currentTarget;
+        const focusable = overlay.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+
+      if (menuBtn) menuBtn.addEventListener('click', () => openOverlay(menuOverlay, menuBtn));
+
+      if (langBtn) {
+        langBtn.addEventListener('click', (e) => {
+          if (isMobile()) { e.stopPropagation(); openOverlay(langOverlay, langBtn); }
+        });
+      }
+
+      // Search overlay
+      if (searchBtn && searchOverlay) {
+        searchBtn.addEventListener('click', () => {
+          openOverlay(searchOverlay, searchBtn);
+          const input = searchOverlay.querySelector('.search-input');
+          if (input) setTimeout(() => input.focus(), 50);
+        });
+      }
+
+      // Close buttons in all overlays
+      document.querySelectorAll('.overlay-close').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const overlay = btn.closest('.mobile-overlay');
+          if (overlay) closeOverlay(overlay);
+        });
+      });
+
+      // Escape closes any open overlay
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          [menuOverlay, langOverlay, searchOverlay].forEach(ov => {
+            if (ov && !ov.hidden) closeOverlay(ov);
+          });
+        }
+      });
+
+      // --- Theme toggle ---
+      (function() {
+        const btn = document.querySelector('[data-theme-toggle]');
+        if (!btn) return;
+        function getTheme() { return localStorage.getItem('plata-theme') || 'system'; }
+        function updateLabel() {
+          const th = getTheme();
+          const labels = { system: btn.dataset.labelLight, light: btn.dataset.labelDark, dark: btn.dataset.labelSystem };
+          btn.setAttribute('aria-label', labels[th] || labels.system);
+        }
+        updateLabel();
+        btn.addEventListener('click', () => {
+          const cur = getTheme();
+          let next = cur === 'system' ? 'light' : cur === 'light' ? 'dark' : 'system';
+          if (next === 'system') {
+            document.documentElement.removeAttribute('data-theme');
+          } else {
+            document.documentElement.setAttribute('data-theme', next);
+          }
+          localStorage.setItem('plata-theme', next);
+          updateLabel();
+        });
+      })();
+
+      // --- Breaking news dismiss ---
+      (function() {
+        const bar = document.getElementById('breaking-news');
+        if (!bar) return;
+        if (sessionStorage.getItem('breaking-dismissed')) { bar.hidden = true; return; }
+        const dismiss = bar.querySelector('[data-dismiss-breaking]');
+        if (dismiss) dismiss.addEventListener('click', () => {
+          bar.hidden = true;
+          sessionStorage.setItem('breaking-dismissed', '1');
+        });
+      })();
+
+      // --- Language suggestion CTA (mobile) ---
+      (function() {
+        const cta = document.getElementById('lang-cta');
+        if (!cta || sessionStorage.getItem('lang-cta-dismissed')) return;
+        if (window.matchMedia('(min-width: 769px)').matches) return;
+        const pageLang = document.documentElement.lang;
+        const browserLang = (navigator.language || '').split('-')[0].toLowerCase();
+        if (browserLang === pageLang) return;
+        try {
+          const map = JSON.parse(document.documentElement.dataset.langMap || '{}');
+          const match = map[browserLang];
+          if (!match) return;
+          const link = document.getElementById('lang-cta-link');
+          if (link) { link.textContent = match.label; link.href = '/' + browserLang + '/'; }
+          cta.hidden = false;
+        } catch(e) {}
+        cta.querySelector('[data-dismiss-lang-cta]')?.addEventListener('click', () => {
+          cta.hidden = true;
+          sessionStorage.setItem('lang-cta-dismissed', '1');
+        });
+      })();
+
+      // Newsletter forms
+      document.querySelectorAll('[data-newsletter-form]').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var input = form.querySelector('input[type="email"]');
+          var btn = form.querySelector('button[type="submit"]');
+          var success = form.querySelector('[class*="success"]');
+          if (input) input.hidden = true;
+          if (btn) btn.hidden = true;
+          if (success) success.hidden = false;
+          // Hide any hint/label siblings
+          var hint = form.querySelector('[class*="hint"]');
+          if (hint) hint.hidden = true;
+          var label = form.querySelector('label');
+          if (label) label.hidden = true;
+        });
+      });
+    </script>
   </body>
 </html>
 
 <style>
-  /* Header */
-  .header {
+  /* Skip link — accessibility */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 9999;
     background: var(--color-celeste);
     color: #fff;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+  }
+
+  .skip-link:focus {
+    left: 0;
+  }
+
+  /* Header — BBC-style two-bar */
+  .header {
     position: sticky;
     top: 0;
     z-index: 100;
   }
 
-  .header-inner {
+  /* Top bar: brand + language */
+  .brand-bar {
+    background: var(--color-celeste);
+    color: #fff;
+  }
+
+  .brand-inner {
     max-width: var(--max-width);
     margin: 0 auto;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 48px;
+    align-items: baseline;
+    height: 44px;
     padding: 0 var(--spacing-lg);
-  }
-
-  .header-left,
-  .header-right {
-    flex: 1;
-    display: flex;
-    align-items: center;
-  }
-
-  .header-right {
-    justify-content: flex-end;
   }
 
   .menu-btn {
@@ -160,8 +645,11 @@ const navItems = [
     color: #fff;
     cursor: pointer;
     padding: 4px;
-    display: flex;
+    display: none;
     align-items: center;
+    align-self: center;
+    flex-shrink: 0;
+    margin-right: var(--spacing-sm);
   }
 
   .logo {
@@ -176,23 +664,24 @@ const navItems = [
   }
 
   .logo-text {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 800;
     font-family: var(--font-sans);
     letter-spacing: -0.02em;
   }
 
-  .logo-dot {
-    color: var(--color-gold);
+  .brand-actions {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    margin-left: auto;
   }
 
-  /* Navigation */
-  .nav {
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-bg);
-    position: sticky;
-    top: 48px;
-    z-index: 99;
+  /* Nav bar: categories */
+  .nav-bar {
+    background: var(--color-celeste);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 3px solid var(--color-gold);
   }
 
   .nav-inner {
@@ -200,10 +689,8 @@ const navItems = [
     margin: 0 auto;
     display: flex;
     align-items: center;
-    gap: 0;
     padding: 0 var(--spacing-lg);
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
@@ -212,29 +699,39 @@ const navItems = [
   }
 
   .nav-link {
-    display: block;
-    padding: 12px 16px;
-    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    height: 40px;
+    font-size: 0.85rem;
     font-weight: 400;
-    color: var(--color-text);
+    color: rgba(255, 255, 255, 0.85);
     white-space: nowrap;
     border-bottom: 3px solid transparent;
-    transition: border-color 0.15s;
+    margin-bottom: -3px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .nav-link:first-child {
+    padding-left: 0;
   }
 
   .nav-link:hover {
     text-decoration: none;
+    color: #fff;
     border-bottom-color: var(--color-gold);
   }
 
   .nav-link.active {
     font-weight: 700;
+    color: #fff;
     border-bottom-color: var(--color-gold);
   }
 
   /* Main */
   .main {
     min-height: 60vh;
+    background: var(--color-bg-content);
   }
 
   .main-inner {
@@ -247,29 +744,24 @@ const navItems = [
   .footer {
     background: var(--color-celeste);
     color: rgba(255, 255, 255, 0.8);
-    padding: var(--spacing-2xl) var(--spacing-lg);
-    margin-top: var(--spacing-2xl);
   }
 
   .footer-inner {
     max-width: var(--max-width);
     margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-lg);
   }
 
-  .footer-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: var(--spacing-lg);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  .footer-brand {
     margin-bottom: var(--spacing-lg);
   }
 
   .footer-logo {
     color: #fff;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 800;
     font-family: var(--font-sans);
+    letter-spacing: -0.02em;
   }
 
   .footer-logo:hover {
@@ -277,46 +769,441 @@ const navItems = [
     color: #fff;
   }
 
-  .footer-nav {
-    display: flex;
-    gap: var(--spacing-lg);
-  }
-
-  .footer-nav a {
-    color: rgba(255, 255, 255, 0.8);
+  .footer-tagline {
     font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 4px;
+    font-style: italic;
   }
 
-  .footer-nav a:hover {
+  .footer-cats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--spacing-lg) var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .footer-cat-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer-cat-title {
     color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .footer-cat-title:hover {
+    color: var(--color-gold);
+    text-decoration: none;
+  }
+
+  .footer-sub-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .footer-sub-link {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+  }
+
+  .footer-sub-link:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .footer-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .footer-util {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm) var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .footer-util a {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+  }
+
+  .footer-util a:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .footer-langs {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .footer-langs-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .footer-langs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px 16px;
+  }
+
+  .footer-lang-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 4px 0;
+  }
+
+  .footer-lang-link:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .footer-lang-link.active {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .footer-lang-flag {
+    font-size: 1rem;
+    line-height: 1;
   }
 
   .footer-bottom {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     line-height: 1.6;
   }
 
   .disclaimer {
     margin-bottom: var(--spacing-sm);
     font-style: italic;
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .copyright {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  /* Mobile overlays */
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--color-bg);
+    flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-overlay[hidden] {
+    display: none;
+  }
+
+  .mobile-overlay.open {
+    display: flex;
+  }
+
+  .overlay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .overlay-title {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .overlay-close {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  .overlay-nav {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-sm) 0;
+  }
+
+  .overlay-nav-link {
+    display: block;
+    padding: 16px var(--spacing-lg);
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .overlay-nav-link:hover {
+    text-decoration: none;
+    background: var(--color-bg-secondary);
+  }
+
+  .overlay-nav-link.active {
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .overlay-langs {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-sm) 0;
+  }
+
+  .overlay-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px var(--spacing-lg);
+    font-size: 1.1rem;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .overlay-lang-option:hover {
+    text-decoration: none;
+    background: var(--color-bg-secondary);
+  }
+
+  .overlay-lang-option.active {
+    font-weight: 700;
+    background: var(--color-bg-secondary);
+  }
+
+  .overlay-lang-flag {
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  /* Header icon buttons (search, theme toggle) */
+  .header-icon-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    margin-right: 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+
+  .header-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Theme toggle icon visibility */
+  .theme-icon--moon { display: none; }
+  .theme-icon--sun { display: block; }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .theme-icon--moon { display: block; }
+    :global(:root:not([data-theme="light"])) .theme-icon--sun { display: none; }
+  }
+
+  :global([data-theme="dark"]) .theme-icon--moon { display: block; }
+  :global([data-theme="dark"]) .theme-icon--sun { display: none; }
+  :global([data-theme="light"]) .theme-icon--moon { display: none; }
+  :global([data-theme="light"]) .theme-icon--sun { display: block; }
+
+  /* Search overlay body */
+  .search-body {
+    padding: var(--spacing-lg);
+  }
+
+  .search-input-wrap {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .search-input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-meta);
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 14px 14px 14px 44px;
+    font-size: 1.1rem;
+    font-family: var(--font-sans);
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    outline: none;
+  }
+
+  .search-input:focus {
+    border-color: var(--color-accent);
+  }
+
+  .search-placeholder-text {
+    color: var(--color-text-meta);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+  }
+
+  /* Footer newsletter */
+  .footer-newsletter {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .footer-newsletter-title {
+    font-size: 0.8rem;
+    font-weight: 700;
     color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .footer-newsletter-form {
+    display: flex;
+    gap: 0;
+    max-width: 400px;
+  }
+
+  .footer-newsletter-input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    font-family: var(--font-sans);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    outline: none;
+  }
+
+  .footer-newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .footer-newsletter-input:focus {
+    border-color: var(--color-gold);
+  }
+
+  .footer-newsletter-btn {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    background: var(--color-gold);
+    color: var(--color-celeste-dark);
+    border: 1px solid var(--color-gold);
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .footer-newsletter-btn:hover {
+    background: var(--color-gold-dark);
+    border-color: var(--color-gold-dark);
+  }
+
+  .footer-newsletter-success {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    margin-top: 6px;
+  }
+
+  /* Language suggestion CTA */
+  .lang-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 150;
+    background: var(--color-celeste);
+    color: #fff;
+  }
+
+  .lang-cta[hidden] { display: none; }
+
+  .lang-cta-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px var(--spacing-md);
+  }
+
+  .lang-cta-link {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .lang-cta-link:hover { text-decoration: underline; color: #fff; }
+
+  .lang-cta-dismiss {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+  }
+
+  @media (min-width: 769px) {
+    .lang-cta { display: none !important; }
   }
 
   /* Mobile */
   @media (max-width: 768px) {
-    .header-inner {
+    .brand-inner {
       padding: 0 var(--spacing-md);
     }
 
-    .nav-inner {
-      padding: 0 var(--spacing-md);
+    .menu-btn {
+      display: flex;
+    }
+
+    .nav-bar {
+      display: none;
     }
 
     .main-inner {
-      padding: var(--spacing-md);
+      padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .footer-inner {
+      padding: var(--spacing-xl) var(--spacing-md);
     }
 
     .logo-text {

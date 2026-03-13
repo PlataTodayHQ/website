@@ -1,0 +1,102 @@
+---
+import { t } from "@/i18n";
+
+interface FeedItem {
+  title: string;
+  href: string;
+  timeAgo: string;
+}
+
+interface Props {
+  items: FeedItem[];
+  lang?: string;
+}
+
+const { items, lang = "en" } = Astro.props;
+---
+
+<section class="just-in" aria-label={t(lang, "justIn.ariaLabel")}>
+  <div class="just-in-header">
+    <span class="just-in-dot" aria-hidden="true"></span>
+    <h2 class="just-in-title">{t(lang, "justIn.title")}</h2>
+  </div>
+  <ul class="just-in-list">
+    {items.map((item) => (
+      <li class="just-in-item">
+        <time class="just-in-time">{item.timeAgo}</time>
+        <a href={item.href} class="just-in-link">{item.title}</a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .just-in {
+    margin-bottom: var(--spacing-2xl);
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: 2px;
+    border-left: 4px solid var(--color-gold);
+  }
+
+  .just-in-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .just-in-dot {
+    width: 8px;
+    height: 8px;
+    background: #b91c1c;
+    border-radius: 50%;
+    animation: just-in-pulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes just-in-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .just-in-title {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .just-in-list { list-style: none; }
+
+  .just-in-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .just-in-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .just-in-item:first-child { padding-top: 0; }
+
+  .just-in-time {
+    font-size: 0.7rem;
+    color: var(--color-text-meta);
+    white-space: nowrap;
+    min-width: 60px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .just-in-link {
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--color-text);
+  }
+
+  .just-in-link:hover { text-decoration: underline; }
+</style>

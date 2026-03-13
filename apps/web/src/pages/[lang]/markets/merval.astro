@@ -1,0 +1,611 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title="Merval Index — Argentine Stock Market"
+  description="Merval stock index overview with constituent stocks, prices, and daily performance. Track Argentina's leading equities."
+  lang={lang}
+  ogType="website"
+  breadcrumbs={[
+    { name: "Home", url: `/${lang}/` },
+    { name: "Markets", url: `/${lang}/markets` },
+    { name: "Merval Index", url: `/${lang}/markets/merval` },
+  ]}
+>
+  <div class="merval-page" data-merval-page data-lang={lang}>
+    <header class="mkts-header">
+      <div>
+        <h1 class="mkts-title">Merval Index</h1>
+        <p class="mkts-subtitle">Buenos Aires Stock Exchange (BYMA)</p>
+      </div>
+      <p class="mkts-updated" data-mkts-updated>Loading…</p>
+    </header>
+
+    <!-- Index Summary Card -->
+    <div class="index-card">
+      <div class="idx-top">
+        <div class="idx-info">
+          <span class="idx-label">MERVAL</span>
+          <span class="rc-badge rc-badge--merval">BYMA</span>
+        </div>
+        <div class="idx-price-row">
+          <span class="idx-price" data-idx-price>—</span>
+          <span class="idx-change" data-idx-change></span>
+        </div>
+      </div>
+      <div class="idx-stats">
+        <div class="idx-stat">
+          <span class="idx-sk">High</span>
+          <span class="idx-sv" data-idx-high>—</span>
+        </div>
+        <div class="idx-stat">
+          <span class="idx-sk">Low</span>
+          <span class="idx-sv" data-idx-low>—</span>
+        </div>
+        <div class="idx-stat">
+          <span class="idx-sk">Prev Close</span>
+          <span class="idx-sv" data-idx-prev>—</span>
+        </div>
+        <div class="idx-stat">
+          <span class="idx-sk">Volume</span>
+          <span class="idx-sv" data-idx-vol>—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Merval Chart -->
+    <section class="chart-section">
+      <h2 class="section-title">1-Month Performance</h2>
+      <div class="chart-wrap">
+        <canvas data-merval-chart height="280"></canvas>
+      </div>
+    </section>
+
+    <!-- Constituent Stocks -->
+    <section class="stocks-section">
+      <div class="stocks-header">
+        <h2 class="section-title">Panel Líder — Constituent Stocks</h2>
+        <div class="sort-controls">
+          <span class="sort-label">Sort:</span>
+          <button class="sort-btn sort-btn--active" data-sort-btn="mcap">Cap</button>
+          <button class="sort-btn" data-sort-btn="variation">Change</button>
+          <button class="sort-btn" data-sort-btn="volume">Volume</button>
+          <button class="sort-btn" data-sort-btn="symbol">A–Z</button>
+        </div>
+      </div>
+      <div class="stocks-grid" data-stocks-grid>
+        <div class="stocks-loading">
+          <div class="loading-spinner"></div>
+          Loading stocks…
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info-section">
+      <div class="info-card">
+        <h3>About the Merval Index</h3>
+        <p>Argentina's main stock index on BYMA (Buenos Aires Stock Exchange). Tracks the most liquid local companies and serves as a key indicator of investor confidence in the economy. The index composition (Panel Líder) is reviewed quarterly.</p>
+      </div>
+    </section>
+
+    <p class="info-disclaimer">Data from BYMA and Yahoo Finance. Prices may be delayed up to 15 minutes. For informational purposes only — not financial advice.</p>
+  </div>
+</Base>
+
+<script is:inline src="/js/charts.js"></script>
+<script is:inline>
+(function() {
+  var C = window.PlataCharts;
+  var lang = document.querySelector('[data-merval-page]').getAttribute('data-lang') || 'en';
+
+  function setEl(sel, text) {
+    var el = document.querySelector(sel);
+    if (el) el.textContent = text;
+  }
+
+  // ─── Panel Líder stock names (BYMA securityDesc is often empty) ───
+  var STOCK_NAMES = {
+    ALUA: 'Aluar Aluminio', BBAR: 'BBVA Argentina', BMA: 'Banco Macro',
+    BYMA: 'Bolsas y Mercados Arg.', CEPU: 'Central Puerto',
+    COME: 'Soc. Comercial del Plata', CRES: 'Cresud', CELU: 'Celulosa Argentina',
+    CVH: 'Cablevision Holding', EDN: 'Edenor', GGAL: 'Grupo Fin. Galicia',
+    HARG: 'Holcim Argentina', LOMA: 'Loma Negra', MIRG: 'Mirgor',
+    PAMP: 'Pampa Energía', SUPV: 'Grupo Supervielle', TECO2: 'Telecom Argentina',
+    TGNO4: 'Transp. Gas del Norte', TGSU2: 'Transp. Gas del Sur',
+    TRAN: 'Transener', TXAR: 'Ternium Argentina', VALO: 'Grupo Fin. Valores',
+    YPFD: 'YPF', METR: 'MetroGAS', IRSA: 'IRSA Inversiones',
+    AGRO: 'Agrometal', DGCU2: 'Distrib. Gas Cuyana', RICH: 'S.A. San Miguel',
+    SEMI: 'Molinos Río de la Plata', MOLI: 'Molinos Agro', LONG: 'Longvie',
+    FERR: 'Ferrum', BOLT: 'Boldt', BHIP: 'Banco Hipotecario',
+    CARC: 'Carboclor', GARO: 'Garovaglio y Zorraquín', MORI: 'Morixe',
+    GBAN: 'Gas Natural BAN', AUSO: 'Autopistas del Sol', SAMI: 'S.A. San Miguel',
+    INVJ: 'Inversora Juramento', FIPL: 'Fiplasto', DYCA: 'Dycasa',
+    GRIM: 'Grimoldi', POLL: 'Polledo', BPAT: 'Banco Patagonia',
+    OEST: 'Grupo Concesionario Oeste', RIGO: 'Rigolleau', CADO: 'Carlos Casado',
+    CAPX: 'Capex', CGPA2: 'Camuzzi Gas Pampeana', GCLA: 'Grupo Clarín',
+    DOME: 'Domec', INTR: 'Introductora', LEDE: 'Ledesma', MOLA: 'Molinos Agro',
+    ROSE: 'Research for Life', CTIO: 'Consultatio', MTAU: 'Metaverso',
+    HAVA: 'Havanna', NORT: 'Ind. del Norte'
+  };
+
+  // ─── Approximate market cap ranking (USD millions, Q1 2026 estimates) ───
+  var STOCK_MCAP = {
+    YPFD: 16000, GGAL: 8500, BMA: 5200, BBAR: 4500, PAMP: 4200,
+    TECO2: 3500, CEPU: 3200, TXAR: 3000, TGSU2: 2500, LOMA: 1800,
+    SUPV: 1600, TRAN: 1500, ALUA: 1500, EDN: 1200, CRES: 1100,
+    BYMA: 1000, VALO: 900, TGNO4: 850, IRSA: 800, COME: 500,
+    METR: 450, MIRG: 400, HARG: 350, BPAT: 320, CVH: 300,
+    BHIP: 250, CAPX: 200, CTIO: 180, LEDE: 170, BOLT: 150,
+    GCLA: 140, CGPA2: 130, GBAN: 120, CELU: 110, MOLI: 100,
+    SEMI: 90, RICH: 80, AGRO: 70, CADO: 60, DGCU2: 55,
+    HAVA: 50, LONG: 40, FERR: 35, MORI: 30, RIGO: 25
+  };
+
+  // ─── State ───
+  var stocksData = [];
+  var currentSort = { key: 'mcap', dir: 'desc' };
+  var chartData = null;
+
+  // ─── BYMA direct fetch helper (POST, no CORS proxy needed if BYMA allows it) ───
+  var BYMA_INDEX = 'https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price';
+  var BYMA_STOCKS = 'https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/leading-equity';
+  var bymaOpts = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' };
+
+  function fetchBYMA(url) {
+    return fetch(url, bymaOpts).then(function(r) { return r.json(); });
+  }
+
+  // ─── Load Merval index data ───
+  function loadIndexData() {
+    // Try BYMA direct, fallback to proxy
+    return fetchBYMA(BYMA_INDEX).then(function(d) {
+      var arr = (d && d.data) || d || [];
+      if (!Array.isArray(arr)) throw new Error('bad');
+      var m = null;
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].symbol === 'M') { m = arr[i]; break; }
+      }
+      if (!m) throw new Error('not found');
+      return {
+        price: m.price || m.closingPrice,
+        high: m.highValue || m.high,
+        low: m.minValue || m.low,
+        previousClose: m.previousClosingPrice,
+        variation: m.variation,
+        volume: m.volume || m.tradeVolume
+      };
+    }).catch(function() {
+      return fetch('/api/merval').then(function(r) { return r.json(); }).catch(function() { return null; });
+    });
+  }
+
+  // ─── Load stocks table data ───
+  function normalizeStocks(arr) {
+    // Map raw BYMA items to normalized objects
+    var items = arr.map(function(s) {
+      var sym = (s.symbol || '').replace('.BA', '');
+      return {
+        symbol: sym,
+        description: s.securityDesc || s.description || STOCK_NAMES[sym] || '',
+        price: s.trade || s.price || s.closingPrice,
+        variation: s.imbalance != null ? s.imbalance : (s.variation != null ? s.variation / 100 : null),
+        previousClose: s.previousClosingPrice,
+        openingPrice: s.openingPrice,
+        volume: s.volume || s.tradeVolume || 0,
+        high: s.tradingHighPrice || s.high,
+        low: s.tradingLowPrice || s.low,
+        mcap: STOCK_MCAP[sym] || 0
+      };
+    });
+    // Deduplicate: keep entry with highest volume per symbol
+    var seen = {};
+    var result = [];
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      if (!item.symbol) continue;
+      if (seen[item.symbol] != null) {
+        var prev = result[seen[item.symbol]];
+        if ((item.volume || 0) > (prev.volume || 0)) {
+          result[seen[item.symbol]] = item;
+        }
+      } else {
+        seen[item.symbol] = result.length;
+        result.push(item);
+      }
+    }
+    return result.sort(function(a, b) { return (b.volume || 0) - (a.volume || 0); });
+  }
+
+  function loadStocksData() {
+    // Try BYMA direct, fallback to proxy
+    return fetchBYMA(BYMA_STOCKS).then(function(d) {
+      var arr = (d && d.data) || d || [];
+      if (!Array.isArray(arr) || arr.length === 0) throw new Error('empty');
+      return normalizeStocks(arr);
+    }).catch(function() {
+      return fetch('/api/leading-equity').then(function(r) { return r.json(); })
+        .then(function(arr) { return Array.isArray(arr) ? normalizeStocks(arr) : null; })
+        .catch(function() { return null; });
+    });
+  }
+
+  // ─── Load chart data ───
+  // In dev: Vite proxy forwards /api/stock/* to Yahoo Finance
+  // In prod: Cloudflare Pages Function proxies to Yahoo Finance
+  function parseYahooChart(json) {
+    var result = json && json.chart && json.chart.result && json.chart.result[0];
+    if (!result || !result.timestamp) return null;
+    var q = result.indicators && result.indicators.quote && result.indicators.quote[0];
+    return {
+      timestamps: result.timestamp,
+      closes: q ? q.close : [],
+      symbol: '^MERV'
+    };
+  }
+
+  function normalizeChartResponse(data) {
+    // Our Pages Function returns {timestamps, closes} at top level
+    if (data && data.timestamps && data.closes) return data;
+    // Vite dev proxy returns raw Yahoo format → parse it
+    var parsed = parseYahooChart(data);
+    if (parsed) return parsed;
+    return null;
+  }
+
+  function loadChartData() {
+    // Primary: our API proxy (works in both dev via Vite proxy and prod via Pages Function)
+    return fetch('/api/stock/%5EMERV?range=1mo&interval=1d')
+      .then(function(r) { if (!r.ok) throw new Error('proxy ' + r.status); return r.json(); })
+      .then(normalizeChartResponse)
+      .then(function(d) { if (!d) throw new Error('no data'); return d; })
+      .catch(function() {
+        // Fallback: try Yahoo Finance directly (usually CORS-blocked, but worth trying)
+        return fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?interval=1d&range=1mo')
+          .then(function(r) { if (!r.ok) throw new Error('yahoo'); return r.json(); })
+          .then(parseYahooChart)
+          .catch(function() { return null; });
+      });
+  }
+
+  // ─── Fetch all data in parallel ───
+  Promise.all([
+    loadIndexData(),
+    loadChartData(),
+    loadStocksData()
+  ]).then(function(res) {
+    var merval = res[0];
+    var chart = res[1];
+    var stocks = res[2];
+
+    setEl('[data-mkts-updated]', 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+
+    // Index summary
+    if (merval && merval.price) {
+      setEl('[data-idx-price]', C.fmtM(merval.price));
+      if (merval.high) setEl('[data-idx-high]', C.fmtM(merval.high));
+      if (merval.low) setEl('[data-idx-low]', C.fmtM(merval.low));
+      if (merval.previousClose) setEl('[data-idx-prev]', C.fmtM(merval.previousClose));
+      if (merval.volume) setEl('[data-idx-vol]', C.fmtVol(merval.volume));
+
+      var mPct = merval.variation != null ? merval.variation * 100 : null;
+      if (mPct == null && merval.previousClose > 0) {
+        mPct = ((merval.price - merval.previousClose) / merval.previousClose) * 100;
+      }
+      var chEl = document.querySelector('[data-idx-change]');
+      if (chEl && mPct != null) {
+        chEl.textContent = C.pctText(mPct);
+        chEl.className = 'idx-change ' + (mPct >= 0 ? 'rc-up' : 'rc-down');
+      }
+    }
+
+    // Chart
+    if (chart && chart.timestamps && chart.closes) {
+      chartData = chart;
+      var points = C.yahooToPoints(chart.timestamps, chart.closes);
+      C.drawChart(document.querySelector('[data-merval-chart]'), [
+        { points: points, lineColor: '#60a5fa', fillColor: 'rgba(96,165,250,0.12)' }
+      ], { yFormat: C.fmtM });
+    } else {
+      var chartWrap = document.querySelector('.chart-wrap');
+      if (chartWrap) chartWrap.innerHTML = '<div class="chart-unavailable">Chart data temporarily unavailable</div>';
+    }
+
+    // Stocks cards
+    if (stocks && Array.isArray(stocks) && stocks.length > 0) {
+      stocksData = stocks;
+      renderStocks();
+    } else {
+      var grid = document.querySelector('[data-stocks-grid]');
+      if (grid) grid.innerHTML = '<div class="stocks-loading">' + (stocks && stocks.error ? 'Unable to load stocks' : 'No stock data available') + '</div>';
+    }
+  }).catch(function() {
+    setEl('[data-mkts-updated]', 'Unable to load data');
+  });
+
+  // ─── Logo / Avatar helpers ───
+  var STOCK_LOGOS = {
+    YPFD: 'https://logo.clearbit.com/ypf.com',
+    GGAL: 'https://logo.clearbit.com/galiciamas.com.ar',
+    BMA: 'https://logo.clearbit.com/macro.com.ar',
+    BBAR: 'https://logo.clearbit.com/bbva.com.ar',
+    PAMP: 'https://logo.clearbit.com/pampaenergia.com',
+    TECO2: 'https://logo.clearbit.com/telecom.com.ar',
+    CEPU: 'https://logo.clearbit.com/centralpuerto.com',
+    TXAR: 'https://logo.clearbit.com/ternium.com',
+    TGSU2: 'https://logo.clearbit.com/tgs.com.ar',
+    LOMA: 'https://logo.clearbit.com/lomanegra.com',
+    SUPV: 'https://logo.clearbit.com/supervielle.com.ar',
+    ALUA: 'https://logo.clearbit.com/aluar.com.ar',
+    TRAN: 'https://logo.clearbit.com/transener.com.ar',
+    EDN: 'https://logo.clearbit.com/edenor.com.ar',
+    CRES: 'https://logo.clearbit.com/cresud.com.ar',
+    BYMA: 'https://logo.clearbit.com/byma.com.ar',
+    IRSA: 'https://logo.clearbit.com/irsa.com.ar',
+    MIRG: 'https://logo.clearbit.com/mirgor.com.ar',
+    METR: 'https://logo.clearbit.com/metrogas.com.ar',
+    BHIP: 'https://logo.clearbit.com/hipotecario.com.ar',
+    BPAT: 'https://logo.clearbit.com/bancopatagonia.com.ar',
+    COME: 'https://logo.clearbit.com/comercialdelplata.com.ar',
+    VALO: 'https://logo.clearbit.com/grupovalores.com',
+    HARG: 'https://logo.clearbit.com/holcim.com.ar',
+    CVH: 'https://logo.clearbit.com/cablevisionholding.com.ar',
+    GCLA: 'https://logo.clearbit.com/clarin.com',
+    TGNO4: 'https://logo.clearbit.com/tgn.com.ar'
+  };
+
+  // Deterministic color palette based on symbol
+  var AVATAR_COLORS = [
+    '#3b82f6','#8b5cf6','#ec4899','#f59e0b','#10b981',
+    '#06b6d4','#6366f1','#ef4444','#14b8a6','#f97316',
+    '#84cc16','#a855f7','#0ea5e9','#e11d48','#22c55e'
+  ];
+
+  function avatarColor(sym) {
+    var h = 0;
+    for (var i = 0; i < sym.length; i++) h = ((h << 5) - h + sym.charCodeAt(i)) | 0;
+    return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length];
+  }
+
+  function logoHtml(sym) {
+    var url = STOCK_LOGOS[sym];
+    var color = avatarColor(sym);
+    var initials = sym.substring(0, 2);
+    if (url) {
+      return '<div class="stk-logo" style="background:' + color + '22" data-stk-logo="' + sym + '" data-color="' + color + '">' +
+        '<img src="' + url + '?size=64&format=png" alt="" loading="lazy">' +
+        '</div>';
+    }
+    return '<div class="stk-logo stk-logo--fallback" style="background:' + color + '22;color:' + color + '">' + initials + '</div>';
+  }
+
+  // Handle logo load errors → fall back to initials
+  document.addEventListener('error', function(e) {
+    if (e.target.tagName !== 'IMG') return;
+    var logoDiv = e.target.closest('[data-stk-logo]');
+    if (!logoDiv) return;
+    var sym = logoDiv.getAttribute('data-stk-logo');
+    var color = logoDiv.getAttribute('data-color');
+    logoDiv.classList.add('stk-logo--fallback');
+    logoDiv.style.color = color;
+    logoDiv.innerHTML = sym.substring(0, 2);
+  }, true);
+
+  // ─── Render stock cards ───
+  function renderStocks() {
+    var grid = document.querySelector('[data-stocks-grid]');
+    if (!grid || stocksData.length === 0) return;
+
+    // Sort
+    var sorted = stocksData.slice().sort(function(a, b) {
+      var key = currentSort.key;
+      var av = a[key], bv = b[key];
+      if (typeof av === 'string') { av = av.toLowerCase(); bv = (bv || '').toLowerCase(); }
+      if (av == null) av = 0;
+      if (bv == null) bv = 0;
+      var cmp = av < bv ? -1 : av > bv ? 1 : 0;
+      return currentSort.dir === 'desc' ? -cmp : cmp;
+    });
+
+    var html = '';
+    for (var i = 0; i < sorted.length; i++) {
+      var s = sorted[i];
+      var pct = s.variation != null ? s.variation * 100 : null;
+      var pctClass = pct != null ? (pct >= 0 ? 'rc-up' : 'rc-down') : '';
+      var arrow = pct != null ? (pct >= 0 ? '▲' : '▼') : '';
+      var borderColor = pct != null ? (pct >= 0 ? '#16a34a' : '#dc2626') : 'var(--color-border)';
+
+      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="stk-card" style="--stk-accent:' + borderColor + '">';
+      html += '<div class="stk-row1">';
+      html += logoHtml(s.symbol);
+      html += '<div class="stk-id">';
+      html += '<span class="stk-symbol">' + (s.symbol || '—') + '</span>';
+      html += '<span class="stk-name">' + (s.description || s.symbol || '') + '</span>';
+      html += '</div>';
+      html += '<div class="stk-change ' + pctClass + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toFixed(2) + '%' : '—') + '</div>';
+      html += '</div>';
+      html += '<div class="stk-row2">';
+      html += '<span class="stk-price">ARS ' + (s.price ? C.fmt(s.price) : '—') + '</span>';
+      html += '<span class="stk-meta">';
+      if (s.volume) html += '<span class="stk-vol">Vol ' + C.fmtVol(s.volume) + '</span>';
+      if (STOCK_MCAP[s.symbol]) html += '<span class="stk-mcap">Cap ~$' + C.fmtVol(STOCK_MCAP[s.symbol] * 1e6) + '</span>';
+      html += '</span>';
+      html += '</div>';
+      html += '</a>';
+    }
+    grid.innerHTML = html;
+  }
+
+  // ─── Sort buttons ───
+  document.querySelectorAll('[data-sort-btn]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var key = btn.getAttribute('data-sort-btn');
+      if (currentSort.key === key) {
+        currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort = { key: key, dir: key === 'symbol' ? 'asc' : 'desc' };
+      }
+      document.querySelectorAll('[data-sort-btn]').forEach(function(b) { b.classList.remove('sort-btn--active'); });
+      btn.classList.add('sort-btn--active');
+      renderStocks();
+    });
+  });
+
+  // ─── Resize handler ───
+  var rTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(rTimer);
+    rTimer = setTimeout(function() {
+      if (!chartData) return;
+      var points = C.yahooToPoints(chartData.timestamps, chartData.closes);
+      C.drawChart(document.querySelector('[data-merval-chart]'), [
+        { points: points, lineColor: '#60a5fa', fillColor: 'rgba(96,165,250,0.12)' }
+      ], { yFormat: C.fmtM });
+    }, 200);
+  });
+})();
+</script>
+
+<style>
+  .mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
+  .mkts-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1.1; }
+  .mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
+  .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
+
+  /* Index Summary Card */
+  .index-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+  .idx-top { margin-bottom: var(--spacing-lg); }
+  .idx-info { display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); }
+  .idx-label { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; color: var(--color-text); }
+  .idx-price-row { display: flex; align-items: baseline; gap: 12px; }
+  .idx-price { font-size: 2.2rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; }
+  .idx-change { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .idx-stats { display: flex; gap: var(--spacing-xl); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); flex-wrap: wrap; }
+  .idx-stat { display: flex; flex-direction: column; gap: 2px; }
+  .idx-sk { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .idx-sv { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+
+  .rc-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; }
+  .rc-badge--merval { background: rgba(96,165,250,0.15); color: #3b82f6; }
+
+  /* Chart */
+  .chart-section { margin-bottom: var(--spacing-2xl); }
+  .section-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; margin-bottom: var(--spacing-lg); }
+  .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-md); }
+  .chart-wrap canvas { width: 100%; display: block; }
+  .chart-unavailable { text-align: center; color: var(--color-text-meta); padding: var(--spacing-2xl) var(--spacing-md); font-size: 0.85rem; font-style: italic; }
+
+  /* Stocks Section */
+  .stocks-section { margin-bottom: var(--spacing-2xl); }
+  .stocks-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg); flex-wrap: wrap; gap: var(--spacing-sm); }
+  .stocks-header .section-title { margin-bottom: 0; }
+
+  .sort-controls { display: flex; align-items: center; gap: 6px; }
+  .sort-label { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .sort-btn { font-size: 0.75rem; padding: 4px 10px; border: 1px solid var(--color-border); border-radius: 4px; background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer; transition: all 0.15s; font-weight: 600; }
+  .sort-btn:hover { border-color: var(--color-gold); color: var(--color-text); }
+  .sort-btn--active { border-color: var(--color-gold); background: rgba(246,180,14,0.1); color: var(--color-gold); }
+
+  .stocks-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl); }
+  .loading-spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--color-border); border-top-color: var(--color-gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Info */
+  .info-section { margin-bottom: var(--spacing-2xl); }
+  .info-card { padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
+  .info-card h3 { font-family: var(--font-serif); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .info-card p { font-size: 0.85rem; line-height: 1.6; color: var(--color-text-secondary); }
+  .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
+
+  :global([data-theme="dark"]) .rc-badge--merval { color: #60a5fa; }
+
+  @media (max-width: 640px) {
+    .mkts-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .mkts-title { font-size: 1.5rem; }
+    .idx-price { font-size: 1.6rem; }
+    .idx-stats { gap: var(--spacing-md); }
+    .section-title { font-size: 1.1rem; }
+    .stocks-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<!-- Global styles for dynamically generated stock cards -->
+<style is:global>
+  .stocks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
+
+  .stk-card {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 14px 16px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--stk-accent, var(--color-border));
+    border-radius: 10px;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .stk-card::after {
+    content: '→'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 1rem; color: var(--color-text-meta); opacity: 0;
+    transition: opacity 0.2s, right 0.2s;
+  }
+  .stk-card:hover {
+    border-color: var(--color-gold); border-left-color: var(--color-gold);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(246,180,14,0.12);
+    transform: translateY(-2px);
+  }
+  .stk-card:hover::after { opacity: 0.5; right: 12px; }
+
+  .stk-row1 { display: flex; align-items: center; gap: 12px; }
+
+  .stk-logo {
+    width: 40px; height: 40px; min-width: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; overflow: hidden;
+  }
+  .stk-logo img { width: 28px; height: 28px; object-fit: contain; border-radius: 4px; display: block; }
+  .stk-logo--fallback { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.02em; }
+
+  .stk-id { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+  .stk-symbol { font-weight: 800; font-size: 0.95rem; color: var(--color-text); letter-spacing: 0.02em; line-height: 1.2; }
+  .stk-name { font-size: 0.72rem; color: var(--color-text-meta); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .stk-change {
+    font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums;
+    white-space: nowrap; padding: 4px 10px; border-radius: 6px;
+    flex-shrink: 0; margin-left: auto;
+  }
+  .stk-change.rc-up { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .stk-change.rc-down { background: rgba(220,38,38,0.12); color: #dc2626; }
+
+  .stk-row2 {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 8px; border-top: 1px solid rgba(128,128,128,0.15);
+  }
+  .stk-price { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.01em; }
+  .stk-meta { display: flex; gap: 12px; align-items: baseline; }
+  .stk-vol, .stk-mcap { font-size: 0.68rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+
+  .rc-up { color: #16a34a; }
+  .rc-down { color: #dc2626; }
+
+  @media (max-width: 640px) {
+    .stocks-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+    .stk-card { padding: 12px 14px; }
+    .stk-card::after { display: none; }
+    .stk-logo { width: 36px; height: 36px; min-width: 36px; border-radius: 8px; }
+    .stk-logo img { width: 24px; height: 24px; }
+    .stk-symbol { font-size: 0.9rem; }
+    .stk-price { font-size: 0.95rem; }
+    .stk-change { font-size: 0.75rem; padding: 3px 8px; }
+    .stk-row2 { padding-top: 6px; }
+  }
+</style>

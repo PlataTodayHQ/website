@@ -1,0 +1,726 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+
+// Build i18n JSON for client-side JS
+const stockI18n = {
+  updated: t(lang, "stock.updated"),
+  analyst: t(lang, "stock.analyst"),
+  analysts: t(lang, "stock.analysts"),
+  recommendation: t(lang, "stock.recommendation"),
+  backToMerval: t(lang, "stock.backToMerval"),
+  disclaimer: t(lang, "stock.disclaimer"),
+  pageTitle: t(lang, "stock.pageTitle"),
+  about: t(lang, "stock.about"),
+  keyProducts: t(lang, "stock.keyProducts"),
+};
+---
+
+<Base
+  title={`${t(lang, "stock.pageTitle")} — Plata`}
+  description={t(lang, "stock.pageDesc")}
+  lang={lang}
+  ogType="website"
+  breadcrumbs={[
+    { name: t(lang, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang, "stock.pageTitle"), url: `/${lang}/markets` },
+    { name: "Merval", url: `/${lang}/markets/merval` },
+    { name: "Stock", url: `/${lang}/markets/stock` },
+  ]}
+>
+  <div class="stock-page" data-stock-page data-lang={lang} data-i18n={JSON.stringify(stockI18n)}>
+    <!-- Error state (no symbol) -->
+    <div class="stock-empty" data-stock-empty style="display:none;">
+      <h1 class="mkts-title">{t(lang, "stock.noSelected")}</h1>
+      <p class="stock-empty-msg">{t(lang, "stock.selectPrompt")}</p>
+      <a href={`/${lang}/markets/merval`} class="back-link">&larr; {t(lang, "stock.viewMerval")}</a>
+    </div>
+
+    <!-- Stock content (populated by JS) -->
+    <div class="stock-content" data-stock-content style="display:none;">
+      <header class="mkts-header">
+        <div>
+          <div class="stock-title-row">
+            <h1 class="mkts-title" data-stock-symbol>&mdash;</h1>
+            <span class="rc-badge rc-badge--merval">BYMA</span>
+          </div>
+          <p class="mkts-subtitle" data-stock-name>Loading&hellip;</p>
+        </div>
+        <p class="mkts-updated" data-mkts-updated>Loading&hellip;</p>
+      </header>
+
+      <!-- Price Card -->
+      <div class="price-card">
+        <div class="pc-main">
+          <span class="pc-price" data-stock-price>&mdash;</span>
+          <span class="pc-change" data-stock-change></span>
+          <span class="pc-currency" data-stock-currency>ARS</span>
+        </div>
+        <div class="pc-stats">
+          <div class="pc-stat">
+            <span class="pc-sk">{t(lang, "stock.open")}</span>
+            <span class="pc-sv" data-stock-open>&mdash;</span>
+          </div>
+          <div class="pc-stat">
+            <span class="pc-sk">{t(lang, "stock.high")}</span>
+            <span class="pc-sv" data-stock-high>&mdash;</span>
+          </div>
+          <div class="pc-stat">
+            <span class="pc-sk">{t(lang, "stock.low")}</span>
+            <span class="pc-sv" data-stock-low>&mdash;</span>
+          </div>
+          <div class="pc-stat">
+            <span class="pc-sk">{t(lang, "stock.prevClose")}</span>
+            <span class="pc-sv" data-stock-prev>&mdash;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart with Range Selector -->
+      <section class="chart-section">
+        <div class="chart-header">
+          <h2 class="section-title">{t(lang, "stock.priceChart")}</h2>
+          <div class="range-buttons" data-range-buttons>
+            <button data-range="1d" data-interval="5m">1D</button>
+            <button data-range="5d" data-interval="15m">5D</button>
+            <button data-range="1mo" data-interval="1d" class="active">1M</button>
+            <button data-range="3mo" data-interval="1d">3M</button>
+            <button data-range="1y" data-interval="1wk">1Y</button>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas data-stock-chart height="280"></canvas>
+        </div>
+      </section>
+
+      <!-- Key Statistics (Yahoo Finance style) -->
+      <section class="detail-section" data-profile-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.keyStats")}</h2>
+        <div class="stats-grid">
+          <div class="stats-col">
+            <table class="stats-table">
+              <tbody>
+                <tr><td class="st-k">{t(lang, "stock.marketCap")}</td><td class="st-v" data-st-mcap>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.enterpriseValue")}</td><td class="st-v" data-st-ev>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.trailingPE")}</td><td class="st-v" data-st-tpe>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.forwardPE")}</td><td class="st-v" data-st-fpe>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.pegRatio")}</td><td class="st-v" data-st-peg>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.priceBook")}</td><td class="st-v" data-st-pb>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.priceSales")}</td><td class="st-v" data-st-ps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.evRevenue")}</td><td class="st-v" data-st-evr>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.evEbitda")}</td><td class="st-v" data-st-eve>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="stats-col">
+            <table class="stats-table">
+              <tbody>
+                <tr><td class="st-k">{t(lang, "stock.epsTTM")}</td><td class="st-v" data-st-eps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.forwardEPS")}</td><td class="st-v" data-st-feps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.beta")}</td><td class="st-v" data-st-beta>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.52wRange")}</td><td class="st-v" data-st-52w>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.50dAvg")}</td><td class="st-v" data-st-50d>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.200dAvg")}</td><td class="st-v" data-st-200d>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.avgVolume")}</td><td class="st-v" data-st-avgvol>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.sharesOut")}</td><td class="st-v" data-st-shares>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.bookValue")}</td><td class="st-v" data-st-bv>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dividends & Returns -->
+      <section class="detail-section" data-dividends-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.dividends")}</h2>
+        <div class="stats-grid">
+          <div class="stats-col">
+            <table class="stats-table">
+              <tbody>
+                <tr><td class="st-k">{t(lang, "stock.divRate")}</td><td class="st-v" data-st-divrate>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.divYield")}</td><td class="st-v" data-st-divyield>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.exDivDate")}</td><td class="st-v" data-st-exdiv>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.payoutRatio")}</td><td class="st-v" data-st-payout>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="stats-col">
+            <table class="stats-table">
+              <tbody>
+                <tr><td class="st-k">{t(lang, "stock.roa")}</td><td class="st-v" data-st-roa>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.roe")}</td><td class="st-v" data-st-roe>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.earningsGrowth")}</td><td class="st-v" data-st-earngr>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.revenueGrowth")}</td><td class="st-v" data-st-revgr>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Financial Highlights -->
+      <section class="detail-section" data-financials-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.financials")}</h2>
+        <div class="stats-grid">
+          <div class="stats-col">
+            <table class="stats-table">
+              <tbody>
+                <tr><td class="st-k">{t(lang, "stock.totalRevenue")}</td><td class="st-v" data-st-rev>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.revenueShare")}</td><td class="st-v" data-st-revps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.grossProfit")}</td><td class="st-v" data-st-gp>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.ebitda")}</td><td class="st-v" data-st-ebitda>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.netIncome")}</td><td class="st-v" data-st-ni>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.opCashflow")}</td><td class="st-v" data-st-opcf>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.freeCashflow")}</td><td class="st-v" data-st-fcf>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="stats-col">
+            <table class="stats-table">
+              <tbody>
+                <tr><td class="st-k">{t(lang, "stock.profitMargin")}</td><td class="st-v" data-st-pm>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.opMargin")}</td><td class="st-v" data-st-om>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.grossMargin")}</td><td class="st-v" data-st-gm>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.ebitdaMargin")}</td><td class="st-v" data-st-em>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.totalCash")}</td><td class="st-v" data-st-cash>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.totalDebt")}</td><td class="st-v" data-st-debt>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.debtEquity")}</td><td class="st-v" data-st-de>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Balance Sheet Ratios -->
+      <section class="detail-section" data-balance-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.balanceSheet")}</h2>
+        <div class="stats-grid">
+          <div class="stats-col">
+            <table class="stats-table">
+              <tbody>
+                <tr><td class="st-k">{t(lang, "stock.currentRatio")}</td><td class="st-v" data-st-cr>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.quickRatio")}</td><td class="st-v" data-st-qr>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.cashShare")}</td><td class="st-v" data-st-cashps>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="stats-col">
+            <table class="stats-table">
+              <tbody>
+                <tr><td class="st-k">{t(lang, "stock.insiderOwn")}</td><td class="st-v" data-st-insiders>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.instOwn")}</td><td class="st-v" data-st-inst>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.floatShares")}</td><td class="st-v" data-st-float>&mdash;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analyst Recommendations -->
+      <section class="detail-section" data-analyst-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.analystRatings")}</h2>
+        <div class="analyst-card">
+          <div class="analyst-main">
+            <div class="analyst-rec" data-analyst-rec>&mdash;</div>
+            <div class="analyst-meta">
+              <span class="analyst-label">{t(lang, "stock.recommendation")}</span>
+              <span class="analyst-count" data-analyst-count></span>
+            </div>
+          </div>
+          <div class="analyst-targets">
+            <div class="at-item">
+              <span class="at-k">{t(lang, "stock.targetLow")}</span>
+              <span class="at-v" data-at-low>&mdash;</span>
+            </div>
+            <div class="at-item at-item--mean">
+              <span class="at-k">{t(lang, "stock.targetMean")}</span>
+              <span class="at-v" data-at-mean>&mdash;</span>
+            </div>
+            <div class="at-item">
+              <span class="at-k">{t(lang, "stock.targetHigh")}</span>
+              <span class="at-v" data-at-high>&mdash;</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Company Profile -->
+      <section class="detail-section" data-company-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.companyProfile")}</h2>
+        <div class="company-card">
+          <div class="company-meta">
+            <div class="cm-item" data-cm-sector style="display:none;">
+              <span class="cm-k">{t(lang, "stock.sector")}</span>
+              <span class="cm-v" data-cm-sector-v></span>
+            </div>
+            <div class="cm-item" data-cm-industry style="display:none;">
+              <span class="cm-k">{t(lang, "stock.industry")}</span>
+              <span class="cm-v" data-cm-industry-v></span>
+            </div>
+            <div class="cm-item" data-cm-employees style="display:none;">
+              <span class="cm-k">{t(lang, "stock.employees")}</span>
+              <span class="cm-v" data-cm-employees-v></span>
+            </div>
+            <div class="cm-item" data-cm-location style="display:none;">
+              <span class="cm-k">{t(lang, "stock.location")}</span>
+              <span class="cm-v" data-cm-location-v></span>
+            </div>
+            <div class="cm-item" data-cm-website style="display:none;">
+              <span class="cm-k">{t(lang, "stock.website")}</span>
+              <a class="cm-link" data-cm-website-v href="#" target="_blank" rel="noopener"></a>
+            </div>
+            <div class="cm-item" data-cm-phone style="display:none;">
+              <span class="cm-k">{t(lang, "stock.phone")}</span>
+              <span class="cm-v" data-cm-phone-v></span>
+            </div>
+            <div class="cm-item" data-cm-founded style="display:none;">
+              <span class="cm-k">{t(lang, "stock.founded")}</span>
+              <span class="cm-v" data-cm-founded-v></span>
+            </div>
+          </div>
+          <!-- About the Company (full description) -->
+          <div class="company-about" data-cm-about style="display:none;">
+            <h3 class="company-about-title" data-cm-about-title>{t(lang, "stock.about")}</h3>
+            <p class="company-about-text" data-cm-about-text></p>
+          </div>
+        </div>
+      </section>
+
+      <a href={`/${lang}/markets/merval`} class="back-link">&larr; {t(lang, "stock.backToMerval")}</a>
+    </div>
+
+    <p class="info-disclaimer">{t(lang, "stock.disclaimer")}</p>
+  </div>
+</Base>
+
+<script is:inline src="/js/charts.js"></script>
+<script is:inline>
+(function() {
+  var C = window.PlataCharts;
+  var page = document.querySelector('[data-stock-page]');
+  var lang = page.getAttribute('data-lang') || 'en';
+  var i18n = {};
+  try { i18n = JSON.parse(page.getAttribute('data-i18n') || '{}'); } catch(e) {}
+
+  function setEl(sel, text) {
+    var el = document.querySelector(sel);
+    if (el) el.textContent = text;
+  }
+
+  function showEl(sel) {
+    var el = document.querySelector(sel);
+    if (el) el.style.display = '';
+  }
+
+  // Format large numbers (1.2B, 345M, etc.)
+  function fmtBig(n) {
+    if (n == null) return '—';
+    if (Math.abs(n) >= 1e12) return (n / 1e12).toFixed(2) + 'T';
+    if (Math.abs(n) >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+    if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+    return n.toLocaleString();
+  }
+
+  function fmtPct(n) {
+    if (n == null) return '—';
+    return (n * 100).toFixed(2) + '%';
+  }
+
+  function fmtNum(n, dec) {
+    if (n == null) return '—';
+    return n.toFixed(dec != null ? dec : 2);
+  }
+
+  // Read symbol from URL
+  var params = new URLSearchParams(window.location.search);
+  var symbol = (params.get('s') || '').trim().toUpperCase();
+
+  if (!symbol) {
+    document.querySelector('[data-stock-empty]').style.display = 'block';
+    return;
+  }
+
+  document.querySelector('[data-stock-content]').style.display = 'block';
+  setEl('[data-stock-symbol]', symbol);
+
+  // Update breadcrumb
+  var breadcrumbs = document.querySelectorAll('.breadcrumb-link, [data-breadcrumbs] a');
+  var lastCrumb = breadcrumbs[breadcrumbs.length - 1];
+  if (lastCrumb) lastCrumb.textContent = symbol;
+
+  document.title = symbol + ' — ' + (i18n.pageTitle || 'Argentine Markets') + ' | Plata';
+
+  var currentChart = null;
+
+  // ── Load price & chart data ──
+  function loadStock(range, interval) {
+    var url = '/api/stock/' + encodeURIComponent(symbol) + '?range=' + range + '&interval=' + interval;
+
+    fetch(url).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.error) {
+        setEl('[data-stock-name]', 'Error: ' + data.error);
+        return;
+      }
+
+      setEl('[data-mkts-updated]', (i18n.updated || 'Updated') + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+      setEl('[data-stock-name]', data.name || symbol);
+      if (data.currency) setEl('[data-stock-currency]', data.currency);
+
+      if (data.price) {
+        setEl('[data-stock-price]', C.fmt(data.price));
+        var pct = data.variation != null ? data.variation * 100 : null;
+        var chEl = document.querySelector('[data-stock-change]');
+        if (chEl && pct != null) {
+          chEl.textContent = C.pctText(pct);
+          chEl.className = 'pc-change ' + (pct >= 0 ? 'rc-up' : 'rc-down');
+        }
+      }
+
+      if (data.previousClose) setEl('[data-stock-prev]', C.fmt(data.previousClose));
+
+      if (data.opens && data.opens.length > 0) {
+        var last = data.opens.length - 1;
+        if (data.opens[last] != null) setEl('[data-stock-open]', C.fmt(data.opens[last]));
+        if (data.highs && data.highs[last] != null) setEl('[data-stock-high]', C.fmt(data.highs[last]));
+        if (data.lows && data.lows[last] != null) setEl('[data-stock-low]', C.fmt(data.lows[last]));
+      }
+
+      if (data.timestamps && data.closes) {
+        currentChart = data;
+        var points = C.yahooToPoints(data.timestamps, data.closes);
+        C.drawChart(document.querySelector('[data-stock-chart]'), [
+          { points: points, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)' }
+        ]);
+      }
+    }).catch(function() {
+      setEl('[data-stock-name]', 'Failed to load data');
+    });
+  }
+
+  // ── Load company profile data ──
+  function loadProfile() {
+    fetch('/api/stock-profile/' + encodeURIComponent(symbol))
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.error) return;
+
+        var s = d.stats || {};
+        var det = d.detail || {};
+        var fin = d.financials || {};
+        var co = d.company || {};
+
+        // ── Key Statistics ──
+        var hasStats = s.marketCap || s.trailingPE || s.eps || s.beta;
+        if (hasStats) {
+          showEl('[data-profile-section]');
+          setEl('[data-st-mcap]', fmtBig(s.marketCap));
+          setEl('[data-st-ev]', fmtBig(s.enterpriseValue));
+          setEl('[data-st-tpe]', fmtNum(s.trailingPE));
+          setEl('[data-st-fpe]', fmtNum(s.forwardPE));
+          setEl('[data-st-peg]', fmtNum(s.pegRatio));
+          setEl('[data-st-pb]', fmtNum(s.priceToBook));
+          setEl('[data-st-ps]', fmtNum(s.priceToSales));
+          setEl('[data-st-evr]', fmtNum(s.enterpriseToRevenue));
+          setEl('[data-st-eve]', fmtNum(s.enterpriseToEbitda));
+          setEl('[data-st-eps]', fmtNum(s.eps));
+          setEl('[data-st-feps]', fmtNum(s.forwardEps));
+          setEl('[data-st-beta]', fmtNum(s.beta));
+          setEl('[data-st-shares]', fmtBig(s.sharesOutstanding));
+          setEl('[data-st-bv]', fmtNum(s.bookValue));
+
+          // 52-week range
+          if (det.fiftyTwoWeekLow != null && det.fiftyTwoWeekHigh != null) {
+            setEl('[data-st-52w]', C.fmt(det.fiftyTwoWeekLow) + ' – ' + C.fmt(det.fiftyTwoWeekHigh));
+          }
+          setEl('[data-st-50d]', det.fiftyDayAverage != null ? C.fmt(det.fiftyDayAverage) : '—');
+          setEl('[data-st-200d]', det.twoHundredDayAverage != null ? C.fmt(det.twoHundredDayAverage) : '—');
+          setEl('[data-st-avgvol]', fmtBig(det.averageVolume));
+        }
+
+        // ── Dividends & Returns ──
+        var hasDiv = det.dividendYield || fin.returnOnEquity || fin.earningsGrowth;
+        if (hasDiv) {
+          showEl('[data-dividends-section]');
+          setEl('[data-st-divrate]', det.dividendRate != null ? fmtNum(det.dividendRate) : '—');
+          setEl('[data-st-divyield]', fmtPct(det.dividendYield));
+          setEl('[data-st-exdiv]', det.exDividendDate || '—');
+          setEl('[data-st-payout]', fmtPct(det.payoutRatio));
+          setEl('[data-st-roa]', fmtPct(fin.returnOnAssets));
+          setEl('[data-st-roe]', fmtPct(fin.returnOnEquity));
+          setEl('[data-st-earngr]', fmtPct(fin.earningsGrowth));
+          setEl('[data-st-revgr]', fmtPct(fin.revenueGrowth));
+        }
+
+        // ── Financial Highlights ──
+        var hasFin = fin.totalRevenue || fin.profitMargins || fin.ebitda;
+        if (hasFin) {
+          showEl('[data-financials-section]');
+          setEl('[data-st-rev]', fmtBig(fin.totalRevenue));
+          setEl('[data-st-revps]', fmtNum(fin.revenuePerShare));
+          setEl('[data-st-gp]', fmtBig(fin.grossProfits));
+          setEl('[data-st-ebitda]', fmtBig(fin.ebitda));
+          setEl('[data-st-ni]', fmtBig(fin.netIncomeToCommon));
+          setEl('[data-st-opcf]', fmtBig(fin.operatingCashflow));
+          setEl('[data-st-fcf]', fmtBig(fin.freeCashflow));
+          setEl('[data-st-pm]', fmtPct(fin.profitMargins));
+          setEl('[data-st-om]', fmtPct(fin.operatingMargins));
+          setEl('[data-st-gm]', fmtPct(fin.grossMargins));
+          setEl('[data-st-em]', fmtPct(fin.ebitdaMargins));
+          setEl('[data-st-cash]', fmtBig(fin.totalCash));
+          setEl('[data-st-debt]', fmtBig(fin.totalDebt));
+          setEl('[data-st-de]', fmtNum(fin.debtToEquity));
+        }
+
+        // ── Balance Sheet & Ownership ──
+        var hasBal = fin.currentRatio || s.heldPercentInsiders || s.floatShares;
+        if (hasBal) {
+          showEl('[data-balance-section]');
+          setEl('[data-st-cr]', fmtNum(fin.currentRatio));
+          setEl('[data-st-qr]', fmtNum(fin.quickRatio));
+          setEl('[data-st-cashps]', fmtNum(fin.totalCashPerShare));
+          setEl('[data-st-insiders]', fmtPct(s.heldPercentInsiders));
+          setEl('[data-st-inst]', fmtPct(s.heldPercentInstitutions));
+          setEl('[data-st-float]', fmtBig(s.floatShares));
+        }
+
+        // ── Analyst Recommendations ──
+        if (fin.recommendationKey || fin.targetMeanPrice) {
+          showEl('[data-analyst-section]');
+          var rec = (fin.recommendationKey || '').replace(/_/g, ' ');
+          if (rec) {
+            setEl('[data-analyst-rec]', rec.charAt(0).toUpperCase() + rec.slice(1));
+            var recEl = document.querySelector('[data-analyst-rec]');
+            if (recEl) {
+              var rk = (fin.recommendationKey || '').toLowerCase();
+              if (rk === 'buy' || rk === 'strong_buy') recEl.classList.add('rec-buy');
+              else if (rk === 'sell' || rk === 'strong_sell') recEl.classList.add('rec-sell');
+              else recEl.classList.add('rec-hold');
+            }
+          }
+          if (fin.numberOfAnalystOpinions) {
+            var aWord = fin.numberOfAnalystOpinions !== 1 ? (i18n.analysts || 'analysts') : (i18n.analyst || 'analyst');
+            setEl('[data-analyst-count]', fin.numberOfAnalystOpinions + ' ' + aWord);
+          }
+          setEl('[data-at-low]', fin.targetLowPrice != null ? C.fmt(fin.targetLowPrice) : '—');
+          setEl('[data-at-mean]', fin.targetMeanPrice != null ? C.fmt(fin.targetMeanPrice) : '—');
+          setEl('[data-at-high]', fin.targetHighPrice != null ? C.fmt(fin.targetHighPrice) : '—');
+        }
+
+        // ── Company Profile ──
+        var hasCo = co.sector || co.industry || co.description || co.website;
+        if (hasCo) {
+          showEl('[data-company-section]');
+
+          if (co.sector) {
+            showEl('[data-cm-sector]');
+            setEl('[data-cm-sector-v]', co.sector);
+          }
+          if (co.industry) {
+            showEl('[data-cm-industry]');
+            setEl('[data-cm-industry-v]', co.industry);
+          }
+          if (co.fullTimeEmployees) {
+            showEl('[data-cm-employees]');
+            setEl('[data-cm-employees-v]', co.fullTimeEmployees.toLocaleString());
+          }
+          if (co.city || co.country) {
+            showEl('[data-cm-location]');
+            setEl('[data-cm-location-v]', [co.city, co.country].filter(Boolean).join(', '));
+          }
+          if (co.website) {
+            showEl('[data-cm-website]');
+            var wLink = document.querySelector('[data-cm-website-v]');
+            if (wLink) {
+              wLink.href = co.website;
+              wLink.textContent = co.website.replace(/^https?:\/\//, '').replace(/\/$/, '');
+            }
+          }
+          if (co.phone) {
+            showEl('[data-cm-phone]');
+            setEl('[data-cm-phone-v]', co.phone);
+          }
+          if (co.description) {
+            showEl('[data-cm-about]');
+            setEl('[data-cm-about-text]', co.description);
+          }
+
+          // Update company name in header if profile has better name
+          if (co.name && co.name !== symbol) {
+            setEl('[data-stock-name]', co.name);
+          }
+        }
+      })
+      .catch(function() {
+        // Silently fail — profile is supplementary
+      });
+  }
+
+  // Initial load — chart + profile in parallel
+  loadStock('1mo', '1d');
+  loadProfile();
+
+  // Range selector
+  document.querySelectorAll('[data-range-buttons] button').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('[data-range-buttons] button').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      loadStock(btn.getAttribute('data-range'), btn.getAttribute('data-interval'));
+    });
+  });
+
+  // Resize
+  var rTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(rTimer);
+    rTimer = setTimeout(function() {
+      if (!currentChart) return;
+      var points = C.yahooToPoints(currentChart.timestamps, currentChart.closes);
+      C.drawChart(document.querySelector('[data-stock-chart]'), [
+        { points: points, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)' }
+      ]);
+    }, 200);
+  });
+})();
+</script>
+
+<style>
+  .mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
+  .mkts-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1.1; }
+  .mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
+  .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
+
+  .stock-title-row { display: flex; align-items: center; gap: var(--spacing-sm); }
+
+  /* Empty state */
+  .stock-empty { text-align: center; padding: var(--spacing-2xl) 0; }
+  .stock-empty-msg { font-size: 1rem; color: var(--color-text-meta); margin: var(--spacing-md) 0 var(--spacing-xl); }
+
+  /* Price Card */
+  .price-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+  .pc-main { display: flex; align-items: baseline; gap: 12px; margin-bottom: var(--spacing-lg); }
+  .pc-price { font-size: 2.4rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; }
+  .pc-change { font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pc-currency { font-size: 0.85rem; color: var(--color-text-meta); font-weight: 600; }
+  .pc-stats { display: flex; gap: var(--spacing-xl); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); flex-wrap: wrap; }
+  .pc-stat { display: flex; flex-direction: column; gap: 2px; }
+  .pc-sk { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .pc-sv { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+
+  .rc-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; }
+  .rc-badge--merval { background: rgba(96,165,250,0.15); color: #3b82f6; }
+  .rc-up { color: #16a34a; }
+  .rc-down { color: #dc2626; }
+
+  /* Chart */
+  .chart-section { margin-bottom: var(--spacing-2xl); }
+  .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md); flex-wrap: wrap; gap: var(--spacing-sm); }
+  .section-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; }
+  .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-md); }
+  .chart-wrap canvas { width: 100%; display: block; }
+
+  /* Range Buttons */
+  .range-buttons { display: flex; gap: 4px; }
+  .range-buttons button {
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+    color: var(--color-text-meta);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .range-buttons button:hover { border-color: var(--color-gold); color: var(--color-text); }
+  .range-buttons button.active { background: var(--color-celeste); color: #fff; border-color: var(--color-celeste); }
+
+  /* ─── Detail Sections ─── */
+  .detail-section { margin-bottom: var(--spacing-2xl); }
+  .detail-section .section-title { margin-bottom: var(--spacing-lg); }
+
+  /* Stats Grid (2 columns) */
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); }
+  .stats-col { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
+
+  .stats-table { width: 100%; border-collapse: collapse; }
+  .stats-table tr { border-bottom: 1px solid var(--color-border); }
+  .stats-table tr:last-child { border-bottom: none; }
+  .stats-table td { padding: 10px 14px; font-size: 0.85rem; }
+  .st-k { color: var(--color-text-meta); font-weight: 500; white-space: nowrap; }
+  .st-v { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); white-space: nowrap; }
+
+  /* ─── Analyst Card ─── */
+  .analyst-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); }
+  .analyst-main { display: flex; align-items: center; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
+  .analyst-rec {
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 8px 20px;
+    border-radius: 6px;
+    background: var(--color-bg);
+  }
+  .rec-buy { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .rec-sell { background: rgba(220,38,38,0.12); color: #dc2626; }
+  .rec-hold { background: rgba(234,179,8,0.12); color: #ca8a04; }
+  .analyst-meta { display: flex; flex-direction: column; gap: 2px; }
+  .analyst-label { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em; }
+  .analyst-count { font-size: 0.85rem; color: var(--color-text-secondary); }
+
+  .analyst-targets { display: flex; gap: var(--spacing-xl); }
+  .at-item { display: flex; flex-direction: column; gap: 2px; }
+  .at-item--mean { }
+  .at-k { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em; }
+  .at-v { font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+
+  /* ─── Company Profile ─── */
+  .company-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
+  .company-meta { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0; }
+  .cm-item { padding: 12px 16px; border-bottom: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 2px; }
+  .cm-k { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em; }
+  .cm-v { font-size: 0.9rem; font-weight: 600; color: var(--color-text); }
+  .cm-link { font-size: 0.9rem; font-weight: 600; color: var(--color-accent); text-decoration: none; }
+  .cm-link:hover { text-decoration: underline; }
+
+  .company-about { padding: 20px; border-top: 1px solid var(--color-border); }
+  .company-about-title { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: var(--color-text); }
+  .company-about-text { font-size: 0.85rem; line-height: 1.8; color: var(--color-text-secondary); }
+
+  /* Back link */
+  .back-link { display: inline-block; font-size: 0.9rem; font-weight: 600; color: var(--color-accent); text-decoration: none; margin-bottom: var(--spacing-2xl); }
+  .back-link:hover { text-decoration: underline; }
+
+  .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
+
+  :global([data-theme="dark"]) .rc-badge--merval { color: #60a5fa; }
+  :global([data-theme="dark"]) .rec-buy { background: rgba(22,163,74,0.18); }
+  :global([data-theme="dark"]) .rec-sell { background: rgba(220,38,38,0.18); }
+  :global([data-theme="dark"]) .rec-hold { background: rgba(234,179,8,0.18); }
+
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .analyst-targets { flex-wrap: wrap; gap: var(--spacing-md); }
+    .company-meta { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .mkts-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .mkts-title { font-size: 1.5rem; }
+    .pc-price { font-size: 1.8rem; }
+    .pc-stats { gap: var(--spacing-md); }
+    .range-buttons button { padding: 6px 10px; font-size: 0.7rem; }
+    .section-title { font-size: 1.1rem; }
+    .stats-table td { padding: 8px 10px; font-size: 0.8rem; }
+    .analyst-main { flex-direction: column; align-items: flex-start; gap: var(--spacing-sm); }
+    .analyst-rec { font-size: 1rem; padding: 6px 14px; }
+    .company-meta { grid-template-columns: 1fr; }
+  }
+</style>

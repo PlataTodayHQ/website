@@ -23,5 +23,14 @@ dist/
 .DS_Store
 Thumbs.db
 
+# SQLite
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Downloaded images
+apps/web/public/images/news/
+
 # Logs
 *.log

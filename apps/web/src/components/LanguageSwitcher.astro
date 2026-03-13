@@ -1,5 +1,6 @@
 ---
 import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
 
 interface Props {
   lang: string;
@@ -10,19 +11,29 @@ const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
 ---
 
 <div class="lang-switcher">
-  <button class="lang-btn" aria-label="Select language">
+  <button
+    class="lang-btn"
+    data-lang-trigger
+    aria-label={t(lang, "langSwitch.label").replace("{lang}", currentLang?.nativeName ?? lang)}
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    <span class="lang-flag" aria-hidden="true">{currentLang?.flag}</span>
     <span class="lang-code">{lang.toUpperCase()}</span>
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
       <path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
-  <div class="lang-dropdown">
+  <div class="lang-dropdown" role="menu" aria-label={t(lang, "langSwitch.selectLanguage")}>
     {Object.entries(LANGUAGES).map(([code, info]) => (
       <a
         href={`/${code}/`}
         class:list={["lang-option", { active: code === lang }]}
+        role="menuitem"
+        lang={code}
+        aria-current={code === lang ? "true" : undefined}
       >
-        <span class="lang-option-code">{code.toUpperCase()}</span>
+        <span class="lang-flag" aria-hidden="true">{info.flag}</span>
         <span class="lang-option-name">{info.nativeName}</span>
       </a>
     ))}
@@ -36,7 +47,7 @@ const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
 
   .lang-btn {
     background: none;
-    border: 1px solid #555;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
@@ -58,7 +69,7 @@ const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
     top: 100%;
     right: 0;
     margin-top: 4px;
-    background: #fff;
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 4px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -93,10 +104,26 @@ const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
     background: var(--color-bg-secondary);
   }
 
-  .lang-option-code {
-    font-weight: 700;
-    font-size: 0.75rem;
-    color: var(--color-text-meta);
-    min-width: 24px;
+  .lang-flag {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .lang-btn .lang-flag {
+    font-size: 1rem;
+  }
+
+  /* Hide hover dropdown on mobile — full-screen overlay replaces it */
+  @media (max-width: 768px) {
+    .lang-switcher:hover .lang-dropdown,
+    .lang-switcher:focus-within .lang-dropdown {
+      display: none;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .lang-dropdown {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
   }
 </style>

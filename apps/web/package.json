@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "astro": "^5.7.0",
-    "@astrojs/cloudflare": "^12.5.0",
+    "better-sqlite3": "^11.0.0",
     "@plata-today/shared": "*"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
     "typescript": "^5.8.0"
   }
 }

@@ -1,0 +1,127 @@
+---
+import { t } from "@/i18n";
+
+interface TrendingItem {
+  title: string;
+  href: string;
+  category?: string;
+  timeAgo?: string;
+}
+
+interface Props {
+  items: TrendingItem[];
+  lang?: string;
+}
+
+const { items, lang = "en" } = Astro.props;
+---
+
+<section class="trending" aria-label={t(lang, "trending.ariaLabel")}>
+  <div class="trending-header">
+    <h2 class="trending-title">{t(lang, "trending.title")}</h2>
+  </div>
+  <ol class="trending-list">
+    {items.map((item, i) => (
+      <li class="trending-item">
+        <span class="trending-number" aria-hidden="true">{i + 1}</span>
+        <div class="trending-body">
+          <a href={item.href} class="trending-link">
+            <h3 class="trending-headline">{item.title}</h3>
+          </a>
+          <div class="trending-meta">
+            {item.category && <span class="trending-cat">{item.category}</span>}
+            {item.timeAgo && <span class="trending-time">{item.timeAgo}</span>}
+          </div>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .trending {
+    margin-bottom: var(--spacing-2xl);
+    border-top: 3px solid var(--color-gold);
+    padding-top: 12px;
+  }
+
+  .trending-title {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .trending-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .trending-item {
+    display: flex;
+    align-items: start;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .trending-item:last-child { border-bottom: none; }
+
+  .trending-number {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-gold);
+    line-height: 1;
+    min-width: 36px;
+    flex-shrink: 0;
+  }
+
+  .trending-link { color: var(--color-text); }
+  .trending-link:hover { text-decoration: none; }
+  .trending-link:hover .trending-headline { text-decoration: underline; }
+
+  .trending-headline {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+
+  .trending-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+  }
+
+  .trending-cat {
+    color: var(--color-gold-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (min-width: 1025px) {
+    .trending-list {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .trending-item {
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 16px;
+      border-bottom: none;
+      border-right: 1px solid var(--color-border);
+    }
+    .trending-item:first-child { padding-left: 0; }
+    .trending-item:last-child { border-right: none; padding-right: 0; }
+    .trending-number { font-size: 2.5rem; }
+  }
+</style>

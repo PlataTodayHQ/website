@@ -1,0 +1,202 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title="Markets — Exchange Rates & Merval"
+  description="Live Argentine exchange rates: USD Official, USD Blue (informal), and Merval stock index. Charts, spreads, and key market data."
+  lang={lang}
+  ogType="website"
+  breadcrumbs={[
+    { name: "Home", url: `/${lang}/` },
+    { name: "Markets", url: `/${lang}/markets` },
+  ]}
+>
+  <div class="markets-hub">
+    <header class="hub-header">
+      <h1 class="hub-title">Markets</h1>
+      <p class="hub-subtitle">Argentine financial markets at a glance</p>
+    </header>
+
+    <div class="hub-cards">
+      <a href={`/${lang}/markets/currencies`} class="hub-card">
+        <div class="hub-card-icon">💱</div>
+        <div class="hub-card-body">
+          <h2>Exchange Rates</h2>
+          <p>USD Official & Blue dollar rates, spread analysis, and 30-day evolution chart</p>
+        </div>
+        <div class="hub-card-preview" data-preview-fx>
+          <div class="hub-mini">
+            <span class="hub-mini-label">Official</span>
+            <span class="hub-mini-value" data-hub-official>—</span>
+          </div>
+          <div class="hub-mini">
+            <span class="hub-mini-label">Blue</span>
+            <span class="hub-mini-value" data-hub-blue>—</span>
+          </div>
+          <div class="hub-mini">
+            <span class="hub-mini-label">Spread</span>
+            <span class="hub-mini-value hub-mini-spread" data-hub-spread>—</span>
+          </div>
+        </div>
+        <span class="hub-card-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a href={`/${lang}/markets/merval`} class="hub-card">
+        <div class="hub-card-icon">📈</div>
+        <div class="hub-card-body">
+          <h2>Merval Index</h2>
+          <p>Buenos Aires stock exchange index, constituent stocks with prices, and daily performance</p>
+        </div>
+        <div class="hub-card-preview" data-preview-merval>
+          <div class="hub-mini">
+            <span class="hub-mini-label">Merval</span>
+            <span class="hub-mini-value" data-hub-merval>—</span>
+          </div>
+          <div class="hub-mini">
+            <span class="hub-mini-label">Change</span>
+            <span class="hub-mini-value" data-hub-merval-chg>—</span>
+          </div>
+        </div>
+        <span class="hub-card-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <p class="hub-disclaimer">Data from Bluelytics and BYMA. For informational purposes only — not financial advice.</p>
+  </div>
+</Base>
+
+<script is:inline>
+(function() {
+  var C = window.PlataCharts || {};
+  var fmt = C.fmt || function(n) { return Math.round(n).toLocaleString('es-AR'); };
+  var fmtM = C.fmtM || function(v) { return v >= 1e6 ? (v/1e6).toFixed(2)+'M' : Math.round(v).toLocaleString('es-AR'); };
+
+  function setEl(sel, text) {
+    var el = document.querySelector(sel);
+    if (el) el.textContent = text;
+  }
+
+  // Fetch dollar rates for preview
+  fetch('https://api.bluelytics.com.ar/v2/latest')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.oficial) {
+        setEl('[data-hub-official]', 'ARS ' + fmt(d.oficial.value_sell));
+        setEl('[data-hub-blue]', 'ARS ' + fmt(d.blue.value_sell));
+        var spread = d.blue.value_sell - d.oficial.value_sell;
+        var gap = d.oficial.value_sell > 0 ? (spread / d.oficial.value_sell * 100).toFixed(1) : '0';
+        setEl('[data-hub-spread]', gap + '%');
+      }
+    }).catch(function() {});
+
+  // Fetch Merval for preview (try direct BYMA, fallback to proxy)
+  function loadMerval(data) {
+    if (data && data.price) {
+      setEl('[data-hub-merval]', fmtM(data.price));
+      var pct = data.variation != null ? data.variation * 100 : null;
+      if (pct == null && data.previousClose > 0) {
+        pct = ((data.price - data.previousClose) / data.previousClose) * 100;
+      }
+      if (pct != null) {
+        var el = document.querySelector('[data-hub-merval-chg]');
+        if (el) {
+          el.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+          el.classList.add(pct >= 0 ? 'rc-up' : 'rc-down');
+        }
+      }
+    }
+  }
+
+  // Try BYMA direct first
+  fetch('https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: '{}'
+  }).then(function(r) { return r.json(); })
+    .then(function(d) {
+      var arr = (d && d.data) || d || [];
+      if (!Array.isArray(arr)) return Promise.reject('bad');
+      var m = null;
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].symbol === 'M') { m = arr[i]; break; }
+      }
+      if (!m) return Promise.reject('not found');
+      loadMerval({ price: m.price, previousClose: m.previousClosingPrice, variation: m.variation });
+    })
+    .catch(function() {
+      // Fallback to proxy
+      fetch('/api/merval').then(function(r) { return r.json(); }).then(loadMerval).catch(function() {});
+    });
+})();
+</script>
+
+<style>
+  .markets-hub { max-width: 700px; margin: 0 auto; }
+
+  .hub-header { text-align: center; margin-bottom: var(--spacing-2xl); padding-bottom: var(--spacing-lg); border-bottom: 2px solid var(--color-border-section); }
+  .hub-title { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; line-height: 1.1; }
+  .hub-subtitle { font-size: 0.9rem; color: var(--color-text-meta); margin-top: 6px; }
+
+  .hub-cards { display: flex; flex-direction: column; gap: var(--spacing-lg); margin-bottom: var(--spacing-2xl); }
+
+  .hub-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-xl);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+  .hub-card:hover {
+    border-color: var(--color-gold);
+    box-shadow: 0 4px 20px rgba(246,180,14,0.12);
+    transform: translateY(-2px);
+  }
+
+  .hub-card-icon { font-size: 2.4rem; flex-shrink: 0; }
+
+  .hub-card-body { flex: 1; min-width: 0; }
+  .hub-card-body h2 { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; color: var(--color-text); }
+  .hub-card-body p { font-size: 0.82rem; color: var(--color-text-meta); line-height: 1.4; }
+
+  .hub-card-preview {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-shrink: 0;
+    padding-left: var(--spacing-md);
+    border-left: 1px solid var(--color-border);
+  }
+
+  .hub-mini { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .hub-mini-label { font-size: 0.6rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .hub-mini-value { font-size: 0.9rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); white-space: nowrap; }
+  .hub-mini-spread { color: var(--color-gold); }
+
+  .rc-up { color: #16a34a; }
+  .rc-down { color: #dc2626; }
+
+  .hub-card-arrow { font-size: 1.4rem; color: var(--color-gold); flex-shrink: 0; font-weight: 700; margin-left: var(--spacing-sm); }
+
+  .hub-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
+
+  @media (max-width: 640px) {
+    .hub-title { font-size: 1.6rem; }
+    .hub-card { flex-wrap: wrap; gap: var(--spacing-md); padding: var(--spacing-lg); }
+    .hub-card-icon { font-size: 2rem; }
+    .hub-card-body h2 { font-size: 1.1rem; }
+    .hub-card-preview { border-left: none; border-top: 1px solid var(--color-border); padding-left: 0; padding-top: var(--spacing-sm); width: 100%; justify-content: space-around; }
+    .hub-card-arrow { display: none; }
+  }
+</style>

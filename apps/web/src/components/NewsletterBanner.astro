@@ -1,0 +1,147 @@
+---
+import { t } from "@/i18n";
+
+interface Props {
+  lang?: string;
+}
+const { lang = "en" } = Astro.props;
+---
+
+<section class="newsletter-banner" aria-label={t(lang, "newsletter.ariaLabel")}>
+  <div class="newsletter-inner">
+    <div class="newsletter-text">
+      <h2 class="newsletter-title">{t(lang, "newsletter.title")}</h2>
+      <p class="newsletter-desc">{t(lang, "newsletter.desc")}</p>
+    </div>
+    <form class="newsletter-form" data-newsletter-form aria-label={t(lang, "newsletter.ariaLabel")}>
+      <div class="newsletter-input-group">
+        <label for="newsletter-email" class="sr-only">{t(lang, "newsletter.emailLabel")}</label>
+        <input
+          type="email"
+          id="newsletter-email"
+          class="newsletter-input"
+          placeholder={t(lang, "newsletter.placeholder")}
+          required
+          autocomplete="email"
+        />
+        <button type="submit" class="newsletter-submit">{t(lang, "newsletter.subscribe")}</button>
+      </div>
+      <p class="newsletter-hint">{t(lang, "newsletter.hint")}</p>
+      <p class="newsletter-success" hidden>{t(lang, "newsletter.success")}</p>
+    </form>
+  </div>
+</section>
+
+<script is:inline>
+(function() {
+  document.querySelectorAll('[data-newsletter-form]').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var input = form.querySelector('.newsletter-input');
+      var group = form.querySelector('.newsletter-input-group');
+      var hint = form.querySelector('.newsletter-hint');
+      var success = form.querySelector('.newsletter-success');
+      if (group) group.hidden = true;
+      if (hint) hint.hidden = true;
+      if (success) success.hidden = false;
+      if (input) input.value = '';
+    });
+  });
+})();
+</script>
+
+<style>
+  .newsletter-banner {
+    background: var(--color-celeste);
+    color: #fff;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    margin: var(--spacing-2xl) calc(-1 * var(--spacing-lg));
+  }
+
+  .newsletter-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-xl);
+  }
+
+  .newsletter-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #fff;
+  }
+
+  .newsletter-desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .newsletter-input-group {
+    display: flex;
+    gap: 0;
+  }
+
+  .newsletter-input {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    min-width: 240px;
+    outline: none;
+  }
+
+  .newsletter-input::placeholder { color: rgba(255, 255, 255, 0.5); }
+  .newsletter-input:focus { border-color: var(--color-gold); }
+
+  .newsletter-submit {
+    padding: 12px 24px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    background: var(--color-gold);
+    color: var(--color-celeste-dark);
+    border: 2px solid var(--color-gold);
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .newsletter-submit:hover {
+    background: var(--color-gold-dark);
+    border-color: var(--color-gold-dark);
+  }
+
+  .newsletter-hint {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 6px;
+  }
+
+  .newsletter-success {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    margin-top: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .newsletter-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+    .newsletter-input { min-width: 0; flex: 1; }
+    .newsletter-input-group { width: 100%; }
+    .newsletter-banner {
+      margin: var(--spacing-2xl) calc(-1 * var(--spacing-md));
+      padding: var(--spacing-xl) var(--spacing-md);
+    }
+  }
+</style>

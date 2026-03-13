@@ -1,0 +1,120 @@
+---
+import { t } from "@/i18n";
+
+interface Props {
+  headline: string;
+  href?: string;
+  isLive?: boolean;
+  lang?: string;
+}
+const { headline, href, isLive = false, lang = "en" } = Astro.props;
+---
+
+<div class="breaking-bar" id="breaking-news" role="alert" aria-live="polite">
+  <div class="breaking-inner">
+    <div class="breaking-content">
+      {isLive && <span class="breaking-live" aria-label="Live"><span class="live-dot"></span>{t(lang, "breaking.live")}</span>}
+      <span class="breaking-label">{t(lang, "breaking.label")}</span>
+      {href ? (
+        <a href={href} class="breaking-headline">{headline}</a>
+      ) : (
+        <span class="breaking-headline">{headline}</span>
+      )}
+    </div>
+    <button class="breaking-dismiss" aria-label={t(lang, "breaking.dismiss")} data-dismiss-breaking>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .breaking-bar {
+    background: #b91c1c;
+    color: #fff;
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+
+  .breaking-bar[hidden] { display: none; }
+
+  .breaking-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-lg);
+    height: 36px;
+    gap: 12px;
+  }
+
+  .breaking-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .breaking-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .breaking-label {
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .breaking-headline {
+    color: #fff;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  a.breaking-headline:hover {
+    text-decoration: underline;
+    color: #fff;
+  }
+
+  .breaking-dismiss {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .breaking-dismiss:hover { color: #fff; }
+
+  @media (max-width: 768px) {
+    .breaking-inner { padding: 0 var(--spacing-md); }
+  }
+</style>

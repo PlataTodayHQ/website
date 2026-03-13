@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
 
 export function getStaticPaths() {
   return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
@@ -9,41 +10,136 @@ export function getStaticPaths() {
 const { lang } = Astro.params;
 ---
 
-<Base title="About" lang={lang}>
+<Base
+  title={t(lang!, "about.title")}
+  description={t(lang!, "about.description")}
+  lang={lang}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "about.title"), url: `/${lang}/about` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": t(lang!, "about.title"),
+    "url": `https://plata.today/${lang}/about`,
+    "description": t(lang!, "about.description"),
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
   <article class="about">
     <header class="about-header">
-      <h1>About plata.today</h1>
+      <h1>{t(lang!, "about.title")}</h1>
+      <p class="about-tagline">{t(lang!, "about.tagline")}</p>
     </header>
 
     <div class="about-body">
-      <p class="lead">
-        <strong>plata.today</strong> is a multilingual AI-powered news portal
-        delivering Argentina's most important stories in 18 languages.
-      </p>
+      <!-- Mission -->
+      <section>
+        <h2>{t(lang!, "about.missionTitle")}</h2>
+        <p>{t(lang!, "about.missionText")}</p>
 
-      <h2>How it works</h2>
-      <p>
-        We collect news from Argentina's leading publications, synthesize
-        multiple sources covering the same event, and generate original articles
-        using AI. Each article is available in 18 languages — not as a
-        translation, but as an original piece written for each language's
-        audience.
-      </p>
+        <div class="value-cards">
+          <div class="value-card">
+            <span class="value-icon" aria-hidden="true">&#9878;</span>
+            <h3>{t(lang!, "about.valueNoOpinion")}</h3>
+            <p>{t(lang!, "about.valueNoOpinionDesc")}</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon" aria-hidden="true">&#127760;</span>
+            <h3>{t(lang!, "about.value18langs")}</h3>
+            <p>{t(lang!, "about.value18langsDesc")}</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon" aria-hidden="true">&#9889;</span>
+            <h3>{t(lang!, "about.valueFast")}</h3>
+            <p>{t(lang!, "about.valueFastDesc")}</p>
+          </div>
+        </div>
+      </section>
 
-      <h2>Our sources</h2>
-      <p>
-        We aggregate from Argentina's most respected news outlets including
-        Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, and others.
-        Every article links back to its original sources.
-      </p>
+      <!-- How it works -->
+      <section>
+        <h2>{t(lang!, "about.howTitle")}</h2>
+        <div class="steps">
+          <div class="step">
+            <span class="step-num">1</span>
+            <div>
+              <h3>{t(lang!, "about.step1Title")}</h3>
+              <p>{t(lang!, "about.step1Desc")}</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">2</span>
+            <div>
+              <h3>{t(lang!, "about.step2Title")}</h3>
+              <p>{t(lang!, "about.step2Desc")}</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">3</span>
+            <div>
+              <h3>{t(lang!, "about.step3Title")}</h3>
+              <p>{t(lang!, "about.step3Desc")}</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">4</span>
+            <div>
+              <h3>{t(lang!, "about.step4Title")}</h3>
+              <p>{t(lang!, "about.step4Desc")}</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <h2>Disclaimer</h2>
-      <p>
-        Articles on plata.today are AI-generated based on multiple news sources.
-        While we strive for accuracy, please verify important information with
-        original sources. We always credit and link to the publications we
-        source from.
-      </p>
+      <!-- Sources -->
+      <section>
+        <h2>{t(lang!, "about.sourcesTitle")}</h2>
+        <p>{t(lang!, "about.sourcesText")}</p>
+      </section>
+
+      <!-- Founder -->
+      <section>
+        <h2>{t(lang!, "about.founderTitle")}</h2>
+        <div class="founder">
+          <div class="founder-avatar" aria-hidden="true">BF</div>
+          <div class="founder-info">
+            <h3>{t(lang!, "about.founderName")}</h3>
+            <p class="founder-role">{t(lang!, "about.founderRole")}</p>
+            <p>{t(lang!, "about.founderBio")}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Disclaimer -->
+      <section>
+        <h2>{t(lang!, "about.disclaimerTitle")}</h2>
+        <p>{t(lang!, "about.disclaimerText")}</p>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact">
+        <h2>{t(lang!, "about.contactTitle")}</h2>
+        <div class="contact-cards">
+          <div class="contact-card">
+            <h3>{t(lang!, "about.contactGeneral")}</h3>
+            <a href="mailto:hello@plata.today">hello@plata.today</a>
+          </div>
+          <div class="contact-card">
+            <h3>{t(lang!, "about.contactPrivacy")}</h3>
+            <a href="mailto:privacy@plata.today">privacy@plata.today</a>
+          </div>
+          <div class="contact-card">
+            <h3>{t(lang!, "about.contactBugs")}</h3>
+            <a href="https://github.com/PlataTodayHQ/website/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
+          </div>
+        </div>
+      </section>
     </div>
   </article>
 </Base>
@@ -52,6 +148,9 @@ const { lang } = Astro.params;
   .about {
     max-width: var(--content-width);
     margin: 0 auto;
+    background: var(--color-bg);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-radius: 2px;
   }
 
   .about-header {
@@ -65,10 +164,10 @@ const { lang } = Astro.params;
     font-size: 2.25rem;
   }
 
-  .about-body .lead {
+  .about-tagline {
     font-size: 1.15rem;
-    line-height: 1.6;
-    margin-bottom: var(--spacing-xl);
+    color: var(--color-text-meta);
+    margin-top: var(--spacing-sm);
   }
 
   .about-body h2 {
@@ -87,5 +186,183 @@ const { lang } = Astro.params;
     line-height: 1.75;
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-md);
+  }
+
+  /* Value cards */
+  .value-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+  }
+
+  .value-card {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-gold);
+    border-radius: 2px;
+  }
+
+  .value-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .value-card h3 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .value-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--color-text-meta);
+    margin-bottom: 0;
+  }
+
+  /* Steps */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+  }
+
+  .step {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-celeste);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 50%;
+  }
+
+  .step h3 {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .step p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-text-meta);
+    margin-bottom: 0;
+  }
+
+  /* Founder */
+  .founder {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+    margin-top: var(--spacing-md);
+  }
+
+  .founder-avatar {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-celeste);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.25rem;
+    border-radius: 50%;
+    letter-spacing: 0.05em;
+  }
+
+  .founder-info h3 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .founder-role {
+    font-size: 0.85rem !important;
+    color: var(--color-text-meta) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--spacing-sm) !important;
+  }
+
+  /* Contact cards */
+  .contact-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+  }
+
+  .contact-card {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  .contact-card h3 {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-text-meta);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.04em;
+  }
+
+  .contact-card a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-celeste);
+    text-decoration: none;
+  }
+
+  .contact-card a:hover {
+    text-decoration: underline;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .value-cards,
+    .contact-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .founder {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .founder-links {
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 900px) {
+    .value-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-cards {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
 </style>

@@ -1,0 +1,148 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "privacy.pageTitle")}
+  description={t(lang!, "privacy.description")}
+  lang={lang}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "privacy.title"), url: `/${lang}/privacy` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "privacy.title"),
+    "url": `https://plata.today/${lang}/privacy`,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <article class="legal">
+    <header class="legal-header">
+      <h1>{t(lang!, "privacy.title")}</h1>
+      <p class="legal-updated">{t(lang!, "privacy.updated")}</p>
+    </header>
+
+    <div class="legal-body">
+      <p class="lead">{t(lang!, "privacy.lead")}</p>
+
+      <h2>{t(lang!, "privacy.collectTitle")}</h2>
+      <p>{t(lang!, "privacy.collectIntro")}</p>
+      <ul>
+        <li>{t(lang!, "privacy.collectAnalytics")}</li>
+        <li>{t(lang!, "privacy.collectEmail")}</li>
+        <li>{t(lang!, "privacy.collectStorage")}</li>
+      </ul>
+
+      <h2>{t(lang!, "privacy.cookiesTitle")}</h2>
+      <p>{t(lang!, "privacy.cookiesText")}</p>
+
+      <h2>{t(lang!, "privacy.thirdPartyTitle")}</h2>
+      <p>{t(lang!, "privacy.thirdPartyIntro")}</p>
+      <ul>
+        <li>{t(lang!, "privacy.thirdPartyCloudflare")}</li>
+        <li>{t(lang!, "privacy.thirdPartyBluelytics")}</li>
+        <li>{t(lang!, "privacy.thirdPartyBYMA")}</li>
+      </ul>
+
+      <h2>{t(lang!, "privacy.retentionTitle")}</h2>
+      <p>{t(lang!, "privacy.retentionText")}</p>
+
+      <h2>{t(lang!, "privacy.rightsTitle")}</h2>
+      <p>{t(lang!, "privacy.rightsText")}</p>
+
+      <h2>{t(lang!, "privacy.childrenTitle")}</h2>
+      <p>{t(lang!, "privacy.childrenText")}</p>
+
+      <h2>{t(lang!, "privacy.changesTitle")}</h2>
+      <p>{t(lang!, "privacy.changesText")}</p>
+
+      <h2>{t(lang!, "privacy.contactTitle")}</h2>
+      <p>{t(lang!, "privacy.contactText")}</p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .legal {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-radius: 2px;
+  }
+
+  .legal-header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .legal-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+  }
+
+  .legal-updated {
+    font-size: 0.85rem;
+    color: var(--color-text-meta);
+    margin-top: var(--spacing-sm);
+  }
+
+  .legal-body .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .legal-body h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-top: 3px solid var(--color-celeste);
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .legal-body p,
+  .legal-body li {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+  }
+
+  .legal-body p {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .legal-body ul {
+    padding-left: 1.5em;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .legal-body li {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .legal-body code {
+    font-size: 0.9em;
+    background: var(--color-bg-secondary);
+    padding: 2px 5px;
+    border-radius: 2px;
+  }
+</style>

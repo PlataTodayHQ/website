@@ -9,11 +9,14 @@
     "dev": "npm run dev --workspace=apps/web",
     "build": "npm run build --workspace=apps/web",
     "preview": "npm run preview --workspace=apps/web",
-    "pipeline:dev": "npm run dev --workspace=apps/pipeline",
-    "pipeline:deploy": "npm run deploy --workspace=apps/pipeline",
-    "db:migrate": "npm run migrate --workspace=apps/pipeline"
+    "pipeline:run": "tsx apps/pipeline/src/main.ts",
+    "pipeline:migrate": "tsx apps/pipeline/src/db/migrate.ts",
+    "db:migrate": "tsx apps/pipeline/src/db/migrate.ts"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
   }
 }
