@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
-import { LANGUAGES } from "@plata-today/shared";
+import { LANGUAGES, CATEGORIES } from "@plata-today/shared";
+import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
 
 interface Props {
   title: string;
@@ -8,6 +9,7 @@ interface Props {
   lang?: string;
   canonicalUrl?: string;
   alternateUrls?: Record<string, string>;
+  activeCategory?: string;
 }
 
 const {
@@ -16,9 +18,19 @@ const {
   lang = "en",
   canonicalUrl,
   alternateUrls,
+  activeCategory,
 } = Astro.props;
 
 const siteUrl = "https://plata.today";
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { label: "Home", href: `/${lang}/` },
+  ...Object.entries(CATEGORIES).map(([key, label]) => ({
+    label,
+    href: `/${lang}/category/${key}`,
+  })),
+];
 ---
 
 <!doctype html>
@@ -52,84 +64,263 @@ const siteUrl = "https://plata.today";
   <body>
     <header class="header">
       <div class="header-inner">
-        <a href={`/${lang}/`} class="logo">plata.today</a>
-        <nav class="nav">
-          <a href={`/${lang}/`}>Home</a>
-          <a href={`/${lang}/about`}>About</a>
-        </nav>
+        <div class="header-left">
+          <button class="menu-btn" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <a href={`/${lang}/`} class="logo">
+          <span class="logo-text">plata<span class="logo-dot">.</span>today</span>
+        </a>
+        <div class="header-right">
+          <LanguageSwitcher lang={lang} />
+        </div>
       </div>
     </header>
 
+    <nav class="nav">
+      <div class="nav-inner">
+        {navItems.map((item) => {
+          const isActive = currentPath === item.href ||
+            (item.href.includes('/category/') && currentPath.startsWith(item.href));
+          return (
+            <a href={item.href} class:list={["nav-link", { active: isActive }]}>
+              {item.label}
+            </a>
+          );
+        })}
+      </div>
+    </nav>
+
     <main class="main">
-      <slot />
+      <div class="main-inner">
+        <slot />
+      </div>
     </main>
 
     <footer class="footer">
-      <p>
-        &copy; {new Date().getFullYear()} plata.today — AI-powered news about Argentina
-      </p>
-      <p class="disclaimer">
-        Articles are AI-generated based on multiple news sources. Please verify
-        important information with original sources.
-      </p>
+      <div class="footer-inner">
+        <div class="footer-top">
+          <a href={`/${lang}/`} class="footer-logo">plata.today</a>
+          <nav class="footer-nav">
+            <a href={`/${lang}/about`}>About</a>
+            <a href={`/${lang}/about`}>Contact</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <p class="disclaimer">
+            Articles are AI-generated based on multiple news sources. While we strive for
+            accuracy, please verify important information with original sources.
+          </p>
+          <p class="copyright">
+            &copy; {new Date().getFullYear()} plata.today
+          </p>
+        </div>
+      </div>
     </footer>
   </body>
 </html>
 
 <style>
+  /* Header */
   .header {
-    border-bottom: 1px solid var(--color-border);
-    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-text);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
   .header-inner {
     max-width: var(--max-width);
     margin: 0 auto;
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    height: 48px;
+    padding: 0 var(--spacing-lg);
+  }
+
+  .header-left,
+  .header-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .header-right {
+    justify-content: flex-end;
+  }
+
+  .menu-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
     align-items: center;
   }
 
   .logo {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-text);
+    color: #fff;
+    text-decoration: none;
+    flex-shrink: 0;
   }
 
   .logo:hover {
     text-decoration: none;
+    color: #fff;
   }
 
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: var(--font-sans);
+    letter-spacing: -0.02em;
+  }
+
+  .logo-dot {
+    color: var(--color-accent);
+  }
+
+  /* Navigation */
   .nav {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+    position: sticky;
+    top: 48px;
+    z-index: 99;
+  }
+
+  .nav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 var(--spacing-lg);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-text);
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.15s;
+  }
+
+  .nav-link:hover {
+    text-decoration: none;
+    border-bottom-color: var(--color-accent);
+  }
+
+  .nav-link.active {
+    font-weight: 700;
+    border-bottom-color: var(--color-accent);
+  }
+
+  /* Main */
+  .main {
+    min-height: 60vh;
+  }
+
+  .main-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--color-text);
+    color: #9a9a9a;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+  }
+
+  .footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid #3a3a3a;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .footer-logo {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-family: var(--font-sans);
+  }
+
+  .footer-logo:hover {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .footer-nav {
     display: flex;
     gap: var(--spacing-lg);
   }
 
-  .nav a {
-    color: var(--color-text-secondary);
-    font-size: 0.9rem;
-  }
-
-  .main {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-lg);
-    min-height: 60vh;
-  }
-
-  .footer {
-    border-top: 1px solid var(--color-border);
-    padding: var(--spacing-xl) var(--spacing-lg);
-    text-align: center;
-    color: var(--color-text-secondary);
+  .footer-nav a {
+    color: #9a9a9a;
     font-size: 0.85rem;
-    max-width: var(--max-width);
-    margin: 0 auto;
+  }
+
+  .footer-nav a:hover {
+    color: #fff;
+  }
+
+  .footer-bottom {
+    font-size: 0.8rem;
+    line-height: 1.6;
   }
 
   .disclaimer {
-    margin-top: var(--spacing-sm);
-    font-size: 0.75rem;
+    margin-bottom: var(--spacing-sm);
     font-style: italic;
+  }
+
+  .copyright {
+    color: #6a6a6a;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .header-inner {
+      padding: 0 var(--spacing-md);
+    }
+
+    .nav-inner {
+      padding: 0 var(--spacing-md);
+    }
+
+    .main-inner {
+      padding: var(--spacing-md);
+    }
+
+    .logo-text {
+      font-size: 1.25rem;
+    }
   }
 </style>

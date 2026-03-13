@@ -1,0 +1,50 @@
+---
+interface Props {
+  title: string;
+  href?: string;
+}
+
+const { title, href } = Astro.props;
+---
+
+<div class="section-header">
+  {href ? (
+    <a href={href} class="section-title-link">
+      <h2 class="section-title">{title}</h2>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  ) : (
+    <h2 class="section-title">{title}</h2>
+  )}
+</div>
+
+<style>
+  .section-header {
+    border-top: 2px solid var(--color-border-section);
+    padding-top: 12px;
+    margin-bottom: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-text);
+  }
+
+  .section-title-link:hover {
+    text-decoration: none;
+    color: var(--color-link-hover);
+  }
+</style>

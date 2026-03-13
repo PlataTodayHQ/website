@@ -11,58 +11,81 @@ const { lang } = Astro.params;
 
 <Base title="About" lang={lang}>
   <article class="about">
-    <h1>About plata.today</h1>
+    <header class="about-header">
+      <h1>About plata.today</h1>
+    </header>
 
-    <p>
-      <strong>plata.today</strong> is a multilingual AI-powered news portal
-      delivering Argentina's most important stories in 18 languages.
-    </p>
+    <div class="about-body">
+      <p class="lead">
+        <strong>plata.today</strong> is a multilingual AI-powered news portal
+        delivering Argentina's most important stories in 18 languages.
+      </p>
 
-    <h2>How it works</h2>
-    <p>
-      We collect news from Argentina's leading publications, synthesize
-      multiple sources covering the same event, and generate original articles
-      using AI. Each article is available in 18 languages — not as a
-      translation, but as an original piece written for each language's
-      audience.
-    </p>
+      <h2>How it works</h2>
+      <p>
+        We collect news from Argentina's leading publications, synthesize
+        multiple sources covering the same event, and generate original articles
+        using AI. Each article is available in 18 languages — not as a
+        translation, but as an original piece written for each language's
+        audience.
+      </p>
 
-    <h2>Our sources</h2>
-    <p>
-      We aggregate from Argentina's most respected news outlets including
-      Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, and others.
-      Every article links back to its original sources.
-    </p>
+      <h2>Our sources</h2>
+      <p>
+        We aggregate from Argentina's most respected news outlets including
+        Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, and others.
+        Every article links back to its original sources.
+      </p>
 
-    <h2>Disclaimer</h2>
-    <p>
-      Articles on plata.today are AI-generated based on multiple news sources.
-      While we strive for accuracy, please verify important information with
-      original sources. We always credit and link to the publications we
-      source from.
-    </p>
+      <h2>Disclaimer</h2>
+      <p>
+        Articles on plata.today are AI-generated based on multiple news sources.
+        While we strive for accuracy, please verify important information with
+        original sources. We always credit and link to the publications we
+        source from.
+      </p>
+    </div>
   </article>
 </Base>
 
 <style>
   .about {
     max-width: var(--content-width);
+    margin: 0 auto;
   }
 
-  .about h1 {
-    font-size: 2rem;
-    margin-bottom: var(--spacing-lg);
+  .about-header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
   }
 
-  .about h2 {
-    font-size: 1.3rem;
+  .about-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+  }
+
+  .about-body .lead {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .about-body h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-top: 2px solid var(--color-border-section);
+    padding-top: var(--spacing-md);
     margin-top: var(--spacing-xl);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
   }
 
-  .about p {
-    margin-bottom: var(--spacing-md);
+  .about-body p {
+    font-size: 1rem;
+    line-height: 1.75;
     color: var(--color-text-secondary);
-    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
   }
 </style>

@@ -12,6 +12,120 @@ const { lang, slug } = Astro.params;
 
 <Base title="Article" lang={lang}>
   <article class="article">
-    <p>Article: {slug}</p>
+    <header class="article-header">
+      <span class="article-category">Economy</span>
+      <h1 class="article-title">Article Title Goes Here</h1>
+      <div class="article-meta">
+        <time>March 13, 2026</time>
+        <span class="meta-divider">|</span>
+        <span>3 min read</span>
+      </div>
+    </header>
+
+    <div class="article-image">
+      <img src="https://placehold.co/1200x630/1a1a1a/ffffff?text=Article" alt="" />
+    </div>
+
+    <div class="article-body">
+      <p>Article content will be loaded from the database once the pipeline is running.</p>
+    </div>
+
+    <footer class="article-sources">
+      <h3>Sources</h3>
+      <ul>
+        <li><a href="#">Infobae</a></li>
+        <li><a href="#">Clarín</a></li>
+      </ul>
+    </footer>
   </article>
 </Base>
+
+<style>
+  .article {
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  .article-header {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .article-category {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .article-title {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    line-height: 1.15;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .article-meta {
+    font-size: 0.85rem;
+    color: var(--color-text-meta);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .meta-divider {
+    color: var(--color-border);
+  }
+
+  .article-image {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .article-image img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .article-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .article-body :global(p) {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .article-sources {
+    border-top: 2px solid var(--color-border-section);
+    padding-top: var(--spacing-lg);
+  }
+
+  .article-sources h3 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .article-sources ul {
+    list-style: none;
+    display: flex;
+    gap: var(--spacing-md);
+  }
+
+  .article-sources a {
+    font-size: 0.9rem;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 640px) {
+    .article-title {
+      font-size: 1.75rem;
+    }
+  }
+</style>

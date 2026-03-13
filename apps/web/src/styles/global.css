@@ -1,17 +1,19 @@
 :root {
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
-  --font-cjk: "Noto Sans SC", "Noto Sans JP", "Noto Sans KR", sans-serif;
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-serif: Georgia, "Times New Roman", Times, serif;
 
   --color-bg: #ffffff;
-  --color-bg-secondary: #f8f9fa;
+  --color-bg-secondary: #f6f6f6;
   --color-text: #1a1a1a;
-  --color-text-secondary: #6b7280;
-  --color-border: #e5e7eb;
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
+  --color-text-secondary: #545454;
+  --color-text-meta: #6e6e6e;
+  --color-border: #e6e8ea;
+  --color-border-section: #1a1a1a;
+  --color-accent: #bb1919;
+  --color-link: #1a1a1a;
+  --color-link-hover: #bb1919;
 
-  --max-width: 1200px;
+  --max-width: 1280px;
   --content-width: 720px;
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -31,10 +33,12 @@
 
 html {
   font-family: var(--font-sans);
+  font-size: 16px;
   color: var(--color-text);
   background: var(--color-bg);
-  line-height: 1.6;
+  line-height: 1.4;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -42,16 +46,23 @@ body {
 }
 
 a {
-  color: var(--color-accent);
+  color: var(--color-link);
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
+  color: var(--color-link-hover);
 }
 
 img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.2;
 }

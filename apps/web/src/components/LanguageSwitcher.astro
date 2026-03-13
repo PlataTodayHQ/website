@@ -1,0 +1,102 @@
+---
+import { LANGUAGES } from "@plata-today/shared";
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
+---
+
+<div class="lang-switcher">
+  <button class="lang-btn" aria-label="Select language">
+    <span class="lang-code">{lang.toUpperCase()}</span>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="lang-dropdown">
+    {Object.entries(LANGUAGES).map(([code, info]) => (
+      <a
+        href={`/${code}/`}
+        class:list={["lang-option", { active: code === lang }]}
+      >
+        <span class="lang-option-code">{code.toUpperCase()}</span>
+        <span class="lang-option-name">{info.nativeName}</span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .lang-switcher {
+    position: relative;
+  }
+
+  .lang-btn {
+    background: none;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .lang-btn:hover {
+    border-color: #fff;
+  }
+
+  .lang-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 200;
+  }
+
+  .lang-switcher:hover .lang-dropdown,
+  .lang-switcher:focus-within .lang-dropdown {
+    display: block;
+  }
+
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    color: var(--color-text);
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .lang-option:hover {
+    background: var(--color-bg-secondary);
+    text-decoration: none;
+  }
+
+  .lang-option.active {
+    font-weight: 700;
+    background: var(--color-bg-secondary);
+  }
+
+  .lang-option-code {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+    min-width: 24px;
+  }
+</style>

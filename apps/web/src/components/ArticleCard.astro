@@ -1,0 +1,128 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  href: string;
+  imageUrl?: string;
+  timeAgo?: string;
+  category?: string;
+  variant?: "default" | "hero" | "sidebar";
+}
+
+const {
+  title,
+  description,
+  href,
+  imageUrl,
+  timeAgo,
+  category,
+  variant = "default",
+} = Astro.props;
+---
+
+<article class:list={["card", `card--${variant}`]}>
+  <a href={href} class="card-link">
+    {imageUrl && (
+      <div class="card-image">
+        <img src={imageUrl} alt="" loading="lazy" />
+      </div>
+    )}
+    <div class="card-body">
+      <h3 class="card-title">{title}</h3>
+      {description && <p class="card-desc">{description}</p>}
+      {(timeAgo || category) && (
+        <div class="card-meta">
+          {timeAgo && <span class="card-time">{timeAgo}</span>}
+          {timeAgo && category && <span class="card-divider">|</span>}
+          {category && <span class="card-category">{category}</span>}
+        </div>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .card-link:hover {
+    text-decoration: none;
+  }
+
+  .card-link:hover .card-title {
+    text-decoration: underline;
+  }
+
+  .card-image {
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .card-image img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.2s;
+  }
+
+  .card-link:hover .card-image img {
+    transform: scale(1.02);
+  }
+
+  .card-title {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: var(--color-text);
+  }
+
+  .card-desc {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .card-meta {
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-divider {
+    color: var(--color-border);
+  }
+
+  /* Hero variant */
+  .card--hero .card-title {
+    font-size: 1.75rem;
+  }
+
+  .card--hero .card-desc {
+    font-size: 1rem;
+  }
+
+  /* Sidebar variant — no image, compact */
+  .card--sidebar {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card--sidebar:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .card--sidebar .card-title {
+    font-size: 1.05rem;
+  }
+</style>

@@ -1,5 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
+import SectionHeader from "@/components/SectionHeader.astro";
 import { LANGUAGES } from "@plata-today/shared";
 
 export function getStaticPaths() {
@@ -8,39 +10,188 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params;
 const langName = LANGUAGES[lang as keyof typeof LANGUAGES]?.name ?? lang;
+
+// Placeholder articles — will be replaced with D1 data
+const placeholderArticles = [
+  {
+    title: "Argentina Announces Major Economic Reform Package for 2026",
+    description: "The government unveiled a comprehensive set of economic measures aimed at stabilizing the peso and attracting foreign investment.",
+    href: `/${lang}/news/argentina-economic-reform-2026`,
+    imageUrl: "https://placehold.co/800x450/1a1a1a/ffffff?text=Economy",
+    timeAgo: "2 hrs ago",
+    category: "Economy",
+  },
+  {
+    title: "Buenos Aires Named Top Destination for Digital Nomads in South America",
+    description: "A new global survey ranks Argentina's capital as the most attractive city for remote workers in the region.",
+    href: `/${lang}/news/buenos-aires-digital-nomads`,
+    imageUrl: "https://placehold.co/800x450/2a2a2a/ffffff?text=Travel",
+    timeAgo: "4 hrs ago",
+    category: "Culture",
+  },
+  {
+    title: "Lithium Production in Northern Argentina Reaches Record Levels",
+    description: "Mining companies report unprecedented output from the lithium triangle as global demand for electric vehicle batteries surges.",
+    href: `/${lang}/news/lithium-production-record`,
+    imageUrl: "https://placehold.co/800x450/3a3a3a/ffffff?text=Business",
+    timeAgo: "5 hrs ago",
+    category: "Economy",
+  },
+  {
+    title: "River Plate Advances to Copa Libertadores Quarter-Finals",
+    description: "The Buenos Aires club secured a convincing victory to progress in South America's premier club competition.",
+    href: `/${lang}/news/river-plate-libertadores`,
+    timeAgo: "6 hrs ago",
+    category: "Sports",
+  },
+  {
+    title: "New Immigration Policy Simplifies Residency Process for Foreign Workers",
+    description: "The migration authority announced streamlined procedures for obtaining temporary and permanent residency permits.",
+    href: `/${lang}/news/immigration-policy-residency`,
+    timeAgo: "7 hrs ago",
+    category: "Politics",
+  },
+  {
+    title: "Argentine Peso Strengthens Against Dollar Following Central Bank Measures",
+    href: `/${lang}/news/peso-dollar-central-bank`,
+    description: "Currency markets respond positively to new monetary policy actions announced this week.",
+    timeAgo: "8 hrs ago",
+    category: "Economy",
+  },
+  {
+    title: "Patagonia's Tourism Season Sets New Visitor Records",
+    href: `/${lang}/news/patagonia-tourism-records`,
+    description: "National parks in southern Argentina welcome their highest visitor numbers in a decade.",
+    timeAgo: "10 hrs ago",
+    category: "Culture",
+  },
+  {
+    title: "Argentina and Brazil Sign New Trade Agreement to Boost Bilateral Commerce",
+    href: `/${lang}/news/argentina-brazil-trade`,
+    description: "The deal aims to reduce tariffs and simplify customs procedures between Mercosur's two largest economies.",
+    timeAgo: "12 hrs ago",
+    category: "Economy",
+  },
+];
+
+const heroArticle = placeholderArticles[0];
+const leftArticle = placeholderArticles[1];
+const sidebarArticles = placeholderArticles.slice(2, 6);
+const moreArticles = placeholderArticles.slice(4);
 ---
 
 <Base title={`Argentina News in ${langName}`} lang={lang}>
-  <section class="hero">
-    <h1>Argentina News in {langName}</h1>
-    <p>AI-powered multilingual news coverage from Argentina's top sources.</p>
+  <!-- Hero Grid: BBC-style 3-column layout -->
+  <section class="hero-grid">
+    <div class="hero-left">
+      <ArticleCard
+        title={leftArticle.title}
+        description={leftArticle.description}
+        href={leftArticle.href}
+        imageUrl={leftArticle.imageUrl}
+        timeAgo={leftArticle.timeAgo}
+        category={leftArticle.category}
+      />
+    </div>
+
+    <div class="hero-center">
+      <ArticleCard
+        title={heroArticle.title}
+        description={heroArticle.description}
+        href={heroArticle.href}
+        imageUrl={heroArticle.imageUrl}
+        timeAgo={heroArticle.timeAgo}
+        category={heroArticle.category}
+        variant="hero"
+      />
+    </div>
+
+    <div class="hero-right">
+      {sidebarArticles.map((article) => (
+        <ArticleCard
+          title={article.title}
+          description={article.description}
+          href={article.href}
+          timeAgo={article.timeAgo}
+          category={article.category}
+          variant="sidebar"
+        />
+      ))}
+    </div>
   </section>
 
-  <section class="feed">
-    <p class="placeholder">Articles will appear here once the content pipeline is running.</p>
+  <!-- More stories -->
+  <SectionHeader title="More Stories" />
+  <section class="stories-grid">
+    {moreArticles.map((article) => (
+      <ArticleCard
+        title={article.title}
+        description={article.description}
+        href={article.href}
+        imageUrl={article.imageUrl}
+        timeAgo={article.timeAgo}
+        category={article.category}
+      />
+    ))}
   </section>
 </Base>
 
 <style>
-  .hero {
-    margin-bottom: var(--spacing-2xl);
+  /* BBC-style 3-column hero grid */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: var(--spacing-lg);
+    padding-bottom: var(--spacing-2xl);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .hero h1 {
-    font-size: 2rem;
-    margin-bottom: var(--spacing-sm);
+  .hero-right {
+    border-left: 1px solid var(--color-border);
+    padding-left: var(--spacing-lg);
   }
 
-  .hero p {
-    color: var(--color-text-secondary);
-    font-size: 1.1rem;
+  /* 4-col grid for more stories */
+  .stories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
   }
 
-  .placeholder {
-    padding: var(--spacing-2xl);
-    text-align: center;
-    color: var(--color-text-secondary);
-    background: var(--color-bg-secondary);
-    border-radius: 8px;
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-right {
+      grid-column: 1 / -1;
+      border-left: none;
+      padding-left: 0;
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--spacing-lg);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+    }
+
+    .stories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-right {
+      grid-template-columns: 1fr;
+    }
+
+    .stories-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
