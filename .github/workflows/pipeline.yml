@@ -19,6 +19,9 @@ jobs:
   pipeline-and-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      HAS_LLM_KEY: ${{ secrets.LLM_API_KEY != '' }}
+      HAS_HETZNER: ${{ secrets.HETZNER_S3_ACCESS_KEY != '' }}
 
     steps:
       - name: Checkout
@@ -52,7 +55,7 @@ jobs:
 
       # --- Run Pipeline ---
       - name: Run pipeline
-        if: ${{ inputs.skip_pipeline != true && secrets.LLM_API_KEY != '' }}
+        if: inputs.skip_pipeline != true && env.HAS_LLM_KEY == 'true'
         continue-on-error: true
         run: npm run pipeline:run
         env:
@@ -80,7 +83,7 @@ jobs:
 
       # --- Deploy to Hetzner Object Storage ---
       - name: Deploy to Hetzner Object Storage
-        if: ${{ secrets.HETZNER_S3_ACCESS_KEY != '' }}
+        if: env.HAS_HETZNER == 'true'
         run: |
           aws s3 sync apps/web/dist/ "s3://${{ secrets.HETZNER_S3_BUCKET }}/" \
             --endpoint-url "https://${{ secrets.HETZNER_S3_ENDPOINT }}" \
@@ -94,7 +97,7 @@ jobs:
 
       # --- Set cache headers for HTML files ---
       - name: Set HTML cache headers
-        if: ${{ secrets.HETZNER_S3_ACCESS_KEY != '' }}
+        if: env.HAS_HETZNER == 'true'
         run: |
           aws s3 cp "s3://${{ secrets.HETZNER_S3_BUCKET }}/" "s3://${{ secrets.HETZNER_S3_BUCKET }}/" \
             --endpoint-url "https://${{ secrets.HETZNER_S3_ENDPOINT }}" \
