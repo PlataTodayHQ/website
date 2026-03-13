@@ -3,15 +3,20 @@
   --font-serif: Georgia, "Times New Roman", Times, serif;
 
   --color-bg: #ffffff;
-  --color-bg-secondary: #f6f6f6;
+  --color-bg-secondary: #f5f5f0;
   --color-text: #1a1a1a;
   --color-text-secondary: #545454;
   --color-text-meta: #6e6e6e;
-  --color-border: #e6e8ea;
+  --color-border: #e0e0dc;
   --color-border-section: #1a1a1a;
-  --color-accent: #bb1919;
+  --color-celeste: #75AADB;
+  --color-celeste-dark: #4a8abf;
+  --color-gold: #F6B40E;
+  --color-gold-dark: #d49c0b;
+  --color-accent: var(--color-celeste);
+  --color-accent-secondary: var(--color-gold);
   --color-link: #1a1a1a;
-  --color-link-hover: #bb1919;
+  --color-link-hover: var(--color-celeste-dark);
 
   --max-width: 1280px;
   --content-width: 720px;
