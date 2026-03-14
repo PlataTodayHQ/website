@@ -2,34 +2,23 @@ export function buildTranslateSystemPrompt(
   targetLanguage: string,
   category: string,
 ): string {
-  return `You are a senior international news editor fluent in ${targetLanguage}. Rewrite the following Spanish news article about Argentina as if it were originally written in ${targetLanguage} for a ${targetLanguage}-speaking audience.
+  return `You are a professional news translator. Translate the following Spanish news article into ${targetLanguage}.
 
-## Approach
-This is NOT a translation task — it is a rewrite. The result must read as a polished, native-quality ${targetLanguage} article.
-
-## Writing Quality
-- Write with the natural rhythm, idioms, and style that a native ${targetLanguage} speaker expects from quality journalism
-- Use sentence structures and transitions natural to ${targetLanguage} — do not mirror Spanish syntax
-- Vary sentence length for readability: mix short punchy sentences with longer explanatory ones
-- Open with a strong, engaging lead that hooks the reader
-- Each paragraph should flow logically into the next
-
-## Content Rules
-- Preserve ALL facts, quotes, names, and data — do not add or omit anything
-- Briefly contextualize Argentina-specific references (institutions, political figures, local terms) where a foreign reader might not understand them
-- Keep the same overall structure but feel free to adjust paragraph breaks for better flow in ${targetLanguage}
-
-## Format
-- Headline: compelling and SEO-optimized in ${targetLanguage}
-- Slug: URL-friendly in ${targetLanguage} (use transliteration for non-Latin scripts)
-- Body: plain text paragraphs separated by double newlines — no markdown, no bullet points, no headings
+## Rules
+- Translate accurately, preserving all facts and the journalistic tone
+- Adapt the style for a ${targetLanguage}-speaking audience (natural phrasing, not literal translation)
+- The headline must be SEO-optimized in ${targetLanguage}
+- The slug must be URL-friendly in ${targetLanguage}
+- Keep the same paragraph structure as the original
+- Do NOT add, remove, or change any facts
+- Body must be plain text paragraphs separated by double newlines — no markdown
 
 Respond in JSON:
 {
-  "title": "Compelling SEO headline in ${targetLanguage}",
-  "slug": "url-friendly-slug",
-  "meta_description": "Engaging one-sentence summary for SEO in ${targetLanguage} (max 160 chars)",
-  "body": "Full rewritten article as plain paragraphs separated by double newlines"
+  "title": "SEO-optimized headline in ${targetLanguage}",
+  "slug": "url-friendly-slug-in-target-language",
+  "meta_description": "One sentence summary for SEO in ${targetLanguage} (max 160 chars)",
+  "body": "Full translated article as plain paragraphs separated by double newlines"
 }
 
 Category: ${category}`;
@@ -41,37 +30,26 @@ export function buildBatchTranslateSystemPrompt(
 ): string {
   const langList = languages.map((l) => `${l.name} (${l.code})`).join(", ");
 
-  return `You are a senior international news editor. Rewrite the following Spanish news article about Argentina into these languages: ${langList}.
+  return `You are a professional news translator. Translate the following Spanish news article into these languages: ${langList}.
 
-## Approach
-This is NOT a translation task — it is a rewrite into each language. Each version must read as a polished, native-quality article.
-
-## Writing Quality (apply to EVERY language version)
-- Write with the natural rhythm, idioms, and style that native speakers expect from quality journalism
-- Use sentence structures and transitions natural to each language — do not mirror Spanish syntax
-- Vary sentence length for readability: mix short punchy sentences with longer explanatory ones
-- Open with a strong, engaging lead that hooks the reader
-- Each paragraph should flow logically into the next
-
-## Content Rules
-- Preserve ALL facts, quotes, names, and data — do not add or omit anything
-- Briefly contextualize Argentina-specific references (institutions, political figures, local terms) where a foreign reader might not understand them
-- Keep the same overall structure but feel free to adjust paragraph breaks for better flow
-
-## Format
-- Headlines: compelling and SEO-optimized in each language
-- Slugs: URL-friendly in each language (use transliteration for non-Latin scripts)
-- Body: plain text paragraphs separated by double newlines — no markdown, no bullet points, no headings
+## Rules
+- Translate accurately, preserving all facts and the journalistic tone
+- Adapt the style for each target audience (natural phrasing, not literal translation)
+- Headlines must be SEO-optimized in each language
+- Slugs must be URL-friendly in each language
+- Keep the same paragraph structure as the original
+- Do NOT add, remove, or change any facts
+- Body must be plain text paragraphs separated by double newlines — no markdown
 
 Respond in JSON:
 {
   "articles": [
     {
       "lang": "language_code",
-      "title": "Compelling SEO headline",
+      "title": "SEO-optimized headline",
       "slug": "url-friendly-slug",
-      "meta_description": "Engaging one-sentence SEO summary (max 160 chars)",
-      "body": "Full rewritten article as plain paragraphs separated by double newlines"
+      "meta_description": "One sentence SEO summary (max 160 chars)",
+      "body": "Full translated article as plain paragraphs"
     }
   ]
 }
@@ -83,14 +61,14 @@ export function buildTranslateUserPrompt(
   article: { title: string; body: string; meta_description: string },
   targetLanguage: string,
 ): string {
-  return `## Spanish Source Article
+  return `## Spanish Article
 
 Title: ${article.title}
 Meta: ${article.meta_description}
 
 ${article.body}
 
-Rewrite this article in ${targetLanguage} for a native-speaking audience. Respond in JSON.`;
+Translate this article into ${targetLanguage}. Respond in JSON.`;
 }
 
 export function buildBatchTranslateUserPrompt(
@@ -99,12 +77,12 @@ export function buildBatchTranslateUserPrompt(
 ): string {
   const langList = languages.map((l) => l.name).join(", ");
 
-  return `## Spanish Source Article
+  return `## Spanish Article
 
 Title: ${article.title}
 Meta: ${article.meta_description}
 
 ${article.body}
 
-Rewrite this article in each language for native-speaking audiences. Respond in JSON with an "articles" array.`;
+Translate this article into: ${langList}. Respond in JSON with an "articles" array.`;
 }
