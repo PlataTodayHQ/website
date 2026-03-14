@@ -22,6 +22,7 @@ Choose exactly one: ${categories}
 - Base your assessment ONLY on the provided source texts
 - Consider: how many people does this affect? Is it timely? Does it have lasting impact?
 - Reject events that are: pure advertising, SEO spam, duplicate/stale content, or too vague to write about
+- Reject live blogs, play-by-play coverage, and "developing story" stubs that lack a complete narrative — score them 1
 
 Respond in JSON:
 {

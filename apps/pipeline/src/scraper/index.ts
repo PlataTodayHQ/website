@@ -12,6 +12,9 @@ export interface ScrapedItem extends RSSItem {
   category: string | null;
 }
 
+/** Patterns that indicate live blogs, play-by-play, or incomplete breaking content */
+const SKIP_TITLE_PATTERNS = /\b(en vivo|en directo|minuto a minuto|segu[íi] el|EN VIVO)\b/i;
+
 export async function scrapeAllFeeds(
   sources: SourceConfig[] = SOURCES,
 ): Promise<ScrapedItem[]> {
@@ -48,13 +51,15 @@ export async function scrapeAllFeeds(
           totalFeeds++;
           try {
             const rssItems = await fetchRSS(feed.rssUrl);
-            return rssItems.map((item) => ({
-              ...item,
-              sourceName: source.name,
-              sourceUrl: source.url,
-              sourceTier: source.tier,
-              category: feed.category ?? null,
-            }));
+            return rssItems
+              .filter((item) => !SKIP_TITLE_PATTERNS.test(item.title))
+              .map((item) => ({
+                ...item,
+                sourceName: source.name,
+                sourceUrl: source.url,
+                sourceTier: source.tier,
+                category: feed.category ?? null,
+              }));
           } catch (err) {
             log.warn("Feed fetch failed", {
               source: source.name,
