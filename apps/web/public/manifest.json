@@ -1,0 +1,27 @@
+{
+  "name": "Plata — Argentine News in 18 Languages",
+  "short_name": "Plata",
+  "description": "Fact-first, source-transparent news from Argentina, natively written in 18 languages.",
+  "start_url": "/en/",
+  "display": "standalone",
+  "background_color": "#1e2a3d",
+  "theme_color": "#1e2a3d",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
