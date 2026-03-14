@@ -19,18 +19,9 @@ async function start(): Promise<void> {
   runMigrations(DB_PATH);
   console.log("[server] Migrations complete");
 
-  // 2. Start Astro server
+  // 2. Start Astro server (standalone mode auto-binds to HOST:PORT)
   console.log("[server] Starting Astro server...");
-  const { handler } = await import(ASTRO_DIST);
-  const { createServer } = await import("node:http");
-
-  const host = process.env.HOST ?? "0.0.0.0";
-  const port = Number(process.env.PORT ?? "4321");
-
-  const server = createServer(handler);
-  server.listen(port, host, () => {
-    console.log(`[server] Astro listening on http://${host}:${port}`);
-  });
+  await import(ASTRO_DIST);
 
   // 3. Start background jobs
   console.log("[server] Starting background jobs...");
@@ -40,10 +31,7 @@ async function start(): Promise<void> {
   const shutdown = () => {
     console.log("[server] Shutting down...");
     stopJobs();
-    server.close(() => {
-      console.log("[server] Server closed");
-      process.exit(0);
-    });
+    process.exit(0);
   };
 
   process.on("SIGTERM", shutdown);
