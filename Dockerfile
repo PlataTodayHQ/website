@@ -51,8 +51,9 @@ RUN npm install -g tsx
 # Non-root user
 RUN groupadd -r plata && useradd -r -g plata -m plata
 
-# Data directory for SQLite
+# Data directory for SQLite + writable dist/client for generated sitemaps
 RUN mkdir -p /data && chown plata:plata /data
+RUN chown -R plata:plata /app/apps/web/dist/client
 
 ENV NODE_ENV=production
 ENV PORT=4321

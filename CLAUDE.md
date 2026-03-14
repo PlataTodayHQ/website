@@ -50,6 +50,14 @@ npm run pipeline:run     # Run pipeline standalone
 npm run db:migrate       # Run DB migrations
 ```
 
+## Production Server
+
+- **VPS:** Hetzner `5.161.196.158`
+- **SSH:** `ssh -i ~/.ssh/plata-hetzner root@5.161.196.158`
+- **Container:** `plata-today` (Docker, runs as non-root `plata` user)
+- **Data:** `/opt/plata/data` on host → `/data` in container
+- **Logs:** `docker logs plata-today --tail 100`
+
 ## GitHub
 
 - Org: PlataTodayHQ
