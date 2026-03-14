@@ -86,7 +86,7 @@ jobs:
             docker run -d \
               --name plata-today \
               --restart unless-stopped \
-              -p 80:4321 \
+              -p 127.0.0.1:4321:4321 \
               -v /opt/plata/data:/data \
               -e LLM_API_KEY='${{ secrets.LLM_API_KEY }}' \
               -e S3_BUCKET='${{ secrets.HETZNER_S3_BUCKET }}' \
