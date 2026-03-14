@@ -15,15 +15,18 @@ import {
   type ArticleRow,
 } from "@/lib/db";
 
-export function getStaticPaths() {
-  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
-}
+export const prerender = false;
 
 const { lang } = Astro.params;
+
+if (!lang || !(lang in LANGUAGES)) {
+  return Astro.redirect("/en/");
+}
+
 const langName = LANGUAGES[lang as keyof typeof LANGUAGES]?.name ?? lang;
 
 // ---------------------------------------------------------------------------
-// Fetch articles from SQLite (build-time)
+// Fetch articles from SQLite (server-rendered)
 // ---------------------------------------------------------------------------
 const allArticles = getArticlesByLang(lang!, 50);
 

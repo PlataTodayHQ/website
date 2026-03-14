@@ -9,6 +9,8 @@
     "dev": "npm run dev --workspace=apps/web",
     "build": "npm run build --workspace=apps/web",
     "preview": "npm run preview --workspace=apps/web",
+    "server:start": "tsx apps/server/src/index.ts",
+    "server:dev": "tsx apps/server/src/index.ts",
     "pipeline:run": "tsx apps/pipeline/src/main.ts",
     "pipeline:migrate": "tsx apps/pipeline/src/db/migrate.ts",
     "db:migrate": "tsx apps/pipeline/src/db/migrate.ts"

@@ -301,6 +301,22 @@ export const fi = {
   "stock.pageTitle": "Argentiinan markkinat",
   "stock.pageDesc": "Reaaliaikaiset kurssit, kaaviot, yritysprofiili ja tunnusluvut argentinalaisille osakkeille BYMA-pörssissä.",
 
+  // Stock Screener
+  "screener.title": "Osakescreener",
+  "screener.subtitle": "Panel Líder — Buenos Airesin pörssi",
+  "screener.search": "Hae symbolilla tai nimellä…",
+  "screener.stocks": "osaketta",
+  "screener.noResults": "Osakkeita ei löytynyt",
+  "screener.col.symbol": "Symboli",
+  "screener.col.price": "Kurssi",
+  "screener.col.change": "Muutos",
+  "screener.col.volume": "Volyymi",
+  "screener.col.marketCap": "Markkina-arvo",
+  "screener.col.pe": "P/E",
+  "screener.col.eps": "EPS",
+  "screener.col.range": "52vk vaihteluväli",
+  "screener.col.sector": "Toimiala",
+
   // Common
   "common.siteDescription": "Argentiinan uutiset maailmalle — puolueettomasti, vain faktat. 18 kielellä",
   "common.breadcrumbHome": "Etusivu",

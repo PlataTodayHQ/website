@@ -301,6 +301,22 @@ export const ja = {
   "stock.pageTitle": "アルゼンチン市場",
   "stock.pageDesc": "BYMAアルゼンチン株式のリアルタイム株価、チャート、企業情報、主要指標。",
 
+  // Stock Screener
+  "screener.title": "株式スクリーナー",
+  "screener.subtitle": "Panel Líder — ブエノスアイレス証券取引所",
+  "screener.search": "銘柄コードまたは名前で検索…",
+  "screener.stocks": "銘柄",
+  "screener.noResults": "該当する銘柄がありません",
+  "screener.col.symbol": "銘柄コード",
+  "screener.col.price": "株価",
+  "screener.col.change": "変動",
+  "screener.col.volume": "出来高",
+  "screener.col.marketCap": "時価総額",
+  "screener.col.pe": "PER",
+  "screener.col.eps": "EPS",
+  "screener.col.range": "52週レンジ",
+  "screener.col.sector": "セクター",
+
   // Common
   "common.siteDescription": "世界に届けるアルゼンチンのニュース — 偏りなく、事実だけを。18言語で配信",
   "common.breadcrumbHome": "ホーム",

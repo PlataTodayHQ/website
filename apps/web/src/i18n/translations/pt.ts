@@ -301,6 +301,22 @@ export const pt = {
   "stock.pageTitle": "Mercados argentinos",
   "stock.pageDesc": "Preço ao vivo, gráfico, perfil da empresa e estatísticas de ações argentinas na BYMA.",
 
+  // Stock Screener
+  "screener.title": "Filtro de ações",
+  "screener.subtitle": "Panel Líder — Bolsa de Buenos Aires",
+  "screener.search": "Buscar por símbolo ou nome…",
+  "screener.stocks": "ações",
+  "screener.noResults": "Nenhuma ação encontrada",
+  "screener.col.symbol": "Símbolo",
+  "screener.col.price": "Preço",
+  "screener.col.change": "Variação",
+  "screener.col.volume": "Volume",
+  "screener.col.marketCap": "Cap. de mercado",
+  "screener.col.pe": "P/L",
+  "screener.col.eps": "LPA",
+  "screener.col.range": "Faixa 52S",
+  "screener.col.sector": "Setor",
+
   // Common
   "common.siteDescription": "Notícias da Argentina para o mundo — sem viés, apenas fatos. Em 18 idiomas",
   "common.breadcrumbHome": "Início",

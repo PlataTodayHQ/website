@@ -10,6 +10,12 @@ export interface PipelineConfig {
   maxEventsPerRun: number;
   maxConcurrentApiCalls: number;
   logLevel: "debug" | "info" | "warn" | "error";
+  s3Bucket: string;
+  s3Endpoint: string;
+  s3AccessKey: string;
+  s3SecretKey: string;
+  s3PublicUrl: string;
+  s3Region: string;
 }
 
 export function loadConfig(): PipelineConfig {
@@ -30,5 +36,11 @@ export function loadConfig(): PipelineConfig {
     maxEventsPerRun: Number(process.env.MAX_EVENTS_PER_RUN ?? "10"),
     maxConcurrentApiCalls: Number(process.env.MAX_CONCURRENT_API_CALLS ?? "5"),
     logLevel: (process.env.LOG_LEVEL as PipelineConfig["logLevel"]) ?? "info",
+    s3Bucket: process.env.S3_BUCKET ?? "",
+    s3Endpoint: process.env.S3_ENDPOINT ?? "",
+    s3AccessKey: process.env.S3_ACCESS_KEY ?? "",
+    s3SecretKey: process.env.S3_SECRET_KEY ?? "",
+    s3PublicUrl: process.env.S3_PUBLIC_URL ?? "",
+    s3Region: process.env.S3_REGION ?? "eu-central-1",
   };
 }

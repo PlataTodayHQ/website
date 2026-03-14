@@ -301,6 +301,22 @@ export const hi = {
   "stock.pageTitle": "अर्जेंटीना बाज़ार",
   "stock.pageDesc": "BYMA पर अर्जेंटीना शेयरों की लाइव कीमत, चार्ट, कंपनी प्रोफ़ाइल और प्रमुख आँकड़े।",
 
+  // Stock Screener
+  "screener.title": "स्टॉक स्क्रीनर",
+  "screener.subtitle": "Panel Líder — ब्यूनस आयर्स स्टॉक एक्सचेंज",
+  "screener.search": "सिंबल या नाम से खोजें…",
+  "screener.stocks": "स्टॉक",
+  "screener.noResults": "कोई स्टॉक नहीं मिला",
+  "screener.col.symbol": "सिंबल",
+  "screener.col.price": "मूल्य",
+  "screener.col.change": "परिवर्तन",
+  "screener.col.volume": "वॉल्यूम",
+  "screener.col.marketCap": "मार्केट कैप",
+  "screener.col.pe": "P/E",
+  "screener.col.eps": "EPS",
+  "screener.col.range": "52 सप्ताह रेंज",
+  "screener.col.sector": "सेक्टर",
+
   // Common
   "common.siteDescription": "दुनिया के लिए अर्जेंटीना की खबरें — बिना पक्षपात, सिर्फ़ तथ्य। 18 भाषाओं में",
   "common.breadcrumbHome": "होम",

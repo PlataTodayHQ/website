@@ -1,0 +1,669 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "screener.title") + " — Plata"}
+  description={t(lang!, "screener.subtitle")}
+  lang={lang}
+  ogType="website"
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: "Markets", url: `/${lang}/markets` },
+    { name: t(lang!, "screener.title"), url: `/${lang}/markets/screener` },
+  ]}
+>
+  <div class="screener-page" data-screener-page data-lang={lang}>
+    <header class="mkts-header">
+      <div>
+        <h1 class="mkts-title">{t(lang!, "screener.title")}</h1>
+        <p class="mkts-subtitle">{t(lang!, "screener.subtitle")}</p>
+      </div>
+      <p class="mkts-updated" data-mkts-updated>Loading…</p>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="scr-toolbar">
+      <div class="scr-search-wrap">
+        <svg class="scr-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="scr-search" data-scr-search placeholder={t(lang!, "screener.search")} autocomplete="off" />
+      </div>
+      <div class="scr-meta">
+        <span class="scr-count" data-scr-count></span>
+      </div>
+    </div>
+
+    <!-- Table (desktop) -->
+    <div class="scr-table-wrap">
+      <table class="scr-table" data-scr-table>
+        <thead>
+          <tr>
+            <th class="scr-th scr-th--name" data-sort-col="symbol">{t(lang!, "screener.col.symbol")} <span class="scr-arrow" data-arrow="symbol"></span></th>
+            <th class="scr-th scr-th--num" data-sort-col="price">{t(lang!, "screener.col.price")} <span class="scr-arrow" data-arrow="price"></span></th>
+            <th class="scr-th scr-th--num" data-sort-col="change">{t(lang!, "screener.col.change")} <span class="scr-arrow" data-arrow="change"></span></th>
+            <th class="scr-th scr-th--num" data-sort-col="volume">{t(lang!, "screener.col.volume")} <span class="scr-arrow" data-arrow="volume"></span></th>
+            <th class="scr-th scr-th--num scr-th--active" data-sort-col="marketCap">{t(lang!, "screener.col.marketCap")} <span class="scr-arrow" data-arrow="marketCap">▼</span></th>
+            <th class="scr-th scr-th--num" data-sort-col="pe">{t(lang!, "screener.col.pe")} <span class="scr-arrow" data-arrow="pe"></span></th>
+            <th class="scr-th scr-th--num scr-th--hide-mobile" data-sort-col="eps">{t(lang!, "screener.col.eps")} <span class="scr-arrow" data-arrow="eps"></span></th>
+            <th class="scr-th scr-th--range scr-th--hide-mobile">{t(lang!, "screener.col.range")}</th>
+            <th class="scr-th scr-th--text scr-th--hide-tablet" data-sort-col="sector">{t(lang!, "screener.col.sector")} <span class="scr-arrow" data-arrow="sector"></span></th>
+          </tr>
+        </thead>
+        <tbody data-scr-tbody>
+          <tr><td colspan="9" class="scr-loading"><div class="loading-spinner"></div> Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cards (mobile) -->
+    <div class="scr-cards" data-scr-cards>
+      <div class="scr-loading"><div class="loading-spinner"></div> Loading…</div>
+    </div>
+
+    <!-- No results -->
+    <div class="scr-empty" data-scr-empty style="display:none">{t(lang!, "screener.noResults")}</div>
+
+    <p class="info-disclaimer">{t(lang!, "stock.disclaimer")}</p>
+  </div>
+</Base>
+
+<script is:inline src="/js/charts.js"></script>
+<script is:inline>
+(function() {
+  var C = window.PlataCharts || {};
+  var fmt = C.fmt || function(n) { return Math.round(n).toLocaleString('es-AR'); };
+  var fmtM = C.fmtM || function(v) { return v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : Math.round(v).toLocaleString('es-AR'); };
+  var fmtVol = C.fmtVol || function(v) { return v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : v >= 1e3 ? (v/1e3).toFixed(1)+'K' : v; };
+
+  var page = document.querySelector('[data-screener-page]');
+  var lang = page.getAttribute('data-lang') || 'en';
+
+  var allStocks = [];
+  var currentSort = { key: 'marketCap', dir: 'desc' };
+  var searchTerm = '';
+
+  // ─── Stock logos ───
+  var STOCK_LOGOS = {
+    YPFD: 'https://logo.clearbit.com/ypf.com',
+    GGAL: 'https://logo.clearbit.com/galiciamas.com.ar',
+    BMA: 'https://logo.clearbit.com/macro.com.ar',
+    BBAR: 'https://logo.clearbit.com/bbva.com.ar',
+    PAMP: 'https://logo.clearbit.com/pampaenergia.com',
+    TECO2: 'https://logo.clearbit.com/telecom.com.ar',
+    CEPU: 'https://logo.clearbit.com/centralpuerto.com',
+    TXAR: 'https://logo.clearbit.com/ternium.com',
+    TGSU2: 'https://logo.clearbit.com/tgs.com.ar',
+    LOMA: 'https://logo.clearbit.com/lomanegra.com',
+    SUPV: 'https://logo.clearbit.com/supervielle.com.ar',
+    ALUA: 'https://logo.clearbit.com/aluar.com.ar',
+    TRAN: 'https://logo.clearbit.com/transener.com.ar',
+    EDN: 'https://logo.clearbit.com/edenor.com.ar',
+    CRES: 'https://logo.clearbit.com/cresud.com.ar',
+    BYMA: 'https://logo.clearbit.com/byma.com.ar',
+    IRSA: 'https://logo.clearbit.com/irsa.com.ar',
+    MIRG: 'https://logo.clearbit.com/mirgor.com.ar',
+    METR: 'https://logo.clearbit.com/metrogas.com.ar',
+    BHIP: 'https://logo.clearbit.com/hipotecario.com.ar',
+    BPAT: 'https://logo.clearbit.com/bancopatagonia.com.ar',
+    COME: 'https://logo.clearbit.com/comercialdelplata.com.ar',
+    VALO: 'https://logo.clearbit.com/grupovalores.com',
+    HARG: 'https://logo.clearbit.com/holcim.com.ar',
+    CVH: 'https://logo.clearbit.com/cablevisionholding.com.ar',
+    GCLA: 'https://logo.clearbit.com/clarin.com',
+    TGNO4: 'https://logo.clearbit.com/tgn.com.ar'
+  };
+
+  var AVATAR_COLORS = [
+    '#3b82f6','#8b5cf6','#ec4899','#f59e0b','#10b981',
+    '#06b6d4','#6366f1','#ef4444','#14b8a6','#f97316',
+    '#84cc16','#a855f7','#0ea5e9','#e11d48','#22c55e'
+  ];
+
+  function avatarColor(sym) {
+    var h = 0;
+    for (var i = 0; i < sym.length; i++) h = ((h << 5) - h + sym.charCodeAt(i)) | 0;
+    return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length];
+  }
+
+  function logoCell(sym) {
+    var url = STOCK_LOGOS[sym];
+    var color = avatarColor(sym);
+    var initials = sym.substring(0, 2);
+    if (url) {
+      return '<div class="scr-logo" style="background:' + color + '22" data-stk-logo="' + sym + '" data-color="' + color + '">' +
+        '<img src="' + url + '?size=64&format=png" alt="" loading="lazy">' +
+        '</div>';
+    }
+    return '<div class="scr-logo scr-logo--fallback" style="background:' + color + '22;color:' + color + '">' + initials + '</div>';
+  }
+
+  // Logo error fallback
+  document.addEventListener('error', function(e) {
+    if (e.target.tagName !== 'IMG') return;
+    var logoDiv = e.target.closest('[data-stk-logo]');
+    if (!logoDiv) return;
+    var sym = logoDiv.getAttribute('data-stk-logo');
+    var color = logoDiv.getAttribute('data-color');
+    logoDiv.classList.add('scr-logo--fallback');
+    logoDiv.style.color = color;
+    logoDiv.innerHTML = sym.substring(0, 2);
+  }, true);
+
+  // ─── Helpers ───
+  function setEl(sel, text) {
+    var el = document.querySelector(sel);
+    if (el) el.textContent = text;
+  }
+
+  function pctHtml(val) {
+    if (val == null) return '<span class="scr-dim">—</span>';
+    var pct = val * 100;
+    var cls = pct >= 0 ? 'rc-up' : 'rc-down';
+    var arrow = pct >= 0 ? '▲' : '▼';
+    return '<span class="scr-pct ' + cls + '">' + arrow + ' ' + Math.abs(pct).toFixed(2) + '%</span>';
+  }
+
+  function numHtml(val, formatter) {
+    if (val == null) return '<span class="scr-dim">—</span>';
+    return (formatter || fmt)(val);
+  }
+
+  function range52Html(s) {
+    if (s.fifty_two_week_low == null || s.fifty_two_week_high == null || s.price == null) {
+      return '<span class="scr-dim">—</span>';
+    }
+    var lo = s.fifty_two_week_low;
+    var hi = s.fifty_two_week_high;
+    var cur = s.price;
+    var pct = hi > lo ? ((cur - lo) / (hi - lo)) * 100 : 50;
+    pct = Math.max(0, Math.min(100, pct));
+    return '<div class="scr-range">' +
+      '<span class="scr-range-lo">' + fmt(lo) + '</span>' +
+      '<div class="scr-range-bar">' +
+        '<div class="scr-range-fill" style="width:' + pct + '%"></div>' +
+        '<div class="scr-range-dot" style="left:' + pct + '%"></div>' +
+      '</div>' +
+      '<span class="scr-range-hi">' + fmt(hi) + '</span>' +
+    '</div>';
+  }
+
+  // ─── Normalize data ───
+  function normalize(raw) {
+    return raw.map(function(s) {
+      return {
+        symbol: s.symbol,
+        name: s.name || s.symbol,
+        sector: s.sector || null,
+        industry: s.industry || null,
+        price: s.price,
+        change: s.change,
+        volume: s.volume || 0,
+        marketCap: s.market_cap,
+        pe: s.trailing_pe,
+        forwardPe: s.forward_pe,
+        eps: s.eps,
+        dividendYield: s.dividend_yield,
+        beta: s.beta,
+        fiftyTwoWeekHigh: s.fifty_two_week_high,
+        fiftyTwoWeekLow: s.fifty_two_week_low,
+        fifty_two_week_high: s.fifty_two_week_high,
+        fifty_two_week_low: s.fifty_two_week_low,
+        recommendation: s.recommendation_key
+      };
+    });
+  }
+
+  // ─── Sort & Filter ───
+  function getFiltered() {
+    var q = searchTerm.toLowerCase();
+    var filtered = allStocks;
+    if (q) {
+      filtered = allStocks.filter(function(s) {
+        return s.symbol.toLowerCase().indexOf(q) !== -1 ||
+               (s.name && s.name.toLowerCase().indexOf(q) !== -1) ||
+               (s.sector && s.sector.toLowerCase().indexOf(q) !== -1);
+      });
+    }
+    var key = currentSort.key;
+    var dir = currentSort.dir;
+    filtered = filtered.slice().sort(function(a, b) {
+      var av = a[key], bv = b[key];
+      if (typeof av === 'string') { av = (av || '').toLowerCase(); bv = (bv || '').toLowerCase(); }
+      if (av == null) av = key === 'symbol' ? 'zzz' : -Infinity;
+      if (bv == null) bv = key === 'symbol' ? 'zzz' : -Infinity;
+      var cmp = av < bv ? -1 : av > bv ? 1 : 0;
+      return dir === 'desc' ? -cmp : cmp;
+    });
+    return filtered;
+  }
+
+  // ─── Render Table ───
+  function renderTable() {
+    var tbody = document.querySelector('[data-scr-tbody]');
+    var cards = document.querySelector('[data-scr-cards]');
+    var empty = document.querySelector('[data-scr-empty]');
+    if (!tbody) return;
+
+    var filtered = getFiltered();
+
+    // Count
+    setEl('[data-scr-count]', filtered.length + ' ' + (filtered.length === 1 ? 'stock' : 'stocks'));
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      cards.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    // Table rows
+    var html = '';
+    for (var i = 0; i < filtered.length; i++) {
+      var s = filtered[i];
+      var borderColor = s.change != null ? (s.change >= 0 ? '#16a34a' : '#dc2626') : 'var(--color-border)';
+
+      html += '<tr class="scr-row" data-symbol="' + s.symbol + '">';
+      // Symbol + Name
+      html += '<td class="scr-td scr-td--name">';
+      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="scr-name-link">';
+      html += logoCell(s.symbol);
+      html += '<div class="scr-name-text">';
+      html += '<span class="scr-symbol">' + s.symbol + '</span>';
+      html += '<span class="scr-company">' + (s.name || '') + '</span>';
+      html += '</div></a></td>';
+      // Price
+      html += '<td class="scr-td scr-td--num">' + (s.price != null ? 'ARS ' + fmt(s.price) : '<span class="scr-dim">—</span>') + '</td>';
+      // Change
+      html += '<td class="scr-td scr-td--num">' + pctHtml(s.change) + '</td>';
+      // Volume
+      html += '<td class="scr-td scr-td--num">' + numHtml(s.volume, fmtVol) + '</td>';
+      // Market Cap
+      html += '<td class="scr-td scr-td--num">' + (s.marketCap ? '$' + fmtVol(s.marketCap) : '<span class="scr-dim">—</span>') + '</td>';
+      // P/E
+      html += '<td class="scr-td scr-td--num">' + (s.pe != null ? s.pe.toFixed(1) : '<span class="scr-dim">—</span>') + '</td>';
+      // EPS
+      html += '<td class="scr-td scr-td--num scr-td--hide-mobile">' + (s.eps != null ? s.eps.toFixed(2) : '<span class="scr-dim">—</span>') + '</td>';
+      // 52W Range
+      html += '<td class="scr-td scr-td--range scr-td--hide-mobile">' + range52Html(s) + '</td>';
+      // Sector
+      html += '<td class="scr-td scr-td--text scr-td--hide-tablet">' + (s.sector || '<span class="scr-dim">—</span>') + '</td>';
+      html += '</tr>';
+    }
+    tbody.innerHTML = html;
+
+    // Mobile cards
+    var cardsHtml = '';
+    for (var j = 0; j < filtered.length; j++) {
+      var st = filtered[j];
+      var pct = st.change != null ? st.change * 100 : null;
+      var pctClass = pct != null ? (pct >= 0 ? 'rc-up' : 'rc-down') : '';
+      var arrow = pct != null ? (pct >= 0 ? '▲' : '▼') : '';
+      var border = pct != null ? (pct >= 0 ? '#16a34a' : '#dc2626') : 'var(--color-border)';
+
+      cardsHtml += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(st.symbol) + '" class="stk-card" style="--stk-accent:' + border + '">';
+      cardsHtml += '<div class="stk-row1">';
+      cardsHtml += logoCell(st.symbol).replace('scr-logo', 'stk-logo');
+      cardsHtml += '<div class="stk-id">';
+      cardsHtml += '<span class="stk-symbol">' + st.symbol + '</span>';
+      cardsHtml += '<span class="stk-name">' + (st.name || '') + '</span>';
+      cardsHtml += '</div>';
+      cardsHtml += '<div class="stk-change ' + pctClass + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toFixed(2) + '%' : '—') + '</div>';
+      cardsHtml += '</div>';
+      cardsHtml += '<div class="stk-row2">';
+      cardsHtml += '<span class="stk-price">' + (st.price != null ? 'ARS ' + fmt(st.price) : '—') + '</span>';
+      cardsHtml += '<span class="stk-meta">';
+      if (st.volume) cardsHtml += '<span class="stk-vol">Vol ' + fmtVol(st.volume) + '</span>';
+      if (st.marketCap) cardsHtml += '<span class="stk-mcap">Cap $' + fmtM(st.marketCap) + '</span>';
+      cardsHtml += '</span>';
+      cardsHtml += '</div>';
+      cardsHtml += '</a>';
+    }
+    cards.innerHTML = cardsHtml;
+  }
+
+  // ─── Sort headers ───
+  function updateArrows() {
+    document.querySelectorAll('[data-arrow]').forEach(function(el) {
+      var col = el.getAttribute('data-arrow');
+      el.textContent = currentSort.key === col ? (currentSort.dir === 'desc' ? '▼' : '▲') : '';
+    });
+    document.querySelectorAll('[data-sort-col]').forEach(function(th) {
+      var col = th.getAttribute('data-sort-col');
+      th.classList.toggle('scr-th--active', currentSort.key === col);
+    });
+  }
+
+  document.querySelectorAll('[data-sort-col]').forEach(function(th) {
+    th.addEventListener('click', function() {
+      var col = th.getAttribute('data-sort-col');
+      if (currentSort.key === col) {
+        currentSort.dir = currentSort.dir === 'desc' ? 'asc' : 'desc';
+      } else {
+        currentSort = { key: col, dir: col === 'symbol' || col === 'sector' ? 'asc' : 'desc' };
+      }
+      updateArrows();
+      renderTable();
+    });
+  });
+
+  // ─── Search ───
+  var searchInput = document.querySelector('[data-scr-search]');
+  var searchTimer;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function() {
+      searchTerm = searchInput.value.trim();
+      renderTable();
+    }, 150);
+  });
+
+  // ─── Hardcoded names & mcap for BYMA fallback ───
+  var STOCK_NAMES = {
+    ALUA: 'Aluar Aluminio', BBAR: 'BBVA Argentina', BMA: 'Banco Macro',
+    BYMA: 'Bolsas y Mercados Arg.', CEPU: 'Central Puerto',
+    COME: 'Soc. Comercial del Plata', CRES: 'Cresud', CELU: 'Celulosa Argentina',
+    CVH: 'Cablevision Holding', EDN: 'Edenor', GGAL: 'Grupo Fin. Galicia',
+    HARG: 'Holcim Argentina', LOMA: 'Loma Negra', MIRG: 'Mirgor',
+    PAMP: 'Pampa Energía', SUPV: 'Grupo Supervielle', TECO2: 'Telecom Argentina',
+    TGNO4: 'Transp. Gas del Norte', TGSU2: 'Transp. Gas del Sur',
+    TRAN: 'Transener', TXAR: 'Ternium Argentina', VALO: 'Grupo Fin. Valores',
+    YPFD: 'YPF', METR: 'MetroGAS', IRSA: 'IRSA Inversiones',
+    BHIP: 'Banco Hipotecario', BPAT: 'Banco Patagonia', CAPX: 'Capex',
+    GCLA: 'Grupo Clarín', LEDE: 'Ledesma', CTIO: 'Consultatio',
+    BOLT: 'Boldt', HAVA: 'Havanna'
+  };
+  var STOCK_MCAP = {
+    YPFD: 16000, GGAL: 8500, BMA: 5200, BBAR: 4500, PAMP: 4200,
+    TECO2: 3500, CEPU: 3200, TXAR: 3000, TGSU2: 2500, LOMA: 1800,
+    SUPV: 1600, TRAN: 1500, ALUA: 1500, EDN: 1200, CRES: 1100,
+    BYMA: 1000, VALO: 900, TGNO4: 850, IRSA: 800, COME: 500,
+    METR: 450, MIRG: 400, HARG: 350, BPAT: 320, CVH: 300,
+    BHIP: 250, CAPX: 200, CTIO: 180, LEDE: 170, BOLT: 150,
+    GCLA: 140
+  };
+
+  function normalizeBYMA(arr) {
+    var seen = {};
+    var result = [];
+    for (var i = 0; i < arr.length; i++) {
+      var s = arr[i];
+      var sym = (s.symbol || '').replace('.BA', '');
+      if (!sym || seen[sym]) continue;
+      seen[sym] = true;
+      var variation = s.imbalance != null ? s.imbalance : (s.variation != null ? s.variation / 100 : null);
+      result.push({
+        symbol: sym,
+        name: STOCK_NAMES[sym] || s.description || sym,
+        sector: null, industry: null,
+        price: s.trade || s.price || s.closingPrice,
+        change: variation,
+        volume: s.volume || s.tradeVolume || 0,
+        marketCap: STOCK_MCAP[sym] ? STOCK_MCAP[sym] * 1e6 : null,
+        pe: null, forwardPe: null, eps: null,
+        dividendYield: null, beta: null,
+        fiftyTwoWeekHigh: null, fiftyTwoWeekLow: null,
+        fifty_two_week_high: null, fifty_two_week_low: null,
+        recommendation: null
+      });
+    }
+    return result.sort(function(a, b) { return (b.marketCap || 0) - (a.marketCap || 0); });
+  }
+
+  // ─── Load data: try /api/screener, fallback to BYMA direct, fallback to /api/leading-equity ───
+  function onData(stocks) {
+    allStocks = stocks;
+    setEl('[data-mkts-updated]', 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    renderTable();
+  }
+
+  function onError() {
+    setEl('[data-mkts-updated]', 'Unable to load data');
+    document.querySelector('[data-scr-tbody]').innerHTML = '<tr><td colspan="9" class="scr-loading">Unable to load stock data</td></tr>';
+    document.querySelector('[data-scr-cards]').innerHTML = '<div class="scr-loading">Unable to load stock data</div>';
+  }
+
+  fetch('/api/screener')
+    .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(data) {
+      if (!Array.isArray(data)) throw new Error('bad');
+      onData(normalize(data));
+    })
+    .catch(function() {
+      // Fallback: try BYMA direct
+      fetch('https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/leading-equity', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}'
+      }).then(function(r) { return r.json(); })
+        .then(function(d) {
+          var arr = (d && d.data) || d || [];
+          if (!Array.isArray(arr) || arr.length === 0) throw new Error('empty');
+          onData(normalizeBYMA(arr));
+        })
+        .catch(function() {
+          // Last resort: proxy
+          fetch('/api/leading-equity')
+            .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function(arr) {
+              if (!Array.isArray(arr) || arr.length === 0) throw new Error('empty');
+              onData(normalizeBYMA(arr));
+            })
+            .catch(onError);
+        });
+    });
+})();
+</script>
+
+<style>
+  /* Header — reuses mkts pattern */
+  .mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
+  .mkts-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1.1; }
+  .mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
+  .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
+
+  /* Toolbar */
+  .scr-toolbar {
+    display: flex; align-items: center; gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+  }
+  .scr-search-wrap {
+    position: relative; flex: 1; min-width: 200px; max-width: 400px;
+  }
+  .scr-search-icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    color: var(--color-text-meta); pointer-events: none;
+  }
+  .scr-search {
+    width: 100%; padding: 8px 12px 8px 36px;
+    border: 1px solid var(--color-border); border-radius: 8px;
+    background: var(--color-bg-secondary); color: var(--color-text);
+    font-size: 0.85rem; outline: none;
+    transition: border-color 0.15s;
+  }
+  .scr-search:focus { border-color: var(--color-gold); }
+  .scr-search::placeholder { color: var(--color-text-meta); }
+  .scr-meta { margin-left: auto; }
+  .scr-count {
+    font-size: 0.75rem; color: var(--color-text-meta);
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+
+  /* Table */
+  .scr-table-wrap {
+    overflow-x: auto; margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--color-border); border-radius: 10px;
+    background: var(--color-bg-secondary);
+  }
+  .scr-table {
+    width: 100%; border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scr-th {
+    position: sticky; top: 0; z-index: 2;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--color-text-meta);
+    background: var(--color-bg-secondary);
+    border-bottom: 2px solid var(--color-border);
+    cursor: pointer; user-select: none;
+    white-space: nowrap;
+    transition: color 0.15s;
+  }
+  .scr-th:hover { color: var(--color-text); }
+  .scr-th--active { color: var(--color-gold); }
+  .scr-th--num { text-align: right; }
+  .scr-th--text { text-align: left; }
+  .scr-th--range { text-align: center; min-width: 160px; cursor: default; }
+
+  .scr-arrow {
+    font-size: 0.65rem; margin-left: 2px;
+    display: inline-block; min-width: 8px;
+  }
+
+  /* Rows */
+  .scr-row {
+    transition: background 0.1s;
+  }
+  .scr-row:nth-child(even) { background: rgba(128,128,128,0.04); }
+  .scr-row:hover { background: rgba(246,180,14,0.06); }
+
+  .scr-td {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: var(--color-text);
+    border-bottom: 1px solid rgba(128,128,128,0.1);
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .scr-td--num { text-align: right; font-weight: 600; }
+  .scr-td--text { font-size: 0.75rem; color: var(--color-text-secondary); max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
+  .scr-td--name { padding-left: 12px; }
+
+  /* Name cell */
+  .scr-name-link {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: inherit;
+  }
+  .scr-logo {
+    width: 32px; height: 32px; min-width: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; overflow: hidden;
+  }
+  .scr-logo img { width: 22px; height: 22px; object-fit: contain; border-radius: 3px; display: block; }
+  .scr-logo--fallback { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.02em; }
+  .scr-name-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .scr-symbol { font-weight: 800; font-size: 0.85rem; color: var(--color-text); letter-spacing: 0.02em; line-height: 1.2; }
+  .scr-company { font-size: 0.68rem; color: var(--color-text-meta); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
+
+  /* Change pill */
+  .scr-pct {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 0.78rem; font-weight: 700;
+  }
+  .scr-pct.rc-up { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .scr-pct.rc-down { background: rgba(220,38,38,0.12); color: #dc2626; }
+
+  .scr-dim { color: var(--color-text-meta); font-weight: 400; }
+
+  /* 52W Range bar */
+  .scr-range { display: flex; align-items: center; gap: 6px; min-width: 140px; }
+  .scr-range-lo, .scr-range-hi { font-size: 0.65rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .scr-range-bar {
+    flex: 1; height: 4px; background: var(--color-border); border-radius: 2px;
+    position: relative; min-width: 60px;
+  }
+  .scr-range-fill {
+    height: 100%; background: var(--color-gold); border-radius: 2px;
+    opacity: 0.5;
+  }
+  .scr-range-dot {
+    position: absolute; top: 50%; transform: translate(-50%, -50%);
+    width: 8px; height: 8px; background: var(--color-gold);
+    border-radius: 50%; border: 1.5px solid var(--color-bg);
+  }
+
+  /* Loading */
+  .scr-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl); font-size: 0.85rem; }
+  .loading-spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--color-border); border-top-color: var(--color-gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .scr-empty { text-align: center; color: var(--color-text-meta); padding: var(--spacing-2xl); font-size: 0.9rem; font-style: italic; }
+
+  .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; margin-top: var(--spacing-xl); }
+
+  /* Cards: hidden on desktop */
+  .scr-cards { display: none; }
+
+  /* Dark mode fixes */
+  :global([data-theme="dark"]) .scr-search { background: var(--color-bg-secondary); color: var(--color-text); border-color: var(--color-border); }
+  :global([data-theme="dark"]) .scr-table-wrap { background: var(--color-bg-secondary); }
+  :global([data-theme="dark"]) .scr-th { background: var(--color-bg-secondary); }
+  :global([data-theme="dark"]) .scr-range-dot { border-color: var(--color-bg-secondary); }
+
+  /* Responsive: hide columns progressively */
+  @media (max-width: 1100px) {
+    .scr-th--hide-tablet, .scr-td--hide-tablet { display: none; }
+  }
+  @media (max-width: 900px) {
+    .scr-th--hide-mobile, .scr-td--hide-mobile { display: none; }
+  }
+
+  /* Mobile: switch to cards */
+  @media (max-width: 640px) {
+    .mkts-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .mkts-title { font-size: 1.5rem; }
+    .scr-table-wrap { display: none; }
+    .scr-cards { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-bottom: var(--spacing-xl); }
+    .scr-search-wrap { max-width: none; }
+  }
+</style>
+
+<!-- Global styles for dynamically generated stock cards (mobile) -->
+<style is:global>
+  .scr-cards .stk-card {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 12px 14px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--stk-accent, var(--color-border));
+    border-radius: 10px;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s;
+  }
+  .scr-cards .stk-row1 { display: flex; align-items: center; gap: 12px; }
+  .scr-cards .stk-logo {
+    width: 36px; height: 36px; min-width: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;
+  }
+  .scr-cards .stk-logo img { width: 24px; height: 24px; object-fit: contain; border-radius: 4px; display: block; }
+  .scr-cards .stk-logo--fallback { font-size: 0.7rem; font-weight: 800; }
+  .scr-cards .stk-id { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+  .scr-cards .stk-symbol { font-weight: 800; font-size: 0.9rem; color: var(--color-text); }
+  .scr-cards .stk-name { font-size: 0.72rem; color: var(--color-text-meta); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .scr-cards .stk-change {
+    font-size: 0.75rem; font-weight: 700; font-variant-numeric: tabular-nums;
+    white-space: nowrap; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; margin-left: auto;
+  }
+  .scr-cards .stk-change.rc-up { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .scr-cards .stk-change.rc-down { background: rgba(220,38,38,0.12); color: #dc2626; }
+  .scr-cards .stk-row2 {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 6px; border-top: 1px solid rgba(128,128,128,0.15);
+  }
+  .scr-cards .stk-price { font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .scr-cards .stk-meta { display: flex; gap: 12px; }
+  .scr-cards .stk-vol, .scr-cards .stk-mcap { font-size: 0.68rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+  .scr-cards .rc-up { color: #16a34a; }
+  .scr-cards .rc-down { color: #dc2626; }
+</style>

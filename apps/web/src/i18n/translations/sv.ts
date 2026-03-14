@@ -301,6 +301,22 @@ export const sv = {
   "stock.pageTitle": "Argentinska marknader",
   "stock.pageDesc": "Realtidskurser, diagram, företagsprofil och nyckeltal för argentinska aktier på BYMA.",
 
+  // Stock Screener
+  "screener.title": "Aktiescreener",
+  "screener.subtitle": "Panel Líder — Buenos Aires-börsen",
+  "screener.search": "Sök efter symbol eller namn…",
+  "screener.stocks": "aktier",
+  "screener.noResults": "Inga aktier hittades",
+  "screener.col.symbol": "Symbol",
+  "screener.col.price": "Kurs",
+  "screener.col.change": "Förändring",
+  "screener.col.volume": "Volym",
+  "screener.col.marketCap": "Börsvärde",
+  "screener.col.pe": "P/E",
+  "screener.col.eps": "VpA",
+  "screener.col.range": "52v intervall",
+  "screener.col.sector": "Sektor",
+
   // Common
   "common.siteDescription": "Argentinas nyheter for varlden — utan partiskhet, bara fakta. Pa 18 sprak",
   "common.breadcrumbHome": "Hem",

@@ -12,13 +12,7 @@ import {
   type ArticleRow,
 } from "@/lib/db";
 
-export function getStaticPaths() {
-  const langs = Object.keys(LANGUAGES);
-  const cats = Object.keys(CATEGORIES) as Category[];
-  return langs.flatMap((lang) =>
-    cats.map((category) => ({ params: { lang, category } }))
-  );
-}
+export const prerender = false;
 
 const { lang, category } = Astro.params;
 const catKey = category as Category;
@@ -26,7 +20,7 @@ const catLabel = t(lang!, `cat.${catKey}` as any) || CATEGORIES[catKey] || categ
 const subcats = SUBCATEGORIES[catKey] ?? {};
 
 // ---------------------------------------------------------------------------
-// Fetch articles from SQLite (build-time)
+// Fetch articles from SQLite (server-rendered)
 // ---------------------------------------------------------------------------
 const dbArticles = getArticlesByCategory(lang!, catKey, 20);
 

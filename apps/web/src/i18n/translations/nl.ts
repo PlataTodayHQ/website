@@ -301,6 +301,22 @@ export const nl = {
   "stock.pageTitle": "Argentijnse markten",
   "stock.pageDesc": "Realtime koersen, grafieken, bedrijfsprofiel en kerncijfers van Argentijnse aandelen op BYMA.",
 
+  // Stock Screener
+  "screener.title": "Aandelenscreener",
+  "screener.subtitle": "Panel Líder — Beurs van Buenos Aires",
+  "screener.search": "Zoek op symbool of naam…",
+  "screener.stocks": "aandelen",
+  "screener.noResults": "Geen aandelen gevonden",
+  "screener.col.symbol": "Symbool",
+  "screener.col.price": "Koers",
+  "screener.col.change": "Verandering",
+  "screener.col.volume": "Volume",
+  "screener.col.marketCap": "Marktkapital.",
+  "screener.col.pe": "K/W",
+  "screener.col.eps": "WpA",
+  "screener.col.range": "52w bereik",
+  "screener.col.sector": "Sector",
+
   // Common
   "common.siteDescription": "Argentijns nieuws voor de wereld — zonder vooroordelen, alleen feiten. In 18 talen",
   "common.breadcrumbHome": "Home",

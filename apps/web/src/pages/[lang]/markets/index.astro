@@ -67,6 +67,21 @@ const { lang } = Astro.params;
         </div>
         <span class="hub-card-arrow" aria-hidden="true">→</span>
       </a>
+
+      <a href={`/${lang}/markets/screener`} class="hub-card">
+        <div class="hub-card-icon">🔍</div>
+        <div class="hub-card-body">
+          <h2>Stock Screener</h2>
+          <p>Browse all Panel Líder stocks with key metrics, P/E ratios, and sector breakdown</p>
+        </div>
+        <div class="hub-card-preview" data-preview-screener>
+          <div class="hub-mini">
+            <span class="hub-mini-label">Stocks</span>
+            <span class="hub-mini-value" data-hub-stocks-count>—</span>
+          </div>
+        </div>
+        <span class="hub-card-arrow" aria-hidden="true">→</span>
+      </a>
     </div>
 
     <p class="hub-disclaimer">Data from Bluelytics and BYMA. For informational purposes only — not financial advice.</p>
@@ -135,6 +150,19 @@ const { lang } = Astro.params;
       // Fallback to proxy
       fetch('/api/merval').then(function(r) { return r.json(); }).then(loadMerval).catch(function() {});
     });
+
+  // Fetch stock count for screener preview
+  fetch('https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/leading-equity', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}'
+  }).then(function(r) { return r.json(); })
+    .then(function(d) {
+      var arr = (d && d.data) || d || [];
+      if (Array.isArray(arr) && arr.length > 0) {
+        var syms = {};
+        arr.forEach(function(s) { syms[s.symbol || ''] = true; });
+        setEl('[data-hub-stocks-count]', Object.keys(syms).length);
+      }
+    }).catch(function() {});
 })();
 </script>
 

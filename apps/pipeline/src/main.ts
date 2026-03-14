@@ -5,18 +5,22 @@ import { createQueries } from "./db/queries.js";
 import { scrapeAllFeeds } from "./scraper/index.js";
 import { ingestArticles } from "./scraper/ingest.js";
 import { enrichArticles } from "./scraper/enrich.js";
+import { configureS3 } from "./scraper/images.js";
 import { clusterArticles } from "./cluster/index.js";
 import { updateEventScores } from "./cluster/scoring.js";
 import { rewriteEvent } from "./rewriter/index.js";
 import { triggerRebuild } from "./rebuild.js";
 import { log, setLogLevel } from "./logger.js";
 
-async function main(): Promise<void> {
+export async function main(): Promise<void> {
   const startTime = Date.now();
   log.info("Pipeline started");
 
   const config = loadConfig();
   setLogLevel(config.logLevel);
+
+  // Configure S3 for image uploads (falls back to local if not configured)
+  configureS3(config);
 
   // Stage 0: Ensure DB schema is up to date
   runMigrations(config.databasePath);
@@ -92,10 +96,20 @@ async function main(): Promise<void> {
   log.info("Pipeline complete", { durationSec, timestamp: new Date().toISOString() });
 }
 
-main().catch((err) => {
-  log.error("Pipeline fatal error", {
-    error: String(err),
-    stack: (err as Error)?.stack,
+// Run standalone: tsx src/main.ts
+import { fileURLToPath as _flu } from "node:url";
+import _path from "node:path";
+
+const _isMain =
+  process.argv[1] &&
+  _path.resolve(process.argv[1]) === _path.resolve(_flu(import.meta.url));
+
+if (_isMain) {
+  main().catch((err) => {
+    log.error("Pipeline fatal error", {
+      error: String(err),
+      stack: (err as Error)?.stack,
+    });
+    process.exit(1);
   });
-  process.exit(1);
-});
+}

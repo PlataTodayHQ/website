@@ -301,6 +301,22 @@ export const ru = {
   "stock.pageTitle": "Аргентинские рынки",
   "stock.pageDesc": "Котировки, графики, профиль компании и ключевые показатели аргентинских акций на BYMA.",
 
+  // Stock Screener
+  "screener.title": "Скринер акций",
+  "screener.subtitle": "Panel Líder — Фондовая биржа Буэнос-Айреса",
+  "screener.search": "Поиск по тикеру или названию…",
+  "screener.stocks": "акций",
+  "screener.noResults": "Акции не найдены",
+  "screener.col.symbol": "Тикер",
+  "screener.col.price": "Цена",
+  "screener.col.change": "Изменение",
+  "screener.col.volume": "Объём",
+  "screener.col.marketCap": "Капитализация",
+  "screener.col.pe": "P/E",
+  "screener.col.eps": "EPS",
+  "screener.col.range": "Диапазон 52Н",
+  "screener.col.sector": "Сектор",
+
   // Common
   "common.siteDescription": "Новости Аргентины для всего мира — без предвзятости, только факты. На 18 языках",
   "common.breadcrumbHome": "Главная",

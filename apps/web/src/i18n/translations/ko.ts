@@ -301,6 +301,22 @@ export const ko = {
   "stock.pageTitle": "아르헨티나 시장",
   "stock.pageDesc": "BYMA 아르헨티나 주식의 실시간 시세, 차트, 기업 정보 및 주요 지표.",
 
+  // Stock Screener
+  "screener.title": "종목 스크리너",
+  "screener.subtitle": "Panel Líder — 부에노스아이레스 증권거래소",
+  "screener.search": "종목코드 또는 이름으로 검색…",
+  "screener.stocks": "종목",
+  "screener.noResults": "검색 결과가 없습니다",
+  "screener.col.symbol": "종목코드",
+  "screener.col.price": "현재가",
+  "screener.col.change": "등락",
+  "screener.col.volume": "거래량",
+  "screener.col.marketCap": "시가총액",
+  "screener.col.pe": "PER",
+  "screener.col.eps": "EPS",
+  "screener.col.range": "52주 범위",
+  "screener.col.sector": "업종",
+
   // Common
   "common.siteDescription": "전 세계를 위한 아르헨티나 뉴스 — 편향 없이, 사실만을. 18개 언어로 제공",
   "common.breadcrumbHome": "홈",

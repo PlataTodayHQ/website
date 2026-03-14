@@ -301,6 +301,22 @@ export const zh = {
   "stock.pageTitle": "阿根廷市场",
   "stock.pageDesc": "BYMA阿根廷股票实时报价、走势图、公司概况及关键数据。",
 
+  // Stock Screener
+  "screener.title": "股票筛选器",
+  "screener.subtitle": "Panel Líder — 布宜诺斯艾利斯证券交易所",
+  "screener.search": "按代码或名称搜索…",
+  "screener.stocks": "只股票",
+  "screener.noResults": "未找到匹配的股票",
+  "screener.col.symbol": "代码",
+  "screener.col.price": "价格",
+  "screener.col.change": "涨跌",
+  "screener.col.volume": "成交量",
+  "screener.col.marketCap": "市值",
+  "screener.col.pe": "市盈率",
+  "screener.col.eps": "每股收益",
+  "screener.col.range": "52周区间",
+  "screener.col.sector": "行业",
+
   // Common
   "common.siteDescription": "面向全球的阿根廷新闻——不偏不倚，只有事实。提供 18 种语言",
   "common.breadcrumbHome": "首页",

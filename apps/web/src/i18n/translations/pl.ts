@@ -301,6 +301,22 @@ export const pl = {
   "stock.pageTitle": "Rynki argentyńskie",
   "stock.pageDesc": "Notowania na żywo, wykresy, profil firmy i kluczowe wskaźniki argentyńskich akcji na BYMA.",
 
+  // Stock Screener
+  "screener.title": "Skaner akcji",
+  "screener.subtitle": "Panel Líder — Giełda w Buenos Aires",
+  "screener.search": "Szukaj po symbolu lub nazwie…",
+  "screener.stocks": "akcji",
+  "screener.noResults": "Nie znaleziono akcji",
+  "screener.col.symbol": "Symbol",
+  "screener.col.price": "Cena",
+  "screener.col.change": "Zmiana",
+  "screener.col.volume": "Wolumen",
+  "screener.col.marketCap": "Kapitalizacja",
+  "screener.col.pe": "C/Z",
+  "screener.col.eps": "ZnA",
+  "screener.col.range": "Zakres 52T",
+  "screener.col.sector": "Sektor",
+
   // Common
   "common.siteDescription": "Wiadomości z Argentyny dla całego świata — bez stronniczości, tylko fakty. W 18 językach",
   "common.breadcrumbHome": "Strona główna",

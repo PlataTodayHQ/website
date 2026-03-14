@@ -308,6 +308,22 @@ export const en = {
   "category.newsTitle": "{cat} — Argentina News",
   "category.newsDesc": "Latest {cat} news from Argentina. Updated coverage and analysis.",
 
+  // Stock Screener
+  "screener.title": "Stock Screener",
+  "screener.subtitle": "Panel Líder — Buenos Aires Stock Exchange",
+  "screener.search": "Search by symbol or name…",
+  "screener.stocks": "stocks",
+  "screener.noResults": "No stocks match your search",
+  "screener.col.symbol": "Symbol",
+  "screener.col.price": "Price",
+  "screener.col.change": "Change",
+  "screener.col.volume": "Volume",
+  "screener.col.marketCap": "Market Cap",
+  "screener.col.pe": "P/E",
+  "screener.col.eps": "EPS",
+  "screener.col.range": "52W Range",
+  "screener.col.sector": "Sector",
+
   // Common
   "common.siteDescription": "Argentina's news for the world — no bias, just facts. In 18 languages",
   "common.breadcrumbHome": "Home",
