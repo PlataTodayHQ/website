@@ -84,10 +84,11 @@ export const sv = {
   "justIn.ariaLabel": "Senaste nytt — de senaste uppdateringarna",
 
   // Trending
-  "trending.title": "Mest last",
+  "trending.title": "Vad folk läser",
   "trending.ariaLabel": "Populara nyheter",
 
   // Homepage
+  "home.politics": "Politik",
   "home.title": "Nyheter fran Argentina pa {lang}",
   "home.heroFallbackTitle": "Valkommen till Plata Today",
   "home.heroFallbackDesc": "Argentinas nyheter for varlden — utan partiskhet, bara fakta. Pa 18 sprak.",
@@ -383,6 +384,12 @@ export const sv = {
   "screener.col.eps": "VpA",
   "screener.col.range": "52v intervall",
   "screener.col.sector": "Sektor",
+
+  // 404
+  "notFound.title": "Sidan hittades inte",
+  "notFound.heading": "Sidan hittades inte",
+  "notFound.message": "Sidan du letar efter finns inte eller har flyttats.",
+  "notFound.backHome": "Gå till startsidan",
 
   // Common
   "common.siteDescription": "Argentinas nyheter for varlden — utan partiskhet, bara fakta. Pa 18 sprak",

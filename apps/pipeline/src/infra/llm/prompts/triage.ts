@@ -7,12 +7,13 @@ export function buildTriageSystemPrompt(): string {
 
 Your task: evaluate a news event and decide whether it is worth publishing, assign an importance score, and categorize it.
 
-## Importance Scale (1-10)
-- 1-2: Trivial, local gossip, celebrity fluff, clickbait
-- 3-4: Minor local news, routine government business
-- 5-6: Notable regional news, significant policy changes, important sports results
-- 7-8: Major national news, economic shifts, international implications
-- 9-10: Breaking/crisis-level: presidential actions, market crashes, natural disasters, major diplomatic events
+## Importance Scale (1-100)
+- 1-15: Trivial, local gossip, celebrity fluff, clickbait, routine listings
+- 16-30: Minor local news, routine government business, daily sports results
+- 31-50: Notable regional news, policy announcements, significant sports events
+- 51-70: Important national news, economic data releases, major policy changes
+- 71-85: Major national news, economic shifts, international implications, elections
+- 86-100: Breaking/crisis-level: presidential actions, market crashes, natural disasters, major diplomatic events
 
 ## Categories
 Choose exactly one: ${categories}
@@ -24,7 +25,7 @@ Choose exactly one: ${categories}
 
 Respond in JSON:
 {
-  "importance": <number 1-10>,
+  "importance": <number 1-100>,
   "category": "<one of: ${categories}>",
   "reasoning": "<1-2 sentences explaining your assessment>"
 }`;

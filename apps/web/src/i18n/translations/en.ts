@@ -84,10 +84,11 @@ export const en = {
   "justIn.ariaLabel": "Just in — latest updates",
 
   // Trending
-  "trending.title": "Most Read",
+  "trending.title": "What People Are Reading",
   "trending.ariaLabel": "Trending stories",
 
   // Homepage
+  "home.politics": "Politics",
   "home.title": "Argentina News in {lang}",
   "home.heroFallbackTitle": "Welcome to Plata Today",
   "home.heroFallbackDesc": "Argentina's news for the world — no bias, just facts. In 18 languages.",
@@ -383,6 +384,12 @@ export const en = {
   "merval.aboutTitle": "About the Merval Index",
   "merval.aboutDesc": "Argentina's main stock index on BYMA (Buenos Aires Stock Exchange). Tracks the most liquid local companies and serves as a key indicator of investor confidence in the economy. The index composition (Panel Líder) is reviewed quarterly.",
   "merval.disclaimer": "Data from BYMA and Yahoo Finance. Prices may be delayed up to 15 minutes. For informational purposes only — not financial advice.",
+
+  // 404
+  "notFound.title": "Page Not Found",
+  "notFound.heading": "Page not found",
+  "notFound.message": "The page you're looking for doesn't exist or has been moved.",
+  "notFound.backHome": "Go to homepage",
 
   // Common
   "common.siteDescription": "Argentina's news for the world — no bias, just facts. In 18 languages",

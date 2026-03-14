@@ -84,10 +84,11 @@ export const ja = {
   "justIn.ariaLabel": "最新ニュース — 新着情報",
 
   // Trending
-  "trending.title": "よく読まれている記事",
+  "trending.title": "みんなが読んでいる記事",
   "trending.ariaLabel": "注目の記事",
 
   // Homepage
+  "home.politics": "政治",
   "home.title": "{lang}で読むアルゼンチンニュース",
   "home.heroFallbackTitle": "Plata Todayへようこそ",
   "home.heroFallbackDesc": "世界に届けるアルゼンチンのニュース — 偏りなく、事実だけを。18言語で配信。",
@@ -383,6 +384,12 @@ export const ja = {
   "screener.col.eps": "EPS",
   "screener.col.range": "52週レンジ",
   "screener.col.sector": "セクター",
+
+  // 404
+  "notFound.title": "ページが見つかりません",
+  "notFound.heading": "ページが見つかりません",
+  "notFound.message": "お探しのページは存在しないか、移動された可能性があります。",
+  "notFound.backHome": "トップページへ",
 
   // Common
   "common.siteDescription": "世界に届けるアルゼンチンのニュース — 偏りなく、事実だけを。18言語で配信",

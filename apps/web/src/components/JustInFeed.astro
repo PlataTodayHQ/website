@@ -5,6 +5,7 @@ interface FeedItem {
   title: string;
   href: string;
   timeAgo: string;
+  category?: string;
 }
 
 interface Props {
@@ -24,7 +25,10 @@ const { items, lang = "en" } = Astro.props;
     {items.map((item) => (
       <li class="just-in-item">
         <time class="just-in-time">{item.timeAgo}</time>
-        <a href={item.href} class="just-in-link">{item.title}</a>
+        <div class="just-in-body">
+          {item.category && <span class="just-in-cat">{item.category}</span>}
+          <a href={item.href} class="just-in-link">{item.title}</a>
+        </div>
       </li>
     ))}
   </ul>
@@ -88,6 +92,21 @@ const { items, lang = "en" } = Astro.props;
     min-width: 60px;
     flex-shrink: 0;
     font-variant-numeric: tabular-nums;
+  }
+
+  .just-in-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .just-in-cat {
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-gold-dark);
   }
 
   .just-in-link {

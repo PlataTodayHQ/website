@@ -11,6 +11,7 @@ const DB_PATH = process.env.DATABASE_PATH
   : path.resolve(__dirname, "../../../data/plata.db");
 
 const ASTRO_DIST = path.resolve(__dirname, "../../web/dist/server/entry.mjs");
+const DIST_CLIENT = path.resolve(__dirname, "../../web/dist/client");
 
 async function start(): Promise<void> {
   console.log("[server] Starting plata.today unified server...");
@@ -26,7 +27,7 @@ async function start(): Promise<void> {
 
   // 3. Start background jobs
   console.log("[server] Starting background jobs...");
-  startJobs(DB_PATH);
+  startJobs(DB_PATH, DIST_CLIENT);
 
   // Graceful shutdown
   const shutdown = () => {

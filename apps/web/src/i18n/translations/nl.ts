@@ -84,10 +84,11 @@ export const nl = {
   "justIn.ariaLabel": "Zojuist — laatste updates",
 
   // Trending
-  "trending.title": "Meest gelezen",
+  "trending.title": "Wat mensen lezen",
   "trending.ariaLabel": "Populaire verhalen",
 
   // Homepage
+  "home.politics": "Politiek",
   "home.title": "Nieuws uit Argentinië in het {lang}",
   "home.heroFallbackTitle": "Welkom bij Plata Today",
   "home.heroFallbackDesc": "Argentijns nieuws voor de wereld — zonder vooroordelen, alleen feiten. In 18 talen.",
@@ -383,6 +384,12 @@ export const nl = {
   "screener.col.eps": "WpA",
   "screener.col.range": "52w bereik",
   "screener.col.sector": "Sector",
+
+  // 404
+  "notFound.title": "Pagina niet gevonden",
+  "notFound.heading": "Pagina niet gevonden",
+  "notFound.message": "De pagina die u zoekt bestaat niet of is verplaatst.",
+  "notFound.backHome": "Ga naar de startpagina",
 
   // Common
   "common.siteDescription": "Argentijns nieuws voor de wereld — zonder vooroordelen, alleen feiten. In 18 talen",

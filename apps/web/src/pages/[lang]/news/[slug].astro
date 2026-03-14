@@ -12,7 +12,6 @@ import {
   timeAgo,
   readingTime,
   parseSourceNames,
-  parseSourceUrls,
 } from "@/lib/db";
 
 export const prerender = false;
@@ -41,11 +40,6 @@ const alternateUrls = Object.fromEntries(
 
 const catLabel = t(lang!, `cat.${row.category}` as any) || CATEGORIES[row.category as Category] || row.category;
 const sourceNames = parseSourceNames(row.source_names);
-const sourceUrls = parseSourceUrls(row.source_urls);
-const sources = sourceNames.map((name, i) => ({
-  name,
-  url: sourceUrls[i] ?? "#",
-}));
 
 const wordCount = row.word_count || row.body.split(/\s+/).length;
 const computedReadingTime = readingTime(wordCount, lang!);
@@ -186,12 +180,12 @@ const relatedArticles = getArticlesByLang(lang!, 20)
     </div>
 
     <!-- Sources -->
-    {sources.length > 0 && (
+    {sourceNames.length > 0 && (
       <footer class="article-sources">
         <h2>{t(lang!, "article.sources")}</h2>
         <ul>
-          {sources.map((s) => (
-            <li><a href={s.url} target="_blank" rel="noopener noreferrer">{s.name} <span class="sr-only">{t(lang!, "article.opensNewTab")}</span></a></li>
+          {sourceNames.map((name) => (
+            <li>{name}</li>
           ))}
         </ul>
       </footer>
@@ -472,9 +466,9 @@ const relatedArticles = getArticlesByLang(lang!, 20)
     gap: var(--spacing-md);
   }
 
-  .article-sources a {
+  .article-sources li {
     font-size: 0.9rem;
-    color: var(--color-celeste-dark);
+    color: var(--color-text-secondary);
   }
 
   /* Related Articles */

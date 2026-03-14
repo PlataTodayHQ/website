@@ -34,7 +34,14 @@ function catLabel(cat: string) {
   return t(lang!, `cat.${cat}` as any) || CATEGORIES[cat as Category] || cat;
 }
 
+const parseSources = (raw: string): string[] => {
+  try { return JSON.parse(raw) as string[]; }
+  catch { return []; }
+};
+
 function mapRow(a: ArticleRow) {
+  const ageHours = (Date.now() - new Date(a.published_at).getTime()) / 3600000;
+  const sources = parseSources(a.source_names);
   return {
     title: a.title,
     description: a.meta_description ?? "",
@@ -42,7 +49,10 @@ function mapRow(a: ArticleRow) {
     imageUrl: a.image_url ?? "/images/placeholder.svg",
     timeAgo: timeAgo(a.published_at, lang!),
     subcategory: catLabel(a.category),
+    category: a.category,
     readingTime: readingTime(a.word_count, lang!),
+    isNew: ageHours < 2,
+    sourceLabel: sources.length > 0 ? sources.slice(0, 2).join(", ") : undefined,
   };
 }
 
@@ -57,11 +67,31 @@ const byImportance = [...allArticles].sort(
   (a, b) => trendingScore(b) - trendingScore(a),
 );
 
-const byCat = (cat: string) =>
-  allArticles.filter((a) => a.category === cat).map(mapRow);
+// ---------------------------------------------------------------------------
+// Global deduplication: each article appears at most once on the homepage
+// ---------------------------------------------------------------------------
+const usedSlugs = new Set<string>();
+
+const claim = (articles: ArticleRow[], count: number): ArticleRow[] => {
+  const result: ArticleRow[] = [];
+  for (const a of articles) {
+    if (result.length >= count) break;
+    if (usedSlugs.has(a.slug)) continue;
+    result.push(a);
+    usedSlugs.add(a.slug);
+  }
+  return result;
+};
+
+const claimByCat = (cat: string, count: number) => {
+  const catArticles = allArticles
+    .filter((a) => a.category === cat && !usedSlugs.has(a.slug))
+    .sort((a, b) => trendingScore(b) - trendingScore(a));
+  return claim(catArticles, count).map(mapRow);
+};
 
 // Hero — most important article
-const heroRow = byImportance[0];
+const [heroRow] = claim(byImportance, 1);
 const heroArticle = heroRow
   ? mapRow(heroRow)
   : {
@@ -71,62 +101,63 @@ const heroArticle = heroRow
       imageUrl: "/images/placeholder.svg",
       timeAgo: "",
       subcategory: "",
+      category: "",
       readingTime: "",
+      isNew: false,
+      sourceLabel: undefined as string | undefined,
     };
 
-const relatedLinks = byImportance.slice(1, 4).map((a) => ({
+// Related links (3) with category labels
+const relatedArticles = claim(byImportance, 3);
+const relatedLinks = relatedArticles.map((a) => ({
   title: a.title,
   href: `/${lang}/news/${a.slug}`,
+  category: catLabel(a.category),
+  categoryKey: a.category,
 }));
 
-// Trending — top 5 excluding hero + related (no duplicates)
-const heroSlugs = new Set([heroRow?.slug, ...byImportance.slice(1, 4).map((a) => a.slug)]);
-const trendingItems = byImportance
-  .filter((a) => !heroSlugs.has(a.slug))
-  .slice(0, 5)
-  .map((a) => ({
-    title: a.title,
-    href: `/${lang}/news/${a.slug}`,
-    category: catLabel(a.category),
-    timeAgo: timeAgo(a.published_at, lang!),
-  }));
-
-// Just In — latest 10 (allArticles already sorted by published_at DESC)
-const justInItems = allArticles.slice(0, 10).map((a) => ({
+// Trending — top 5 from remaining by trendingScore
+const trendingItems = claim(byImportance, 5).map((a) => ({
   title: a.title,
   href: `/${lang}/news/${a.slug}`,
+  category: catLabel(a.category),
   timeAgo: timeAgo(a.published_at, lang!),
 }));
 
-// Top Stories — 6 items
-const topStories = allArticles.slice(0, 6).map(mapRow);
+// Politics
+const politicsAll = claimByCat("politics", 5);
+const politicsFeatured = politicsAll[0] ?? null;
+const politicsSidebar = politicsAll.slice(1, 5);
+
+// Just In — 8 latest, deduplicated
+const justInItems = claim([...allArticles], 8).map((a) => ({
+  title: a.title,
+  href: `/${lang}/news/${a.slug}`,
+  timeAgo: timeAgo(a.published_at, lang!),
+  category: catLabel(a.category),
+}));
 
 // Economy & Business
-const econAll = byCat("economy");
+const econAll = claimByCat("economy", 5);
 const econFeatured = econAll[0] ?? null;
 const econSidebar = econAll.slice(1, 5);
 
 // Sports
-const sportsAll = byCat("sports");
+const sportsAll = claimByCat("sports", 5);
 const sportsFeatured = sportsAll[0] ?? null;
 const sportsSidebar = sportsAll.slice(1, 5);
 
-// Culture & Society
-const cultureSociety = [...byCat("culture"), ...byCat("society")].slice(0, 4);
-
 // World
-const worldNews = byCat("world").slice(0, 4);
+const worldNews = claimByCat("world", 4);
+
+// Culture & Society (combined)
+const cultureSociety = [...claimByCat("culture", 2), ...claimByCat("society", 2)];
 
 // Science & Tech
-const scienceTech = byCat("science").slice(0, 4);
+const scienceTech = claimByCat("science", 4);
 
-// More News — remaining articles
-const moreNews = allArticles.slice(6, 14).map((a) => ({
-  title: a.title,
-  href: `/${lang}/news/${a.slug}`,
-  timeAgo: timeAgo(a.published_at, lang!),
-  subcategory: catLabel(a.category),
-}));
+// More News — remaining articles with images
+const moreNews = claim(allArticles, 8).map(mapRow);
 ---
 
 <Base
@@ -162,14 +193,18 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
         <img src={heroArticle.imageUrl} alt={heroArticle.title} loading="eager" />
       </div>
       <div class="hero-body">
+        <div class="hero-meta-top">
+          {heroArticle.isNew && <span class="hero-badge-new">NEW</span>}
+          {heroArticle.subcategory && <span class="hero-cat" style={heroArticle.category ? `color: var(--cat-${heroArticle.category})` : undefined}>{heroArticle.subcategory}</span>}
+        </div>
         <h1 class="hero-title">{heroArticle.title}</h1>
         <p class="hero-desc">{heroArticle.description}</p>
         <div class="meta">
           {heroArticle.timeAgo && <span class="meta-time">{heroArticle.timeAgo}</span>}
-          {heroArticle.subcategory && <span class="meta-dot"></span>}
-          {heroArticle.subcategory && <span class="meta-sub">{heroArticle.subcategory}</span>}
           {heroArticle.readingTime && <span class="meta-dot"></span>}
           {heroArticle.readingTime && <span class="meta-reading">{heroArticle.readingTime}</span>}
+          {heroArticle.sourceLabel && <span class="meta-dot"></span>}
+          {heroArticle.sourceLabel && <span class="meta-source">via {heroArticle.sourceLabel}</span>}
         </div>
       </div>
     </a>
@@ -177,6 +212,7 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
       <ul class="hero-related">
         {relatedLinks.map((link) => (
           <li>
+            <span class="hero-related-cat" style={`color: var(--cat-${link.categoryKey})`}>{link.category}</span>
             <a href={link.href} class="hero-related-link">{link.title}</a>
           </li>
         ))}
@@ -187,29 +223,47 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
   <!-- TRENDING -->
   {trendingItems.length > 0 && <TrendingSection items={trendingItems} lang={lang} />}
 
-  <!-- JUST IN -->
-  {justInItems.length > 0 && <JustInFeed items={justInItems} lang={lang} />}
-
-  <!-- TOP STORIES -->
-  {topStories.length > 0 && <SectionHeader title={t(lang!, "home.topStories")} />}
-  {topStories.length > 0 && (
-    <section class="top-stories" aria-label={t(lang!, "home.topStories")}>
-      {topStories.map((a) => (
-        <ArticleCard
-          title={a.title}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          readingTime={a.readingTime}
-          variant="compact"
-        />
-      ))}
+  <!-- POLITICS -->
+  {politicsAll.length > 0 && <SectionHeader title={t(lang!, "home.politics")} href={`/${lang}/category/politics`} accentColor="var(--cat-politics)" />}
+  {politicsAll.length > 0 && (
+    <section class="topic-section" aria-label={t(lang!, "home.politics")}>
+      {politicsFeatured && (
+        <div class="topic-featured">
+          <ArticleCard
+            title={politicsFeatured.title}
+            description={politicsFeatured.description}
+            href={politicsFeatured.href}
+            imageUrl={politicsFeatured.imageUrl}
+            timeAgo={politicsFeatured.timeAgo}
+            category={politicsFeatured.subcategory}
+            categoryKey={politicsFeatured.category}
+            readingTime={politicsFeatured.readingTime}
+            isNew={politicsFeatured.isNew}
+            sourceLabel={politicsFeatured.sourceLabel}
+          />
+        </div>
+      )}
+      <aside class="topic-sidebar">
+        {politicsSidebar.map((a) => (
+          <ArticleCard
+            title={a.title}
+            href={a.href}
+            timeAgo={a.timeAgo}
+            category={a.subcategory}
+            categoryKey={a.category}
+            readingTime={a.readingTime}
+            variant="sidebar"
+          />
+        ))}
+      </aside>
     </section>
   )}
 
+  <!-- JUST IN -->
+  {justInItems.length > 0 && <JustInFeed items={justInItems} lang={lang} />}
+
   <!-- ECONOMY & BUSINESS -->
-  {econAll.length > 0 && <SectionHeader title={t(lang!, "home.economyBusiness")} href={`/${lang}/category/economy`} />}
+  {econAll.length > 0 && <SectionHeader title={t(lang!, "home.economyBusiness")} href={`/${lang}/category/economy`} accentColor="var(--cat-economy)" />}
   {econAll.length > 0 && (
     <section class="topic-section" aria-label={t(lang!, "home.economyBusiness")}>
       {econFeatured && (
@@ -221,7 +275,10 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
             imageUrl={econFeatured.imageUrl}
             timeAgo={econFeatured.timeAgo}
             category={econFeatured.subcategory}
+            categoryKey={econFeatured.category}
             readingTime={econFeatured.readingTime}
+            isNew={econFeatured.isNew}
+            sourceLabel={econFeatured.sourceLabel}
           />
         </div>
       )}
@@ -232,6 +289,7 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
             href={a.href}
             timeAgo={a.timeAgo}
             category={a.subcategory}
+            categoryKey={a.category}
             readingTime={a.readingTime}
             variant="sidebar"
           />
@@ -241,7 +299,7 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
   )}
 
   <!-- SPORTS -->
-  {sportsAll.length > 0 && <SectionHeader title={t(lang!, "cat.sports")} href={`/${lang}/category/sports`} />}
+  {sportsAll.length > 0 && <SectionHeader title={t(lang!, "cat.sports")} href={`/${lang}/category/sports`} accentColor="var(--cat-sports)" />}
   {sportsAll.length > 0 && (
     <section class="topic-section" aria-label={t(lang!, "cat.sports")}>
       {sportsFeatured && (
@@ -253,7 +311,10 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
             imageUrl={sportsFeatured.imageUrl}
             timeAgo={sportsFeatured.timeAgo}
             category={sportsFeatured.subcategory}
+            categoryKey={sportsFeatured.category}
             readingTime={sportsFeatured.readingTime}
+            isNew={sportsFeatured.isNew}
+            sourceLabel={sportsFeatured.sourceLabel}
           />
         </div>
       )}
@@ -264,6 +325,7 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
             href={a.href}
             timeAgo={a.timeAgo}
             category={a.subcategory}
+            categoryKey={a.category}
             readingTime={a.readingTime}
             variant="sidebar"
           />
@@ -275,26 +337,8 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
   <!-- NEWSLETTER BANNER -->
   <NewsletterBanner lang={lang} />
 
-  <!-- CULTURE & SOCIETY -->
-  {cultureSociety.length > 0 && <SectionHeader title={t(lang!, "home.cultureSociety")} href={`/${lang}/category/culture`} />}
-  {cultureSociety.length > 0 && (
-    <section class="compact-grid" aria-label={t(lang!, "home.cultureSociety")}>
-      {cultureSociety.map((a) => (
-        <ArticleCard
-          title={a.title}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          readingTime={a.readingTime}
-          variant="compact"
-        />
-      ))}
-    </section>
-  )}
-
   <!-- WORLD -->
-  {worldNews.length > 0 && <SectionHeader title={t(lang!, "cat.world")} href={`/${lang}/category/world`} />}
+  {worldNews.length > 0 && <SectionHeader title={t(lang!, "cat.world")} href={`/${lang}/category/world`} accentColor="var(--cat-world)" />}
   {worldNews.length > 0 && (
     <section class="compact-grid" aria-label={t(lang!, "cat.world")}>
       {worldNews.map((a) => (
@@ -304,7 +348,29 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
           imageUrl={a.imageUrl}
           timeAgo={a.timeAgo}
           category={a.subcategory}
+          categoryKey={a.category}
           readingTime={a.readingTime}
+          isNew={a.isNew}
+          variant="compact"
+        />
+      ))}
+    </section>
+  )}
+
+  <!-- CULTURE & SOCIETY -->
+  {cultureSociety.length > 0 && <SectionHeader title={t(lang!, "home.cultureSociety")} href={`/${lang}/category/culture`} accentColor="var(--cat-culture)" />}
+  {cultureSociety.length > 0 && (
+    <section class="compact-grid" aria-label={t(lang!, "home.cultureSociety")}>
+      {cultureSociety.map((a) => (
+        <ArticleCard
+          title={a.title}
+          href={a.href}
+          imageUrl={a.imageUrl}
+          timeAgo={a.timeAgo}
+          category={a.subcategory}
+          categoryKey={a.category}
+          readingTime={a.readingTime}
+          isNew={a.isNew}
           variant="compact"
         />
       ))}
@@ -312,7 +378,7 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
   )}
 
   <!-- SCIENCE & TECH -->
-  {scienceTech.length > 0 && <SectionHeader title={t(lang!, "cat.science")} href={`/${lang}/category/science`} />}
+  {scienceTech.length > 0 && <SectionHeader title={t(lang!, "cat.science")} href={`/${lang}/category/science`} accentColor="var(--cat-science)" />}
   {scienceTech.length > 0 && (
     <section class="sidebar-list" aria-label={t(lang!, "cat.science")}>
       {scienceTech.map((a) => (
@@ -321,6 +387,7 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
           href={a.href}
           timeAgo={a.timeAgo}
           category={a.subcategory}
+          categoryKey={a.category}
           variant="sidebar"
         />
       ))}
@@ -330,18 +397,18 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
   <!-- MORE NEWS -->
   {moreNews.length > 0 && <SectionHeader title={t(lang!, "home.moreNews")} />}
   {moreNews.length > 0 && (
-    <section class="more-news" aria-label={t(lang!, "home.moreNews")}>
+    <section class="compact-grid" aria-label={t(lang!, "home.moreNews")}>
       {moreNews.map((a) => (
-        <div class="mn-item">
-          <a href={a.href} class="mn-link">
-            <h3 class="mn-title">{a.title}</h3>
-          </a>
-          <div class="meta">
-            <span class="meta-time">{a.timeAgo}</span>
-            <span class="meta-dot"></span>
-            <span class="meta-sub">{a.subcategory}</span>
-          </div>
-        </div>
+        <ArticleCard
+          title={a.title}
+          href={a.href}
+          imageUrl={a.imageUrl}
+          timeAgo={a.timeAgo}
+          category={a.subcategory}
+          categoryKey={a.category}
+          readingTime={a.readingTime}
+          variant="compact"
+        />
       ))}
     </section>
   )}
@@ -368,6 +435,32 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
 
   .hero-link:hover .hero-title {
     text-decoration: underline;
+  }
+
+  .hero-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .hero-badge-new {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    background: #b91c1c;
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .hero-cat {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .hero-image {
@@ -401,7 +494,11 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
     line-height: 1.65;
     color: var(--color-text-secondary);
     margin-bottom: 12px;
-    max-width: var(--content-width);
+  }
+
+  .meta-source {
+    font-size: 0.75rem;
+    font-style: italic;
   }
 
   .hero-related {
@@ -430,6 +527,15 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
     border-radius: 50%;
   }
 
+  .hero-related-cat {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 2px;
+  }
+
   .hero-related-link {
     font-family: var(--font-serif);
     font-size: 1rem;
@@ -442,34 +548,6 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
   .hero-related-link:hover {
     text-decoration: underline;
     color: var(--color-link-hover);
-  }
-
-  /* ====================== */
-  /* TOP STORIES            */
-  /* ====================== */
-  .top-stories {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    margin-bottom: var(--spacing-2xl);
-  }
-
-  .top-stories :global(.card--compact) {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .top-stories :global(.card--compact:nth-child(odd)) {
-    padding-right: var(--spacing-xl);
-    border-right: 1px solid var(--color-border);
-  }
-
-  .top-stories :global(.card--compact:nth-child(even)) {
-    padding-left: var(--spacing-xl);
-  }
-
-  .top-stories :global(.card--compact:nth-last-child(-n+2)) {
-    border-bottom: none;
   }
 
   /* ========================= */
@@ -527,46 +605,43 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
   }
 
   /* ========================= */
-  /* MORE NEWS — single col    */
+  /* DESKTOP HERO              */
   /* ========================= */
-  .more-news {
-    max-width: var(--content-width);
-    margin-bottom: var(--spacing-2xl);
-  }
+  @media (min-width: 1025px) {
+    .hero-link {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: var(--spacing-xl);
+      align-items: start;
+    }
 
-  .mn-item {
-    padding: 16px 0;
-    border-bottom: 1px solid var(--color-border);
-  }
+    .hero-image {
+      margin-bottom: 0;
+    }
 
-  .mn-item:first-child {
-    padding-top: 0;
-  }
+    .hero-image img {
+      aspect-ratio: 3 / 2;
+    }
 
-  .mn-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
+    .hero-title {
+      font-size: 1.8rem;
+    }
 
-  .mn-link {
-    color: var(--color-text);
-  }
+    .hero-related {
+      flex-direction: row;
+      gap: var(--spacing-lg);
+    }
 
-  .mn-link:hover {
-    text-decoration: none;
-  }
+    .hero-related li {
+      flex: 1;
+      border-left: 2px solid var(--color-accent);
+      padding-left: 12px;
+      padding-top: 0;
+    }
 
-  .mn-link:hover .mn-title {
-    text-decoration: underline;
-  }
-
-  .mn-title {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    font-weight: 700;
-    line-height: 1.4;
-    margin-bottom: 6px;
-    letter-spacing: -0.01em;
+    .hero-related li::before {
+      display: none;
+    }
   }
 
   /* ========================= */
@@ -603,29 +678,24 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
       font-size: 0.9rem;
     }
 
-    .top-stories,
     .compact-grid {
       grid-template-columns: 1fr;
     }
 
-    .top-stories :global(.card--compact),
     .compact-grid :global(.card--compact) {
       padding: 16px 0;
       border-bottom: 1px solid var(--color-border);
     }
 
-    .top-stories :global(.card--compact:nth-child(odd)),
     .compact-grid :global(.card--compact:nth-child(odd)) {
       padding-right: 0;
       border-right: none;
     }
 
-    .top-stories :global(.card--compact:nth-child(even)),
     .compact-grid :global(.card--compact:nth-child(even)) {
       padding-left: 0;
     }
 
-    .top-stories :global(.card--compact:last-child),
     .compact-grid :global(.card--compact:last-child) {
       border-bottom: none;
     }

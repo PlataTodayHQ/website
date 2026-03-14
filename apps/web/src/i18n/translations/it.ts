@@ -84,10 +84,11 @@ export const it = {
   "justIn.ariaLabel": "Ultime notizie — aggiornamenti recenti",
 
   // Trending
-  "trending.title": "Più letti",
+  "trending.title": "Cosa leggono le persone",
   "trending.ariaLabel": "Articoli di tendenza",
 
   // Homepage
+  "home.politics": "Politica",
   "home.title": "Notizie dall'Argentina in {lang}",
   "home.heroFallbackTitle": "Benvenuto su Plata Today",
   "home.heroFallbackDesc": "Le notizie dall'Argentina per il mondo — senza pregiudizi, solo fatti. In 18 lingue.",
@@ -383,6 +384,12 @@ export const it = {
   "screener.col.eps": "UPA",
   "screener.col.range": "Range 52S",
   "screener.col.sector": "Settore",
+
+  // 404
+  "notFound.title": "Pagina non trovata",
+  "notFound.heading": "Pagina non trovata",
+  "notFound.message": "La pagina che cerchi non esiste o è stata spostata.",
+  "notFound.backHome": "Vai alla home",
 
   // Common
   "common.siteDescription": "Le notizie dall'Argentina per il mondo — senza pregiudizi, solo fatti. In 18 lingue",

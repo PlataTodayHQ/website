@@ -84,10 +84,11 @@ export const zh = {
   "justIn.ariaLabel": "最新消息——实时更新",
 
   // Trending
-  "trending.title": "热门阅读",
+  "trending.title": "大家在读什么",
   "trending.ariaLabel": "热门报道",
 
   // Homepage
+  "home.politics": "政治",
   "home.title": "阿根廷新闻 · {lang}",
   "home.heroFallbackTitle": "欢迎来到 Plata Today",
   "home.heroFallbackDesc": "面向全球的阿根廷新闻——不偏不倚，只有事实。提供 18 种语言。",
@@ -383,6 +384,12 @@ export const zh = {
   "screener.col.eps": "每股收益",
   "screener.col.range": "52周区间",
   "screener.col.sector": "行业",
+
+  // 404
+  "notFound.title": "页面未找到",
+  "notFound.heading": "页面未找到",
+  "notFound.message": "您查找的页面不存在或已被移动。",
+  "notFound.backHome": "返回首页",
 
   // Common
   "common.siteDescription": "面向全球的阿根廷新闻——不偏不倚，只有事实。提供 18 种语言",

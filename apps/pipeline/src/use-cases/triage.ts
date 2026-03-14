@@ -29,13 +29,13 @@ export async function triageEvent(
 
   const result = await llm.triage(sources);
 
-  const importance = Math.max(1, Math.min(10, Math.round(result.importance)));
+  const importance = Math.max(1, Math.min(100, Math.round(result.importance)));
   const category = CATEGORY_LIST.includes(result.category as any)
     ? result.category
     : event.category;
   const reasoning = String(result.reasoning ?? "").slice(0, 500);
 
-  if (importance < 3) {
+  if (importance < 20) {
     eventRepo.kill(event.id, importance, reasoning);
     log.info("Event killed by triage", { eventId: event.id, importance, category, reasoning });
     return "killed";

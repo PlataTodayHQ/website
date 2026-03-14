@@ -84,10 +84,11 @@ export const es = {
   "justIn.ariaLabel": "Ultimo momento — ultimas actualizaciones",
 
   // Trending
-  "trending.title": "Mas leidas",
+  "trending.title": "Lo que la gente lee",
   "trending.ariaLabel": "Noticias mas leidas",
 
   // Homepage
+  "home.politics": "Política",
   "home.title": "Noticias de Argentina en {lang}",
   "home.heroFallbackTitle": "Bienvenido a Plata Today",
   "home.heroFallbackDesc": "Las noticias de Argentina para el mundo — sin sesgo, solo hechos. En 18 idiomas.",
@@ -383,6 +384,12 @@ export const es = {
   "screener.col.eps": "GPA",
   "screener.col.range": "Rango 52S",
   "screener.col.sector": "Sector",
+
+  // 404
+  "notFound.title": "Página no encontrada",
+  "notFound.heading": "Página no encontrada",
+  "notFound.message": "La página que buscas no existe o fue movida.",
+  "notFound.backHome": "Ir al inicio",
 
   // Common
   "common.siteDescription": "Las noticias de Argentina para el mundo — sin sesgo, solo hechos. En 18 idiomas",

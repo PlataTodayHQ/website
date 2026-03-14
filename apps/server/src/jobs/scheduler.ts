@@ -1,9 +1,10 @@
 import { runPipeline } from "./pipeline.js";
 import { fetchMarketData } from "./market-data.js";
+import { generateSitemaps } from "./sitemap.js";
 
 const intervals: NodeJS.Timeout[] = [];
 
-export function startJobs(dbPath: string): void {
+export function startJobs(dbPath: string, distDir: string): void {
   // Run pipeline immediately on start, then every 30 minutes
   // Skip if LLM_API_KEY is not configured
   if (process.env.LLM_API_KEY) {
@@ -34,6 +35,20 @@ export function startJobs(dbPath: string): void {
           console.error("[scheduler] Market data interval error:", err),
         ),
       5 * 60 * 1000,
+    ),
+  );
+
+  // Generate sitemaps immediately, then every 24 hours
+  generateSitemaps(dbPath, distDir).catch((err) =>
+    console.error("[scheduler] Sitemap startup error:", err),
+  );
+  intervals.push(
+    setInterval(
+      () =>
+        generateSitemaps(dbPath, distDir).catch((err) =>
+          console.error("[scheduler] Sitemap interval error:", err),
+        ),
+      24 * 60 * 60 * 1000,
     ),
   );
 }

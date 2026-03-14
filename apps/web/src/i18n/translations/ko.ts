@@ -84,10 +84,11 @@ export const ko = {
   "justIn.ariaLabel": "방금 들어온 뉴스 — 최신 소식",
 
   // Trending
-  "trending.title": "많이 읽은 기사",
+  "trending.title": "사람들이 읽고 있는 기사",
   "trending.ariaLabel": "인기 기사",
 
   // Homepage
+  "home.politics": "정치",
   "home.title": "{lang}으로 읽는 아르헨티나 뉴스",
   "home.heroFallbackTitle": "Plata Today에 오신 것을 환영합니다",
   "home.heroFallbackDesc": "전 세계를 위한 아르헨티나 뉴스 — 편향 없이, 사실만을. 18개 언어로 제공.",
@@ -383,6 +384,12 @@ export const ko = {
   "screener.col.eps": "EPS",
   "screener.col.range": "52주 범위",
   "screener.col.sector": "업종",
+
+  // 404
+  "notFound.title": "페이지를 찾을 수 없습니다",
+  "notFound.heading": "페이지를 찾을 수 없습니다",
+  "notFound.message": "찾으시는 페이지가 존재하지 않거나 이동되었습니다.",
+  "notFound.backHome": "홈으로 이동",
 
   // Common
   "common.siteDescription": "전 세계를 위한 아르헨티나 뉴스 — 편향 없이, 사실만을. 18개 언어로 제공",

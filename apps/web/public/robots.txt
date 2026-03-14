@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://plata.today/sitemap.xml
+Sitemap: https://plata.today/sitemap-index.xml

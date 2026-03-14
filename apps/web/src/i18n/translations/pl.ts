@@ -84,10 +84,11 @@ export const pl = {
   "justIn.ariaLabel": "Właśnie teraz — najnowsze wiadomości",
 
   // Trending
-  "trending.title": "Najczęściej czytane",
+  "trending.title": "Co czytają ludzie",
   "trending.ariaLabel": "Popularne artykuły",
 
   // Homepage
+  "home.politics": "Polityka",
   "home.title": "Wiadomości z Argentyny po {lang}",
   "home.heroFallbackTitle": "Witamy w Plata Today",
   "home.heroFallbackDesc": "Wiadomości z Argentyny dla całego świata — bez stronniczości, tylko fakty. W 18 językach.",
@@ -383,6 +384,12 @@ export const pl = {
   "screener.col.eps": "ZnA",
   "screener.col.range": "Zakres 52T",
   "screener.col.sector": "Sektor",
+
+  // 404
+  "notFound.title": "Strona nie znaleziona",
+  "notFound.heading": "Strona nie znaleziona",
+  "notFound.message": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
+  "notFound.backHome": "Przejdź na stronę główną",
 
   // Common
   "common.siteDescription": "Wiadomości z Argentyny dla całego świata — bez stronniczości, tylko fakty. W 18 językach",

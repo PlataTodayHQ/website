@@ -1,0 +1,90 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export const prerender = false;
+
+// Try to detect language from URL path
+const pathLang = Astro.url.pathname.split("/")[1];
+const lang = pathLang && pathLang in LANGUAGES ? pathLang : "en";
+
+Astro.response.status = 404;
+---
+
+<Base
+  title={t(lang, "notFound.title")}
+  lang={lang}
+>
+  <div class="not-found">
+    <span class="not-found-code">404</span>
+    <h1 class="not-found-title">{t(lang, "notFound.heading")}</h1>
+    <p class="not-found-message">{t(lang, "notFound.message")}</p>
+    <a href={`/${lang}/`} class="not-found-link">{t(lang, "notFound.backHome")}</a>
+  </div>
+</Base>
+
+<style>
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    min-height: 40vh;
+  }
+
+  .not-found-code {
+    font-size: 6rem;
+    font-weight: 800;
+    font-family: var(--font-sans);
+    color: var(--color-border);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .not-found-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .not-found-message {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    max-width: 400px;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .not-found-link {
+    display: inline-block;
+    padding: 10px 24px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    background: var(--color-celeste);
+    color: #fff;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+
+  .not-found-link:hover {
+    background: var(--color-celeste-dark);
+    text-decoration: none;
+    color: #fff;
+  }
+
+  @media (max-width: 640px) {
+    .not-found-code {
+      font-size: 4rem;
+    }
+
+    .not-found-title {
+      font-size: 1.25rem;
+    }
+  }
+</style>

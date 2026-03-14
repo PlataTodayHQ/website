@@ -2,12 +2,13 @@
 interface Props {
   title: string;
   href?: string;
+  accentColor?: string;
 }
 
-const { title, href } = Astro.props;
+const { title, href, accentColor } = Astro.props;
 ---
 
-<div class="section-header">
+<div class="section-header" style={accentColor ? `border-color: ${accentColor}` : undefined}>
   {href ? (
     <a href={href} class="section-title-link">
       <h2 class="section-title">{title}</h2>

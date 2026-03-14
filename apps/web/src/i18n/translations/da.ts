@@ -84,10 +84,11 @@ export const da = {
   "justIn.ariaLabel": "Netop nu — seneste opdateringer",
 
   // Trending
-  "trending.title": "Mest læste",
+  "trending.title": "Hvad folk læser",
   "trending.ariaLabel": "Populære historier",
 
   // Homepage
+  "home.politics": "Politik",
   "home.title": "Nyheder fra Argentina på {lang}",
   "home.heroFallbackTitle": "Velkommen til Plata Today",
   "home.heroFallbackDesc": "Nyheder fra Argentina til verden — uden bias, kun fakta. På 18 sprog.",
@@ -383,6 +384,12 @@ export const da = {
   "screener.col.eps": "EPS",
   "screener.col.range": "52u interval",
   "screener.col.sector": "Sektor",
+
+  // 404
+  "notFound.title": "Siden blev ikke fundet",
+  "notFound.heading": "Siden blev ikke fundet",
+  "notFound.message": "Den side, du leder efter, findes ikke eller er blevet flyttet.",
+  "notFound.backHome": "Gå til forsiden",
 
   // Common
   "common.siteDescription": "Nyheder fra Argentina til verden — uden bias, kun fakta. På 18 sprog",

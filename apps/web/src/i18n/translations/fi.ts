@@ -84,10 +84,11 @@ export const fi = {
   "justIn.ariaLabel": "Tuoreimmat — viimeisimmät päivitykset",
 
   // Trending
-  "trending.title": "Luetuimmat",
+  "trending.title": "Mitä ihmiset lukevat",
   "trending.ariaLabel": "Suosituimmat uutiset",
 
   // Homepage
+  "home.politics": "Politiikka",
   "home.title": "Argentiinan uutiset kielellä {lang}",
   "home.heroFallbackTitle": "Tervetuloa Plata Todayhin",
   "home.heroFallbackDesc": "Argentiinan uutiset maailmalle — puolueettomasti, vain faktat. 18 kielellä.",
@@ -383,6 +384,12 @@ export const fi = {
   "screener.col.eps": "EPS",
   "screener.col.range": "52vk vaihteluväli",
   "screener.col.sector": "Toimiala",
+
+  // 404
+  "notFound.title": "Sivua ei löytynyt",
+  "notFound.heading": "Sivua ei löytynyt",
+  "notFound.message": "Etsimääsi sivua ei ole olemassa tai se on siirretty.",
+  "notFound.backHome": "Etusivulle",
 
   // Common
   "common.siteDescription": "Argentiinan uutiset maailmalle — puolueettomasti, vain faktat. 18 kielellä",

@@ -84,10 +84,11 @@ export const uk = {
   "justIn.ariaLabel": "Щойно — останні оновлення",
 
   // Trending
-  "trending.title": "Найпопулярніше",
+  "trending.title": "Що читають люди",
   "trending.ariaLabel": "Популярні матеріали",
 
   // Homepage
+  "home.politics": "Політика",
   "home.title": "Новини Аргентини — {lang}",
   "home.heroFallbackTitle": "Ласкаво просимо до Plata Today",
   "home.heroFallbackDesc": "Новини Аргентини для всього світу — без упередженості, лише факти. 18 мовами.",
@@ -383,6 +384,12 @@ export const uk = {
   "screener.col.eps": "EPS",
   "screener.col.range": "Діапазон 52Т",
   "screener.col.sector": "Сектор",
+
+  // 404
+  "notFound.title": "Сторінку не знайдено",
+  "notFound.heading": "Сторінку не знайдено",
+  "notFound.message": "Сторінка, яку ви шукаєте, не існує або була переміщена.",
+  "notFound.backHome": "На головну",
 
   // Common
   "common.siteDescription": "Новини Аргентини для всього світу — без упередженості, лише факти. 18 мовами",

@@ -84,10 +84,11 @@ export const hi = {
   "justIn.ariaLabel": "ताज़ा खबरें — नवीनतम अपडेट",
 
   // Trending
-  "trending.title": "सबसे ज़्यादा पढ़ा गया",
+  "trending.title": "लोग क्या पढ़ रहे हैं",
   "trending.ariaLabel": "चर्चित खबरें",
 
   // Homepage
+  "home.politics": "राजनीति",
   "home.title": "अर्जेंटीना समाचार {lang} में",
   "home.heroFallbackTitle": "Plata Today में आपका स्वागत है",
   "home.heroFallbackDesc": "दुनिया के लिए अर्जेंटीना की खबरें — बिना पक्षपात, सिर्फ़ तथ्य। 18 भाषाओं में।",
@@ -383,6 +384,12 @@ export const hi = {
   "screener.col.eps": "EPS",
   "screener.col.range": "52 सप्ताह रेंज",
   "screener.col.sector": "सेक्टर",
+
+  // 404
+  "notFound.title": "पृष्ठ नहीं मिला",
+  "notFound.heading": "पृष्ठ नहीं मिला",
+  "notFound.message": "आप जो पृष्ठ खोज रहे हैं वह मौजूद नहीं है या स्थानांतरित कर दिया गया है।",
+  "notFound.backHome": "होमपेज पर जाएं",
 
   // Common
   "common.siteDescription": "दुनिया के लिए अर्जेंटीना की खबरें — बिना पक्षपात, सिर्फ़ तथ्य। 18 भाषाओं में",

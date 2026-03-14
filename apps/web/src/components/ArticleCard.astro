@@ -6,7 +6,10 @@ interface Props {
   imageUrl?: string;
   timeAgo?: string;
   category?: string;
+  categoryKey?: string;
   readingTime?: string;
+  isNew?: boolean;
+  sourceLabel?: string;
   variant?: "default" | "hero" | "sidebar" | "compact";
 }
 
@@ -17,12 +20,18 @@ const {
   imageUrl,
   timeAgo,
   category,
+  categoryKey,
   readingTime,
+  isNew,
+  sourceLabel,
   variant = "default",
 } = Astro.props;
 ---
 
-<article class:list={["card", `card--${variant}`]}>
+<article
+  class:list={["card", `card--${variant}`]}
+  style={categoryKey ? `--cat-color: var(--cat-${categoryKey}, var(--color-gold-dark))` : undefined}
+>
   <a href={href} class="card-link">
     {imageUrl && (
       <div class="card-image">
@@ -32,14 +41,16 @@ const {
     <div class="card-body">
       <h3 class="card-title">{title}</h3>
       {description && <p class="card-desc">{description}</p>}
-      {(timeAgo || category) && (
+      {(timeAgo || category || isNew) && (
         <div class="card-meta">
+          {isNew && <span class="card-badge-new">NEW</span>}
           {timeAgo && <time class="card-time">{timeAgo}</time>}
           {timeAgo && category && <span class="card-divider" aria-hidden="true">|</span>}
           {category && <span class="card-category">{category}</span>}
           {readingTime && <><span class="card-divider" aria-hidden="true">|</span><span class="card-reading-time">{readingTime}</span></>}
         </div>
       )}
+      {sourceLabel && <span class="card-source">via {sourceLabel}</span>}
     </div>
   </a>
 </article>
@@ -101,11 +112,32 @@ const {
   }
 
   .card-category {
-    color: var(--color-gold-dark);
+    color: var(--cat-color, var(--color-gold-dark));
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.7rem;
     letter-spacing: 0.03em;
+  }
+
+  .card-badge-new {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    background: #b91c1c;
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  .card-source {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--color-text-meta);
+    font-style: italic;
+    margin-top: 4px;
   }
 
   .card-divider {

@@ -84,10 +84,11 @@ export const ru = {
   "justIn.ariaLabel": "Только что — последние обновления",
 
   // Trending
-  "trending.title": "Самое читаемое",
+  "trending.title": "Что читают люди",
   "trending.ariaLabel": "Популярные новости",
 
   // Homepage
+  "home.politics": "Политика",
   "home.title": "Новости Аргентины на {lang}",
   "home.heroFallbackTitle": "Добро пожаловать на Plata Today",
   "home.heroFallbackDesc": "Новости Аргентины для всего мира — без предвзятости, только факты. На 18 языках.",
@@ -383,6 +384,12 @@ export const ru = {
   "screener.col.eps": "EPS",
   "screener.col.range": "Диапазон 52Н",
   "screener.col.sector": "Сектор",
+
+  // 404
+  "notFound.title": "Страница не найдена",
+  "notFound.heading": "Страница не найдена",
+  "notFound.message": "Запрашиваемая страница не существует или была перемещена.",
+  "notFound.backHome": "На главную",
 
   // Common
   "common.siteDescription": "Новости Аргентины для всего мира — без предвзятости, только факты. На 18 языках",
