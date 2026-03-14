@@ -1,6 +1,53 @@
 # plata.today
 
-Multilingual AI-powered news portal about Argentina. Scrapes Spanish-language sources, rewrites (not translates) into 18 languages via OpenAI API, serves via unified Node.js server with background jobs.
+Multilingual news platform covering Argentina in 18 languages. Monitors 13+ Argentine sources, synthesizes what matters, and writes each story natively for each language — not translated, but rewritten from scratch with context for international readers.
+
+## Brand Identity
+
+### Positioning
+- **What we are:** Multilingual news platform — the BBC World Service for Argentina
+- **Tagline:** Fact-first, source-transparent
+- **Mission:** Make Argentine news accessible to the world in 18 languages, natively written, with context for international readers
+- **Name origin:** Río de la Plata
+- **Colors:** Teal + gold — Argentine flag reference
+- **Logo:** Text-only "Plata" (like BBC, Reuters)
+- **Feel:** Between BBC authority and modern media cleanness
+
+### Brand Personality
+- **Character:** Journalist-correspondent — on the ground, explains what's happening
+- **Tone:** BBC + Enlightenment-era optimism — authoritative but believes in the informed reader
+- **Address:** Follows native norms per language (Sie in German, tú in Spanish, etc.)
+- **Perception:** Independent project with a mission, built by one developer
+- **Three words:** Smart, reliable, global
+
+### Content Principles
+- **Format:** Facts + explanation — "what happened" + "why it matters"
+- **Depth:** Context + significance for international readers (explain BCRA, cepo, etc.)
+- **Out of scope:** Lifestyle, entertainment, opinions, op-eds
+- **Financial data:** Supplement to news, not a separate product
+- **Each article must be autonomous** — a random visitor from Google must understand context without prior visits
+
+### Key Rules
+1. **Never mention AI in user-facing content.** No "AI-powered", "AI-generated" in UI, About, footer, disclaimers. Technology stays behind the scenes. Product speaks through quality.
+2. **Fact-first, source-transparent.** Every article cites source names. Not "no bias" (impossible to guarantee) — we show where facts come from.
+3. **Public corrections.** If we publish an inaccuracy — mark in article + corrections page. Respect the reader.
+4. **Native language quality.** Not translation — original for each audience. Address norms, idioms, structure — all native.
+5. **No "no bias" claims.** Source selection, importance scoring, category structure — all are editorial decisions. We strive for factual accuracy and transparency, not impossible neutrality.
+
+### Audience
+- **Primary:** Any non-Spanish-speaker connected to Argentina (expats, investors, journalists, researchers)
+- **Secondary:** Random visitors from search/social
+- **NOT our audience:** Argentines who read original sources
+- **Key insight:** Without Plata, these readers would simply stop following Argentina. There is no alternative.
+
+### Pending Changes
+- [ ] Replace "no bias, just facts" → "fact-first, source-transparent" across all i18n files
+- [ ] Remove all AI mentions from UI (About, footer disclaimer, value cards)
+- [ ] Rewrite About page: "how our newsroom works" instead of "how AI works"
+- [ ] Add Editorial Standards page
+- [ ] Add Corrections Policy page
+- [ ] Update footer disclaimer: "Articles are synthesized from multiple Argentine sources. Always verify important decisions with original reporting."
+- [ ] Update home tagline: "Argentina's news, natively written in 18 languages"
 
 ## Architecture
 

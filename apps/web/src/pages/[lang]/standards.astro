@@ -1,0 +1,114 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "standards.pageTitle")}
+  description={t(lang!, "standards.description")}
+  lang={lang}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "standards.title"), url: `/${lang}/standards` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "standards.title"),
+    "url": `https://plata.today/${lang}/standards`,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <article class="legal">
+    <header class="legal-header">
+      <h1>{t(lang!, "standards.title")}</h1>
+      <p class="legal-updated">{t(lang!, "standards.updated")}</p>
+    </header>
+
+    <div class="legal-body">
+      <p class="lead">{t(lang!, "standards.lead")}</p>
+
+      <h2>{t(lang!, "standards.sourcingTitle")}</h2>
+      <p>{t(lang!, "standards.sourcingText")}</p>
+
+      <h2>{t(lang!, "standards.verificationTitle")}</h2>
+      <p>{t(lang!, "standards.verificationText")}</p>
+
+      <h2>{t(lang!, "standards.languageTitle")}</h2>
+      <p>{t(lang!, "standards.languageText")}</p>
+
+      <h2>{t(lang!, "standards.attributionTitle")}</h2>
+      <p>{t(lang!, "standards.attributionText")}</p>
+
+      <h2>{t(lang!, "standards.filteringTitle")}</h2>
+      <p>{t(lang!, "standards.filteringText")}</p>
+
+      <h2>{t(lang!, "standards.correctionsTitle")}</h2>
+      <p>{t(lang!, "standards.correctionsText")}</p>
+
+      <h2>{t(lang!, "standards.contactTitle")}</h2>
+      <p>{t(lang!, "standards.contactText")}</p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .legal {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-radius: 2px;
+  }
+
+  .legal-header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .legal-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+  }
+
+  .legal-updated {
+    font-size: 0.85rem;
+    color: var(--color-text-meta);
+    margin-top: var(--spacing-sm);
+  }
+
+  .legal-body h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-top: 3px solid var(--color-celeste);
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .legal-body p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .lead {
+    font-size: 1.1rem;
+    color: var(--color-text);
+  }
+</style>

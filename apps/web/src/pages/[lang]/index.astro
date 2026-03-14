@@ -5,7 +5,8 @@ import SectionHeader from "@/components/SectionHeader.astro";
 import TrendingSection from "@/components/TrendingSection.astro";
 import JustInFeed from "@/components/JustInFeed.astro";
 import NewsletterBanner from "@/components/NewsletterBanner.astro";
-import { LANGUAGES, CATEGORIES } from "@plata-today/shared";
+import FinancialDashboard from "@/components/FinancialDashboard.astro";
+import { LANGUAGES, CATEGORIES, CATEGORY_LIST } from "@plata-today/shared";
 import { t } from "@/i18n";
 import type { Category } from "@plata-today/shared";
 import {
@@ -299,6 +300,10 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     </section>
   )}
 
+  <!-- FINANCIAL DASHBOARD -->
+  <SectionHeader title={t(lang!, "finDash.title" as any)} href={`/${lang}/markets`} accentColor="var(--cat-economy)" />
+  <FinancialDashboard lang={lang} />
+
   <!-- SPORTS -->
   {sportsAll.length > 0 && <SectionHeader title={t(lang!, "cat.sports")} href={`/${lang}/category/sports`} accentColor="var(--cat-sports)" />}
   {sportsAll.length > 0 && (
@@ -396,24 +401,123 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   )}
 
   <!-- MORE NEWS -->
-  {moreNews.length > 0 && <SectionHeader title={t(lang!, "home.moreNews")} />}
-  {moreNews.length > 0 && (
-    <section class="compact-grid" aria-label={t(lang!, "home.moreNews")}>
-      {moreNews.map((a) => (
-        <ArticleCard
-          title={a.title}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          categoryKey={a.category}
-          readingTime={a.readingTime}
-          variant="compact"
-        />
-      ))}
-    </section>
-  )}
+  <SectionHeader title={t(lang!, "home.moreNews")} />
+  <section class="compact-grid" id="more-news-grid" aria-label={t(lang!, "home.moreNews")}>
+    {moreNews.map((a) => (
+      <ArticleCard
+        title={a.title}
+        href={a.href}
+        imageUrl={a.imageUrl}
+        timeAgo={a.timeAgo}
+        category={a.subcategory}
+        categoryKey={a.category}
+        readingTime={a.readingTime}
+        variant="compact"
+      />
+    ))}
+  </section>
+
+  <!-- LOAD MORE -->
+  <div id="load-more-container">
+    <button class="load-more-btn" id="load-more-btn" type="button">
+      {t(lang!, "home.loadMore" as any)}
+    </button>
+    <p class="load-more-end" id="load-more-end" hidden>
+      {t(lang!, "home.noMoreArticles" as any)}
+    </p>
+  </div>
 </Base>
+
+<script is:inline define:vars={{
+  initialSlugs: Array.from(usedSlugs),
+  lang,
+  initialOffset: allArticles.length,
+  loadMoreLabel: t(lang!, "home.loadMore" as any),
+  catLabels: Object.fromEntries(
+    CATEGORY_LIST.map((c: string) => [c, t(lang!, `cat.${c}` as any)])
+  )
+}}>
+(function() {
+  var btn = document.getElementById('load-more-btn');
+  var endMsg = document.getElementById('load-more-end');
+  var grid = document.getElementById('more-news-grid');
+  if (!btn || !grid) return;
+
+  var offset = initialOffset;
+  var LIMIT = 12;
+  var seenSlugs = new Set(initialSlugs);
+  var loading = false;
+
+  function escapeHtml(str) {
+    var d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function createCard(a) {
+    var article = document.createElement('article');
+    article.className = 'card card--compact';
+    if (a.category) {
+      article.style.setProperty('--cat-color', 'var(--cat-' + a.category + ', var(--color-gold-dark))');
+    }
+
+    var html = '<a href="' + escapeHtml(a.href) + '" class="card-link">';
+    if (a.imageUrl) {
+      html += '<div class="card-image"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" /></div>';
+    }
+    html += '<div class="card-body">';
+    html += '<h3 class="card-title">' + escapeHtml(a.title) + '</h3>';
+    html += '<div class="card-meta">';
+    if (a.timeAgo) html += '<time class="card-time">' + escapeHtml(a.timeAgo) + '</time>';
+    var catLabel = catLabels[a.category] || a.category;
+    if (a.timeAgo && catLabel) html += '<span class="card-divider" aria-hidden="true">|</span>';
+    if (catLabel) html += '<span class="card-category">' + escapeHtml(catLabel) + '</span>';
+    if (a.readingTime) html += '<span class="card-divider" aria-hidden="true">|</span><span class="card-reading-time">' + escapeHtml(a.readingTime) + '</span>';
+    html += '</div></div></a>';
+
+    article.innerHTML = html;
+    return article;
+  }
+
+  function loadMore() {
+    if (loading) return;
+    loading = true;
+    btn.textContent = '...';
+    btn.disabled = true;
+
+    fetch('/api/feed?lang=' + encodeURIComponent(lang) + '&offset=' + offset + '&limit=' + LIMIT)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var articles = data.articles.filter(function(a) {
+          return !seenSlugs.has(a.slug);
+        });
+
+        articles.forEach(function(a) {
+          seenSlugs.add(a.slug);
+          grid.appendChild(createCard(a));
+        });
+
+        offset += LIMIT;
+
+        if (!data.hasMore || articles.length === 0) {
+          btn.hidden = true;
+          if (endMsg) endMsg.hidden = false;
+        } else {
+          btn.textContent = loadMoreLabel;
+          btn.disabled = false;
+        }
+        loading = false;
+      })
+      .catch(function() {
+        btn.textContent = loadMoreLabel;
+        btn.disabled = false;
+        loading = false;
+      });
+  }
+
+  btn.addEventListener('click', loadMore);
+})();
+</script>
 
 <style>
   /* ====================== */
@@ -712,5 +816,125 @@ const moreNews = claim(allArticles, 8).map(mapRow);
       border-top: 1px solid var(--color-border);
       padding-top: var(--spacing-lg);
     }
+  }
+
+  /* ========================= */
+  /* LOAD MORE                 */
+  /* ========================= */
+  #load-more-container {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .load-more-btn[hidden] {
+    display: none;
+  }
+
+  .load-more-btn {
+    display: inline-block;
+    padding: 14px 48px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    background: transparent;
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .load-more-btn:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold-dark);
+  }
+
+  .load-more-btn:disabled {
+    opacity: 0.5;
+    cursor: wait;
+  }
+
+  .load-more-end {
+    font-size: 0.85rem;
+    color: var(--color-text-meta);
+    font-style: italic;
+  }
+
+  /* ========================= */
+  /* DYNAMIC CARD STYLES       */
+  /* (for JS-appended cards)   */
+  /* ========================= */
+  #more-news-grid :global(.card-link) {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #more-news-grid :global(.card-link:hover) {
+    text-decoration: none;
+  }
+
+  #more-news-grid :global(.card-link:hover .card-title) {
+    text-decoration: underline;
+  }
+
+  #more-news-grid :global(.card-image) {
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  #more-news-grid :global(.card-image img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 2px;
+    transition: transform 0.2s;
+  }
+
+  #more-news-grid :global(.card-link:hover .card-image img) {
+    transform: scale(1.02);
+  }
+
+  #more-news-grid :global(.card--compact .card-link) {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+
+  #more-news-grid :global(.card-title) {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+
+  #more-news-grid :global(.card-meta) {
+    font-size: 0.7rem;
+    color: var(--color-text-meta);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  #more-news-grid :global(.card-category) {
+    color: var(--cat-color, var(--color-gold-dark));
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+  }
+
+  #more-news-grid :global(.card-divider) {
+    color: var(--color-border);
+  }
+
+  #more-news-grid :global(.card-reading-time) {
+    font-size: 0.7rem;
+    color: var(--color-text-meta);
   }
 </style>
