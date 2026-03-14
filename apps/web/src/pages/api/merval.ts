@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { fetchT } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -14,7 +15,7 @@ const CORS_HEADERS = {
 };
 
 async function fetchBYMA() {
-  const res = await fetch(BYMA_URL, {
+  const res = await fetchT(BYMA_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +42,7 @@ async function fetchBYMA() {
 }
 
 async function fetchYahoo() {
-  const res = await fetch(YAHOO_URL);
+  const res = await fetchT(YAHOO_URL);
   if (!res.ok) throw new Error(`Yahoo ${res.status}`);
   const json: any = await res.json();
   const meta = json?.chart?.result?.[0]?.meta;

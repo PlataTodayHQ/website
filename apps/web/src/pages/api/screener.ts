@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { getDb } from "@/lib/db";
-import { BYMA_EQUITY_URL } from "@plata-today/shared";
+import { BYMA_EQUITY_URL, fetchT } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -112,7 +112,7 @@ function tryDb(): ScreenerRow[] | null {
 }
 
 async function fetchByma(): Promise<any[]> {
-  const res = await fetch(BYMA_EQUITY_URL, {
+  const res = await fetchT(BYMA_EQUITY_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: "{}",

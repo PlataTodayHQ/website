@@ -1,0 +1,72 @@
+import { defineMiddleware } from "astro:middleware";
+import { LANG_CODES, type LangCode } from "@plata-today/shared";
+
+const LANG_SET = new Set<string>(LANG_CODES);
+
+// Map broad language families to our supported codes
+const LANG_MAP: Record<string, LangCode> = {
+  pt: "pt", "pt-br": "pt",
+  de: "de", "de-at": "de", "de-ch": "de",
+  it: "it",
+  fr: "fr", "fr-ca": "fr", "fr-be": "fr",
+  ru: "ru",
+  zh: "zh", "zh-cn": "zh", "zh-tw": "zh", "zh-hk": "zh",
+  pl: "pl",
+  uk: "uk",
+  ja: "ja",
+  ko: "ko",
+  es: "es", "es-ar": "es", "es-mx": "es", "es-es": "es",
+  sv: "sv",
+  da: "da",
+  nl: "nl", "nl-be": "nl",
+  no: "no", nb: "no", nn: "no",
+  fi: "fi",
+  hi: "hi",
+  en: "en", "en-us": "en", "en-gb": "en", "en-au": "en",
+};
+
+function detectLang(acceptLanguage: string | null): LangCode {
+  if (!acceptLanguage) return "en";
+  const parts = acceptLanguage.split(",");
+  for (const part of parts) {
+    const tag = part.split(";")[0].trim().toLowerCase();
+    if (LANG_MAP[tag]) return LANG_MAP[tag];
+    const base = tag.split("-")[0];
+    if (LANG_MAP[base]) return LANG_MAP[base];
+  }
+  return "en";
+}
+
+export const onRequest = defineMiddleware(({ request, url, redirect }, next) => {
+  const { pathname } = url;
+
+  // Skip API routes and assets
+  if (pathname.startsWith("/api/") || pathname.startsWith("/_") || pathname.includes(".")) {
+    return next();
+  }
+
+  // Root — detect language and redirect
+  if (pathname === "/") {
+    const lang = detectLang(request.headers.get("accept-language"));
+    return redirect(`/${lang}/`, 302);
+  }
+
+  // Ensure trailing slash on lang-prefixed paths
+  const segments = pathname.split("/").filter(Boolean);
+  if (segments.length >= 1) {
+    const maybeLang = segments[0];
+
+    // Valid lang prefix without trailing slash → add it
+    if (LANG_SET.has(maybeLang) && !pathname.endsWith("/") && segments.length === 1) {
+      return redirect(`${pathname}/`, 301);
+    }
+
+    // Invalid lang prefix → redirect to detected lang
+    if (!LANG_SET.has(maybeLang) && segments.length === 1 && maybeLang.length === 2) {
+      const lang = detectLang(request.headers.get("accept-language"));
+      return redirect(`/${lang}/`, 302);
+    }
+  }
+
+  return next();
+});

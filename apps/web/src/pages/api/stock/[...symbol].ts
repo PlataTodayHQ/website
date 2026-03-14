@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { fetchT } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -50,13 +51,13 @@ export const GET: APIRoute = async ({ params, url }) => {
       : "1d";
 
     const yahooUrl = `https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=${interval}&range=${range}`;
-    let res = await fetch(yahooUrl, {
+    let res = await fetchT(yahooUrl, {
       headers: { "User-Agent": USER_AGENT },
     });
 
     if (!res.ok) {
       const fallbackUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=${interval}&range=${range}`;
-      res = await fetch(fallbackUrl, {
+      res = await fetchT(fallbackUrl, {
         headers: { "User-Agent": USER_AGENT },
       });
     }

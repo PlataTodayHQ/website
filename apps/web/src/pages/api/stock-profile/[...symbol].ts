@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { YAHOO_UA, getYahooCrumb, numVal as num, strVal as str } from "@plata-today/shared";
+import { YAHOO_UA, getYahooCrumb, numVal as num, strVal as str, fetchT } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -48,7 +48,7 @@ export const GET: APIRoute = async ({ params }) => {
 
     const yahooUrl = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(symbol)}?modules=${modules}&crumb=${encodeURIComponent(crumb)}`;
 
-    const res = await fetch(yahooUrl, {
+    const res = await fetchT(yahooUrl, {
       headers: { "User-Agent": YAHOO_UA, Cookie: cookie },
     });
     if (!res.ok) throw new Error(`Yahoo ${res.status}`);

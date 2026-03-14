@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { BLUELYTICS_URL } from "@plata-today/shared";
+import { BLUELYTICS_URL, fetchT } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -27,8 +27,8 @@ export const GET: APIRoute = async () => {
     }
 
     const [blueRes, dolarRes] = await Promise.all([
-      fetch(BLUELYTICS_URL),
-      fetch(DOLARAPI_URL).catch(() => null),
+      fetchT(BLUELYTICS_URL),
+      fetchT(DOLARAPI_URL).catch(() => null),
     ]);
 
     if (!blueRes.ok) throw new Error(`Bluelytics ${blueRes.status}`);

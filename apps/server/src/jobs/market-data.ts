@@ -1,7 +1,7 @@
 import Database from "better-sqlite3";
 import {
   BLUELYTICS_URL, BLUELYTICS_EVOLUTION_URL, BYMA_INDEX_URL, BYMA_EQUITY_URL, YAHOO_UA,
-  getYahooCrumb, numVal as num, strVal as str, sleep,
+  getYahooCrumb, numVal as num, strVal as str, sleep, fetchT,
 } from "@plata-today/shared";
 import { recordJobStart, recordJobEnd } from "./job-tracking.js";
 
@@ -57,7 +57,7 @@ function pruneOldData(db: Database.Database): void {
 
 async function fetchExchangeRates(db: Database.Database): Promise<void> {
   try {
-    const res = await fetch(BLUELYTICS_URL);
+    const res = await fetchT(BLUELYTICS_URL);
     if (!res.ok) throw new Error(`Bluelytics ${res.status}`);
     const data: any = await res.json();
 
@@ -79,7 +79,7 @@ async function fetchExchangeRates(db: Database.Database): Promise<void> {
 
 async function fetchExchangeRateHistory(db: Database.Database): Promise<void> {
   try {
-    const res = await fetch(BLUELYTICS_EVOLUTION_URL);
+    const res = await fetchT(BLUELYTICS_EVOLUTION_URL);
     if (!res.ok) throw new Error(`Bluelytics evolution ${res.status}`);
     const data: any[] = await res.json();
 
@@ -114,7 +114,7 @@ async function fetchExchangeRateHistory(db: Database.Database): Promise<void> {
 
 async function fetchMerval(db: Database.Database): Promise<void> {
   try {
-    const res = await fetch(BYMA_INDEX_URL, {
+    const res = await fetchT(BYMA_INDEX_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: "{}",
@@ -148,7 +148,7 @@ async function fetchMerval(db: Database.Database): Promise<void> {
 async function fetchMervalCandles(db: Database.Database): Promise<void> {
   try {
     const yahooUrl = `https://query2.finance.yahoo.com/v8/finance/chart/%5EMERV?interval=1d&range=1mo`;
-    const res = await fetch(yahooUrl, { headers: { "User-Agent": YAHOO_UA } });
+    const res = await fetchT(yahooUrl, { headers: { "User-Agent": YAHOO_UA } });
     if (!res.ok) throw new Error(`Yahoo Merval chart ${res.status}`);
     const json: any = await res.json();
 
@@ -168,7 +168,7 @@ async function fetchMervalCandles(db: Database.Database): Promise<void> {
 
 async function fetchStocks(db: Database.Database): Promise<void> {
   try {
-    const res = await fetch(BYMA_EQUITY_URL, {
+    const res = await fetchT(BYMA_EQUITY_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: "{}",
@@ -220,7 +220,7 @@ async function fetchStockCandles(db: Database.Database): Promise<void> {
         : `${symbol}.BA`;
 
       const yahooUrl = `https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahooSymbol)}?interval=1d&range=1mo`;
-      const res = await fetch(yahooUrl, { headers: { "User-Agent": YAHOO_UA } });
+      const res = await fetchT(yahooUrl, { headers: { "User-Agent": YAHOO_UA } });
 
       if (!res.ok) {
         if (res.status === 429) {
@@ -283,7 +283,7 @@ async function fetchStockProfiles(db: Database.Database): Promise<void> {
       const modules = "assetProfile,summaryDetail,defaultKeyStatistics,financialData,earnings,price";
       const yahooUrl = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(yahooSymbol)}?modules=${modules}&crumb=${encodeURIComponent(crumb)}`;
 
-      const res = await fetch(yahooUrl, {
+      const res = await fetchT(yahooUrl, {
         headers: { "User-Agent": YAHOO_UA, Cookie: cookie },
       });
 

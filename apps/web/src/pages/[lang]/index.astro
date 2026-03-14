@@ -20,7 +20,7 @@ export const prerender = false;
 const { lang } = Astro.params;
 
 if (!lang || !(lang in LANGUAGES)) {
-  return Astro.redirect("/en/");
+  return Astro.redirect("/en/", 302);
 }
 
 const langName = LANGUAGES[lang as keyof typeof LANGUAGES]?.name ?? lang;

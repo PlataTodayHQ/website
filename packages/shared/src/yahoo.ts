@@ -1,4 +1,5 @@
 import { YAHOO_UA } from "./constants.js";
+import { fetchT } from "./utils.js";
 
 // Yahoo crumb cache for quoteSummary auth
 let yahooCrumb: string | null = null;
@@ -9,13 +10,13 @@ export async function getYahooCrumb(): Promise<{ crumb: string; cookie: string }
   if (yahooCrumb && yahooCookie && Date.now() < crumbExpiry) {
     return { crumb: yahooCrumb, cookie: yahooCookie };
   }
-  const cookieRes = await fetch("https://fc.yahoo.com", {
+  const cookieRes = await fetchT("https://fc.yahoo.com", {
     headers: { "User-Agent": YAHOO_UA },
     redirect: "manual",
   });
   const setCookies = cookieRes.headers.getSetCookie?.() || [];
   const cookies = setCookies.map((c: string) => c.split(";")[0]).join("; ");
-  const crumbRes = await fetch(
+  const crumbRes = await fetchT(
     "https://query2.finance.yahoo.com/v1/test/getcrumb",
     { headers: { "User-Agent": YAHOO_UA, Cookie: cookies } },
   );

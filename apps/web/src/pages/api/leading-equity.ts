@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { fetchT } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -13,7 +14,7 @@ const CORS_HEADERS = {
 
 export const GET: APIRoute = async () => {
   try {
-    const res = await fetch(BYMA_URL, {
+    const res = await fetchT(BYMA_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

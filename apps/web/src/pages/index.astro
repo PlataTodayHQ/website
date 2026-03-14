@@ -1,3 +1,7 @@
 ---
-return Astro.redirect("/en/");
+// Middleware handles / → /{lang}/ redirect with Accept-Language detection.
+// This is a fallback in case middleware is bypassed.
+export const prerender = false;
+const lang = "en";
+return Astro.redirect(`/${lang}/`);
 ---
