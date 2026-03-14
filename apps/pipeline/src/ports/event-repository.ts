@@ -1,7 +1,7 @@
 import type { EventEntity, RawArticleEntity } from "../domain/entities.js";
 
 export interface IEventRepository {
-  getByStage(stage: string, limit: number): EventEntity[];
+  getByStage(stage: string): EventEntity[];
   getAllUnpublished(): EventEntity[];
   create(category: string, score: number): number;
   getRawArticles(eventId: number): RawArticleEntity[];

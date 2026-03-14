@@ -22,7 +22,7 @@ import { reviewEvent } from "./use-cases/review.js";
 import { translateEvent } from "./use-cases/translate.js";
 
 const TIME_BUDGET_MS = 12 * 60 * 1000;
-const EVENTS_PER_BATCH = 50;
+const STALE_HOURS = 24;
 
 export async function main(dbPath?: string): Promise<void> {
   const startTime = Date.now();
@@ -91,8 +91,12 @@ async function processEventsByStage(
 ): Promise<void> {
   const budgetLeft = () => Date.now() - startTime < TIME_BUDGET_MS;
 
+  // Kill stale 'new' events — news older than STALE_HOURS is no longer relevant
+  const killed = eventRepo.killStaleNewEvents(STALE_HOURS);
+  if (killed > 0) log.info("Killed stale new events", { killed });
+
   // Priority 1: Translate reviewed → published
-  const reviewed = eventRepo.getByStage("reviewed", EVENTS_PER_BATCH);
+  const reviewed = eventRepo.getByStage("reviewed");
   log.info("Events to translate", { count: reviewed.length });
   for (const event of reviewed) {
     if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
@@ -104,7 +108,7 @@ async function processEventsByStage(
   }
 
   // Priority 2: Review drafted → reviewed
-  const drafted = eventRepo.getByStage("drafted", EVENTS_PER_BATCH);
+  const drafted = eventRepo.getByStage("drafted");
   log.info("Events to review", { count: drafted.length });
   for (const event of drafted) {
     if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
@@ -116,7 +120,7 @@ async function processEventsByStage(
   }
 
   // Priority 3: Draft triaged → drafted
-  const triaged = eventRepo.getByStage("triaged", EVENTS_PER_BATCH);
+  const triaged = eventRepo.getByStage("triaged");
   log.info("Events to draft", { count: triaged.length });
   for (const event of triaged) {
     if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
@@ -128,7 +132,7 @@ async function processEventsByStage(
   }
 
   // Priority 4: Triage new → triaged/killed
-  const newEvents = eventRepo.getByStage("new", EVENTS_PER_BATCH);
+  const newEvents = eventRepo.getByStage("new");
   log.info("Events to triage", { count: newEvents.length });
   for (const event of newEvents) {
     if (!budgetLeft()) { log.info("Time budget exhausted"); return; }

@@ -3,6 +3,7 @@ import type { EventEntity, RawArticleEntity } from "../../domain/entities.js";
 import type { IEventRepository } from "../../ports/event-repository.js";
 
 export class SQLiteEventRepository implements IEventRepository {
+  private db;
   private getByStageStmt;
   private getAllUnpublishedStmt;
   private insertEventStmt;
@@ -15,8 +16,9 @@ export class SQLiteEventRepository implements IEventRepository {
   private incrementReviewAttemptsStmt;
 
   constructor(db: Database.Database) {
+    this.db = db;
     this.getByStageStmt = db.prepare(
-      `SELECT * FROM events WHERE stage = ? ORDER BY importance_score DESC LIMIT ?`,
+      `SELECT * FROM events WHERE stage = ? ORDER BY importance_score DESC`,
     );
     this.getAllUnpublishedStmt = db.prepare(
       `SELECT * FROM events WHERE is_published = 0`,
@@ -41,7 +43,7 @@ export class SQLiteEventRepository implements IEventRepository {
     );
     this.triageStmt = db.prepare(`
       UPDATE events
-      SET llm_importance = ?, llm_category = ?, category = ?, triage_reason = ?, stage = 'triaged'
+      SET llm_importance = ?, llm_category = ?, category = ?, triage_reason = ?, stage = 'triaged', importance_score = ?
       WHERE id = ?
     `);
     this.killStmt = db.prepare(`
@@ -54,8 +56,16 @@ export class SQLiteEventRepository implements IEventRepository {
     );
   }
 
-  getByStage(stage: string, limit: number): EventEntity[] {
-    return this.getByStageStmt.all(stage, limit) as EventEntity[];
+  getByStage(stage: string): EventEntity[] {
+    return this.getByStageStmt.all(stage) as EventEntity[];
+  }
+
+  killStaleNewEvents(staleHours: number): number {
+    const result = this.db.prepare(
+      `UPDATE events SET stage = 'killed', triage_reason = 'Stale — older than ' || ? || 'h'
+       WHERE stage = 'new' AND created_at < datetime('now', '-' || ? || ' hours')`,
+    ).run(staleHours, staleHours);
+    return result.changes;
   }
 
   getAllUnpublished(): EventEntity[] {
@@ -84,7 +94,7 @@ export class SQLiteEventRepository implements IEventRepository {
   }
 
   triage(id: number, importance: number, category: string, reason: string): void {
-    this.triageStmt.run(importance, category, category, reason, id);
+    this.triageStmt.run(importance, category, category, reason, importance, id);
   }
 
   kill(id: number, importance: number, reason: string): void {
