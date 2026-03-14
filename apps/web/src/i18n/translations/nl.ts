@@ -92,6 +92,7 @@ export const nl = {
   "home.title": "Nieuws uit Argentinië in het {lang}",
   "home.heroFallbackTitle": "Welkom bij Plata Today",
   "home.heroFallbackDesc": "Argentijns nieuws voor de wereld — zonder vooroordelen, alleen feiten. In 18 talen.",
+  "home.description": "Het belangrijkste nieuws uit Argentinië vandaag in het {lang}: politiek, economie, sport, cultuur. 24/7 bijgewerkt, 18 talen.",
   "home.topStories": "Topverhalen",
   "home.economyBusiness": "Economie & Bedrijfsleven",
   "home.cultureSociety": "Cultuur & Samenleving",
@@ -390,10 +391,34 @@ export const nl = {
   "notFound.heading": "Pagina niet gevonden",
   "notFound.message": "De pagina die u zoekt bestaat niet of is verplaatst.",
   "notFound.backHome": "Ga naar de startpagina",
+  "notFound.description": "Pagina niet gevonden. Ontdek het laatste nieuws uit Argentinië op Plata Today.",
 
   // Common
   "common.siteDescription": "Argentijns nieuws voor de wereld — zonder vooroordelen, alleen feiten. In 18 talen",
   "common.breadcrumbHome": "Home",
+
+  // Feed page
+  "nav.feed": "Feed",
+  "feed.title": "Nieuwsfeed",
+  "feed.all": "Alles",
+  "feed.loadMore": "Laden...",
+  "feed.noMore": "Geen artikelen meer",
+  "feed.description": "Chronologische feed van al het nieuws uit Argentinië. Volg de laatste gebeurtenissen in realtime.",
+
+  // Financial Dashboard
+  "finDash.title": "Markten in één oogopslag",
+  "finDash.buy": "Koop",
+  "finDash.sell": "Verkoop",
+  "finDash.high": "Hoog",
+  "finDash.low": "Laag",
+  "finDash.prevClose": "Vor. sluiting",
+  "finDash.volume": "Volume",
+  "finDash.topMovers": "Grootste bewegingen",
+  "finDash.viewAll": "Alle markten",
+
+  // Homepage — Load More
+  "home.loadMore": "Meer laden",
+  "home.noMoreArticles": "Je bent helemaal bij",
 } as const;
 
 export type Translations = typeof nl;

@@ -22,6 +22,7 @@ interface Props {
   ogImage?: string;
   ogUrl?: string;
   ogType?: string;
+  noindex?: boolean;
   jsonLd?: Record<string, any> | Record<string, any>[];
   breadcrumbs?: BreadcrumbItem[];
   articleMeta?: {
@@ -43,13 +44,18 @@ const {
   ogImage,
   ogUrl,
   ogType = "website",
+  noindex = false,
   jsonLd,
   breadcrumbs,
   articleMeta,
 } = Astro.props;
 
 const siteUrl = import.meta.env.SITE ?? "https://plata.today";
-const currentPath = Astro.url.pathname;
+// Normalize: strip trailing slash (keep for / and /{lang}/ roots)
+const rawPath = Astro.url.pathname;
+const currentPath = rawPath === '/' || /^\/[a-z]{2}\/$/.test(rawPath)
+  ? rawPath
+  : rawPath.replace(/\/$/, '');
 const fullTitle = `${title} | Plata`;
 const resolvedCanonical = canonicalUrl ?? `${siteUrl}${currentPath}`;
 const resolvedOgUrl = ogUrl ?? resolvedCanonical;
@@ -85,6 +91,7 @@ const breakingArticle = getBreakingNews(lang);
 
 const navItems = [
   { label: t(lang, "nav.home"), href: `/${lang}/` },
+  { label: t(lang, "nav.feed" as any), href: `/${lang}/feed` },
   ...CATEGORY_LIST.map((key) => ({
     label: t(lang, `cat.${key}` as any),
     href: `/${lang}/category/${key}`,
@@ -120,17 +127,17 @@ const allJsonLd = [
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
     <meta name="theme-color" content="#3D6B99" />
     <meta name="color-scheme" content="light dark" />
 
-    <link rel="canonical" href={resolvedCanonical} />
+    {!noindex && <link rel="canonical" href={resolvedCanonical} />}
     <link rel="alternate" type="application/rss+xml" title="Plata News" href={`${siteUrl}/rss.xml`} />
 
-    {Object.entries(resolvedAlternates).map(([hrefLang, url]) => (
+    {!noindex && Object.entries(resolvedAlternates).map(([hrefLang, url]) => (
       <link rel="alternate" hreflang={hrefLang} href={url} />
     ))}
-    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/en/`} />
+    {!noindex && <link rel="alternate" hreflang="x-default" href={`${siteUrl}/en/`} />}
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />

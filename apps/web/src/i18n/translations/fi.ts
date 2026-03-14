@@ -92,6 +92,7 @@ export const fi = {
   "home.title": "Argentiinan uutiset kielellä {lang}",
   "home.heroFallbackTitle": "Tervetuloa Plata Todayhin",
   "home.heroFallbackDesc": "Argentiinan uutiset maailmalle — puolueettomasti, vain faktat. 18 kielellä.",
+  "home.description": "Argentiinan tärkeimmät uutiset tänään kielellä {lang}: politiikka, talous, urheilu, kulttuuri. Päivittyy 24/7, 18 kieltä.",
   "home.topStories": "Pääuutiset",
   "home.economyBusiness": "Talous ja liiketoiminta",
   "home.cultureSociety": "Kulttuuri ja yhteiskunta",
@@ -390,10 +391,34 @@ export const fi = {
   "notFound.heading": "Sivua ei löytynyt",
   "notFound.message": "Etsimääsi sivua ei ole olemassa tai se on siirretty.",
   "notFound.backHome": "Etusivulle",
+  "notFound.description": "Sivua ei löytynyt. Selaa viimeisimmät Argentiinan uutiset Plata Todayssa.",
 
   // Common
   "common.siteDescription": "Argentiinan uutiset maailmalle — puolueettomasti, vain faktat. 18 kielellä",
   "common.breadcrumbHome": "Etusivu",
+
+  // Feed page
+  "nav.feed": "Syöte",
+  "feed.title": "Uutissyöte",
+  "feed.all": "Kaikki",
+  "feed.loadMore": "Ladataan...",
+  "feed.noMore": "Ei enempää artikkeleita",
+  "feed.description": "Kronologinen syöte kaikista Argentiinan uutisista. Seuraa viimeisimpiä tapahtumia reaaliajassa.",
+
+  // Financial Dashboard
+  "finDash.title": "Markkinat yhdellä silmäyksellä",
+  "finDash.buy": "Osto",
+  "finDash.sell": "Myynti",
+  "finDash.high": "Korkein",
+  "finDash.low": "Matalin",
+  "finDash.prevClose": "Ed. sulkeminen",
+  "finDash.volume": "Volyymi",
+  "finDash.topMovers": "Suurimmat liikkeet",
+  "finDash.viewAll": "Kaikki markkinat",
+
+  // Homepage — Load More
+  "home.loadMore": "Lataa lisää",
+  "home.noMoreArticles": "Olet ajan tasalla",
 } as const;
 
 export type Translations = typeof fi;

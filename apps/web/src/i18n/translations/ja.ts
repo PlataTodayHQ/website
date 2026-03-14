@@ -92,6 +92,7 @@ export const ja = {
   "home.title": "{lang}で読むアルゼンチンニュース",
   "home.heroFallbackTitle": "Plata Todayへようこそ",
   "home.heroFallbackDesc": "世界に届けるアルゼンチンのニュース — 偏りなく、事実だけを。18言語で配信。",
+  "home.description": "今日のアルゼンチン主要ニュース（{lang}）：政治、経済、スポーツ、文化。24時間更新、18言語対応。",
   "home.topStories": "トップニュース",
   "home.economyBusiness": "経済・ビジネス",
   "home.cultureSociety": "文化・社会",
@@ -390,10 +391,34 @@ export const ja = {
   "notFound.heading": "ページが見つかりません",
   "notFound.message": "お探しのページは存在しないか、移動された可能性があります。",
   "notFound.backHome": "トップページへ",
+  "notFound.description": "ページが見つかりません。Plata Todayで最新のアルゼンチンニュースをご覧ください。",
 
   // Common
   "common.siteDescription": "世界に届けるアルゼンチンのニュース — 偏りなく、事実だけを。18言語で配信",
   "common.breadcrumbHome": "ホーム",
+
+  // Feed page
+  "nav.feed": "フィード",
+  "feed.title": "ニュースフィード",
+  "feed.all": "すべて",
+  "feed.loadMore": "読み込み中...",
+  "feed.noMore": "記事はもうありません",
+  "feed.description": "アルゼンチンの全ニュースを時系列で。最新の出来事をリアルタイムで。",
+
+  // Financial Dashboard
+  "finDash.title": "マーケット概況",
+  "finDash.buy": "買値",
+  "finDash.sell": "売値",
+  "finDash.high": "高値",
+  "finDash.low": "安値",
+  "finDash.prevClose": "前日終値",
+  "finDash.volume": "出来高",
+  "finDash.topMovers": "値動き上位",
+  "finDash.viewAll": "全市場を見る",
+
+  // Homepage — Load More
+  "home.loadMore": "もっと読む",
+  "home.noMoreArticles": "すべて読みました",
 } as const;
 
 export type Translations = typeof ja;

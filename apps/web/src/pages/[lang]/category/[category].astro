@@ -131,7 +131,7 @@ const olderArticles = articles.slice(5);
           </div>
           {a.imageUrl && (
             <a href={a.href} class="cat-list-thumb" aria-hidden="true" tabindex="-1">
-              <img src={a.imageUrl} alt="" loading="lazy" />
+              <img src={a.imageUrl} alt={a.title} loading="lazy" />
             </a>
           )}
         </article>

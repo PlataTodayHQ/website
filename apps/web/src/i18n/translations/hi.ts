@@ -92,6 +92,7 @@ export const hi = {
   "home.title": "अर्जेंटीना समाचार {lang} में",
   "home.heroFallbackTitle": "Plata Today में आपका स्वागत है",
   "home.heroFallbackDesc": "दुनिया के लिए अर्जेंटीना की खबरें — बिना पक्षपात, सिर्फ़ तथ्य। 18 भाषाओं में।",
+  "home.description": "आज की प्रमुख अर्जेंटीना खबरें {lang} में: राजनीति, अर्थव्यवस्था, खेल, संस्कृति। 24/7 अपडेट, 18 भाषाएं।",
   "home.topStories": "प्रमुख खबरें",
   "home.economyBusiness": "अर्थव्यवस्था और व्यापार",
   "home.cultureSociety": "संस्कृति और समाज",
@@ -390,10 +391,34 @@ export const hi = {
   "notFound.heading": "पृष्ठ नहीं मिला",
   "notFound.message": "आप जो पृष्ठ खोज रहे हैं वह मौजूद नहीं है या स्थानांतरित कर दिया गया है।",
   "notFound.backHome": "होमपेज पर जाएं",
+  "notFound.description": "पृष्ठ नहीं मिला। Plata Today पर अर्जेंटीना की ताज़ा खबरें पढ़ें।",
 
   // Common
   "common.siteDescription": "दुनिया के लिए अर्जेंटीना की खबरें — बिना पक्षपात, सिर्फ़ तथ्य। 18 भाषाओं में",
   "common.breadcrumbHome": "होम",
+
+  // Feed page
+  "nav.feed": "फ़ीड",
+  "feed.title": "समाचार फ़ीड",
+  "feed.all": "सभी",
+  "feed.loadMore": "लोड हो रहा है...",
+  "feed.noMore": "और कोई लेख नहीं",
+  "feed.description": "अर्जेंटीना की सभी खबरों का कालानुक्रमिक फ़ीड। नवीनतम घटनाओं को रीयल-टाइम में देखें।",
+
+  // Financial Dashboard
+  "finDash.title": "बाज़ार एक नज़र में",
+  "finDash.buy": "खरीद",
+  "finDash.sell": "बिक्री",
+  "finDash.high": "उच्च",
+  "finDash.low": "निम्न",
+  "finDash.prevClose": "पिछला बंद",
+  "finDash.volume": "वॉल्यूम",
+  "finDash.topMovers": "शीर्ष उतार-चढ़ाव",
+  "finDash.viewAll": "सभी बाज़ार देखें",
+
+  // Homepage — Load More
+  "home.loadMore": "और लोड करें",
+  "home.noMoreArticles": "आप अपडेट हैं",
 } as const;
 
 export type Translations = typeof hi;

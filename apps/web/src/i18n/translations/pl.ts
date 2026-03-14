@@ -92,6 +92,7 @@ export const pl = {
   "home.title": "Wiadomości z Argentyny po {lang}",
   "home.heroFallbackTitle": "Witamy w Plata Today",
   "home.heroFallbackDesc": "Wiadomości z Argentyny dla całego świata — bez stronniczości, tylko fakty. W 18 językach.",
+  "home.description": "Najważniejsze wiadomości z Argentyny dziś po {lang}: polityka, gospodarka, sport, kultura. Aktualizacja 24/7, 18 języków.",
   "home.topStories": "Najważniejsze wiadomości",
   "home.economyBusiness": "Gospodarka i biznes",
   "home.cultureSociety": "Kultura i społeczeństwo",
@@ -390,10 +391,34 @@ export const pl = {
   "notFound.heading": "Strona nie znaleziona",
   "notFound.message": "Strona, której szukasz, nie istnieje lub została przeniesiona.",
   "notFound.backHome": "Przejdź na stronę główną",
+  "notFound.description": "Strona nie znaleziona. Przeglądaj najnowsze wiadomości z Argentyny na Plata Today.",
 
   // Common
   "common.siteDescription": "Wiadomości z Argentyny dla całego świata — bez stronniczości, tylko fakty. W 18 językach",
   "common.breadcrumbHome": "Strona główna",
+
+  // Feed page
+  "nav.feed": "Feed",
+  "feed.title": "Kanał wiadomości",
+  "feed.all": "Wszystko",
+  "feed.loadMore": "Ładowanie...",
+  "feed.noMore": "Brak kolejnych artykułów",
+  "feed.description": "Chronologiczny kanał wszystkich wiadomości z Argentyny. Najnowsze wydarzenia na bieżąco.",
+
+  // Financial Dashboard
+  "finDash.title": "Rynki w pigułce",
+  "finDash.buy": "Kupno",
+  "finDash.sell": "Sprzedaż",
+  "finDash.high": "Maks",
+  "finDash.low": "Min",
+  "finDash.prevClose": "Poprz. zamkn.",
+  "finDash.volume": "Wolumen",
+  "finDash.topMovers": "Największe zmiany",
+  "finDash.viewAll": "Wszystkie rynki",
+
+  // Homepage — Load More
+  "home.loadMore": "Załaduj więcej",
+  "home.noMoreArticles": "Jesteś na bieżąco",
 } as const;
 
 export type Translations = typeof pl;

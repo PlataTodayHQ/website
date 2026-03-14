@@ -92,6 +92,7 @@ export const ko = {
   "home.title": "{lang}으로 읽는 아르헨티나 뉴스",
   "home.heroFallbackTitle": "Plata Today에 오신 것을 환영합니다",
   "home.heroFallbackDesc": "전 세계를 위한 아르헨티나 뉴스 — 편향 없이, 사실만을. 18개 언어로 제공.",
+  "home.description": "오늘의 아르헨티나 주요 뉴스({lang}): 정치, 경제, 스포츠, 문화. 24시간 업데이트, 18개 언어.",
   "home.topStories": "주요 뉴스",
   "home.economyBusiness": "경제·비즈니스",
   "home.cultureSociety": "문화·사회",
@@ -390,10 +391,34 @@ export const ko = {
   "notFound.heading": "페이지를 찾을 수 없습니다",
   "notFound.message": "찾으시는 페이지가 존재하지 않거나 이동되었습니다.",
   "notFound.backHome": "홈으로 이동",
+  "notFound.description": "페이지를 찾을 수 없습니다. Plata Today에서 최신 아르헨티나 뉴스를 확인하세요.",
 
   // Common
   "common.siteDescription": "전 세계를 위한 아르헨티나 뉴스 — 편향 없이, 사실만을. 18개 언어로 제공",
   "common.breadcrumbHome": "홈",
+
+  // Feed page
+  "nav.feed": "피드",
+  "feed.title": "뉴스 피드",
+  "feed.all": "전체",
+  "feed.loadMore": "로딩 중...",
+  "feed.noMore": "더 이상 기사가 없습니다",
+  "feed.description": "아르헨티나의 모든 뉴스를 시간순으로. 최신 소식을 실시간으로 확인하세요.",
+
+  // Financial Dashboard
+  "finDash.title": "시장 한눈에 보기",
+  "finDash.buy": "매수",
+  "finDash.sell": "매도",
+  "finDash.high": "고가",
+  "finDash.low": "저가",
+  "finDash.prevClose": "전일 종가",
+  "finDash.volume": "거래량",
+  "finDash.topMovers": "주요 변동",
+  "finDash.viewAll": "전체 시장 보기",
+
+  // Homepage — Load More
+  "home.loadMore": "더 보기",
+  "home.noMoreArticles": "모두 확인했습니다",
 } as const;
 
 export type Translations = typeof ko;

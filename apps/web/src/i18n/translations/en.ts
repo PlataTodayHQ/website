@@ -92,6 +92,7 @@ export const en = {
   "home.title": "Argentina News in {lang}",
   "home.heroFallbackTitle": "Welcome to Plata Today",
   "home.heroFallbackDesc": "Argentina's news for the world — no bias, just facts. In 18 languages.",
+  "home.description": "Today's top Argentina news in {lang}: politics, economy, sports, culture. Updated 24/7, 18 languages.",
   "home.topStories": "Top Stories",
   "home.economyBusiness": "Economy & Business",
   "home.cultureSociety": "Culture & Society",
@@ -390,10 +391,34 @@ export const en = {
   "notFound.heading": "Page not found",
   "notFound.message": "The page you're looking for doesn't exist or has been moved.",
   "notFound.backHome": "Go to homepage",
+  "notFound.description": "Page not found. Browse the latest Argentina news on Plata Today.",
 
   // Common
   "common.siteDescription": "Argentina's news for the world — no bias, just facts. In 18 languages",
   "common.breadcrumbHome": "Home",
+
+  // Feed page
+  "nav.feed": "Feed",
+  "feed.title": "News Feed",
+  "feed.all": "All",
+  "feed.loadMore": "Loading...",
+  "feed.noMore": "No more articles",
+  "feed.description": "Chronological feed of all Argentina news. Browse the latest stories as they happen.",
+
+  // Financial Dashboard
+  "finDash.title": "Markets at a Glance",
+  "finDash.buy": "Buy",
+  "finDash.sell": "Sell",
+  "finDash.high": "High",
+  "finDash.low": "Low",
+  "finDash.prevClose": "Prev Close",
+  "finDash.volume": "Volume",
+  "finDash.topMovers": "Top Movers",
+  "finDash.viewAll": "View all markets",
+
+  // Homepage — Load More
+  "home.loadMore": "Load More",
+  "home.noMoreArticles": "You're all caught up",
 } as const;
 
 export type Translations = typeof en;

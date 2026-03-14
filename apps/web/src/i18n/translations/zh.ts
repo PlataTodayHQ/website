@@ -92,6 +92,7 @@ export const zh = {
   "home.title": "阿根廷新闻 · {lang}",
   "home.heroFallbackTitle": "欢迎来到 Plata Today",
   "home.heroFallbackDesc": "面向全球的阿根廷新闻——不偏不倚，只有事实。提供 18 种语言。",
+  "home.description": "今日阿根廷头条新闻（{lang}）：政治、经济、体育、文化。全天候更新，18 种语言。",
   "home.topStories": "头条新闻",
   "home.economyBusiness": "经济与商业",
   "home.cultureSociety": "文化与社会",
@@ -390,10 +391,34 @@ export const zh = {
   "notFound.heading": "页面未找到",
   "notFound.message": "您查找的页面不存在或已被移动。",
   "notFound.backHome": "返回首页",
+  "notFound.description": "页面未找到。浏览 Plata Today 上的最新阿根廷新闻。",
 
   // Common
   "common.siteDescription": "面向全球的阿根廷新闻——不偏不倚，只有事实。提供 18 种语言",
   "common.breadcrumbHome": "首页",
+
+  // Feed page
+  "nav.feed": "动态",
+  "feed.title": "新闻动态",
+  "feed.all": "全部",
+  "feed.loadMore": "加载中...",
+  "feed.noMore": "没有更多文章",
+  "feed.description": "阿根廷所有新闻的时间线。实时关注最新动态。",
+
+  // Financial Dashboard
+  "finDash.title": "市场概览",
+  "finDash.buy": "买入",
+  "finDash.sell": "卖出",
+  "finDash.high": "最高",
+  "finDash.low": "最低",
+  "finDash.prevClose": "前收盘",
+  "finDash.volume": "成交量",
+  "finDash.topMovers": "涨跌幅领先",
+  "finDash.viewAll": "查看所有市场",
+
+  // Homepage — Load More
+  "home.loadMore": "加载更多",
+  "home.noMoreArticles": "已全部加载",
 } as const;
 
 export type Translations = typeof zh;

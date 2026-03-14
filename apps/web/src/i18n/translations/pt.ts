@@ -92,6 +92,7 @@ export const pt = {
   "home.title": "Notícias da Argentina em {lang}",
   "home.heroFallbackTitle": "Bem-vindo ao Plata Today",
   "home.heroFallbackDesc": "Notícias da Argentina para o mundo — sem viés, apenas fatos. Em 18 idiomas.",
+  "home.description": "Principais notícias da Argentina hoje em {lang}: política, economia, esportes, cultura. Atualização 24/7, 18 idiomas.",
   "home.topStories": "Principais Notícias",
   "home.economyBusiness": "Economia & Negócios",
   "home.cultureSociety": "Cultura & Sociedade",
@@ -390,10 +391,34 @@ export const pt = {
   "notFound.heading": "Página não encontrada",
   "notFound.message": "A página que você procura não existe ou foi movida.",
   "notFound.backHome": "Ir para o início",
+  "notFound.description": "Página não encontrada. Explore as últimas notícias da Argentina no Plata Today.",
 
   // Common
   "common.siteDescription": "Notícias da Argentina para o mundo — sem viés, apenas fatos. Em 18 idiomas",
   "common.breadcrumbHome": "Início",
+
+  // Feed page
+  "nav.feed": "Feed",
+  "feed.title": "Feed de Notícias",
+  "feed.all": "Tudo",
+  "feed.loadMore": "Carregando...",
+  "feed.noMore": "Sem mais artigos",
+  "feed.description": "Feed cronológico de todas as notícias da Argentina. Acompanhe as últimas histórias em tempo real.",
+
+  // Financial Dashboard
+  "finDash.title": "Mercados num relance",
+  "finDash.buy": "Compra",
+  "finDash.sell": "Venda",
+  "finDash.high": "Máx",
+  "finDash.low": "Mín",
+  "finDash.prevClose": "Fech. ant.",
+  "finDash.volume": "Volume",
+  "finDash.topMovers": "Maiores movimentos",
+  "finDash.viewAll": "Ver todos os mercados",
+
+  // Homepage — Load More
+  "home.loadMore": "Carregar mais",
+  "home.noMoreArticles": "Você está em dia",
 } as const;
 
 export type Translations = typeof pt;

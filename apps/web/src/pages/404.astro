@@ -14,7 +14,10 @@ Astro.response.status = 404;
 
 <Base
   title={t(lang, "notFound.title")}
+  description={t(lang, "notFound.description")}
   lang={lang}
+  noindex={true}
+  alternateUrls={{}}
 >
   <div class="not-found">
     <span class="not-found-code">404</span>

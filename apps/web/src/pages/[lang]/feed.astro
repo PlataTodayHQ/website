@@ -1,0 +1,421 @@
+---
+import Base from "@/layouts/Base.astro";
+import { CATEGORIES, CATEGORY_LIST } from "@plata-today/shared";
+import type { Category } from "@plata-today/shared";
+import { t } from "@/i18n";
+import { getArticlesFeed, timeAgo, readingTime, type ArticleRow } from "@/lib/db";
+
+export const prerender = false;
+
+const { lang } = Astro.params;
+const LIMIT = 20;
+
+const { articles: initialArticles, hasMore } = getArticlesFeed(lang!, 0, LIMIT);
+
+function mapRow(a: ArticleRow) {
+  return {
+    title: a.title,
+    slug: a.slug,
+    href: `/${lang}/news/${a.slug}`,
+    description: a.meta_description ?? "",
+    imageUrl: a.image_url ?? "",
+    category: a.category,
+    categoryLabel: t(lang!, `cat.${a.category}` as any) || CATEGORIES[a.category as Category] || a.category,
+    timeAgo: timeAgo(a.published_at, lang!),
+    readingTime: readingTime(a.word_count, lang!),
+    publishedAt: a.published_at,
+  };
+}
+
+const articles = initialArticles.map(mapRow);
+
+const categoryTabs = [
+  { key: "", label: t(lang!, "feed.all" as any) },
+  ...CATEGORY_LIST.map((key) => ({
+    key,
+    label: t(lang!, `cat.${key}` as any) || CATEGORIES[key],
+  })),
+];
+---
+
+<Base
+  title={t(lang!, "feed.title" as any)}
+  description={t(lang!, "feed.description" as any)}
+  lang={lang}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "feed.title" as any), url: `/${lang}/feed` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `${t(lang!, "feed.title" as any)} — Plata`,
+    "url": `https://plata.today/${lang}/feed`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <div class="feed-page" data-lang={lang} data-limit={LIMIT}>
+    <h1 class="feed-heading">{t(lang!, "feed.title" as any)}</h1>
+
+    <!-- Category filter tabs -->
+    <nav class="feed-tabs" aria-label="Filter by category">
+      {categoryTabs.map((tab) => (
+        <button
+          class:list={["feed-tab", { active: tab.key === "" }]}
+          data-category={tab.key}
+          type="button"
+        >
+          {tab.label}
+        </button>
+      ))}
+    </nav>
+
+    <!-- Articles list -->
+    <div class="feed-list" id="feed-list">
+      {articles.map((a) => (
+        <article class="feed-item" data-category={a.category}>
+          <div class="feed-item-content">
+            <div class="feed-item-meta">
+              <a href={`/${lang}/category/${a.category}`} class="feed-item-cat" data-cat={a.category}>
+                {a.categoryLabel}
+              </a>
+              <span class="meta-dot" aria-hidden="true"></span>
+              <time class="meta-time">{a.timeAgo}</time>
+              <span class="meta-dot" aria-hidden="true"></span>
+              <span class="meta-reading">{a.readingTime}</span>
+            </div>
+            <a href={a.href} class="feed-item-link">
+              <h2 class="feed-item-title">{a.title}</h2>
+            </a>
+            {a.description && (
+              <p class="feed-item-desc">{a.description}</p>
+            )}
+          </div>
+          {a.imageUrl && (
+            <a href={a.href} class="feed-item-thumb" aria-hidden="true" tabindex="-1">
+              <img src={a.imageUrl} alt={a.title} loading="lazy" />
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+
+    <!-- Infinite scroll sentinel -->
+    <div class="feed-status" id="feed-status">
+      {hasMore ? (
+        <div class="feed-loader" id="feed-loader">
+          <div class="loading-spinner"></div>
+          <span>{t(lang!, "feed.loadMore" as any)}</span>
+        </div>
+      ) : (
+        <p class="feed-end">{t(lang!, "feed.noMore" as any)}</p>
+      )}
+    </div>
+  </div>
+</Base>
+
+<script is:inline>
+(function() {
+  const page = document.querySelector('.feed-page');
+  if (!page) return;
+
+  const lang = page.dataset.lang;
+  const limit = parseInt(page.dataset.limit, 10);
+  const list = document.getElementById('feed-list');
+  const status = document.getElementById('feed-status');
+  const tabs = page.querySelectorAll('.feed-tab');
+
+  let offset = list.children.length;
+  let loading = false;
+  let hasMore = !!document.getElementById('feed-loader');
+  let activeCategory = '';
+
+  // Category tab switching
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      const cat = tab.dataset.category;
+      if (cat === activeCategory) return;
+      activeCategory = cat;
+      tabs.forEach(function(t) { t.classList.toggle('active', t.dataset.category === cat); });
+      // Reset and reload
+      list.innerHTML = '';
+      offset = 0;
+      hasMore = true;
+      status.innerHTML = '<div class="feed-loader" id="feed-loader"><div class="loading-spinner"></div></div>';
+      loadMore();
+    });
+  });
+
+  function createItem(a) {
+    var article = document.createElement('article');
+    article.className = 'feed-item';
+    article.dataset.category = a.category;
+
+    var desc = a.description ? '<p class="feed-item-desc">' + escapeHtml(a.description) + '</p>' : '';
+    var thumb = a.imageUrl ? '<a href="' + a.href + '" class="feed-item-thumb" aria-hidden="true" tabindex="-1"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" /></a>' : '';
+
+    article.innerHTML =
+      '<div class="feed-item-content">' +
+        '<div class="feed-item-meta">' +
+          '<a href="/' + lang + '/category/' + a.category + '" class="feed-item-cat" data-cat="' + a.category + '">' + escapeHtml(a.categoryLabel || a.category) + '</a>' +
+          '<span class="meta-dot" aria-hidden="true"></span>' +
+          '<time class="meta-time">' + escapeHtml(a.timeAgo) + '</time>' +
+          '<span class="meta-dot" aria-hidden="true"></span>' +
+          '<span class="meta-reading">' + escapeHtml(a.readingTime) + '</span>' +
+        '</div>' +
+        '<a href="' + a.href + '" class="feed-item-link"><h2 class="feed-item-title">' + escapeHtml(a.title) + '</h2></a>' +
+        desc +
+      '</div>' +
+      thumb;
+
+    return article;
+  }
+
+  // Category label cache from initial tabs
+  var catLabels = {};
+  tabs.forEach(function(t) {
+    if (t.dataset.category) catLabels[t.dataset.category] = t.textContent.trim();
+  });
+
+  function loadMore() {
+    if (loading || !hasMore) return;
+    loading = true;
+
+    var url = '/api/feed?lang=' + lang + '&offset=' + offset + '&limit=' + limit;
+    if (activeCategory) url += '&category=' + activeCategory;
+
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        data.articles.forEach(function(a) {
+          a.categoryLabel = catLabels[a.category] || a.category;
+          list.appendChild(createItem(a));
+        });
+        offset += data.articles.length;
+        hasMore = data.hasMore;
+        if (!hasMore) {
+          status.innerHTML = '<p class="feed-end">' + (page.dataset.noMore || 'No more articles') + '</p>';
+        }
+        loading = false;
+      })
+      .catch(function() {
+        loading = false;
+      });
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Intersection Observer for infinite scroll
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting && hasMore && !loading) {
+        loadMore();
+      }
+    }, { rootMargin: '400px' });
+    observer.observe(status);
+  }
+})();
+</script>
+
+<style>
+  .feed-page {
+    max-width: 800px;
+  }
+
+  .feed-heading {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  /* Category tabs */
+  .feed-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .feed-tab {
+    display: inline-block;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    color: var(--color-text-secondary);
+    background: var(--color-bg-secondary);
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .feed-tab:hover {
+    background: var(--color-celeste);
+    color: #fff;
+  }
+
+  .feed-tab.active {
+    background: var(--color-celeste);
+    color: #fff;
+  }
+
+  /* Feed list */
+  .feed-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feed-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .feed-item:first-child {
+    padding-top: 0;
+  }
+
+  .feed-item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .feed-item-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .feed-item-cat {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .feed-item-cat:hover {
+    text-decoration: underline;
+  }
+
+  .feed-item-cat[data-cat="politics"] { color: var(--cat-politics); }
+  .feed-item-cat[data-cat="economy"] { color: var(--cat-economy); }
+  .feed-item-cat[data-cat="sports"] { color: var(--cat-sports); }
+  .feed-item-cat[data-cat="society"] { color: var(--cat-society); }
+  .feed-item-cat[data-cat="culture"] { color: var(--cat-culture); }
+  .feed-item-cat[data-cat="world"] { color: var(--cat-world); }
+  .feed-item-cat[data-cat="science"] { color: var(--cat-science); }
+
+  .feed-item-link {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .feed-item-link:hover .feed-item-title {
+    text-decoration: underline;
+  }
+
+  .feed-item-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .feed-item-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .feed-item-thumb {
+    flex-shrink: 0;
+    width: 180px;
+  }
+
+  .feed-item-thumb img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 2px;
+    transition: transform 0.2s;
+  }
+
+  .feed-item-thumb:hover img {
+    transform: scale(1.03);
+  }
+
+  /* Status / loader */
+  .feed-status {
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+  }
+
+  .feed-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--color-text-meta);
+    font-size: 0.85rem;
+  }
+
+  .feed-end {
+    color: var(--color-text-meta);
+    font-size: 0.85rem;
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .feed-heading {
+      font-size: 1.6rem;
+    }
+
+    .feed-tabs {
+      gap: 6px;
+    }
+
+    .feed-tab {
+      padding: 5px 12px;
+      font-size: 0.75rem;
+    }
+
+    .feed-item-thumb {
+      width: 110px;
+    }
+
+    .feed-item-title {
+      font-size: 0.95rem;
+    }
+
+    .feed-item-desc {
+      display: none;
+    }
+  }
+</style>

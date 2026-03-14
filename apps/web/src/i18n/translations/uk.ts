@@ -92,6 +92,7 @@ export const uk = {
   "home.title": "Новини Аргентини — {lang}",
   "home.heroFallbackTitle": "Ласкаво просимо до Plata Today",
   "home.heroFallbackDesc": "Новини Аргентини для всього світу — без упередженості, лише факти. 18 мовами.",
+  "home.description": "Головні новини Аргентини сьогодні {lang}: політика, економіка, спорт, культура. Оновлення 24/7, 18 мов.",
   "home.topStories": "Головні новини",
   "home.economyBusiness": "Економіка та бізнес",
   "home.cultureSociety": "Культура та суспільство",
@@ -390,10 +391,34 @@ export const uk = {
   "notFound.heading": "Сторінку не знайдено",
   "notFound.message": "Сторінка, яку ви шукаєте, не існує або була переміщена.",
   "notFound.backHome": "На головну",
+  "notFound.description": "Сторінку не знайдено. Переглядайте останні новини Аргентини на Plata Today.",
 
   // Common
   "common.siteDescription": "Новини Аргентини для всього світу — без упередженості, лише факти. 18 мовами",
   "common.breadcrumbHome": "Головна",
+
+  // Feed page
+  "nav.feed": "Стрічка",
+  "feed.title": "Стрічка новин",
+  "feed.all": "Усе",
+  "feed.loadMore": "Завантаження...",
+  "feed.noMore": "Більше немає статей",
+  "feed.description": "Хронологічна стрічка всіх новин Аргентини. Стежте за подіями в реальному часі.",
+
+  // Financial Dashboard
+  "finDash.title": "Ринки одним поглядом",
+  "finDash.buy": "Купівля",
+  "finDash.sell": "Продаж",
+  "finDash.high": "Макс",
+  "finDash.low": "Мін",
+  "finDash.prevClose": "Попер. закр.",
+  "finDash.volume": "Обсяг",
+  "finDash.topMovers": "Лідери руху",
+  "finDash.viewAll": "Усі ринки",
+
+  // Homepage — Load More
+  "home.loadMore": "Завантажити ще",
+  "home.noMoreArticles": "Ви все прочитали",
 } as const;
 
 export type Translations = typeof uk;

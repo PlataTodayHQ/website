@@ -92,6 +92,7 @@ export const fr = {
   "home.title": "Actualités argentines en {lang}",
   "home.heroFallbackTitle": "Bienvenue sur Plata Today",
   "home.heroFallbackDesc": "L'actualité argentine pour le monde entier — sans parti pris, rien que les faits. En 18 langues.",
+  "home.description": "L'essentiel de l'actualité argentine aujourd'hui en {lang} : politique, économie, sport, culture. Mise à jour 24/7, 18 langues.",
   "home.topStories": "À la une",
   "home.economyBusiness": "Économie & Business",
   "home.cultureSociety": "Culture & Société",
@@ -390,10 +391,34 @@ export const fr = {
   "notFound.heading": "Page introuvable",
   "notFound.message": "La page que vous cherchez n'existe pas ou a été déplacée.",
   "notFound.backHome": "Retour à l'accueil",
+  "notFound.description": "Page introuvable. Parcourez les dernières actualités d'Argentine sur Plata Today.",
 
   // Common
   "common.siteDescription": "L'actualité argentine pour le monde entier — sans parti pris, rien que les faits. En 18 langues",
   "common.breadcrumbHome": "Accueil",
+
+  // Feed page
+  "nav.feed": "Fil",
+  "feed.title": "Fil d'actualités",
+  "feed.all": "Tout",
+  "feed.loadMore": "Chargement...",
+  "feed.noMore": "Plus d'articles",
+  "feed.description": "Fil chronologique de toutes les actualités d'Argentine. Les dernières nouvelles en temps réel.",
+
+  // Financial Dashboard
+  "finDash.title": "Marchés en un coup d'œil",
+  "finDash.buy": "Achat",
+  "finDash.sell": "Vente",
+  "finDash.high": "Haut",
+  "finDash.low": "Bas",
+  "finDash.prevClose": "Clôt. préc.",
+  "finDash.volume": "Volume",
+  "finDash.topMovers": "Plus fortes variations",
+  "finDash.viewAll": "Voir tous les marchés",
+
+  // Homepage — Load More
+  "home.loadMore": "Charger plus",
+  "home.noMoreArticles": "Vous êtes à jour",
 } as const;
 
 export type Translations = typeof fr;

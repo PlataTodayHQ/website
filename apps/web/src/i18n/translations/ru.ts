@@ -92,6 +92,7 @@ export const ru = {
   "home.title": "Новости Аргентины на {lang}",
   "home.heroFallbackTitle": "Добро пожаловать на Plata Today",
   "home.heroFallbackDesc": "Новости Аргентины для всего мира — без предвзятости, только факты. На 18 языках.",
+  "home.description": "Главные новости Аргентины сегодня на {lang}: политика, экономика, спорт, культура. Обновление 24/7, 18 языков.",
   "home.topStories": "Главные новости",
   "home.economyBusiness": "Экономика и бизнес",
   "home.cultureSociety": "Культура и общество",
@@ -390,10 +391,34 @@ export const ru = {
   "notFound.heading": "Страница не найдена",
   "notFound.message": "Запрашиваемая страница не существует или была перемещена.",
   "notFound.backHome": "На главную",
+  "notFound.description": "Страница не найдена. Читайте последние новости Аргентины на Plata Today.",
 
   // Common
   "common.siteDescription": "Новости Аргентины для всего мира — без предвзятости, только факты. На 18 языках",
   "common.breadcrumbHome": "Главная",
+
+  // Feed page
+  "nav.feed": "Лента",
+  "feed.title": "Лента новостей",
+  "feed.all": "Все",
+  "feed.loadMore": "Загрузка...",
+  "feed.noMore": "Больше нет статей",
+  "feed.description": "Хронологическая лента всех новостей Аргентины. Следите за событиями в реальном времени.",
+
+  // Financial Dashboard
+  "finDash.title": "Рынки одним взглядом",
+  "finDash.buy": "Покупка",
+  "finDash.sell": "Продажа",
+  "finDash.high": "Макс",
+  "finDash.low": "Мин",
+  "finDash.prevClose": "Пред. закр.",
+  "finDash.volume": "Объём",
+  "finDash.topMovers": "Лидеры движения",
+  "finDash.viewAll": "Все рынки",
+
+  // Homepage — Load More
+  "home.loadMore": "Загрузить ещё",
+  "home.noMoreArticles": "Вы всё прочитали",
 } as const;
 
 export type Translations = typeof ru;

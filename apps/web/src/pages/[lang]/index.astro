@@ -162,6 +162,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
 <Base
   title={t(lang!, "home.title").replace("{lang}", langName)}
+  description={t(lang!, "home.description").replace("{lang}", langName)}
   lang={lang}
   ogType="website"
   ogImage={`${import.meta.env.SITE ?? "https://plata.today"}/images/placeholder.svg`}

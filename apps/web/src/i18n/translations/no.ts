@@ -92,6 +92,7 @@ export const no = {
   "home.title": "Nyheter fra Argentina på {lang}",
   "home.heroFallbackTitle": "Velkommen til Plata Today",
   "home.heroFallbackDesc": "Argentinas nyheter for verden — uten partiskhet, bare fakta. På 18 språk.",
+  "home.description": "Dagens viktigste nyheter fra Argentina på {lang}: politikk, økonomi, sport, kultur. Oppdateres døgnet rundt, 18 språk.",
   "home.topStories": "Toppsaker",
   "home.economyBusiness": "Økonomi og næringsliv",
   "home.cultureSociety": "Kultur og samfunn",
@@ -390,10 +391,34 @@ export const no = {
   "notFound.heading": "Siden ble ikke funnet",
   "notFound.message": "Siden du leter etter finnes ikke eller har blitt flyttet.",
   "notFound.backHome": "Gå til forsiden",
+  "notFound.description": "Siden ble ikke funnet. Utforsk de siste nyhetene fra Argentina på Plata Today.",
 
   // Common
   "common.siteDescription": "Argentinas nyheter for verden — uten partiskhet, bare fakta. På 18 språk",
   "common.breadcrumbHome": "Hjem",
+
+  // Feed page
+  "nav.feed": "Feed",
+  "feed.title": "Nyhetsstrøm",
+  "feed.all": "Alle",
+  "feed.loadMore": "Laster...",
+  "feed.noMore": "Ingen flere artikler",
+  "feed.description": "Kronologisk strøm av alle nyheter fra Argentina. Følg de siste hendelsene i sanntid.",
+
+  // Financial Dashboard
+  "finDash.title": "Markeder i overblikk",
+  "finDash.buy": "Kjøp",
+  "finDash.sell": "Salg",
+  "finDash.high": "Høy",
+  "finDash.low": "Lav",
+  "finDash.prevClose": "Forr. stenging",
+  "finDash.volume": "Volum",
+  "finDash.topMovers": "Største bevegelser",
+  "finDash.viewAll": "Alle markeder",
+
+  // Homepage — Load More
+  "home.loadMore": "Last inn mer",
+  "home.noMoreArticles": "Du er oppdatert",
 } as const;
 
 export type Translations = typeof no;

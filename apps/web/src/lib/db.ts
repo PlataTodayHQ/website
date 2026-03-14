@@ -146,6 +146,33 @@ export function parseSourceUrls(json: string): string[] {
   }
 }
 
+export function getArticlesFeed(
+  lang: string,
+  offset = 0,
+  limit = 20,
+  category?: string,
+): { articles: ArticleRow[]; hasMore: boolean } {
+  const db = getDb();
+  if (!db) return { articles: [], hasMore: false };
+  const params: any[] = [lang];
+  let where = "a.lang = ? AND e.stage = 'published'";
+  if (category) {
+    where += " AND e.category = ?";
+    params.push(category);
+  }
+  params.push(limit + 1, offset);
+  const rows = db
+    .prepare(
+      `SELECT a.*, e.category, e.importance_score
+       FROM articles a JOIN events e ON a.event_id = e.id
+       WHERE ${where}
+       ORDER BY a.published_at DESC LIMIT ? OFFSET ?`,
+    )
+    .all(...params) as ArticleRow[];
+  const hasMore = rows.length > limit;
+  return { articles: rows.slice(0, limit), hasMore };
+}
+
 export function getBreakingNews(lang: string): ArticleRow | null {
   const db = getDb();
   if (!db) return null;
