@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
 
 export function getStaticPaths() {
   return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
@@ -10,39 +11,39 @@ const { lang } = Astro.params;
 ---
 
 <Base
-  title="Markets — Exchange Rates & Merval"
-  description="Live Argentine exchange rates: USD Official, USD Blue (informal), and Merval stock index. Charts, spreads, and key market data."
+  title={t(lang!, "markets.title")}
+  description={t(lang!, "markets.subtitle")}
   lang={lang}
   ogType="website"
   breadcrumbs={[
-    { name: "Home", url: `/${lang}/` },
-    { name: "Markets", url: `/${lang}/markets` },
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
   ]}
 >
   <div class="markets-hub">
     <header class="hub-header">
-      <h1 class="hub-title">Markets</h1>
-      <p class="hub-subtitle">Argentine financial markets at a glance</p>
+      <h1 class="hub-title">{t(lang!, "markets.title")}</h1>
+      <p class="hub-subtitle">{t(lang!, "markets.subtitle")}</p>
     </header>
 
     <div class="hub-cards">
       <a href={`/${lang}/markets/currencies`} class="hub-card">
         <div class="hub-card-icon">💱</div>
         <div class="hub-card-body">
-          <h2>Exchange Rates</h2>
-          <p>USD Official & Blue dollar rates, spread analysis, and 30-day evolution chart</p>
+          <h2>{t(lang!, "markets.fxTitle")}</h2>
+          <p>{t(lang!, "markets.fxDesc")}</p>
         </div>
         <div class="hub-card-preview" data-preview-fx>
           <div class="hub-mini">
-            <span class="hub-mini-label">Official</span>
+            <span class="hub-mini-label">{t(lang!, "markets.official")}</span>
             <span class="hub-mini-value" data-hub-official>—</span>
           </div>
           <div class="hub-mini">
-            <span class="hub-mini-label">Blue</span>
+            <span class="hub-mini-label">{t(lang!, "markets.blue")}</span>
             <span class="hub-mini-value" data-hub-blue>—</span>
           </div>
           <div class="hub-mini">
-            <span class="hub-mini-label">Spread</span>
+            <span class="hub-mini-label">{t(lang!, "markets.spread")}</span>
             <span class="hub-mini-value hub-mini-spread" data-hub-spread>—</span>
           </div>
         </div>
@@ -52,8 +53,8 @@ const { lang } = Astro.params;
       <a href={`/${lang}/markets/merval`} class="hub-card">
         <div class="hub-card-icon">📈</div>
         <div class="hub-card-body">
-          <h2>Merval Index</h2>
-          <p>Buenos Aires stock exchange index, constituent stocks with prices, and daily performance</p>
+          <h2>{t(lang!, "markets.mervalTitle")}</h2>
+          <p>{t(lang!, "markets.mervalDesc")}</p>
         </div>
         <div class="hub-card-preview" data-preview-merval>
           <div class="hub-mini">
@@ -61,7 +62,7 @@ const { lang } = Astro.params;
             <span class="hub-mini-value" data-hub-merval>—</span>
           </div>
           <div class="hub-mini">
-            <span class="hub-mini-label">Change</span>
+            <span class="hub-mini-label">{t(lang!, "markets.change")}</span>
             <span class="hub-mini-value" data-hub-merval-chg>—</span>
           </div>
         </div>
@@ -71,12 +72,12 @@ const { lang } = Astro.params;
       <a href={`/${lang}/markets/screener`} class="hub-card">
         <div class="hub-card-icon">🔍</div>
         <div class="hub-card-body">
-          <h2>Stock Screener</h2>
-          <p>Browse all Panel Líder stocks with key metrics, P/E ratios, and sector breakdown</p>
+          <h2>{t(lang!, "screener.title")}</h2>
+          <p>{t(lang!, "markets.screenerDesc")}</p>
         </div>
         <div class="hub-card-preview" data-preview-screener>
           <div class="hub-mini">
-            <span class="hub-mini-label">Stocks</span>
+            <span class="hub-mini-label">{t(lang!, "markets.stocks")}</span>
             <span class="hub-mini-value" data-hub-stocks-count>—</span>
           </div>
         </div>
@@ -84,7 +85,7 @@ const { lang } = Astro.params;
       </a>
     </div>
 
-    <p class="hub-disclaimer">Data from Bluelytics and BYMA. For informational purposes only — not financial advice.</p>
+    <p class="hub-disclaimer">{t(lang!, "markets.disclaimer")}</p>
   </div>
 </Base>
 

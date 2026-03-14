@@ -10,7 +10,7 @@ const DB_PATH =
 
 let _db: Database.Database | null = null;
 
-function getDb(): Database.Database | null {
+export function getDb(): Database.Database | null {
   if (_db) return _db;
   if (!fs.existsSync(DB_PATH)) return null;
 
@@ -48,7 +48,8 @@ export function getArticlesByLang(
     .prepare(
       `SELECT a.*, e.category, e.importance_score
        FROM articles a JOIN events e ON a.event_id = e.id
-       WHERE a.lang = ? ORDER BY a.published_at DESC LIMIT ?`,
+       WHERE a.lang = ? AND e.stage = 'published'
+       ORDER BY a.published_at DESC LIMIT ?`,
     )
     .all(lang, limit) as ArticleRow[];
 }
@@ -64,7 +65,7 @@ export function getArticleBySlug(
       .prepare(
         `SELECT a.*, e.category, e.importance_score
          FROM articles a JOIN events e ON a.event_id = e.id
-         WHERE a.lang = ? AND a.slug = ?`,
+         WHERE a.lang = ? AND a.slug = ? AND e.stage = 'published'`,
       )
       .get(lang, slug) as ArticleRow | undefined) ?? null
   );
@@ -81,29 +82,27 @@ export function getArticlesByCategory(
     .prepare(
       `SELECT a.*, e.category, e.importance_score
        FROM articles a JOIN events e ON a.event_id = e.id
-       WHERE a.lang = ? AND e.category = ?
+       WHERE a.lang = ? AND e.category = ? AND e.stage = 'published'
        ORDER BY a.published_at DESC LIMIT ?`,
     )
     .all(lang, category, limit) as ArticleRow[];
 }
 
-export function getAllSlugs(): string[] {
-  const db = getDb();
-  if (!db) return [];
-  return (db.prepare("SELECT DISTINCT slug FROM articles").all() as Array<{ slug: string }>).map(
-    (r) => r.slug,
-  );
-}
 
-export function getAllLangSlugPairs(): Array<{ lang: string; slug: string }> {
+export function getArticleLangSlugs(eventId: number): Record<string, string> {
   const db = getDb();
-  if (!db) return [];
-  return db.prepare("SELECT lang, slug FROM articles").all() as Array<{ lang: string; slug: string }>;
+  if (!db) return {};
+  const rows = db
+    .prepare("SELECT lang, slug FROM articles WHERE event_id = ?")
+    .all(eventId) as Array<{ lang: string; slug: string }>;
+  const result: Record<string, string> = {};
+  for (const r of rows) result[r.lang] = r.slug;
+  return result;
 }
 
 // --- Helpers ---
 
-export function timeAgo(dateStr: string): string {
+export function timeAgo(dateStr: string, lang = "en"): string {
   const now = Date.now();
   const then = new Date(dateStr).getTime();
   const diffMs = now - then;
@@ -111,19 +110,24 @@ export function timeAgo(dateStr: string): string {
   const diffHr = Math.floor(diffMin / 60);
   const diffDay = Math.floor(diffHr / 24);
 
-  if (diffMin < 1) return "just now";
-  if (diffMin < 60) return `${diffMin} min ago`;
-  if (diffHr < 24) return `${diffHr} hr${diffHr > 1 ? "s" : ""} ago`;
-  if (diffDay < 7) return `${diffDay} day${diffDay > 1 ? "s" : ""} ago`;
-  return new Date(dateStr).toLocaleDateString("en-US", {
+  try {
+    const rtf = new Intl.RelativeTimeFormat(lang, { numeric: "auto" });
+    if (diffMin < 1) return rtf.format(0, "minute");
+    if (diffMin < 60) return rtf.format(-diffMin, "minute");
+    if (diffHr < 24) return rtf.format(-diffHr, "hour");
+    if (diffDay < 7) return rtf.format(-diffDay, "day");
+  } catch {
+    // fallback below
+  }
+  return new Date(dateStr).toLocaleDateString(lang, {
     month: "short",
     day: "numeric",
   });
 }
 
-export function readingTime(wordCount: number): string {
+export function readingTime(wordCount: number, _lang = "en"): string {
   const min = Math.max(1, Math.round(wordCount / 200));
-  return `${min} min read`;
+  return `${min} min`;
 }
 
 export function parseSourceNames(json: string): string[] {
@@ -150,7 +154,8 @@ export function getBreakingNews(lang: string): ArticleRow | null {
       .prepare(
         `SELECT a.*, e.category, e.importance_score
          FROM articles a JOIN events e ON a.event_id = e.id
-         WHERE a.lang = ? AND a.published_at > datetime('now', '-12 hours')
+         WHERE a.lang = ? AND e.stage = 'published'
+           AND a.published_at > datetime('now', '-12 hours')
          ORDER BY e.importance_score DESC
          LIMIT 1`,
       )

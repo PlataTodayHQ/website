@@ -13,12 +13,16 @@
     "server:dev": "tsx apps/server/src/index.ts",
     "pipeline:run": "tsx apps/pipeline/src/main.ts",
     "pipeline:migrate": "tsx apps/pipeline/src/db/migrate.ts",
-    "db:migrate": "tsx apps/pipeline/src/db/migrate.ts"
+    "db:migrate": "tsx apps/pipeline/src/db/migrate.ts",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit -p apps/pipeline/tsconfig.json && tsc --noEmit -p apps/server/tsconfig.json"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.7",
     "tsx": "^4.19.0"
   }
 }

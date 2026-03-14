@@ -1,3 +1,5 @@
+import { recordJobStart, recordJobEnd } from "./job-tracking.js";
+
 let running = false;
 
 export async function runPipeline(dbPath: string): Promise<void> {
@@ -9,15 +11,16 @@ export async function runPipeline(dbPath: string): Promise<void> {
   running = true;
   console.log("[pipeline] Starting pipeline run...");
 
-  try {
-    // Set env vars that pipeline expects
-    process.env.DATABASE_PATH = dbPath;
+  const runId = recordJobStart(dbPath, "pipeline");
 
-    const { main } = await import("../../../pipeline/src/main.js");
-    await main();
+  try {
+    const { main } = await import("@plata-today/pipeline");
+    await main(dbPath);
     console.log("[pipeline] Pipeline run complete");
+    recordJobEnd(dbPath, runId, "success");
   } catch (err) {
     console.error("[pipeline] Pipeline error:", err);
+    recordJobEnd(dbPath, runId, "error", String(err));
   } finally {
     running = false;
   }

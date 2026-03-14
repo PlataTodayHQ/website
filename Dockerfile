@@ -48,8 +48,11 @@ COPY db db
 # Install tsx globally for runtime TypeScript execution
 RUN npm install -g tsx
 
+# Non-root user
+RUN groupadd -r plata && useradd -r -g plata -m plata
+
 # Data directory for SQLite
-RUN mkdir -p /data
+RUN mkdir -p /data && chown plata:plata /data
 
 ENV NODE_ENV=production
 ENV PORT=4321
@@ -59,6 +62,8 @@ ENV DATABASE_PATH=/data/plata.db
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 
 EXPOSE 4321
+
+USER plata
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s \

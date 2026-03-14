@@ -1,9 +1,9 @@
 ---
 import "@/styles/global.css";
-import { LANGUAGES, CATEGORIES, SUBCATEGORIES } from "@plata-today/shared";
+import { LANGUAGES, CATEGORIES, CATEGORY_LIST, SUBCATEGORIES } from "@plata-today/shared";
 import LanguageSwitcher from "@/components/LanguageSwitcher.astro";
 import BreakingNews from "@/components/BreakingNews.astro";
-import DollarWidget from "@/components/DollarWidget.astro";
+import MarketTicker from "@/components/MarketTicker.astro";
 import { t } from "@/i18n";
 import { getBreakingNews } from "@/lib/db";
 
@@ -48,7 +48,7 @@ const {
   articleMeta,
 } = Astro.props;
 
-const siteUrl = "https://plata.today";
+const siteUrl = import.meta.env.SITE ?? "https://plata.today";
 const currentPath = Astro.url.pathname;
 const fullTitle = `${title} | Plata`;
 const resolvedCanonical = canonicalUrl ?? `${siteUrl}${currentPath}`;
@@ -72,12 +72,20 @@ const langCtaMap = JSON.stringify(
   )
 );
 
+// OG locale mapping (BCP47 → OG format)
+const OG_LOCALE: Record<string, string> = {
+  en: "en_US", pt: "pt_BR", de: "de_DE", it: "it_IT", fr: "fr_FR",
+  ru: "ru_RU", zh: "zh_CN", pl: "pl_PL", uk: "uk_UA", ja: "ja_JP",
+  ko: "ko_KR", es: "es_AR", sv: "sv_SE", da: "da_DK", nl: "nl_NL",
+  no: "nb_NO", fi: "fi_FI", hi: "hi_IN",
+};
+const ogLocale = OG_LOCALE[lang] ?? lang;
+
 const breakingArticle = getBreakingNews(lang);
 
-const catKeys = ["politics", "economy", "sports", "society", "culture", "world", "science"] as const;
 const navItems = [
   { label: t(lang, "nav.home"), href: `/${lang}/` },
-  ...catKeys.map((key) => ({
+  ...CATEGORY_LIST.map((key) => ({
     label: t(lang, `cat.${key}` as any),
     href: `/${lang}/category/${key}`,
   })),
@@ -130,7 +138,7 @@ const allJsonLd = [
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={resolvedOgUrl} />
     <meta property="og:site_name" content="Plata" />
-    <meta property="og:locale" content={lang} />
+    <meta property="og:locale" content={ogLocale} />
     {ogImage && <meta property="og:image" content={ogImage} />}
     {ogImage && <meta property="og:image:width" content="1200" />}
     {ogImage && <meta property="og:image:height" content="630" />}
@@ -153,10 +161,14 @@ const allJsonLd = [
     ))}
 
     <!-- Google Analytics -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-F100G3G0V9"></script>
-    <script is:inline>
-      window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F100G3G0V9');
-    </script>
+    {import.meta.env.PUBLIC_GA_ID && (
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_ID}`}></script>
+    )}
+    {import.meta.env.PUBLIC_GA_ID && (
+      <script is:inline define:vars={{ gaId: import.meta.env.PUBLIC_GA_ID }}>
+        window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',gaId);
+      </script>
+    )}
 
     <!-- Blocking theme script — prevents flash of wrong theme -->
     <script is:inline>
@@ -193,7 +205,6 @@ const allJsonLd = [
           <a href={`/${lang}/`} class="logo" aria-label="Plata — Home">
             <span class="logo-text">Plata</span>
           </a>
-          <DollarWidget lang={lang} />
           <div class="brand-actions">
             <button class="header-icon-btn" aria-label={t(lang, "nav.search")} aria-expanded="false" aria-controls="search-overlay" data-search-trigger>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -233,6 +244,8 @@ const allJsonLd = [
         </div>
       </nav>
     </header>
+
+    <MarketTicker lang={lang} />
 
     <!-- Mobile menu overlay -->
     <div
@@ -634,7 +647,7 @@ const allJsonLd = [
     max-width: var(--max-width);
     margin: 0 auto;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     height: 44px;
     padding: 0 var(--spacing-lg);
   }

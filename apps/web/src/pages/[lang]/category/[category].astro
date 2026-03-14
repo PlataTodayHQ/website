@@ -29,12 +29,10 @@ function mapRow(a: ArticleRow) {
     title: a.title,
     href: `/${lang}/news/${a.slug}`,
     description: a.meta_description ?? "",
-    imageUrl:
-      a.image_url ??
-      `https://placehold.co/800x450/1e2a3d/e8e6e3?text=${encodeURIComponent(catLabel)}`,
-    timeAgo: timeAgo(a.published_at),
+    imageUrl: a.image_url ?? "/images/placeholder.svg",
+    timeAgo: timeAgo(a.published_at, lang!),
     subcategory: t(lang!, `cat.${a.category}` as any) || CATEGORIES[a.category as Category] || a.category,
-    readingTime: readingTime(a.word_count),
+    readingTime: readingTime(a.word_count, lang!),
   };
 }
 
@@ -50,7 +48,7 @@ const olderArticles = articles.slice(5);
   lang={lang}
   activeCategory={category}
   ogType="website"
-  ogImage={featured?.imageUrl ?? `https://placehold.co/800x450/1e2a3d/e8e6e3?text=${encodeURIComponent(catLabel)}`}
+  ogImage={featured?.imageUrl ?? "/images/placeholder.svg"}
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
     { name: catLabel, url: `/${lang}/category/${category}` },
@@ -150,30 +148,6 @@ const olderArticles = articles.slice(5);
 </Base>
 
 <style>
-  /* ========================= */
-  /* META HELPERS               */
-  /* ========================= */
-  .meta-time {
-    font-size: 0.8rem;
-    color: var(--color-text-meta);
-  }
-
-  .meta-dot {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: var(--color-text-meta);
-    flex-shrink: 0;
-  }
-
-  .meta-sub {
-    color: var(--color-gold-dark);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-  }
-
   /* ========================= */
   /* CATEGORY HEADER            */
   /* ========================= */

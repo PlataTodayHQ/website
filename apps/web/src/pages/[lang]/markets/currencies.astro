@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
 
 export function getStaticPaths() {
   return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
@@ -10,31 +11,31 @@ const { lang } = Astro.params;
 ---
 
 <Base
-  title="Exchange Rates — USD Official & Blue"
-  description="Argentine exchange rates: USD Official (BCRA) and Blue (informal). Live prices, spread analysis, and 30-day evolution chart."
+  title={t(lang!, "currencies.title")}
+  description={t(lang!, "currencies.subtitle")}
   lang={lang}
   ogType="website"
   breadcrumbs={[
-    { name: "Home", url: `/${lang}/` },
-    { name: "Markets", url: `/${lang}/markets` },
-    { name: "Exchange Rates", url: `/${lang}/markets/currencies` },
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
+    { name: t(lang!, "currencies.breadcrumb"), url: `/${lang}/markets/currencies` },
   ]}
 >
   <div class="currencies-page" data-currencies-page>
     <header class="mkts-header">
       <div>
-        <h1 class="mkts-title">Exchange Rates</h1>
-        <p class="mkts-subtitle">USD Official & Blue dollar rates</p>
+        <h1 class="mkts-title">{t(lang!, "currencies.title")}</h1>
+        <p class="mkts-subtitle">{t(lang!, "currencies.subtitle")}</p>
       </div>
-      <p class="mkts-updated" data-mkts-updated>Loading…</p>
+      <p class="mkts-updated" data-mkts-updated>{t(lang!, "currencies.loading")}</p>
     </header>
 
     <!-- Rate Cards -->
     <div class="rate-cards">
       <div class="rate-card" id="official">
         <div class="rc-top">
-          <span class="rc-label">USD Official</span>
-          <span class="rc-badge">BCRA</span>
+          <span class="rc-label">{t(lang!, "currencies.usdOfficial")}</span>
+          <span class="rc-badge">{t(lang!, "currencies.bcra")}</span>
         </div>
         <div class="rc-price-row">
           <span class="rc-price" data-rc-price="official">—</span>
@@ -42,11 +43,11 @@ const { lang } = Astro.params;
         </div>
         <div class="rc-details">
           <div class="rc-detail">
-            <span class="rc-dk">Buy</span>
+            <span class="rc-dk">{t(lang!, "currencies.buy")}</span>
             <span class="rc-dv" data-rc-buy="official">—</span>
           </div>
           <div class="rc-detail">
-            <span class="rc-dk">Sell</span>
+            <span class="rc-dk">{t(lang!, "currencies.sell")}</span>
             <span class="rc-dv" data-rc-sell="official">—</span>
           </div>
         </div>
@@ -57,8 +58,8 @@ const { lang } = Astro.params;
 
       <div class="rate-card rate-card--blue" id="blue">
         <div class="rc-top">
-          <span class="rc-label">USD Blue</span>
-          <span class="rc-badge rc-badge--blue">Informal</span>
+          <span class="rc-label">{t(lang!, "currencies.usdBlue")}</span>
+          <span class="rc-badge rc-badge--blue">{t(lang!, "currencies.informal")}</span>
         </div>
         <div class="rc-price-row">
           <span class="rc-price" data-rc-price="blue">—</span>
@@ -66,11 +67,11 @@ const { lang } = Astro.params;
         </div>
         <div class="rc-details">
           <div class="rc-detail">
-            <span class="rc-dk">Buy</span>
+            <span class="rc-dk">{t(lang!, "currencies.buy")}</span>
             <span class="rc-dv" data-rc-buy="blue">—</span>
           </div>
           <div class="rc-detail">
-            <span class="rc-dk">Sell</span>
+            <span class="rc-dk">{t(lang!, "currencies.sell")}</span>
             <span class="rc-dv" data-rc-sell="blue">—</span>
           </div>
         </div>
@@ -83,22 +84,22 @@ const { lang } = Astro.params;
     <!-- Spread Bar -->
     <div class="spread-bar">
       <div class="spread-item">
-        <span class="spread-label">Blue–Official Spread</span>
+        <span class="spread-label">{t(lang!, "currencies.blueSpread")}</span>
         <span class="spread-value" data-spread-abs>—</span>
       </div>
       <div class="spread-sep"></div>
       <div class="spread-item">
-        <span class="spread-label">Gap</span>
+        <span class="spread-label">{t(lang!, "currencies.gap")}</span>
         <span class="spread-value spread-pct" data-spread-pct>—</span>
       </div>
     </div>
 
     <!-- 30-Day Evolution Chart -->
     <section class="evo-section">
-      <h2 class="evo-title">30-Day Dollar Evolution</h2>
+      <h2 class="evo-title">{t(lang!, "currencies.evoTitle")}</h2>
       <div class="evo-legend">
-        <span class="evo-leg evo-leg--official"><span class="evo-dot"></span> Official</span>
-        <span class="evo-leg evo-leg--blue"><span class="evo-dot"></span> Blue</span>
+        <span class="evo-leg evo-leg--official"><span class="evo-dot"></span> {t(lang!, "markets.official")}</span>
+        <span class="evo-leg evo-leg--blue"><span class="evo-dot"></span> {t(lang!, "markets.blue")}</span>
       </div>
       <div class="evo-wrap">
         <canvas data-evo-chart height="280"></canvas>
@@ -107,16 +108,16 @@ const { lang } = Astro.params;
 
     <!-- 7-Day Comparison Table -->
     <section class="comparison-section">
-      <h2 class="section-title">Recent History</h2>
+      <h2 class="section-title">{t(lang!, "currencies.recentHistory")}</h2>
       <div class="table-wrap">
         <table class="comparison-table" data-comparison-table>
           <thead>
             <tr>
-              <th>Date</th>
-              <th class="text-right">Official</th>
-              <th class="text-right">Blue</th>
-              <th class="text-right">Spread</th>
-              <th class="text-right">Gap</th>
+              <th>{t(lang!, "currencies.date")}</th>
+              <th class="text-right">{t(lang!, "markets.official")}</th>
+              <th class="text-right">{t(lang!, "markets.blue")}</th>
+              <th class="text-right">{t(lang!, "markets.spread")}</th>
+              <th class="text-right">{t(lang!, "currencies.gap")}</th>
             </tr>
           </thead>
           <tbody data-comparison-body>
@@ -128,20 +129,20 @@ const { lang } = Astro.params;
 
     <!-- Info Section -->
     <section class="info-section">
-      <h2 class="section-title">Understanding the Rates</h2>
+      <h2 class="section-title">{t(lang!, "currencies.understandTitle")}</h2>
       <div class="info-grid">
         <div class="info-card">
-          <h3>Official Rate</h3>
-          <p>The government-regulated rate set by the Central Bank (BCRA). Used for formal banking, imports, and official commerce. Subject to currency controls known as the "cepo cambiario."</p>
+          <h3>{t(lang!, "currencies.officialTitle")}</h3>
+          <p>{t(lang!, "currencies.officialDesc")}</p>
         </div>
         <div class="info-card">
-          <h3>Blue Rate</h3>
-          <p>The informal parallel market rate reflecting actual dollar demand outside government controls. The gap between official and blue rates signals the level of currency restrictions in the economy.</p>
+          <h3>{t(lang!, "currencies.blueTitle")}</h3>
+          <p>{t(lang!, "currencies.blueDesc")}</p>
         </div>
       </div>
     </section>
 
-    <p class="info-disclaimer">Data from Bluelytics. Rates may be delayed up to 5 minutes. For informational purposes only — not financial advice.</p>
+    <p class="info-disclaimer">{t(lang!, "currencies.disclaimer")}</p>
   </div>
 </Base>
 
@@ -277,11 +278,6 @@ const { lang } = Astro.params;
 </script>
 
 <style>
-  .mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
-  .mkts-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1.1; }
-  .mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
-  .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
-
   .rate-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); }
   .rate-card { background: var(--color-bg-secondary); border-radius: 8px; padding: var(--spacing-lg); border: 1px solid var(--color-border); }
   .rc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md); }
@@ -291,8 +287,6 @@ const { lang } = Astro.params;
   .rc-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: var(--spacing-md); }
   .rc-price { font-size: 1.75rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; }
   .rc-change { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .rc-up { color: #16a34a; }
-  .rc-down { color: #dc2626; }
   .rc-details { display: flex; gap: var(--spacing-lg); padding-top: var(--spacing-sm); border-top: 1px solid var(--color-border); margin-bottom: var(--spacing-md); }
   .rc-detail { display: flex; flex-direction: column; gap: 2px; }
   .rc-dk { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
@@ -318,7 +312,6 @@ const { lang } = Astro.params;
   .evo-wrap canvas { width: 100%; display: block; }
 
   .comparison-section { margin-bottom: var(--spacing-2xl); }
-  .section-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; margin-bottom: var(--spacing-lg); }
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .comparison-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
   .comparison-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); font-weight: 700; padding: var(--spacing-sm) var(--spacing-md); border-bottom: 2px solid var(--color-border); }
@@ -327,24 +320,14 @@ const { lang } = Astro.params;
   .comparison-table .tabular { font-variant-numeric: tabular-nums; font-weight: 600; }
   .loading-cell { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl) !important; }
 
-  .info-section { margin-bottom: var(--spacing-2xl); }
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
-  .info-card { padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
-  .info-card h3 { font-family: var(--font-serif); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-  .info-card p { font-size: 0.85rem; line-height: 1.6; color: var(--color-text-secondary); }
-  .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
-
   :global([data-theme="dark"]) .rc-badge { color: #75AADB; }
   :global([data-theme="dark"]) .rc-badge--blue { color: #F6B40E; }
 
   @media (max-width: 640px) {
-    .mkts-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .mkts-title { font-size: 1.5rem; }
     .rate-cards { grid-template-columns: 1fr; }
     .spread-bar { flex-direction: column; gap: var(--spacing-sm); }
     .spread-sep { width: 80%; height: 1px; }
     .rc-price { font-size: 1.4rem; }
-    .info-grid { grid-template-columns: 1fr; }
-    .evo-title, .section-title { font-size: 1.1rem; }
+    .evo-title { font-size: 1.1rem; }
   }
 </style>

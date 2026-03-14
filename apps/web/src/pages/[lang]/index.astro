@@ -39,12 +39,10 @@ function mapRow(a: ArticleRow) {
     title: a.title,
     description: a.meta_description ?? "",
     href: `/${lang}/news/${a.slug}`,
-    imageUrl:
-      a.image_url ??
-      `https://placehold.co/800x450/1e2a3d/e8e6e3?text=${encodeURIComponent(CATEGORIES[a.category as Category] ?? a.category)}`,
-    timeAgo: timeAgo(a.published_at),
+    imageUrl: a.image_url ?? "/images/placeholder.svg",
+    timeAgo: timeAgo(a.published_at, lang!),
     subcategory: catLabel(a.category),
-    readingTime: readingTime(a.word_count),
+    readingTime: readingTime(a.word_count, lang!),
   };
 }
 
@@ -63,8 +61,7 @@ const heroArticle = heroRow
       title: t(lang!, "home.heroFallbackTitle"),
       description: t(lang!, "home.heroFallbackDesc"),
       href: `/${lang}/`,
-      imageUrl:
-        "https://placehold.co/1200x600/1e2a3d/e8e6e3?text=Plata+Today",
+      imageUrl: "/images/placeholder.svg",
       timeAgo: "",
       subcategory: "",
       readingTime: "",
@@ -80,14 +77,14 @@ const trendingItems = byImportance.slice(0, 5).map((a) => ({
   title: a.title,
   href: `/${lang}/news/${a.slug}`,
   category: catLabel(a.category),
-  timeAgo: timeAgo(a.published_at),
+  timeAgo: timeAgo(a.published_at, lang!),
 }));
 
 // Just In — latest 10 (allArticles already sorted by published_at DESC)
 const justInItems = allArticles.slice(0, 10).map((a) => ({
   title: a.title,
   href: `/${lang}/news/${a.slug}`,
-  timeAgo: timeAgo(a.published_at),
+  timeAgo: timeAgo(a.published_at, lang!),
 }));
 
 // Top Stories — 6 items
@@ -116,7 +113,7 @@ const scienceTech = byCat("science").slice(0, 4);
 const moreNews = allArticles.slice(6, 14).map((a) => ({
   title: a.title,
   href: `/${lang}/news/${a.slug}`,
-  timeAgo: timeAgo(a.published_at),
+  timeAgo: timeAgo(a.published_at, lang!),
   subcategory: catLabel(a.category),
 }));
 ---
@@ -125,7 +122,7 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
   title={t(lang!, "home.title").replace("{lang}", langName)}
   lang={lang}
   ogType="website"
-  ogImage="https://placehold.co/1200x630/3D6B99/ffffff?text=Plata+News"
+  ogImage={`${import.meta.env.SITE ?? "https://plata.today"}/images/placeholder.svg`}
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
   ]}
@@ -137,18 +134,13 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
       "url": "https://plata.today",
       "description": t(lang!, "common.siteDescription"),
       "inLanguage": lang,
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://plata.today/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
     },
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Plata",
       "url": "https://plata.today",
-      "logo": "https://plata.today/logo.png"
+      "logo": "https://plata.today/logo.svg"
     }
   ]}
 >
@@ -345,37 +337,6 @@ const moreNews = allArticles.slice(6, 14).map((a) => ({
 </Base>
 
 <style>
-  /* ====================== */
-  /* SHARED META            */
-  /* ====================== */
-  .meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.8rem;
-    color: var(--color-text-meta);
-  }
-
-  .meta-dot {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: var(--color-text-meta);
-    flex-shrink: 0;
-  }
-
-  .meta-sub {
-    color: var(--color-gold-dark);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-  }
-
-  .meta-reading {
-    font-size: 0.7rem;
-  }
-
   /* ====================== */
   /* HERO                   */
   /* ====================== */

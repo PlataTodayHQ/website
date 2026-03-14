@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/node": "^9.5.5",
+    "@astrojs/sitemap": "^3.3.0",
     "@plata-today/shared": "*",
     "astro": "^5.7.0",
     "better-sqlite3": "^11.0.0"

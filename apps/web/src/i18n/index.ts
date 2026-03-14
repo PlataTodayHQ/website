@@ -1,4 +1,3 @@
-import type { LangCode } from "@plata-today/shared";
 import { en } from "./translations/en";
 
 // All translation files — lazy-loaded at build time

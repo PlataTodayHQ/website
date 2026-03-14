@@ -37,7 +37,7 @@ export const GET: APIRoute = async ({ params, url }) => {
 
     let symbol = rawSymbol;
     if (!symbol.startsWith("^") && !symbol.includes(".")) {
-      symbol = symbol + ".BA";
+      symbol = `${symbol}.BA`;
     }
 
     const range = VALID_RANGES.includes(url.searchParams.get("range") ?? "")

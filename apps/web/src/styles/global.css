@@ -133,6 +133,135 @@ button:focus:not(:focus-visible) {
   }
 }
 
+/* ====================== */
+/* SHARED: Meta labels    */
+/* ====================== */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--color-text-meta);
+}
+.meta-time { font-size: 0.8rem; color: var(--color-text-meta); }
+.meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--color-text-meta); flex-shrink: 0; }
+.meta-sub { color: var(--color-gold-dark); font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.04em; }
+.meta-reading { font-size: 0.7rem; }
+
+/* ====================== */
+/* SHARED: Markets header */
+/* ====================== */
+.mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
+.mkts-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1.1; }
+.mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
+.mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
+
+@media (max-width: 640px) {
+  .mkts-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .mkts-title { font-size: 1.5rem; }
+}
+
+/* ====================== */
+/* SHARED: Up/Down colors */
+/* ====================== */
+.rc-up { color: #16a34a; }
+.rc-down { color: #dc2626; }
+
+/* ====================== */
+/* SHARED: Info section   */
+/* ====================== */
+.info-section { margin-bottom: var(--spacing-2xl); }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
+.info-card { padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
+.info-card h3 { font-family: var(--font-serif); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.info-card p { font-size: 0.85rem; line-height: 1.6; color: var(--color-text-secondary); }
+.info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
+
+@media (max-width: 640px) {
+  .info-grid { grid-template-columns: 1fr; }
+}
+
+/* ====================== */
+/* SHARED: Section title  */
+/* ====================== */
+.section-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; margin-bottom: var(--spacing-lg); }
+
+@media (max-width: 640px) {
+  .section-title { font-size: 1.1rem; }
+}
+
+/* ====================== */
+/* SHARED: Loading        */
+/* ====================== */
+.loading-spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--color-border); border-top-color: var(--color-gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ======================== */
+/* SHARED: Stock cards      */
+/* ======================== */
+.stocks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
+
+.stk-card {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 14px 16px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--stk-accent, var(--color-border));
+  border-radius: 10px;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  position: relative; overflow: hidden;
+}
+.stk-card::after {
+  content: '\2192'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 1rem; color: var(--color-text-meta); opacity: 0;
+  transition: opacity 0.2s, right 0.2s;
+}
+.stk-card:hover {
+  border-color: var(--color-gold); border-left-color: var(--color-gold);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(246,180,14,0.12);
+  transform: translateY(-2px);
+}
+.stk-card:hover::after { opacity: 0.5; right: 12px; }
+
+.stk-row1 { display: flex; align-items: center; gap: 12px; }
+.stk-logo {
+  width: 40px; height: 40px; min-width: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; overflow: hidden;
+}
+.stk-logo img { width: 28px; height: 28px; object-fit: contain; border-radius: 4px; display: block; }
+.stk-logo--fallback { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.02em; }
+.stk-id { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+.stk-symbol { font-weight: 800; font-size: 0.95rem; color: var(--color-text); letter-spacing: 0.02em; line-height: 1.2; }
+.stk-name { font-size: 0.72rem; color: var(--color-text-meta); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stk-change {
+  font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  white-space: nowrap; padding: 4px 10px; border-radius: 6px;
+  flex-shrink: 0; margin-left: auto;
+}
+.stk-change.rc-up { background: rgba(22,163,74,0.12); color: #16a34a; }
+.stk-change.rc-down { background: rgba(220,38,38,0.12); color: #dc2626; }
+.stk-row2 {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: 8px; border-top: 1px solid rgba(128,128,128,0.15);
+}
+.stk-price { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.01em; }
+.stk-meta { display: flex; gap: 12px; align-items: baseline; }
+.stk-vol, .stk-mcap { font-size: 0.68rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 640px) {
+  .stocks-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+  .stk-card { padding: 12px 14px; }
+  .stk-card::after { display: none; }
+  .stk-logo { width: 36px; height: 36px; min-width: 36px; border-radius: 8px; }
+  .stk-logo img { width: 24px; height: 24px; }
+  .stk-symbol { font-size: 0.9rem; }
+  .stk-price { font-size: 0.95rem; }
+  .stk-change { font-size: 0.75rem; padding: 3px 8px; }
+  .stk-row2 { padding-top: 6px; }
+}
+
 /* Explicit dark mode via toggle */
 [data-theme="dark"] {
   --color-bg: #1a1a1a;

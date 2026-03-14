@@ -8,6 +8,7 @@ import type { Category } from "@plata-today/shared";
 import {
   getArticleBySlug,
   getArticlesByLang,
+  getArticleLangSlugs,
   timeAgo,
   readingTime,
   parseSourceNames,
@@ -27,6 +28,17 @@ if (!row) {
   return new Response(null, { status: 404, statusText: "Not Found" });
 }
 
+// Build correct hreflang alternate URLs using per-language slugs
+const langSlugs = getArticleLangSlugs(row.event_id);
+const alternateUrls = Object.fromEntries(
+  Object.keys(LANGUAGES).map((code) => [
+    code,
+    langSlugs[code]
+      ? `https://plata.today/${code}/news/${langSlugs[code]}`
+      : `https://plata.today/${code}/`,
+  ])
+);
+
 const catLabel = t(lang!, `cat.${row.category}` as any) || CATEGORIES[row.category as Category] || row.category;
 const sourceNames = parseSourceNames(row.source_names);
 const sourceUrls = parseSourceUrls(row.source_urls);
@@ -36,7 +48,7 @@ const sources = sourceNames.map((name, i) => ({
 }));
 
 const wordCount = row.word_count || row.body.split(/\s+/).length;
-const computedReadingTime = readingTime(wordCount);
+const computedReadingTime = readingTime(wordCount, lang!);
 const publishedDate = new Date(row.published_at);
 const dateFormatted = publishedDate.toLocaleDateString(lang!, {
   month: "long",
@@ -62,10 +74,10 @@ const relatedArticles = getArticlesByLang(lang!, 20)
     href: `/${lang}/news/${a.slug}`,
     imageUrl:
       a.image_url ??
-      `https://placehold.co/400x300/2a3a4a/e8e6e3?text=${encodeURIComponent(t(lang!, `cat.${a.category}` as any) || a.category)}`,
-    timeAgo: timeAgo(a.published_at),
+      "/images/placeholder.svg",
+    timeAgo: timeAgo(a.published_at, lang!),
     category: t(lang!, `cat.${a.category}` as any) || CATEGORIES[a.category as Category] || a.category,
-    readingTime: readingTime(a.word_count),
+    readingTime: readingTime(a.word_count, lang!),
   }));
 ---
 
@@ -73,8 +85,9 @@ const relatedArticles = getArticlesByLang(lang!, 20)
   title={row.title}
   description={row.meta_description ?? bodyParagraphs[0]?.slice(0, 160) ?? ""}
   lang={lang}
+  alternateUrls={alternateUrls}
   ogType="article"
-  ogImage={row.image_url ?? `https://placehold.co/1200x630/1e2a3d/e8e6e3?text=${encodeURIComponent(catLabel)}`}
+  ogImage={row.image_url ?? "/images/placeholder.svg"}
   ogUrl={`https://plata.today/${lang}/news/${slug}`}
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
@@ -106,7 +119,7 @@ const relatedArticles = getArticlesByLang(lang!, 20)
       "url": "https://plata.today",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://plata.today/logo.png"
+        "url": "https://plata.today/logo.svg"
       }
     },
     "mainEntityOfPage": {

@@ -1,0 +1,347 @@
+---
+import { t } from "@/i18n";
+
+interface Props {
+  lang?: string;
+}
+const { lang = "en" } = Astro.props;
+---
+
+<div class="ticker" role="complementary" aria-label="Market data" data-market-ticker>
+  <div class="ticker-inner">
+    <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="oficial">
+      <span class="ticker-label">USD</span>
+      <span class="ticker-value" data-tv="oficial">---</span>
+      <span class="ticker-change" data-tc="oficial"></span>
+    </a>
+    <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="blue">
+      <span class="ticker-label ticker-label--blue">Blue</span>
+      <span class="ticker-value" data-tv="blue">---</span>
+      <span class="ticker-change" data-tc="blue"></span>
+    </a>
+    <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="mep">
+      <span class="ticker-label">MEP</span>
+      <span class="ticker-value" data-tv="mep">---</span>
+      <span class="ticker-change" data-tc="mep"></span>
+    </a>
+    <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="ccl">
+      <span class="ticker-label">CCL</span>
+      <span class="ticker-value" data-tv="ccl">---</span>
+      <span class="ticker-change" data-tc="ccl"></span>
+    </a>
+    <a href={`/${lang}/markets/merval`} class="ticker-item" data-ticker="merval">
+      <span class="ticker-label ticker-label--merval">Merval</span>
+      <span class="ticker-value" data-tv="merval">---</span>
+      <span class="ticker-change" data-tc="merval"></span>
+    </a>
+    <a href={`/${lang}/markets`} class="ticker-item" data-ticker="btc">
+      <span class="ticker-label ticker-label--btc">BTC</span>
+      <span class="ticker-value" data-tv="btc">---</span>
+      <span class="ticker-change" data-tc="btc"></span>
+    </a>
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  var CACHE_KEY = 'plata-market-v4';
+  var RATES_URL = '/api/rates';
+  var EVO_URL = 'https://api.bluelytics.com.ar/v2/evolution.json?days=10';
+  var BYMA_URL = 'https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price';
+  var YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?interval=1d&range=1d';
+  var BINANCE_URL = 'https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT';
+  var REFRESH_MS = 5 * 60 * 1000;
+  var lastFetchTime = 0;
+
+  function pct(current, previous) {
+    if (!previous || previous === 0) return null;
+    var p = ((current - previous) / previous) * 100;
+    if (Math.abs(p) < 0.01) return null;
+    return p;
+  }
+
+  function formatARS(val) {
+    return Math.round(val).toLocaleString('es-AR');
+  }
+
+  function formatMerval(val) {
+    if (val >= 1000000) return (val / 1000000).toFixed(2) + 'M';
+    if (val >= 1000) return (val / 1000).toFixed(0) + 'K';
+    return Math.round(val).toLocaleString('es-AR');
+  }
+
+  function formatUSD(val) {
+    if (val >= 1000) return Math.round(val).toLocaleString('en-US');
+    return val.toFixed(2);
+  }
+
+  function applyItem(key, displayText, percent) {
+    var el = document.querySelector('[data-tv="' + key + '"]');
+    var chEl = document.querySelector('[data-tc="' + key + '"]');
+    if (!el || !chEl) return;
+
+    el.textContent = displayText;
+
+    if (percent != null) {
+      var sign = percent > 0 ? '+' : '';
+      chEl.textContent = sign + percent.toFixed(1) + '%';
+      chEl.className = 'ticker-change ' + (percent >= 0 ? 'ticker-up' : 'ticker-down');
+    } else {
+      chEl.textContent = '';
+      chEl.className = 'ticker-change';
+    }
+  }
+
+  function render(data) {
+    if (data.oficial) applyItem('oficial', formatARS(data.oficial), data.oficialPct);
+    if (data.blue) applyItem('blue', formatARS(data.blue), data.bluePct);
+    if (data.mep) applyItem('mep', formatARS(data.mep), data.mepPct);
+    if (data.ccl) applyItem('ccl', formatARS(data.ccl), data.cclPct);
+    if (data.merval) applyItem('merval', formatMerval(data.merval), data.mervalPct);
+    if (data.btc) applyItem('btc', '$' + formatUSD(data.btc), data.btcPct);
+  }
+
+  function loadCached() {
+    try {
+      var raw = localStorage.getItem(CACHE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+
+  function saveCache(data) {
+    try {
+      data.ts = Date.now();
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  function parseEvolution(entries) {
+    var bySource = {};
+    for (var i = 0; i < entries.length; i++) {
+      var e = entries[i];
+      var key = e.source.toLowerCase();
+      if (!bySource[key]) bySource[key] = [];
+      bySource[key].push(e);
+    }
+
+    function sortDesc(a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; }
+
+    var result = {};
+    var sources = ['oficial', 'blue'];
+    for (var s = 0; s < sources.length; s++) {
+      var arr = bySource[sources[s]];
+      if (arr && arr.length > 0) {
+        arr.sort(sortDesc);
+        result[sources[s]] = { current: arr[0].value_sell };
+        if (arr.length > 1) {
+          result[sources[s]].previous = arr[1].value_sell;
+        }
+      }
+    }
+    return result;
+  }
+
+  function fetchAll() {
+    var now = Date.now();
+    if (now - lastFetchTime < 60000) return;
+    lastFetchTime = now;
+
+    var cached = loadCached() || {};
+
+    Promise.all([
+      // 1. Rates (oficial, blue, mep, ccl)
+      fetch(RATES_URL).then(function(r) { return r.json(); }).catch(function() { return null; }),
+      // 2. Evolution for % change
+      fetch(EVO_URL).then(function(r) { return r.json(); }).catch(function() { return null; }),
+      // 3. Merval (BYMA → Yahoo fallback)
+      fetch(BYMA_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: '{}' })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) {
+          if (!d || !d.data) return null;
+          var m = null;
+          for (var i = 0; i < d.data.length; i++) { if (d.data[i].symbol === 'M') { m = d.data[i]; break; } }
+          if (!m) return null;
+          return { price: m.price, previousClose: m.previousClosingPrice, variation: m.variation };
+        })
+        .catch(function() { return null; })
+        .then(function(byma) {
+          if (byma) return byma;
+          return fetch(YAHOO_URL).then(function(r) { return r.ok ? r.json() : null; }).then(function(d) {
+            var meta = d && d.chart && d.chart.result && d.chart.result[0] && d.chart.result[0].meta;
+            if (!meta) return null;
+            var p = meta.regularMarketPrice, pc = meta.chartPreviousClose;
+            return { price: p, previousClose: pc, variation: pc > 0 ? (p - pc) / pc : null };
+          }).catch(function() { return null; });
+        }),
+      // 4. BTC from Binance
+      fetch(BINANCE_URL).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; })
+    ]).then(function(results) {
+      var rates = results[0];
+      var evo = results[1];
+      var mervalData = results[2];
+      var btcData = results[3];
+
+      var data = {
+        oficial: cached.oficial || null, oficialPct: cached.oficialPct || null,
+        blue: cached.blue || null, bluePct: cached.bluePct || null,
+        mep: cached.mep || null, mepPct: cached.mepPct || null,
+        ccl: cached.ccl || null, cclPct: cached.cclPct || null,
+        merval: cached.merval || null, mervalPct: cached.mervalPct || null,
+        btc: cached.btc || null, btcPct: cached.btcPct || null
+      };
+
+      // Dollar rates
+      if (rates && rates.oficial) {
+        data.oficial = rates.oficial.value_sell;
+        data.blue = rates.blue.value_sell;
+
+        if (evo && evo.length > 0) {
+          var parsed = parseEvolution(evo);
+          if (parsed.oficial && parsed.oficial.previous) {
+            data.oficialPct = pct(data.oficial, parsed.oficial.previous);
+          }
+          if (parsed.blue && parsed.blue.previous) {
+            data.bluePct = pct(data.blue, parsed.blue.previous);
+          }
+        }
+      }
+
+      // MEP & CCL
+      if (rates && rates.mep) {
+        data.mep = rates.mep.value_sell;
+        // No historical data for MEP/CCL % yet — show null
+        data.mepPct = null;
+      }
+      if (rates && rates.ccl) {
+        data.ccl = rates.ccl.value_sell;
+        data.cclPct = null;
+      }
+
+      // Merval
+      if (mervalData && mervalData.price) {
+        data.merval = mervalData.price;
+        data.mervalPct = mervalData.variation != null
+          ? mervalData.variation * 100
+          : pct(mervalData.price, mervalData.previousClose);
+      }
+
+      // BTC
+      if (btcData && btcData.lastPrice) {
+        data.btc = parseFloat(btcData.lastPrice);
+        data.btcPct = parseFloat(btcData.priceChangePercent);
+      }
+
+      render(data);
+      saveCache(data);
+    }).catch(function() {});
+  }
+
+  // 1. Show cached immediately
+  var cached = loadCached();
+  if (cached) render(cached);
+
+  // 2. Fetch live
+  fetchAll();
+
+  // 3. Auto-refresh
+  setInterval(fetchAll, REFRESH_MS);
+
+  // 4. Refresh on tab return
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) fetchAll();
+  });
+
+  // 5. Refresh on focus
+  window.addEventListener('focus', fetchAll);
+})();
+</script>
+
+<style>
+  .ticker {
+    background: var(--color-celeste-dark);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .ticker-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-lg);
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 0;
+  }
+
+  .ticker-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 8px 16px;
+    white-space: nowrap;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.15s;
+  }
+
+  .ticker-item:first-child {
+    padding-left: 0;
+  }
+
+  .ticker-item:last-child {
+    border-right: none;
+  }
+
+  .ticker-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .ticker-label {
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+  }
+
+  .ticker-label--blue { color: var(--color-gold); }
+  .ticker-label--merval { color: #60a5fa; }
+  .ticker-label--btc { color: #f7931a; }
+
+  .ticker-value {
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .ticker-change {
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+
+  .ticker-up { color: #4ade80; }
+  .ticker-down { color: #f87171; }
+
+  @media (max-width: 768px) {
+    .ticker-inner {
+      padding: 0 var(--spacing-md);
+    }
+
+    .ticker-item {
+      padding: 6px 12px;
+      font-size: 0.72rem;
+    }
+
+    .ticker-item:first-child {
+      padding-left: 0;
+    }
+  }
+</style>

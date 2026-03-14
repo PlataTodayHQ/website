@@ -41,10 +41,27 @@ const { lang = "en" } = Astro.props;
       var group = form.querySelector('.newsletter-input-group');
       var hint = form.querySelector('.newsletter-hint');
       var success = form.querySelector('.newsletter-success');
-      if (group) group.hidden = true;
-      if (hint) hint.hidden = true;
-      if (success) success.hidden = false;
-      if (input) input.value = '';
+      var btn = form.querySelector('.newsletter-submit');
+      var email = input ? input.value.trim() : '';
+      if (!email) return;
+
+      if (btn) { btn.disabled = true; btn.textContent = '…'; }
+      var lang = document.documentElement.lang || 'en';
+
+      fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, lang: lang })
+      }).then(function(r) { return r.json(); }).then(function() {
+        if (group) group.hidden = true;
+        if (hint) hint.hidden = true;
+        if (success) success.hidden = false;
+        if (input) input.value = '';
+      }).catch(function() {
+        if (group) group.hidden = true;
+        if (hint) hint.hidden = true;
+        if (success) success.hidden = false;
+      });
     });
   });
 })();

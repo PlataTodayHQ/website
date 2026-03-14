@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro";
+import { BLUELYTICS_URL } from "@plata-today/shared";
 
 export const prerender = false;
 
-const BLUELYTICS_URL = "https://api.bluelytics.com.ar/v2/latest";
+const DOLARAPI_URL = "https://dolarapi.com/v1/dolares";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -25,10 +26,30 @@ export const GET: APIRoute = async () => {
       });
     }
 
-    const res = await fetch(BLUELYTICS_URL);
-    if (!res.ok) throw new Error(`Bluelytics ${res.status}`);
-    const data = await res.json();
+    const [blueRes, dolarRes] = await Promise.all([
+      fetch(BLUELYTICS_URL),
+      fetch(DOLARAPI_URL).catch(() => null),
+    ]);
 
+    if (!blueRes.ok) throw new Error(`Bluelytics ${blueRes.status}`);
+    const blueData = await blueRes.json();
+
+    // Extract MEP and CCL from dolarapi.com
+    let mep: { value_buy: number; value_sell: number } | null = null;
+    let ccl: { value_buy: number; value_sell: number } | null = null;
+
+    if (dolarRes && dolarRes.ok) {
+      const dolares = await dolarRes.json();
+      for (const d of dolares) {
+        if (d.casa === "bolsa") {
+          mep = { value_buy: d.compra, value_sell: d.venta };
+        } else if (d.casa === "contadoconliqui") {
+          ccl = { value_buy: d.compra, value_sell: d.venta };
+        }
+      }
+    }
+
+    const data = { ...blueData, mep, ccl };
     cache = { data, ts: Date.now() };
 
     return new Response(JSON.stringify(data), {

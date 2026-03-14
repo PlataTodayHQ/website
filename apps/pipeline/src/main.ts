@@ -1,99 +1,143 @@
 import { loadConfig } from "./config.js";
 import { openDatabase } from "./db/connection.js";
 import { runMigrations } from "./db/migrate.js";
-import { createQueries } from "./db/queries.js";
-import { scrapeAllFeeds } from "./scraper/index.js";
-import { ingestArticles } from "./scraper/ingest.js";
-import { enrichArticles } from "./scraper/enrich.js";
-import { configureS3 } from "./scraper/images.js";
-import { clusterArticles } from "./cluster/index.js";
-import { updateEventScores } from "./cluster/scoring.js";
-import { rewriteEvent } from "./rewriter/index.js";
-import { triggerRebuild } from "./rebuild.js";
+import { SOURCES } from "./scraper/sources.js";
 import { log, setLogLevel } from "./logger.js";
 
-export async function main(): Promise<void> {
+// Infrastructure
+import { SQLiteEventRepository } from "./infra/db/sqlite-event-repo.js";
+import { SQLiteArticleRepository } from "./infra/db/sqlite-article-repo.js";
+import { SQLiteRawArticleRepository } from "./infra/db/sqlite-raw-article-repo.js";
+import { OpenAILLMService } from "./infra/llm/openai-service.js";
+import { RSSScraper } from "./infra/scraper/rss-scraper.js";
+import { ReadabilityExtractor } from "./infra/scraper/extractor.js";
+import { S3ImageStorage } from "./infra/storage/s3-storage.js";
+
+// Use cases
+import { collectNews } from "./use-cases/collect.js";
+import { clusterAndScore } from "./use-cases/cluster.js";
+import { triageEvent } from "./use-cases/triage.js";
+import { draftEvent } from "./use-cases/draft.js";
+import { reviewEvent } from "./use-cases/review.js";
+import { translateEvent } from "./use-cases/translate.js";
+
+const TIME_BUDGET_MS = 12 * 60 * 1000;
+const EVENTS_PER_BATCH = 50;
+
+export async function main(dbPath?: string): Promise<void> {
   const startTime = Date.now();
   log.info("Pipeline started");
 
-  const config = loadConfig();
+  const config = loadConfig(dbPath);
   setLogLevel(config.logLevel);
 
-  // Configure S3 for image uploads (falls back to local if not configured)
-  configureS3(config);
-
-  // Stage 0: Ensure DB schema is up to date
+  // Stage 0: Migrations
   runMigrations(config.databasePath);
 
   const db = openDatabase(config.databasePath);
 
   try {
-    const queries = createQueries(db);
-
-    // Stage 1: Scrape RSS feeds
-    log.info("=== Stage 1: Scraping ===");
-    const scrapedItems = await scrapeAllFeeds();
-    log.info("Scraping done", { items: scrapedItems.length });
-
-    // Stage 2: Ingest into raw_articles (downloads images)
-    log.info("=== Stage 2: Ingesting ===");
-    const inserted = await ingestArticles(db, queries, scrapedItems);
-    log.info("Ingestion done", {
-      inserted,
-      skipped: scrapedItems.length - inserted,
+    // Wire infrastructure
+    const eventRepo = new SQLiteEventRepository(db);
+    const articleRepo = new SQLiteArticleRepository(db);
+    const rawArticleRepo = new SQLiteRawArticleRepository(db);
+    const llm = new OpenAILLMService(config.llmApiKey, config.llmModel, config.llmBaseUrl);
+    const scraper = new RSSScraper();
+    const extractor = new ReadabilityExtractor();
+    const imageStorage = new S3ImageStorage({
+      bucket: config.s3Bucket,
+      endpoint: config.s3Endpoint,
+      accessKey: config.s3AccessKey,
+      secretKey: config.s3SecretKey,
+      publicUrl: config.s3PublicUrl,
+      region: config.s3Region,
     });
 
-    // Stage 2.5: Enrich with full-text extraction
-    log.info("=== Stage 2.5: Enriching ===");
-    const enriched = await enrichArticles(db, queries);
-    log.info("Enrichment done", { enriched });
-
-    if (inserted === 0) {
-      log.info("No new articles, skipping to rewrite check");
+    // Build source tier map for scoring
+    const sourceTiers = new Map<string, number>();
+    for (const s of SOURCES) {
+      sourceTiers.set(s.name, s.tier);
     }
 
-    // Stage 3: Cluster articles into events
-    log.info("=== Stage 3: Clustering ===");
-    const { newClusters, clusteredArticles } = clusterArticles(db, queries);
-    log.info("Clustering done", { newClusters, clusteredArticles });
+    // Phase 1: Collect (scrape → ingest → enrich)
+    log.info("=== Phase 1: Collect ===");
+    const { scraped, inserted, enriched } = await collectNews(
+      scraper, rawArticleRepo, extractor, imageStorage,
+    );
+    log.info("Collect complete", { scraped, inserted, enriched });
 
-    // Stage 4: Score events
-    log.info("=== Stage 4: Scoring ===");
-    updateEventScores(db, queries);
+    // Phase 2: Cluster + Score
+    log.info("=== Phase 2: Cluster & Score ===");
+    const { newClusters, clustered } = clusterAndScore(rawArticleRepo, eventRepo, sourceTiers);
+    log.info("Cluster & Score complete", { newClusters, clustered });
 
-    // Stage 5: Rewrite via LLM API
-    log.info("=== Stage 5: Rewriting ===");
-    const events = queries.getUnpublishedEvents.all(
-      config.minImportanceScore,
-      config.maxEventsPerRun,
-    ) as Array<{ id: number; category: string }>;
+    // Phase 3: Newsroom processing (time-budgeted)
+    log.info("=== Phase 3: Newsroom ===");
+    await processEventsByStage(eventRepo, articleRepo, llm, startTime);
 
-    let totalArticles = 0;
-    for (const event of events) {
-      const count = await rewriteEvent(config, db, queries, event);
-      totalArticles += count;
-    }
-    log.info("Rewriting done", {
-      events: events.length,
-      articles: totalArticles,
-    });
-
-    // Stage 6: Rebuild static site
-    if (totalArticles > 0) {
-      log.info("=== Stage 6: Rebuilding ===");
-      const rebuildCmd = process.env.ASTRO_REBUILD_COMMAND;
-      if (rebuildCmd) {
-        await triggerRebuild(rebuildCmd);
-      } else {
-        log.info("No ASTRO_REBUILD_COMMAND set, skipping rebuild");
-      }
-    }
   } finally {
     db.close();
   }
 
   const durationSec = ((Date.now() - startTime) / 1000).toFixed(1);
   log.info("Pipeline complete", { durationSec, timestamp: new Date().toISOString() });
+}
+
+async function processEventsByStage(
+  eventRepo: SQLiteEventRepository,
+  articleRepo: SQLiteArticleRepository,
+  llm: OpenAILLMService,
+  startTime: number,
+): Promise<void> {
+  const budgetLeft = () => Date.now() - startTime < TIME_BUDGET_MS;
+
+  // Priority 1: Translate reviewed → published
+  const reviewed = eventRepo.getByStage("reviewed", EVENTS_PER_BATCH);
+  log.info("Events to translate", { count: reviewed.length });
+  for (const event of reviewed) {
+    if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
+    try {
+      await translateEvent(eventRepo, articleRepo, llm, event);
+    } catch (err) {
+      log.error("Translate failed", { eventId: event.id, error: String(err) });
+    }
+  }
+
+  // Priority 2: Review drafted → reviewed
+  const drafted = eventRepo.getByStage("drafted", EVENTS_PER_BATCH);
+  log.info("Events to review", { count: drafted.length });
+  for (const event of drafted) {
+    if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
+    try {
+      await reviewEvent(eventRepo, articleRepo, llm, event);
+    } catch (err) {
+      log.error("Review failed", { eventId: event.id, error: String(err) });
+    }
+  }
+
+  // Priority 3: Draft triaged → drafted
+  const triaged = eventRepo.getByStage("triaged", EVENTS_PER_BATCH);
+  log.info("Events to draft", { count: triaged.length });
+  for (const event of triaged) {
+    if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
+    try {
+      await draftEvent(eventRepo, articleRepo, llm, event);
+    } catch (err) {
+      log.error("Draft failed", { eventId: event.id, error: String(err) });
+    }
+  }
+
+  // Priority 4: Triage new → triaged/killed
+  const newEvents = eventRepo.getByStage("new", EVENTS_PER_BATCH);
+  log.info("Events to triage", { count: newEvents.length });
+  for (const event of newEvents) {
+    if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
+    try {
+      await triageEvent(eventRepo, llm, event);
+    } catch (err) {
+      log.error("Triage failed", { eventId: event.id, error: String(err) });
+    }
+  }
 }
 
 // Run standalone: tsx src/main.ts

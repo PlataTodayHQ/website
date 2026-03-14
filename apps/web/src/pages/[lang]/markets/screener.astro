@@ -462,12 +462,6 @@ const { lang } = Astro.params;
 </script>
 
 <style>
-  /* Header — reuses mkts pattern */
-  .mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
-  .mkts-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1.1; }
-  .mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
-  .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
-
   /* Toolbar */
   .scr-toolbar {
     display: flex; align-items: center; gap: var(--spacing-md);
@@ -595,12 +589,11 @@ const { lang } = Astro.params;
 
   /* Loading */
   .scr-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl); font-size: 0.85rem; }
-  .loading-spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--color-border); border-top-color: var(--color-gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-spinner { margin-right: 8px; vertical-align: middle; }
 
   .scr-empty { text-align: center; color: var(--color-text-meta); padding: var(--spacing-2xl); font-size: 0.9rem; font-style: italic; }
 
-  .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; margin-top: var(--spacing-xl); }
+  .info-disclaimer { margin-top: var(--spacing-xl); }
 
   /* Cards: hidden on desktop */
   .scr-cards { display: none; }
@@ -621,49 +614,9 @@ const { lang } = Astro.params;
 
   /* Mobile: switch to cards */
   @media (max-width: 640px) {
-    .mkts-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .mkts-title { font-size: 1.5rem; }
     .scr-table-wrap { display: none; }
     .scr-cards { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-bottom: var(--spacing-xl); }
     .scr-search-wrap { max-width: none; }
   }
 </style>
 
-<!-- Global styles for dynamically generated stock cards (mobile) -->
-<style is:global>
-  .scr-cards .stk-card {
-    display: flex; flex-direction: column; gap: 10px;
-    padding: 12px 14px;
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    border-left: 3px solid var(--stk-accent, var(--color-border));
-    border-radius: 10px;
-    text-decoration: none; color: inherit;
-    transition: border-color 0.2s;
-  }
-  .scr-cards .stk-row1 { display: flex; align-items: center; gap: 12px; }
-  .scr-cards .stk-logo {
-    width: 36px; height: 36px; min-width: 36px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;
-  }
-  .scr-cards .stk-logo img { width: 24px; height: 24px; object-fit: contain; border-radius: 4px; display: block; }
-  .scr-cards .stk-logo--fallback { font-size: 0.7rem; font-weight: 800; }
-  .scr-cards .stk-id { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
-  .scr-cards .stk-symbol { font-weight: 800; font-size: 0.9rem; color: var(--color-text); }
-  .scr-cards .stk-name { font-size: 0.72rem; color: var(--color-text-meta); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .scr-cards .stk-change {
-    font-size: 0.75rem; font-weight: 700; font-variant-numeric: tabular-nums;
-    white-space: nowrap; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; margin-left: auto;
-  }
-  .scr-cards .stk-change.rc-up { background: rgba(22,163,74,0.12); color: #16a34a; }
-  .scr-cards .stk-change.rc-down { background: rgba(220,38,38,0.12); color: #dc2626; }
-  .scr-cards .stk-row2 {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding-top: 6px; border-top: 1px solid rgba(128,128,128,0.15);
-  }
-  .scr-cards .stk-price { font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
-  .scr-cards .stk-meta { display: flex; gap: 12px; }
-  .scr-cards .stk-vol, .scr-cards .stk-mcap { font-size: 0.68rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
-  .scr-cards .rc-up { color: #16a34a; }
-  .scr-cards .rc-down { color: #dc2626; }
-</style>

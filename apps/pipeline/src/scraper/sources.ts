@@ -110,7 +110,7 @@ export const SOURCES: SourceConfig[] = [
     name: "Cadena 3",
     url: "https://cadena3.com",
     feeds: [
-      { rssUrl: "http://cadena3.com/rss/secciones/politica.xml", category: "politics" },
+      { rssUrl: "https://cadena3.com/rss/secciones/politica.xml", category: "politics" },
     ],
     tier: 2,
   },

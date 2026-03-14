@@ -1,0 +1,17 @@
+INSERT OR IGNORE INTO sources (name, url) VALUES ('Infobae', 'https://www.infobae.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('Clarín', 'https://www.clarin.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('La Nación', 'https://www.lanacion.com.ar');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('Ámbito Financiero', 'https://www.ambito.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('El Cronista', 'https://www.cronista.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('El Economista', 'https://eleconomista.com.ar');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('iProfesional', 'https://www.iprofesional.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('BAE Negocios', 'https://www.baenegocios.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('Perfil', 'https://www.perfil.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('La Política Online', 'https://www.lapoliticaonline.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('Cadena 3', 'https://cadena3.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('Olé', 'https://www.ole.com.ar');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('TyC Sports', 'https://www.tycsports.com');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('La Voz', 'https://www.lavoz.com.ar');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('La Gaceta', 'https://www.lagaceta.com.ar');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('Misiones Online', 'https://misionesonline.net');
+INSERT OR IGNORE INTO sources (name, url) VALUES ('El Día', 'https://www.eldia.com');

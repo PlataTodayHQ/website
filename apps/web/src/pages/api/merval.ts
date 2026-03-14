@@ -63,7 +63,7 @@ async function fetchYahoo() {
 
 export const GET: APIRoute = async () => {
   try {
-    let data;
+    let data: Record<string, unknown>;
     try {
       data = await fetchBYMA();
     } catch {

@@ -1,6 +1,11 @@
 .git
+.github
 node_modules
+dist
 data
+.env
+*.db
 .claude
+.vscode
 *.md
 !README.md

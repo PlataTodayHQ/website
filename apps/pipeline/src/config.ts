@@ -7,7 +7,6 @@ export interface PipelineConfig {
   llmBaseUrl: string;
   databasePath: string;
   minImportanceScore: number;
-  maxEventsPerRun: number;
   maxConcurrentApiCalls: number;
   logLevel: "debug" | "info" | "warn" | "error";
   s3Bucket: string;
@@ -18,23 +17,34 @@ export interface PipelineConfig {
   s3Region: string;
 }
 
-export function loadConfig(): PipelineConfig {
+function parsePositiveNum(val: string | undefined, fallback: number, name: string): number {
+  const n = Number(val ?? String(fallback));
+  if (!Number.isFinite(n) || n < 0) {
+    throw new Error(`Invalid value for ${name}: "${val}"`);
+  }
+  return n;
+}
+
+export function loadConfig(dbPath?: string): PipelineConfig {
   const apiKey = process.env.LLM_API_KEY ?? process.env.OPENAI_API_KEY;
   if (!apiKey) throw new Error("LLM_API_KEY is required");
 
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const defaultDbPath = path.resolve(__dirname, "../../../data/plata.db");
 
+  const resolvedDbPath = dbPath
+    ? path.resolve(dbPath)
+    : process.env.DATABASE_PATH
+      ? path.resolve(process.env.DATABASE_PATH)
+      : defaultDbPath;
+
   return {
     llmApiKey: apiKey,
     llmModel: process.env.LLM_MODEL ?? process.env.OPENAI_MODEL ?? "gpt-5-nano",
     llmBaseUrl: process.env.LLM_BASE_URL ?? "https://api.openai.com/v1",
-    databasePath: process.env.DATABASE_PATH
-      ? path.resolve(process.env.DATABASE_PATH)
-      : defaultDbPath,
-    minImportanceScore: Number(process.env.MIN_IMPORTANCE_SCORE ?? "2.0"),
-    maxEventsPerRun: Number(process.env.MAX_EVENTS_PER_RUN ?? "10"),
-    maxConcurrentApiCalls: Number(process.env.MAX_CONCURRENT_API_CALLS ?? "5"),
+    databasePath: resolvedDbPath,
+    minImportanceScore: parsePositiveNum(process.env.MIN_IMPORTANCE_SCORE, 2.0, "MIN_IMPORTANCE_SCORE"),
+    maxConcurrentApiCalls: parsePositiveNum(process.env.MAX_CONCURRENT_API_CALLS, 5, "MAX_CONCURRENT_API_CALLS"),
     logLevel: (process.env.LOG_LEVEL as PipelineConfig["logLevel"]) ?? "info",
     s3Bucket: process.env.S3_BUCKET ?? "",
     s3Endpoint: process.env.S3_ENDPOINT ?? "",

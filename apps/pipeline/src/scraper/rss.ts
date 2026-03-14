@@ -25,7 +25,7 @@ function parseRSS(xml: string): RSSItem[] {
 
   // Simple regex-based RSS parser (no DOM parser in Workers)
   const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
-  let match;
+  let match: RegExpExecArray | null;
 
   while ((match = itemRegex.exec(xml)) !== null) {
     const itemXml = match[1];

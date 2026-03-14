@@ -1,18 +1,8 @@
 import type { APIRoute } from "astro";
-import Database from "better-sqlite3";
-import path from "node:path";
-import fs from "node:fs";
-import { fileURLToPath } from "node:url";
+import { getDb } from "@/lib/db";
+import { BYMA_EQUITY_URL } from "@plata-today/shared";
 
 export const prerender = false;
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH =
-  process.env.DATABASE_PATH ??
-  path.resolve(__dirname, "../../../../../data/plata.db");
-
-const BYMA_URL =
-  "https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/leading-equity";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -50,7 +40,7 @@ const SCREENER_SQL = `
     sc.sector,
     sc.industry,
     sp.price,
-    sp.change_percent AS change,
+    sp.variation AS change,
     sp.opening_price,
     sp.previous_close,
     sp.high,
@@ -111,12 +101,10 @@ const STOCK_MCAP: Record<string, number> = {
 };
 
 function tryDb(): ScreenerRow[] | null {
-  if (!fs.existsSync(DB_PATH)) return null;
+  const db = getDb();
+  if (!db) return null;
   try {
-    const db = new Database(DB_PATH, { readonly: true });
-    db.pragma("journal_mode = WAL");
     const rows = db.prepare(SCREENER_SQL).all() as ScreenerRow[];
-    db.close();
     return rows.length > 0 ? rows : null;
   } catch {
     return null;
@@ -124,7 +112,7 @@ function tryDb(): ScreenerRow[] | null {
 }
 
 async function fetchByma(): Promise<any[]> {
-  const res = await fetch(BYMA_URL, {
+  const res = await fetch(BYMA_EQUITY_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: "{}",
