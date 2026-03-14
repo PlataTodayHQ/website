@@ -32,13 +32,13 @@ export class OpenAILLMService implements ILLMService {
   async triage(sources: SourceText[]): Promise<TriageResult> {
     const system = buildTriageSystemPrompt();
     const user = buildTriageUserPrompt(sources);
-    return await this.callJsonWithRetry(system, user, 512) as TriageResult;
+    return await this.callJsonWithRetry(system, user) as TriageResult;
   }
 
   async draft(sources: SourceText[], category: string, date: string): Promise<DraftResult> {
     const system = buildDraftSystemPrompt(category, date);
     const user = buildDraftUserPrompt(sources);
-    const json = await this.callJsonWithRetry(system, user, 3072);
+    const json = await this.callJsonWithRetry(system, user);
     const articles = parseArticleResponse(json);
     if (articles.length === 0) throw new Error("Draft returned no articles");
     const a = articles[0];
@@ -53,14 +53,14 @@ export class OpenAILLMService implements ILLMService {
   async review(draft: DraftInput, sources: SourceText[]): Promise<ReviewResult> {
     const system = buildReviewSystemPrompt();
     const user = buildReviewUserPrompt(draft, sources);
-    return await this.callJsonWithRetry(system, user, 3072) as ReviewResult;
+    return await this.callJsonWithRetry(system, user) as ReviewResult;
   }
 
   async translate(article: DraftInput, lang: string, category: string): Promise<TranslationResult> {
     const langName = LANGUAGES[lang as LangCode].name;
     const system = buildTranslateSystemPrompt(langName, category);
     const user = buildTranslateUserPrompt(article, langName);
-    const json = await this.callJsonWithRetry(system, user, 2048);
+    const json = await this.callJsonWithRetry(system, user);
     const articles = parseArticleResponse(json);
     if (articles.length === 0) throw new Error("Translation returned no articles");
     return { ...articles[0], lang };
@@ -69,14 +69,13 @@ export class OpenAILLMService implements ILLMService {
   async translateBatch(article: DraftInput, langs: LangInfo[], category: string): Promise<TranslationResult[]> {
     const system = buildBatchTranslateSystemPrompt(langs, category);
     const user = buildBatchTranslateUserPrompt(article, langs);
-    const json = await this.callJsonWithRetry(system, user, 2048 * langs.length);
+    const json = await this.callJsonWithRetry(system, user);
     return parseArticleResponse(json);
   }
 
   private async callJson(
     systemPrompt: string,
     userPrompt: string,
-    maxTokens: number,
   ): Promise<unknown> {
     const response = await fetch(`${this.baseUrl}/chat/completions`, {
       method: "POST",
@@ -86,7 +85,6 @@ export class OpenAILLMService implements ILLMService {
       },
       body: JSON.stringify({
         model: this.model,
-        max_completion_tokens: maxTokens,
         response_format: { type: "json_object" },
         messages: [
           { role: "system", content: systemPrompt },
@@ -120,12 +118,11 @@ export class OpenAILLMService implements ILLMService {
   private async callJsonWithRetry(
     systemPrompt: string,
     userPrompt: string,
-    maxTokens: number,
     maxRetries = 3,
   ): Promise<unknown> {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        return await this.callJson(systemPrompt, userPrompt, maxTokens);
+        return await this.callJson(systemPrompt, userPrompt);
       } catch (err) {
         if (err instanceof LLMAPIError) {
           if ((err.status === 429 || err.status >= 500) && attempt < maxRetries) {
