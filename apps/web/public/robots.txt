@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
+Host: https://plata.today
 Sitemap: https://plata.today/sitemap-index.xml
