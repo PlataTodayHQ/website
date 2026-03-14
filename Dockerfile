@@ -55,6 +55,8 @@ ENV NODE_ENV=production
 ENV PORT=4321
 ENV HOST=0.0.0.0
 ENV DATABASE_PATH=/data/plata.db
+# BYMA API (open.bymadata.com.ar) has invalid SSL cert
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 
 EXPOSE 4321
 
