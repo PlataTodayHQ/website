@@ -12,10 +12,10 @@ export const SOURCES: SourceConfig[] = [
     name: "Infobae",
     url: "https://www.infobae.com",
     feeds: [
-      { rssUrl: "https://www.infobae.com/feeds/rss/" },
-      { rssUrl: "https://www.infobae.com/adjuntos/html/RSS/economia.xml", category: "economy" },
-      { rssUrl: "https://www.infobae.com/adjuntos/html/RSS/politica.xml", category: "politics" },
-      { rssUrl: "https://www.infobae.com/feeds/rss/tag/tecnologia/", category: "science" },
+      { rssUrl: "https://www.infobae.com/arc/outboundfeeds/rss/" },
+      { rssUrl: "https://www.infobae.com/arc/outboundfeeds/rss/category/economia/", category: "economy" },
+      { rssUrl: "https://www.infobae.com/arc/outboundfeeds/rss/category/politica/", category: "politics" },
+      { rssUrl: "https://www.infobae.com/arc/outboundfeeds/rss/category/tecnologia/", category: "science" },
     ],
     tier: 1,
   },
@@ -79,14 +79,6 @@ export const SOURCES: SourceConfig[] = [
     ],
     tier: 1,
   },
-  {
-    name: "BAE Negocios",
-    url: "https://www.baenegocios.com",
-    feeds: [
-      { rssUrl: "https://www.baenegocios.com/feed", category: "economy" },
-    ],
-    tier: 1,
-  },
 
   // === TIER 2 — Independent & Political ===
 
@@ -95,14 +87,6 @@ export const SOURCES: SourceConfig[] = [
     url: "https://www.perfil.com",
     feeds: [
       { rssUrl: "https://www.perfil.com/feed" },
-    ],
-    tier: 2,
-  },
-  {
-    name: "La Política Online",
-    url: "https://www.lapoliticaonline.com",
-    feeds: [
-      { rssUrl: "https://www.lapoliticaonline.com/feed/", category: "politics" },
     ],
     tier: 2,
   },
@@ -127,25 +111,9 @@ export const SOURCES: SourceConfig[] = [
     ],
     tier: 2,
   },
-  {
-    name: "TyC Sports",
-    url: "https://www.tycsports.com",
-    feeds: [
-      { rssUrl: "https://www.tycsports.com/rss.xml", category: "sports" },
-    ],
-    tier: 2,
-  },
 
   // === TIER 3 — Regional ===
 
-  {
-    name: "La Voz",
-    url: "https://www.lavoz.com.ar",
-    feeds: [
-      { rssUrl: "https://www.lavoz.com.ar/arc/outboundfeeds/rss/" },
-    ],
-    tier: 3,
-  },
   {
     name: "La Gaceta",
     url: "https://www.lagaceta.com.ar",
