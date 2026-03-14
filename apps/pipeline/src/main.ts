@@ -20,8 +20,10 @@ import { triageEvent } from "./use-cases/triage.js";
 import { draftEvent } from "./use-cases/draft.js";
 import { reviewEvent } from "./use-cases/review.js";
 import { translateEvent } from "./use-cases/translate.js";
+import { runConcurrent } from "./concurrency.js";
 
 const TIME_BUDGET_MS = 12 * 60 * 1000;
+const CONCURRENCY = 5;
 const STALE_HOURS = 24;
 
 export async function main(dbPath?: string): Promise<void> {
@@ -95,53 +97,53 @@ async function processEventsByStage(
   const killed = eventRepo.killStaleNewEvents(STALE_HOURS);
   if (killed > 0) log.info("Killed stale new events", { killed });
 
-  // Priority 1: Translate reviewed → published
+  // Priority 1: Translate reviewed → published (5 events concurrently, each with 5 concurrent batches)
   const reviewed = eventRepo.getByStage("reviewed");
   log.info("Events to translate", { count: reviewed.length });
-  for (const event of reviewed) {
-    if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
+  await runConcurrent(reviewed, async (event) => {
+    if (!budgetLeft()) return;
     try {
-      await translateEvent(eventRepo, articleRepo, llm, event);
+      await translateEvent(eventRepo, articleRepo, llm, event, CONCURRENCY);
     } catch (err) {
       log.error("Translate failed", { eventId: event.id, error: String(err) });
     }
-  }
+  }, CONCURRENCY);
 
-  // Priority 2: Review drafted → reviewed
+  // Priority 2: Review drafted → reviewed (5 concurrent)
   const drafted = eventRepo.getByStage("drafted");
   log.info("Events to review", { count: drafted.length });
-  for (const event of drafted) {
-    if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
+  await runConcurrent(drafted, async (event) => {
+    if (!budgetLeft()) return;
     try {
       await reviewEvent(eventRepo, articleRepo, llm, event);
     } catch (err) {
       log.error("Review failed", { eventId: event.id, error: String(err) });
     }
-  }
+  }, CONCURRENCY);
 
-  // Priority 3: Draft triaged → drafted
+  // Priority 3: Draft triaged → drafted (5 concurrent)
   const triaged = eventRepo.getByStage("triaged");
   log.info("Events to draft", { count: triaged.length });
-  for (const event of triaged) {
-    if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
+  await runConcurrent(triaged, async (event) => {
+    if (!budgetLeft()) return;
     try {
       await draftEvent(eventRepo, articleRepo, llm, event);
     } catch (err) {
       log.error("Draft failed", { eventId: event.id, error: String(err) });
     }
-  }
+  }, CONCURRENCY);
 
-  // Priority 4: Triage new → triaged/killed
+  // Priority 4: Triage new → triaged/killed (5 concurrent)
   const newEvents = eventRepo.getByStage("new");
   log.info("Events to triage", { count: newEvents.length });
-  for (const event of newEvents) {
-    if (!budgetLeft()) { log.info("Time budget exhausted"); return; }
+  await runConcurrent(newEvents, async (event) => {
+    if (!budgetLeft()) return;
     try {
       await triageEvent(eventRepo, llm, event);
     } catch (err) {
       log.error("Triage failed", { eventId: event.id, error: String(err) });
     }
-  }
+  }, CONCURRENCY);
 }
 
 // Run standalone: tsx src/main.ts

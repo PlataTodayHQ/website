@@ -4,6 +4,7 @@ import type { IEventRepository } from "../ports/event-repository.js";
 import type { IArticleRepository } from "../ports/article-repository.js";
 import type { ILLMService } from "../ports/llm-service.js";
 import { log } from "../logger.js";
+import { runConcurrent } from "../concurrency.js";
 
 const BATCH_SIZE = 3;
 
@@ -12,6 +13,7 @@ export async function translateEvent(
   articleRepo: IArticleRepository,
   llm: ILLMService,
   event: EventEntity,
+  concurrency = 5,
 ): Promise<number> {
   const esArticle = articleRepo.getSpanish(event.id);
   if (!esArticle) {
@@ -34,13 +36,18 @@ export async function translateEvent(
     meta_description: esArticle.meta_description,
   };
 
+  // Split into batches of 3 languages each, then run batches concurrently
+  const batches: string[][] = [];
+  for (let i = 0; i < langsToProcess.length; i += BATCH_SIZE) {
+    batches.push(langsToProcess.slice(i, i + BATCH_SIZE));
+  }
+
   let articlesCreated = 0;
 
-  for (let i = 0; i < langsToProcess.length; i += BATCH_SIZE) {
-    const batchLangs = langsToProcess.slice(i, i + BATCH_SIZE);
+  const processBatch = async (batchLangs: string[]): Promise<void> => {
     const langInfos = batchLangs.map((code) => ({
       code,
-      name: LANGUAGES[code].name,
+      name: LANGUAGES[code as keyof typeof LANGUAGES].name,
     }));
 
     try {
@@ -55,7 +62,7 @@ export async function translateEvent(
 
       for (const result of results) {
         const lang = result.lang ?? batchLangs[0];
-        if (!(batchLangs as string[]).includes(lang)) {
+        if (!batchLangs.includes(lang)) {
           log.warn("LLM returned unexpected lang", { eventId: event.id, lang });
           continue;
         }
@@ -133,11 +140,22 @@ export async function translateEvent(
         }
       }
     }
-  }
+  };
 
-  if (articlesCreated > 0) {
+  await runConcurrent(batches, processBatch, concurrency);
+
+  // Check actual completeness from DB (not just this run's count)
+  const finalLangs = new Set(articleRepo.getExistingLangs(event.id));
+  const allComplete = LANG_CODES.every((l) => finalLangs.has(l));
+
+  if (allComplete) {
     eventRepo.setStage(event.id, "published");
     log.info("Event published", { eventId: event.id, translations: articlesCreated });
+  } else {
+    const missing = LANG_CODES.filter((l) => !finalLangs.has(l));
+    log.warn("Incomplete translations, will retry next run", {
+      eventId: event.id, created: articlesCreated, missing,
+    });
   }
 
   return articlesCreated;
