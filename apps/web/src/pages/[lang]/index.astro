@@ -46,8 +46,15 @@ function mapRow(a: ArticleRow) {
   };
 }
 
+// Trending score: importance weighted by recency (exponential decay, half-life 12h)
+const trendingScore = (a: ArticleRow): number => {
+  const ageHours = (Date.now() - new Date(a.published_at).getTime()) / 3600000;
+  const recency = Math.exp(-ageHours / 18);
+  return a.importance_score * (0.1 + 0.9 * recency);
+};
+
 const byImportance = [...allArticles].sort(
-  (a, b) => b.importance_score - a.importance_score,
+  (a, b) => trendingScore(b) - trendingScore(a),
 );
 
 const byCat = (cat: string) =>
@@ -72,13 +79,17 @@ const relatedLinks = byImportance.slice(1, 4).map((a) => ({
   href: `/${lang}/news/${a.slug}`,
 }));
 
-// Trending — top 5 by importance
-const trendingItems = byImportance.slice(0, 5).map((a) => ({
-  title: a.title,
-  href: `/${lang}/news/${a.slug}`,
-  category: catLabel(a.category),
-  timeAgo: timeAgo(a.published_at, lang!),
-}));
+// Trending — top 5 excluding hero + related (no duplicates)
+const heroSlugs = new Set([heroRow?.slug, ...byImportance.slice(1, 4).map((a) => a.slug)]);
+const trendingItems = byImportance
+  .filter((a) => !heroSlugs.has(a.slug))
+  .slice(0, 5)
+  .map((a) => ({
+    title: a.title,
+    href: `/${lang}/news/${a.slug}`,
+    category: catLabel(a.category),
+    timeAgo: timeAgo(a.published_at, lang!),
+  }));
 
 // Just In — latest 10 (allArticles already sorted by published_at DESC)
 const justInItems = allArticles.slice(0, 10).map((a) => ({
