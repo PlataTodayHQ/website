@@ -21,6 +21,9 @@ jobs:
       contents: read
       packages: write
 
+    env:
+      HAS_VPS: ${{ secrets.VPS_HOST != '' }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,7 +53,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Deploy to VPS
-        if: ${{ secrets.VPS_HOST != '' }}
+        if: env.HAS_VPS == 'true'
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
