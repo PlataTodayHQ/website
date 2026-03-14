@@ -1,16 +1,13 @@
 import { sleep, LANGUAGES, type LangCode } from "@plata-today/shared";
 import type {
   SourceText, TriageResult, DraftResult,
-  ReviewResult, TranslationResult,
+  ReviewResult, RewriteResult,
 } from "../../domain/entities.js";
-import type { ILLMService, DraftInput, LangInfo } from "../../ports/llm-service.js";
+import type { ILLMService, DraftInput } from "../../ports/llm-service.js";
 import { buildTriageSystemPrompt, buildTriageUserPrompt } from "./prompts/triage.js";
 import { buildDraftSystemPrompt, buildDraftUserPrompt } from "./prompts/draft.js";
 import { buildReviewSystemPrompt, buildReviewUserPrompt } from "./prompts/review.js";
-import {
-  buildTranslateSystemPrompt, buildTranslateUserPrompt,
-  buildBatchTranslateSystemPrompt, buildBatchTranslateUserPrompt,
-} from "./prompts/translate.js";
+import { buildRewriteSystemPrompt, buildRewriteUserPrompt } from "./prompts/rewrite.js";
 import { log } from "../../logger.js";
 
 class LLMAPIError extends Error {
@@ -56,27 +53,22 @@ export class OpenAILLMService implements ILLMService {
     return await this.callJsonWithRetry(system, user) as ReviewResult;
   }
 
-  async translate(article: DraftInput, lang: string, category: string): Promise<TranslationResult> {
+  async rewrite(article: DraftInput, lang: string, category: string): Promise<RewriteResult> {
     const langName = LANGUAGES[lang as LangCode].name;
-    const system = buildTranslateSystemPrompt(langName, category);
-    const user = buildTranslateUserPrompt(article, langName);
+    const system = buildRewriteSystemPrompt(langName, category);
+    const user = buildRewriteUserPrompt(article, langName);
     const json = await this.callJsonWithRetry(system, user);
     const articles = parseArticleResponse(json);
-    if (articles.length === 0) throw new Error("Translation returned no articles");
+    if (articles.length === 0) throw new Error("Rewrite returned no articles");
     return { ...articles[0], lang };
-  }
-
-  async translateBatch(article: DraftInput, langs: LangInfo[], category: string): Promise<TranslationResult[]> {
-    const system = buildBatchTranslateSystemPrompt(langs, category);
-    const user = buildBatchTranslateUserPrompt(article, langs);
-    const json = await this.callJsonWithRetry(system, user);
-    return parseArticleResponse(json);
   }
 
   private async callJson(
     systemPrompt: string,
     userPrompt: string,
   ): Promise<unknown> {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 120_000);
     const response = await fetch(`${this.baseUrl}/chat/completions`, {
       method: "POST",
       headers: {
@@ -91,7 +83,8 @@ export class OpenAILLMService implements ILLMService {
           { role: "user", content: userPrompt },
         ],
       }),
-    });
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timer));
 
     if (!response.ok) {
       const body = await response.text();
@@ -139,7 +132,7 @@ export class OpenAILLMService implements ILLMService {
   }
 }
 
-function parseArticleResponse(parsed: unknown): TranslationResult[] {
+function parseArticleResponse(parsed: unknown): RewriteResult[] {
   const obj = parsed as Record<string, unknown>;
   const articles: unknown[] = obj.articles ? (obj.articles as unknown[]) : [parsed];
 

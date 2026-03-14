@@ -19,7 +19,7 @@ import { clusterAndScore } from "./use-cases/cluster.js";
 import { triageEvent } from "./use-cases/triage.js";
 import { draftEvent } from "./use-cases/draft.js";
 import { reviewEvent } from "./use-cases/review.js";
-import { translateEvent } from "./use-cases/translate.js";
+import { rewriteEvent } from "./use-cases/rewrite.js";
 import { runConcurrent } from "./concurrency.js";
 
 const TIME_BUDGET_MS = 12 * 60 * 1000;
@@ -97,15 +97,15 @@ async function processEventsByStage(
   const killed = eventRepo.killStaleNewEvents(STALE_HOURS);
   if (killed > 0) log.info("Killed stale new events", { killed });
 
-  // Priority 1: Translate reviewed → published (5 events concurrently, each with 5 concurrent batches)
+  // Priority 1: Rewrite reviewed → published (5 events concurrently)
   const reviewed = eventRepo.getByStage("reviewed");
-  log.info("Events to translate", { count: reviewed.length });
+  log.info("Events to rewrite", { count: reviewed.length });
   await runConcurrent(reviewed, async (event) => {
     if (!budgetLeft()) return;
     try {
-      await translateEvent(eventRepo, articleRepo, llm, event, CONCURRENCY);
+      await rewriteEvent(eventRepo, articleRepo, llm, event, CONCURRENCY);
     } catch (err) {
-      log.error("Translate failed", { eventId: event.id, error: String(err) });
+      log.error("Rewrite failed", { eventId: event.id, error: String(err) });
     }
   }, CONCURRENCY);
 

@@ -1,6 +1,6 @@
 import type {
   SourceText, TriageResult, DraftResult,
-  ReviewResult, TranslationResult,
+  ReviewResult, RewriteResult,
 } from "../domain/entities.js";
 
 export interface DraftInput {
@@ -9,15 +9,9 @@ export interface DraftInput {
   meta_description: string;
 }
 
-export interface LangInfo {
-  code: string;
-  name: string;
-}
-
 export interface ILLMService {
   triage(sources: SourceText[]): Promise<TriageResult>;
   draft(sources: SourceText[], category: string, date: string): Promise<DraftResult>;
   review(draft: DraftInput, sources: SourceText[]): Promise<ReviewResult>;
-  translate(article: DraftInput, lang: string, category: string): Promise<TranslationResult>;
-  translateBatch(article: DraftInput, langs: LangInfo[], category: string): Promise<TranslationResult[]>;
+  rewrite(article: DraftInput, lang: string, category: string): Promise<RewriteResult>;
 }

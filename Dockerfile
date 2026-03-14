@@ -19,6 +19,10 @@ COPY apps/pipeline apps/pipeline
 COPY apps/server apps/server
 COPY db db
 
+# Astro PUBLIC_ vars are embedded at build time
+ARG PUBLIC_GA_ID=G-F100G3G0V9
+ENV PUBLIC_GA_ID=$PUBLIC_GA_ID
+
 # Build Astro (hybrid mode produces dist/server/entry.mjs + dist/client/)
 RUN npm run build
 

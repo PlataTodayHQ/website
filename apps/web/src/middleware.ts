@@ -37,12 +37,26 @@ function detectLang(acceptLanguage: string | null): LangCode {
   return "en";
 }
 
+// Static asset — check last segment for file extension
+const ASSET_EXT = /\.\w{2,5}$/;
+function isAsset(pathname: string): boolean {
+  const last = pathname.split("/").pop() ?? "";
+  return ASSET_EXT.test(last);
+}
+
 export const onRequest = defineMiddleware(({ request, url, redirect }, next) => {
   const { pathname } = url;
 
-  // Skip API routes and assets
-  if (pathname.startsWith("/api/") || pathname.startsWith("/_") || pathname.includes(".")) {
+  // Skip internals, API routes, and static assets
+  if (pathname.startsWith("/_") || pathname.startsWith("/api/") || isAsset(pathname)) {
     return next();
+  }
+
+  // Normalize: lowercase + trailing slash in one redirect
+  const lower = pathname.toLowerCase();
+  const normalized = lower.endsWith("/") ? lower : lower + "/";
+  if (normalized !== pathname) {
+    return redirect(normalized + url.search, 301);
   }
 
   // Root — detect language and redirect
@@ -51,18 +65,12 @@ export const onRequest = defineMiddleware(({ request, url, redirect }, next) => 
     return redirect(`/${lang}/`, 302);
   }
 
-  // Ensure trailing slash on lang-prefixed paths
   const segments = pathname.split("/").filter(Boolean);
-  if (segments.length >= 1) {
+  if (segments.length === 1) {
     const maybeLang = segments[0];
 
-    // Valid lang prefix without trailing slash → add it
-    if (LANG_SET.has(maybeLang) && !pathname.endsWith("/") && segments.length === 1) {
-      return redirect(`${pathname}/`, 301);
-    }
-
     // Invalid lang prefix → redirect to detected lang
-    if (!LANG_SET.has(maybeLang) && segments.length === 1 && maybeLang.length === 2) {
+    if (!LANG_SET.has(maybeLang) && maybeLang.length === 2) {
       const lang = detectLang(request.headers.get("accept-language"));
       return redirect(`/${lang}/`, 302);
     }

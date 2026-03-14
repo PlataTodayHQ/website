@@ -9,7 +9,15 @@ import { recordJobStart, recordJobEnd } from "./job-tracking.js";
 // Main entry — runs every 5 minutes
 // =========================================================================
 
+let running = false;
+
 export async function fetchMarketData(dbPath: string): Promise<void> {
+  if (running) {
+    console.log("[market-data] Already running, skipping");
+    return;
+  }
+  running = true;
+
   const runId = recordJobStart(dbPath, "market-data");
   const db = new Database(dbPath);
   db.pragma("journal_mode = WAL");
@@ -37,6 +45,7 @@ export async function fetchMarketData(dbPath: string): Promise<void> {
     throw err;
   } finally {
     db.close();
+    running = false;
   }
 }
 

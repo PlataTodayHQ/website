@@ -5,7 +5,7 @@ import { generateSitemaps } from "./sitemap.js";
 const intervals: NodeJS.Timeout[] = [];
 
 export function startJobs(dbPath: string, distDir: string): void {
-  // Run pipeline immediately on start, then every 30 minutes
+  // Run pipeline immediately on start, then every 15 minutes
   // Skip if LLM_API_KEY is not configured
   if (process.env.LLM_API_KEY) {
     runPipeline(dbPath).catch((err) =>

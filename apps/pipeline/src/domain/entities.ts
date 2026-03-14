@@ -111,7 +111,7 @@ export interface ReviewResult {
   corrected_meta_description: string;
 }
 
-export interface TranslationResult {
+export interface RewriteResult {
   lang?: string;
   title: string;
   slug: string;

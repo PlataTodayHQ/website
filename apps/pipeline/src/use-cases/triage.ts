@@ -35,7 +35,7 @@ export async function triageEvent(
     : event.category;
   const reasoning = String(result.reasoning ?? "").slice(0, 500);
 
-  if (importance < 20) {
+  if (importance < 30) {
     eventRepo.kill(event.id, importance, reasoning);
     log.info("Event killed by triage", { eventId: event.id, importance, category, reasoning });
     return "killed";

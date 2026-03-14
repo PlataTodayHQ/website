@@ -31,7 +31,7 @@ export class SQLiteRawArticleRepository implements IRawArticleRepository {
     `);
     this.getNeedingFullTextStmt = db.prepare(`
       SELECT id, original_url FROM raw_articles
-      WHERE length(body) < 500
+      WHERE length(body) < 1500
         AND scraped_at > datetime('now', '-48 hours')
       ORDER BY scraped_at DESC
     `);

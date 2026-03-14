@@ -4,6 +4,7 @@ import { log } from "../logger.js";
 
 const MAX_CONCURRENT_TOTAL = 10;
 const MAX_CONCURRENT_PER_DOMAIN = 2;
+const SKIP_TITLE_PATTERN = /\b(en vivo|en directo|minuto a minuto|segu[íi] el|EN VIVO)\b/i;
 
 export interface ScrapedItem extends RSSItem {
   sourceName: string;
@@ -74,13 +75,20 @@ export async function scrapeAllFeeds(
     items.push(...domainItems);
   }
 
+  // Filter live blogs and play-by-play content
+  const beforeFilter = items.length;
+  const filtered = items.filter((item) => !SKIP_TITLE_PATTERN.test(item.title));
+  const skipped = beforeFilter - filtered.length;
+
   log.info("Scraping summary", {
     domains: domainEntries.length,
     totalFeeds,
-    totalItems: items.length,
+    totalItems: beforeFilter,
+    filteredLive: skipped,
+    afterFilter: filtered.length,
   });
 
-  return items;
+  return filtered;
 }
 
 /** Simple concurrency limiter — runs tasks with at most `limit` in parallel */

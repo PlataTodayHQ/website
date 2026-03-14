@@ -26,10 +26,15 @@ export async function draftEvent(
     return false;
   }
 
+  const wordCount = draft.body.split(/\s+/).filter(Boolean).length;
+  if (wordCount < 100) {
+    log.warn("Draft too short, skipping", { eventId: event.id, wordCount });
+    return false;
+  }
+
   const imageArticle = rawArticles.find((a) => a.image_url);
   const sourceNames = JSON.stringify([...new Set(rawArticles.map((a) => a.source_name))]);
   const sourceUrls = JSON.stringify([...new Set(rawArticles.map((a) => a.original_url))]);
-  const wordCount = draft.body.split(/\s+/).filter(Boolean).length;
 
   articleRepo.insert({
     eventId: event.id,

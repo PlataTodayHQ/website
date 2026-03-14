@@ -7,9 +7,12 @@ export interface RSSItem {
 }
 
 export async function fetchRSS(url: string): Promise<RSSItem[]> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15_000);
   const response = await fetch(url, {
     headers: { "User-Agent": "PlataTodayBot/1.0" },
-  });
+    signal: controller.signal,
+  }).finally(() => clearTimeout(timer));
 
   if (!response.ok) {
     console.error(`Failed to fetch RSS from ${url}: ${response.status}`);

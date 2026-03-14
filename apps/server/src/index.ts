@@ -40,6 +40,15 @@ async function start(): Promise<void> {
   process.on("SIGINT", shutdown);
 }
 
+// Prevent silent crashes from unhandled async errors
+process.on("unhandledRejection", (reason) => {
+  console.error("[server] Unhandled rejection:", reason);
+});
+process.on("uncaughtException", (err) => {
+  console.error("[server] Uncaught exception:", err);
+  process.exit(1);
+});
+
 start().catch((err) => {
   console.error("[server] Fatal error:", err);
   process.exit(1);

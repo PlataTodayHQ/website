@@ -4,6 +4,9 @@ import node from "@astrojs/node";
 export default defineConfig({
   adapter: node({ mode: "standalone" }),
   site: "https://plata.today",
+  vite: {
+    envDir: "../../",
+  },
   i18n: {
     defaultLocale: "en",
     locales: [
