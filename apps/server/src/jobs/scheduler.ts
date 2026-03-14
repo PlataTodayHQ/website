@@ -5,15 +5,36 @@ const intervals: NodeJS.Timeout[] = [];
 
 export function startJobs(dbPath: string): void {
   // Run pipeline immediately on start, then every 30 minutes
-  runPipeline(dbPath);
-  intervals.push(
-    setInterval(() => runPipeline(dbPath), 30 * 60 * 1000),
-  );
+  // Skip if LLM_API_KEY is not configured
+  if (process.env.LLM_API_KEY) {
+    runPipeline(dbPath).catch((err) =>
+      console.error("[scheduler] Pipeline startup error:", err),
+    );
+    intervals.push(
+      setInterval(
+        () =>
+          runPipeline(dbPath).catch((err) =>
+            console.error("[scheduler] Pipeline interval error:", err),
+          ),
+        30 * 60 * 1000,
+      ),
+    );
+  } else {
+    console.log("[scheduler] LLM_API_KEY not set, pipeline disabled");
+  }
 
   // Fetch market data immediately, then every 5 minutes
-  fetchMarketData(dbPath);
+  fetchMarketData(dbPath).catch((err) =>
+    console.error("[scheduler] Market data startup error:", err),
+  );
   intervals.push(
-    setInterval(() => fetchMarketData(dbPath), 5 * 60 * 1000),
+    setInterval(
+      () =>
+        fetchMarketData(dbPath).catch((err) =>
+          console.error("[scheduler] Market data interval error:", err),
+        ),
+      5 * 60 * 1000,
+    ),
   );
 }
 
