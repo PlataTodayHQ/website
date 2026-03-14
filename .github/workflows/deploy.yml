@@ -67,7 +67,7 @@ jobs:
             docker run -d \
               --name plata-today \
               --restart unless-stopped \
-              -p 4321:4321 \
+              -p 80:4321 \
               -v /opt/plata/data:/data \
               -e LLM_API_KEY="${{ secrets.LLM_API_KEY }}" \
               -e LLM_MODEL="${{ vars.LLM_MODEL || 'gpt-5-nano' }}" \
