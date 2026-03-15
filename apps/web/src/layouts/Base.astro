@@ -171,15 +171,15 @@ const allJsonLd = [
 
     <!-- Google Analytics (GA4) with Consent Mode v2 -->
     {import.meta.env.PUBLIC_GA_ID && (
-      <script is:inline define:vars={{ gaId: import.meta.env.PUBLIC_GA_ID }}>
+      <script is:inline async data-cfasync="false" src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_ID}`}></script>
+    )}
+    {import.meta.env.PUBLIC_GA_ID && (
+      <script is:inline data-cfasync="false" define:vars={{ gaId: import.meta.env.PUBLIC_GA_ID }}>
         window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
         gtag('consent','default',{'analytics_storage':'granted','ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied'});
         gtag('js',new Date());
         gtag('config',gaId,{'send_page_view':true});
       </script>
-    )}
-    {import.meta.env.PUBLIC_GA_ID && (
-      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_ID}`}></script>
     )}
 
     <!-- Blocking theme script — prevents flash of wrong theme -->
