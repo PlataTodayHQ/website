@@ -116,6 +116,7 @@ export const tl = {
   "article.shareArticle": "I-share ang artikulong ito",
   "article.opensNewTab": "(magbubukas sa bagong tab)",
   "article.photoCredit": "Larawan",
+  "article.updated": "Na-update",
 
   // Footer
   "footer.tagline": "Balita ng Argentina, bukas sa buong mundo",

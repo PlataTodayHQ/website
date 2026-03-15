@@ -4,6 +4,7 @@ export interface IEventRepository {
   getByStage(stage: string): EventEntity[];
   getAllUnpublished(): EventEntity[];
   create(category: string, score: number): number;
+  createWithParent(category: string, score: number, parentEventId: number): number;
   getRawArticles(eventId: number): RawArticleEntity[];
   updateScore(id: number, score: number): void;
   updateCategory(id: number, category: string): void;
@@ -11,4 +12,11 @@ export interface IEventRepository {
   triage(id: number, importance: number, category: string, reason: string): void;
   kill(id: number, importance: number, reason: string): void;
   incrementReviewAttempts(id: number): void;
+  killStaleNewEvents(staleHours: number): number;
+  killStaleTriagedEvents(): number;
+  getBreakingTriaged(): EventEntity[];
+  getById(id: number): EventEntity | null;
+  markBreaking(id: number): void;
+  setCategories(eventId: number, primary: string, secondary: string[]): void;
+  getEventStageByClusterId(clusterId: number): string | null;
 }

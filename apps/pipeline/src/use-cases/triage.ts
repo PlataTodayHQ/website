@@ -42,13 +42,20 @@ export async function triageEvent(
     return "killed";
   }
 
-  if (importance < 30) {
+  if (importance < 20) {
     eventRepo.kill(event.id, importance, reasoning);
     log.info("Event killed by triage", { eventId: event.id, importance, category, reasoning });
     return "killed";
   }
 
   eventRepo.triage(event.id, importance, category, reasoning);
-  log.info("Event triaged", { eventId: event.id, importance, category, reasoning });
+
+  // Set multi-categories if provided
+  const secondaryCategories = Array.isArray(result.secondary_categories)
+    ? result.secondary_categories.filter((c: string) => CATEGORY_LIST.includes(c as any) && c !== category)
+    : [];
+  eventRepo.setCategories(event.id, category, secondaryCategories);
+
+  log.info("Event triaged", { eventId: event.id, importance, category, secondaryCategories, reasoning });
   return "triaged";
 }

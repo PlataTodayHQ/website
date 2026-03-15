@@ -34,8 +34,11 @@ export interface ArticleRow {
   source_urls: string; // JSON array
   word_count: number;
   published_at: string;
+  updated_at: string | null;
+  correction_note: string | null;
   category: string;
   importance_score: number;
+  parent_event_id: number | null;
 }
 
 export function getArticlesByLang(
@@ -46,7 +49,7 @@ export function getArticlesByLang(
   if (!db) return [];
   return db
     .prepare(
-      `SELECT a.*, e.category, e.importance_score
+      `SELECT a.*, e.category, e.importance_score, e.parent_event_id
        FROM articles a JOIN events e ON a.event_id = e.id
        WHERE a.lang = ? AND e.stage = 'published'
        ORDER BY a.published_at DESC LIMIT ?`,
@@ -63,7 +66,7 @@ export function getArticleBySlug(
   return (
     (db
       .prepare(
-        `SELECT a.*, e.category, e.importance_score
+        `SELECT a.*, e.category, e.importance_score, e.parent_event_id
          FROM articles a JOIN events e ON a.event_id = e.id
          WHERE a.lang = ? AND a.slug = ? AND e.stage = 'published'`,
       )
@@ -80,7 +83,7 @@ export function getArticlesByCategory(
   if (!db) return [];
   return db
     .prepare(
-      `SELECT a.*, e.category, e.importance_score
+      `SELECT a.*, e.category, e.importance_score, e.parent_event_id
        FROM articles a JOIN events e ON a.event_id = e.id
        WHERE a.lang = ? AND e.category = ? AND e.stage = 'published'
        ORDER BY a.published_at DESC LIMIT ?`,
@@ -163,7 +166,7 @@ export function getArticlesFeed(
   params.push(limit + 1, offset);
   const rows = db
     .prepare(
-      `SELECT a.*, e.category, e.importance_score
+      `SELECT a.*, e.category, e.importance_score, e.parent_event_id
        FROM articles a JOIN events e ON a.event_id = e.id
        WHERE ${where}
        ORDER BY a.published_at DESC LIMIT ? OFFSET ?`,
@@ -179,7 +182,7 @@ export function getBreakingNews(lang: string): ArticleRow | null {
   return (
     (db
       .prepare(
-        `SELECT a.*, e.category, e.importance_score
+        `SELECT a.*, e.category, e.importance_score, e.parent_event_id
          FROM articles a JOIN events e ON a.event_id = e.id
          WHERE a.lang = ? AND e.stage = 'published'
            AND a.published_at > datetime('now', '-12 hours')

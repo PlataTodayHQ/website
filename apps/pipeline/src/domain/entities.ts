@@ -94,6 +94,7 @@ export interface TriageResult {
   argentina_relevant: boolean;
   importance: number;
   category: string;
+  secondary_categories?: string[];
   reasoning: string;
 }
 
@@ -107,6 +108,13 @@ export interface DraftResult {
 export interface ReviewResult {
   approved: boolean;
   feedback: string;
+  checks?: {
+    hallucination: string;
+    tone: string;
+    completeness: string;
+    style: string;
+    seo: string;
+  };
   corrected_title: string;
   corrected_body: string;
   corrected_meta_description: string;
@@ -118,4 +126,12 @@ export interface RewriteResult {
   slug: string;
   meta_description: string;
   body: string;
+}
+
+export interface ValidateRewriteResult {
+  valid: boolean;
+  issues: string[];
+  corrected_title?: string;
+  corrected_body?: string;
+  corrected_meta_description?: string;
 }

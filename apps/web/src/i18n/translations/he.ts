@@ -116,6 +116,7 @@ export const he = {
   "article.shareArticle": "שיתוף כתבה זו",
   "article.opensNewTab": "(נפתח בלשונית חדשה)",
   "article.photoCredit": "צילום",
+  "article.updated": "עודכן",
 
   // Footer
   "footer.tagline": "חדשות ארגנטינה, פתוחות לעולם",

@@ -116,6 +116,7 @@ export const it = {
   "article.shareArticle": "Condividi questo articolo",
   "article.opensNewTab": "(si apre in una nuova scheda)",
   "article.photoCredit": "Foto",
+  "article.updated": "Aggiornato",
 
   // Footer
   "footer.tagline": "Le notizie dall'Argentina, aperte al mondo",

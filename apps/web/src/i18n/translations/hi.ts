@@ -116,6 +116,7 @@ export const hi = {
   "article.shareArticle": "यह लेख शेयर करें",
   "article.opensNewTab": "(नई टैब में खुलेगा)",
   "article.photoCredit": "फ़ोटो",
+  "article.updated": "अपडेट किया गया",
 
   // Footer
   "footer.tagline": "अर्जेंटीना की खबरें, दुनिया के लिए खुली",

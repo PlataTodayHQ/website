@@ -18,7 +18,7 @@ export function startJobs(dbPath: string, distDir: string): void {
           runPipeline(dbPath).catch((err) =>
             console.error("[scheduler] Pipeline interval error:", err),
           ),
-        15 * 60 * 1000,
+        10 * 60 * 1000,
       ),
     );
   } else {

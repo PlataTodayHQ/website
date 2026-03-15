@@ -116,6 +116,7 @@ export const ja = {
   "article.shareArticle": "この記事をシェア",
   "article.opensNewTab": "（新しいタブで開きます）",
   "article.photoCredit": "写真",
+  "article.updated": "更新",
 
   // Footer
   "footer.tagline": "アルゼンチンのニュース、世界に開かれて",

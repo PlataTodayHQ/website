@@ -43,7 +43,8 @@ export class SQLiteEventRepository implements IEventRepository {
     );
     this.triageStmt = db.prepare(`
       UPDATE events
-      SET llm_importance = ?, llm_category = ?, category = ?, triage_reason = ?, stage = 'triaged', importance_score = ?
+      SET llm_importance = ?, llm_category = ?, category = ?, triage_reason = ?, stage = 'triaged',
+          importance_score = ROUND(? * 0.7 + importance_score * 0.3, 2)
       WHERE id = ?
     `);
     this.killStmt = db.prepare(`
@@ -103,5 +104,67 @@ export class SQLiteEventRepository implements IEventRepository {
 
   incrementReviewAttempts(id: number): void {
     this.incrementReviewAttemptsStmt.run(id);
+  }
+
+  killStaleTriagedEvents(): number {
+    let total = 0;
+    // High importance (>70): kill after 48h
+    total += this.db.prepare(
+      `UPDATE events SET stage = 'killed', triage_reason = 'Stale triaged (>48h, high importance)'
+       WHERE stage = 'triaged' AND llm_importance > 70
+       AND created_at < datetime('now', '-48 hours')`,
+    ).run().changes;
+    // Medium importance (20-70): kill after 24h
+    total += this.db.prepare(
+      `UPDATE events SET stage = 'killed', triage_reason = 'Stale triaged (>24h, medium importance)'
+       WHERE stage = 'triaged' AND llm_importance BETWEEN 20 AND 70
+       AND created_at < datetime('now', '-24 hours')`,
+    ).run().changes;
+    // Low importance (<20): kill after 12h
+    total += this.db.prepare(
+      `UPDATE events SET stage = 'killed', triage_reason = 'Stale triaged (>12h, low importance)'
+       WHERE stage = 'triaged' AND (llm_importance < 20 OR llm_importance IS NULL)
+       AND created_at < datetime('now', '-12 hours')`,
+    ).run().changes;
+    return total;
+  }
+
+  getBreakingTriaged(): EventEntity[] {
+    return this.db.prepare(
+      `SELECT * FROM events WHERE stage = 'triaged' AND llm_importance >= 86 AND (is_breaking = 0 OR is_breaking IS NULL)
+       ORDER BY llm_importance DESC`,
+    ).all() as EventEntity[];
+  }
+
+  getById(id: number): EventEntity | null {
+    return (this.db.prepare(`SELECT * FROM events WHERE id = ?`).get(id) as EventEntity) ?? null;
+  }
+
+  markBreaking(id: number): void {
+    this.db.prepare(`UPDATE events SET is_breaking = 1 WHERE id = ?`).run(id);
+  }
+
+  setCategories(eventId: number, primary: string, secondary: string[]): void {
+    const insertCat = this.db.prepare(
+      `INSERT OR IGNORE INTO event_categories (event_id, category, is_primary) VALUES (?, ?, ?)`,
+    );
+    insertCat.run(eventId, primary, 1);
+    for (const cat of secondary) {
+      insertCat.run(eventId, cat, 0);
+    }
+  }
+
+  createWithParent(category: string, score: number, parentEventId: number): number {
+    const result = this.db.prepare(
+      `INSERT INTO events (category, importance_score, parent_event_id) VALUES (?, ?, ?)`,
+    ).run(category, score, parentEventId);
+    return Number(result.lastInsertRowid);
+  }
+
+  getEventStageByClusterId(clusterId: number): string | null {
+    const row = this.db.prepare(
+      `SELECT stage FROM events WHERE id = ?`,
+    ).get(clusterId) as { stage: string } | undefined;
+    return row?.stage ?? null;
   }
 }

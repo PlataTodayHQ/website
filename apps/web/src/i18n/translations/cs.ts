@@ -116,6 +116,7 @@ export const cs = {
   "article.shareArticle": "Sdílet tento článek",
   "article.opensNewTab": "(otevře novou kartu)",
   "article.photoCredit": "Foto",
+  "article.updated": "Aktualizováno",
 
   // Footer
   "footer.tagline": "Zprávy z Argentiny, otevřené světu",

@@ -116,6 +116,7 @@ export const zh = {
   "article.shareArticle": "分享本文",
   "article.opensNewTab": "（在新标签页中打开）",
   "article.photoCredit": "图片",
+  "article.updated": "更新",
 
   // Footer
   "footer.tagline": "阿根廷新闻，向世界敞开",

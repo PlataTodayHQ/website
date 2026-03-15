@@ -116,6 +116,7 @@ export const ms = {
   "article.shareArticle": "Kongsi artikel ini",
   "article.opensNewTab": "(buka dalam tab baharu)",
   "article.photoCredit": "Foto",
+  "article.updated": "Dikemas kini",
 
   // Footer
   "footer.tagline": "Berita Argentina, terbuka kepada dunia",

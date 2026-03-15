@@ -22,7 +22,6 @@ import { reviewEvent } from "./use-cases/review.js";
 import { rewriteEvent } from "./use-cases/rewrite.js";
 import { runConcurrent } from "./concurrency.js";
 
-const TIME_BUDGET_MS = 12 * 60 * 1000;
 const CONCURRENCY = 5;
 const STALE_HOURS = 24;
 
@@ -73,9 +72,9 @@ export async function main(dbPath?: string): Promise<void> {
     const { newClusters, clustered } = clusterAndScore(rawArticleRepo, eventRepo, sourceTiers);
     log.info("Cluster & Score complete", { newClusters, clustered });
 
-    // Phase 3: Newsroom processing (time-budgeted)
+    // Phase 3: Newsroom processing
     log.info("=== Phase 3: Newsroom ===");
-    await processEventsByStage(eventRepo, articleRepo, llm, startTime);
+    await processEventsByStage(eventRepo, articleRepo, llm);
 
   } finally {
     db.close();
@@ -89,19 +88,41 @@ async function processEventsByStage(
   eventRepo: SQLiteEventRepository,
   articleRepo: SQLiteArticleRepository,
   llm: OpenAILLMService,
-  startTime: number,
 ): Promise<void> {
-  const budgetLeft = () => Date.now() - startTime < TIME_BUDGET_MS;
-
   // Kill stale 'new' events — news older than STALE_HOURS is no longer relevant
   const killed = eventRepo.killStaleNewEvents(STALE_HOURS);
   if (killed > 0) log.info("Killed stale new events", { killed });
+
+  // Kill stale triaged events — importance-based thresholds
+  const killedTriaged = eventRepo.killStaleTriagedEvents();
+  if (killedTriaged > 0) log.info("Killed stale triaged events", { killed: killedTriaged });
+
+  // Priority 0: Breaking news fast track (importance >= 86)
+  const breakingEvents = eventRepo.getBreakingTriaged();
+  if (breakingEvents.length > 0) {
+    log.info("Breaking news fast track", { count: breakingEvents.length });
+    for (const event of breakingEvents) {
+      try {
+        await draftEvent(eventRepo, articleRepo, llm, event);
+        const drafted = eventRepo.getById(event.id);
+        if (drafted?.stage === "drafted") {
+          await reviewEvent(eventRepo, articleRepo, llm, drafted);
+          const reviewed = eventRepo.getById(event.id);
+          if (reviewed?.stage === "reviewed") {
+            await rewriteEvent(eventRepo, articleRepo, llm, reviewed, CONCURRENCY);
+          }
+        }
+        eventRepo.markBreaking(event.id);
+      } catch (err) {
+        log.error("Breaking fast track failed", { eventId: event.id, error: String(err) });
+      }
+    }
+  }
 
   // Priority 1: Rewrite reviewed → published (5 events concurrently)
   const reviewed = eventRepo.getByStage("reviewed");
   log.info("Events to rewrite", { count: reviewed.length });
   await runConcurrent(reviewed, async (event) => {
-    if (!budgetLeft()) return;
     try {
       await rewriteEvent(eventRepo, articleRepo, llm, event, CONCURRENCY);
     } catch (err) {
@@ -113,7 +134,6 @@ async function processEventsByStage(
   const drafted = eventRepo.getByStage("drafted");
   log.info("Events to review", { count: drafted.length });
   await runConcurrent(drafted, async (event) => {
-    if (!budgetLeft()) return;
     try {
       await reviewEvent(eventRepo, articleRepo, llm, event);
     } catch (err) {
@@ -125,7 +145,6 @@ async function processEventsByStage(
   const triaged = eventRepo.getByStage("triaged");
   log.info("Events to draft", { count: triaged.length });
   await runConcurrent(triaged, async (event) => {
-    if (!budgetLeft()) return;
     try {
       await draftEvent(eventRepo, articleRepo, llm, event);
     } catch (err) {
@@ -137,7 +156,6 @@ async function processEventsByStage(
   const newEvents = eventRepo.getByStage("new");
   log.info("Events to triage", { count: newEvents.length });
   await runConcurrent(newEvents, async (event) => {
-    if (!budgetLeft()) return;
     try {
       await triageEvent(eventRepo, llm, event);
     } catch (err) {

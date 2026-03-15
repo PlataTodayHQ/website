@@ -116,6 +116,7 @@ export const ur = {
   "article.shareArticle": "یہ مضمون شیئر کریں",
   "article.opensNewTab": "(نئی ٹیب میں کھلے گا)",
   "article.photoCredit": "تصویر",
+  "article.updated": "تازہ ترین",
 
   // Footer
   "footer.tagline": "ارجنٹینا کی خبریں، پوری دنیا کے لیے",
