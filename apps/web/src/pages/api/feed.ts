@@ -24,7 +24,7 @@ export const GET: APIRoute = ({ url }) => {
     slug: a.slug,
     href: `/${lang}/news/${a.slug}`,
     description: a.meta_description ?? "",
-    imageUrl: a.image_url ?? "",
+    imageUrl: a.image_url || "",
     category: a.category,
     timeAgo: timeAgo(a.published_at, lang),
     readingTime: readingTime(a.word_count, lang),
