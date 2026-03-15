@@ -19,6 +19,19 @@ const { lang } = Astro.params;
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
   ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "markets.title"),
+    "description": t(lang!, "markets.subtitle"),
+    "url": `https://plata.today/${lang}/markets`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
 >
   <div class="markets-hub">
     <header class="hub-header">

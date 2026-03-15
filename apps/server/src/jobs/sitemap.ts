@@ -48,8 +48,9 @@ function buildLangSitemap(lang: string, articles: ArticleInfo[]): string {
   const entries: string[] = [];
 
   // Static pages
+  const today = new Date().toISOString().slice(0, 10);
   for (const page of STATIC_PAGES) {
-    entries.push(buildUrlEntry(`${SITE}/${lang}${page.path}`, undefined, page.changefreq, page.priority));
+    entries.push(buildUrlEntry(`${SITE}/${lang}${page.path}`, today, page.changefreq, page.priority));
   }
 
   // Category pages

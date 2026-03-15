@@ -145,7 +145,7 @@ try {
   lang={lang}
   alternateUrls={alternateUrls}
   ogType="article"
-  ogImage={row.image_url ?? "/images/placeholder.svg"}
+  ogImage={row.image_url ?? undefined}
   ogUrl={`https://plata.today/${lang}/news/${slug}`}
   breadcrumbs={[
     { name: t(lang, "common.breadcrumbHome"), url: `/${lang}/` },
@@ -154,6 +154,7 @@ try {
   ]}
   articleMeta={{
     publishedTime: dateISO,
+    modifiedTime: updatedISO ?? dateISO,
     section: catLabel,
     tags: [catLabel],
     author: "Plata Newsroom",
@@ -165,7 +166,7 @@ try {
     "description": row.meta_description ?? "",
     "image": row.image_url ?? "",
     "datePublished": dateISO,
-    "dateModified": dateISO,
+    "dateModified": updatedISO ?? dateISO,
     "author": {
       "@type": "Organization",
       "name": "Plata Newsroom",

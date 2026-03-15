@@ -20,6 +20,19 @@ const { lang } = Astro.params;
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
     { name: t(lang!, "merval.breadcrumb"), url: `/${lang}/markets/merval` },
   ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "merval.title"),
+    "description": t(lang!, "merval.subtitle"),
+    "url": `https://plata.today/${lang}/markets/merval`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
 >
   <div class="merval-page" data-merval-page data-lang={lang}>
     <header class="mkts-header">
