@@ -71,9 +71,9 @@ export const zh = {
 
   // Welcome Hero
   "welcome.ariaLabel": "欢迎",
-  "welcome.eyebrow": "25种语言 · 一个使命",
+  "welcome.eyebrow": "35种语言 · 一个使命",
   "welcome.headline": "阿根廷，向世界敞开",
-  "welcome.sub": "我们每天用25种语言原生撰写新闻——让全世界都能了解阿根廷正在发生的一切。",
+  "welcome.sub": "我们每天用35种语言原生撰写新闻——让全世界都能了解阿根廷正在发生的一切。",
 
   // Newsletter
   "newsletter.title": "与阿根廷保持连接",
@@ -97,8 +97,8 @@ export const zh = {
   "home.politics": "政治",
   "home.title": "阿根廷新闻 · {lang}",
   "home.heroFallbackTitle": "欢迎来到 Plata Today",
-  "home.heroFallbackDesc": "阿根廷新闻，以 25 种语言原生呈现。",
-  "home.description": "今日阿根廷头条新闻（{lang}）：政治、经济、体育、文化。全天候更新，25 种语言。",
+  "home.heroFallbackDesc": "阿根廷新闻，以 35 种语言原生呈现。",
+  "home.description": "今日阿根廷头条新闻（{lang}）：政治、经济、体育、文化。全天候更新，35 种语言。",
   "home.topStories": "头条新闻",
   "home.economyBusiness": "经济与商业",
   "home.cultureSociety": "文化与社会",
@@ -141,13 +141,13 @@ export const zh = {
 
   // About page
   "about.title": "关于 Plata",
-  "about.description": "Plata 以 25 种语言向全球传递阿根廷新闻。了解创始人和我们编辑部的运作方式。",
+  "about.description": "Plata 以 35 种语言向全球传递阿根廷新闻。了解创始人和我们编辑部的运作方式。",
   "about.tagline": "阿根廷新闻。每种语言。每个来源。",
   "about.missionTitle": "我们的使命",
   "about.missionText": "我们相信每个人都有权了解阿根廷正在发生的事情，无论他们使用哪种语言。Plata 监控 13 家以上阿根廷新闻来源，筛选重要内容，并以您的语言原生撰写每篇报道——为国际读者提供必要的背景信息。",
   "about.valueNoOpinion": "来源透明",
   "about.valueNoOpinionDesc": "每篇报道都标注信息来源。我们交叉比对多家媒体，让您了解事实的出处。",
-  "about.value18langs": "25 种语言",
+  "about.value18langs": "35 种语言",
   "about.value18langsDesc": "每篇文章都为各语言读者原生写作——不是翻译，而是从零开始创作。",
   "about.valueFast": "精选且快速",
   "about.valueFastDesc": "我们监控 13 家以上媒体，您无需亲自追踪。每 30 分钟发布新报道。",
@@ -157,7 +157,7 @@ export const zh = {
   "about.step2Title": "去重",
   "about.step2Desc": "当多家媒体报道同一事件时，我们会识别并归类，将不同视角合并为一条报道。",
   "about.step3Title": "改写",
-  "about.step3Desc": "归类后的来源被综合为一篇事实性文章——以我们支持的 25 种语言原生撰写。",
+  "about.step3Desc": "归类后的来源被综合为一篇事实性文章——以我们支持的 35 种语言原生撰写。",
   "about.step4Title": "发布",
   "about.step4Desc": "文章发布在 plata.today，附有完整的来源标注、结构化数据和实时市场信息。",
   "about.sourcesTitle": "信息来源",
@@ -165,7 +165,7 @@ export const zh = {
   "about.founderTitle": "创始人",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "创始人兼开发者",
-  "about.founderBio": "Bogdan 创建 Plata 是为了解决他亲身经历的难题：用西班牙语以外的语言查找关于阿根廷的可靠新闻。作为一名开发者，他构建了一个监控 13 家以上阿根廷媒体的编辑部，以 25 种语言原生撰写每篇报道。",
+  "about.founderBio": "Bogdan 创建 Plata 是为了解决他亲身经历的难题：用西班牙语以外的语言查找关于阿根廷的可靠新闻。作为一名开发者，他构建了一个监控 13 家以上阿根廷媒体的编辑部，以 35 种语言原生撰写每篇报道。",
   "about.disclaimerTitle": "免责声明",
   "about.disclaimerText": "文章综合自多个阿根廷新闻来源。尽管我们力求准确，但请务必就重要信息参照原始报道进行核实。我们始终标注所引用的出版物。",
   "about.contactTitle": "联系方式",
@@ -402,7 +402,7 @@ export const zh = {
   "notFound.description": "页面未找到。浏览 Plata Today 上的最新阿根廷新闻。",
 
   // Common
-  "common.siteDescription": "阿根廷新闻，以 25 种语言原生呈现",
+  "common.siteDescription": "阿根廷新闻，以 35 种语言原生呈现",
   "common.breadcrumbHome": "首页",
 
   // Feed page
@@ -433,13 +433,13 @@ export const zh = {
   "standards.pageTitle": "编辑准则 — Plata",
   "standards.description": "Plata 编辑部的运作方式：信源采集、事实核查与发布标准。",
   "standards.updated": "最后更新：2026年3月14日",
-  "standards.lead": "Plata 是一个以25种语言报道阿根廷新闻的多语平台。本页介绍我们编辑部的工作流程——从信源采集到文章发布。",
+  "standards.lead": "Plata 是一个以35种语言报道阿根廷新闻的多语平台。本页介绍我们编辑部的工作流程——从信源采集到文章发布。",
   "standards.sourcingTitle": "信源采集",
   "standards.sourcingText": "我们监控超过13家阿根廷新闻媒体，分为三个层级。第一层级包括 Infobae、Clarín、La Nación、Ámbito Financiero、El Cronista 和 iProfesional 等主要全国性媒体。第二层级涵盖 Perfil、Cadena 3 和 Olé 等独立及专业媒体。第三层级包括 La Gaceta、Misiones Online 和 El Día 等地方媒体。文章通过 RSS 订阅每30分钟自动采集。",
   "standards.verificationTitle": "事实核查",
   "standards.verificationText": "每篇报道都经过多阶段审核流程。报道同一事件的信源会被归类整合。每篇文章都会与原始信源进行核对。没有信源支持的说法会被标记并删除。两次未通过核查的报道不予发布。",
   "standards.languageTitle": "语言质量",
-  "standards.languageText": "每篇文章都以目标语言原生撰写，而非翻译。每个语言版本都遵循该语言的表达习惯、用语风格和称谓规范。我们支持25种语言：阿拉伯语、中文、丹麦语、荷兰语、英语、芬兰语、法语、德语、希腊语、印地语、印度尼西亚语、意大利语、日语、韩语、挪威语、波兰语、葡萄牙语、俄语、西班牙语、斯瓦希里语、瑞典语、泰语、土耳其语、乌克兰语和越南语。",
+  "standards.languageText": "每篇文章都以目标语言原生撰写，而非翻译。每个语言版本都遵循该语言的表达习惯、用语风格和称谓规范。我们支持35种语言：阿拉伯语、孟加拉语、加泰罗尼亚语、中文（简体）、中文（繁体）、捷克语、丹麦语、荷兰语、英语、芬兰语、法语、德语、希腊语、希伯来语、印地语、印度尼西亚语、意大利语、日语、韩语、马来语、挪威语、波斯语、波兰语、葡萄牙语、罗马尼亚语、俄语、西班牙语、斯瓦希里语、瑞典语、他加禄语、泰语、土耳其语、乌克兰语、乌尔都语和越南语。",
   "standards.attributionTitle": "信源标注",
   "standards.attributionText": "Plata 的每篇文章都会注明信息来源。信源名称标注在文章末尾。我们认为，读者有权知道信息的出处。",
   "standards.filteringTitle": "我们不发布的内容",

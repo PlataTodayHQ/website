@@ -71,9 +71,9 @@ export const sw = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Karibu",
-  "welcome.eyebrow": "Lugha 25 · Dhamira moja",
+  "welcome.eyebrow": "Lugha 35 · Dhamira moja",
   "welcome.headline": "Habari za Argentina, wazi kwa ulimwengu",
-  "welcome.sub": "Kila siku, tunaandika habari asilia katika lugha 25 — ili ulimwengu wote uweze kuelewa yanayotokea Argentina.",
+  "welcome.sub": "Kila siku, tunaandika habari asilia katika lugha 35 — ili ulimwengu wote uweze kuelewa yanayotokea Argentina.",
 
   // Newsletter
   "newsletter.title": "Endelea kuunganishwa na Argentina",
@@ -97,8 +97,8 @@ export const sw = {
   "home.politics": "Siasa",
   "home.title": "Habari za Argentina kwa {lang}",
   "home.heroFallbackTitle": "Karibu Plata Today",
-  "home.heroFallbackDesc": "Habari za Argentina, zimeandikwa asilia katika lugha 25.",
-  "home.description": "Habari kuu za Argentina leo kwa {lang}: siasa, uchumi, michezo, utamaduni. Zinasasishwa masaa 24/7, lugha 25.",
+  "home.heroFallbackDesc": "Habari za Argentina, zimeandikwa asilia katika lugha 35.",
+  "home.description": "Habari kuu za Argentina leo kwa {lang}: siasa, uchumi, michezo, utamaduni. Zinasasishwa masaa 24/7, lugha 35.",
   "home.topStories": "Habari Kuu",
   "home.economyBusiness": "Uchumi na Biashara",
   "home.cultureSociety": "Utamaduni na Jamii",
@@ -141,13 +141,13 @@ export const sw = {
 
   // About page
   "about.title": "Kuhusu Plata",
-  "about.description": "Plata inaleta habari za Argentina kwa ulimwengu katika lugha 25. Fahamu mwanzilishi na jinsi chumba chetu cha habari kinavyofanya kazi.",
+  "about.description": "Plata inaleta habari za Argentina kwa ulimwengu katika lugha 35. Fahamu mwanzilishi na jinsi chumba chetu cha habari kinavyofanya kazi.",
   "about.tagline": "Habari za Argentina. Kila lugha. Kila chanzo.",
   "about.missionTitle": "Dhamira yetu",
   "about.missionText": "Tunaamini kila mtu anastahili kupata habari kuhusu yanayotokea Argentina, bila kujali lugha anayoizungumza. Plata inafuatilia vyanzo 13+ vya habari vya Argentina, inachambua yaliyo muhimu, na kuandika kila habari asilia kwa lugha yako — na muktadha ambao wasomaji wa kimataifa wanahitaji.",
   "about.valueNoOpinion": "Uwazi wa vyanzo",
   "about.valueNoOpinionDesc": "Kila habari inataja vyanzo vyake. Tunalinganisha vyombo mbalimbali ili uone ukweli unatoka wapi.",
-  "about.value18langs": "Lugha 25",
+  "about.value18langs": "Lugha 35",
   "about.value18langsDesc": "Kila makala imeandikwa asilia kwa hadhira ya kila lugha — si kutafsiriwa, bali kuundwa upya.",
   "about.valueFast": "Iliyochaguliwa na ya haraka",
   "about.valueFastDesc": "Tunafuatilia vyombo 13+ ili wewe usihitajike. Habari mpya zinachapishwa kila dakika 30.",
@@ -157,7 +157,7 @@ export const sw = {
   "about.step2Title": "Kuondoa nakala",
   "about.step2Desc": "Vyombo vingi vinapofunika tukio moja, tunavitambua na kuviunganisha pamoja, tukichanganya mitazamo tofauti kuwa habari moja.",
   "about.step3Title": "Kuandika upya",
-  "about.step3Desc": "Vyanzo vilivyounganishwa vinaunganishwa kuwa makala moja ya ukweli — imeandikwa asilia katika kila moja ya lugha zetu 25.",
+  "about.step3Desc": "Vyanzo vilivyounganishwa vinaunganishwa kuwa makala moja ya ukweli — imeandikwa asilia katika kila moja ya lugha zetu 35.",
   "about.step4Title": "Kuchapisha",
   "about.step4Desc": "Makala zinachapishwa kwenye plata.today na utambuzi kamili wa vyanzo, data iliyopangwa, na taarifa za masoko za wakati halisi.",
   "about.sourcesTitle": "Vyanzo vyetu",
@@ -165,7 +165,7 @@ export const sw = {
   "about.founderTitle": "Mwanzilishi",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Muundaji na Mtengenezaji",
-  "about.founderBio": "Bogdan alijenga Plata kutatua tatizo alilolipitia mwenyewe: kupata habari za kuaminika kuhusu Argentina katika lugha zisizo Kihispania. Kama mtengenezaji, alijenga chumba cha habari kinachofuatilia vyombo 13+ vya Argentina na kuandika kila habari asilia katika lugha 25.",
+  "about.founderBio": "Bogdan alijenga Plata kutatua tatizo alilolipitia mwenyewe: kupata habari za kuaminika kuhusu Argentina katika lugha zisizo Kihispania. Kama mtengenezaji, alijenga chumba cha habari kinachofuatilia vyombo 13+ vya Argentina na kuandika kila habari asilia katika lugha 35.",
   "about.disclaimerTitle": "Kanusho",
   "about.disclaimerText": "Makala yanaunganishwa kutoka vyanzo mbalimbali vya habari vya Argentina. Ingawa tunajitahidi kuwa sahihi, tafadhali hakikisha taarifa muhimu na taarifa za awali. Siku zote tunatambua machapisho tunayoyatumia kama vyanzo.",
   "about.contactTitle": "Wasiliana nasi",
@@ -402,7 +402,7 @@ export const sw = {
   "notFound.description": "Ukurasa haupatikani. Vinjari habari mpya za Argentina kwenye Plata Today.",
 
   // Common
-  "common.siteDescription": "Habari za Argentina, zimeandikwa asilia katika lugha 25. Ukweli kwanza, uwazi wa vyanzo.",
+  "common.siteDescription": "Habari za Argentina, zimeandikwa asilia katika lugha 35. Ukweli kwanza, uwazi wa vyanzo.",
   "common.breadcrumbHome": "Nyumbani",
 
   // Feed page
@@ -433,13 +433,13 @@ export const sw = {
   "standards.pageTitle": "Viwango vya Uhariri — Plata",
   "standards.description": "Jinsi chumba cha habari cha Plata kinavyofanya kazi: vyanzo, uhakiki, na viwango vya uchapishaji.",
   "standards.updated": "Ilisasishwa mwisho: Machi 14, 2026",
-  "standards.lead": "Plata ni jukwaa la habari la lugha nyingi linalofunika Argentina katika lugha 25. Ukurasa huu unaeleza jinsi chumba chetu cha habari kinavyofanya kazi — kutoka vyanzo hadi uchapishaji.",
+  "standards.lead": "Plata ni jukwaa la habari la lugha nyingi linalofunika Argentina katika lugha 35. Ukurasa huu unaeleza jinsi chumba chetu cha habari kinavyofanya kazi — kutoka vyanzo hadi uchapishaji.",
   "standards.sourcingTitle": "Vyanzo",
   "standards.sourcingText": "Tunafuatilia vyombo 13+ vya habari vya Argentina katika ngazi tatu. Ngazi ya 1 inajumuisha vyombo vikubwa vya kitaifa kama Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, na iProfesional. Ngazi ya 2 inafunika vyanzo huru na maalum kama Perfil, Cadena 3, na Olé. Ngazi ya 3 inajumuisha vyombo vya mikoa kama La Gaceta, Misiones Online, na El Día. Makala yanakusanywa kupitia RSS kila dakika 30.",
   "standards.verificationTitle": "Uhakiki",
   "standards.verificationText": "Kila habari inapitia mchakato wa mapitio ya hatua nyingi. Vyanzo vinavyofunika tukio moja vinaunganishwa pamoja. Kila makala inahakikiwa dhidi ya vyanzo vyake vya awali. Madai yasiyoungwa mkono na chanzo chochote yanabainishwa na kuondolewa. Habari zinazoshindwa uhakiki mara mbili hazichapishwi.",
   "standards.languageTitle": "Ubora wa lugha",
-  "standards.languageText": "Makala yanaandikwa asilia kwa kila lugha — si kutafsiriwa. Kila toleo linafuata kanuni, nahau, na mila ya anwani ya lugha yake. Tunasaidia lugha 25: Kiingereza, Kireno, Kijerumani, Kiitaliano, Kifaransa, Kirusi, Kichina, Kipolandi, Kiukrania, Kijapani, Kikorea, Kihispania, Kiswidi, Kidenmaki, Kiholanzi, Kinorwe, Kifini, Kihindi, na nyingine.",
+  "standards.languageText": "Makala yanaandikwa asilia kwa kila lugha — si kutafsiriwa. Kila toleo linafuata kanuni, nahau, na mila ya anwani ya lugha yake. Tunasaidia lugha 35: Kiarabu, Kibengali, Kikatalani, Kichina (Kilichorahisishwa), Kichina (Cha Jadi), Kicheki, Kidenmaki, Kiholanzi, Kiingereza, Kifini, Kifaransa, Kijerumani, Kigiriki, Kiebrania, Kihindi, Kiindonesia, Kiitaliano, Kijapani, Kikorea, Kimalei, Kinorwe, Kiajemi, Kipolandi, Kireno, Kiromania, Kirusi, Kihispania, Kiswahili, Kiswidi, Kitagalogi, Kithai, Kituruki, Kiukrania, Kiurdu na Kivietinamu.",
   "standards.attributionTitle": "Utambuzi wa vyanzo",
   "standards.attributionText": "Kila makala kwenye Plata inataja vyombo ilivyotokana navyo. Majina ya vyanzo yanaonekana chini ya kila makala. Tunaamini wasomaji wanapaswa kujua kila wakati habari inatoka wapi.",
   "standards.filteringTitle": "Tusichochapisha",

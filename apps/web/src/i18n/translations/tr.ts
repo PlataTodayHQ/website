@@ -71,9 +71,9 @@ export const tr = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Hoş Geldiniz",
-  "welcome.eyebrow": "25 dil · Tek bir misyon",
+  "welcome.eyebrow": "35 dil · Tek bir misyon",
   "welcome.headline": "Arjantin'in hikâyesi, dünyaya açık",
-  "welcome.sub": "Her gün haberleri 25 dilde özgün olarak yazıyoruz — böylece tüm dünya Arjantin'de neler olduğunu anlayabiliyor.",
+  "welcome.sub": "Her gün haberleri 35 dilde özgün olarak yazıyoruz — böylece tüm dünya Arjantin'de neler olduğunu anlayabiliyor.",
 
   // Newsletter
   "newsletter.title": "Arjantin'le bağlantıda kalın",
@@ -97,8 +97,8 @@ export const tr = {
   "home.politics": "Siyaset",
   "home.title": "{lang} Arjantin Haberleri",
   "home.heroFallbackTitle": "Plata Today'e Hoş Geldiniz",
-  "home.heroFallbackDesc": "Arjantin haberleri, 25 dilde özgün olarak yazılıyor.",
-  "home.description": "Bugünün {lang} Arjantin haberleri: siyaset, ekonomi, spor, kültür. 7/24 güncelleniyor, 25 dil.",
+  "home.heroFallbackDesc": "Arjantin haberleri, 35 dilde özgün olarak yazılıyor.",
+  "home.description": "Bugünün {lang} Arjantin haberleri: siyaset, ekonomi, spor, kültür. 7/24 güncelleniyor, 35 dil.",
   "home.topStories": "Öne Çıkan Haberler",
   "home.economyBusiness": "Ekonomi ve İş Dünyası",
   "home.cultureSociety": "Kültür ve Toplum",
@@ -141,13 +141,13 @@ export const tr = {
 
   // About page
   "about.title": "Plata Hakkında",
-  "about.description": "Plata, Arjantin haberlerini 25 dilde dünyaya ulaştırıyor. Kurucumuzu tanıyın ve haber merkezimizin nasıl çalıştığını öğrenin.",
+  "about.description": "Plata, Arjantin haberlerini 35 dilde dünyaya ulaştırıyor. Kurucumuzu tanıyın ve haber merkezimizin nasıl çalıştığını öğrenin.",
   "about.tagline": "Arjantin haberleri. Her dilde. Her kaynaktan.",
   "about.missionTitle": "Misyonumuz",
   "about.missionText": "Herkesin, hangi dili konuşursa konuşsun, Arjantin'de olup bitenlere erişebilmesi gerektiğine inanıyoruz. Plata 13'ten fazla Arjantin haber kaynağını takip eder, önemli olanları süzgeçten geçirir ve her haberi sizin dilinize özgü olarak — uluslararası okuyucunun ihtiyaç duyduğu bağlamla birlikte — yazar.",
   "about.valueNoOpinion": "Kaynak şeffaflığı",
   "about.valueNoOpinionDesc": "Her haber kaynaklarını belirtir. Birden fazla yayın organını çapraz kontrol ediyoruz, böylece bilgilerin nereden geldiğini görürsünüz.",
-  "about.value18langs": "25 dil",
+  "about.value18langs": "35 dil",
   "about.value18langsDesc": "Her haber, ilgili dilin okuyucu kitlesine özel olarak yazılır — çeviri değil, sıfırdan oluşturulur.",
   "about.valueFast": "Derlenmiş ve hızlı",
   "about.valueFastDesc": "13'ten fazla yayın organını takip ediyoruz, böylece sizin takip etmenize gerek kalmıyor. Yeni haberler her 30 dakikada bir yayınlanır.",
@@ -157,7 +157,7 @@ export const tr = {
   "about.step2Title": "Tekilleştirme",
   "about.step2Desc": "Aynı olayı birden fazla kaynak haber yaptığında, bunları tespit edip bir araya getiriyoruz ve farklı bakış açılarını tek bir haberde birleştiriyoruz.",
   "about.step3Title": "Yeniden Yazım",
-  "about.step3Desc": "Gruplanmış kaynaklar, desteklediğimiz 25 dilin her birinde özgün ve olgusal bir haber haline getirilir.",
+  "about.step3Desc": "Gruplanmış kaynaklar, desteklediğimiz 35 dilin her birinde özgün ve olgusal bir haber haline getirilir.",
   "about.step4Title": "Yayınlama",
   "about.step4Desc": "Haberler, kaynak bilgisi, yapılandırılmış veri ve anlık piyasa bilgileriyle birlikte plata.today üzerinde yayına alınır.",
   "about.sourcesTitle": "Kaynaklarımız",
@@ -165,7 +165,7 @@ export const tr = {
   "about.founderTitle": "Kurucu",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Yaratıcı ve Geliştirici",
-  "about.founderBio": "Bogdan, bizzat yaşadığı bir sorunu çözmek için Plata'yı kurdu: İspanyolca dışındaki dillerde Arjantin hakkında güvenilir haber bulmak. Bir geliştirici olarak, 13'ten fazla Arjantin kaynağını takip eden ve her haberi 25 dilde özgün olarak yazan bir haber odası inşa etti.",
+  "about.founderBio": "Bogdan, bizzat yaşadığı bir sorunu çözmek için Plata'yı kurdu: İspanyolca dışındaki dillerde Arjantin hakkında güvenilir haber bulmak. Bir geliştirici olarak, 13'ten fazla Arjantin kaynağını takip eden ve her haberi 35 dilde özgün olarak yazan bir haber odası inşa etti.",
   "about.disclaimerTitle": "Sorumluluk Reddi",
   "about.disclaimerText": "Haberler birden fazla Arjantin haber kaynağından derlenmektedir. Doğruluk için azami özen göstermemize rağmen, lütfen önemli bilgileri orijinal kaynaklardan doğrulayın. Kaynak aldığımız yayın organlarını her zaman belirtiriz.",
   "about.contactTitle": "İletişim",
@@ -402,7 +402,7 @@ export const tr = {
   "notFound.description": "Sayfa bulunamadı. Plata Today'de en son Arjantin haberlerine göz atın.",
 
   // Common
-  "common.siteDescription": "Arjantin haberleri, 25 dilde özgün olarak yazılıyor. Gerçeğe dayalı, kaynağı şeffaf.",
+  "common.siteDescription": "Arjantin haberleri, 35 dilde özgün olarak yazılıyor. Gerçeğe dayalı, kaynağı şeffaf.",
   "common.breadcrumbHome": "Ana Sayfa",
 
   // Feed page
@@ -433,13 +433,13 @@ export const tr = {
   "standards.pageTitle": "Yayın İlkeleri — Plata",
   "standards.description": "Plata'nın haber odası nasıl çalışır: kaynak toplama, doğrulama ve yayın standartları.",
   "standards.updated": "Son güncelleme: 14 Mart 2026",
-  "standards.lead": "Plata, Arjantin'i 25 dilde takip eden çok dilli bir haber platformudur. Bu sayfa, kaynak toplamadan yayına kadar haber odamızın nasıl çalıştığını açıklar.",
+  "standards.lead": "Plata, Arjantin'i 35 dilde takip eden çok dilli bir haber platformudur. Bu sayfa, kaynak toplamadan yayına kadar haber odamızın nasıl çalıştığını açıklar.",
   "standards.sourcingTitle": "Kaynak Toplama",
   "standards.sourcingText": "Üç katmandaki 13'ten fazla Arjantin haber kuruluşunu takip ediyoruz. 1. Katman: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista ve iProfesional gibi büyük ulusal yayın organları. 2. Katman: Perfil, Cadena 3 ve Olé gibi bağımsız ve uzmanlaşmış kaynaklar. 3. Katman: La Gaceta, Misiones Online ve El Día gibi bölgesel yayın organları. Haberler her 30 dakikada bir RSS beslemeleri aracılığıyla toplanır.",
   "standards.verificationTitle": "Doğrulama",
   "standards.verificationText": "Her haber çok aşamalı bir inceleme sürecinden geçer. Aynı olayı konu alan kaynaklar bir araya getirilir. Her haber, orijinal kaynaklarıyla karşılaştırılarak doğrulanır. Hiçbir kaynakça desteklenmeyen iddialar işaretlenip çıkarılır. Doğrulamayı iki kez geçemeyen haberler yayınlanmaz.",
   "standards.languageTitle": "Dil kalitesi",
-  "standards.languageText": "Haberler her dil için özgün olarak yazılır — çeviri değildir. Her sürüm, ilgili dilin kurallarına, deyimlerine ve hitap biçimlerine uyar. 25 dili destekliyoruz: İngilizce, Portekizce, Almanca, İtalyanca, Fransızca, Rusça, Çince, Lehçe, Ukraynaca, Japonca, Korece, İspanyolca, İsveççe, Danca, Felemenkçe, Norveççe, Fince, Hintçe ve daha fazlası.",
+  "standards.languageText": "Haberler her dil için özgün olarak yazılır — çeviri değildir. Her sürüm, ilgili dilin kurallarına, deyimlerine ve hitap biçimlerine uyar. 35 dili destekliyoruz: Almanca, Arapça, Bengalce, Çekçe, Çince (Basitleştirilmiş), Çince (Geleneksel), Danca, Endonezce, Farsça, Felemenkçe, Filipince (Tagalogca), Fince, Fransızca, Hintçe, İbranice, İngilizce, İspanyolca, İsveççe, İtalyanca, Japonca, Katalanca, Korece, Lehçe, Malayca, Norveççe, Portekizce, Romence, Rusça, Svahilice, Tayca, Türkçe, Ukraynaca, Urduca ve Vietnamca.",
   "standards.attributionTitle": "Kaynak belirtme",
   "standards.attributionText": "Plata'daki her haber, kaynak alınan yayın organlarını belirtir. Kaynak adları her haberin altında yer alır. Okuyucuların bilgilerin nereden geldiğini her zaman bilmesi gerektiğine inanıyoruz.",
   "standards.filteringTitle": "Yayınlamadıklarımız",

@@ -71,9 +71,9 @@ export const id = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Selamat datang",
-  "welcome.eyebrow": "25 bahasa · Satu misi",
+  "welcome.eyebrow": "35 bahasa · Satu misi",
   "welcome.headline": "Kabar Argentina, terbuka untuk dunia",
-  "welcome.sub": "Setiap hari, kami menulis berita secara native dalam 25 bahasa — agar seluruh dunia bisa memahami apa yang terjadi di Argentina.",
+  "welcome.sub": "Setiap hari, kami menulis berita secara native dalam 35 bahasa — agar seluruh dunia bisa memahami apa yang terjadi di Argentina.",
 
   // Newsletter
   "newsletter.title": "Tetap terhubung dengan Argentina",
@@ -97,8 +97,8 @@ export const id = {
   "home.politics": "Politik",
   "home.title": "Berita Argentina dalam {lang}",
   "home.heroFallbackTitle": "Selamat Datang di Plata Today",
-  "home.heroFallbackDesc": "Berita Argentina, ditulis secara native dalam 25 bahasa.",
-  "home.description": "Berita utama Argentina hari ini dalam {lang}: politik, ekonomi, olahraga, budaya. Diperbarui 24/7, 25 bahasa.",
+  "home.heroFallbackDesc": "Berita Argentina, ditulis secara native dalam 35 bahasa.",
+  "home.description": "Berita utama Argentina hari ini dalam {lang}: politik, ekonomi, olahraga, budaya. Diperbarui 24/7, 35 bahasa.",
   "home.topStories": "Berita Utama",
   "home.economyBusiness": "Ekonomi & Bisnis",
   "home.cultureSociety": "Budaya & Masyarakat",
@@ -141,13 +141,13 @@ export const id = {
 
   // About page
   "about.title": "Tentang Plata",
-  "about.description": "Plata menyampaikan berita Argentina ke seluruh dunia dalam 25 bahasa. Kenali pendirinya dan pelajari cara kerja redaksi kami.",
+  "about.description": "Plata menyampaikan berita Argentina ke seluruh dunia dalam 35 bahasa. Kenali pendirinya dan pelajari cara kerja redaksi kami.",
   "about.tagline": "Berita Argentina. Setiap bahasa. Setiap sumber.",
   "about.missionTitle": "Misi kami",
   "about.missionText": "Kami percaya semua orang berhak mengetahui apa yang terjadi di Argentina, apa pun bahasa yang mereka gunakan. Plata memantau 13+ sumber berita Argentina, menyaring yang penting, dan menulis setiap berita secara native untuk bahasa Anda — lengkap dengan konteks yang dibutuhkan pembaca internasional.",
   "about.valueNoOpinion": "Transparan terhadap sumber",
   "about.valueNoOpinionDesc": "Setiap berita mencantumkan sumbernya. Kami melakukan referensi silang dari berbagai media agar Anda tahu dari mana fakta berasal.",
-  "about.value18langs": "25 bahasa",
+  "about.value18langs": "35 bahasa",
   "about.value18langsDesc": "Setiap artikel ditulis secara native untuk pembaca masing-masing bahasa — bukan diterjemahkan, melainkan ditulis dari awal.",
   "about.valueFast": "Terkurasi & cepat",
   "about.valueFastDesc": "Kami memantau 13+ media sehingga Anda tidak perlu repot. Berita baru terbit setiap 30 menit.",
@@ -157,7 +157,7 @@ export const id = {
   "about.step2Title": "Deduplikasi",
   "about.step2Desc": "Ketika beberapa media meliput peristiwa yang sama, kami mengidentifikasi dan mengelompokkannya, menggabungkan berbagai perspektif menjadi satu cerita.",
   "about.step3Title": "Tulis ulang",
-  "about.step3Desc": "Sumber-sumber yang dikelompokkan disintesis menjadi satu artikel faktual — ditulis secara native dalam masing-masing dari 25 bahasa yang kami dukung.",
+  "about.step3Desc": "Sumber-sumber yang dikelompokkan disintesis menjadi satu artikel faktual — ditulis secara native dalam masing-masing dari 35 bahasa yang kami dukung.",
   "about.step4Title": "Terbitkan",
   "about.step4Desc": "Artikel tayang di plata.today dengan atribusi sumber lengkap, data terstruktur, dan informasi pasar real-time.",
   "about.sourcesTitle": "Sumber kami",
@@ -165,7 +165,7 @@ export const id = {
   "about.founderTitle": "Pendiri",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Pencipta & Pengembang",
-  "about.founderBio": "Bogdan membangun Plata untuk menyelesaikan masalah yang ia alami sendiri: menemukan berita terpercaya tentang Argentina dalam bahasa selain Spanyol. Sebagai pengembang, ia membangun redaksi yang memantau 13+ media Argentina dan menulis setiap berita secara native dalam 25 bahasa.",
+  "about.founderBio": "Bogdan membangun Plata untuk menyelesaikan masalah yang ia alami sendiri: menemukan berita terpercaya tentang Argentina dalam bahasa selain Spanyol. Sebagai pengembang, ia membangun redaksi yang memantau 13+ media Argentina dan menulis setiap berita secara native dalam 35 bahasa.",
   "about.disclaimerTitle": "Sanggahan",
   "about.disclaimerText": "Artikel disintesis dari berbagai sumber berita Argentina. Meskipun kami mengupayakan akurasi, silakan verifikasi informasi penting dengan laporan aslinya. Kami selalu mencantumkan media yang menjadi sumber kami.",
   "about.contactTitle": "Kontak",
@@ -402,7 +402,7 @@ export const id = {
   "notFound.description": "Halaman tidak ditemukan. Jelajahi berita Argentina terbaru di Plata Today.",
 
   // Common
-  "common.siteDescription": "Berita Argentina, ditulis secara native dalam 25 bahasa. Mengutamakan fakta, transparan terhadap sumber.",
+  "common.siteDescription": "Berita Argentina, ditulis secara native dalam 35 bahasa. Mengutamakan fakta, transparan terhadap sumber.",
   "common.breadcrumbHome": "Beranda",
 
   // Feed page
@@ -433,13 +433,13 @@ export const id = {
   "standards.pageTitle": "Standar Editorial — Plata",
   "standards.description": "Cara kerja redaksi Plata: pengumpulan sumber, verifikasi, dan standar publikasi.",
   "standards.updated": "Terakhir diperbarui: 14 Maret 2026",
-  "standards.lead": "Plata adalah platform berita multibahasa yang meliput Argentina dalam 25 bahasa. Halaman ini menjelaskan cara kerja redaksi kami — dari pengumpulan sumber hingga publikasi.",
+  "standards.lead": "Plata adalah platform berita multibahasa yang meliput Argentina dalam 35 bahasa. Halaman ini menjelaskan cara kerja redaksi kami — dari pengumpulan sumber hingga publikasi.",
   "standards.sourcingTitle": "Pengumpulan sumber",
   "standards.sourcingText": "Kami memantau 13+ media berita Argentina di tiga tingkatan. Tingkat 1 mencakup media nasional besar seperti Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, dan iProfesional. Tingkat 2 mencakup sumber independen dan khusus seperti Perfil, Cadena 3, dan Olé. Tingkat 3 mencakup media regional seperti La Gaceta, Misiones Online, dan El Día. Artikel dikumpulkan melalui RSS feed setiap 30 menit.",
   "standards.verificationTitle": "Verifikasi",
   "standards.verificationText": "Setiap berita melalui proses peninjauan bertahap. Sumber yang meliput peristiwa yang sama dikelompokkan bersama. Setiap artikel diperiksa faktanya terhadap sumber aslinya. Klaim yang tidak didukung oleh sumber mana pun ditandai dan dihapus. Berita yang gagal verifikasi dua kali tidak diterbitkan.",
   "standards.languageTitle": "Kualitas bahasa",
-  "standards.languageText": "Artikel ditulis secara native untuk setiap bahasa — bukan diterjemahkan. Setiap versi mengikuti konvensi, idiom, dan norma sapaan bahasanya masing-masing. Kami mendukung 25 bahasa: Inggris, Portugis, Jerman, Italia, Prancis, Rusia, Tionghoa, Polandia, Ukraina, Jepang, Korea, Spanyol, Swedia, Denmark, Belanda, Norwegia, Finlandia, Hindi, dan lainnya.",
+  "standards.languageText": "Artikel ditulis secara native untuk setiap bahasa — bukan diterjemahkan. Setiap versi mengikuti konvensi, idiom, dan norma sapaan bahasanya masing-masing. Kami mendukung 35 bahasa: Arab, Belanda, Bengal, Ceko, Denmark, Finlandia, Ibrani, Hindi, Indonesia, Inggris, Italia, Jepang, Jerman, Katalan, Korea, Melayu, Norwegia, Perancis, Persia, Polandia, Portugis, Rumania, Rusia, Spanyol, Swahili, Swedia, Tagalog, Thai, Tionghoa (Sederhana), Tionghoa (Tradisional), Turki, Ukraina, Urdu, Vietnam, dan Yunani.",
   "standards.attributionTitle": "Atribusi sumber",
   "standards.attributionText": "Setiap artikel di Plata mencantumkan media sumbernya. Nama sumber ditampilkan di bagian bawah setiap artikel. Kami percaya pembaca harus selalu tahu dari mana informasi berasal.",
   "standards.filteringTitle": "Yang tidak kami terbitkan",

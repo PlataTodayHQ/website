@@ -71,9 +71,9 @@ export const ko = {
 
   // Welcome Hero
   "welcome.ariaLabel": "환영합니다",
-  "welcome.eyebrow": "25개 언어 · 하나의 사명",
+  "welcome.eyebrow": "35개 언어 · 하나의 사명",
   "welcome.headline": "아르헨티나, 세계를 향해 열리다",
-  "welcome.sub": "매일 25개 언어로 뉴스를 네이티브로 작성하여, 전 세계가 아르헨티나의 오늘을 이해할 수 있도록 합니다.",
+  "welcome.sub": "매일 35개 언어로 뉴스를 네이티브로 작성하여, 전 세계가 아르헨티나의 오늘을 이해할 수 있도록 합니다.",
 
   // Newsletter
   "newsletter.title": "아르헨티나와 연결되세요",
@@ -97,8 +97,8 @@ export const ko = {
   "home.politics": "정치",
   "home.title": "{lang}으로 읽는 아르헨티나 뉴스",
   "home.heroFallbackTitle": "Plata Today에 오신 것을 환영합니다",
-  "home.heroFallbackDesc": "아르헨티나 뉴스를 25개 언어로 자연스럽게 전합니다.",
-  "home.description": "오늘의 아르헨티나 주요 뉴스({lang}): 정치, 경제, 스포츠, 문화. 24시간 업데이트, 25개 언어.",
+  "home.heroFallbackDesc": "아르헨티나 뉴스를 35개 언어로 자연스럽게 전합니다.",
+  "home.description": "오늘의 아르헨티나 주요 뉴스({lang}): 정치, 경제, 스포츠, 문화. 24시간 업데이트, 35개 언어.",
   "home.topStories": "주요 뉴스",
   "home.economyBusiness": "경제·비즈니스",
   "home.cultureSociety": "문화·사회",
@@ -141,13 +141,13 @@ export const ko = {
 
   // About page
   "about.title": "Plata 소개",
-  "about.description": "Plata는 아르헨티나 뉴스를 25개 언어로 전 세계에 전합니다. 창립자를 만나보고, 편집부가 어떻게 운영되는지 알아보세요.",
+  "about.description": "Plata는 아르헨티나 뉴스를 35개 언어로 전 세계에 전합니다. 창립자를 만나보고, 편집부가 어떻게 운영되는지 알아보세요.",
   "about.tagline": "아르헨티나 뉴스. 모든 언어. 모든 출처.",
   "about.missionTitle": "우리의 사명",
   "about.missionText": "우리는 누구나 사용하는 언어에 관계없이 아르헨티나에서 일어나는 일을 알 수 있어야 한다고 믿습니다. Plata는 13개 이상의 아르헨티나 뉴스 매체를 모니터링하고, 중요한 소식을 선별하여, 각 언어에 맞게 자연스럽게 기사를 작성합니다 — 국제 독자에게 필요한 맥락을 함께 전달합니다.",
   "about.valueNoOpinion": "출처 투명성",
   "about.valueNoOpinionDesc": "모든 기사에 출처를 명시합니다. 여러 매체를 교차 확인하여 사실의 출처를 분명히 밝힙니다.",
-  "about.value18langs": "25개 언어",
+  "about.value18langs": "35개 언어",
   "about.value18langsDesc": "모든 기사는 각 언어 독자를 위해 처음부터 새로 작성됩니다. 단순 번역이 아닌, 해당 언어로 새롭게 만들어집니다.",
   "about.valueFast": "엄선된 속보",
   "about.valueFastDesc": "13개 이상의 매체를 모니터링하므로 직접 찾아볼 필요가 없습니다. 30분마다 새로운 기사가 게시됩니다.",
@@ -157,7 +157,7 @@ export const ko = {
   "about.step2Title": "중복 제거",
   "about.step2Desc": "여러 매체가 같은 사건을 보도할 경우, 이를 식별하고 하나로 묶어 다양한 관점을 결합합니다.",
   "about.step3Title": "재작성",
-  "about.step3Desc": "묶인 출처들을 종합하여 하나의 사실 기반 기사로 작성합니다. 지원하는 25개 언어 각각에 맞게 자연스럽게 작성됩니다.",
+  "about.step3Desc": "묶인 출처들을 종합하여 하나의 사실 기반 기사로 작성합니다. 지원하는 35개 언어 각각에 맞게 자연스럽게 작성됩니다.",
   "about.step4Title": "게시",
   "about.step4Desc": "기사는 plata.today에 출처 표기, 구조화된 데이터, 실시간 시장 정보와 함께 게시됩니다.",
   "about.sourcesTitle": "출처 매체",
@@ -165,7 +165,7 @@ export const ko = {
   "about.founderTitle": "창립자",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "창립자 겸 개발자",
-  "about.founderBio": "Bogdan은 스페인어 외의 언어로 아르헨티나에 대한 신뢰할 수 있는 뉴스를 찾기 어려웠던 자신의 경험에서 Plata를 만들었습니다. 개발자로서 13개 이상의 아르헨티나 매체를 모니터링하고 25개 언어로 자연스럽게 기사를 작성하는 편집부를 구축했습니다.",
+  "about.founderBio": "Bogdan은 스페인어 외의 언어로 아르헨티나에 대한 신뢰할 수 있는 뉴스를 찾기 어려웠던 자신의 경험에서 Plata를 만들었습니다. 개발자로서 13개 이상의 아르헨티나 매체를 모니터링하고 35개 언어로 자연스럽게 기사를 작성하는 편집부를 구축했습니다.",
   "about.disclaimerTitle": "면책 조항",
   "about.disclaimerText": "기사는 여러 아르헨티나 뉴스 출처를 종합하여 작성됩니다. 정확성을 위해 최선을 다하지만, 중요한 정보는 원문 보도를 통해 확인해 주시기 바랍니다. 우리는 항상 참조한 매체를 밝힙니다.",
   "about.contactTitle": "문의",
@@ -402,7 +402,7 @@ export const ko = {
   "notFound.description": "페이지를 찾을 수 없습니다. Plata Today에서 최신 아르헨티나 뉴스를 확인하세요.",
 
   // Common
-  "common.siteDescription": "아르헨티나 뉴스를 25개 언어로 자연스럽게 전합니다",
+  "common.siteDescription": "아르헨티나 뉴스를 35개 언어로 자연스럽게 전합니다",
   "common.breadcrumbHome": "홈",
 
   // Feed page
@@ -433,13 +433,13 @@ export const ko = {
   "standards.pageTitle": "편집 기준 — Plata",
   "standards.description": "Plata 편집부의 운영 방식: 취재원 관리, 사실 확인, 게재 기준.",
   "standards.updated": "최종 업데이트: 2026년 3월 14일",
-  "standards.lead": "Plata는 아르헨티나 뉴스를 25개 언어로 전하는 다국어 뉴스 플랫폼입니다. 이 페이지에서는 취재원 관리부터 기사 게재까지 편집부의 운영 방식을 소개합니다.",
+  "standards.lead": "Plata는 아르헨티나 뉴스를 35개 언어로 전하는 다국어 뉴스 플랫폼입니다. 이 페이지에서는 취재원 관리부터 기사 게재까지 편집부의 운영 방식을 소개합니다.",
   "standards.sourcingTitle": "취재원 관리",
   "standards.sourcingText": "아르헨티나의 13개 이상 언론 매체를 3단계로 나누어 모니터링합니다. 1단계에는 Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional 등 주요 전국 매체가 포함됩니다. 2단계에는 Perfil, Cadena 3, Olé 등 독립·전문 매체가 해당됩니다. 3단계에는 La Gaceta, Misiones Online, El Día 등 지역 매체가 있습니다. 기사는 RSS 피드를 통해 30분마다 수집됩니다.",
   "standards.verificationTitle": "사실 확인",
   "standards.verificationText": "모든 기사는 다단계 검증을 거칩니다. 같은 사건을 다루는 취재원은 하나로 묶어 비교합니다. 각 기사는 원본 취재원과 대조하여 검증됩니다. 어떤 취재원으로도 뒷받침되지 않는 주장은 표시 후 삭제됩니다. 두 차례 검증에 실패한 기사는 게재하지 않습니다.",
   "standards.languageTitle": "언어 품질",
-  "standards.languageText": "기사는 번역이 아닌, 각 언어로 직접 작성됩니다. 각 언어 버전은 해당 언어의 관용 표현, 문체, 호칭 관습을 따릅니다. 지원 언어는 아랍어, 중국어, 덴마크어, 네덜란드어, 영어, 핀란드어, 프랑스어, 독일어, 그리스어, 힌디어, 인도네시아어, 이탈리아어, 일본어, 한국어, 노르웨이어, 폴란드어, 포르투갈어, 러시아어, 스페인어, 스와힐리어, 스웨덴어, 태국어, 터키어, 우크라이나어, 베트남어 등 25개입니다.",
+  "standards.languageText": "기사는 번역이 아닌, 각 언어로 직접 작성됩니다. 각 언어 버전은 해당 언어의 관용 표현, 문체, 호칭 관습을 따릅니다. 지원 언어는 그리스어, 네덜란드어, 노르웨이어, 덴마크어, 독일어, 러시아어, 루마니아어, 말레이어, 벤골어, 베트남어, 스와힐리어, 스웨덴어, 스페인어, 아랍어, 영어, 우르두어, 우크라이나어, 이탈리아어, 인도네시아어, 일본어, 중국어(간체), 중국어(번체), 체코어, 카탈루냐어, 타갈로그어, 태국어, 터키어, 페르시아어, 포르투갈어, 폴란드어, 프랑스어, 핀란드어, 한국어, 헤브라이어, 힌디어 등 35개입니다.",
   "standards.attributionTitle": "출처 표기",
   "standards.attributionText": "Plata의 모든 기사에는 정보를 인용한 매체가 명시됩니다. 각 기사 하단에 출처명이 표시됩니다. 독자가 정보의 출처를 항상 확인할 수 있어야 한다고 생각합니다.",
   "standards.filteringTitle": "게재하지 않는 콘텐츠",

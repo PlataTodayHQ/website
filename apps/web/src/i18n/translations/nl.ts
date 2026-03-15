@@ -71,9 +71,9 @@ export const nl = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Welkom",
-  "welcome.eyebrow": "25 talen · Eén missie",
+  "welcome.eyebrow": "35 talen · Eén missie",
   "welcome.headline": "Argentinië, open voor de wereld",
-  "welcome.sub": "Elke dag schrijven we het nieuws op moedertaalniveau in 25 talen — zodat de hele wereld kan begrijpen wat er in Argentinië gebeurt.",
+  "welcome.sub": "Elke dag schrijven we het nieuws op moedertaalniveau in 35 talen — zodat de hele wereld kan begrijpen wat er in Argentinië gebeurt.",
 
   // Newsletter
   "newsletter.title": "Blijf verbonden met Argentinië",
@@ -97,8 +97,8 @@ export const nl = {
   "home.politics": "Politiek",
   "home.title": "Nieuws uit Argentinië in het {lang}",
   "home.heroFallbackTitle": "Welkom bij Plata Today",
-  "home.heroFallbackDesc": "Argentijns nieuws, oorspronkelijk geschreven in 25 talen.",
-  "home.description": "Het belangrijkste nieuws uit Argentinië vandaag in het {lang}: politiek, economie, sport, cultuur. 24/7 bijgewerkt, 25 talen.",
+  "home.heroFallbackDesc": "Argentijns nieuws, oorspronkelijk geschreven in 35 talen.",
+  "home.description": "Het belangrijkste nieuws uit Argentinië vandaag in het {lang}: politiek, economie, sport, cultuur. 24/7 bijgewerkt, 35 talen.",
   "home.topStories": "Topverhalen",
   "home.economyBusiness": "Economie & Bedrijfsleven",
   "home.cultureSociety": "Cultuur & Samenleving",
@@ -141,13 +141,13 @@ export const nl = {
 
   // About page
   "about.title": "Over Plata",
-  "about.description": "Plata brengt Argentijns nieuws naar de wereld in 25 talen. Maak kennis met de oprichter en ontdek hoe onze redactie werkt.",
+  "about.description": "Plata brengt Argentijns nieuws naar de wereld in 35 talen. Maak kennis met de oprichter en ontdek hoe onze redactie werkt.",
   "about.tagline": "Argentijns nieuws. Elke taal. Elke bron.",
   "about.missionTitle": "Onze missie",
   "about.missionText": "Wij geloven dat iedereen recht heeft op informatie over wat er in Argentinië gebeurt, ongeacht de taal die men spreekt. Plata volgt 13+ Argentijnse nieuwsbronnen, synthetiseert wat belangrijk is en schrijft elk verhaal oorspronkelijk in jouw taal — met de context die internationale lezers nodig hebben.",
   "about.valueNoOpinion": "Transparante bronvermelding",
   "about.valueNoOpinionDesc": "Elk verhaal vermeldt zijn bronnen. We vergelijken meerdere media zodat je ziet waar de feiten vandaan komen.",
-  "about.value18langs": "25 talen",
+  "about.value18langs": "35 talen",
   "about.value18langsDesc": "Elk artikel wordt specifiek geschreven voor het publiek van elke taal — niet vertaald, maar vanaf nul gecreëerd.",
   "about.valueFast": "Gecureerd & snel",
   "about.valueFastDesc": "Wij volgen 13+ media zodat jij dat niet hoeft te doen. Nieuwe artikelen verschijnen elke 30 minuten.",
@@ -157,7 +157,7 @@ export const nl = {
   "about.step2Title": "Ontdubbelen",
   "about.step2Desc": "Wanneer meerdere media dezelfde gebeurtenis behandelen, identificeren en groeperen we ze en combineren we verschillende perspectieven tot één verhaal.",
   "about.step3Title": "Herschrijven",
-  "about.step3Desc": "De gegroepeerde bronnen worden gesynthetiseerd tot één feitelijk artikel — oorspronkelijk geschreven in elk van onze 25 ondersteunde talen.",
+  "about.step3Desc": "De gegroepeerde bronnen worden gesynthetiseerd tot één feitelijk artikel — oorspronkelijk geschreven in elk van onze 35 ondersteunde talen.",
   "about.step4Title": "Publiceren",
   "about.step4Desc": "Artikelen verschijnen op plata.today met volledige bronvermelding, gestructureerde data en realtime marktinformatie.",
   "about.sourcesTitle": "Onze bronnen",
@@ -165,7 +165,7 @@ export const nl = {
   "about.founderTitle": "Oprichter",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Bedenker & Ontwikkelaar",
-  "about.founderBio": "Bogdan heeft Plata gebouwd om een probleem op te lossen dat hij zelf ondervond: het vinden van betrouwbaar nieuws over Argentinië in andere talen dan het Spaans. Als ontwikkelaar bouwde hij een redactie die 13+ Argentijnse media volgt en elk verhaal oorspronkelijk schrijft in 25 talen.",
+  "about.founderBio": "Bogdan heeft Plata gebouwd om een probleem op te lossen dat hij zelf ondervond: het vinden van betrouwbaar nieuws over Argentinië in andere talen dan het Spaans. Als ontwikkelaar bouwde hij een redactie die 13+ Argentijnse media volgt en elk verhaal oorspronkelijk schrijft in 35 talen.",
   "about.disclaimerTitle": "Disclaimer",
   "about.disclaimerText": "Artikelen worden samengesteld uit meerdere Argentijnse nieuwsbronnen. Hoewel we streven naar nauwkeurigheid, verifieer belangrijke informatie altijd met de oorspronkelijke berichtgeving. We vermelden en linken altijd naar de publicaties die we als bron gebruiken.",
   "about.contactTitle": "Contact",
@@ -402,7 +402,7 @@ export const nl = {
   "notFound.description": "Pagina niet gevonden. Ontdek het laatste nieuws uit Argentinië op Plata Today.",
 
   // Common
-  "common.siteDescription": "Argentijns nieuws, oorspronkelijk geschreven in 25 talen. Feiten voorop, bronnen transparant.",
+  "common.siteDescription": "Argentijns nieuws, oorspronkelijk geschreven in 35 talen. Feiten voorop, bronnen transparant.",
   "common.breadcrumbHome": "Home",
 
   // Feed page
@@ -433,13 +433,13 @@ export const nl = {
   "standards.pageTitle": "Redactionele normen — Plata",
   "standards.description": "Hoe de redactie van Plata werkt: bronnen, verificatie en publicatienormen.",
   "standards.updated": "Laatst bijgewerkt: 14 maart 2026",
-  "standards.lead": "Plata is een meertalig nieuwsplatform dat verslag doet over Argentinië in 25 talen. Op deze pagina leggen we uit hoe onze redactie werkt — van bronnen tot publicatie.",
+  "standards.lead": "Plata is een meertalig nieuwsplatform dat verslag doet over Argentinië in 35 talen. Op deze pagina leggen we uit hoe onze redactie werkt — van bronnen tot publicatie.",
   "standards.sourcingTitle": "Bronnen",
   "standards.sourcingText": "We volgen meer dan 13 Argentijnse nieuwsmedia in drie categorieën. Categorie 1 omvat grote landelijke media zoals Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista en iProfesional. Categorie 2 betreft onafhankelijke en gespecialiseerde bronnen zoals Perfil, Cadena 3 en Olé. Categorie 3 omvat regionale media zoals La Gaceta, Misiones Online en El Día. Artikelen worden elke 30 minuten verzameld via RSS-feeds.",
   "standards.verificationTitle": "Verificatie",
   "standards.verificationText": "Elk bericht doorloopt een meervoudig controleproces. Bronnen die hetzelfde onderwerp behandelen worden gegroepeerd. Elk artikel wordt getoetst aan de oorspronkelijke bronnen. Beweringen die door geen enkele bron worden ondersteund, worden gemarkeerd en verwijderd. Berichten die tweemaal de verificatie niet doorstaan, worden niet gepubliceerd.",
   "standards.languageTitle": "Taalkwaliteit",
-  "standards.languageText": "Artikelen worden in elke taal op maat geschreven — niet vertaald. Elke versie volgt de conventies, uitdrukkingen en aanspreekvormen van de betreffende taal. We ondersteunen 25 talen: Arabisch, Chinees, Deens, Nederlands, Engels, Fins, Frans, Duits, Grieks, Hindi, Indonesisch, Italiaans, Japans, Koreaans, Noors, Pools, Portugees, Russisch, Spaans, Swahili, Zweeds, Thais, Turks, Oekraïens en Vietnamees.",
+  "standards.languageText": "Artikelen worden in elke taal op maat geschreven — niet vertaald. Elke versie volgt de conventies, uitdrukkingen en aanspreekvormen van de betreffende taal. We ondersteunen 35 talen: Arabisch, Bengaals, Catalaans, Chinees (traditioneel), Chinees (vereenvoudigd), Deens, Duits, Engels, Fins, Frans, Grieks, Hebreeuws, Hindi, Indonesisch, Italiaans, Japans, Koreaans, Maleis, Nederlands, Noors, Oekraïens, Perzisch, Pools, Portugees, Roemeens, Russisch, Spaans, Swahili, Tagalog, Thais, Tsjechisch, Turks, Urdu, Vietnamees en Zweeds.",
   "standards.attributionTitle": "Bronvermelding",
   "standards.attributionText": "Elk artikel op Plata vermeldt de media waaruit het is samengesteld. Bronnamen staan onderaan elk artikel. Wij vinden dat lezers altijd moeten weten waar informatie vandaan komt.",
   "standards.filteringTitle": "Wat we niet publiceren",

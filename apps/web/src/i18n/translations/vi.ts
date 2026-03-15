@@ -71,9 +71,9 @@ export const vi = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Chào mừng",
-  "welcome.eyebrow": "25 ngôn ngữ · Một sứ mệnh",
+  "welcome.eyebrow": "35 ngôn ngữ · Một sứ mệnh",
   "welcome.headline": "Câu chuyện Argentina, mở ra với thế giới",
-  "welcome.sub": "Mỗi ngày, chúng tôi viết tin tức bằng 25 ngôn ngữ — để cả thế giới có thể hiểu những gì đang diễn ra tại Argentina.",
+  "welcome.sub": "Mỗi ngày, chúng tôi viết tin tức bằng 35 ngôn ngữ — để cả thế giới có thể hiểu những gì đang diễn ra tại Argentina.",
 
   // Newsletter
   "newsletter.title": "Kết nối với Argentina",
@@ -97,8 +97,8 @@ export const vi = {
   "home.politics": "Chính trị",
   "home.title": "Tin tức Argentina bằng {lang}",
   "home.heroFallbackTitle": "Chào mừng đến Plata Today",
-  "home.heroFallbackDesc": "Tin tức Argentina, viết bằng 25 ngôn ngữ.",
-  "home.description": "Tin tức Argentina hôm nay bằng {lang}: chính trị, kinh tế, thể thao, văn hóa. Cập nhật 24/7, 25 ngôn ngữ.",
+  "home.heroFallbackDesc": "Tin tức Argentina, viết bằng 35 ngôn ngữ.",
+  "home.description": "Tin tức Argentina hôm nay bằng {lang}: chính trị, kinh tế, thể thao, văn hóa. Cập nhật 24/7, 35 ngôn ngữ.",
   "home.topStories": "Tin nổi bật",
   "home.economyBusiness": "Kinh tế & Doanh nghiệp",
   "home.cultureSociety": "Văn hóa & Xã hội",
@@ -141,13 +141,13 @@ export const vi = {
 
   // About page
   "about.title": "Giới thiệu về Plata",
-  "about.description": "Plata đưa tin tức Argentina đến thế giới bằng 25 ngôn ngữ. Tìm hiểu về người sáng lập và cách tòa soạn của chúng tôi hoạt động.",
+  "about.description": "Plata đưa tin tức Argentina đến thế giới bằng 35 ngôn ngữ. Tìm hiểu về người sáng lập và cách tòa soạn của chúng tôi hoạt động.",
   "about.tagline": "Tin tức Argentina. Mọi ngôn ngữ. Mọi nguồn tin.",
   "about.missionTitle": "Sứ mệnh của chúng tôi",
   "about.missionText": "Chúng tôi tin rằng mọi người đều xứng đáng được tiếp cận những gì đang diễn ra tại Argentina, bất kể họ nói ngôn ngữ nào. Plata theo dõi hơn 13 nguồn tin Argentina, tổng hợp những gì quan trọng, và viết mỗi bài natively cho ngôn ngữ của bạn — với bối cảnh mà độc giả quốc tế cần.",
   "about.valueNoOpinion": "Minh bạch nguồn tin",
   "about.valueNoOpinionDesc": "Mỗi bài viết đều trích dẫn nguồn. Chúng tôi đối chiếu nhiều tờ báo để bạn biết thông tin đến từ đâu.",
-  "about.value18langs": "25 ngôn ngữ",
+  "about.value18langs": "35 ngôn ngữ",
   "about.value18langsDesc": "Mỗi bài viết được viết riêng cho từng ngôn ngữ — không phải dịch, mà viết lại từ đầu.",
   "about.valueFast": "Chọn lọc & nhanh chóng",
   "about.valueFastDesc": "Chúng tôi theo dõi hơn 13 tờ báo để bạn không phải làm điều đó. Tin mới được đăng mỗi 30 phút.",
@@ -157,7 +157,7 @@ export const vi = {
   "about.step2Title": "Loại trùng lặp",
   "about.step2Desc": "Khi nhiều tờ báo đưa tin về cùng một sự kiện, chúng tôi nhận diện và gom nhóm, kết hợp các góc nhìn khác nhau thành một bài.",
   "about.step3Title": "Viết lại",
-  "about.step3Desc": "Các nguồn được tổng hợp thành một bài viết thống nhất, chính xác — viết bằng ngôn ngữ gốc cho từng ngôn ngữ trong 25 ngôn ngữ được hỗ trợ.",
+  "about.step3Desc": "Các nguồn được tổng hợp thành một bài viết thống nhất, chính xác — viết bằng ngôn ngữ gốc cho từng ngôn ngữ trong 35 ngôn ngữ được hỗ trợ.",
   "about.step4Title": "Xuất bản",
   "about.step4Desc": "Bài viết lên sóng tại plata.today với trích dẫn nguồn đầy đủ, dữ liệu có cấu trúc, và thông tin thị trường theo thời gian thực.",
   "about.sourcesTitle": "Nguồn tin của chúng tôi",
@@ -165,7 +165,7 @@ export const vi = {
   "about.founderTitle": "Người sáng lập",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Nhà sáng lập & Lập trình viên",
-  "about.founderBio": "Bogdan xây dựng Plata để giải quyết vấn đề mà chính anh trải nghiệm: tìm tin tức đáng tin cậy về Argentina bằng ngôn ngữ khác ngoài tiếng Tây Ban Nha. Là lập trình viên, anh đã xây dựng một tòa soạn theo dõi hơn 13 tờ báo Argentina và viết mỗi bài bằng 25 ngôn ngữ.",
+  "about.founderBio": "Bogdan xây dựng Plata để giải quyết vấn đề mà chính anh trải nghiệm: tìm tin tức đáng tin cậy về Argentina bằng ngôn ngữ khác ngoài tiếng Tây Ban Nha. Là lập trình viên, anh đã xây dựng một tòa soạn theo dõi hơn 13 tờ báo Argentina và viết mỗi bài bằng 35 ngôn ngữ.",
   "about.disclaimerTitle": "Tuyên bố miễn trừ",
   "about.disclaimerText": "Các bài viết được tổng hợp từ nhiều nguồn tin Argentina. Dù chúng tôi nỗ lực đảm bảo tính chính xác, vui lòng kiểm chứng thông tin quan trọng với bản gốc. Chúng tôi luôn ghi công các tờ báo mà chúng tôi tham khảo.",
   "about.contactTitle": "Liên hệ",
@@ -402,7 +402,7 @@ export const vi = {
   "notFound.description": "Không tìm thấy trang. Xem tin tức Argentina mới nhất trên Plata Today.",
 
   // Common
-  "common.siteDescription": "Tin tức Argentina, viết bằng 25 ngôn ngữ. Sự thật là trên hết, minh bạch nguồn tin.",
+  "common.siteDescription": "Tin tức Argentina, viết bằng 35 ngôn ngữ. Sự thật là trên hết, minh bạch nguồn tin.",
   "common.breadcrumbHome": "Trang chủ",
 
   // Feed page
@@ -433,13 +433,13 @@ export const vi = {
   "standards.pageTitle": "Tiêu chuẩn biên tập — Plata",
   "standards.description": "Cách tòa soạn Plata hoạt động: nguồn tin, xác minh và tiêu chuẩn xuất bản.",
   "standards.updated": "Cập nhật lần cuối: 14 tháng 3, 2026",
-  "standards.lead": "Plata là nền tảng tin tức đa ngôn ngữ đưa tin về Argentina bằng 25 ngôn ngữ. Trang này giải thích cách tòa soạn của chúng tôi hoạt động — từ nguồn tin đến xuất bản.",
+  "standards.lead": "Plata là nền tảng tin tức đa ngôn ngữ đưa tin về Argentina bằng 35 ngôn ngữ. Trang này giải thích cách tòa soạn của chúng tôi hoạt động — từ nguồn tin đến xuất bản.",
   "standards.sourcingTitle": "Nguồn tin",
   "standards.sourcingText": "Chúng tôi theo dõi hơn 13 tờ báo Argentina thuộc ba cấp. Cấp 1 bao gồm các tờ báo quốc gia lớn như Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista và iProfesional. Cấp 2 gồm các nguồn độc lập và chuyên biệt như Perfil, Cadena 3 và Olé. Cấp 3 gồm các tờ báo địa phương như La Gaceta, Misiones Online và El Día. Bài viết được thu thập qua nguồn cấp RSS mỗi 30 phút.",
   "standards.verificationTitle": "Xác minh",
   "standards.verificationText": "Mỗi tin tức đều trải qua quy trình kiểm duyệt nhiều bước. Các nguồn đưa tin về cùng một sự kiện được gom nhóm. Mỗi bài viết được kiểm chứng với nguồn gốc. Những tuyên bố không có nguồn hỗ trợ sẽ bị đánh dấu và loại bỏ. Tin không qua được xác minh hai lần sẽ không được xuất bản.",
   "standards.languageTitle": "Chất lượng ngôn ngữ",
-  "standards.languageText": "Bài viết được viết bằng ngôn ngữ gốc cho từng ngôn ngữ — không phải dịch. Mỗi phiên bản tuân theo quy ước, thành ngữ và cách xưng hô riêng. Chúng tôi hỗ trợ 25 ngôn ngữ.",
+  "standards.languageText": "Bài viết được viết bằng ngôn ngữ gốc cho từng ngôn ngữ — không phải dịch. Mỗi phiên bản tuân theo quy ước, thành ngữ và cách xưng hô riêng. Chúng tôi hỗ trợ 35 ngôn ngữ: tiếng Anh, tiếng Ả Rập, tiếng Ba Lan, tiếng Ba Tư, tiếng Bengal, tiếng Catalan, tiếng Đan Mạch, tiếng Đức, tiếng Do Thái, tiếng Hà Lan, tiếng Hàn, tiếng Hindi, tiếng Hy Lạp, tiếng Indonesia, tiếng Italy, tiếng Mã Lai, tiếng Na Uy, tiếng Nga, tiếng Nhật, tiếng Phần Lan, tiếng Pháp, tiếng Rumani, tiếng Séc, tiếng Swahili, tiếng Tagalog, tiếng Tây Ban Nha, tiếng Thái, tiếng Thổ Nhĩ Kỳ, tiếng Thụy Điển, tiếng Trung (giản thể), tiếng Trung (phồn thể), tiếng Ukraina, tiếng Urdu, tiếng Việt và tiếng Bồ Đào Nha.",
   "standards.attributionTitle": "Trích dẫn nguồn",
   "standards.attributionText": "Mỗi bài viết trên Plata đều trích dẫn các tờ báo là nguồn tin. Tên nguồn xuất hiện ở cuối mỗi bài viết. Chúng tôi tin rằng độc giả luôn cần biết thông tin đến từ đâu.",
   "standards.filteringTitle": "Những gì chúng tôi không đăng",

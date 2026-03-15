@@ -6,29 +6,39 @@ const LANG_SET = new Set<string>(LANG_CODES);
 // Map broad language families to our supported codes
 const LANG_MAP: Record<string, LangCode> = {
   ar: "ar", "ar-sa": "ar", "ar-eg": "ar", "ar-ae": "ar",
-  zh: "zh", "zh-cn": "zh", "zh-tw": "zh", "zh-hk": "zh",
+  bn: "bn", "bn-bd": "bn", "bn-in": "bn",
+  ca: "ca",
+  zh: "zh", "zh-cn": "zh", "zh-hans": "zh",
+  "zh-tw": "zh-tw", "zh-hant": "zh-tw", "zh-hk": "zh-tw",
+  cs: "cs",
   da: "da",
   nl: "nl", "nl-be": "nl",
   en: "en", "en-us": "en", "en-gb": "en", "en-au": "en",
+  fa: "fa", "fa-ir": "fa",
   fi: "fi",
   fr: "fr", "fr-ca": "fr", "fr-be": "fr",
   de: "de", "de-at": "de", "de-ch": "de",
   el: "el",
+  he: "he", iw: "he",
   hi: "hi",
   id: "id",
   it: "it",
   ja: "ja",
   ko: "ko",
+  ms: "ms", "ms-my": "ms",
   no: "no", nb: "no", nn: "no",
   pl: "pl",
   pt: "pt", "pt-br": "pt",
+  ro: "ro",
   ru: "ru",
   es: "es", "es-ar": "es", "es-mx": "es", "es-es": "es",
   sw: "sw",
   sv: "sv",
+  tl: "tl", fil: "tl",
   th: "th",
   tr: "tr",
   uk: "uk",
+  ur: "ur", "ur-pk": "ur",
   vi: "vi",
 };
 
@@ -77,7 +87,7 @@ export const onRequest = defineMiddleware(({ request, url, redirect }, next) => 
     const maybeLang = segments[0];
 
     // Invalid lang prefix → redirect to detected lang
-    if (!LANG_SET.has(maybeLang) && maybeLang.length === 2) {
+    if (!LANG_SET.has(maybeLang) && maybeLang.length <= 5) {
       const lang = detectLang(request.headers.get("accept-language"));
       return redirect(`/${lang}/`, 302);
     }
