@@ -54,6 +54,11 @@ export async function triageEvent(
 
   eventRepo.triage(event.id, importance, category, reasoning);
 
+  // Set subcategory if provided
+  if (result.subcategory) {
+    eventRepo.setSubcategory(event.id, result.subcategory);
+  }
+
   // Set multi-categories if provided
   const secondaryCategories = Array.isArray(result.secondary_categories)
     ? result.secondary_categories.filter((c: string) => CATEGORY_LIST.includes(c as any) && c !== category)

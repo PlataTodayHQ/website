@@ -7,6 +7,8 @@ export interface EventEntity {
   llm_category: string | null;
   triage_reason: string | null;
   review_attempts: number;
+  review_feedback: string | null;
+  subcategory: string | null;
   created_at: string;
 }
 
@@ -95,6 +97,7 @@ export interface TriageResult {
   importance: number;
   category: string;
   secondary_categories?: string[];
+  subcategory?: string;
   reasoning: string;
 }
 

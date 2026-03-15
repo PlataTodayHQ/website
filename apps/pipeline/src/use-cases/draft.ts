@@ -19,7 +19,15 @@ export async function draftEvent(
   }));
 
   const eventDate = rawArticles[0].published_at ?? new Date().toISOString().split("T")[0];
-  const draft = await llm.draft(sources, event.category, eventDate);
+
+  // If this is a re-draft after review rejection, include the feedback
+  let feedbackPrompt = "";
+  if (event.review_feedback) {
+    feedbackPrompt = `\n\nPREVIOUS DRAFT FEEDBACK (address these issues in your new draft):\n${event.review_feedback}`;
+    log.info("Re-drafting with review feedback", { eventId: event.id });
+  }
+
+  const draft = await llm.draft(sources, event.category, eventDate, feedbackPrompt);
 
   if (!draft.title || !draft.body) {
     log.warn("Draft has empty title or body", { eventId: event.id });

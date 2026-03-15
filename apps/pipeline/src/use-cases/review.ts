@@ -46,8 +46,9 @@ export async function reviewEvent(
     return "reviewed";
   }
 
-  // Rejected
+  // Rejected — store feedback for revision-aware re-drafting
   eventRepo.incrementReviewAttempts(event.id);
+  eventRepo.setReviewFeedback(event.id, result.feedback);
   const attempts = (event.review_attempts ?? 0) + 1;
 
   if (attempts >= 3) {
@@ -56,7 +57,9 @@ export async function reviewEvent(
     return "killed";
   }
 
+  // Delete old Spanish article so draft can create a new one
+  articleRepo.deleteByEventAndLang(event.id, "es");
   eventRepo.setStage(event.id, "triaged");
-  log.info("Event sent back for redraft", { eventId: event.id, attempt: attempts, feedback: result.feedback });
+  log.info("Event sent back for redraft with feedback", { eventId: event.id, attempt: attempts, feedback: result.feedback });
   return "triaged";
 }

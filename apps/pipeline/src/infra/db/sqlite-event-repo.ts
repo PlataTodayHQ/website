@@ -167,4 +167,39 @@ export class SQLiteEventRepository implements IEventRepository {
     ).get(clusterId) as { stage: string } | undefined;
     return row?.stage ?? null;
   }
+
+  setReviewFeedback(id: number, feedback: string): void {
+    this.db.prepare(
+      `UPDATE events SET review_feedback = ? WHERE id = ?`,
+    ).run(feedback, id);
+  }
+
+  setSubcategory(id: number, subcategory: string): void {
+    this.db.prepare(
+      `UPDATE events SET subcategory = ? WHERE id = ?`,
+    ).run(subcategory, id);
+  }
+
+  /**
+   * Repair events in inconsistent states (e.g., after a crash).
+   * Returns the number of events repaired.
+   */
+  repairInconsistentEvents(hasSpanishArticle: (eventId: number) => boolean): number {
+    let repaired = 0;
+    const draftedEvents = this.getByStage("drafted");
+    for (const event of draftedEvents) {
+      if (!hasSpanishArticle(event.id)) {
+        this.setStage(event.id, "triaged");
+        repaired++;
+      }
+    }
+    const reviewedEvents = this.getByStage("reviewed");
+    for (const event of reviewedEvents) {
+      if (!hasSpanishArticle(event.id)) {
+        this.setStage(event.id, "triaged");
+        repaired++;
+      }
+    }
+    return repaired;
+  }
 }
