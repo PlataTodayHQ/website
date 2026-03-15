@@ -1,0 +1,215 @@
+---
+/**
+ * LeadSection — Type A layout.
+ * One prominent story with image (left) + 3 text-only stories (right).
+ * Used for Politics, Economy sections.
+ */
+import SectionHeader from "./SectionHeader.astro";
+
+interface Story {
+  title: string;
+  description?: string;
+  href: string;
+  imageUrl?: string;
+  timeAgo?: string;
+  category?: string;
+  categoryKey?: string;
+  readingTime?: string;
+  sourceLabel?: string;
+}
+
+interface Props {
+  title: string;
+  href?: string;
+  accentColor?: string;
+  stories: Story[];
+}
+
+const { title, href, accentColor, stories } = Astro.props;
+const [lead, ...rest] = stories;
+---
+
+{stories.length > 0 && (
+  <>
+    <SectionHeader title={title} href={href} accentColor={accentColor} />
+    <section class="lead-section" aria-label={title}>
+      {lead && (
+        <article class="ls-lead" style={lead.categoryKey ? `--cat-color: var(--cat-${lead.categoryKey}, var(--color-gold-dark))` : undefined}>
+          <a href={lead.href} class="ls-lead-link">
+            {lead.imageUrl && (
+              <div class="ls-lead-image">
+                <img src={lead.imageUrl} alt={lead.title} loading="lazy" onerror="this.parentElement.style.display='none'" />
+              </div>
+            )}
+            <h3 class="ls-lead-title">{lead.title}</h3>
+            {lead.description && <p class="ls-lead-desc">{lead.description}</p>}
+            <div class="ls-meta">
+              {lead.timeAgo && <time>{lead.timeAgo}</time>}
+              {lead.readingTime && <><span class="ls-dot" aria-hidden="true">&middot;</span><span>{lead.readingTime}</span></>}
+              {lead.sourceLabel && <><span class="ls-dot" aria-hidden="true">&middot;</span><span class="ls-source">via {lead.sourceLabel}</span></>}
+            </div>
+          </a>
+        </article>
+      )}
+      {rest.length > 0 && (
+        <div class="ls-sidebar">
+          {rest.map((story) => (
+            <article class="ls-item" style={story.categoryKey ? `--cat-color: var(--cat-${story.categoryKey}, var(--color-gold-dark))` : undefined}>
+              <a href={story.href} class="ls-item-link">
+                <h4 class="ls-item-title">{story.title}</h4>
+                {story.description && <p class="ls-item-desc">{story.description}</p>}
+                <div class="ls-meta">
+                  {story.timeAgo && <time>{story.timeAgo}</time>}
+                  {story.readingTime && <><span class="ls-dot" aria-hidden="true">&middot;</span><span>{story.readingTime}</span></>}
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  </>
+)}
+
+<style>
+  .lead-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  @media (min-width: 768px) {
+    .lead-section {
+      grid-template-columns: 3fr 2fr;
+      gap: var(--spacing-2xl);
+    }
+  }
+
+  /* ---- Lead story ---- */
+  .ls-lead-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ls-lead-link:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ls-lead-link:hover .ls-lead-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .ls-lead-image {
+    overflow: hidden;
+    border-radius: 2px;
+    margin-bottom: 12px;
+  }
+
+  .ls-lead-image img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ls-lead-title {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: var(--color-text);
+  }
+
+  .ls-lead-desc {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ---- Meta ---- */
+  .ls-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+    font-family: var(--font-sans);
+  }
+
+  .ls-dot { color: var(--color-border); }
+  .ls-source { font-style: italic; }
+
+  /* ---- Sidebar items ---- */
+  .ls-sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 768px) {
+    .ls-sidebar {
+      border-left: 1px solid var(--color-border);
+      padding-left: var(--spacing-xl);
+    }
+  }
+
+  .ls-item {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .ls-item:first-child {
+    padding-top: 0;
+  }
+
+  .ls-item:last-child {
+    border-bottom: none;
+  }
+
+  .ls-item-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ls-item-link:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ls-item-link:hover .ls-item-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .ls-item-title {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    color: var(--color-text);
+  }
+
+  .ls-item-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
