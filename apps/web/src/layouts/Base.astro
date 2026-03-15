@@ -262,15 +262,6 @@ const allJsonLd = [
       </nav>
     </header>
 
-    <!-- Dateline — classic newspaper edition line -->
-    <div class="dateline-bar">
-      <div class="dateline-inner">
-        <time class="dateline-date" datetime={new Date().toISOString().slice(0, 10)}>
-          {new Date().toLocaleDateString(lang, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
-        </time>
-      </div>
-    </div>
-
     <MarketTicker lang={lang} />
 
     <!-- Mobile menu overlay -->
@@ -1390,38 +1381,6 @@ const allJsonLd = [
 
   .ptr--ready .ptr-spinner {
     color: var(--color-accent);
-  }
-
-  /* Dateline bar — newspaper edition line */
-  .dateline-bar {
-    background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .dateline-inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 6px var(--spacing-lg);
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .dateline-date {
-    font-family: var(--font-sans);
-    font-size: 0.72rem;
-    color: var(--color-text-meta);
-    letter-spacing: 0.02em;
-    text-transform: capitalize;
-  }
-
-  @media (max-width: 768px) {
-    .dateline-inner {
-      padding: 5px var(--spacing-md);
-    }
-    .dateline-date {
-      font-size: 0.68rem;
-    }
   }
 
   .ptr--loading .ptr-spinner {
