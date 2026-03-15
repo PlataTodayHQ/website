@@ -38,14 +38,18 @@ function parseRSS(xml: string): RSSItem[] {
 
     if (!title || !link) continue;
 
+    const description = extractTag(itemXml, "description") ?? "";
+
     items.push({
       title: decodeEntities(title),
       link,
-      description: decodeEntities(extractTag(itemXml, "description") ?? ""),
+      description: decodeEntities(description),
       pubDate: extractTag(itemXml, "pubDate"),
       imageUrl:
         extractAttr(itemXml, "enclosure", "url") ??
-        extractAttr(itemXml, "media:content", "url"),
+        extractAttr(itemXml, "media:content", "url") ??
+        extractAttr(itemXml, "media:thumbnail", "url") ??
+        extractImgSrc(description),
     });
   }
 
@@ -73,6 +77,11 @@ function extractAttr(
 ): string | null {
   const regex = new RegExp(`<${tag}[^>]*${attr}="([^"]*)"`, "i");
   const match = regex.exec(xml);
+  return match ? match[1] : null;
+}
+
+function extractImgSrc(html: string): string | null {
+  const match = /<img[^>]+src=["']([^"']+)["']/i.exec(html);
   return match ? match[1] : null;
 }
 
