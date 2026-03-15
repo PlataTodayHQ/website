@@ -1,3 +1,4 @@
+import type Database from "better-sqlite3";
 import { runPipeline } from "./pipeline.js";
 import { fetchMarketData } from "./market-data.js";
 import { fetchRealtimeMarketData } from "./realtime-market.js";
@@ -5,17 +6,17 @@ import { generateSitemaps } from "./sitemap.js";
 
 const intervals: NodeJS.Timeout[] = [];
 
-export function startJobs(dbPath: string, distDir: string): void {
+export function startJobs(db: Database.Database, distDir: string): void {
   // Run pipeline immediately on start, then every 15 minutes
   // Skip if LLM_API_KEY is not configured
   if (process.env.LLM_API_KEY) {
-    runPipeline(dbPath).catch((err) =>
+    runPipeline(db).catch((err) =>
       console.error("[scheduler] Pipeline startup error:", err),
     );
     intervals.push(
       setInterval(
         () =>
-          runPipeline(dbPath).catch((err) =>
+          runPipeline(db).catch((err) =>
             console.error("[scheduler] Pipeline interval error:", err),
           ),
         10 * 60 * 1000,
@@ -41,13 +42,13 @@ export function startJobs(dbPath: string, distDir: string): void {
   );
 
   // Full market data (candles, profiles → DB): immediately, then every 5 minutes
-  fetchMarketData(dbPath).catch((err) =>
+  fetchMarketData(db).catch((err) =>
     console.error("[scheduler] Market data startup error:", err),
   );
   intervals.push(
     setInterval(
       () =>
-        fetchMarketData(dbPath).catch((err) =>
+        fetchMarketData(db).catch((err) =>
           console.error("[scheduler] Market data interval error:", err),
         ),
       5 * 60 * 1000,
@@ -55,13 +56,13 @@ export function startJobs(dbPath: string, distDir: string): void {
   );
 
   // Generate sitemaps immediately, then every 24 hours
-  generateSitemaps(dbPath, distDir).catch((err) =>
+  generateSitemaps(db, distDir).catch((err) =>
     console.error("[scheduler] Sitemap startup error:", err),
   );
   intervals.push(
     setInterval(
       () =>
-        generateSitemaps(dbPath, distDir).catch((err) =>
+        generateSitemaps(db, distDir).catch((err) =>
           console.error("[scheduler] Sitemap interval error:", err),
         ),
       24 * 60 * 60 * 1000,

@@ -1,4 +1,4 @@
-import { sleep, LANGUAGES, type LangCode } from "@plata-today/shared";
+import { sleep, LANGUAGES, type LangCode, log } from "@plata-today/shared";
 import type {
   SourceText, TriageResult, DraftResult,
   ReviewResult, RewriteResult, ValidateRewriteResult,
@@ -9,7 +9,6 @@ import { buildDraftSystemPrompt, buildDraftUserPrompt } from "./prompts/draft.js
 import { buildReviewSystemPrompt, buildReviewUserPrompt } from "./prompts/review.js";
 import { buildRewriteSystemPrompt, buildRewriteUserPrompt } from "./prompts/rewrite.js";
 import { buildValidateRewriteSystemPrompt, buildValidateRewriteUserPrompt } from "./prompts/validate-rewrite.js";
-import { log } from "../../logger.js";
 
 class LLMAPIError extends Error {
   constructor(

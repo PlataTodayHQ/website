@@ -1,13 +1,10 @@
 import type { APIRoute } from "astro";
-import { fetchT } from "@plata-today/shared";
+import {
+  fetchT,
+  optionsResponse, jsonResponse, errorResponse,
+} from "@plata-today/shared";
 
 export const prerender = false;
-
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-};
 
 let cache: { data: any; ts: number } | null = null;
 const CACHE_TTL = 2 * 60 * 1000;
@@ -39,19 +36,12 @@ const DISPLAY_NAMES: Record<string, string> = {
   LINKUSDT: "LINK",
 };
 
-export const OPTIONS: APIRoute = () =>
-  new Response(null, { status: 204, headers: CORS_HEADERS });
+export const OPTIONS: APIRoute = () => optionsResponse();
 
 export const GET: APIRoute = async () => {
   try {
     if (cache && Date.now() - cache.ts < CACHE_TTL) {
-      return new Response(JSON.stringify(cache.data), {
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=120",
-          ...CORS_HEADERS,
-        },
-      });
+      return jsonResponse(cache.data, 120);
     }
 
     const symbols = JSON.stringify(TOP_SYMBOLS);
@@ -75,20 +65,8 @@ export const GET: APIRoute = async () => {
 
     cache = { data, ts: Date.now() };
 
-    return new Response(JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=120",
-        ...CORS_HEADERS,
-      },
-    });
+    return jsonResponse(data, 120);
   } catch (err: any) {
-    return new Response(
-      JSON.stringify({ error: err.message ?? "Failed to fetch crypto data" }),
-      {
-        status: 502,
-        headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-      },
-    );
+    return errorResponse(err.message ?? "Failed to fetch crypto data");
   }
 };

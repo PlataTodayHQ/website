@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+import type Database from "better-sqlite3";
 import fs from "node:fs";
 import path from "node:path";
 import { LANG_CODES, CATEGORY_LIST } from "@plata-today/shared";
@@ -76,13 +76,10 @@ ${entries.join("\n")}
 </sitemapindex>`;
 }
 
-export async function generateSitemaps(dbPath: string, distDir: string): Promise<void> {
-  const runId = recordJobStart(dbPath, "sitemap");
+export async function generateSitemaps(db: Database.Database, distDir: string): Promise<void> {
+  const runId = recordJobStart(db, "sitemap");
 
   try {
-    const db = new Database(dbPath, { readonly: true });
-    db.pragma("journal_mode = WAL");
-
     const rows = db
       .prepare(
         `SELECT a.lang, a.slug, a.published_at
@@ -91,8 +88,6 @@ export async function generateSitemaps(dbPath: string, distDir: string): Promise
          ORDER BY a.published_at DESC`,
       )
       .all() as Array<{ lang: string; slug: string; published_at: string }>;
-
-    db.close();
 
     // Group by language
     const byLang = new Map<string, ArticleInfo[]>();
@@ -117,9 +112,9 @@ export async function generateSitemaps(dbPath: string, distDir: string): Promise
     fs.writeFileSync(path.join(distDir, "sitemap-index.xml"), indexXml, "utf-8");
 
     console.log("[sitemap] Generated sitemaps for %d languages, %d articles total", LANG_CODES.length, rows.length);
-    recordJobEnd(dbPath, runId, "success");
+    recordJobEnd(db, runId, "success");
   } catch (err) {
-    recordJobEnd(dbPath, runId, "error", String(err));
+    recordJobEnd(db, runId, "error", String(err));
     throw err;
   }
 }

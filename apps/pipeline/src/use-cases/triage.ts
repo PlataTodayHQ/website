@@ -1,8 +1,7 @@
-import { CATEGORY_LIST } from "@plata-today/shared";
+import { CATEGORY_LIST, log } from "@plata-today/shared";
 import type { EventEntity } from "../domain/entities.js";
 import type { IEventRepository } from "../ports/event-repository.js";
 import type { ILLMService } from "../ports/llm-service.js";
-import { log } from "../logger.js";
 
 export async function triageEvent(
   eventRepo: IEventRepository,

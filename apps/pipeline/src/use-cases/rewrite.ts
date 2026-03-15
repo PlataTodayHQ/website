@@ -1,9 +1,8 @@
-import { LANG_CODES } from "@plata-today/shared";
+import { LANG_CODES, log } from "@plata-today/shared";
 import type { EventEntity } from "../domain/entities.js";
 import type { IEventRepository } from "../ports/event-repository.js";
 import type { IArticleRepository } from "../ports/article-repository.js";
 import type { ILLMService } from "../ports/llm-service.js";
-import { log } from "../logger.js";
 import { runConcurrent } from "../concurrency.js";
 
 const MIN_WORD_COUNT = 30;
