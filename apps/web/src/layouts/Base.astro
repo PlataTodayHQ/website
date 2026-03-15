@@ -90,17 +90,16 @@ const ogLocale = OG_LOCALE[lang] ?? lang;
 const breakingArticle = getBreakingNews(lang);
 
 // Script-specific Google Fonts for non-Latin languages
-const CJK_FONTS: Record<string, string> = {
-  zh: "Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600;700",
-  ja: "Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700",
-  ko: "Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700",
+// Weights must match base fonts: Sans 400;500;600;700, Serif 400;600;700;800
+const SCRIPT_FONTS: Record<string, string> = {
+  zh: "Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;800",
+  ja: "Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;600;700;800",
+  ko: "Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;600;700;800",
+  hi: "Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700;800",
 };
-const DEVANAGARI_FONT = "Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700";
-const scriptFontUrl = CJK_FONTS[lang]
-  ? `https://fonts.googleapis.com/css2?family=${CJK_FONTS[lang]}&display=swap`
-  : lang === "hi"
-    ? `https://fonts.googleapis.com/css2?family=${DEVANAGARI_FONT}&display=swap`
-    : null;
+const scriptFontUrl = SCRIPT_FONTS[lang]
+  ? `https://fonts.googleapis.com/css2?family=${SCRIPT_FONTS[lang]}&display=swap`
+  : null;
 
 const navItems = [
   { label: t(lang, "nav.home"), href: `/${lang}/` },
