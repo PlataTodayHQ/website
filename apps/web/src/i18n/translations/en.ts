@@ -364,6 +364,8 @@ export const en = {
   // Stock Screener
   "screener.title": "Stock Screener",
   "screener.subtitle": "Panel Líder — Buenos Aires Stock Exchange",
+  "screener.seoTitle": "Argentina Stock Screener — Buenos Aires (BYMA) Stocks, P/E & Market Cap",
+  "screener.seoDescription": "Screen all Argentine stocks on BYMA's Panel Líder. Compare prices, daily changes, P/E ratios, EPS, 52-week ranges, market cap, and sector breakdown.",
   "screener.search": "Search by symbol or name…",
   "screener.stocks": "stocks",
   "screener.noResults": "No stocks match your search",
@@ -380,6 +382,8 @@ export const en = {
   // Markets Hub
   "markets.title": "Markets",
   "markets.subtitle": "Argentine financial markets at a glance",
+  "markets.seoTitle": "Argentina Markets — Blue Dollar, Merval Index & Stock Prices Today",
+  "markets.seoDescription": "Live Argentine financial markets: blue dollar and official exchange rates, Merval index performance, and Buenos Aires stock prices. Updated in real time.",
   "markets.fxTitle": "Exchange Rates",
   "markets.fxDesc": "USD Official & Blue dollar rates, spread analysis, and 30-day evolution chart",
   "markets.mervalTitle": "Merval Index",
@@ -396,6 +400,8 @@ export const en = {
   // Currencies page
   "currencies.title": "Exchange Rates",
   "currencies.subtitle": "USD Official & Blue dollar rates",
+  "currencies.seoTitle": "Argentina Blue Dollar Rate Today — Official vs Blue USD/ARS Exchange Rate",
+  "currencies.seoDescription": "Today's Argentina blue dollar and official exchange rates with live buy/sell prices, spread analysis, and 30-day history chart. Understand the cepo cambiario and why Argentina has two dollar rates.",
   "currencies.breadcrumb": "Exchange Rates",
   "currencies.loading": "Loading…",
   "currencies.usdOfficial": "USD Official",
@@ -409,16 +415,20 @@ export const en = {
   "currencies.evoTitle": "30-Day Dollar Evolution",
   "currencies.recentHistory": "Recent History",
   "currencies.date": "Date",
-  "currencies.understandTitle": "Understanding the Rates",
-  "currencies.officialTitle": "Official Rate",
-  "currencies.officialDesc": "The government-regulated rate set by the Central Bank (BCRA). Used for formal banking, imports, and official commerce. Subject to currency controls known as the \"cepo cambiario.\"",
-  "currencies.blueTitle": "Blue Rate",
-  "currencies.blueDesc": "The informal parallel market rate reflecting actual dollar demand outside government controls. The gap between official and blue rates signals the level of currency restrictions in the economy.",
+  "currencies.understandTitle": "Understanding Argentina's Dollar Rates",
+  "currencies.officialTitle": "Official Rate (Dólar Oficial)",
+  "currencies.officialDesc": "The government-regulated rate set by Argentina's Central Bank (BCRA). Used for formal banking, imports, and official commerce. Subject to currency controls known as the \"cepo cambiario\" — restrictions on buying foreign currency that have been a recurring feature of Argentine economic policy since 2011.",
+  "currencies.blueTitle": "Blue Dollar Rate (Dólar Blue)",
+  "currencies.blueDesc": "The informal parallel market rate reflecting actual dollar demand outside government controls. The \"blue\" dollar is traded in unofficial exchange houses (cuevas) and is closely watched by businesses and individuals as a measure of real purchasing power. The gap between official and blue rates signals the severity of currency restrictions in the economy.",
+  "currencies.whyTwoRates": "Why Does Argentina Have Two Dollar Rates?",
+  "currencies.whyTwoRatesDesc": "Argentina's dual exchange rate system is a consequence of capital controls (cepo cambiario) imposed to prevent capital flight and protect foreign reserves. When the government restricts access to dollars at the official rate, demand spills into the informal market, creating the blue dollar. The spread between the two rates widens during economic uncertainty and narrows when confidence returns. For travelers, expats, and investors, the blue rate often determines the real cost of living and doing business in Argentina.",
   "currencies.disclaimer": "Data from Bluelytics. Rates may be delayed up to 5 minutes. For informational purposes only — not financial advice.",
 
   // Merval page
   "merval.title": "Merval Index",
   "merval.subtitle": "Buenos Aires Stock Exchange (BYMA)",
+  "merval.seoTitle": "Merval Index Today — Buenos Aires Stock Exchange Live Chart & Stocks",
+  "merval.seoDescription": "Live Merval index price, daily chart, and all Panel Líder constituent stocks on BYMA (Buenos Aires Stock Exchange). Track Argentina's stock market performance in real time.",
   "merval.breadcrumb": "Merval Index",
   "merval.loading": "Loading…",
   "merval.high": "High",
@@ -434,7 +444,9 @@ export const en = {
   "merval.sortVolume": "Volume",
   "merval.sortAZ": "A–Z",
   "merval.aboutTitle": "About the Merval Index",
-  "merval.aboutDesc": "Argentina's main stock index on BYMA (Buenos Aires Stock Exchange). Tracks the most liquid local companies and serves as a key indicator of investor confidence in the economy. The index composition (Panel Líder) is reviewed quarterly.",
+  "merval.aboutDesc": "The Merval (Mercado de Valores) is Argentina's flagship stock market index, traded on BYMA (Bolsas y Mercados Argentinos). It tracks the most actively traded stocks in the Panel Líder, Argentina's equivalent of the S&P 500 but focused on the Buenos Aires exchange. The index composition is reviewed quarterly based on trading volume and market capitalization.",
+  "merval.whyMatters": "Why the Merval Matters",
+  "merval.whyMattersDesc": "The Merval is the primary barometer of investor confidence in Argentina's economy. Major components include YPF (state energy company), Grupo Financiero Galicia and Banco Macro (banking), Pampa Energía (utilities), and Telecom Argentina. The index is heavily influenced by Argentine peso devaluation, government policy, commodity prices, and global emerging market sentiment. For international investors, Merval stocks are also accessible through ADRs (American Depositary Receipts) listed on NYSE and NASDAQ.",
   "merval.disclaimer": "Data from BYMA and Yahoo Finance. Prices may be delayed up to 15 minutes. For informational purposes only — not financial advice.",
 
   // 404

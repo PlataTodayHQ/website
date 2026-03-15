@@ -11,8 +11,8 @@ const { lang } = Astro.params;
 ---
 
 <Base
-  title={t(lang!, "merval.title")}
-  description={t(lang!, "merval.subtitle")}
+  title={t(lang!, "merval.seoTitle")}
+  description={t(lang!, "merval.seoDescription")}
   lang={lang}
   ogType="website"
   breadcrumbs={[
@@ -95,6 +95,10 @@ const { lang } = Astro.params;
       <div class="info-card">
         <h3>{t(lang!, "merval.aboutTitle")}</h3>
         <p>{t(lang!, "merval.aboutDesc")}</p>
+      </div>
+      <div class="info-card">
+        <h3>{t(lang!, "merval.whyMatters")}</h3>
+        <p>{t(lang!, "merval.whyMattersDesc")}</p>
       </div>
     </section>
 
