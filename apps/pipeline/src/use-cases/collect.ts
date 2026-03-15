@@ -114,8 +114,13 @@ async function enrich(
       }),
     );
 
-    for (const r of results) {
-      if (r.status === "fulfilled" && r.value) enriched++;
+    for (let j = 0; j < results.length; j++) {
+      const r = results[j];
+      if (r.status === "fulfilled" && r.value) {
+        enriched++;
+      } else if (r.status === "rejected") {
+        log.warn("Full-text extraction failed", { url: batch[j].original_url, error: String(r.reason) });
+      }
     }
   }
 

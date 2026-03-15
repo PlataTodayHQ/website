@@ -7,6 +7,8 @@ export interface EventEntity {
   llm_category: string | null;
   triage_reason: string | null;
   review_attempts: number;
+  review_feedback: string | null;
+  subcategory: string | null;
   created_at: string;
 }
 

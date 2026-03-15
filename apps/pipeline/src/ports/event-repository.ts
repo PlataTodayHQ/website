@@ -19,4 +19,7 @@ export interface IEventRepository {
   markBreaking(id: number): void;
   setCategories(eventId: number, primary: string, secondary: string[]): void;
   getEventStageByClusterId(clusterId: number): string | null;
+  setReviewFeedback(id: number, feedback: string): void;
+  setSubcategory(id: number, subcategory: string): void;
+  repairInconsistentEvents(hasSpanishArticle: (eventId: number) => boolean): number;
 }

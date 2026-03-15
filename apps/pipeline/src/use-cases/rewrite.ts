@@ -4,6 +4,7 @@ import type { IEventRepository } from "../ports/event-repository.js";
 import type { IArticleRepository } from "../ports/article-repository.js";
 import type { ILLMService } from "../ports/llm-service.js";
 import { runConcurrent } from "../concurrency.js";
+import { similarity } from "../domain/similarity.js";
 
 const MIN_WORD_COUNT = 30;
 
@@ -107,6 +108,17 @@ export async function rewriteEvent(
   const allComplete = LANG_CODES.every((l) => finalLangs.has(l));
 
   if (allComplete) {
+    // Article-level dedup safety net: check for duplicates before publishing
+    const recentTitles = articleRepo.getRecentSpanishTitles(48);
+    const isDuplicate = recentTitles.some(
+      (recent) => recent.event_id !== event.id && similarity(esArticle.title, recent.title) > 0.75,
+    );
+    if (isDuplicate) {
+      eventRepo.setStage(event.id, "killed");
+      log.info("Event killed — duplicate of recently published article", { eventId: event.id, title: esArticle.title });
+      return articlesCreated;
+    }
+
     eventRepo.setStage(event.id, "published");
     log.info("Event published", { eventId: event.id, rewrites: articlesCreated });
   } else {

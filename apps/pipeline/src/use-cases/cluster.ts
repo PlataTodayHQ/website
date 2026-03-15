@@ -1,6 +1,6 @@
 import type { IRawArticleRepository } from "../ports/raw-article-repository.js";
 import type { IEventRepository } from "../ports/event-repository.js";
-import { isClusterMatch } from "../domain/similarity.js";
+import { isClusterMatch, buildIdfIndex, type IdfIndex } from "../domain/similarity.js";
 import { scoreEvent, getPluralityCategory } from "../domain/scoring.js";
 import { log } from "@plata-today/shared";
 
@@ -9,10 +9,19 @@ export function clusterAndScore(
   eventRepo: IEventRepository,
   sourceTiers: Map<string, number>,
 ): { newClusters: number; clustered: number } {
-  // Phase 1: Cluster unprocessed articles
-  const { newClusters, clustered } = clusterArticles(rawArticleRepo, eventRepo);
+  // Phase 1: Build IDF index from recent articles for better clustering
+  const recentArticles = rawArticleRepo.getRecentClustered();
+  const unprocessed = rawArticleRepo.getUnprocessed();
+  const allTexts = [
+    ...recentArticles.map((a) => `${a.title} ${a.body}`),
+    ...unprocessed.map((a) => `${a.title} ${a.body}`),
+  ];
+  const idf = buildIdfIndex(allTexts);
 
-  // Phase 2: Score all unpublished events
+  // Phase 2: Cluster unprocessed articles
+  const { newClusters, clustered } = clusterArticles(rawArticleRepo, eventRepo, recentArticles, unprocessed, idf);
+
+  // Phase 3: Score all unpublished events
   scoreEvents(eventRepo, sourceTiers);
 
   return { newClusters, clustered };
@@ -21,11 +30,11 @@ export function clusterAndScore(
 function clusterArticles(
   rawArticleRepo: IRawArticleRepository,
   eventRepo: IEventRepository,
+  recentClustered: ReturnType<IRawArticleRepository["getRecentClustered"]>,
+  unprocessed: ReturnType<IRawArticleRepository["getUnprocessed"]>,
+  idf: IdfIndex,
 ): { newClusters: number; clustered: number } {
-  const unprocessed = rawArticleRepo.getUnprocessed();
   if (unprocessed.length === 0) return { newClusters: 0, clustered: 0 };
-
-  const recentClustered = rawArticleRepo.getRecentClustered();
 
   let newClusters = 0;
   let clustered = 0;
@@ -39,7 +48,7 @@ function clusterArticles(
 
       // 1. Match against recently clustered articles
       for (const existing of recentClustered) {
-        if (existing.cluster_id && isClusterMatch(article, existing)) {
+        if (existing.cluster_id && isClusterMatch(article, existing, 0.55, idf)) {
           // If the existing cluster's event is already published, create a new event
           // linked via parent_event_id (developing story)
           const existingStage = eventRepo.getEventStageByClusterId(existing.cluster_id);
@@ -62,7 +71,7 @@ function clusterArticles(
       if (!assignedClusterId) {
         for (const [otherId, otherClusterId] of batchAssignments) {
           const other = articleById.get(otherId);
-          if (other && isClusterMatch(article, other)) {
+          if (other && isClusterMatch(article, other, 0.55, idf)) {
             assignedClusterId = otherClusterId;
             break;
           }
