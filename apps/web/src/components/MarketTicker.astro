@@ -10,34 +10,46 @@ const { lang = "en" } = Astro.props;
 <div class="ticker" role="complementary" aria-label="Market data" data-market-ticker>
   <div class="ticker-inner">
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="oficial">
-      <span class="ticker-label">USD</span>
-      <span class="ticker-value" data-tv="oficial">---</span>
-      <span class="ticker-change" data-tc="oficial"></span>
+      <span class="ticker-name">USD Oficial</span>
+      <span class="ticker-row">
+        <span class="ticker-price" data-tv="oficial">---</span>
+        <span class="ticker-change" data-tc="oficial"></span>
+      </span>
     </a>
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="blue">
-      <span class="ticker-label ticker-label--blue">Blue</span>
-      <span class="ticker-value" data-tv="blue">---</span>
-      <span class="ticker-change" data-tc="blue"></span>
+      <span class="ticker-name ticker-name--blue">USD Blue</span>
+      <span class="ticker-row">
+        <span class="ticker-price" data-tv="blue">---</span>
+        <span class="ticker-change" data-tc="blue"></span>
+      </span>
     </a>
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="mep">
-      <span class="ticker-label">MEP</span>
-      <span class="ticker-value" data-tv="mep">---</span>
-      <span class="ticker-change" data-tc="mep"></span>
+      <span class="ticker-name">Dólar MEP</span>
+      <span class="ticker-row">
+        <span class="ticker-price" data-tv="mep">---</span>
+        <span class="ticker-change" data-tc="mep"></span>
+      </span>
     </a>
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="ccl">
-      <span class="ticker-label">CCL</span>
-      <span class="ticker-value" data-tv="ccl">---</span>
-      <span class="ticker-change" data-tc="ccl"></span>
+      <span class="ticker-name">Dólar CCL</span>
+      <span class="ticker-row">
+        <span class="ticker-price" data-tv="ccl">---</span>
+        <span class="ticker-change" data-tc="ccl"></span>
+      </span>
     </a>
     <a href={`/${lang}/markets/merval`} class="ticker-item" data-ticker="merval">
-      <span class="ticker-label ticker-label--merval">Merval</span>
-      <span class="ticker-value" data-tv="merval">---</span>
-      <span class="ticker-change" data-tc="merval"></span>
+      <span class="ticker-name ticker-name--merval">Merval</span>
+      <span class="ticker-row">
+        <span class="ticker-price" data-tv="merval">---</span>
+        <span class="ticker-change" data-tc="merval"></span>
+      </span>
     </a>
     <a href={`/${lang}/markets`} class="ticker-item" data-ticker="btc">
-      <span class="ticker-label ticker-label--btc">BTC</span>
-      <span class="ticker-value" data-tv="btc">---</span>
-      <span class="ticker-change" data-tc="btc"></span>
+      <span class="ticker-name ticker-name--btc">Bitcoin</span>
+      <span class="ticker-row">
+        <span class="ticker-price" data-tv="btc">---</span>
+        <span class="ticker-change" data-tc="btc"></span>
+      </span>
     </a>
   </div>
 </div>
@@ -84,7 +96,8 @@ const { lang = "en" } = Astro.props;
 
     if (percent != null) {
       var sign = percent > 0 ? '+' : '';
-      chEl.textContent = sign + percent.toFixed(1) + '%';
+      var arrow = percent > 0 ? '\u25B2' : percent < 0 ? '\u25BC' : '';
+      chEl.textContent = arrow + ' ' + sign + percent.toFixed(2) + '%';
       chEl.className = 'ticker-change ' + (percent >= 0 ? 'ticker-up' : 'ticker-down');
     } else {
       chEl.textContent = '';
@@ -258,15 +271,15 @@ const { lang = "en" } = Astro.props;
 
 <style>
   .ticker {
-    background: var(--color-celeste-dark);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
   }
 
   .ticker-inner {
     max-width: var(--max-width);
     margin: 0 auto;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     padding: 0 var(--spacing-lg);
     overflow-x: auto;
     scrollbar-width: none;
@@ -279,16 +292,16 @@ const { lang = "en" } = Astro.props;
 
   .ticker-item {
     display: flex;
-    align-items: baseline;
-    gap: 6px;
-    padding: 8px 16px;
+    flex-direction: column;
+    gap: 1px;
+    padding: 10px 20px;
     white-space: nowrap;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.78rem;
+    color: var(--color-text);
     font-variant-numeric: tabular-nums;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid #e8e8e8;
     transition: background 0.15s;
+    min-width: 0;
   }
 
   .ticker-item:first-child {
@@ -300,35 +313,42 @@ const { lang = "en" } = Astro.props;
   }
 
   .ticker-item:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: #f5f5f5;
     text-decoration: none;
-    color: #fff;
   }
 
-  .ticker-label {
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.5);
-    text-transform: uppercase;
-    font-size: 0.68rem;
-    letter-spacing: 0.04em;
+  .ticker-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.2;
   }
 
-  .ticker-label--blue { color: var(--color-gold); }
-  .ticker-label--merval { color: #60a5fa; }
-  .ticker-label--btc { color: #f7931a; }
+  .ticker-name--blue { color: var(--color-gold-dark); }
+  .ticker-name--merval { color: #0056b3; }
+  .ticker-name--btc { color: #f7931a; }
 
-  .ticker-value {
+  .ticker-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .ticker-price {
+    font-size: 0.9rem;
     font-weight: 700;
-    color: #fff;
+    color: #1a1a1a;
+    line-height: 1.3;
   }
 
   .ticker-change {
-    font-size: 0.65rem;
-    font-weight: 700;
+    font-size: 0.7rem;
+    font-weight: 600;
+    line-height: 1.3;
   }
 
-  .ticker-up { color: #4ade80; }
-  .ticker-down { color: #f87171; }
+  .ticker-up { color: #00853e; }
+  .ticker-down { color: #d32f2f; }
 
   @media (max-width: 768px) {
     .ticker-inner {
@@ -336,12 +356,23 @@ const { lang = "en" } = Astro.props;
     }
 
     .ticker-item {
-      padding: 6px 12px;
-      font-size: 0.72rem;
+      padding: 8px 14px;
     }
 
     .ticker-item:first-child {
       padding-left: 0;
+    }
+
+    .ticker-name {
+      font-size: 0.68rem;
+    }
+
+    .ticker-price {
+      font-size: 0.82rem;
+    }
+
+    .ticker-change {
+      font-size: 0.65rem;
     }
   }
 </style>
