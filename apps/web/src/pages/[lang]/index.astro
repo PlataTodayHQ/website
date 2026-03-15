@@ -8,7 +8,6 @@ import TextListSection from "@/components/TextListSection.astro";
 import TrendingSection from "@/components/TrendingSection.astro";
 import JustInFeed from "@/components/JustInFeed.astro";
 import NewsletterBanner from "@/components/NewsletterBanner.astro";
-import FinancialDashboard from "@/components/FinancialDashboard.astro";
 import WelcomeHero from "@/components/WelcomeHero.astro";
 import { LANGUAGES, CATEGORIES, CATEGORY_LIST } from "@plata-today/shared";
 import { t } from "@/i18n";
@@ -273,10 +272,6 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     accentColor="var(--cat-economy)"
     stories={econStories}
   />
-
-  <!-- FINANCIAL DASHBOARD -->
-  <SectionHeader title={t(lang!, "finDash.title" as any)} href={`/${lang}/markets`} accentColor="var(--cat-economy)" />
-  <FinancialDashboard lang={lang} />
 
   <!-- SPORTS — Text List (Type B) -->
   <TextListSection
