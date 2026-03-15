@@ -92,18 +92,82 @@ const { lang } = Astro.params;
           <canvas data-spark="blue" height="60"></canvas>
         </div>
       </div>
+
+      <div class="rate-card rate-card--mep" id="mep">
+        <div class="rc-top">
+          <span class="rc-label">{t(lang!, "currencies.usdMep")}</span>
+          <span class="rc-badge rc-badge--mep">{t(lang!, "currencies.stockMarket")}</span>
+        </div>
+        <div class="rc-price-row">
+          <span class="rc-price" data-rc-price="mep">—</span>
+        </div>
+        <div class="rc-details">
+          <div class="rc-detail">
+            <span class="rc-dk">{t(lang!, "currencies.buy")}</span>
+            <span class="rc-dv" data-rc-buy="mep">—</span>
+          </div>
+          <div class="rc-detail">
+            <span class="rc-dk">{t(lang!, "currencies.sell")}</span>
+            <span class="rc-dv" data-rc-sell="mep">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rate-card rate-card--ccl" id="ccl">
+        <div class="rc-top">
+          <span class="rc-label">{t(lang!, "currencies.usdCcl")}</span>
+          <span class="rc-badge rc-badge--ccl">{t(lang!, "currencies.settlement")}</span>
+        </div>
+        <div class="rc-price-row">
+          <span class="rc-price" data-rc-price="ccl">—</span>
+        </div>
+        <div class="rc-details">
+          <div class="rc-detail">
+            <span class="rc-dk">{t(lang!, "currencies.buy")}</span>
+            <span class="rc-dv" data-rc-buy="ccl">—</span>
+          </div>
+          <div class="rc-detail">
+            <span class="rc-dk">{t(lang!, "currencies.sell")}</span>
+            <span class="rc-dv" data-rc-sell="ccl">—</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Spread Bar -->
-    <div class="spread-bar">
-      <div class="spread-item">
-        <span class="spread-label">{t(lang!, "currencies.blueSpread")}</span>
-        <span class="spread-value" data-spread-abs>—</span>
+    <!-- Spread Bars -->
+    <div class="spread-bars">
+      <div class="spread-bar">
+        <div class="spread-item">
+          <span class="spread-label">{t(lang!, "currencies.blueSpread")}</span>
+          <span class="spread-value" data-spread-abs="blue">—</span>
+        </div>
+        <div class="spread-sep"></div>
+        <div class="spread-item">
+          <span class="spread-label">{t(lang!, "currencies.gap")}</span>
+          <span class="spread-value spread-pct" data-spread-pct="blue">—</span>
+        </div>
       </div>
-      <div class="spread-sep"></div>
-      <div class="spread-item">
-        <span class="spread-label">{t(lang!, "currencies.gap")}</span>
-        <span class="spread-value spread-pct" data-spread-pct>—</span>
+      <div class="spread-bar spread-bar--mep">
+        <div class="spread-item">
+          <span class="spread-label">{t(lang!, "currencies.mepSpread")}</span>
+          <span class="spread-value" data-spread-abs="mep">—</span>
+        </div>
+        <div class="spread-sep"></div>
+        <div class="spread-item">
+          <span class="spread-label">{t(lang!, "currencies.gap")}</span>
+          <span class="spread-value spread-pct" data-spread-pct="mep">—</span>
+        </div>
+      </div>
+      <div class="spread-bar spread-bar--ccl">
+        <div class="spread-item">
+          <span class="spread-label">{t(lang!, "currencies.cclSpread")}</span>
+          <span class="spread-value" data-spread-abs="ccl">—</span>
+        </div>
+        <div class="spread-sep"></div>
+        <div class="spread-item">
+          <span class="spread-label">{t(lang!, "currencies.gap")}</span>
+          <span class="spread-value spread-pct" data-spread-pct="ccl">—</span>
+        </div>
       </div>
     </div>
 
@@ -140,10 +204,18 @@ const { lang } = Astro.params;
       </div>
     </section>
 
-    <!-- Info Section -->
+    <!-- Guide Section -->
+    <section class="info-section">
+      <h2 class="section-title">{t(lang!, "currencies.guideTitle")}</h2>
+      <div class="explainer-card">
+        <p>{t(lang!, "currencies.guideIntro")}</p>
+      </div>
+    </section>
+
+    <!-- Info Section — All 4 Rates -->
     <section class="info-section">
       <h2 class="section-title">{t(lang!, "currencies.understandTitle")}</h2>
-      <div class="info-grid">
+      <div class="info-grid info-grid--4">
         <div class="info-card">
           <h3>{t(lang!, "currencies.officialTitle")}</h3>
           <p>{t(lang!, "currencies.officialDesc")}</p>
@@ -152,14 +224,53 @@ const { lang } = Astro.params;
           <h3>{t(lang!, "currencies.blueTitle")}</h3>
           <p>{t(lang!, "currencies.blueDesc")}</p>
         </div>
+        <div class="info-card">
+          <h3>{t(lang!, "currencies.mepTitle")}</h3>
+          <p>{t(lang!, "currencies.mepDesc")}</p>
+        </div>
+        <div class="info-card">
+          <h3>{t(lang!, "currencies.cclTitle")}</h3>
+          <p>{t(lang!, "currencies.cclDesc")}</p>
+        </div>
       </div>
     </section>
 
-    <!-- Why Two Rates Explainer -->
+    <!-- Why Multiple Rates Explainer -->
     <section class="info-section">
       <h2 class="section-title">{t(lang!, "currencies.whyTwoRates")}</h2>
       <div class="explainer-card">
         <p>{t(lang!, "currencies.whyTwoRatesDesc")}</p>
+      </div>
+    </section>
+
+    <!-- Who Uses Each Rate -->
+    <section class="info-section">
+      <h2 class="section-title">{t(lang!, "currencies.whoUsesTitle")}</h2>
+      <div class="info-grid info-grid--4">
+        <div class="info-card info-card--compact">
+          <h3>{t(lang!, "currencies.whoUsesOfficialLabel")}</h3>
+          <p>{t(lang!, "currencies.whoUsesOfficialDesc")}</p>
+        </div>
+        <div class="info-card info-card--compact">
+          <h3>{t(lang!, "currencies.whoUsesBlueLabel")}</h3>
+          <p>{t(lang!, "currencies.whoUsesBlueDesc")}</p>
+        </div>
+        <div class="info-card info-card--compact">
+          <h3>{t(lang!, "currencies.whoUsesMepLabel")}</h3>
+          <p>{t(lang!, "currencies.whoUsesMepDesc")}</p>
+        </div>
+        <div class="info-card info-card--compact">
+          <h3>{t(lang!, "currencies.whoUsesCclLabel")}</h3>
+          <p>{t(lang!, "currencies.whoUsesCclDesc")}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Sources -->
+    <section class="info-section">
+      <h2 class="section-title">{t(lang!, "currencies.rateSourcesTitle")}</h2>
+      <div class="explainer-card">
+        <p>{t(lang!, "currencies.rateSourcesDesc")}</p>
       </div>
     </section>
 
@@ -189,27 +300,52 @@ const { lang } = Astro.params;
 
   var chartData = null;
 
+  function calcSpread(rateSell, officialSell) {
+    var spread = rateSell - officialSell;
+    var gap = officialSell > 0 ? (spread / officialSell) * 100 : 0;
+    return { spread: spread, gap: gap };
+  }
+
+  function fillRate(key, data) {
+    if (!data) return;
+    setEl('[data-rc-price="' + key + '"]', 'ARS ' + C.fmt(data.value_sell));
+    setEl('[data-rc-buy="' + key + '"]', C.fmt(data.value_buy));
+    setEl('[data-rc-sell="' + key + '"]', C.fmt(data.value_sell));
+  }
+
+  function fillSpread(key, rateSell, officialSell) {
+    var s = calcSpread(rateSell, officialSell);
+    setEl('[data-spread-abs="' + key + '"]', 'ARS ' + C.fmt(s.spread));
+    setEl('[data-spread-pct="' + key + '"]', s.gap.toFixed(1) + '%');
+  }
+
   Promise.all([
     fetch(LATEST).then(function(r) { return r.json(); }).catch(function() { return null; }),
-    fetch(EVO).then(function(r) { return r.json(); }).catch(function() { return null; })
+    fetch(EVO).then(function(r) { return r.json(); }).catch(function() { return null; }),
+    fetch('/api/rates').then(function(r) { return r.json(); }).catch(function() { return null; })
   ]).then(function(res) {
     var latest = res[0];
     var evoRaw = res[1];
+    var apiRates = res[2];
 
     setEl('[data-mkts-updated]', 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
 
     if (latest && latest.oficial) {
-      setEl('[data-rc-price="official"]', 'ARS ' + C.fmt(latest.oficial.value_sell));
-      setEl('[data-rc-buy="official"]', C.fmt(latest.oficial.value_buy));
-      setEl('[data-rc-sell="official"]', C.fmt(latest.oficial.value_sell));
-      setEl('[data-rc-price="blue"]', 'ARS ' + C.fmt(latest.blue.value_sell));
-      setEl('[data-rc-buy="blue"]', C.fmt(latest.blue.value_buy));
-      setEl('[data-rc-sell="blue"]', C.fmt(latest.blue.value_sell));
+      fillRate('official', latest.oficial);
+      fillRate('blue', latest.blue);
+      fillSpread('blue', latest.blue.value_sell, latest.oficial.value_sell);
 
-      var spread = latest.blue.value_sell - latest.oficial.value_sell;
-      var gap = latest.oficial.value_sell > 0 ? (spread / latest.oficial.value_sell) * 100 : 0;
-      setEl('[data-spread-abs]', 'ARS ' + C.fmt(spread));
-      setEl('[data-spread-pct]', gap.toFixed(1) + '%');
+      // MEP and CCL from internal API
+      if (apiRates) {
+        if (apiRates.mep) {
+          fillRate('mep', apiRates.mep);
+          fillSpread('mep', apiRates.mep.value_sell, latest.oficial.value_sell);
+        }
+        if (apiRates.ccl) {
+          fillRate('ccl', apiRates.ccl);
+          fillSpread('ccl', apiRates.ccl.value_sell, latest.oficial.value_sell);
+        }
+      }
     }
 
     if (evoRaw && evoRaw.length > 0) {
@@ -305,6 +441,8 @@ const { lang } = Astro.params;
   .rc-label { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; color: var(--color-text); }
   .rc-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; background: rgba(117,170,219,0.15); color: #4a8abf; }
   .rc-badge--blue { background: rgba(246,180,14,0.15); color: #b8860b; }
+  .rc-badge--mep { background: rgba(76,175,80,0.15); color: #2e7d32; }
+  .rc-badge--ccl { background: rgba(156,39,176,0.15); color: #7b1fa2; }
   .rc-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: var(--spacing-md); }
   .rc-price { font-size: 1.75rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; }
   .rc-change { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -315,7 +453,10 @@ const { lang } = Astro.params;
   .rc-spark { margin-top: var(--spacing-sm); }
   .rc-spark canvas { width: 100%; display: block; }
 
-  .spread-bar { display: flex; align-items: center; justify-content: center; gap: var(--spacing-xl); background: var(--color-celeste); color: #fff; padding: var(--spacing-md) var(--spacing-lg); border-radius: 6px; margin-bottom: var(--spacing-2xl); }
+  .spread-bars { display: flex; flex-direction: column; gap: var(--spacing-sm); margin-bottom: var(--spacing-2xl); }
+  .spread-bar { display: flex; align-items: center; justify-content: center; gap: var(--spacing-xl); background: var(--color-celeste); color: #fff; padding: var(--spacing-md) var(--spacing-lg); border-radius: 6px; }
+  .spread-bar--mep { background: #2e7d32; }
+  .spread-bar--ccl { background: #7b1fa2; }
   .spread-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.2); }
   .spread-item { display: flex; align-items: center; gap: 8px; }
   .spread-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
@@ -343,6 +484,8 @@ const { lang } = Astro.params;
 
   :global([data-theme="dark"]) .rc-badge { color: #75AADB; }
   :global([data-theme="dark"]) .rc-badge--blue { color: #F6B40E; }
+  :global([data-theme="dark"]) .rc-badge--mep { color: #66BB6A; }
+  :global([data-theme="dark"]) .rc-badge--ccl { color: #CE93D8; }
 
   @media (max-width: 640px) {
     .rate-cards { grid-template-columns: 1fr; }
@@ -350,5 +493,6 @@ const { lang } = Astro.params;
     .spread-sep { width: 80%; height: 1px; }
     .rc-price { font-size: 1.4rem; }
     .evo-title { font-size: 1.1rem; }
+    .spread-bars { gap: var(--spacing-xs); }
   }
 </style>
