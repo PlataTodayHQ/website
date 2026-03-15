@@ -69,9 +69,15 @@ export const no = {
   "dollar.exchangeRates": "Valutakurser — klikk for detaljer",
   "dollar.mervalIndex": "Merval-indeks — klikk for detaljer",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "Velkommen",
+  "welcome.eyebrow": "18 språk · Én misjon",
+  "welcome.headline": "Argentina, åpent for verden",
+  "welcome.sub": "Hver dag skriver vi nyhetene på morsmålsnivå på 18 språk — slik at hele verden kan forstå hva som skjer i Argentina.",
+
   // Newsletter
-  "newsletter.title": "Få Argentinas nyheter rett i innboksen",
-  "newsletter.desc": "En daglig oppsummering av de viktigste sakene. Gratis, ingen spam.",
+  "newsletter.title": "Hold deg nær Argentina",
+  "newsletter.desc": "De viktigste sakene, på ditt språk, hver dag. Gratis, ingen spam.",
   "newsletter.emailLabel": "E-postadresse",
   "newsletter.placeholder": "din@epost.no",
   "newsletter.subscribe": "Abonner",
@@ -112,7 +118,7 @@ export const no = {
   "article.photoCredit": "Foto",
 
   // Footer
-  "footer.tagline": "Argentinas nyheter for verden",
+  "footer.tagline": "Argentinas nyheter, åpne for verden",
   "footer.about": "Om oss",
   "footer.contact": "Kontakt",
   "footer.terms": "Bruksvilkår",

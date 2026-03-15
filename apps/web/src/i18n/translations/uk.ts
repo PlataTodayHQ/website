@@ -69,9 +69,15 @@ export const uk = {
   "dollar.exchangeRates": "Курси валют — натисніть для деталей",
   "dollar.mervalIndex": "Індекс Merval — натисніть для деталей",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "Ласкаво просимо",
+  "welcome.eyebrow": "18 мов · Одна місія",
+  "welcome.headline": "Аргентина, відкрита світу",
+  "welcome.sub": "Щодня ми пишемо новини рідною мовою кожної з 18 аудиторій — щоб увесь світ міг зрозуміти, що відбувається в Аргентині.",
+
   // Newsletter
-  "newsletter.title": "Отримуйте новини Аргентини на пошту",
-  "newsletter.desc": "Щоденний дайджест найважливіших подій. Безплатно, без спаму.",
+  "newsletter.title": "Залишайтесь на зв'язку з Аргентиною",
+  "newsletter.desc": "Найважливіші події дня вашою мовою. Безплатно, без спаму.",
   "newsletter.emailLabel": "Електронна пошта",
   "newsletter.placeholder": "your@email.com",
   "newsletter.subscribe": "Підписатися",
@@ -112,7 +118,7 @@ export const uk = {
   "article.photoCredit": "Фото",
 
   // Footer
-  "footer.tagline": "Новини Аргентини для всього світу",
+  "footer.tagline": "Новини Аргентини, відкриті світу",
   "footer.about": "Про нас",
   "footer.contact": "Контакти",
   "footer.terms": "Умови використання",

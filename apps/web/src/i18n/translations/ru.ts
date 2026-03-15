@@ -69,9 +69,15 @@ export const ru = {
   "dollar.exchangeRates": "Курсы валют — нажмите для подробностей",
   "dollar.mervalIndex": "Индекс Merval — нажмите для подробностей",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "Добро пожаловать",
+  "welcome.eyebrow": "18 языков · Одна миссия",
+  "welcome.headline": "Аргентина, открытая миру",
+  "welcome.sub": "Каждый день мы пишем новости на 18 языках — чтобы весь мир мог понять, что происходит в Аргентине.",
+
   // Newsletter
-  "newsletter.title": "Новости Аргентины — прямо в вашу почту",
-  "newsletter.desc": "Ежедневная подборка главных событий. Бесплатно, без спама.",
+  "newsletter.title": "Будьте на связи с Аргентиной",
+  "newsletter.desc": "Главные события дня на вашем языке. Бесплатно, без спама.",
   "newsletter.emailLabel": "Адрес электронной почты",
   "newsletter.placeholder": "your@email.com",
   "newsletter.subscribe": "Подписаться",
@@ -112,7 +118,7 @@ export const ru = {
   "article.photoCredit": "Фото",
 
   // Footer
-  "footer.tagline": "Новости Аргентины для всего мира",
+  "footer.tagline": "Новости Аргентины, открытые миру",
   "footer.about": "О проекте",
   "footer.contact": "Контакты",
   "footer.terms": "Условия использования",

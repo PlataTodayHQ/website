@@ -69,9 +69,15 @@ export const es = {
   "dollar.exchangeRates": "Cotizaciones del dólar — click para más detalles",
   "dollar.mervalIndex": "Índice Merval — click para más detalles",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "Bienvenido",
+  "welcome.eyebrow": "18 idiomas · Una misión",
+  "welcome.headline": "Argentina, abierta al mundo",
+  "welcome.sub": "Cada día escribimos las noticias de forma nativa en 18 idiomas — para que el mundo entero pueda entender lo que pasa en Argentina.",
+
   // Newsletter
-  "newsletter.title": "Recibe las noticias de Argentina en tu casilla",
-  "newsletter.desc": "Un resumen diario con las noticias que importan. Gratis, sin spam.",
+  "newsletter.title": "Seguí conectado con Argentina",
+  "newsletter.desc": "Las noticias que importan, en tu idioma, todos los días. Gratis, sin spam.",
   "newsletter.emailLabel": "Dirección de email",
   "newsletter.placeholder": "tu@email.com",
   "newsletter.subscribe": "Suscribirse",
@@ -112,7 +118,7 @@ export const es = {
   "article.photoCredit": "Foto",
 
   // Footer
-  "footer.tagline": "Las noticias de Argentina para el mundo",
+  "footer.tagline": "Las noticias de Argentina, abiertas al mundo",
   "footer.about": "Quiénes somos",
   "footer.contact": "Contacto",
   "footer.terms": "Términos de uso",

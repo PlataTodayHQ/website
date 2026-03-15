@@ -69,9 +69,15 @@ export const nl = {
   "dollar.exchangeRates": "Wisselkoersen — klik voor details",
   "dollar.mervalIndex": "Merval-index — klik voor details",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "Welkom",
+  "welcome.eyebrow": "18 talen · Eén missie",
+  "welcome.headline": "Argentinië, open voor de wereld",
+  "welcome.sub": "Elke dag schrijven we het nieuws op moedertaalniveau in 18 talen — zodat de hele wereld kan begrijpen wat er in Argentinië gebeurt.",
+
   // Newsletter
-  "newsletter.title": "Ontvang Argentijns nieuws in je inbox",
-  "newsletter.desc": "Een dagelijkse samenvatting van de belangrijkste verhalen. Gratis, geen spam.",
+  "newsletter.title": "Blijf verbonden met Argentinië",
+  "newsletter.desc": "De belangrijkste verhalen, in jouw taal, elke dag. Gratis, geen spam.",
   "newsletter.emailLabel": "E-mailadres",
   "newsletter.placeholder": "jouw@email.com",
   "newsletter.subscribe": "Abonneren",
@@ -112,7 +118,7 @@ export const nl = {
   "article.photoCredit": "Foto",
 
   // Footer
-  "footer.tagline": "Argentijns nieuws voor de wereld",
+  "footer.tagline": "Argentijns nieuws, open voor de wereld",
   "footer.about": "Over ons",
   "footer.contact": "Contact",
   "footer.terms": "Gebruiksvoorwaarden",

@@ -69,9 +69,15 @@ export const zh = {
   "dollar.exchangeRates": "汇率——点击查看详情",
   "dollar.mervalIndex": "Merval 指数——点击查看详情",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "欢迎",
+  "welcome.eyebrow": "18种语言 · 一个使命",
+  "welcome.headline": "阿根廷，向世界敞开",
+  "welcome.sub": "我们每天用18种语言原生撰写新闻——让全世界都能了解阿根廷正在发生的一切。",
+
   // Newsletter
-  "newsletter.title": "将阿根廷新闻送到您的收件箱",
-  "newsletter.desc": "每日精选重要报道，免费订阅，绝无垃圾邮件。",
+  "newsletter.title": "与阿根廷保持连接",
+  "newsletter.desc": "用您的语言，每日精选重要报道。免费订阅，绝无垃圾邮件。",
   "newsletter.emailLabel": "电子邮箱",
   "newsletter.placeholder": "your@email.com",
   "newsletter.subscribe": "订阅",
@@ -112,7 +118,7 @@ export const zh = {
   "article.photoCredit": "图片",
 
   // Footer
-  "footer.tagline": "面向全球的阿根廷新闻",
+  "footer.tagline": "阿根廷新闻，向世界敞开",
   "footer.about": "关于我们",
   "footer.contact": "联系我们",
   "footer.terms": "使用条款",
