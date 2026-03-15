@@ -996,6 +996,8 @@ const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
     height: 32px;
     opacity: calc(1 - var(--scroll-progress));
     will-change: opacity;
+    position: relative;
+    z-index: 2;
   }
 
   .utility-inner {
