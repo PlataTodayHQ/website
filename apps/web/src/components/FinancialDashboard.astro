@@ -7,82 +7,83 @@ interface Props {
 const { lang = "en" } = Astro.props;
 ---
 
-<section class="fin-dashboard" data-fin-dashboard aria-label={t(lang, "finDash.title" as any)}>
-  <!-- Exchange Rates -->
-  <div class="fin-panel">
-    <div class="fin-rate-grid">
-      <div class="fin-rate-card">
-        <span class="fin-rate-label">USD Oficial</span>
-        <div class="fin-rate-values">
-          <span class="fin-rate-pair"><span class="fin-rate-key">{t(lang, "finDash.buy" as any)}</span> <span data-fd="oficial-buy">---</span></span>
-          <span class="fin-rate-pair"><span class="fin-rate-key">{t(lang, "finDash.sell" as any)}</span> <span data-fd="oficial-sell">---</span></span>
-        </div>
-        <span class="fin-rate-change" data-fd-ch="oficial"></span>
+<section class="fd" data-fin-dashboard aria-label={t(lang, "finDash.title" as any)}>
+  <!-- Market Cards Strip -->
+  <div class="fd-strip">
+    <a href={`/${lang}/markets/currencies`} class="fd-card" data-fd-card="oficial">
+      <div class="fd-card-head">
+        <span class="fd-card-name">USD Oficial</span>
+        <span class="fd-card-badge" data-fd-ch="oficial"></span>
       </div>
-      <div class="fin-rate-card">
-        <span class="fin-rate-label fin-rate-label--blue">USD Blue</span>
-        <div class="fin-rate-values">
-          <span class="fin-rate-pair"><span class="fin-rate-key">{t(lang, "finDash.buy" as any)}</span> <span data-fd="blue-buy">---</span></span>
-          <span class="fin-rate-pair"><span class="fin-rate-key">{t(lang, "finDash.sell" as any)}</span> <span data-fd="blue-sell">---</span></span>
-        </div>
-        <span class="fin-rate-change" data-fd-ch="blue"></span>
+      <div class="fd-card-price" data-fd="oficial-sell">---</div>
+      <div class="fd-card-sub">
+        <span class="fd-card-meta">{t(lang, "finDash.buy" as any)}</span>
+        <span class="fd-card-meta-val" data-fd="oficial-buy">---</span>
       </div>
-      <div class="fin-rate-card">
-        <span class="fin-rate-label">MEP</span>
-        <div class="fin-rate-values">
-          <span class="fin-rate-pair"><span class="fin-rate-key">{t(lang, "finDash.buy" as any)}</span> <span data-fd="mep-buy">---</span></span>
-          <span class="fin-rate-pair"><span class="fin-rate-key">{t(lang, "finDash.sell" as any)}</span> <span data-fd="mep-sell">---</span></span>
-        </div>
-        <span class="fin-rate-change" data-fd-ch="mep"></span>
-      </div>
-      <div class="fin-rate-card">
-        <span class="fin-rate-label">CCL</span>
-        <div class="fin-rate-values">
-          <span class="fin-rate-pair"><span class="fin-rate-key">{t(lang, "finDash.buy" as any)}</span> <span data-fd="ccl-buy">---</span></span>
-          <span class="fin-rate-pair"><span class="fin-rate-key">{t(lang, "finDash.sell" as any)}</span> <span data-fd="ccl-sell">---</span></span>
-        </div>
-        <span class="fin-rate-change" data-fd-ch="ccl"></span>
-      </div>
-    </div>
-  </div>
+    </a>
 
-  <!-- Merval Index -->
-  <div class="fin-panel fin-panel--merval">
-    <span class="fin-panel-label">Merval</span>
-    <div class="fin-merval-price" data-fd="merval-price">---</div>
-    <span class="fin-merval-change" data-fd-ch="merval"></span>
-    <div class="fin-merval-stats">
-      <div class="fin-stat">
-        <span class="fin-stat-key">{t(lang, "finDash.high" as any)}</span>
-        <span class="fin-stat-val" data-fd="merval-high">---</span>
+    <a href={`/${lang}/markets/currencies`} class="fd-card fd-card--blue" data-fd-card="blue">
+      <div class="fd-card-head">
+        <span class="fd-card-name">USD Blue</span>
+        <span class="fd-card-badge" data-fd-ch="blue"></span>
       </div>
-      <div class="fin-stat">
-        <span class="fin-stat-key">{t(lang, "finDash.low" as any)}</span>
-        <span class="fin-stat-val" data-fd="merval-low">---</span>
+      <div class="fd-card-price" data-fd="blue-sell">---</div>
+      <div class="fd-card-sub">
+        <span class="fd-card-meta">{t(lang, "finDash.buy" as any)}</span>
+        <span class="fd-card-meta-val" data-fd="blue-buy">---</span>
       </div>
-      <div class="fin-stat">
-        <span class="fin-stat-key">{t(lang, "finDash.prevClose" as any)}</span>
-        <span class="fin-stat-val" data-fd="merval-prev">---</span>
+    </a>
+
+    <a href={`/${lang}/markets/currencies`} class="fd-card" data-fd-card="mep">
+      <div class="fd-card-head">
+        <span class="fd-card-name">MEP</span>
+        <span class="fd-card-badge" data-fd-ch="mep"></span>
       </div>
-      <div class="fin-stat">
-        <span class="fin-stat-key">{t(lang, "finDash.volume" as any)}</span>
-        <span class="fin-stat-val" data-fd="merval-vol">---</span>
+      <div class="fd-card-price" data-fd="mep-sell">---</div>
+      <div class="fd-card-sub">
+        <span class="fd-card-meta">{t(lang, "finDash.buy" as any)}</span>
+        <span class="fd-card-meta-val" data-fd="mep-buy">---</span>
       </div>
-    </div>
+    </a>
+
+    <a href={`/${lang}/markets/currencies`} class="fd-card" data-fd-card="ccl">
+      <div class="fd-card-head">
+        <span class="fd-card-name">CCL</span>
+        <span class="fd-card-badge" data-fd-ch="ccl"></span>
+      </div>
+      <div class="fd-card-price" data-fd="ccl-sell">---</div>
+      <div class="fd-card-sub">
+        <span class="fd-card-meta">{t(lang, "finDash.buy" as any)}</span>
+        <span class="fd-card-meta-val" data-fd="ccl-buy">---</span>
+      </div>
+    </a>
+
+    <a href={`/${lang}/markets/merval`} class="fd-card fd-card--merval" data-fd-card="merval">
+      <div class="fd-card-head">
+        <span class="fd-card-name">Merval</span>
+        <span class="fd-card-badge" data-fd-ch="merval"></span>
+      </div>
+      <div class="fd-card-price" data-fd="merval-price">---</div>
+      <div class="fd-card-sub">
+        <span class="fd-card-meta">{t(lang, "finDash.volume" as any)}</span>
+        <span class="fd-card-meta-val" data-fd="merval-vol">---</span>
+      </div>
+    </a>
   </div>
 
   <!-- Top Movers -->
-  <div class="fin-panel fin-panel--stocks">
-    <span class="fin-panel-label">{t(lang, "finDash.topMovers" as any)}</span>
-    <div class="fin-stocks-list" data-fd-stocks></div>
+  <div class="fd-movers">
+    <div class="fd-movers-head">
+      <span class="fd-movers-title">{t(lang, "finDash.topMovers" as any)}</span>
+      <a href={`/${lang}/markets`} class="fd-movers-link">{t(lang, "finDash.viewAll" as any)} &rarr;</a>
+    </div>
+    <div class="fd-movers-table" data-fd-stocks></div>
   </div>
 </section>
 
-<a href={`/${lang}/markets`} class="fin-view-all">{t(lang, "finDash.viewAll" as any)} &rarr;</a>
-
 <script is:inline>
 (function() {
-  var CACHE_KEY = 'plata-fin-dash-v1';
+  var CACHE_KEY = 'plata-fin-dash-v2';
   var REFRESH_MS = 5 * 60 * 1000;
   var lastFetch = 0;
 
@@ -104,41 +105,48 @@ const { lang = "en" } = Astro.props;
   }
 
   function setVal(attr, text) {
-    var el = document.querySelector('[data-fd="' + attr + '"]');
-    if (el) el.textContent = text;
+    document.querySelectorAll('[data-fd="' + attr + '"]').forEach(function(el) {
+      el.textContent = text;
+    });
   }
 
-  function setChange(attr, percent) {
-    var el = document.querySelector('[data-fd-ch="' + attr + '"]');
-    if (!el) return;
-    if (percent == null) { el.textContent = ''; el.className = 'fin-rate-change'; return; }
-    var sign = percent > 0 ? '+' : '';
-    el.textContent = sign + percent.toFixed(1) + '%';
-    el.className = 'fin-rate-change ' + (percent >= 0 ? 'fin-up' : 'fin-down');
+  function setBadge(attr, percent) {
+    document.querySelectorAll('[data-fd-ch="' + attr + '"]').forEach(function(el) {
+      if (percent == null) { el.textContent = ''; el.className = 'fd-card-badge'; return; }
+      var sign = percent > 0 ? '+' : '';
+      el.textContent = sign + percent.toFixed(1) + '%';
+      el.className = 'fd-card-badge ' + (percent >= 0 ? 'fd-up' : 'fd-down');
+    });
+
+    // Also update the card's accent bar
+    var card = document.querySelector('[data-fd-card="' + attr + '"]');
+    if (card) {
+      card.classList.remove('fd-card--positive', 'fd-card--negative');
+      if (percent != null) {
+        card.classList.add(percent >= 0 ? 'fd-card--positive' : 'fd-card--negative');
+      }
+    }
   }
 
   function renderRates(data) {
-    if (data.oficial_buy) setVal('oficial-buy', fmt(data.oficial_buy));
     if (data.oficial_sell) setVal('oficial-sell', fmt(data.oficial_sell));
-    if (data.blue_buy) setVal('blue-buy', fmt(data.blue_buy));
+    if (data.oficial_buy) setVal('oficial-buy', fmt(data.oficial_buy));
     if (data.blue_sell) setVal('blue-sell', fmt(data.blue_sell));
-    if (data.mep_buy) setVal('mep-buy', fmt(data.mep_buy));
+    if (data.blue_buy) setVal('blue-buy', fmt(data.blue_buy));
     if (data.mep_sell) setVal('mep-sell', fmt(data.mep_sell));
-    if (data.ccl_buy) setVal('ccl-buy', fmt(data.ccl_buy));
+    if (data.mep_buy) setVal('mep-buy', fmt(data.mep_buy));
     if (data.ccl_sell) setVal('ccl-sell', fmt(data.ccl_sell));
-    setChange('oficial', data.oficialPct);
-    setChange('blue', data.bluePct);
-    setChange('mep', data.mepPct);
-    setChange('ccl', data.cclPct);
+    if (data.ccl_buy) setVal('ccl-buy', fmt(data.ccl_buy));
+    setBadge('oficial', data.oficialPct);
+    setBadge('blue', data.bluePct);
+    setBadge('mep', data.mepPct);
+    setBadge('ccl', data.cclPct);
   }
 
   function renderMerval(data) {
     if (data.merval_price) setVal('merval-price', fmtLarge(data.merval_price));
-    setChange('merval', data.mervalPct);
-    if (data.merval_high) setVal('merval-high', fmtLarge(data.merval_high));
-    if (data.merval_low) setVal('merval-low', fmtLarge(data.merval_low));
-    if (data.merval_prev) setVal('merval-prev', fmtLarge(data.merval_prev));
     if (data.merval_vol) setVal('merval-vol', fmtLarge(data.merval_vol));
+    setBadge('merval', data.mervalPct);
   }
 
   function renderStocks(stocks) {
@@ -147,14 +155,19 @@ const { lang = "en" } = Astro.props;
     container.innerHTML = '';
     for (var i = 0; i < stocks.length; i++) {
       var s = stocks[i];
-      var row = document.createElement('div');
-      row.className = 'fin-stock-row';
-      var changeClass = s.variation >= 0 ? 'fin-up' : 'fin-down';
+      var row = document.createElement('a');
+      var langPath = window.location.pathname.split('/')[1] || 'en';
+      row.href = '/' + langPath + '/markets/stock?s=' + encodeURIComponent(s.symbol + '.BA');
+      row.className = 'fd-mover-row';
+      var isUp = s.variation >= 0;
       var sign = s.variation > 0 ? '+' : '';
       row.innerHTML =
-        '<span class="fin-stock-symbol">' + s.symbol + '</span>' +
-        '<span class="fin-stock-price">' + fmt(s.price) + '</span>' +
-        '<span class="fin-stock-change ' + changeClass + '">' + sign + s.variation.toFixed(1) + '%</span>';
+        '<span class="fd-mover-rank">' + (i + 1) + '</span>' +
+        '<span class="fd-mover-sym">' + s.symbol + '</span>' +
+        '<span class="fd-mover-price">' + fmt(s.price) + '</span>' +
+        '<span class="fd-mover-chg ' + (isUp ? 'fd-up' : 'fd-down') + '">' +
+          sign + s.variation.toFixed(1) + '%' +
+        '</span>';
       container.appendChild(row);
     }
   }
@@ -214,7 +227,6 @@ const { lang = "en" } = Astro.props;
         }
       }
 
-      // % change from evolution data
       if (evo && evo.length > 0) {
         var bySource = {};
         for (var i = 0; i < evo.length; i++) {
@@ -267,270 +279,304 @@ const { lang = "en" } = Astro.props;
 </script>
 
 <style>
-  .fin-dashboard {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1px;
-    background: var(--color-border);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: var(--spacing-md);
-  }
-
-  .fin-panel {
-    background: var(--color-bg);
-    padding: 20px;
-  }
-
-  .fin-panel-label {
-    display: block;
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-text-meta);
-    margin-bottom: 12px;
-  }
-
-  /* Rate grid: 2x2 */
-  .fin-rate-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-
-  .fin-rate-card {
-    position: relative;
-  }
-
-  .fin-rate-label {
-    display: block;
-    font-size: 0.68rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-text-meta);
-    margin-bottom: 6px;
-  }
-
-  .fin-rate-label--blue {
-    color: var(--color-gold);
-  }
-
-  .fin-rate-values {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .fin-rate-pair {
-    font-size: 0.82rem;
-    font-variant-numeric: tabular-nums;
-    color: var(--color-text);
-    display: flex;
-    justify-content: space-between;
-    gap: 6px;
-  }
-
-  .fin-rate-key {
-    font-size: 0.68rem;
-    color: var(--color-text-meta);
-    font-weight: 600;
-  }
-
-  .fin-rate-change {
-    display: block;
-    font-size: 0.68rem;
-    font-weight: 700;
-    margin-top: 4px;
-  }
-
-  .fin-up { color: #16a34a; }
-  .fin-down { color: #dc2626; }
-
-  :global([data-theme="dark"]) .fin-up { color: #4ade80; }
-  :global([data-theme="dark"]) .fin-down { color: #f87171; }
-
-  /* Merval panel */
-  .fin-panel--merval {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .fin-panel--merval .fin-panel-label {
-    color: #60a5fa;
-    margin-bottom: 8px;
-  }
-
-  .fin-merval-price {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-text);
-    line-height: 1;
-    margin-bottom: 4px;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .fin-merval-change {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
-
-  .fin-merval-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    border-top: 1px solid var(--color-border);
-    padding-top: 12px;
-  }
-
-  .fin-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .fin-stat-key {
-    font-size: 0.62rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-text-meta);
-  }
-
-  .fin-stat-val {
-    font-size: 0.8rem;
-    font-variant-numeric: tabular-nums;
-    color: var(--color-text);
-    font-weight: 600;
-  }
-
-  /* Stocks panel */
-  .fin-panel--stocks {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .fin-stocks-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    flex: 1;
-  }
-
-  .fin-stocks-list :global(.fin-stock-row) {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--color-border);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .fin-stocks-list :global(.fin-stock-row:last-child) {
-    border-bottom: none;
-  }
-
-  .fin-stocks-list :global(.fin-stock-symbol) {
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: var(--color-text);
-    min-width: 50px;
-  }
-
-  .fin-stocks-list :global(.fin-stock-price) {
-    font-size: 0.82rem;
-    color: var(--color-text);
-    flex: 1;
-    text-align: right;
-  }
-
-  .fin-stocks-list :global(.fin-stock-change) {
-    font-size: 0.75rem;
-    font-weight: 700;
-    min-width: 60px;
-    text-align: right;
-  }
-
-  .fin-stocks-list :global(.fin-up) { color: #16a34a; }
-  .fin-stocks-list :global(.fin-down) { color: #dc2626; }
-
-  :global([data-theme="dark"]) .fin-stocks-list :global(.fin-up) { color: #4ade80; }
-  :global([data-theme="dark"]) .fin-stocks-list :global(.fin-down) { color: #f87171; }
-
-  /* View all link */
-  .fin-view-all {
-    display: block;
-    text-align: right;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--color-text-meta);
-    text-decoration: none;
+  .fd {
     margin-bottom: var(--spacing-2xl);
   }
 
-  .fin-view-all:hover {
+  /* ── Market Cards Strip ── */
+  .fd-strip {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    margin-bottom: 16px;
+  }
+
+  .fd-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fd-card {
+    flex: 1 0 0;
+    min-width: 160px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 16px;
+    text-decoration: none;
+    color: var(--color-text);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .fd-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-border);
+    transition: background 0.2s;
+  }
+
+  .fd-card--positive::before {
+    background: #16a34a;
+  }
+
+  .fd-card--negative::before {
+    background: #dc2626;
+  }
+
+  :global([data-theme="dark"]) .fd-card--positive::before {
+    background: #4ade80;
+  }
+
+  :global([data-theme="dark"]) .fd-card--negative::before {
+    background: #f87171;
+  }
+
+  .fd-card:hover {
+    border-color: var(--color-text-meta);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  :global([data-theme="dark"]) .fd-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .fd-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .fd-card-name {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-meta);
+  }
+
+  .fd-card--blue .fd-card-name {
+    color: var(--color-gold);
+  }
+
+  .fd-card--merval .fd-card-name {
+    color: #60a5fa;
+  }
+
+  .fd-card-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .fd-card-badge.fd-up {
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.08);
+  }
+
+  .fd-card-badge.fd-down {
+    color: #dc2626;
+    background: rgba(220, 38, 38, 0.08);
+  }
+
+  :global([data-theme="dark"]) .fd-card-badge.fd-up {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.12);
+  }
+
+  :global([data-theme="dark"]) .fd-card-badge.fd-down {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.12);
+  }
+
+  .fd-card-price {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 8px;
+  }
+
+  .fd-card-sub {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--color-border);
+    padding-top: 8px;
+  }
+
+  .fd-card-meta {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-text-meta);
+  }
+
+  .fd-card-meta-val {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Top Movers ── */
+  .fd-movers {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .fd-movers-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .fd-movers-title {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-meta);
+  }
+
+  .fd-movers-link {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--color-text-meta);
+    text-decoration: none;
+  }
+
+  .fd-movers-link:hover {
     color: var(--color-gold-dark);
   }
 
-  /* Tablet: 2 columns */
+  .fd-movers-table {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fd-movers-table :global(.fd-mover-row) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--color-border);
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: background 0.12s;
+  }
+
+  .fd-movers-table :global(.fd-mover-row:last-child) {
+    border-bottom: none;
+  }
+
+  .fd-movers-table :global(.fd-mover-row:hover) {
+    background: var(--color-bg-secondary);
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .fd-movers-table :global(.fd-mover-rank) {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--color-text-meta);
+    width: 18px;
+    text-align: center;
+  }
+
+  .fd-movers-table :global(.fd-mover-sym) {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--color-text);
+    min-width: 56px;
+  }
+
+  .fd-movers-table :global(.fd-mover-price) {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text);
+    flex: 1;
+    text-align: right;
+  }
+
+  .fd-movers-table :global(.fd-mover-chg) {
+    font-size: 0.75rem;
+    font-weight: 700;
+    min-width: 64px;
+    text-align: right;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .fd-movers-table :global(.fd-up) {
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.08);
+  }
+
+  .fd-movers-table :global(.fd-down) {
+    color: #dc2626;
+    background: rgba(220, 38, 38, 0.08);
+  }
+
+  :global([data-theme="dark"]) .fd-movers-table :global(.fd-up) {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.12);
+  }
+
+  :global([data-theme="dark"]) .fd-movers-table :global(.fd-down) {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.12);
+  }
+
+  /* ── Tablet ── */
   @media (max-width: 1024px) {
-    .fin-dashboard {
-      grid-template-columns: 1fr 1fr;
+    .fd-strip {
+      gap: 10px;
     }
-    .fin-panel--stocks {
-      grid-column: 1 / -1;
-    }
-    .fin-stocks-list {
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-    .fin-stocks-list :global(.fin-stock-row) {
-      flex: 1 1 45%;
-      border-bottom: none;
-      border-right: 1px solid var(--color-border);
-      padding: 6px 12px 6px 0;
-    }
-    .fin-stocks-list :global(.fin-stock-row:nth-child(even)) {
-      border-right: none;
-      padding-left: 12px;
+
+    .fd-card {
+      min-width: 140px;
     }
   }
 
-  /* Mobile: single column */
+  /* ── Mobile ── */
   @media (max-width: 640px) {
-    .fin-dashboard {
-      grid-template-columns: 1fr;
+    .fd-strip {
+      gap: 8px;
+      margin-left: calc(-1 * var(--spacing-md));
+      margin-right: calc(-1 * var(--spacing-md));
+      padding-left: var(--spacing-md);
+      padding-right: var(--spacing-md);
     }
-    .fin-panel {
-      padding: 16px;
+
+    .fd-card {
+      min-width: 130px;
+      flex: 0 0 auto;
+      padding: 12px;
     }
-    .fin-panel--stocks {
-      grid-column: auto;
-    }
-    .fin-merval-price {
-      font-size: 1.5rem;
-    }
-    .fin-stocks-list {
-      flex-direction: column;
-    }
-    .fin-stocks-list :global(.fin-stock-row) {
-      flex: auto;
-      border-right: none;
-      border-bottom: 1px solid var(--color-border);
-      padding: 8px 0;
-    }
-    .fin-stocks-list :global(.fin-stock-row:nth-child(even)) {
-      padding-left: 0;
-    }
-    .fin-stocks-list :global(.fin-stock-row:last-child) {
-      border-bottom: none;
+
+    .fd-card-price {
+      font-size: 1.25rem;
     }
   }
 </style>
