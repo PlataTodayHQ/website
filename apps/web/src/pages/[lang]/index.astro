@@ -108,15 +108,6 @@ const heroArticle = heroRow
       sourceLabel: undefined as string | undefined,
     };
 
-// Related links (3) with category labels
-const relatedArticles = claim(byImportance, 3);
-const relatedLinks = relatedArticles.map((a) => ({
-  title: a.title,
-  href: `/${lang}/news/${a.slug}`,
-  category: catLabel(a.category),
-  categoryKey: a.category,
-}));
-
 // Trending — top 5 from remaining by trendingScore
 const trendingItems = claim(byImportance, 5).map((a) => ({
   title: a.title,
@@ -126,9 +117,7 @@ const trendingItems = claim(byImportance, 5).map((a) => ({
 }));
 
 // Politics
-const politicsAll = claimByCat("politics", 5);
-const politicsFeatured = politicsAll[0] ?? null;
-const politicsSidebar = politicsAll.slice(1, 5);
+const politicsAll = claimByCat("politics", 4);
 
 // Just In — 8 latest, deduplicated
 const justInItems = claim([...allArticles], 8).map((a) => ({
@@ -139,14 +128,10 @@ const justInItems = claim([...allArticles], 8).map((a) => ({
 }));
 
 // Economy & Business
-const econAll = claimByCat("economy", 5);
-const econFeatured = econAll[0] ?? null;
-const econSidebar = econAll.slice(1, 5);
+const econAll = claimByCat("economy", 4);
 
 // Sports
-const sportsAll = claimByCat("sports", 5);
-const sportsFeatured = sportsAll[0] ?? null;
-const sportsSidebar = sportsAll.slice(1, 5);
+const sportsAll = claimByCat("sports", 4);
 
 // World
 const worldNews = claimByCat("world", 4);
@@ -189,37 +174,20 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   ]}
 >
   <!-- HERO -->
-  <section class="hero" aria-label={t(lang!, "home.featuredStory")}>
-    <a href={heroArticle.href} class="hero-link">
-      <div class="hero-image">
-        <img src={heroArticle.imageUrl} alt={heroArticle.title} loading="eager" />
-      </div>
-      <div class="hero-body">
-        <div class="hero-meta-top">
-          {heroArticle.isNew && <span class="hero-badge-new">NEW</span>}
-          {heroArticle.subcategory && <span class="hero-cat" style={heroArticle.category ? `color: var(--cat-${heroArticle.category})` : undefined}>{heroArticle.subcategory}</span>}
-        </div>
-        <h1 class="hero-title">{heroArticle.title}</h1>
-        <p class="hero-desc">{heroArticle.description}</p>
-        <div class="meta">
-          {heroArticle.timeAgo && <span class="meta-time">{heroArticle.timeAgo}</span>}
-          {heroArticle.readingTime && <span class="meta-dot"></span>}
-          {heroArticle.readingTime && <span class="meta-reading">{heroArticle.readingTime}</span>}
-          {heroArticle.sourceLabel && <span class="meta-dot"></span>}
-          {heroArticle.sourceLabel && <span class="meta-source">via {heroArticle.sourceLabel}</span>}
-        </div>
-      </div>
-    </a>
-    {relatedLinks.length > 0 && (
-      <ul class="hero-related">
-        {relatedLinks.map((link) => (
-          <li>
-            <span class="hero-related-cat" style={`color: var(--cat-${link.categoryKey})`}>{link.category}</span>
-            <a href={link.href} class="hero-related-link">{link.title}</a>
-          </li>
-        ))}
-      </ul>
-    )}
+  <section class="hero-section" aria-label={t(lang!, "home.featuredStory")}>
+    <ArticleCard
+      title={heroArticle.title}
+      description={heroArticle.description}
+      href={heroArticle.href}
+      imageUrl={heroArticle.imageUrl}
+      timeAgo={heroArticle.timeAgo}
+      category={heroArticle.subcategory}
+      categoryKey={heroArticle.category}
+      readingTime={heroArticle.readingTime}
+      isNew={heroArticle.isNew}
+      sourceLabel={heroArticle.sourceLabel}
+      variant="hero"
+    />
   </section>
 
   <!-- TRENDING -->
@@ -228,36 +196,21 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   <!-- POLITICS -->
   {politicsAll.length > 0 && <SectionHeader title={t(lang!, "home.politics")} href={`/${lang}/category/politics`} accentColor="var(--cat-politics)" />}
   {politicsAll.length > 0 && (
-    <section class="topic-section" aria-label={t(lang!, "home.politics")}>
-      {politicsFeatured && (
-        <div class="topic-featured">
-          <ArticleCard
-            title={politicsFeatured.title}
-            description={politicsFeatured.description}
-            href={politicsFeatured.href}
-            imageUrl={politicsFeatured.imageUrl}
-            timeAgo={politicsFeatured.timeAgo}
-            category={politicsFeatured.subcategory}
-            categoryKey={politicsFeatured.category}
-            readingTime={politicsFeatured.readingTime}
-            isNew={politicsFeatured.isNew}
-            sourceLabel={politicsFeatured.sourceLabel}
-          />
-        </div>
-      )}
-      <aside class="topic-sidebar">
-        {politicsSidebar.map((a) => (
-          <ArticleCard
-            title={a.title}
-            href={a.href}
-            timeAgo={a.timeAgo}
-            category={a.subcategory}
-            categoryKey={a.category}
-            readingTime={a.readingTime}
-            variant="sidebar"
-          />
-        ))}
-      </aside>
+    <section class="feed-grid" aria-label={t(lang!, "home.politics")}>
+      {politicsAll.map((a) => (
+        <ArticleCard
+          title={a.title}
+          description={a.description}
+          href={a.href}
+          imageUrl={a.imageUrl}
+          timeAgo={a.timeAgo}
+          category={a.subcategory}
+          categoryKey={a.category}
+          readingTime={a.readingTime}
+          isNew={a.isNew}
+          sourceLabel={a.sourceLabel}
+        />
+      ))}
     </section>
   )}
 
@@ -267,36 +220,21 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   <!-- ECONOMY & BUSINESS -->
   {econAll.length > 0 && <SectionHeader title={t(lang!, "home.economyBusiness")} href={`/${lang}/category/economy`} accentColor="var(--cat-economy)" />}
   {econAll.length > 0 && (
-    <section class="topic-section" aria-label={t(lang!, "home.economyBusiness")}>
-      {econFeatured && (
-        <div class="topic-featured">
-          <ArticleCard
-            title={econFeatured.title}
-            description={econFeatured.description}
-            href={econFeatured.href}
-            imageUrl={econFeatured.imageUrl}
-            timeAgo={econFeatured.timeAgo}
-            category={econFeatured.subcategory}
-            categoryKey={econFeatured.category}
-            readingTime={econFeatured.readingTime}
-            isNew={econFeatured.isNew}
-            sourceLabel={econFeatured.sourceLabel}
-          />
-        </div>
-      )}
-      <aside class="topic-sidebar">
-        {econSidebar.map((a) => (
-          <ArticleCard
-            title={a.title}
-            href={a.href}
-            timeAgo={a.timeAgo}
-            category={a.subcategory}
-            categoryKey={a.category}
-            readingTime={a.readingTime}
-            variant="sidebar"
-          />
-        ))}
-      </aside>
+    <section class="feed-grid" aria-label={t(lang!, "home.economyBusiness")}>
+      {econAll.map((a) => (
+        <ArticleCard
+          title={a.title}
+          description={a.description}
+          href={a.href}
+          imageUrl={a.imageUrl}
+          timeAgo={a.timeAgo}
+          category={a.subcategory}
+          categoryKey={a.category}
+          readingTime={a.readingTime}
+          isNew={a.isNew}
+          sourceLabel={a.sourceLabel}
+        />
+      ))}
     </section>
   )}
 
@@ -307,36 +245,21 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   <!-- SPORTS -->
   {sportsAll.length > 0 && <SectionHeader title={t(lang!, "cat.sports")} href={`/${lang}/category/sports`} accentColor="var(--cat-sports)" />}
   {sportsAll.length > 0 && (
-    <section class="topic-section" aria-label={t(lang!, "cat.sports")}>
-      {sportsFeatured && (
-        <div class="topic-featured">
-          <ArticleCard
-            title={sportsFeatured.title}
-            description={sportsFeatured.description}
-            href={sportsFeatured.href}
-            imageUrl={sportsFeatured.imageUrl}
-            timeAgo={sportsFeatured.timeAgo}
-            category={sportsFeatured.subcategory}
-            categoryKey={sportsFeatured.category}
-            readingTime={sportsFeatured.readingTime}
-            isNew={sportsFeatured.isNew}
-            sourceLabel={sportsFeatured.sourceLabel}
-          />
-        </div>
-      )}
-      <aside class="topic-sidebar">
-        {sportsSidebar.map((a) => (
-          <ArticleCard
-            title={a.title}
-            href={a.href}
-            timeAgo={a.timeAgo}
-            category={a.subcategory}
-            categoryKey={a.category}
-            readingTime={a.readingTime}
-            variant="sidebar"
-          />
-        ))}
-      </aside>
+    <section class="feed-grid" aria-label={t(lang!, "cat.sports")}>
+      {sportsAll.map((a) => (
+        <ArticleCard
+          title={a.title}
+          description={a.description}
+          href={a.href}
+          imageUrl={a.imageUrl}
+          timeAgo={a.timeAgo}
+          category={a.subcategory}
+          categoryKey={a.category}
+          readingTime={a.readingTime}
+          isNew={a.isNew}
+          sourceLabel={a.sourceLabel}
+        />
+      ))}
     </section>
   )}
 
@@ -346,7 +269,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   <!-- WORLD -->
   {worldNews.length > 0 && <SectionHeader title={t(lang!, "cat.world")} href={`/${lang}/category/world`} accentColor="var(--cat-world)" />}
   {worldNews.length > 0 && (
-    <section class="compact-grid" aria-label={t(lang!, "cat.world")}>
+    <section class="feed-grid" aria-label={t(lang!, "cat.world")}>
       {worldNews.map((a) => (
         <ArticleCard
           title={a.title}
@@ -357,7 +280,6 @@ const moreNews = claim(allArticles, 8).map(mapRow);
           categoryKey={a.category}
           readingTime={a.readingTime}
           isNew={a.isNew}
-          variant="compact"
         />
       ))}
     </section>
@@ -366,7 +288,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   <!-- CULTURE & SOCIETY -->
   {cultureSociety.length > 0 && <SectionHeader title={t(lang!, "home.cultureSociety")} href={`/${lang}/category/culture`} accentColor="var(--cat-culture)" />}
   {cultureSociety.length > 0 && (
-    <section class="compact-grid" aria-label={t(lang!, "home.cultureSociety")}>
+    <section class="feed-grid" aria-label={t(lang!, "home.cultureSociety")}>
       {cultureSociety.map((a) => (
         <ArticleCard
           title={a.title}
@@ -377,7 +299,6 @@ const moreNews = claim(allArticles, 8).map(mapRow);
           categoryKey={a.category}
           readingTime={a.readingTime}
           isNew={a.isNew}
-          variant="compact"
         />
       ))}
     </section>
@@ -386,15 +307,17 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   <!-- SCIENCE & TECH -->
   {scienceTech.length > 0 && <SectionHeader title={t(lang!, "cat.science")} href={`/${lang}/category/science`} accentColor="var(--cat-science)" />}
   {scienceTech.length > 0 && (
-    <section class="sidebar-list" aria-label={t(lang!, "cat.science")}>
+    <section class="feed-grid" aria-label={t(lang!, "cat.science")}>
       {scienceTech.map((a) => (
         <ArticleCard
           title={a.title}
           href={a.href}
+          imageUrl={a.imageUrl}
           timeAgo={a.timeAgo}
           category={a.subcategory}
           categoryKey={a.category}
-          variant="sidebar"
+          readingTime={a.readingTime}
+          isNew={a.isNew}
         />
       ))}
     </section>
@@ -402,7 +325,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
   <!-- MORE NEWS -->
   <SectionHeader title={t(lang!, "home.moreNews")} />
-  <section class="compact-grid" id="more-news-grid" aria-label={t(lang!, "home.moreNews")}>
+  <section class="feed-grid" id="more-news-grid" aria-label={t(lang!, "home.moreNews")}>
     {moreNews.map((a) => (
       <ArticleCard
         title={a.title}
@@ -412,7 +335,6 @@ const moreNews = claim(allArticles, 8).map(mapRow);
         category={a.subcategory}
         categoryKey={a.category}
         readingTime={a.readingTime}
-        variant="compact"
       />
     ))}
   </section>
@@ -456,12 +378,16 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
   function createCard(a) {
     var article = document.createElement('article');
-    article.className = 'card card--compact';
+    article.className = 'card card--default';
     if (a.category) {
       article.style.setProperty('--cat-color', 'var(--cat-' + a.category + ', var(--color-gold-dark))');
     }
 
+    var catLabel = catLabels[a.category] || a.category;
     var html = '<a href="' + escapeHtml(a.href) + '" class="card-link">';
+    if (catLabel) {
+      html += '<div class="card-header"><span class="card-category">' + escapeHtml(catLabel) + '</span></div>';
+    }
     if (a.imageUrl) {
       html += '<div class="card-image"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" /></div>';
     }
@@ -469,10 +395,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     html += '<h3 class="card-title">' + escapeHtml(a.title) + '</h3>';
     html += '<div class="card-meta">';
     if (a.timeAgo) html += '<time class="card-time">' + escapeHtml(a.timeAgo) + '</time>';
-    var catLabel = catLabels[a.category] || a.category;
-    if (a.timeAgo && catLabel) html += '<span class="card-divider" aria-hidden="true">|</span>';
-    if (catLabel) html += '<span class="card-category">' + escapeHtml(catLabel) + '</span>';
-    if (a.readingTime) html += '<span class="card-divider" aria-hidden="true">|</span><span class="card-reading-time">' + escapeHtml(a.readingTime) + '</span>';
+    if (a.readingTime) html += '<span class="card-divider" aria-hidden="true">&middot;</span><span class="card-reading-time">' + escapeHtml(a.readingTime) + '</span>';
     html += '</div></div></a>';
 
     article.innerHTML = html;
@@ -521,301 +444,38 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
 <style>
   /* ====================== */
-  /* HERO                   */
+  /* HERO SECTION            */
   /* ====================== */
-  .hero {
+  .hero-section {
     margin-bottom: var(--spacing-xl);
   }
 
-  .hero-link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .hero-link:hover {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .hero-link:hover .hero-title {
-    text-decoration: underline;
-  }
-
-  .hero-meta-top {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-
-  .hero-badge-new {
-    display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    background: #b91c1c;
-    color: #fff;
-    padding: 1px 5px;
-    border-radius: 2px;
-    text-transform: uppercase;
-  }
-
-  .hero-cat {
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .hero-image {
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-
-  .hero-image img {
-    width: 100%;
-    aspect-ratio: 2 / 1;
-    object-fit: cover;
-    transition: transform 0.3s;
-    border: 1px solid var(--color-border);
-  }
-
-  .hero-link:hover .hero-image img {
-    transform: scale(1.02);
-  }
-
-  .hero-title {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-    color: var(--color-text);
-  }
-
-  .hero-desc {
-    font-size: 1.05rem;
-    line-height: 1.65;
-    color: var(--color-text-secondary);
-    margin-bottom: 12px;
-  }
-
-  .meta-source {
-    font-size: 0.75rem;
-    font-style: italic;
-  }
-
-  .hero-related {
-    list-style: none;
-    border-top: 1px solid var(--color-border);
-    padding-top: 16px;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .hero-related li {
-    padding-left: 18px;
-    position: relative;
-  }
-
-  .hero-related li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 8px;
-    width: 6px;
-    height: 6px;
-    background: var(--color-accent);
-    border-radius: 50%;
-  }
-
-  .hero-related-cat {
-    font-size: 0.65rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  .hero-related-link {
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.4;
-    color: var(--color-text);
-    letter-spacing: -0.01em;
-  }
-
-  .hero-related-link:hover {
-    text-decoration: underline;
-    color: var(--color-link-hover);
-  }
-
   /* ========================= */
-  /* TOPIC SECTIONS            */
-  /* (Economy, Sports, etc.)   */
+  /* FEED GRID (Instagram)     */
   /* ========================= */
-  .topic-section {
+  .feed-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: var(--spacing-2xl);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     margin-bottom: var(--spacing-2xl);
-  }
-
-  .topic-sidebar {
-    border-left: 1px solid var(--color-border);
-    padding-left: var(--spacing-2xl);
-  }
-
-  /* ========================= */
-  /* COMPACT GRID              */
-  /* (Culture, World)          */
-  /* ========================= */
-  .compact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    margin-bottom: var(--spacing-2xl);
-  }
-
-  .compact-grid :global(.card--compact) {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .compact-grid :global(.card--compact:nth-child(odd)) {
-    padding-right: var(--spacing-xl);
-    border-right: 1px solid var(--color-border);
-  }
-
-  .compact-grid :global(.card--compact:nth-child(even)) {
-    padding-left: var(--spacing-xl);
-  }
-
-  .compact-grid :global(.card--compact:nth-last-child(-n+2)) {
-    border-bottom: none;
-  }
-
-  /* ========================= */
-  /* SIDEBAR LIST              */
-  /* (Science & Tech)          */
-  /* ========================= */
-  .sidebar-list {
-    max-width: var(--content-width);
-    margin-bottom: var(--spacing-2xl);
-  }
-
-  /* ========================= */
-  /* DESKTOP HERO              */
-  /* ========================= */
-  @media (min-width: 1025px) {
-    .hero-link {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: var(--spacing-xl);
-      align-items: start;
-    }
-
-    .hero-image {
-      margin-bottom: 0;
-    }
-
-    .hero-image img {
-      aspect-ratio: 3 / 2;
-    }
-
-    .hero-title {
-      font-size: 1.8rem;
-    }
-
-    .hero-related {
-      flex-direction: row;
-      gap: var(--spacing-lg);
-    }
-
-    .hero-related li {
-      flex: 1;
-      border-left: 2px solid var(--color-accent);
-      padding-left: 12px;
-      padding-top: 0;
-    }
-
-    .hero-related li::before {
-      display: none;
-    }
-  }
-
-  /* ========================= */
-  /* TABLET                    */
-  /* ========================= */
-  @media (max-width: 1024px) {
-    .hero-title {
-      font-size: 1.75rem;
-    }
-
-    .topic-section {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-xl);
-    }
-
-    .topic-sidebar {
-      padding-left: var(--spacing-xl);
-    }
   }
 
   /* ========================= */
   /* MOBILE                    */
   /* ========================= */
   @media (max-width: 640px) {
-    .hero-title {
-      font-size: 1.4rem;
-    }
-
-    .hero-image img {
-      aspect-ratio: 16 / 10;
-    }
-
-    .hero-desc {
-      font-size: 0.9rem;
-    }
-
-    .compact-grid {
+    .feed-grid {
       grid-template-columns: 1fr;
+      gap: 12px;
     }
+  }
 
-    .compact-grid :global(.card--compact) {
-      padding: 16px 0;
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .compact-grid :global(.card--compact:nth-child(odd)) {
-      padding-right: 0;
-      border-right: none;
-    }
-
-    .compact-grid :global(.card--compact:nth-child(even)) {
-      padding-left: 0;
-    }
-
-    .compact-grid :global(.card--compact:last-child) {
-      border-bottom: none;
-    }
-
-    .topic-section {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-lg);
-    }
-
-    .topic-sidebar {
-      border-left: none;
-      padding-left: 0;
-      border-top: 1px solid var(--color-border);
-      padding-top: var(--spacing-lg);
+  /* ========================= */
+  /* LARGE DESKTOP — 3 cols    */
+  /* ========================= */
+  @media (min-width: 1025px) {
+    .feed-grid {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
@@ -841,14 +501,15 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     background: transparent;
     color: var(--color-text);
     border: 2px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 24px;
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
   }
 
   .load-more-btn:hover {
     border-color: var(--color-gold);
     color: var(--color-gold-dark);
+    background: rgba(246, 180, 14, 0.06);
   }
 
   .load-more-btn:disabled {
@@ -866,6 +527,19 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   /* DYNAMIC CARD STYLES       */
   /* (for JS-appended cards)   */
   /* ========================= */
+  #more-news-grid :global(.card) {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  #more-news-grid :global(.card:hover) {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
   #more-news-grid :global(.card-link) {
     display: block;
     color: inherit;
@@ -874,60 +548,63 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
   #more-news-grid :global(.card-link:hover) {
     text-decoration: none;
+    color: inherit;
   }
 
-  #more-news-grid :global(.card-link:hover .card-title) {
-    text-decoration: underline;
-  }
-
-  #more-news-grid :global(.card-image) {
-    overflow: hidden;
-    margin-bottom: 0;
-  }
-
-  #more-news-grid :global(.card-image img) {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 2px;
-    transition: transform 0.2s;
-  }
-
-  #more-news-grid :global(.card-link:hover .card-image img) {
-    transform: scale(1.02);
-  }
-
-  #more-news-grid :global(.card--compact .card-link) {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 12px;
-    align-items: start;
-  }
-
-  #more-news-grid :global(.card-title) {
-    font-family: var(--font-serif);
-    font-size: 0.95rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 6px;
-    color: var(--color-text);
-    letter-spacing: -0.01em;
-  }
-
-  #more-news-grid :global(.card-meta) {
-    font-size: 0.7rem;
-    color: var(--color-text-meta);
+  #more-news-grid :global(.card-header) {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    padding: 12px 16px;
   }
 
   #more-news-grid :global(.card-category) {
     color: var(--cat-color, var(--color-gold-dark));
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
     font-size: 0.7rem;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.06em;
+  }
+
+  #more-news-grid :global(.card-image) {
+    overflow: hidden;
+  }
+
+  #more-news-grid :global(.card-image img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  #more-news-grid :global(.card-link:hover .card-image img) {
+    transform: scale(1.03);
+  }
+
+  #more-news-grid :global(.card-body) {
+    padding: 14px 16px 16px;
+  }
+
+  #more-news-grid :global(.card-title) {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 6px;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  #more-news-grid :global(.card-meta) {
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
   #more-news-grid :global(.card-divider) {
@@ -935,7 +612,15 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   }
 
   #more-news-grid :global(.card-reading-time) {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--color-text-meta);
+  }
+
+  @media (max-width: 640px) {
+    #more-news-grid :global(.card) {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
   }
 </style>
