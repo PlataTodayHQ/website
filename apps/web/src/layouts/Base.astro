@@ -481,6 +481,22 @@ const allJsonLd = [
     </div>
 
     <script is:inline>
+      // --- Shrink header on scroll ---
+      (function() {
+        const header = document.querySelector('.header');
+        if (header) {
+          const onScroll = () => {
+            if (window.scrollY > 0) {
+              header.classList.add('header--scrolled');
+            } else {
+              header.classList.remove('header--scrolled');
+            }
+          };
+          onScroll();
+          window.addEventListener('scroll', onScroll, { passive: true });
+        }
+      })();
+
       // --- Overlay system ---
       const menuBtn = document.querySelector('.menu-btn');
       const langBtn = document.querySelector('[data-lang-trigger]');
@@ -753,6 +769,16 @@ const allJsonLd = [
     background: var(--color-celeste);
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     color: #fff;
+    overflow: hidden;
+    max-height: 32px;
+    transition: max-height 0.2s ease, opacity 0.2s ease;
+    opacity: 1;
+  }
+
+  .header--scrolled .utility-bar {
+    max-height: 0;
+    opacity: 0;
+    border-bottom: none;
   }
 
   .utility-inner {
@@ -783,6 +809,11 @@ const allJsonLd = [
     background: var(--color-celeste);
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     position: relative;
+    transition: border-color 0.2s ease;
+  }
+
+  .header--scrolled .masthead {
+    border-bottom: 3px solid var(--color-gold);
   }
 
   .masthead-inner {
@@ -793,6 +824,13 @@ const allJsonLd = [
     justify-content: center;
     padding: var(--spacing-md) var(--spacing-lg);
     position: relative;
+    transition: padding 0.2s ease;
+  }
+
+  .header--scrolled .masthead-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 44px;
   }
 
   .menu-btn {
@@ -825,12 +863,27 @@ const allJsonLd = [
     font-weight: 400;
     font-family: var(--font-display);
     letter-spacing: 0.02em;
+    transition: font-size 0.2s ease;
+  }
+
+  .header--scrolled .logo-text {
+    font-size: 1.5rem;
   }
 
   /* Nav bar: categories */
   .nav-bar {
     background: var(--color-celeste);
     border-bottom: 3px solid var(--color-gold);
+    overflow: hidden;
+    max-height: 43px;
+    transition: max-height 0.2s ease, opacity 0.2s ease;
+    opacity: 1;
+  }
+
+  .header--scrolled .nav-bar {
+    max-height: 0;
+    opacity: 0;
+    border-bottom: none;
   }
 
   .nav-inner {
@@ -1377,6 +1430,10 @@ const allJsonLd = [
 
     .logo-text {
       font-size: 2.2rem;
+    }
+
+    .header--scrolled .logo-text {
+      font-size: 1.3rem;
     }
   }
 
