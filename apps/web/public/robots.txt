@@ -1,6 +1,62 @@
+# plata.today — Multilingual Argentine news platform
+# https://plata.today
+
+# ===========================================
+# Default: allow all crawlers
+# ===========================================
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /_astro/
+Disallow: /404
+Crawl-delay: 1
 
+# ===========================================
+# Google (no crawl-delay support, use Search Console)
+# ===========================================
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /404
+
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /api/
+
+User-agent: Googlebot-News
+Allow: /
+Disallow: /api/
+Disallow: /*/markets/
+Disallow: /*/privacy
+Disallow: /*/terms
+Disallow: /*/contact
+Disallow: /*/about
+Disallow: /*/founder
+Disallow: /*/corrections
+
+# ===========================================
+# Bing
+# ===========================================
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /404
+Crawl-delay: 1
+
+# ===========================================
+# Yandex
+# ===========================================
+User-agent: Yandex
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /404
+Crawl-delay: 2
+
+# ===========================================
+# Sitemaps
+# ===========================================
 Host: https://plata.today
 Sitemap: https://plata.today/sitemap-index.xml

@@ -6,16 +6,24 @@ import { recordJobStart, recordJobEnd } from "./job-tracking.js";
 
 const SITE = "https://plata.today";
 
-const STATIC_PATHS = [
-  "",           // homepage
-  "/about",
-  "/privacy",
-  "/terms",
-  "/markets",
-  "/markets/stock",
-  "/markets/currencies",
-  "/markets/merval",
-  "/markets/screener",
+/** Static pages with their changefreq and priority */
+const STATIC_PAGES: Array<{ path: string; changefreq: string; priority: number }> = [
+  { path: "",                    changefreq: "hourly",  priority: 1.0 },
+  { path: "/about",             changefreq: "monthly", priority: 0.4 },
+  { path: "/mission",           changefreq: "monthly", priority: 0.4 },
+  { path: "/newsroom",          changefreq: "monthly", priority: 0.4 },
+  { path: "/standards",         changefreq: "monthly", priority: 0.5 },
+  { path: "/corrections",       changefreq: "weekly",  priority: 0.4 },
+  { path: "/contact",           changefreq: "monthly", priority: 0.3 },
+  { path: "/founder",           changefreq: "monthly", priority: 0.3 },
+  { path: "/feed",              changefreq: "hourly",  priority: 0.6 },
+  { path: "/privacy",           changefreq: "monthly", priority: 0.2 },
+  { path: "/terms",             changefreq: "monthly", priority: 0.2 },
+  { path: "/markets",           changefreq: "hourly",  priority: 0.7 },
+  { path: "/markets/stock",     changefreq: "hourly",  priority: 0.6 },
+  { path: "/markets/currencies",changefreq: "hourly",  priority: 0.6 },
+  { path: "/markets/merval",    changefreq: "hourly",  priority: 0.6 },
+  { path: "/markets/screener",  changefreq: "daily",   priority: 0.5 },
 ];
 
 interface ArticleInfo {
@@ -40,10 +48,8 @@ function buildLangSitemap(lang: string, articles: ArticleInfo[]): string {
   const entries: string[] = [];
 
   // Static pages
-  for (const p of STATIC_PATHS) {
-    const freq = p === "" ? "hourly" : "weekly";
-    const prio = p === "" ? 1.0 : 0.5;
-    entries.push(buildUrlEntry(`${SITE}/${lang}${p}`, undefined, freq, prio));
+  for (const page of STATIC_PAGES) {
+    entries.push(buildUrlEntry(`${SITE}/${lang}${page.path}`, undefined, page.changefreq, page.priority));
   }
 
   // Category pages
