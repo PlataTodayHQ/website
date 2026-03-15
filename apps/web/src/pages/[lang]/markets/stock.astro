@@ -353,14 +353,34 @@ const stockI18n = {
   }
 
   document.querySelector('[data-stock-content]').style.display = 'block';
-  setEl('[data-stock-symbol]', symbol);
+
+  // Determine asset type from symbol
+  var isCrypto = symbol.indexOf('-USD') !== -1;
+  var isCommodity = symbol.indexOf('=') !== -1;
+  var displaySymbol = isCrypto ? symbol.replace('-USD', '') : symbol;
+
+  setEl('[data-stock-symbol]', displaySymbol);
+
+  // Update badge
+  var badgeEl = document.querySelector('.rc-badge--merval');
+  if (badgeEl) {
+    if (isCrypto) { badgeEl.textContent = 'CRYPTO'; badgeEl.className = 'rc-badge rc-badge--crypto'; }
+    else if (isCommodity) { badgeEl.textContent = 'CME'; badgeEl.className = 'rc-badge rc-badge--commodity'; }
+  }
+
+  // Update back link for non-BYMA assets
+  var backLink = document.querySelector('.back-link');
+  if (backLink && (isCrypto || isCommodity)) {
+    backLink.href = '/' + lang + '/markets';
+    backLink.innerHTML = '&larr; Markets';
+  }
 
   // Update breadcrumb
   var breadcrumbs = document.querySelectorAll('.breadcrumb-link, [data-breadcrumbs] a');
   var lastCrumb = breadcrumbs[breadcrumbs.length - 1];
   if (lastCrumb) lastCrumb.textContent = symbol;
 
-  document.title = symbol + ' — ' + (i18n.pageTitle || 'Argentine Markets') + ' | Plata';
+  document.title = displaySymbol + ' — ' + (i18n.pageTitle || 'Argentine Markets') + ' | Plata';
 
   var currentChart = null;
 
@@ -620,6 +640,8 @@ const stockI18n = {
 
   .rc-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; }
   .rc-badge--merval { background: rgba(96,165,250,0.15); color: #3b82f6; }
+  .rc-badge--crypto { background: rgba(247,147,26,0.15); color: #f7931a; }
+  .rc-badge--commodity { background: rgba(184,134,11,0.15); color: #b8860b; }
   .rc-up { color: #16a34a; }
   .rc-down { color: #dc2626; }
 
