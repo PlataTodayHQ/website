@@ -2,6 +2,7 @@ import type { IScraper, IFullTextExtractor } from "../ports/scraper.js";
 import type { IRawArticleRepository } from "../ports/raw-article-repository.js";
 import type { IImageStorage } from "../ports/image-storage.js";
 import { log } from "@plata-today/shared";
+import { inferCategoryFromText } from "../domain/category-hints.js";
 
 const IMAGE_BATCH_SIZE = 5;
 const MAX_CONCURRENT_EXTRACTIONS = 5;
@@ -70,12 +71,14 @@ async function ingest(
       }
 
       const imageUrl = image.localPath ?? item.imageUrl;
+      // Use RSS category if available, otherwise infer from title/URL
+      const category = item.category ?? inferCategoryFromText(item.title, item.link);
       const wasInserted = rawArticleRepo.insert({
         sourceId,
         url: item.link,
         title: item.title,
         body: item.description,
-        category: item.category,
+        category,
         imageUrl,
         imageSource: image.source,
         publishedAt: item.pubDate,

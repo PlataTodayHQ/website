@@ -40,9 +40,11 @@ export function scoreEvent(
 export function getPluralityCategory(rawArticles: ScoringArticle[]): string {
   const counts = new Map<string, number>();
   for (const a of rawArticles) {
-    const cat = a.category ?? "society";
-    counts.set(cat, (counts.get(cat) ?? 0) + 1);
+    if (!a.category) continue; // Skip articles without a category — don't bias toward any default
+    counts.set(a.category, (counts.get(a.category) ?? 0) + 1);
   }
+  // If no article had a category, fall back to "society" as a neutral default
+  if (counts.size === 0) return "society";
   let best = "society";
   let bestCount = 0;
   for (const [cat, count] of counts) {
