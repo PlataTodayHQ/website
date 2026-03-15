@@ -14,6 +14,9 @@ const CORS_HEADERS = {
 let cache: { data: any; ts: number } | null = null;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
+export const OPTIONS: APIRoute = () =>
+  new Response(null, { status: 204, headers: CORS_HEADERS });
+
 export const GET: APIRoute = async () => {
   try {
     if (cache && Date.now() - cache.ts < CACHE_TTL) {

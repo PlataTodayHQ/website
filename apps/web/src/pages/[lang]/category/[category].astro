@@ -78,7 +78,7 @@ const olderArticles = articles.slice(5);
     <h1 class="cat-title">{catLabel}</h1>
     <nav class="cat-subs" aria-label={`${catLabel} subcategories`}>
       {Object.entries(subcats).map(([subKey, subLabel]) => (
-        <a href={`/${lang}/category/${category}`} class="sub-pill">
+        <a href={`/${lang}/category/${category}?sub=${subKey}`} class="sub-pill">
           {subLabel}
         </a>
       ))}

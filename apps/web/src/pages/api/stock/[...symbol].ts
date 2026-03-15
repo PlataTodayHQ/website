@@ -15,6 +15,9 @@ const VALID_INTERVALS = ["5m", "15m", "30m", "1h", "1d", "1wk", "1mo"];
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
+export const OPTIONS: APIRoute = () =>
+  new Response(null, { status: 204, headers: CORS_HEADERS });
+
 export const GET: APIRoute = async ({ params, url }) => {
   try {
     const rawSymbol = params.symbol ?? "";

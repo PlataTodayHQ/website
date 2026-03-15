@@ -62,6 +62,9 @@ async function fetchYahoo() {
   };
 }
 
+export const OPTIONS: APIRoute = () =>
+  new Response(null, { status: 204, headers: CORS_HEADERS });
+
 export const GET: APIRoute = async () => {
   try {
     let data: Record<string, unknown>;
