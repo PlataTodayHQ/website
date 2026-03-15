@@ -45,9 +45,9 @@ const {
         <div class="card-meta">
           {isNew && <span class="card-badge-new">NEW</span>}
           {timeAgo && <time class="card-time">{timeAgo}</time>}
-          {timeAgo && category && <span class="card-divider" aria-hidden="true">|</span>}
+          {timeAgo && category && <span class="card-divider" aria-hidden="true">&middot;</span>}
           {category && <span class="card-category">{category}</span>}
-          {readingTime && <><span class="card-divider" aria-hidden="true">|</span><span class="card-reading-time">{readingTime}</span></>}
+          {readingTime && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-reading-time">{readingTime}</span></>}
         </div>
       )}
       {sourceLabel && <span class="card-source">via {sourceLabel}</span>}
@@ -80,6 +80,7 @@ const {
     aspect-ratio: 16 / 9;
     object-fit: cover;
     transition: transform 0.2s;
+    border: 1px solid var(--color-border);
   }
 
   .card-link:hover .card-image img {
