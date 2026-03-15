@@ -85,7 +85,7 @@ async function fetchRatesRT(): Promise<void> {
     let mep: ExchangeRates["mep"] = null;
     let ccl: ExchangeRates["ccl"] = null;
 
-    if (dolarRes && dolarRes.ok) {
+    if (dolarRes?.ok) {
       const dolares: any[] = await dolarRes.json();
       for (const d of dolares) {
         if (d.casa === "bolsa") {

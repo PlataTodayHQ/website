@@ -198,7 +198,7 @@ export const ro = {
   "privacy.childrenTitle": "Copii",
   "privacy.childrenText": "Plata este un site de știri pentru public larg. Nu colectăm cu bună știință date personale de la copii sub 16 ani.",
   "privacy.changesTitle": "Modificări",
-  "privacy.changesText": "Este posibil să actualizăm această politică periodic. Data „Ultima actualizare" de la începutul paginii va reflecta orice modificare.",
+  "privacy.changesText": "Este posibil să actualizăm această politică periodic. Data 'Ultima actualizare' de la începutul paginii va reflecta orice modificare.",
   "privacy.contactTitle": "Contact",
   "privacy.contactText": "Pentru întrebări legate de confidențialitate, scrieți-ne la privacy@plata.today.",
 
@@ -368,7 +368,7 @@ export const ro = {
   "currencies.date": "Data",
   "currencies.understandTitle": "Înțelegerea cursurilor",
   "currencies.officialTitle": "Cursul oficial",
-  "currencies.officialDesc": "Cursul reglementat de guvern, stabilit de Banca Centrală (BCRA). Folosit pentru operațiuni bancare formale, importuri și comerț oficial. Supus restricțiilor valutare cunoscute sub numele de „cepo cambiario".",
+  "currencies.officialDesc": "Cursul reglementat de guvern, stabilit de Banca Centrală (BCRA). Folosit pentru operațiuni bancare formale, importuri și comerț oficial. Supus restricțiilor valutare cunoscute sub numele de 'cepo cambiario'.",
   "currencies.blueTitle": "Cursul Blue",
   "currencies.blueDesc": "Cursul de pe piața paralelă informală, care reflectă cererea reală de dolari în afara controalelor guvernamentale. Diferența dintre cursul oficial și cel blue indică nivelul restricțiilor valutare din economie.",
   "currencies.disclaimer": "Date de la Bluelytics. Cursurile pot avea o întârziere de până la 5 minute. Doar în scop informativ — nu constituie sfaturi financiare.",
