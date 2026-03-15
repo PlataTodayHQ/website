@@ -32,6 +32,7 @@ function mapRow(a: ArticleRow) {
     imageUrl: a.image_url ?? "/images/placeholder.svg",
     timeAgo: timeAgo(a.published_at, lang!),
     subcategory: t(lang!, `cat.${a.category}` as any) || CATEGORIES[a.category as Category] || a.category,
+    categoryKey: a.category,
     readingTime: readingTime(a.word_count, lang!),
   };
 }
@@ -89,6 +90,7 @@ const olderArticles = articles.slice(5);
         imageUrl={featured.imageUrl}
         timeAgo={featured.timeAgo}
         category={featured.subcategory}
+        categoryKey={featured.categoryKey}
         readingTime={featured.readingTime}
         variant="hero"
       />
@@ -106,6 +108,7 @@ const olderArticles = articles.slice(5);
           imageUrl={a.imageUrl}
           timeAgo={a.timeAgo}
           category={a.subcategory}
+          categoryKey={a.categoryKey}
           readingTime={a.readingTime}
           variant="compact"
         />
@@ -118,23 +121,17 @@ const olderArticles = articles.slice(5);
   {olderArticles.length > 0 && (
     <section class="cat-list" aria-label="Earlier articles">
       {olderArticles.map((a) => (
-        <article class="cat-list-item">
-          <div class="cat-list-text">
-            <a href={a.href} class="cat-list-link">
-              <h3 class="cat-list-title">{a.title}</h3>
-            </a>
-            <div class="cat-list-meta">
-              <time class="meta-time">{a.timeAgo}</time>
-              <span class="meta-dot" aria-hidden="true"></span>
-              <span class="meta-sub">{a.subcategory}</span>
-            </div>
-          </div>
-          {a.imageUrl && (
-            <a href={a.href} class="cat-list-thumb" aria-hidden="true" tabindex="-1">
-              <img src={a.imageUrl} alt={a.title} loading="lazy" />
-            </a>
-          )}
-        </article>
+        <ArticleCard
+          title={a.title}
+          description={a.description}
+          href={a.href}
+          imageUrl={a.imageUrl}
+          timeAgo={a.timeAgo}
+          category={a.subcategory}
+          categoryKey={a.categoryKey}
+          readingTime={a.readingTime}
+          variant="list"
+        />
       ))}
     </section>
   )}
@@ -224,76 +221,11 @@ const olderArticles = articles.slice(5);
   }
 
   /* ========================= */
-  /* LIST (text + thumb)        */
+  /* LIST (ArticleCard list)    */
   /* ========================= */
   .cat-list {
     max-width: var(--content-width);
     margin-bottom: var(--spacing-2xl);
-  }
-
-  .cat-list-item {
-    display: flex;
-    align-items: start;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-lg) 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .cat-list-item:first-child {
-    padding-top: 0;
-  }
-
-  .cat-list-item:last-child {
-    border-bottom: none;
-  }
-
-  .cat-list-text {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .cat-list-link {
-    color: var(--color-text);
-  }
-
-  .cat-list-link:hover {
-    text-decoration: none;
-  }
-
-  .cat-list-link:hover .cat-list-title {
-    text-decoration: underline;
-  }
-
-  .cat-list-title {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    font-weight: 700;
-    line-height: 1.35;
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
-  }
-
-  .cat-list-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .cat-list-thumb {
-    flex-shrink: 0;
-    width: 160px;
-  }
-
-  .cat-list-thumb img {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    border-radius: 2px;
-    transition: transform 0.2s;
-  }
-
-  .cat-list-thumb:hover img {
-    transform: scale(1.03);
   }
 
   /* ========================= */
@@ -333,14 +265,6 @@ const olderArticles = articles.slice(5);
 
     .cat-grid :global(.card--compact:last-child) {
       border-bottom: none;
-    }
-
-    .cat-list-thumb {
-      width: 110px;
-    }
-
-    .cat-list-title {
-      font-size: 0.95rem;
     }
   }
 </style>
