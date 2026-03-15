@@ -282,7 +282,7 @@ const { lang = "en" } = Astro.props;
     margin: 0 auto;
     display: flex;
     align-items: stretch;
-    padding: 0 var(--spacing-lg);
+    padding: 0;
     overflow-x: auto;
     scrollbar-width: none;
     gap: 0;
@@ -295,19 +295,18 @@ const { lang = "en" } = Astro.props;
   .ticker-item {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 1px;
-    padding: 10px 20px;
+    padding: 8px 0;
     white-space: nowrap;
     text-decoration: none;
     color: var(--color-text);
     font-variant-numeric: tabular-nums;
     border-right: 1px solid var(--color-border, #e8e8e8);
     transition: background 0.15s;
-    flex: 0 0 auto;
-  }
-
-  .ticker-item:first-child {
-    padding-left: 0;
+    flex: 1 1 0%;
+    text-align: center;
+    align-items: center;
   }
 
   .ticker-item:last-child {
@@ -354,15 +353,15 @@ const { lang = "en" } = Astro.props;
 
   @media (max-width: 768px) {
     .ticker-inner {
-      padding: 0 var(--spacing-md);
+      padding: 0;
     }
 
     .ticker-item {
-      padding: 8px 12px;
-    }
-
-    .ticker-item:first-child {
-      padding-left: 0;
+      padding: 6px 0;
+      flex: 0 0 auto;
+      min-width: 0;
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
     .ticker-name {
