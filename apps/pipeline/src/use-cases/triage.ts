@@ -29,11 +29,18 @@ export async function triageEvent(
 
   const result = await llm.triage(sources);
 
+  const argentinaRelevant = result.argentina_relevant !== false;
   const importance = Math.max(1, Math.min(100, Math.round(result.importance)));
   const category = CATEGORY_LIST.includes(result.category as any)
     ? result.category
     : event.category;
   const reasoning = String(result.reasoning ?? "").slice(0, 500);
+
+  if (!argentinaRelevant) {
+    eventRepo.kill(event.id, importance, `[NOT ARGENTINA] ${reasoning}`);
+    log.info("Event killed — not about Argentina", { eventId: event.id, importance, category, reasoning });
+    return "killed";
+  }
 
   if (importance < 30) {
     eventRepo.kill(event.id, importance, reasoning);
