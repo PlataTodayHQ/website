@@ -188,9 +188,9 @@ button:focus:not(:focus-visible) {
 /* ====================== */
 .info-section { margin-bottom: var(--spacing-2xl); }
 .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
-.info-card { padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
+.info-card, .explainer-card { padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
 .info-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-.info-card p { font-size: 0.85rem; line-height: 1.6; color: var(--color-text-secondary); }
+.info-card p, .explainer-card p { font-size: 0.85rem; line-height: 1.6; color: var(--color-text-secondary); }
 .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
 
 @media (max-width: 640px) {
