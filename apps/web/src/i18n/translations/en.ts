@@ -69,9 +69,15 @@ export const en = {
   "dollar.exchangeRates": "Exchange rates — click for details",
   "dollar.mervalIndex": "Merval index — click for details",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "Welcome",
+  "welcome.eyebrow": "18 languages · One mission",
+  "welcome.headline": "Argentina's story, open to the world",
+  "welcome.sub": "Every day, we write the news natively in 18 languages — so the whole world can understand what's happening in Argentina.",
+
   // Newsletter
-  "newsletter.title": "Get Argentina's news in your inbox",
-  "newsletter.desc": "A daily digest of the stories that matter. Free, no spam.",
+  "newsletter.title": "Stay connected to Argentina",
+  "newsletter.desc": "A daily digest of the stories that matter, in your language. Free, no spam.",
   "newsletter.emailLabel": "Email address",
   "newsletter.placeholder": "your@email.com",
   "newsletter.subscribe": "Subscribe",
@@ -112,7 +118,7 @@ export const en = {
   "article.photoCredit": "Photo",
 
   // Footer
-  "footer.tagline": "Argentina's news for the world",
+  "footer.tagline": "Argentina's news, open to the world",
   "footer.about": "About",
   "footer.contact": "Contact",
   "footer.terms": "Terms of Use",

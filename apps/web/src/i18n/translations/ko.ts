@@ -69,9 +69,15 @@ export const ko = {
   "dollar.exchangeRates": "환율 — 클릭하여 자세히 보기",
   "dollar.mervalIndex": "Merval 지수 — 클릭하여 자세히 보기",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "환영합니다",
+  "welcome.eyebrow": "18개 언어 · 하나의 사명",
+  "welcome.headline": "아르헨티나, 세계를 향해 열리다",
+  "welcome.sub": "매일 18개 언어로 뉴스를 네이티브로 작성하여, 전 세계가 아르헨티나의 오늘을 이해할 수 있도록 합니다.",
+
   // Newsletter
-  "newsletter.title": "아르헨티나 뉴스를 이메일로 받아보세요",
-  "newsletter.desc": "중요한 소식을 매일 요약해 드립니다. 무료, 스팸 없음.",
+  "newsletter.title": "아르헨티나와 연결되세요",
+  "newsletter.desc": "중요한 소식을 여러분의 언어로 매일 전해 드립니다. 무료, 스팸 없음.",
   "newsletter.emailLabel": "이메일 주소",
   "newsletter.placeholder": "your@email.com",
   "newsletter.subscribe": "구독하기",
@@ -112,7 +118,7 @@ export const ko = {
   "article.photoCredit": "사진",
 
   // Footer
-  "footer.tagline": "전 세계를 위한 아르헨티나 뉴스",
+  "footer.tagline": "아르헨티나 뉴스, 세계를 향해 열리다",
   "footer.about": "소개",
   "footer.contact": "문의",
   "footer.terms": "이용약관",

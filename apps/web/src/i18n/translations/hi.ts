@@ -69,9 +69,15 @@ export const hi = {
   "dollar.exchangeRates": "विनिमय दरें — विवरण के लिए क्लिक करें",
   "dollar.mervalIndex": "Merval सूचकांक — विवरण के लिए क्लिक करें",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "स्वागत",
+  "welcome.eyebrow": "18 भाषाएँ · एक लक्ष्य",
+  "welcome.headline": "अर्जेंटीना, दुनिया के लिए खुला",
+  "welcome.sub": "हम हर दिन 18 भाषाओं में मूल रूप से समाचार लिखते हैं — ताकि पूरी दुनिया समझ सके कि अर्जेंटीना में क्या हो रहा है।",
+
   // Newsletter
-  "newsletter.title": "अर्जेंटीना की खबरें अपने इनबॉक्स में पाएँ",
-  "newsletter.desc": "रोज़ाना की अहम खबरों का संक्षिप्त संकलन। मुफ़्त, बिना स्पैम।",
+  "newsletter.title": "अर्जेंटीना से जुड़े रहें",
+  "newsletter.desc": "अहम खबरें, आपकी भाषा में, हर दिन। मुफ़्त, बिना स्पैम।",
   "newsletter.emailLabel": "ईमेल पता",
   "newsletter.placeholder": "your@email.com",
   "newsletter.subscribe": "सदस्यता लें",
@@ -112,7 +118,7 @@ export const hi = {
   "article.photoCredit": "फ़ोटो",
 
   // Footer
-  "footer.tagline": "दुनिया के लिए अर्जेंटीना की खबरें",
+  "footer.tagline": "अर्जेंटीना की खबरें, दुनिया के लिए खुली",
   "footer.about": "हमारे बारे में",
   "footer.contact": "संपर्क",
   "footer.terms": "उपयोग की शर्तें",

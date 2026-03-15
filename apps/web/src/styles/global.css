@@ -4,14 +4,15 @@
   --font-serif: "Source Serif 4", Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
   --font-display: "Libre Caslon Display", "Source Serif 4", serif;
 
-  --color-bg: #fafaf9;
-  --color-bg-secondary: #f2f1ef;
-  --color-bg-content: #fafaf9;
+  --color-bg: #fdfcfa;
+  --color-bg-secondary: #f5f3ef;
+  --color-bg-content: #fdfcfa;
   --color-text: #1a1a1a;
   --color-text-secondary: #444;
   --color-text-meta: #6e6e6e;
   --color-border: #ddd9d4;
   --color-border-section: #1a1a1a;
+  --color-gold-glow: rgba(246, 180, 14, 0.08);
   --color-celeste: #112e51;
   --color-celeste-dark: #0b1e3d;
   --color-gold: #F6B40E;
@@ -84,6 +85,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.01em;
+}
+
+::selection {
+  background: rgba(246, 180, 14, 0.2);
+  color: inherit;
 }
 
 /* ================================= */

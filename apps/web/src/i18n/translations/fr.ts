@@ -69,9 +69,15 @@ export const fr = {
   "dollar.exchangeRates": "Taux de change — cliquer pour plus de détails",
   "dollar.mervalIndex": "Indice Merval — cliquer pour plus de détails",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "Bienvenue",
+  "welcome.eyebrow": "18 langues · Une mission",
+  "welcome.headline": "L'Argentine, ouverte sur le monde",
+  "welcome.sub": "Chaque jour, nous rédigeons l'actualité nativement dans 18 langues — pour que le monde entier puisse comprendre ce qui se passe en Argentine.",
+
   // Newsletter
-  "newsletter.title": "Recevez l'actualité argentine dans votre boîte mail",
-  "newsletter.desc": "Un résumé quotidien des articles qui comptent. Gratuit, sans spam.",
+  "newsletter.title": "Restez connecté à l'Argentine",
+  "newsletter.desc": "L'essentiel de l'actualité, dans votre langue, chaque jour. Gratuit, sans spam.",
   "newsletter.emailLabel": "Adresse e-mail",
   "newsletter.placeholder": "votre@email.com",
   "newsletter.subscribe": "S'abonner",
@@ -112,7 +118,7 @@ export const fr = {
   "article.photoCredit": "Photo",
 
   // Footer
-  "footer.tagline": "L'actualité argentine pour le monde entier",
+  "footer.tagline": "L'actualité argentine, ouverte sur le monde",
   "footer.about": "À propos",
   "footer.contact": "Contact",
   "footer.terms": "Conditions d'utilisation",

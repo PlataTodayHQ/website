@@ -1,0 +1,149 @@
+---
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = "en" } = Astro.props;
+
+// Show all 18 language flags as a visual "all the world is welcome"
+const flags = Object.values(LANGUAGES).map((info) => info.flag);
+---
+
+<section class="welcome-hero" aria-label={t(lang, "welcome.ariaLabel" as any)}>
+  <div class="welcome-inner">
+    <p class="welcome-eyebrow">{t(lang, "welcome.eyebrow" as any)}</p>
+    <h2 class="welcome-headline">{t(lang, "welcome.headline" as any)}</h2>
+    <p class="welcome-sub">{t(lang, "welcome.sub" as any)}</p>
+    <div class="welcome-flags" aria-hidden="true">
+      {flags.map((flag) => (
+        <span class="welcome-flag">{flag}</span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .welcome-hero {
+    position: relative;
+    background: linear-gradient(135deg, #0b1e3d 0%, #112e51 40%, #1a3a5c 70%, #1f4068 100%);
+    color: #fff;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    margin: 0 calc(-1 * var(--spacing-lg));
+    margin-bottom: var(--spacing-xl);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Subtle golden light from the top — sunrise feel */
+  .welcome-hero::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(246, 180, 14, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Bottom gold accent line */
+  .welcome-hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--color-gold) 30%, var(--color-gold) 70%, transparent 100%);
+  }
+
+  .welcome-inner {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .welcome-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-gold);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .welcome-headline {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--spacing-md);
+    color: #fff;
+  }
+
+  @media (min-width: 768px) {
+    .welcome-headline {
+      font-size: 2.8rem;
+    }
+  }
+
+  .welcome-sub {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 560px;
+    margin: 0 auto var(--spacing-lg);
+  }
+
+  .welcome-flags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .welcome-flag {
+    font-size: 1.3rem;
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .welcome-flag:hover {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  @media (max-width: 640px) {
+    .welcome-hero {
+      padding: var(--spacing-xl) var(--spacing-md);
+      margin: 0 calc(-1 * var(--spacing-md));
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .welcome-headline {
+      font-size: 1.75rem;
+    }
+
+    .welcome-sub {
+      font-size: 0.95rem;
+    }
+
+    .welcome-flag {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .welcome-flag:hover {
+      transform: none;
+    }
+  }
+</style>

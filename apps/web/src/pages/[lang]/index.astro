@@ -9,6 +9,7 @@ import TrendingSection from "@/components/TrendingSection.astro";
 import JustInFeed from "@/components/JustInFeed.astro";
 import NewsletterBanner from "@/components/NewsletterBanner.astro";
 import FinancialDashboard from "@/components/FinancialDashboard.astro";
+import WelcomeHero from "@/components/WelcomeHero.astro";
 import { LANGUAGES, CATEGORIES, CATEGORY_LIST } from "@plata-today/shared";
 import { t } from "@/i18n";
 import type { Category } from "@plata-today/shared";
@@ -232,6 +233,9 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     }
   ]}
 >
+  <!-- WELCOME HERO — Optimistic manifesto -->
+  <WelcomeHero lang={lang} />
+
   <!-- FRONT PAGE — Above the fold -->
   <FrontPage
     lead={{

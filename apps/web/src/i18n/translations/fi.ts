@@ -69,9 +69,15 @@ export const fi = {
   "dollar.exchangeRates": "Valuuttakurssit — klikkaa lisätietoja",
   "dollar.mervalIndex": "Merval-indeksi — klikkaa lisätietoja",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "Tervetuloa",
+  "welcome.eyebrow": "18 kieltä · Yksi tehtävä",
+  "welcome.headline": "Argentiina, avoin maailmalle",
+  "welcome.sub": "Kirjoitamme uutiset joka päivä äidinkielentasoisesti 18 kielellä — jotta koko maailma voi ymmärtää, mitä Argentiinassa tapahtuu.",
+
   // Newsletter
-  "newsletter.title": "Argentiinan uutiset sähköpostiisi",
-  "newsletter.desc": "Päivittäinen kooste tärkeimmistä uutisista. Ilmainen, ei roskapostia.",
+  "newsletter.title": "Pysy yhteydessä Argentiinaan",
+  "newsletter.desc": "Päivän tärkeimmät uutiset omalla kielelläsi. Ilmainen, ei roskapostia.",
   "newsletter.emailLabel": "Sähköpostiosoite",
   "newsletter.placeholder": "sinun@email.com",
   "newsletter.subscribe": "Tilaa",
@@ -112,7 +118,7 @@ export const fi = {
   "article.photoCredit": "Kuva",
 
   // Footer
-  "footer.tagline": "Argentiinan uutiset maailmalle",
+  "footer.tagline": "Argentiinan uutiset, avoimena maailmalle",
   "footer.about": "Tietoa",
   "footer.contact": "Yhteystiedot",
   "footer.terms": "Käyttöehdot",

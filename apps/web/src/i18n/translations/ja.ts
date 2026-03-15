@@ -69,9 +69,15 @@ export const ja = {
   "dollar.exchangeRates": "為替レート — クリックして詳細を表示",
   "dollar.mervalIndex": "Merval指数 — クリックして詳細を表示",
 
+  // Welcome Hero
+  "welcome.ariaLabel": "ようこそ",
+  "welcome.eyebrow": "18言語 · ひとつの使命",
+  "welcome.headline": "アルゼンチン、世界に開かれて",
+  "welcome.sub": "毎日18言語でネイティブにニュースを執筆し、世界中の方々にアルゼンチンの今をお届けします。",
+
   // Newsletter
-  "newsletter.title": "アルゼンチンのニュースをメールでお届け",
-  "newsletter.desc": "重要なニュースを毎日ダイジェストで配信。無料、スパムなし。",
+  "newsletter.title": "アルゼンチンとつながり続ける",
+  "newsletter.desc": "大切なニュースをあなたの言語で毎日お届け。無料、スパムなし。",
   "newsletter.emailLabel": "メールアドレス",
   "newsletter.placeholder": "your@email.com",
   "newsletter.subscribe": "登録する",
@@ -112,7 +118,7 @@ export const ja = {
   "article.photoCredit": "写真",
 
   // Footer
-  "footer.tagline": "世界に届けるアルゼンチンのニュース",
+  "footer.tagline": "アルゼンチンのニュース、世界に開かれて",
   "footer.about": "Plataについて",
   "footer.contact": "お問い合わせ",
   "footer.terms": "利用規約",

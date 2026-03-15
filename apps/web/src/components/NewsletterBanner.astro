@@ -69,10 +69,24 @@ const { lang = "en" } = Astro.props;
 
 <style>
   .newsletter-banner {
-    background: var(--color-celeste);
+    background: linear-gradient(135deg, #0b1e3d 0%, #112e51 50%, #1a3a5c 100%);
     color: #fff;
     padding: var(--spacing-2xl) var(--spacing-lg);
     margin: var(--spacing-2xl) calc(-1 * var(--spacing-lg));
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Warm golden glow accent */
+  .newsletter-banner::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 40%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(246, 180, 14, 0.06) 0%, transparent 70%);
+    pointer-events: none;
   }
 
   .newsletter-inner {
