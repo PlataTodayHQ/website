@@ -18,7 +18,7 @@ function mapRow(a: ArticleRow) {
     slug: a.slug,
     href: `/${lang}/news/${a.slug}`,
     description: a.meta_description ?? "",
-    imageUrl: a.image_url ?? "",
+    imageUrl: a.image_url || "",
     category: a.category,
     categoryLabel: t(lang!, `cat.${a.category}` as any) || CATEGORIES[a.category as Category] || a.category,
     timeAgo: timeAgo(a.published_at, lang!),
@@ -98,7 +98,7 @@ const categoryTabs = [
           </div>
           {a.imageUrl && (
             <a href={a.href} class="feed-item-thumb" aria-hidden="true" tabindex="-1">
-              <img src={a.imageUrl} alt={a.title} loading="lazy" />
+              <img src={a.imageUrl} alt={a.title} loading="lazy" onerror="this.parentElement.style.display='none'" />
             </a>
           )}
         </article>
@@ -157,7 +157,7 @@ const categoryTabs = [
     article.dataset.category = a.category;
 
     var desc = a.description ? '<p class="feed-item-desc">' + escapeHtml(a.description) + '</p>' : '';
-    var thumb = a.imageUrl ? '<a href="' + a.href + '" class="feed-item-thumb" aria-hidden="true" tabindex="-1"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" /></a>' : '';
+    var thumb = a.imageUrl ? '<a href="' + a.href + '" class="feed-item-thumb" aria-hidden="true" tabindex="-1"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'" /></a>' : '';
 
     article.innerHTML =
       '<div class="feed-item-content">' +

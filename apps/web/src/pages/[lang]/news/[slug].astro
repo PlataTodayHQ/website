@@ -210,7 +210,7 @@ try {
     <!-- Hero image -->
     {row.image_url && (
       <figure class="article-image">
-        <img src={row.image_url} alt={row.title} itemprop="image" />
+        <img src={row.image_url} alt={row.title} itemprop="image" onerror="this.closest('.article-image').style.display='none'" />
         {row.image_source && (
           <figcaption class="article-image-credit">
             {t(lang, "article.photoCredit")}: {row.image_source}

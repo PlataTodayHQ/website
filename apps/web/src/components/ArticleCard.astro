@@ -35,7 +35,7 @@ const {
   <a href={href} class="card-link">
     {imageUrl && (
       <div class="card-image">
-        <img src={imageUrl} alt={title} loading="lazy" />
+        <img src={imageUrl} alt={title} loading="lazy" onerror="this.parentElement.style.display='none'" />
       </div>
     )}
     <div class="card-body">
