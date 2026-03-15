@@ -194,7 +194,7 @@ async function fetchStocks(db: Database.Database): Promise<void> {
     const tx = db.transaction(() => {
       for (const s of json.data) {
         insert.run(
-          s.symbol ?? s.denominacion ?? "",
+          (s.symbol ?? s.denominacion ?? "").replace(".BA", ""),
           s.price ?? s.ultimoPrecio ?? 0,
           s.variation ?? s.variacionPorcentual ?? null,
           s.previousClosingPrice ?? s.anteriorCierre ?? null,

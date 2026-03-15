@@ -11,7 +11,8 @@ if (!lang || !(lang in LANGUAGES)) {
   return Astro.redirect("/en/", 302);
 }
 
-const symbol = Astro.url.searchParams.get("s") ?? "";
+const rawSymbol = Astro.url.searchParams.get("s") ?? "";
+const symbol = rawSymbol.replace(/\.BA$/i, "");
 
 // Build i18n JSON for client-side JS
 const stockI18n = {
@@ -344,7 +345,7 @@ const stockI18n = {
 
   // Read symbol from URL
   var params = new URLSearchParams(window.location.search);
-  var symbol = (params.get('s') || '').trim().toUpperCase();
+  var symbol = (params.get('s') || '').trim().toUpperCase().replace(/\.BA$/, '');
 
   if (!symbol) {
     document.querySelector('[data-stock-empty]').style.display = 'block';
