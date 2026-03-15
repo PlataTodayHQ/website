@@ -24,8 +24,8 @@ const { items, lang = "en" } = Astro.props;
   <ul class="just-in-list">
     {items.map((item) => (
       <li class="just-in-item">
-        <time class="just-in-time">{item.timeAgo}</time>
         <div class="just-in-body">
+          <time class="just-in-time">{item.timeAgo}</time>
           {item.category && <span class="just-in-cat">{item.category}</span>}
           <a href={item.href} class="just-in-link">{item.title}</a>
         </div>
@@ -75,9 +75,6 @@ const { items, lang = "en" } = Astro.props;
   .just-in-list { list-style: none; }
 
   .just-in-item {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid var(--color-border);
   }
@@ -88,9 +85,6 @@ const { items, lang = "en" } = Astro.props;
   .just-in-time {
     font-size: 0.7rem;
     color: var(--color-text-meta);
-    white-space: nowrap;
-    min-width: 60px;
-    flex-shrink: 0;
     font-variant-numeric: tabular-nums;
   }
 
