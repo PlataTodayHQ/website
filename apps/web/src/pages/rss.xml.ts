@@ -35,12 +35,13 @@ export const GET: APIRoute = ({ url }) => {
       <pubDate>${pubDate}</pubDate>
       <description>${escapeXml(description)}</description>
       <category>${escapeXml(a.category)}</category>
+      <dc:creator>Plata Newsroom</dc:creator>
     </item>`;
     })
     .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>Plata Today</title>
     <link>${SITE_URL}/${lang}/</link>

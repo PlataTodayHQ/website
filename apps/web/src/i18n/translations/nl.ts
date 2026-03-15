@@ -117,6 +117,7 @@ export const nl = {
   "article.opensNewTab": "(opent in nieuw tabblad)",
   "article.photoCredit": "Foto",
   "article.updated": "Bijgewerkt",
+  "article.byline": "Door",
 
   // Footer
   "footer.tagline": "Argentijns nieuws, open voor de wereld",

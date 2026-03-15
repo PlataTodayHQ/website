@@ -20,6 +20,19 @@ const { lang } = Astro.params;
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
     { name: t(lang!, "currencies.breadcrumb"), url: `/${lang}/markets/currencies` },
   ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "currencies.title"),
+    "description": t(lang!, "currencies.subtitle"),
+    "url": `https://plata.today/${lang}/markets/currencies`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
 >
   <div class="currencies-page" data-currencies-page>
     <header class="mkts-header">

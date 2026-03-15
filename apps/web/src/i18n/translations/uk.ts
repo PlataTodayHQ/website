@@ -117,6 +117,7 @@ export const uk = {
   "article.opensNewTab": "(відкриється в новій вкладці)",
   "article.photoCredit": "Фото",
   "article.updated": "Оновлено",
+  "article.byline": "Автор",
 
   // Footer
   "footer.tagline": "Новини Аргентини, відкриті світу",

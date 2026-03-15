@@ -117,6 +117,7 @@ export const el = {
   "article.opensNewTab": "(ανοίγει σε νέα καρτέλα)",
   "article.photoCredit": "Φωτογραφία",
   "article.updated": "Ενημερώθηκε",
+  "article.byline": "Από",
 
   // Footer
   "footer.tagline": "Οι ειδήσεις της Αργεντινής, ανοιχτές στον κόσμο",

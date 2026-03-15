@@ -117,6 +117,7 @@ export const ja = {
   "article.opensNewTab": "（新しいタブで開きます）",
   "article.photoCredit": "写真",
   "article.updated": "更新",
+  "article.byline": "著者",
 
   // Footer
   "footer.tagline": "アルゼンチンのニュース、世界に開かれて",

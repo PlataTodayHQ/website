@@ -117,6 +117,7 @@ export const tl = {
   "article.opensNewTab": "(magbubukas sa bagong tab)",
   "article.photoCredit": "Larawan",
   "article.updated": "Na-update",
+  "article.byline": "Ni",
 
   // Footer
   "footer.tagline": "Balita ng Argentina, bukas sa buong mundo",

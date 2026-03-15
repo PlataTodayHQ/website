@@ -117,6 +117,7 @@ export const ur = {
   "article.opensNewTab": "(نئی ٹیب میں کھلے گا)",
   "article.photoCredit": "تصویر",
   "article.updated": "تازہ ترین",
+  "article.byline": "از",
 
   // Footer
   "footer.tagline": "ارجنٹینا کی خبریں، پوری دنیا کے لیے",

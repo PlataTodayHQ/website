@@ -22,7 +22,9 @@ const { lang } = Astro.params;
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": t(lang!, "corrections.title"),
+    "description": t(lang!, "corrections.description"),
     "url": `https://plata.today/${lang}/corrections`,
+    "inLanguage": lang,
     "isPartOf": {
       "@type": "WebSite",
       "name": "Plata",

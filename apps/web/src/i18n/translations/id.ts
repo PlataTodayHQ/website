@@ -117,6 +117,7 @@ export const id = {
   "article.opensNewTab": "(buka di tab baru)",
   "article.photoCredit": "Foto",
   "article.updated": "Diperbarui",
+  "article.byline": "Oleh",
 
   // Footer
   "footer.tagline": "Berita Argentina, terbuka untuk dunia",

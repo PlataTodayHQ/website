@@ -117,6 +117,7 @@ export const ar = {
   "article.opensNewTab": "(يُفتح في علامة تبويب جديدة)",
   "article.photoCredit": "الصورة",
   "article.updated": "تم التحديث",
+  "article.byline": "بقلم",
 
   // Footer
   "footer.tagline": "أخبار الأرجنتين، مفتوحة للعالم",

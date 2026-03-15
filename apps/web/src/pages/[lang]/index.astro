@@ -210,7 +210,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   description={t(lang!, "home.description").replace("{lang}", langName)}
   lang={lang}
   ogType="website"
-  ogImage={`${import.meta.env.SITE ?? "https://plata.today"}/images/placeholder.svg`}
+  ogImage={undefined}
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
   ]}

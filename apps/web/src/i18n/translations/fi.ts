@@ -117,6 +117,7 @@ export const fi = {
   "article.opensNewTab": "(avautuu uuteen välilehteen)",
   "article.photoCredit": "Kuva",
   "article.updated": "Päivitetty",
+  "article.byline": "Kirjoittaja",
 
   // Footer
   "footer.tagline": "Argentiinan uutiset, avoimena maailmalle",

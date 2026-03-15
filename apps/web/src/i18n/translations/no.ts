@@ -117,6 +117,7 @@ export const no = {
   "article.opensNewTab": "(åpner i ny fane)",
   "article.photoCredit": "Foto",
   "article.updated": "Oppdatert",
+  "article.byline": "Av",
 
   // Footer
   "footer.tagline": "Argentinas nyheter, åpne for verden",

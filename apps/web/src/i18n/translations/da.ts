@@ -117,6 +117,7 @@ export const da = {
   "article.opensNewTab": "(åbner i ny fane)",
   "article.photoCredit": "Foto",
   "article.updated": "Opdateret",
+  "article.byline": "Af",
 
   // Footer
   "footer.tagline": "Nyheder fra Argentina, åbne for verden",

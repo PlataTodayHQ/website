@@ -147,7 +147,7 @@ try {
   lang={lang}
   alternateUrls={alternateUrls}
   ogType="article"
-  ogImage={row.image_url ?? "/images/placeholder.svg"}
+  ogImage={row.image_url ?? undefined}
   ogUrl={`https://plata.today/${lang}/news/${slug}`}
   breadcrumbs={[
     { name: t(lang, "common.breadcrumbHome"), url: `/${lang}/` },
@@ -156,6 +156,7 @@ try {
   ]}
   articleMeta={{
     publishedTime: dateISO,
+    modifiedTime: updatedISO ?? dateISO,
     section: catLabel,
     tags: [catLabel],
     author: "Plata Newsroom",
@@ -167,7 +168,7 @@ try {
     "description": row.meta_description ?? "",
     "image": row.image_url ?? "",
     "datePublished": dateISO,
-    "dateModified": dateISO,
+    "dateModified": updatedISO ?? dateISO,
     "author": {
       "@type": "Organization",
       "name": "Plata Newsroom",
@@ -210,6 +211,10 @@ try {
       </a>
       <h1 class="article-title" itemprop="headline">{row.title}</h1>
       {row.meta_description && <p class="article-subtitle" itemprop="description">{row.meta_description}</p>}
+      <div class="article-byline" itemprop="author" itemscope itemtype="https://schema.org/Organization">
+        <span>{t(lang, "article.byline" as any)}</span>{" "}
+        <a href={`/${lang}/newsroom`} class="byline-name" itemprop="name">Plata Newsroom</a>
+      </div>
       <div class="article-meta">
         <time datetime={dateISO.slice(0, 10)} itemprop="datePublished">{dateFormatted}</time>
         {updatedFormatted && (
@@ -239,7 +244,7 @@ try {
     <!-- Hero image -->
     {row.image_url && (
       <figure class="article-image">
-        <img src={row.image_url} alt={row.title} itemprop="image" onerror="this.closest('.article-image').style.display='none'" />
+        <img src={row.image_url} alt={row.title} itemprop="image" loading="eager" fetchpriority="high" width="960" height="540" onerror="this.closest('.article-image').style.display='none'" />
         {row.image_source && (
           <figcaption class="article-image-credit">
             {t(lang, "article.photoCredit")}: {row.image_source}
@@ -453,6 +458,21 @@ try {
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-md);
     max-width: 90%;
+  }
+
+  .article-byline {
+    font-size: 0.85rem;
+    color: var(--color-text-meta);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .byline-name {
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .byline-name:hover {
+    text-decoration: underline;
   }
 
   .article-meta {

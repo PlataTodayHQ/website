@@ -117,6 +117,7 @@ export const fa = {
   "article.opensNewTab": "(در تب جدید باز می‌شود)",
   "article.photoCredit": "عکس",
   "article.updated": "به‌روزرسانی شد",
+  "article.byline": "نوشته",
 
   // Footer
   "footer.tagline": "اخبار آرژانتین، باز به روی جهان",
