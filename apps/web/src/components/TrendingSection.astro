@@ -120,6 +120,24 @@ const { items, lang = "en" } = Astro.props;
     letter-spacing: 0.04em;
   }
 
+  @media (max-width: 640px) {
+    .trending-title {
+      font-size: 0.82rem;
+    }
+
+    .trending-headline {
+      font-size: 1.02rem;
+    }
+
+    .trending-meta {
+      font-size: 0.8rem;
+    }
+
+    .trending-cat {
+      font-size: 0.75rem;
+    }
+  }
+
   @media (min-width: 1025px) {
     .trending-list {
       grid-template-columns: repeat(5, 1fr);
