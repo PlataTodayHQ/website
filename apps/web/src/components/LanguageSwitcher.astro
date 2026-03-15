@@ -41,6 +41,39 @@ const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
   </div>
 </div>
 
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.lang-switcher').forEach((switcher) => {
+      const btn = switcher.querySelector<HTMLButtonElement>('[data-lang-trigger]');
+      const dropdown = switcher.querySelector<HTMLElement>('.lang-dropdown');
+      if (!btn || !dropdown) return;
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = switcher.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      // Close when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!switcher.contains(e.target as Node)) {
+          switcher.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Close on Escape
+      switcher.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          switcher.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.focus();
+        }
+      });
+    });
+  });
+</script>
+
 <style>
   .lang-switcher {
     position: relative;
@@ -80,9 +113,35 @@ const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
     z-index: 200;
   }
 
-  .lang-switcher:hover .lang-dropdown,
-  .lang-switcher:focus-within .lang-dropdown {
+  /* Show dropdown on click (via .open class) */
+  .lang-switcher.open .lang-dropdown {
     display: block;
+  }
+
+  /* Also show on hover for desktop — use padding bridge to prevent gap */
+  @media (hover: hover) {
+    .lang-dropdown {
+      padding-top: 0;
+    }
+
+    .lang-switcher::after {
+      content: '';
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 100%;
+      height: 8px;
+    }
+
+    .lang-switcher:hover::after {
+      display: block;
+    }
+
+    .lang-switcher:hover .lang-dropdown,
+    .lang-switcher:focus-within .lang-dropdown {
+      display: block;
+    }
   }
 
   .lang-option {
@@ -112,14 +171,6 @@ const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
 
   .lang-btn .lang-flag {
     font-size: 1rem;
-  }
-
-  /* Hide hover dropdown on mobile — full-screen overlay replaces it */
-  @media (max-width: 768px) {
-    .lang-switcher:hover .lang-dropdown,
-    .lang-switcher:focus-within .lang-dropdown {
-      display: none;
-    }
   }
 
   @media (prefers-color-scheme: dark) {
