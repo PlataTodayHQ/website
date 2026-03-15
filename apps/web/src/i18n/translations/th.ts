@@ -509,6 +509,21 @@ export const th = {
   "corrections.reportText": "หากคุณพบข้อมูลที่ไม่ถูกต้องในบทความใด ๆ ของ Plata กรุณาส่งอีเมลถึงเราที่ hello@plata.today พร้อม URL ของบทความและรายละเอียดของข้อผิดพลาด เราตรวจสอบทุกรายงาน",
   "corrections.logTitle": "บันทึกการแก้ไข",
   "corrections.logEmpty": "ยังไม่มีการแก้ไขใด ๆ",
+  // Common & UI labels
+  "common.loading": "กำลังโหลด…",
+  "common.loadingData": "กำลังโหลดข้อมูล…",
+  "common.marketData": "ข้อมูลตลาด",
+  "common.topStories": "ข่าวเด่น",
+  "article.badgeNew": "ใหม่",
+  "article.via": "จาก",
+  "ticker.usdOficial": "USD ทางการ",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "บทความก่อนหน้า",
+  "category.featuredAria": "บทความแนะนำ",
+  "feed.filterByCategory": "กรองตามหมวดหมู่",
 } as const;
 
 export type Translations = typeof th;

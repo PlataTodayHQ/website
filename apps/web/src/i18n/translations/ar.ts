@@ -509,6 +509,21 @@ export const ar = {
   "corrections.reportText": "إذا لاحظت عدم دقة في أي مقال على Plata، راسلنا على hello@plata.today مع رابط المقال ووصف الخطأ. نراجع كل بلاغ.",
   "corrections.logTitle": "سجل التصحيحات",
   "corrections.logEmpty": "لم تصدر أي تصحيحات بعد.",
+  // Common & UI labels
+  "common.loading": "جارٍ التحميل…",
+  "common.loadingData": "جارٍ تحميل البيانات…",
+  "common.marketData": "بيانات السوق",
+  "common.topStories": "أهم الأخبار",
+  "article.badgeNew": "جديد",
+  "article.via": "عبر",
+  "ticker.usdOficial": "الدولار الرسمي",
+  "ticker.usdBlue": "الدولار الأزرق",
+  "ticker.mep": "دولار MEP",
+  "ticker.ccl": "دولار CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "مقالات سابقة",
+  "category.featuredAria": "مقال مميز",
+  "feed.filterByCategory": "تصفية حسب الفئة",
 } as const;
 
 export type Translations = typeof ar;

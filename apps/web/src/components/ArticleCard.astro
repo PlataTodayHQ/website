@@ -1,4 +1,6 @@
 ---
+import { t } from "@/i18n";
+
 interface Props {
   title: string;
   description?: string;
@@ -11,6 +13,7 @@ interface Props {
   isNew?: boolean;
   sourceLabel?: string;
   variant?: "default" | "hero" | "sidebar" | "compact" | "list";
+  lang?: string;
 }
 
 const {
@@ -25,6 +28,7 @@ const {
   isNew,
   sourceLabel,
   variant = "default",
+  lang = "en",
 } = Astro.props;
 
 const isList = variant === "list";
@@ -68,7 +72,7 @@ const isList = variant === "list";
         {(category || isNew) && (
           <div class="card-meta-top">
             {category && <span class="card-category">{category}</span>}
-            {isNew && <span class="card-badge-new">NEW</span>}
+            {isNew && <span class="card-badge-new">{t(lang, "article.badgeNew")}</span>}
           </div>
         )}
         <h3 class="card-title">{title}</h3>
@@ -76,7 +80,7 @@ const isList = variant === "list";
         <div class="card-meta">
           {timeAgo && <time class="card-time">{timeAgo}</time>}
           {readingTime && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-reading-time">{readingTime}</span></>}
-          {sourceLabel && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-source">via {sourceLabel}</span></>}
+          {sourceLabel && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-source">{t(lang, "article.via")} {sourceLabel}</span></>}
         </div>
       </div>
     </a>

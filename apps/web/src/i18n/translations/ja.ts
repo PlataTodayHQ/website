@@ -607,6 +607,21 @@ export const ja = {
   "footer.mission": "使命",
   "footer.newsroom": "編集部",
   "footer.founder": "創設者",
+  // Common & UI labels
+  "common.loading": "読み込み中…",
+  "common.loadingData": "データを読み込み中…",
+  "common.marketData": "市場データ",
+  "common.topStories": "トップニュース",
+  "article.badgeNew": "新着",
+  "article.via": "出典",
+  "ticker.usdOficial": "USD公式",
+  "ticker.usdBlue": "USDブルー",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "過去の記事",
+  "category.featuredAria": "注目の記事",
+  "feed.filterByCategory": "カテゴリーで絞り込み",
 } as const;
 
 export type Translations = typeof ja;

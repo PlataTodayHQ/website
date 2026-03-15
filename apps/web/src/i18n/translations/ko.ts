@@ -607,6 +607,21 @@ export const ko = {
   "footer.mission": "사명",
   "footer.newsroom": "편집부",
   "footer.founder": "창립자",
+  // Common & UI labels
+  "common.loading": "로딩 중…",
+  "common.loadingData": "데이터 로딩 중…",
+  "common.marketData": "시장 데이터",
+  "common.topStories": "주요 뉴스",
+  "article.badgeNew": "NEW",
+  "article.via": "출처",
+  "ticker.usdOficial": "USD 공식",
+  "ticker.usdBlue": "USD 블루",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "이전 기사",
+  "category.featuredAria": "추천 기사",
+  "feed.filterByCategory": "카테고리별 필터",
 } as const;
 
 export type Translations = typeof ko;

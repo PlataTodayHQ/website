@@ -509,6 +509,21 @@ export const tr = {
   "corrections.reportText": "Herhangi bir Plata haberinde bir yanlışlık fark ederseniz, lütfen hello@plata.today adresine haberin bağlantısını ve hatanın açıklamasını içeren bir e-posta gönderin. Her bildirimi inceliyoruz.",
   "corrections.logTitle": "Düzeltme kaydı",
   "corrections.logEmpty": "Henüz herhangi bir düzeltme yayınlanmamıştır.",
+  // Common & UI labels
+  "common.loading": "Yükleniyor…",
+  "common.loadingData": "Veriler yükleniyor…",
+  "common.marketData": "Piyasa verileri",
+  "common.topStories": "Öne çıkan haberler",
+  "article.badgeNew": "YENİ",
+  "article.via": "kaynak",
+  "ticker.usdOficial": "USD resmi",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Eski makaleler",
+  "category.featuredAria": "Öne çıkan makale",
+  "feed.filterByCategory": "Kategoriye göre filtrele",
 } as const;
 
 export type Translations = typeof tr;

@@ -4,6 +4,7 @@
  * 60/40 split: main story (left) + secondary stories (right).
  * Shows 5+ stories without scrolling.
  */
+import { t } from "@/i18n";
 
 interface Story {
   title: string;
@@ -20,12 +21,13 @@ interface Story {
 interface Props {
   lead: Story;
   secondary: Story[];
+  lang?: string;
 }
 
-const { lead, secondary } = Astro.props;
+const { lead, secondary, lang = "en" } = Astro.props;
 ---
 
-<section class="front-page" aria-label="Top stories">
+<section class="front-page" aria-label={t(lang, "common.topStories")}>
   <div class="fp-grid">
     <!-- Lead story — left column (60%) -->
     <article class="fp-lead" style={lead.categoryKey ? `--cat-color: var(--cat-${lead.categoryKey}, var(--color-gold-dark))` : undefined}>
@@ -41,7 +43,7 @@ const { lead, secondary } = Astro.props;
         <div class="fp-meta">
           {lead.timeAgo && <time>{lead.timeAgo}</time>}
           {lead.readingTime && <><span class="fp-dot" aria-hidden="true">&middot;</span><span>{lead.readingTime}</span></>}
-          {lead.sourceLabel && <><span class="fp-dot" aria-hidden="true">&middot;</span><span class="fp-source">via {lead.sourceLabel}</span></>}
+          {lead.sourceLabel && <><span class="fp-dot" aria-hidden="true">&middot;</span><span class="fp-source">{t(lang, "article.via")} {lead.sourceLabel}</span></>}
         </div>
       </a>
     </article>

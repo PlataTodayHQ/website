@@ -509,6 +509,21 @@ export const bn = {
   "corrections.reportText": "Plata-র কোনো নিবন্ধে ভুল দেখলে নিবন্ধের URL ও ত্রুটির বিবরণসহ hello@plata.today-এ ইমেইল করুন। আমরা প্রতিটি রিপোর্ট পর্যালোচনা করি।",
   "corrections.logTitle": "সংশোধনী তালিকা",
   "corrections.logEmpty": "এখনো কোনো সংশোধনী প্রকাশিত হয়নি।",
+  // Common & UI labels
+  "common.loading": "লোড হচ্ছে…",
+  "common.loadingData": "ডেটা লোড হচ্ছে…",
+  "common.marketData": "বাজারের তথ্য",
+  "common.topStories": "শীর্ষ খবর",
+  "article.badgeNew": "নতুন",
+  "article.via": "সূত্র",
+  "ticker.usdOficial": "USD অফিসিয়াল",
+  "ticker.usdBlue": "USD ব্লু",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "পূর্ববর্তী নিবন্ধ",
+  "category.featuredAria": "বৈশিষ্ট্যযুক্ত নিবন্ধ",
+  "feed.filterByCategory": "বিভাগ অনুসারে ফিল্টার করুন",
 } as const;
 
 export type Translations = typeof bn;

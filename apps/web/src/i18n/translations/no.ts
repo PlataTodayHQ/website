@@ -607,6 +607,21 @@ export const no = {
   "footer.mission": "Oppdrag",
   "footer.newsroom": "Redaksjon",
   "footer.founder": "Grunnlegger",
+  // Common & UI labels
+  "common.loading": "Laster…",
+  "common.loadingData": "Laster inn data…",
+  "common.marketData": "Markedsdata",
+  "common.topStories": "Toppnyheter",
+  "article.badgeNew": "NY",
+  "article.via": "via",
+  "ticker.usdOficial": "USD offisiell",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Eldre artikler",
+  "category.featuredAria": "Fremhevet artikkel",
+  "feed.filterByCategory": "Filtrer etter kategori",
 } as const;
 
 export type Translations = typeof no;

@@ -141,9 +141,7 @@ const allJsonLd = [
   ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
 ].filter(Boolean);
 
-// RTL direction for Arabic, Persian, Hebrew, Urdu
-const RTL_LANGS = new Set(["ar", "fa", "he", "ur"]);
-const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
+// RTL direction already computed above (line 100–101)
 ---
 
 <!doctype html>

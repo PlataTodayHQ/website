@@ -607,6 +607,21 @@ export const hi = {
   "footer.mission": "उद्देश्य",
   "footer.newsroom": "संपादकीय कक्ष",
   "footer.founder": "संस्थापक",
+  // Common & UI labels
+  "common.loading": "लोड हो रहा है…",
+  "common.loadingData": "डेटा लोड हो रहा है…",
+  "common.marketData": "बाज़ार डेटा",
+  "common.topStories": "शीर्ष समाचार",
+  "article.badgeNew": "नया",
+  "article.via": "स्रोत",
+  "ticker.usdOficial": "USD आधिकारिक",
+  "ticker.usdBlue": "USD ब्लू",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "पुराने लेख",
+  "category.featuredAria": "विशेष लेख",
+  "feed.filterByCategory": "श्रेणी के अनुसार फ़िल्टर करें",
 } as const;
 
 export type Translations = typeof hi;

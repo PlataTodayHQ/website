@@ -509,6 +509,21 @@ export const tl = {
   "corrections.reportText": "Kung may nakita kang hindi katumpakan sa anumang artikulo ng Plata, mangyaring mag-email sa amin sa hello@plata.today kasama ang URL ng artikulo at paglalarawan ng pagkakamali. Sinusuri namin ang bawat ulat.",
   "corrections.logTitle": "Talaan ng mga pagwawasto",
   "corrections.logEmpty": "Wala pang nailabas na mga pagwawasto.",
+  // Common & UI labels
+  "common.loading": "Naglo-load…",
+  "common.loadingData": "Naglo-load ng data…",
+  "common.marketData": "Data ng merkado",
+  "common.topStories": "Pangunahing balita",
+  "article.badgeNew": "BAGO",
+  "article.via": "mula sa",
+  "ticker.usdOficial": "USD Opisyal",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Mga naunang artikulo",
+  "category.featuredAria": "Itinatampok na artikulo",
+  "feed.filterByCategory": "I-filter ayon sa kategorya",
 } as const;
 
 export type Translations = typeof tl;

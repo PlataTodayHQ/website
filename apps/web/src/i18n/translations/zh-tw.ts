@@ -509,6 +509,21 @@ export const zhTw = {
   "corrections.reportText": "若您在 Plata 的任何文章中發現不準確之處，請寄信至 hello@plata.today，附上文章網址及錯誤描述。我們會審查每一則回報。",
   "corrections.logTitle": "更正記錄",
   "corrections.logEmpty": "目前尚未發布任何更正。",
+  // Common & UI labels
+  "common.loading": "載入中…",
+  "common.loadingData": "正在載入資料…",
+  "common.marketData": "市場數據",
+  "common.topStories": "頭條新聞",
+  "article.badgeNew": "最新",
+  "article.via": "來源",
+  "ticker.usdOficial": "美元官方",
+  "ticker.usdBlue": "美元藍價",
+  "ticker.mep": "美元MEP",
+  "ticker.ccl": "美元CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "較早文章",
+  "category.featuredAria": "精選文章",
+  "feed.filterByCategory": "按類別篩選",
 } as const;
 
 export type Translations = typeof zhTw;

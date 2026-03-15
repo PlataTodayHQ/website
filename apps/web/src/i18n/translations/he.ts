@@ -509,6 +509,21 @@ export const he = {
   "corrections.reportText": "אם הבחנתם באי-דיוק בכתבה כלשהי ב-Plata, אנא כתבו אלינו ל-hello@plata.today עם קישור לכתבה ותיאור השגיאה. אנחנו בודקים כל דיווח.",
   "corrections.logTitle": "יומן תיקונים",
   "corrections.logEmpty": "לא הונפקו תיקונים עד כה.",
+  // Common & UI labels
+  "common.loading": "טוען…",
+  "common.loadingData": "טוען נתונים…",
+  "common.marketData": "נתוני שוק",
+  "common.topStories": "כתבות מובילות",
+  "article.badgeNew": "חדש",
+  "article.via": "מאת",
+  "ticker.usdOficial": "דולר רשמי",
+  "ticker.usdBlue": "דולר בלו",
+  "ticker.mep": "דולר MEP",
+  "ticker.ccl": "דולר CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "כתבות קודמות",
+  "category.featuredAria": "כתבה מומלצת",
+  "feed.filterByCategory": "סינון לפי קטגוריה",
 } as const;
 
 export type Translations = typeof he;

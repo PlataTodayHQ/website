@@ -607,6 +607,21 @@ export const fi = {
   "footer.mission": "Tehtävä",
   "footer.newsroom": "Toimitus",
   "footer.founder": "Perustaja",
+  // Common & UI labels
+  "common.loading": "Ladataan…",
+  "common.loadingData": "Ladataan tietoja…",
+  "common.marketData": "Markkinatiedot",
+  "common.topStories": "Tärkeimmät uutiset",
+  "article.badgeNew": "UUSI",
+  "article.via": "lähde",
+  "ticker.usdOficial": "USD virallinen",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Vanhemmat artikkelit",
+  "category.featuredAria": "Nostettu artikkeli",
+  "feed.filterByCategory": "Suodata kategorian mukaan",
 } as const;
 
 export type Translations = typeof fi;

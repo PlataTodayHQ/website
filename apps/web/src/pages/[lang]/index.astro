@@ -237,6 +237,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
   <!-- FRONT PAGE — Above the fold -->
   <FrontPage
+    lang={lang}
     lead={{
       title: frontPageLead.title,
       description: frontPageLead.description,
@@ -298,6 +299,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     <section class="feed-grid" aria-label={t(lang!, "home.cultureSociety")}>
       {cultureSociety.map((a) => (
         <ArticleCard
+          lang={lang}
           title={a.title}
           description={a.description}
           href={a.href}
@@ -319,6 +321,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     <section class="feed-grid" aria-label={t(lang!, "cat.science")}>
       {scienceTech.map((a) => (
         <ArticleCard
+          lang={lang}
           title={a.title}
           description={a.description}
           href={a.href}
@@ -339,6 +342,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   <section class="feed-grid" id="more-news-grid" aria-label={t(lang!, "home.moreNews")}>
     {moreNews.map((a) => (
       <ArticleCard
+        lang={lang}
         title={a.title}
         description={a.description}
         href={a.href}

@@ -607,6 +607,21 @@ export const zh = {
   "footer.mission": "使命",
   "footer.newsroom": "编辑部",
   "footer.founder": "创始人",
+  // Common & UI labels
+  "common.loading": "加载中…",
+  "common.loadingData": "正在加载数据…",
+  "common.marketData": "市场数据",
+  "common.topStories": "头条新闻",
+  "article.badgeNew": "最新",
+  "article.via": "来源",
+  "ticker.usdOficial": "美元官方",
+  "ticker.usdBlue": "美元蓝价",
+  "ticker.mep": "美元MEP",
+  "ticker.ccl": "美元CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "早期文章",
+  "category.featuredAria": "精选文章",
+  "feed.filterByCategory": "按类别筛选",
 } as const;
 
 export type Translations = typeof zh;

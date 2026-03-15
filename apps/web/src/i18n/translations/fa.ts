@@ -509,6 +509,21 @@ export const fa = {
   "corrections.reportText": "اگر نادرستی‌ای در هر مقاله Plata مشاهده کردید، لطفاً با ذکر آدرس مقاله و شرح خطا به hello@plata.today ایمیل بزنید. ما هر گزارشی را بررسی می‌کنیم.",
   "corrections.logTitle": "دفتر تصحیحات",
   "corrections.logEmpty": "هنوز تصحیحی صادر نشده است.",
+  // Common & UI labels
+  "common.loading": "در حال بارگذاری…",
+  "common.loadingData": "در حال بارگذاری داده‌ها…",
+  "common.marketData": "داده‌های بازار",
+  "common.topStories": "خبرهای مهم",
+  "article.badgeNew": "جدید",
+  "article.via": "از طریق",
+  "ticker.usdOficial": "دلار رسمی",
+  "ticker.usdBlue": "دلار بلو",
+  "ticker.mep": "دلار MEP",
+  "ticker.ccl": "دلار CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "مقالات قبلی",
+  "category.featuredAria": "مقاله ویژه",
+  "feed.filterByCategory": "فیلتر بر اساس دسته‌بندی",
 } as const;
 
 export type Translations = typeof fa;

@@ -509,6 +509,21 @@ export const sw = {
   "corrections.reportText": "Ukiona usahihi katika makala yoyote ya Plata, tafadhali tutumie barua pepe kwa hello@plata.today na URL ya makala na maelezo ya kosa. Tunapitia kila ripoti.",
   "corrections.logTitle": "Kumbukumbu ya marekebisho",
   "corrections.logEmpty": "Hakuna marekebisho yaliyotolewa bado.",
+  // Common & UI labels
+  "common.loading": "Inapakia…",
+  "common.loadingData": "Inapakia data…",
+  "common.marketData": "Data ya soko",
+  "common.topStories": "Habari kuu",
+  "article.badgeNew": "MPYA",
+  "article.via": "kupitia",
+  "ticker.usdOficial": "USD rasmi",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Makala ya awali",
+  "category.featuredAria": "Makala iliyoangaziwa",
+  "feed.filterByCategory": "Chuja kwa kategoria",
 } as const;
 
 export type Translations = typeof sw;

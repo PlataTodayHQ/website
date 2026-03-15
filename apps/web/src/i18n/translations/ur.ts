@@ -509,6 +509,21 @@ export const ur = {
   "corrections.reportText": "اگر آپ کو Plata کے کسی مضمون میں غلطی نظر آئے تو براہ کرم ہمیں hello@plata.today پر مضمون کا URL اور غلطی کی تفصیل کے ساتھ ای میل کریں۔ ہم ہر اطلاع کا جائزہ لیتے ہیں۔",
   "corrections.logTitle": "تصحیحات کا ریکارڈ",
   "corrections.logEmpty": "ابھی تک کوئی تصحیح جاری نہیں کی گئی۔",
+  // Common & UI labels
+  "common.loading": "لوڈ ہو رہا ہے…",
+  "common.loadingData": "ڈیٹا لوڈ ہو رہا ہے…",
+  "common.marketData": "مارکیٹ ڈیٹا",
+  "common.topStories": "اہم خبریں",
+  "article.badgeNew": "نیا",
+  "article.via": "ذریعے",
+  "ticker.usdOficial": "USD سرکاری",
+  "ticker.usdBlue": "USD بلو",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "پرانے مضامین",
+  "category.featuredAria": "نمایاں مضمون",
+  "feed.filterByCategory": "زمرے کے مطابق فلٹر کریں",
 } as const;
 
 export type Translations = typeof ur;

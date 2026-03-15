@@ -607,6 +607,21 @@ export const nl = {
   "footer.mission": "Missie",
   "footer.newsroom": "Redactie",
   "footer.founder": "Oprichter",
+  // Common & UI labels
+  "common.loading": "Laden…",
+  "common.loadingData": "Gegevens laden…",
+  "common.marketData": "Marktgegevens",
+  "common.topStories": "Hoofdnieuws",
+  "article.badgeNew": "NIEUW",
+  "article.via": "via",
+  "ticker.usdOficial": "USD officieel",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Eerdere artikelen",
+  "category.featuredAria": "Uitgelicht artikel",
+  "feed.filterByCategory": "Filteren op categorie",
 } as const;
 
 export type Translations = typeof nl;
