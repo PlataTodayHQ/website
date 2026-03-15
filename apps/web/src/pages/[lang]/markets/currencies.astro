@@ -34,247 +34,126 @@ const { lang } = Astro.params;
     }
   }}
 >
-  <div class="currencies-page" data-currencies-page>
-    <header class="mkts-header">
-      <div>
-        <h1 class="mkts-title">{t(lang!, "currencies.title")}</h1>
-        <p class="mkts-subtitle">{t(lang!, "currencies.subtitle")}</p>
+  <div class="fx-page" data-currencies-page>
+    <!-- Header -->
+    <header class="fx-header">
+      <div class="fx-header-left">
+        <h1 class="fx-title">{t(lang!, "currencies.title")}</h1>
+        <span class="fx-updated" data-mkts-updated>{t(lang!, "currencies.loading")}</span>
       </div>
-      <p class="mkts-updated" data-mkts-updated>{t(lang!, "currencies.loading")}</p>
     </header>
 
-    <!-- Rate Cards -->
-    <div class="rate-cards">
-      <div class="rate-card" id="official">
-        <div class="rc-top">
-          <span class="rc-label">{t(lang!, "currencies.usdOfficial")}</span>
-          <span class="rc-badge">{t(lang!, "currencies.bcra")}</span>
+    <!-- Rate Strip -->
+    <div class="fx-strip">
+      <div class="fx-rate" id="official">
+        <div class="fx-rate-head">
+          <span class="fx-rate-name">{t(lang!, "currencies.usdOfficial")}</span>
+          <span class="fx-badge">{t(lang!, "currencies.bcra")}</span>
         </div>
-        <div class="rc-price-row">
-          <span class="rc-price" data-rc-price="official">—</span>
-          <span class="rc-change" data-rc-change="official"></span>
+        <div class="fx-rate-mid">
+          <span class="fx-price" data-rc-price="official">—</span>
+          <span class="fx-change" data-rc-change="official"></span>
         </div>
-        <div class="rc-details">
-          <div class="rc-detail">
-            <span class="rc-dk">{t(lang!, "currencies.buy")}</span>
-            <span class="rc-dv" data-rc-buy="official">—</span>
-          </div>
-          <div class="rc-detail">
-            <span class="rc-dk">{t(lang!, "currencies.sell")}</span>
-            <span class="rc-dv" data-rc-sell="official">—</span>
-          </div>
+        <div class="fx-buysell">
+          <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.buy")}</span><span class="fx-bs-val" data-rc-buy="official">—</span></div>
+          <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.sell")}</span><span class="fx-bs-val" data-rc-sell="official">—</span></div>
         </div>
-        <div class="rc-spark">
-          <canvas data-spark="official" height="60"></canvas>
+        <div class="fx-spark"><canvas data-spark="official" height="48"></canvas></div>
+      </div>
+
+      <div class="fx-rate fx-rate--blue" id="blue">
+        <div class="fx-rate-head">
+          <span class="fx-rate-name">{t(lang!, "currencies.usdBlue")}</span>
+          <span class="fx-badge fx-badge--blue">{t(lang!, "currencies.informal")}</span>
+        </div>
+        <div class="fx-rate-mid">
+          <span class="fx-price" data-rc-price="blue">—</span>
+          <span class="fx-change" data-rc-change="blue"></span>
+        </div>
+        <div class="fx-buysell">
+          <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.buy")}</span><span class="fx-bs-val" data-rc-buy="blue">—</span></div>
+          <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.sell")}</span><span class="fx-bs-val" data-rc-sell="blue">—</span></div>
+        </div>
+        <div class="fx-spread-row">
+          <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
+          <span class="fx-spread-val" data-spread-pct="blue">—</span>
+        </div>
+        <div class="fx-spark"><canvas data-spark="blue" height="48"></canvas></div>
+      </div>
+
+      <div class="fx-rate fx-rate--mep" id="mep">
+        <div class="fx-rate-head">
+          <span class="fx-rate-name">{t(lang!, "currencies.usdMep")}</span>
+          <span class="fx-badge fx-badge--mep">{t(lang!, "currencies.stockMarket")}</span>
+        </div>
+        <div class="fx-rate-mid">
+          <span class="fx-price" data-rc-price="mep">—</span>
+        </div>
+        <div class="fx-buysell">
+          <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.buy")}</span><span class="fx-bs-val" data-rc-buy="mep">—</span></div>
+          <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.sell")}</span><span class="fx-bs-val" data-rc-sell="mep">—</span></div>
+        </div>
+        <div class="fx-spread-row">
+          <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
+          <span class="fx-spread-val" data-spread-pct="mep">—</span>
         </div>
       </div>
 
-      <div class="rate-card rate-card--blue" id="blue">
-        <div class="rc-top">
-          <span class="rc-label">{t(lang!, "currencies.usdBlue")}</span>
-          <span class="rc-badge rc-badge--blue">{t(lang!, "currencies.informal")}</span>
+      <div class="fx-rate fx-rate--ccl" id="ccl">
+        <div class="fx-rate-head">
+          <span class="fx-rate-name">{t(lang!, "currencies.usdCcl")}</span>
+          <span class="fx-badge fx-badge--ccl">{t(lang!, "currencies.settlement")}</span>
         </div>
-        <div class="rc-price-row">
-          <span class="rc-price" data-rc-price="blue">—</span>
-          <span class="rc-change" data-rc-change="blue"></span>
+        <div class="fx-rate-mid">
+          <span class="fx-price" data-rc-price="ccl">—</span>
         </div>
-        <div class="rc-details">
-          <div class="rc-detail">
-            <span class="rc-dk">{t(lang!, "currencies.buy")}</span>
-            <span class="rc-dv" data-rc-buy="blue">—</span>
-          </div>
-          <div class="rc-detail">
-            <span class="rc-dk">{t(lang!, "currencies.sell")}</span>
-            <span class="rc-dv" data-rc-sell="blue">—</span>
-          </div>
+        <div class="fx-buysell">
+          <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.buy")}</span><span class="fx-bs-val" data-rc-buy="ccl">—</span></div>
+          <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.sell")}</span><span class="fx-bs-val" data-rc-sell="ccl">—</span></div>
         </div>
-        <div class="rc-spark">
-          <canvas data-spark="blue" height="60"></canvas>
-        </div>
-      </div>
-
-      <div class="rate-card rate-card--mep" id="mep">
-        <div class="rc-top">
-          <span class="rc-label">{t(lang!, "currencies.usdMep")}</span>
-          <span class="rc-badge rc-badge--mep">{t(lang!, "currencies.stockMarket")}</span>
-        </div>
-        <div class="rc-price-row">
-          <span class="rc-price" data-rc-price="mep">—</span>
-        </div>
-        <div class="rc-details">
-          <div class="rc-detail">
-            <span class="rc-dk">{t(lang!, "currencies.buy")}</span>
-            <span class="rc-dv" data-rc-buy="mep">—</span>
-          </div>
-          <div class="rc-detail">
-            <span class="rc-dk">{t(lang!, "currencies.sell")}</span>
-            <span class="rc-dv" data-rc-sell="mep">—</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rate-card rate-card--ccl" id="ccl">
-        <div class="rc-top">
-          <span class="rc-label">{t(lang!, "currencies.usdCcl")}</span>
-          <span class="rc-badge rc-badge--ccl">{t(lang!, "currencies.settlement")}</span>
-        </div>
-        <div class="rc-price-row">
-          <span class="rc-price" data-rc-price="ccl">—</span>
-        </div>
-        <div class="rc-details">
-          <div class="rc-detail">
-            <span class="rc-dk">{t(lang!, "currencies.buy")}</span>
-            <span class="rc-dv" data-rc-buy="ccl">—</span>
-          </div>
-          <div class="rc-detail">
-            <span class="rc-dk">{t(lang!, "currencies.sell")}</span>
-            <span class="rc-dv" data-rc-sell="ccl">—</span>
-          </div>
+        <div class="fx-spread-row">
+          <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
+          <span class="fx-spread-val" data-spread-pct="ccl">—</span>
         </div>
       </div>
     </div>
 
-    <!-- Spread Bars -->
-    <div class="spread-bars">
-      <div class="spread-bar">
-        <div class="spread-item">
-          <span class="spread-label">{t(lang!, "currencies.blueSpread")}</span>
-          <span class="spread-value" data-spread-abs="blue">—</span>
-        </div>
-        <div class="spread-sep"></div>
-        <div class="spread-item">
-          <span class="spread-label">{t(lang!, "currencies.gap")}</span>
-          <span class="spread-value spread-pct" data-spread-pct="blue">—</span>
+    <!-- Chart -->
+    <section class="fx-chart-section">
+      <div class="fx-chart-head">
+        <h2 class="fx-chart-title">{t(lang!, "currencies.evoTitle")}</h2>
+        <div class="fx-legend">
+          <span class="fx-leg fx-leg--official"><span class="fx-dot"></span> {t(lang!, "markets.official")}</span>
+          <span class="fx-leg fx-leg--blue"><span class="fx-dot"></span> {t(lang!, "markets.blue")}</span>
         </div>
       </div>
-      <div class="spread-bar spread-bar--mep">
-        <div class="spread-item">
-          <span class="spread-label">{t(lang!, "currencies.mepSpread")}</span>
-          <span class="spread-value" data-spread-abs="mep">—</span>
-        </div>
-        <div class="spread-sep"></div>
-        <div class="spread-item">
-          <span class="spread-label">{t(lang!, "currencies.gap")}</span>
-          <span class="spread-value spread-pct" data-spread-pct="mep">—</span>
-        </div>
-      </div>
-      <div class="spread-bar spread-bar--ccl">
-        <div class="spread-item">
-          <span class="spread-label">{t(lang!, "currencies.cclSpread")}</span>
-          <span class="spread-value" data-spread-abs="ccl">—</span>
-        </div>
-        <div class="spread-sep"></div>
-        <div class="spread-item">
-          <span class="spread-label">{t(lang!, "currencies.gap")}</span>
-          <span class="spread-value spread-pct" data-spread-pct="ccl">—</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 30-Day Evolution Chart -->
-    <section class="evo-section">
-      <h2 class="evo-title">{t(lang!, "currencies.evoTitle")}</h2>
-      <div class="evo-legend">
-        <span class="evo-leg evo-leg--official"><span class="evo-dot"></span> {t(lang!, "markets.official")}</span>
-        <span class="evo-leg evo-leg--blue"><span class="evo-dot"></span> {t(lang!, "markets.blue")}</span>
-      </div>
-      <div class="evo-wrap">
-        <canvas data-evo-chart height="280"></canvas>
+      <div class="fx-chart-wrap">
+        <canvas data-evo-chart height="320"></canvas>
       </div>
     </section>
 
-    <!-- 7-Day Comparison Table -->
-    <section class="comparison-section">
-      <h2 class="section-title">{t(lang!, "currencies.recentHistory")}</h2>
-      <div class="table-wrap">
-        <table class="comparison-table" data-comparison-table>
+    <!-- History Table -->
+    <section class="fx-table-section">
+      <h2 class="fx-section-title">{t(lang!, "currencies.recentHistory")}</h2>
+      <div class="fx-table-wrap">
+        <table class="fx-table" data-comparison-table>
           <thead>
             <tr>
               <th>{t(lang!, "currencies.date")}</th>
-              <th class="text-right">{t(lang!, "markets.official")}</th>
-              <th class="text-right">{t(lang!, "markets.blue")}</th>
-              <th class="text-right">{t(lang!, "markets.spread")}</th>
-              <th class="text-right">{t(lang!, "currencies.gap")}</th>
+              <th class="r">{t(lang!, "markets.official")}</th>
+              <th class="r">{t(lang!, "markets.blue")}</th>
+              <th class="r">{t(lang!, "markets.spread")}</th>
+              <th class="r">{t(lang!, "currencies.gap")}</th>
             </tr>
           </thead>
           <tbody data-comparison-body>
-            <tr><td colspan="5" class="loading-cell">Loading data…</td></tr>
+            <tr><td colspan="5" class="fx-loading">Loading…</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- Guide Section -->
-    <section class="info-section">
-      <h2 class="section-title">{t(lang!, "currencies.guideTitle")}</h2>
-      <div class="explainer-card">
-        <p>{t(lang!, "currencies.guideIntro")}</p>
-      </div>
-    </section>
-
-    <!-- Info Section — All 4 Rates -->
-    <section class="info-section">
-      <h2 class="section-title">{t(lang!, "currencies.understandTitle")}</h2>
-      <div class="info-grid info-grid--4">
-        <div class="info-card">
-          <h3>{t(lang!, "currencies.officialTitle")}</h3>
-          <p>{t(lang!, "currencies.officialDesc")}</p>
-        </div>
-        <div class="info-card">
-          <h3>{t(lang!, "currencies.blueTitle")}</h3>
-          <p>{t(lang!, "currencies.blueDesc")}</p>
-        </div>
-        <div class="info-card">
-          <h3>{t(lang!, "currencies.mepTitle")}</h3>
-          <p>{t(lang!, "currencies.mepDesc")}</p>
-        </div>
-        <div class="info-card">
-          <h3>{t(lang!, "currencies.cclTitle")}</h3>
-          <p>{t(lang!, "currencies.cclDesc")}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why Multiple Rates Explainer -->
-    <section class="info-section">
-      <h2 class="section-title">{t(lang!, "currencies.whyTwoRates")}</h2>
-      <div class="explainer-card">
-        <p>{t(lang!, "currencies.whyTwoRatesDesc")}</p>
-      </div>
-    </section>
-
-    <!-- Who Uses Each Rate -->
-    <section class="info-section">
-      <h2 class="section-title">{t(lang!, "currencies.whoUsesTitle")}</h2>
-      <div class="info-grid info-grid--4">
-        <div class="info-card info-card--compact">
-          <h3>{t(lang!, "currencies.whoUsesOfficialLabel")}</h3>
-          <p>{t(lang!, "currencies.whoUsesOfficialDesc")}</p>
-        </div>
-        <div class="info-card info-card--compact">
-          <h3>{t(lang!, "currencies.whoUsesBlueLabel")}</h3>
-          <p>{t(lang!, "currencies.whoUsesBlueDesc")}</p>
-        </div>
-        <div class="info-card info-card--compact">
-          <h3>{t(lang!, "currencies.whoUsesMepLabel")}</h3>
-          <p>{t(lang!, "currencies.whoUsesMepDesc")}</p>
-        </div>
-        <div class="info-card info-card--compact">
-          <h3>{t(lang!, "currencies.whoUsesCclLabel")}</h3>
-          <p>{t(lang!, "currencies.whoUsesCclDesc")}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Data Sources -->
-    <section class="info-section">
-      <h2 class="section-title">{t(lang!, "currencies.rateSourcesTitle")}</h2>
-      <div class="explainer-card">
-        <p>{t(lang!, "currencies.rateSourcesDesc")}</p>
-      </div>
-    </section>
-
-    <p class="info-disclaimer">{t(lang!, "currencies.disclaimer")}</p>
+    <p class="fx-disclaimer">{t(lang!, "currencies.disclaimer")}</p>
   </div>
 </Base>
 
@@ -295,7 +174,7 @@ const { lang } = Astro.params;
     if (percent == null) { el.textContent = ''; return; }
     var sign = percent >= 0 ? '+' : '';
     el.textContent = sign + percent.toFixed(2) + '%';
-    el.className = 'rc-change ' + (percent >= 0 ? 'rc-up' : 'rc-down');
+    el.className = 'fx-change ' + (percent >= 0 ? 'rc-up' : 'rc-down');
   }
 
   var chartData = null;
@@ -315,8 +194,9 @@ const { lang } = Astro.params;
 
   function fillSpread(key, rateSell, officialSell) {
     var s = calcSpread(rateSell, officialSell);
-    setEl('[data-spread-abs="' + key + '"]', 'ARS ' + C.fmt(s.spread));
-    setEl('[data-spread-pct="' + key + '"]', s.gap.toFixed(1) + '%');
+    setEl('[data-spread-pct="' + key + '"]', (s.gap >= 0 ? '+' : '') + s.gap.toFixed(1) + '%');
+    var el = document.querySelector('[data-spread-pct="' + key + '"]');
+    if (el) el.className = 'fx-spread-val ' + (s.gap >= 0 ? 'rc-up' : 'rc-down');
   }
 
   Promise.all([
@@ -328,14 +208,13 @@ const { lang } = Astro.params;
     var evoRaw = res[1];
     var apiRates = res[2];
 
-    setEl('[data-mkts-updated]', 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    setEl('[data-mkts-updated]', new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
 
     if (latest && latest.oficial) {
       fillRate('official', latest.oficial);
       fillRate('blue', latest.blue);
       fillSpread('blue', latest.blue.value_sell, latest.oficial.value_sell);
 
-      // MEP and CCL from internal API
       if (apiRates) {
         if (apiRates.mep) {
           fillRate('mep', apiRates.mep);
@@ -352,15 +231,13 @@ const { lang } = Astro.params;
       var parsed = C.parseEvolution(evoRaw);
       chartData = parsed;
 
-      // Sparklines
       if (parsed.official.length >= 2) {
-        C.drawSpark(document.querySelector('[data-spark="official"]'), parsed.official.map(function(p) { return p.v; }), '#75AADB', 'rgba(117,170,219,0.25)');
+        C.drawSpark(document.querySelector('[data-spark="official"]'), parsed.official.map(function(p) { return p.v; }), '#75AADB', 'rgba(117,170,219,0.18)');
       }
       if (parsed.blue.length >= 2) {
-        C.drawSpark(document.querySelector('[data-spark="blue"]'), parsed.blue.map(function(p) { return p.v; }), '#F6B40E', 'rgba(246,180,14,0.25)');
+        C.drawSpark(document.querySelector('[data-spark="blue"]'), parsed.blue.map(function(p) { return p.v; }), '#F6B40E', 'rgba(246,180,14,0.18)');
       }
 
-      // Change %
       if (parsed.official.length >= 2) {
         var o = parsed.official;
         setChange('[data-rc-change="official"]', ((o[o.length - 1].v - o[o.length - 2].v) / o[o.length - 2].v) * 100);
@@ -370,30 +247,27 @@ const { lang } = Astro.params;
         setChange('[data-rc-change="blue"]', ((b[b.length - 1].v - b[b.length - 2].v) / b[b.length - 2].v) * 100);
       }
 
-      // Evolution chart
       C.drawChart(document.querySelector('[data-evo-chart]'), [
-        { points: parsed.official, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)', label: 'Official' },
-        { points: parsed.blue, lineColor: '#F6B40E', fillColor: 'rgba(246,180,14,0.12)', label: 'Blue' }
-      ]);
+        { points: parsed.official, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.08)', label: 'Official' },
+        { points: parsed.blue, lineColor: '#F6B40E', fillColor: 'rgba(246,180,14,0.08)', label: 'Blue' }
+      ], { height: 320 });
 
-      // Comparison table (last 7 days)
       buildComparisonTable(parsed);
     }
   }).catch(function() {
-    setEl('[data-mkts-updated]', 'Unable to load data');
+    setEl('[data-mkts-updated]', '—');
   });
 
   function buildComparisonTable(parsed) {
     var tbody = document.querySelector('[data-comparison-body]');
     if (!tbody) return;
 
-    // Merge dates, take last 7
     var dateMap = {};
     parsed.official.forEach(function(p) { dateMap[p.d] = dateMap[p.d] || {}; dateMap[p.d].official = p.v; });
     parsed.blue.forEach(function(p) { dateMap[p.d] = dateMap[p.d] || {}; dateMap[p.d].blue = p.v; });
 
     var dates = Object.keys(dateMap).sort().reverse().slice(0, 7);
-    if (dates.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="loading-cell">No data available</td></tr>'; return; }
+    if (dates.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="fx-loading">—</td></tr>'; return; }
 
     var html = '';
     for (var i = 0; i < dates.length; i++) {
@@ -407,92 +281,112 @@ const { lang } = Astro.params;
       var dateStr = parseInt(parts[2]) + '/' + parseInt(parts[1]);
 
       html += '<tr>';
-      html += '<td>' + dateStr + '</td>';
-      html += '<td class="text-right tabular">' + (off ? C.fmt(off) : '—') + '</td>';
-      html += '<td class="text-right tabular">' + (blu ? C.fmt(blu) : '—') + '</td>';
-      html += '<td class="text-right tabular">' + (spread > 0 ? C.fmt(spread) : '—') + '</td>';
-      html += '<td class="text-right tabular">' + gap + '</td>';
+      html += '<td class="fx-td-date">' + dateStr + '</td>';
+      html += '<td class="r tab">' + (off ? C.fmt(off) : '—') + '</td>';
+      html += '<td class="r tab">' + (blu ? C.fmt(blu) : '—') + '</td>';
+      html += '<td class="r tab">' + (spread > 0 ? C.fmt(spread) : '—') + '</td>';
+      html += '<td class="r tab ' + (spread >= 0 ? 'rc-up' : 'rc-down') + '">' + gap + '</td>';
       html += '</tr>';
     }
     tbody.innerHTML = html;
   }
 
-  // Resize handler
   var rTimer;
   window.addEventListener('resize', function() {
     clearTimeout(rTimer);
     rTimer = setTimeout(function() {
       if (!chartData) return;
-      C.drawSpark(document.querySelector('[data-spark="official"]'), chartData.official.map(function(p) { return p.v; }), '#75AADB', 'rgba(117,170,219,0.25)');
-      C.drawSpark(document.querySelector('[data-spark="blue"]'), chartData.blue.map(function(p) { return p.v; }), '#F6B40E', 'rgba(246,180,14,0.25)');
+      C.drawSpark(document.querySelector('[data-spark="official"]'), chartData.official.map(function(p) { return p.v; }), '#75AADB', 'rgba(117,170,219,0.18)');
+      C.drawSpark(document.querySelector('[data-spark="blue"]'), chartData.blue.map(function(p) { return p.v; }), '#F6B40E', 'rgba(246,180,14,0.18)');
       C.drawChart(document.querySelector('[data-evo-chart]'), [
-        { points: chartData.official, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)', label: 'Official' },
-        { points: chartData.blue, lineColor: '#F6B40E', fillColor: 'rgba(246,180,14,0.12)', label: 'Blue' }
-      ]);
+        { points: chartData.official, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.08)', label: 'Official' },
+        { points: chartData.blue, lineColor: '#F6B40E', fillColor: 'rgba(246,180,14,0.08)', label: 'Blue' }
+      ], { height: 320 });
     }, 200);
   });
 })();
 </script>
 
 <style>
-  .rate-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); }
-  .rate-card { background: var(--color-bg-secondary); border-radius: 8px; padding: var(--spacing-lg); border: 1px solid var(--color-border); }
-  .rc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md); }
-  .rc-label { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; color: var(--color-text); }
-  .rc-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; background: rgba(117,170,219,0.15); color: #4a8abf; }
-  .rc-badge--blue { background: rgba(246,180,14,0.15); color: #b8860b; }
-  .rc-badge--mep { background: rgba(76,175,80,0.15); color: #2e7d32; }
-  .rc-badge--ccl { background: rgba(156,39,176,0.15); color: #7b1fa2; }
-  .rc-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: var(--spacing-md); }
-  .rc-price { font-size: 1.75rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; }
-  .rc-change { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .rc-details { display: flex; gap: var(--spacing-lg); padding-top: var(--spacing-sm); border-top: 1px solid var(--color-border); margin-bottom: var(--spacing-md); }
-  .rc-detail { display: flex; flex-direction: column; gap: 2px; }
-  .rc-dk { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
-  .rc-dv { font-size: 0.95rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
-  .rc-spark { margin-top: var(--spacing-sm); }
-  .rc-spark canvas { width: 100%; display: block; }
+  /* ═══ FX Page — Yahoo Finance / TradingView inspired ═══ */
 
-  .spread-bars { display: flex; flex-direction: column; gap: var(--spacing-sm); margin-bottom: var(--spacing-2xl); }
-  .spread-bar { display: flex; align-items: center; justify-content: center; gap: var(--spacing-xl); background: var(--color-celeste); color: #fff; padding: var(--spacing-md) var(--spacing-lg); border-radius: 6px; }
-  .spread-bar--mep { background: #2e7d32; }
-  .spread-bar--ccl { background: #7b1fa2; }
-  .spread-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.2); }
-  .spread-item { display: flex; align-items: center; gap: 8px; }
-  .spread-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
-  .spread-value { font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .spread-pct { color: var(--color-gold); }
+  .fx-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
 
-  .evo-section { margin-bottom: var(--spacing-2xl); }
-  .evo-title { font-size: 1.3rem; font-weight: 700; margin-bottom: var(--spacing-sm); }
-  .evo-legend { display: flex; gap: var(--spacing-lg); margin-bottom: var(--spacing-md); }
-  .evo-leg { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--color-text-secondary); font-weight: 600; }
-  .evo-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-  .evo-leg--official .evo-dot { background: #75AADB; }
-  .evo-leg--blue .evo-dot { background: #F6B40E; }
-  .evo-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-md); }
-  .evo-wrap canvas { width: 100%; display: block; }
+  /* Header */
+  .fx-header { display: flex; align-items: baseline; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-sm); border-bottom: 1px solid var(--color-border); }
+  .fx-header-left { display: flex; align-items: baseline; gap: var(--spacing-md); flex-wrap: wrap; }
+  .fx-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .fx-updated { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
 
-  .comparison-section { margin-bottom: var(--spacing-2xl); }
-  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .comparison-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-  .comparison-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); font-weight: 700; padding: var(--spacing-sm) var(--spacing-md); border-bottom: 2px solid var(--color-border); }
-  .comparison-table td { padding: var(--spacing-sm) var(--spacing-md); border-bottom: 1px solid var(--color-border); color: var(--color-text); }
-  .comparison-table .text-right { text-align: right; }
-  .comparison-table .tabular { font-variant-numeric: tabular-nums; font-weight: 600; }
-  .loading-cell { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl) !important; }
+  /* Rate Strip — 4 cards in a row */
+  .fx-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; margin-bottom: var(--spacing-xl); }
 
-  :global([data-theme="dark"]) .rc-badge { color: #75AADB; }
-  :global([data-theme="dark"]) .rc-badge--blue { color: #F6B40E; }
-  :global([data-theme="dark"]) .rc-badge--mep { color: #66BB6A; }
-  :global([data-theme="dark"]) .rc-badge--ccl { color: #CE93D8; }
+  .fx-rate { background: var(--color-bg); padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .fx-rate-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .fx-rate-name { font-size: 0.78rem; font-weight: 700; color: var(--color-text); text-transform: uppercase; letter-spacing: 0.03em; }
+  .fx-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 3px; background: rgba(117,170,219,0.12); color: #4a8abf; white-space: nowrap; }
+  .fx-badge--blue { background: rgba(246,180,14,0.12); color: #b8860b; }
+  .fx-badge--mep { background: rgba(76,175,80,0.12); color: #2e7d32; }
+  .fx-badge--ccl { background: rgba(156,39,176,0.12); color: #7b1fa2; }
 
-  @media (max-width: 640px) {
-    .rate-cards { grid-template-columns: 1fr; }
-    .spread-bar { flex-direction: column; gap: var(--spacing-sm); }
-    .spread-sep { width: 80%; height: 1px; }
-    .rc-price { font-size: 1.4rem; }
-    .evo-title { font-size: 1.1rem; }
-    .spread-bars { gap: var(--spacing-xs); }
+  .fx-rate-mid { display: flex; align-items: baseline; gap: 8px; }
+  .fx-price { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; color: var(--color-text); line-height: 1.1; }
+  .fx-change { font-size: 0.78rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .fx-buysell { display: flex; gap: 16px; }
+  .fx-bs { display: flex; align-items: baseline; gap: 4px; }
+  .fx-bs-label { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; font-weight: 600; }
+  .fx-bs-val { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+
+  .fx-spread-row { display: flex; align-items: center; gap: 6px; }
+  .fx-spread-label { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; font-weight: 600; }
+  .fx-spread-val { font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .fx-spark { margin-top: auto; }
+  .fx-spark canvas { width: 100%; display: block; }
+
+  /* Chart Section */
+  .fx-chart-section { margin-bottom: var(--spacing-xl); }
+  .fx-chart-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-sm); }
+  .fx-chart-title { font-size: 1rem; font-weight: 700; }
+  .fx-legend { display: flex; gap: var(--spacing-md); }
+  .fx-leg { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--color-text-meta); font-weight: 600; }
+  .fx-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .fx-leg--official .fx-dot { background: #75AADB; }
+  .fx-leg--blue .fx-dot { background: #F6B40E; }
+  .fx-chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-sm) var(--spacing-md); }
+  .fx-chart-wrap canvas { width: 100%; display: block; }
+
+  /* Table Section */
+  .fx-table-section { margin-bottom: var(--spacing-xl); }
+  .fx-section-title { font-size: 1rem; font-weight: 700; margin-bottom: var(--spacing-sm); }
+  .fx-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .fx-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .fx-table thead th { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); font-weight: 700; padding: 8px 12px; border-bottom: 2px solid var(--color-border); white-space: nowrap; }
+  .fx-table tbody td { padding: 8px 12px; border-bottom: 1px solid var(--color-border); color: var(--color-text); }
+  .fx-table tbody tr:hover { background: var(--color-bg-secondary); }
+  .fx-table .r { text-align: right; }
+  .fx-table .tab { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .fx-td-date { font-weight: 600; color: var(--color-text-meta); white-space: nowrap; }
+  .fx-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl) !important; }
+
+  /* Disclaimer */
+  .fx-disclaimer { font-size: 0.7rem; color: var(--color-text-meta); text-align: center; margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); }
+
+  /* Dark mode badge overrides */
+  :global([data-theme="dark"]) .fx-badge { color: #75AADB; }
+  :global([data-theme="dark"]) .fx-badge--blue { color: #F6B40E; }
+  :global([data-theme="dark"]) .fx-badge--mep { color: #66BB6A; }
+  :global([data-theme="dark"]) .fx-badge--ccl { color: #CE93D8; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .fx-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .fx-strip { grid-template-columns: 1fr; }
+    .fx-title { font-size: 1.25rem; }
+    .fx-price { font-size: 1.3rem; }
+    .fx-chart-head { flex-direction: column; align-items: flex-start; gap: 4px; }
   }
 </style>
