@@ -1,0 +1,160 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "contact.title")}
+  description={t(lang!, "contact.description")}
+  lang={lang}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "about.title"), url: `/${lang}/about` },
+    { name: t(lang!, "contact.title"), url: `/${lang}/contact` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": t(lang!, "contact.title"),
+    "url": `https://plata.today/${lang}/contact`,
+    "description": t(lang!, "contact.description"),
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <article class="info-page">
+    <header class="info-header">
+      <h1>{t(lang!, "contact.heading")}</h1>
+      <p class="info-tagline">{t(lang!, "contact.intro")}</p>
+    </header>
+
+    <div class="info-body">
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon" aria-hidden="true">&#9993;</div>
+          <h2>{t(lang!, "contact.generalTitle")}</h2>
+          <p>{t(lang!, "contact.generalDesc")}</p>
+          <a href="mailto:hello@plata.today">hello@plata.today</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon" aria-hidden="true">&#128274;</div>
+          <h2>{t(lang!, "contact.privacyTitle")}</h2>
+          <p>{t(lang!, "contact.privacyDesc")}</p>
+          <a href="mailto:privacy@plata.today">privacy@plata.today</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon" aria-hidden="true">&#128736;</div>
+          <h2>{t(lang!, "contact.bugsTitle")}</h2>
+          <p>{t(lang!, "contact.bugsDesc")}</p>
+          <a href="https://github.com/PlataTodayHQ/website/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-icon" aria-hidden="true">&#9998;</div>
+          <h2>{t(lang!, "contact.correctionsTitle")}</h2>
+          <p>{t(lang!, "contact.correctionsDesc")}</p>
+          <a href="mailto:hello@plata.today">hello@plata.today</a>
+        </div>
+      </div>
+
+      <p class="response-note">{t(lang!, "contact.responseTime")}</p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .info-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-radius: 2px;
+  }
+
+  .info-header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .info-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+  }
+
+  .info-tagline {
+    font-size: 1.05rem;
+    color: var(--color-text-meta);
+    margin-top: var(--spacing-sm);
+    line-height: 1.6;
+  }
+
+  .info-body h2 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  /* Contact grid */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .contact-card {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-gold);
+    border-radius: 2px;
+  }
+
+  .contact-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .contact-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--color-text-meta);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .contact-card a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-celeste);
+    text-decoration: none;
+  }
+
+  .contact-card a:hover {
+    text-decoration: underline;
+  }
+
+  .response-note {
+    font-size: 0.85rem;
+    color: var(--color-text-meta);
+    text-align: center;
+    margin-top: var(--spacing-xl);
+  }
+
+  @media (max-width: 640px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

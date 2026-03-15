@@ -31,121 +31,54 @@ const { lang } = Astro.params;
     }
   }}
 >
-  <article class="about">
+  <article class="about-hub">
     <header class="about-header">
       <h1>{t(lang!, "about.title")}</h1>
-      <p class="about-tagline">{t(lang!, "about.tagline")}</p>
+      <p class="about-tagline">{t(lang!, "about.hubTagline")}</p>
     </header>
 
-    <div class="about-body">
-      <!-- Mission -->
-      <section>
-        <h2>{t(lang!, "about.missionTitle")}</h2>
-        <p>{t(lang!, "about.missionText")}</p>
+    <div class="hub-grid">
+      <a href={`/${lang}/mission`} class="hub-card">
+        <span class="hub-icon" aria-hidden="true">&#9878;</span>
+        <h2>{t(lang!, "about.missionCard")}</h2>
+        <p>{t(lang!, "about.missionCardDesc")}</p>
+      </a>
 
-        <div class="value-cards">
-          <div class="value-card">
-            <span class="value-icon" aria-hidden="true">&#9878;</span>
-            <h3>{t(lang!, "about.valueNoOpinion")}</h3>
-            <p>{t(lang!, "about.valueNoOpinionDesc")}</p>
-          </div>
-          <div class="value-card">
-            <span class="value-icon" aria-hidden="true">&#127760;</span>
-            <h3>{t(lang!, "about.value18langs")}</h3>
-            <p>{t(lang!, "about.value18langsDesc")}</p>
-          </div>
-          <div class="value-card">
-            <span class="value-icon" aria-hidden="true">&#9889;</span>
-            <h3>{t(lang!, "about.valueFast")}</h3>
-            <p>{t(lang!, "about.valueFastDesc")}</p>
-          </div>
-        </div>
-      </section>
+      <a href={`/${lang}/newsroom`} class="hub-card">
+        <span class="hub-icon" aria-hidden="true">&#9881;</span>
+        <h2>{t(lang!, "about.newsroomCard")}</h2>
+        <p>{t(lang!, "about.newsroomCardDesc")}</p>
+      </a>
 
-      <!-- How it works -->
-      <section>
-        <h2>{t(lang!, "about.howTitle")}</h2>
-        <div class="steps">
-          <div class="step">
-            <span class="step-num">1</span>
-            <div>
-              <h3>{t(lang!, "about.step1Title")}</h3>
-              <p>{t(lang!, "about.step1Desc")}</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-num">2</span>
-            <div>
-              <h3>{t(lang!, "about.step2Title")}</h3>
-              <p>{t(lang!, "about.step2Desc")}</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-num">3</span>
-            <div>
-              <h3>{t(lang!, "about.step3Title")}</h3>
-              <p>{t(lang!, "about.step3Desc")}</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-num">4</span>
-            <div>
-              <h3>{t(lang!, "about.step4Title")}</h3>
-              <p>{t(lang!, "about.step4Desc")}</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <a href={`/${lang}/founder`} class="hub-card">
+        <span class="hub-icon" aria-hidden="true">&#9733;</span>
+        <h2>{t(lang!, "about.founderCard")}</h2>
+        <p>{t(lang!, "about.founderCardDesc")}</p>
+      </a>
 
-      <!-- Sources -->
-      <section>
-        <h2>{t(lang!, "about.sourcesTitle")}</h2>
-        <p>{t(lang!, "about.sourcesText")}</p>
-      </section>
+      <a href={`/${lang}/contact`} class="hub-card">
+        <span class="hub-icon" aria-hidden="true">&#9993;</span>
+        <h2>{t(lang!, "about.contactCard")}</h2>
+        <p>{t(lang!, "about.contactCardDesc")}</p>
+      </a>
 
-      <!-- Founder -->
-      <section>
-        <h2>{t(lang!, "about.founderTitle")}</h2>
-        <div class="founder">
-          <div class="founder-avatar" aria-hidden="true">BF</div>
-          <div class="founder-info">
-            <h3>{t(lang!, "about.founderName")}</h3>
-            <p class="founder-role">{t(lang!, "about.founderRole")}</p>
-            <p>{t(lang!, "about.founderBio")}</p>
-          </div>
-        </div>
-      </section>
+      <a href={`/${lang}/standards`} class="hub-card">
+        <span class="hub-icon" aria-hidden="true">&#9745;</span>
+        <h2>{t(lang!, "about.standardsCard")}</h2>
+        <p>{t(lang!, "about.standardsCardDesc")}</p>
+      </a>
 
-      <!-- Disclaimer -->
-      <section>
-        <h2>{t(lang!, "about.disclaimerTitle")}</h2>
-        <p>{t(lang!, "about.disclaimerText")}</p>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact">
-        <h2>{t(lang!, "about.contactTitle")}</h2>
-        <div class="contact-cards">
-          <div class="contact-card">
-            <h3>{t(lang!, "about.contactGeneral")}</h3>
-            <a href="mailto:hello@plata.today">hello@plata.today</a>
-          </div>
-          <div class="contact-card">
-            <h3>{t(lang!, "about.contactPrivacy")}</h3>
-            <a href="mailto:privacy@plata.today">privacy@plata.today</a>
-          </div>
-          <div class="contact-card">
-            <h3>{t(lang!, "about.contactBugs")}</h3>
-            <a href="https://github.com/PlataTodayHQ/website/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
-          </div>
-        </div>
-      </section>
+      <a href={`/${lang}/corrections`} class="hub-card">
+        <span class="hub-icon" aria-hidden="true">&#9998;</span>
+        <h2>{t(lang!, "about.correctionsCard")}</h2>
+        <p>{t(lang!, "about.correctionsCardDesc")}</p>
+      </a>
     </div>
   </article>
 </Base>
 
 <style>
-  .about {
+  .about-hub {
     max-width: var(--content-width);
     margin: 0 auto;
     background: var(--color-bg);
@@ -170,199 +103,57 @@ const { lang } = Astro.params;
     margin-top: var(--spacing-sm);
   }
 
-  .about-body h2 {
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-top: 3px solid var(--color-celeste);
-    padding-top: var(--spacing-md);
-    margin-top: var(--spacing-xl);
-    margin-bottom: var(--spacing-md);
-  }
-
-  .about-body p {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-md);
-  }
-
-  /* Value cards */
-  .value-cards {
+  .hub-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-lg);
-    margin-top: var(--spacing-lg);
   }
 
-  .value-card {
+  .hub-card {
+    display: block;
     padding: var(--spacing-lg);
     border: 1px solid var(--color-border);
     border-top: 3px solid var(--color-gold);
     border-radius: 2px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
 
-  .value-icon {
+  .hub-card:hover {
+    border-color: var(--color-celeste);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .hub-icon {
     font-size: 1.5rem;
     display: block;
     margin-bottom: var(--spacing-sm);
   }
 
-  .value-card h3 {
+  .hub-card h2 {
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 700;
     margin-bottom: var(--spacing-xs);
   }
 
-  .value-card p {
+  .hub-card p {
     font-size: 0.85rem;
     line-height: 1.6;
     color: var(--color-text-meta);
-    margin-bottom: 0;
+    margin: 0;
   }
 
-  /* Steps */
-  .steps {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-md);
+  @media (max-width: 900px) {
+    .hub-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  .step {
-    display: flex;
-    gap: var(--spacing-md);
-    align-items: flex-start;
-  }
-
-  .step-num {
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-celeste);
-    color: #fff;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 50%;
-  }
-
-  .step h3 {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 2px;
-  }
-
-  .step p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--color-text-meta);
-    margin-bottom: 0;
-  }
-
-  /* Founder */
-  .founder {
-    display: flex;
-    gap: var(--spacing-lg);
-    align-items: flex-start;
-    margin-top: var(--spacing-md);
-  }
-
-  .founder-avatar {
-    flex-shrink: 0;
-    width: 72px;
-    height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-celeste);
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.25rem;
-    border-radius: 50%;
-    letter-spacing: 0.05em;
-  }
-
-  .founder-info h3 {
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
-
-  .founder-role {
-    font-size: 0.85rem !important;
-    color: var(--color-text-meta) !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: var(--spacing-sm) !important;
-  }
-
-  /* Contact cards */
-  .contact-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-md);
-  }
-
-  .contact-card {
-    padding: var(--spacing-lg);
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
-    text-align: center;
-  }
-
-  .contact-card h3 {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--color-text-meta);
-    margin-bottom: var(--spacing-sm);
-    letter-spacing: 0.04em;
-  }
-
-  .contact-card a {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--color-celeste);
-    text-decoration: none;
-  }
-
-  .contact-card a:hover {
-    text-decoration: underline;
-  }
-
-  /* Mobile */
   @media (max-width: 640px) {
-    .value-cards,
-    .contact-cards {
+    .hub-grid {
       grid-template-columns: 1fr;
-    }
-
-    .founder {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .founder-links {
-      justify-content: center;
-    }
-  }
-
-  @media (min-width: 641px) and (max-width: 900px) {
-    .value-cards {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .contact-cards {
-      grid-template-columns: 1fr 1fr 1fr;
     }
   }
 </style>
