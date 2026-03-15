@@ -44,6 +44,23 @@ const { title, href, accentColor } = Astro.props;
     color: var(--color-text);
   }
 
+  .section-title-link .section-title {
+    margin-bottom: 0;
+  }
+
+  .section-title-link svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 640px) {
+    .section-title-link svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
   .section-title-link:hover {
     text-decoration: none;
     color: var(--color-link-hover);
