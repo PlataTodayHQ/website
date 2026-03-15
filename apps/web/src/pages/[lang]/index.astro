@@ -400,7 +400,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     var catLabel = catLabels[a.category] || a.category;
     var html = '<a href="' + escapeHtml(a.href) + '" class="card-link">';
     if (a.imageUrl) {
-      html += '<div class="card-image"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" /></div>';
+      html += '<div class="card-image"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" onerror="this.parentElement.style.display=\'none\'" /></div>';
     }
     html += '<div class="card-body">';
     if (catLabel) {

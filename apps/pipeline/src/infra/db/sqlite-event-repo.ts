@@ -44,7 +44,8 @@ export class SQLiteEventRepository implements IEventRepository {
     this.triageStmt = db.prepare(`
       UPDATE events
       SET llm_importance = ?, llm_category = ?, category = ?, triage_reason = ?, stage = 'triaged',
-          importance_score = ROUND(? * 0.7 + importance_score * 0.3, 2)
+          importance_score = ROUND(? * 0.7 + importance_score * 0.3, 2),
+          subcategory = ?
       WHERE id = ?
     `);
     this.killStmt = db.prepare(`
@@ -94,8 +95,8 @@ export class SQLiteEventRepository implements IEventRepository {
     this.setStageStmt.run(stage, id);
   }
 
-  triage(id: number, importance: number, category: string, reason: string): void {
-    this.triageStmt.run(importance, category, category, reason, importance, id);
+  triage(id: number, importance: number, category: string, reason: string, subcategory?: string): void {
+    this.triageStmt.run(importance, category, category, reason, importance, subcategory ?? null, id);
   }
 
   kill(id: number, importance: number, reason: string): void {

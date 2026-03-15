@@ -107,8 +107,10 @@ if (row.updated_at) {
 }
 
 // Parse body as markdown → HTML
+// Normalize literal \n sequences that sometimes survive JSON parsing
+const normalizedBody = row.body.replace(/\\n/g, "\n");
 // Strip leading markdown heading if it duplicates the title
-const bodyText = row.body.replace(/^#+\s+.*\n+/, "");
+const bodyText = normalizedBody.replace(/^#+\s+.*\n+/, "");
 const bodyHtml = String(
   await unified()
     .use(remarkParse)

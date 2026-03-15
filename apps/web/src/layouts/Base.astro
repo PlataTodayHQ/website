@@ -284,25 +284,25 @@ const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
           </a>
         </div>
       </div>
-      <!-- Nav bar: categories -->
-      <nav class="nav-bar" aria-label="Main navigation">
-        <div class="nav-inner">
-          {navItems.map((item) => {
-            const isActive = currentPath === item.href ||
-              (item.href.includes('/category/') && currentPath.startsWith(item.href));
-            return (
-              <a
-                href={item.href}
-                class:list={["nav-link", { active: isActive }]}
-                aria-current={isActive ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-      </nav>
     </header>
+    <!-- Nav bar: categories (not sticky — scrolls away like BBC) -->
+    <nav class="nav-bar" aria-label="Main navigation">
+      <div class="nav-inner">
+        {navItems.map((item) => {
+          const isActive = currentPath === item.href ||
+            (item.href.includes('/category/') && currentPath.startsWith(item.href));
+          return (
+            <a
+              href={item.href}
+              class:list={["nav-link", { active: isActive }]}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+      </div>
+    </nav>
     <MarketTicker lang={lang} />
 
     <!-- Mobile menu backdrop -->
@@ -1041,6 +1041,7 @@ const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
     height: 100%;
     background: radial-gradient(ellipse at center, rgba(246, 180, 14, 0.08) 0%, transparent 70%);
     pointer-events: none;
+    opacity: calc(1 - var(--scroll-progress));
   }
 
   .masthead-inner {
@@ -1049,8 +1050,9 @@ const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: calc(var(--spacing-md) * (1 - 0.6 * var(--scroll-progress))) var(--spacing-lg);
     position: relative;
+    will-change: padding;
   }
 
   .menu-btn {
@@ -1083,7 +1085,7 @@ const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
     font-weight: 400;
     font-family: var(--font-display);
     letter-spacing: 0.02em;
-    transform: scale(calc(1 - 0.2 * var(--scroll-progress)));
+    transform: scale(calc(1 - 0.5 * var(--scroll-progress)));
     transform-origin: center center;
     will-change: transform;
     line-height: 1;
@@ -1860,7 +1862,7 @@ const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
 
     .logo-text {
       font-size: 2.2rem;
-      transform: scale(calc(1 - 0.18 * var(--scroll-progress)));
+      transform: scale(calc(1 - 0.4 * var(--scroll-progress)));
     }
   }
 

@@ -11,8 +11,8 @@ const { lang } = Astro.params;
 ---
 
 <Base
-  title={t(lang!, "currencies.title")}
-  description={t(lang!, "currencies.subtitle")}
+  title={t(lang!, "currencies.seoTitle")}
+  description={t(lang!, "currencies.seoDescription")}
   lang={lang}
   ogType="website"
   breadcrumbs={[
@@ -152,6 +152,14 @@ const { lang } = Astro.params;
           <h3>{t(lang!, "currencies.blueTitle")}</h3>
           <p>{t(lang!, "currencies.blueDesc")}</p>
         </div>
+      </div>
+    </section>
+
+    <!-- Why Two Rates Explainer -->
+    <section class="info-section">
+      <h2 class="section-title">{t(lang!, "currencies.whyTwoRates")}</h2>
+      <div class="explainer-card">
+        <p>{t(lang!, "currencies.whyTwoRatesDesc")}</p>
       </div>
     </section>
 
