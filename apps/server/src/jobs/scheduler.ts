@@ -1,5 +1,6 @@
 import { runPipeline } from "./pipeline.js";
 import { fetchMarketData } from "./market-data.js";
+import { fetchRealtimeMarketData } from "./realtime-market.js";
 import { generateSitemaps } from "./sitemap.js";
 
 const intervals: NodeJS.Timeout[] = [];
@@ -24,7 +25,22 @@ export function startJobs(dbPath: string, distDir: string): void {
     console.log("[scheduler] LLM_API_KEY not set, pipeline disabled");
   }
 
-  // Fetch market data immediately, then every 5 minutes
+  // Realtime market data: immediately, then every 30 seconds
+  // Populates in-memory store for fast API responses
+  fetchRealtimeMarketData().catch((err) =>
+    console.error("[scheduler] Realtime market startup error:", err),
+  );
+  intervals.push(
+    setInterval(
+      () =>
+        fetchRealtimeMarketData().catch((err) =>
+          console.error("[scheduler] Realtime market interval error:", err),
+        ),
+      30 * 1000,
+    ),
+  );
+
+  // Full market data (candles, profiles → DB): immediately, then every 5 minutes
   fetchMarketData(dbPath).catch((err) =>
     console.error("[scheduler] Market data startup error:", err),
   );

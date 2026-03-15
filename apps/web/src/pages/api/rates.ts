@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { BLUELYTICS_URL, fetchT } from "@plata-today/shared";
+import { BLUELYTICS_URL, fetchT, getRates } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -11,24 +11,24 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-let cache: { data: any; ts: number } | null = null;
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-
 export const OPTIONS: APIRoute = () =>
   new Response(null, { status: 204, headers: CORS_HEADERS });
 
 export const GET: APIRoute = async () => {
   try {
-    if (cache && Date.now() - cache.ts < CACHE_TTL) {
-      return new Response(JSON.stringify(cache.data), {
+    // Serve from in-memory store (populated every 30s by background job)
+    const cached = getRates();
+    if (cached) {
+      return new Response(JSON.stringify(cached), {
         headers: {
           "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=300",
+          "Cache-Control": "public, max-age=15",
           ...CORS_HEADERS,
         },
       });
     }
 
+    // Fallback: direct fetch if store is empty (cold start)
     const [blueRes, dolarRes] = await Promise.all([
       fetchT(BLUELYTICS_URL),
       fetchT(DOLARAPI_URL).catch(() => null),
@@ -37,7 +37,6 @@ export const GET: APIRoute = async () => {
     if (!blueRes.ok) throw new Error(`Bluelytics ${blueRes.status}`);
     const blueData = await blueRes.json();
 
-    // Extract MEP and CCL from dolarapi.com
     let mep: { value_buy: number; value_sell: number } | null = null;
     let ccl: { value_buy: number; value_sell: number } | null = null;
 
@@ -53,12 +52,11 @@ export const GET: APIRoute = async () => {
     }
 
     const data = { ...blueData, mep, ccl };
-    cache = { data, ts: Date.now() };
 
     return new Response(JSON.stringify(data), {
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=300",
+        "Cache-Control": "public, max-age=60",
         ...CORS_HEADERS,
       },
     });
