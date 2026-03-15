@@ -166,6 +166,13 @@ button:focus:not(:focus-visible) {
 .meta-sub { color: var(--color-gold-dark); font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.04em; }
 .meta-reading { font-size: 0.7rem; }
 
+@media (max-width: 640px) {
+  .meta { font-size: 0.82rem; }
+  .meta-time { font-size: 0.82rem; }
+  .meta-sub { font-size: 0.75rem; }
+  .meta-reading { font-size: 0.75rem; }
+}
+
 /* ====================== */
 /* SHARED: Markets header */
 /* ====================== */
@@ -197,6 +204,8 @@ button:focus:not(:focus-visible) {
 
 @media (max-width: 640px) {
   .info-grid { grid-template-columns: 1fr; }
+  .info-card p { font-size: 0.88rem; }
+  .info-disclaimer { font-size: 0.8rem; }
 }
 
 /* ====================== */
@@ -275,8 +284,10 @@ button:focus:not(:focus-visible) {
   .stk-logo { width: 36px; height: 36px; min-width: 36px; border-radius: 8px; }
   .stk-logo img { width: 24px; height: 24px; }
   .stk-symbol { font-size: 0.9rem; }
+  .stk-name { font-size: 0.75rem; }
   .stk-price { font-size: 0.95rem; }
-  .stk-change { font-size: 0.75rem; padding: 3px 8px; }
+  .stk-change { font-size: 0.78rem; padding: 3px 8px; }
+  .stk-vol, .stk-mcap { font-size: 0.75rem; }
   .stk-row2 { padding-top: 6px; }
 }
 

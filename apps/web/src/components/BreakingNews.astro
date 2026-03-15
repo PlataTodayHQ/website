@@ -117,4 +117,10 @@ const { headline, href, isLive = false, lang = "en" } = Astro.props;
   @media (max-width: 768px) {
     .breaking-inner { padding: 0 var(--spacing-md); }
   }
+
+  @media (max-width: 640px) {
+    .breaking-bar { font-size: 0.85rem; }
+    .breaking-live { font-size: 0.75rem; }
+    .breaking-label { font-size: 0.75rem; }
+  }
 </style>

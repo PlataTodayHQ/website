@@ -161,4 +161,12 @@ const { lang = "en" } = Astro.props;
       padding: var(--spacing-xl) var(--spacing-md);
     }
   }
+
+  @media (max-width: 640px) {
+    .newsletter-title { font-size: 1.35rem; }
+    .newsletter-desc { font-size: 0.92rem; }
+    .newsletter-input { font-size: 0.92rem; }
+    .newsletter-submit { font-size: 0.88rem; }
+    .newsletter-hint { font-size: 0.78rem; }
+  }
 </style>
