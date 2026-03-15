@@ -41,9 +41,14 @@ export async function triageEvent(
     return "killed";
   }
 
-  if (importance < 30) {
+  // Economy & politics get a lower kill threshold — these categories
+  // often produce "routine" news (BCRA rates, exchange rates, provincial
+  // policy) that scores 20-30 but is essential for international readers.
+  const killThreshold = (category === "economy" || category === "politics") ? 20 : 30;
+
+  if (importance < killThreshold) {
     eventRepo.kill(event.id, importance, reasoning);
-    log.info("Event killed by triage", { eventId: event.id, importance, category, reasoning });
+    log.info("Event killed by triage", { eventId: event.id, importance, category, reasoning, killThreshold });
     return "killed";
   }
 
