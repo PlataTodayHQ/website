@@ -38,7 +38,7 @@ const [lead, ...rest] = stories;
           <a href={lead.href} class="ls-lead-link">
             {lead.imageUrl && (
               <div class="ls-lead-image">
-                <img src={lead.imageUrl} alt={lead.title} loading="lazy" onerror="this.parentElement.style.display='none'" />
+                <img src={lead.imageUrl} alt={lead.title} loading="eager" width="720" height="480" onerror="this.parentElement.style.display='none'" />
               </div>
             )}
             <h3 class="ls-lead-title">{lead.title}</h3>

@@ -49,7 +49,7 @@ const isList = variant === "list";
     </div>
     {imageUrl && (
       <a href={href} class="card-thumb" aria-hidden="true" tabindex="-1">
-        <img src={imageUrl} alt={title} loading="lazy" onerror="this.parentElement.style.display='none'" />
+        <img src={imageUrl} alt={title} loading="lazy" width="270" height="180" onerror="this.parentElement.style.display='none'" />
       </a>
     )}
   </article>
@@ -61,7 +61,7 @@ const isList = variant === "list";
     <a href={href} class="card-link">
       {imageUrl && (
         <div class="card-image">
-          <img src={imageUrl} alt={title} loading="lazy" onerror="this.parentElement.style.display='none'" />
+          <img src={imageUrl} alt={title} loading="lazy" width="600" height="400" onerror="this.parentElement.style.display='none'" />
         </div>
       )}
       <div class="card-body">

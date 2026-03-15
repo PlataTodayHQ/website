@@ -28,6 +28,7 @@ const STATIC_PAGES: Array<{ path: string; changefreq: string; priority: number }
 
 interface ArticleInfo {
   slug: string;
+  title: string;
   published_at: string;
   event_id?: number;
 }
@@ -104,12 +105,44 @@ ${entries.join("\n")}
 </urlset>`;
 }
 
+/** Google News sitemap — only articles from last 48 hours */
+function buildNewsSitemap(byLang: Map<string, ArticleInfo[]>): string {
+  const cutoff = Date.now() - 48 * 60 * 60 * 1000;
+  const entries: string[] = [];
+
+  for (const lang of LANG_CODES) {
+    const articles = byLang.get(lang) ?? [];
+    for (const a of articles) {
+      if (new Date(a.published_at).getTime() < cutoff) continue;
+      entries.push(`  <url>
+    <loc>${escapeXml(`${SITE}/${lang}/news/${a.slug}`)}</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Plata</news:name>
+        <news:language>${lang}</news:language>
+      </news:publication>
+      <news:publication_date>${a.published_at.slice(0, 10)}</news:publication_date>
+      <news:title>${escapeXml(a.title)}</news:title>
+    </news:news>
+  </url>`);
+    }
+  }
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+${entries.join("\n")}
+</urlset>`;
+}
+
 function buildSitemapIndex(langs: string[]): string {
   const now = new Date().toISOString().slice(0, 10);
   const entries = langs.map(
     (lang) =>
       `  <sitemap>\n    <loc>${SITE}/sitemap-${lang}.xml</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>`,
   );
+  // Google News sitemap
+  entries.push(`  <sitemap>\n    <loc>${SITE}/news-sitemap.xml</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>`);
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -123,12 +156,12 @@ export async function generateSitemaps(db: Database.Database, distDir: string): 
   try {
     const rows = db
       .prepare(
-        `SELECT a.lang, a.slug, a.published_at, a.event_id
+        `SELECT a.lang, a.slug, a.title, a.published_at, a.event_id
          FROM articles a JOIN events e ON a.event_id = e.id
          WHERE e.stage = 'published'
          ORDER BY a.published_at DESC`,
       )
-      .all() as Array<{ lang: string; slug: string; published_at: string; event_id: number }>;
+      .all() as Array<{ lang: string; slug: string; title: string; published_at: string; event_id: number }>;
 
     // Group by language
     const byLang = new Map<string, ArticleInfo[]>();
@@ -140,7 +173,7 @@ export async function generateSitemaps(db: Database.Database, distDir: string): 
         list = [];
         byLang.set(row.lang, list);
       }
-      list.push({ slug: row.slug, published_at: row.published_at, event_id: row.event_id });
+      list.push({ slug: row.slug, title: row.title, published_at: row.published_at, event_id: row.event_id });
 
       let slugMap = articleLangSlugs.get(row.event_id);
       if (!slugMap) {
@@ -156,6 +189,10 @@ export async function generateSitemaps(db: Database.Database, distDir: string): 
       const xml = buildLangSitemap(lang, articles, articleLangSlugs);
       fs.writeFileSync(path.join(distDir, `sitemap-${lang}.xml`), xml, "utf-8");
     }
+
+    // Generate Google News sitemap
+    const newsXml = buildNewsSitemap(byLang);
+    fs.writeFileSync(path.join(distDir, "news-sitemap.xml"), newsXml, "utf-8");
 
     // Generate index
     const indexXml = buildSitemapIndex([...LANG_CODES]);

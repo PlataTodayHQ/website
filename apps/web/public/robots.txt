@@ -64,3 +64,4 @@ Crawl-delay: 2
 # ===========================================
 Host: https://plata.today
 Sitemap: https://plata.today/sitemap-index.xml
+Sitemap: https://plata.today/news-sitemap.xml
