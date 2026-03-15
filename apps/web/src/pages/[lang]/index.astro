@@ -273,6 +273,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
       {worldNews.map((a) => (
         <ArticleCard
           title={a.title}
+          description={a.description}
           href={a.href}
           imageUrl={a.imageUrl}
           timeAgo={a.timeAgo}
@@ -280,6 +281,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
           categoryKey={a.category}
           readingTime={a.readingTime}
           isNew={a.isNew}
+          sourceLabel={a.sourceLabel}
         />
       ))}
     </section>
@@ -292,6 +294,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
       {cultureSociety.map((a) => (
         <ArticleCard
           title={a.title}
+          description={a.description}
           href={a.href}
           imageUrl={a.imageUrl}
           timeAgo={a.timeAgo}
@@ -299,6 +302,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
           categoryKey={a.category}
           readingTime={a.readingTime}
           isNew={a.isNew}
+          sourceLabel={a.sourceLabel}
         />
       ))}
     </section>
@@ -311,6 +315,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
       {scienceTech.map((a) => (
         <ArticleCard
           title={a.title}
+          description={a.description}
           href={a.href}
           imageUrl={a.imageUrl}
           timeAgo={a.timeAgo}
@@ -318,6 +323,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
           categoryKey={a.category}
           readingTime={a.readingTime}
           isNew={a.isNew}
+          sourceLabel={a.sourceLabel}
         />
       ))}
     </section>
@@ -329,12 +335,15 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     {moreNews.map((a) => (
       <ArticleCard
         title={a.title}
+        description={a.description}
         href={a.href}
         imageUrl={a.imageUrl}
         timeAgo={a.timeAgo}
         category={a.subcategory}
         categoryKey={a.category}
         readingTime={a.readingTime}
+        isNew={a.isNew}
+        sourceLabel={a.sourceLabel}
       />
     ))}
   </section>

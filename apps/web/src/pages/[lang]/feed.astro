@@ -1,5 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
+import ArticleCard from "@/components/ArticleCard.astro";
 import { CATEGORIES, CATEGORY_LIST } from "@plata-today/shared";
 import type { Category } from "@plata-today/shared";
 import { t } from "@/i18n";
@@ -78,30 +79,17 @@ const categoryTabs = [
     <!-- Articles list -->
     <div class="feed-list" id="feed-list">
       {articles.map((a) => (
-        <article class="feed-item" data-category={a.category}>
-          <div class="feed-item-content">
-            <div class="feed-item-meta">
-              <a href={`/${lang}/category/${a.category}`} class="feed-item-cat" data-cat={a.category}>
-                {a.categoryLabel}
-              </a>
-              <span class="meta-dot" aria-hidden="true"></span>
-              <time class="meta-time">{a.timeAgo}</time>
-              <span class="meta-dot" aria-hidden="true"></span>
-              <span class="meta-reading">{a.readingTime}</span>
-            </div>
-            <a href={a.href} class="feed-item-link">
-              <h2 class="feed-item-title">{a.title}</h2>
-            </a>
-            {a.description && (
-              <p class="feed-item-desc">{a.description}</p>
-            )}
-          </div>
-          {a.imageUrl && (
-            <a href={a.href} class="feed-item-thumb" aria-hidden="true" tabindex="-1">
-              <img src={a.imageUrl} alt={a.title} loading="lazy" onerror="this.parentElement.style.display='none'" />
-            </a>
-          )}
-        </article>
+        <ArticleCard
+          title={a.title}
+          description={a.description}
+          href={a.href}
+          imageUrl={a.imageUrl}
+          timeAgo={a.timeAgo}
+          category={a.categoryLabel}
+          categoryKey={a.category}
+          readingTime={a.readingTime}
+          variant="list"
+        />
       ))}
     </div>
 
@@ -119,30 +107,33 @@ const categoryTabs = [
   </div>
 </Base>
 
-<script is:inline>
+<script is:inline define:vars={{
+  lang,
+  LIMIT,
+  catLabels: Object.fromEntries(
+    CATEGORY_LIST.map((c: string) => [c, t(lang!, `cat.${c}` as any) || CATEGORIES[c as Category] || c])
+  )
+}}>
 (function() {
-  const page = document.querySelector('.feed-page');
+  var page = document.querySelector('.feed-page');
   if (!page) return;
 
-  const lang = page.dataset.lang;
-  const limit = parseInt(page.dataset.limit, 10);
-  const list = document.getElementById('feed-list');
-  const status = document.getElementById('feed-status');
-  const tabs = page.querySelectorAll('.feed-tab');
+  var list = document.getElementById('feed-list');
+  var status = document.getElementById('feed-status');
+  var tabs = page.querySelectorAll('.feed-tab');
 
-  let offset = list.children.length;
-  let loading = false;
-  let hasMore = !!document.getElementById('feed-loader');
-  let activeCategory = '';
+  var offset = list.children.length;
+  var loading = false;
+  var hasMore = !!document.getElementById('feed-loader');
+  var activeCategory = '';
 
   // Category tab switching
   tabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
-      const cat = tab.dataset.category;
+      var cat = tab.dataset.category;
       if (cat === activeCategory) return;
       activeCategory = cat;
       tabs.forEach(function(t) { t.classList.toggle('active', t.dataset.category === cat); });
-      // Reset and reload
       list.innerHTML = '';
       offset = 0;
       hasMore = true;
@@ -151,24 +142,33 @@ const categoryTabs = [
     });
   });
 
+  function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
   function createItem(a) {
     var article = document.createElement('article');
-    article.className = 'feed-item';
-    article.dataset.category = a.category;
+    article.className = 'card card--list';
+    if (a.category) {
+      article.style.setProperty('--cat-color', 'var(--cat-' + a.category + ', var(--color-gold-dark))');
+    }
 
-    var desc = a.description ? '<p class="feed-item-desc">' + escapeHtml(a.description) + '</p>' : '';
-    var thumb = a.imageUrl ? '<a href="' + a.href + '" class="feed-item-thumb" aria-hidden="true" tabindex="-1"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'" /></a>' : '';
+    var categoryLabel = catLabels[a.category] || a.category;
+    var desc = a.description ? '<p class="card-desc">' + escapeHtml(a.description) + '</p>' : '';
+    var thumb = a.imageUrl ? '<a href="' + escapeHtml(a.href) + '" class="card-thumb" aria-hidden="true" tabindex="-1"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'" /></a>' : '';
 
     article.innerHTML =
-      '<div class="feed-item-content">' +
-        '<div class="feed-item-meta">' +
-          '<a href="/' + lang + '/category/' + a.category + '" class="feed-item-cat" data-cat="' + a.category + '">' + escapeHtml(a.categoryLabel || a.category) + '</a>' +
-          '<span class="meta-dot" aria-hidden="true"></span>' +
-          '<time class="meta-time">' + escapeHtml(a.timeAgo) + '</time>' +
-          '<span class="meta-dot" aria-hidden="true"></span>' +
-          '<span class="meta-reading">' + escapeHtml(a.readingTime) + '</span>' +
+      '<div class="card-body">' +
+        '<div class="card-meta">' +
+          '<span class="card-category">' + escapeHtml(categoryLabel) + '</span>' +
+          '<span class="card-divider" aria-hidden="true">&middot;</span>' +
+          '<time class="card-time">' + escapeHtml(a.timeAgo) + '</time>' +
+          (a.readingTime ? '<span class="card-divider" aria-hidden="true">&middot;</span><span class="card-reading-time">' + escapeHtml(a.readingTime) + '</span>' : '') +
         '</div>' +
-        '<a href="' + a.href + '" class="feed-item-link"><h2 class="feed-item-title">' + escapeHtml(a.title) + '</h2></a>' +
+        '<a href="' + escapeHtml(a.href) + '" class="card-link"><h3 class="card-title">' + escapeHtml(a.title) + '</h3></a>' +
         desc +
       '</div>' +
       thumb;
@@ -176,24 +176,17 @@ const categoryTabs = [
     return article;
   }
 
-  // Category label cache from initial tabs
-  var catLabels = {};
-  tabs.forEach(function(t) {
-    if (t.dataset.category) catLabels[t.dataset.category] = t.textContent.trim();
-  });
-
   function loadMore() {
     if (loading || !hasMore) return;
     loading = true;
 
-    var url = '/api/feed?lang=' + lang + '&offset=' + offset + '&limit=' + limit;
+    var url = '/api/feed?lang=' + lang + '&offset=' + offset + '&limit=' + LIMIT;
     if (activeCategory) url += '&category=' + activeCategory;
 
     fetch(url)
       .then(function(r) { return r.json(); })
       .then(function(data) {
         data.articles.forEach(function(a) {
-          a.categoryLabel = catLabels[a.category] || a.category;
           list.appendChild(createItem(a));
         });
         offset += data.articles.length;
@@ -206,13 +199,6 @@ const categoryTabs = [
       .catch(function() {
         loading = false;
       });
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    var div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
   }
 
   // Intersection Observer for infinite scroll
@@ -280,97 +266,6 @@ const categoryTabs = [
     flex-direction: column;
   }
 
-  .feed-page .feed-item {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-lg) 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .feed-page .feed-item:first-child {
-    padding-top: 0;
-  }
-
-  .feed-page .feed-item-content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .feed-page .feed-item-meta {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 6px;
-  }
-
-  .feed-page .feed-item-cat {
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: var(--color-accent);
-    text-decoration: none;
-  }
-
-  .feed-page .feed-item-cat:hover {
-    text-decoration: underline;
-  }
-
-  .feed-page .feed-item-cat[data-cat="politics"] { color: var(--cat-politics); }
-  .feed-page .feed-item-cat[data-cat="economy"] { color: var(--cat-economy); }
-  .feed-page .feed-item-cat[data-cat="sports"] { color: var(--cat-sports); }
-  .feed-page .feed-item-cat[data-cat="society"] { color: var(--cat-society); }
-  .feed-page .feed-item-cat[data-cat="culture"] { color: var(--cat-culture); }
-  .feed-page .feed-item-cat[data-cat="world"] { color: var(--cat-world); }
-  .feed-page .feed-item-cat[data-cat="science"] { color: var(--cat-science); }
-
-  .feed-page .feed-item-link {
-    color: var(--color-text);
-    text-decoration: none;
-  }
-
-  .feed-page .feed-item-link:hover .feed-item-title {
-    text-decoration: underline;
-  }
-
-  .feed-page .feed-item-title {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    font-weight: 700;
-    line-height: 1.35;
-    letter-spacing: -0.01em;
-    margin-bottom: 4px;
-  }
-
-  .feed-page .feed-item-desc {
-    font-size: 0.88rem;
-    line-height: 1.5;
-    color: var(--color-text-secondary);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .feed-page .feed-item-thumb {
-    flex-shrink: 0;
-    width: 180px;
-  }
-
-  .feed-page .feed-item-thumb img {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
-    border-radius: 2px;
-    transition: transform 0.2s;
-  }
-
-  .feed-page .feed-item-thumb:hover img {
-    transform: scale(1.03);
-  }
-
   /* Status / loader */
   .feed-page .feed-status {
     padding: var(--spacing-xl) 0;
@@ -391,6 +286,114 @@ const categoryTabs = [
     font-size: 0.85rem;
   }
 
+  /* ========================================= */
+  /* Dynamic card styles for JS-appended items */
+  /* ========================================= */
+  .feed-list .card--list {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .feed-list .card--list:first-child {
+    padding-top: 0;
+  }
+
+  .feed-list .card--list:last-child {
+    border-bottom: none;
+  }
+
+  .feed-list .card--list:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .feed-list .card--list .card-body {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .feed-list .card--list .card-meta {
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .feed-list .card--list .card-category {
+    color: var(--cat-color, var(--color-gold-dark));
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+  }
+
+  .feed-list .card--list .card-divider {
+    color: var(--color-border);
+  }
+
+  .feed-list .card--list .card-reading-time {
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+  }
+
+  .feed-list .card--list .card-link {
+    display: block;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .feed-list .card--list .card-link:hover .card-title {
+    text-decoration: underline;
+  }
+
+  .feed-list .card--list .card-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    color: var(--color-text);
+  }
+
+  .feed-list .card--list .card-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .feed-list .card--list .card-thumb {
+    flex-shrink: 0;
+    width: 180px;
+  }
+
+  .feed-list .card--list .card-thumb img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 2px;
+    transition: transform 0.2s;
+  }
+
+  .feed-list .card--list .card-thumb:hover img {
+    transform: scale(1.03);
+  }
+
   /* Mobile */
   @media (max-width: 640px) {
     .feed-page .feed-heading {
@@ -406,16 +409,16 @@ const categoryTabs = [
       font-size: 0.75rem;
     }
 
-    .feed-page .feed-item-thumb {
-      width: 110px;
-    }
-
-    .feed-page .feed-item-title {
+    .feed-list .card--list .card-title {
       font-size: 0.95rem;
     }
 
-    .feed-page .feed-item-desc {
+    .feed-list .card--list .card-desc {
       display: none;
+    }
+
+    .feed-list .card--list .card-thumb {
+      width: 110px;
     }
   }
 </style>

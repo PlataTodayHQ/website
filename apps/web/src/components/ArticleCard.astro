@@ -10,7 +10,7 @@ interface Props {
   readingTime?: string;
   isNew?: boolean;
   sourceLabel?: string;
-  variant?: "default" | "hero" | "sidebar" | "compact";
+  variant?: "default" | "hero" | "sidebar" | "compact" | "list";
 }
 
 const {
@@ -26,36 +26,63 @@ const {
   sourceLabel,
   variant = "default",
 } = Astro.props;
+
+const isList = variant === "list";
 ---
 
-<article
-  class:list={["card", `card--${variant}`]}
-  style={categoryKey ? `--cat-color: var(--cat-${categoryKey}, var(--color-gold-dark))` : undefined}
->
-  <a href={href} class="card-link">
-    {/* Category header — Instagram-style top bar */}
-    {(category || isNew) && (
-      <div class="card-header">
-        {category && <span class="card-category">{category}</span>}
-        {isNew && <span class="card-badge-new">NEW</span>}
-      </div>
-    )}
-    {imageUrl && (
-      <div class="card-image">
-        <img src={imageUrl} alt={title} loading="lazy" onerror="this.parentElement.style.display='none'" />
-      </div>
-    )}
+{isList ? (
+  <article
+    class="card card--list"
+    style={categoryKey ? `--cat-color: var(--cat-${categoryKey}, var(--color-gold-dark))` : undefined}
+  >
     <div class="card-body">
-      <h3 class="card-title">{title}</h3>
-      {description && <p class="card-desc">{description}</p>}
       <div class="card-meta">
+        {category && <span class="card-category">{category}</span>}
+        {category && timeAgo && <span class="card-divider" aria-hidden="true">&middot;</span>}
         {timeAgo && <time class="card-time">{timeAgo}</time>}
         {readingTime && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-reading-time">{readingTime}</span></>}
-        {sourceLabel && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-source">via {sourceLabel}</span></>}
       </div>
+      <a href={href} class="card-link">
+        <h3 class="card-title">{title}</h3>
+      </a>
+      {description && <p class="card-desc">{description}</p>}
     </div>
-  </a>
-</article>
+    {imageUrl && (
+      <a href={href} class="card-thumb" aria-hidden="true" tabindex="-1">
+        <img src={imageUrl} alt={title} loading="lazy" onerror="this.parentElement.style.display='none'" />
+      </a>
+    )}
+  </article>
+) : (
+  <article
+    class:list={["card", `card--${variant}`]}
+    style={categoryKey ? `--cat-color: var(--cat-${categoryKey}, var(--color-gold-dark))` : undefined}
+  >
+    <a href={href} class="card-link">
+      {/* Category header — Instagram-style top bar */}
+      {(category || isNew) && (
+        <div class="card-header">
+          {category && <span class="card-category">{category}</span>}
+          {isNew && <span class="card-badge-new">NEW</span>}
+        </div>
+      )}
+      {imageUrl && (
+        <div class="card-image">
+          <img src={imageUrl} alt={title} loading="lazy" onerror="this.parentElement.style.display='none'" />
+        </div>
+      )}
+      <div class="card-body">
+        <h3 class="card-title">{title}</h3>
+        {description && <p class="card-desc">{description}</p>}
+        <div class="card-meta">
+          {timeAgo && <time class="card-time">{timeAgo}</time>}
+          {readingTime && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-reading-time">{readingTime}</span></>}
+          {sourceLabel && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-source">via {sourceLabel}</span></>}
+        </div>
+      </div>
+    </a>
+  </article>
+)}
 
 <style>
   /* ====================== */
@@ -272,6 +299,86 @@ const {
     font-size: 0.7rem;
   }
 
+  /* ============================== */
+  /* LIST VARIANT (horizontal)      */
+  /* ============================== */
+  .card--list {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card--list:first-child {
+    padding-top: 0;
+  }
+
+  .card--list:last-child {
+    border-bottom: none;
+  }
+
+  .card--list:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .card--list .card-body {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .card--list .card-meta {
+    margin-bottom: 6px;
+  }
+
+  .card--list .card-category {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  .card--list .card-link {
+    color: var(--color-text);
+  }
+
+  .card--list .card-link:hover .card-title {
+    text-decoration: underline;
+  }
+
+  .card--list .card-title {
+    font-size: 1.15rem;
+    -webkit-line-clamp: unset;
+    margin-bottom: 4px;
+  }
+
+  .card--list .card-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  .card-thumb {
+    flex-shrink: 0;
+    width: 180px;
+  }
+
+  .card-thumb img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 2px;
+    transition: transform 0.2s;
+  }
+
+  .card-thumb:hover img {
+    transform: scale(1.03);
+  }
+
   /* ====================== */
   /* MOBILE                  */
   /* ====================== */
@@ -292,6 +399,23 @@ const {
 
     .card--hero .card-image img {
       aspect-ratio: 4 / 5;
+    }
+
+    .card--list {
+      border-left: none;
+      border-right: none;
+    }
+
+    .card--list .card-title {
+      font-size: 0.95rem;
+    }
+
+    .card--list .card-desc {
+      display: none;
+    }
+
+    .card-thumb {
+      width: 110px;
     }
   }
 </style>

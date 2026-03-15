@@ -96,7 +96,7 @@ const bodyHtml = String(
 );
 
 // Related articles — same category, different slug
-let relatedArticles: Array<{title: string; href: string; imageUrl: string; timeAgo: string; category: string; readingTime: string}> = [];
+let relatedArticles: Array<{title: string; href: string; imageUrl: string; timeAgo: string; category: string; categoryKey: string; readingTime: string}> = [];
 try {
   relatedArticles = getArticlesByLang(lang, 20)
     .filter((a) => a.slug !== slug)
@@ -109,6 +109,7 @@ try {
         "/images/placeholder.svg",
       timeAgo: timeAgo(a.published_at, lang),
       category: t(lang, `cat.${a.category}` as any) || CATEGORIES[a.category as Category] || a.category,
+      categoryKey: a.category,
       readingTime: readingTime(a.word_count, lang),
     }));
 } catch {
@@ -257,6 +258,7 @@ try {
             imageUrl={a.imageUrl}
             timeAgo={a.timeAgo}
             category={a.category}
+            categoryKey={a.categoryKey}
             readingTime={a.readingTime}
           />
         ))}
