@@ -71,9 +71,9 @@ export const it = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Benvenuto",
-  "welcome.eyebrow": "18 lingue · Una missione",
+  "welcome.eyebrow": "25 lingue · Una missione",
   "welcome.headline": "L'Argentina, aperta al mondo",
-  "welcome.sub": "Ogni giorno scriviamo le notizie nativamente in 18 lingue — perché il mondo intero possa capire cosa accade in Argentina.",
+  "welcome.sub": "Ogni giorno scriviamo le notizie nativamente in 25 lingue — perché il mondo intero possa capire cosa accade in Argentina.",
 
   // Newsletter
   "newsletter.title": "Resta connesso all'Argentina",
@@ -97,8 +97,8 @@ export const it = {
   "home.politics": "Politica",
   "home.title": "Notizie dall'Argentina in {lang}",
   "home.heroFallbackTitle": "Benvenuto su Plata Today",
-  "home.heroFallbackDesc": "Le notizie dall'Argentina, scritte nativamente in 18 lingue.",
-  "home.description": "Le notizie più importanti dall'Argentina oggi in {lang}: politica, economia, sport, cultura. Aggiornamento 24/7, 18 lingue.",
+  "home.heroFallbackDesc": "Le notizie dall'Argentina, scritte nativamente in 25 lingue.",
+  "home.description": "Le notizie più importanti dall'Argentina oggi in {lang}: politica, economia, sport, cultura. Aggiornamento 24/7, 25 lingue.",
   "home.topStories": "In primo piano",
   "home.economyBusiness": "Economia e affari",
   "home.cultureSociety": "Cultura e società",
@@ -141,13 +141,13 @@ export const it = {
 
   // About page
   "about.title": "Chi è Plata",
-  "about.description": "Plata porta le notizie dall'Argentina al mondo in 18 lingue. Scopri il fondatore e come funziona la nostra redazione.",
+  "about.description": "Plata porta le notizie dall'Argentina al mondo in 25 lingue. Scopri il fondatore e come funziona la nostra redazione.",
   "about.tagline": "Le notizie dall'Argentina. Ogni lingua. Ogni fonte.",
   "about.missionTitle": "La nostra missione",
   "about.missionText": "Crediamo che tutti meritino di sapere cosa succede in Argentina, indipendentemente dalla lingua che parlano. Plata monitora oltre 13 fonti giornalistiche argentine, sintetizza ciò che conta e scrive ogni articolo nativamente nella tua lingua — con il contesto di cui i lettori internazionali hanno bisogno.",
   "about.valueNoOpinion": "Fonti trasparenti",
   "about.valueNoOpinionDesc": "Ogni articolo cita le sue fonti. Incrociamo più testate per farti vedere da dove provengono i fatti.",
-  "about.value18langs": "18 lingue",
+  "about.value18langs": "25 lingue",
   "about.value18langsDesc": "Ogni articolo è scritto appositamente per il pubblico di ciascuna lingua — non tradotto, ma creato da zero.",
   "about.valueFast": "Curata e veloce",
   "about.valueFastDesc": "Monitoriamo oltre 13 testate perché tu non debba farlo. Nuovi articoli ogni 30 minuti.",
@@ -157,7 +157,7 @@ export const it = {
   "about.step2Title": "Deduplicazione",
   "about.step2Desc": "Quando più testate coprono lo stesso evento, le identifichiamo e raggruppiamo, combinando diverse prospettive in un'unica notizia.",
   "about.step3Title": "Riscrittura",
-  "about.step3Desc": "Le fonti raggruppate vengono sintetizzate in un unico articolo fattuale — scritto nativamente in ciascuna delle nostre 18 lingue supportate.",
+  "about.step3Desc": "Le fonti raggruppate vengono sintetizzate in un unico articolo fattuale — scritto nativamente in ciascuna delle nostre 25 lingue supportate.",
   "about.step4Title": "Pubblicazione",
   "about.step4Desc": "Gli articoli vengono pubblicati su plata.today con attribuzione completa delle fonti, dati strutturati e informazioni di mercato in tempo reale.",
   "about.sourcesTitle": "Le nostre fonti",
@@ -165,7 +165,7 @@ export const it = {
   "about.founderTitle": "Fondatore",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Ideatore e sviluppatore",
-  "about.founderBio": "Bogdan ha creato Plata per risolvere un problema che ha vissuto in prima persona: trovare notizie affidabili sull'Argentina in lingue diverse dallo spagnolo. Da sviluppatore, ha costruito una redazione che monitora oltre 13 testate argentine e scrive ogni articolo nativamente in 18 lingue.",
+  "about.founderBio": "Bogdan ha creato Plata per risolvere un problema che ha vissuto in prima persona: trovare notizie affidabili sull'Argentina in lingue diverse dallo spagnolo. Da sviluppatore, ha costruito una redazione che monitora oltre 13 testate argentine e scrive ogni articolo nativamente in 25 lingue.",
   "about.disclaimerTitle": "Avvertenza",
   "about.disclaimerText": "Gli articoli sono elaborati a partire da molteplici fonti giornalistiche argentine. Pur impegnandoci per garantire l'accuratezza, ti invitiamo a verificare le informazioni importanti con le fonti originali. Citiamo sempre le pubblicazioni da cui attingiamo.",
   "about.contactTitle": "Contatti",
@@ -402,7 +402,7 @@ export const it = {
   "notFound.description": "Pagina non trovata. Esplora le ultime notizie dall'Argentina su Plata Today.",
 
   // Common
-  "common.siteDescription": "Le notizie dall'Argentina, scritte nativamente in 18 lingue. I fatti prima di tutto, le fonti in piena trasparenza.",
+  "common.siteDescription": "Le notizie dall'Argentina, scritte nativamente in 25 lingue. I fatti prima di tutto, le fonti in piena trasparenza.",
   "common.breadcrumbHome": "Home",
 
   // Feed page
@@ -433,13 +433,13 @@ export const it = {
   "standards.pageTitle": "Standard editoriali — Plata",
   "standards.description": "Come lavora la redazione di Plata: fonti, verifica dei fatti e standard di pubblicazione.",
   "standards.updated": "Ultimo aggiornamento: 14 marzo 2026",
-  "standards.lead": "Plata è una piattaforma di informazione multilingue che copre l'Argentina in 18 lingue. Questa pagina spiega come funziona la nostra redazione — dalla raccolta delle fonti alla pubblicazione.",
+  "standards.lead": "Plata è una piattaforma di informazione multilingue che copre l'Argentina in 25 lingue. Questa pagina spiega come funziona la nostra redazione — dalla raccolta delle fonti alla pubblicazione.",
   "standards.sourcingTitle": "Fonti",
   "standards.sourcingText": "Monitoriamo oltre 13 testate giornalistiche argentine su tre livelli. Il livello 1 comprende i principali media nazionali: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista e iProfesional. Il livello 2 copre fonti indipendenti e specializzate come Perfil, Cadena 3 e Olé. Il livello 3 include testate regionali come La Gaceta, Misiones Online ed El Día. Gli articoli vengono raccolti tramite feed RSS ogni 30 minuti.",
   "standards.verificationTitle": "Verifica dei fatti",
   "standards.verificationText": "Ogni notizia passa attraverso un processo di revisione a più fasi. Le pubblicazioni di fonti diverse sullo stesso evento vengono raggruppate. Ogni articolo viene verificato rispetto alle fonti originali. Le affermazioni non supportate da alcuna fonte vengono segnalate e rimosse. Le notizie che non superano la verifica due volte non vengono pubblicate.",
   "standards.languageTitle": "Qualità linguistica",
-  "standards.languageText": "Gli articoli vengono scritti nativamente per ogni lingua — non tradotti. Ogni versione segue le convenzioni, le espressioni idiomatiche e le norme stilistiche della propria lingua. Supportiamo 18 lingue: inglese, portoghese, tedesco, italiano, francese, russo, cinese, polacco, ucraino, giapponese, coreano, spagnolo, svedese, danese, olandese, norvegese, finlandese e hindi.",
+  "standards.languageText": "Gli articoli vengono scritti nativamente per ogni lingua — non tradotti. Ogni versione segue le convenzioni, le espressioni idiomatiche e le norme stilistiche della propria lingua. Supportiamo 25 lingue: arabo, cinese, danese, olandese, inglese, finlandese, francese, tedesco, greco, hindi, indonesiano, italiano, giapponese, coreano, norvegese, polacco, portoghese, russo, spagnolo, swahili, svedese, thailandese, turco, ucraino e vietnamita.",
   "standards.attributionTitle": "Attribuzione delle fonti",
   "standards.attributionText": "Ogni articolo di Plata cita le testate da cui è stato elaborato. I nomi delle fonti compaiono in fondo a ogni articolo. Crediamo che il lettore debba sempre sapere da dove provengono le informazioni.",
   "standards.filteringTitle": "Cosa non pubblichiamo",

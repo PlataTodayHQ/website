@@ -71,9 +71,9 @@ export const es = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Bienvenido",
-  "welcome.eyebrow": "18 idiomas · Una misión",
+  "welcome.eyebrow": "25 idiomas · Una misión",
   "welcome.headline": "Argentina, abierta al mundo",
-  "welcome.sub": "Cada día escribimos las noticias de forma nativa en 18 idiomas — para que el mundo entero pueda entender lo que pasa en Argentina.",
+  "welcome.sub": "Cada día escribimos las noticias de forma nativa en 25 idiomas — para que el mundo entero pueda entender lo que pasa en Argentina.",
 
   // Newsletter
   "newsletter.title": "Seguí conectado con Argentina",
@@ -97,8 +97,8 @@ export const es = {
   "home.politics": "Política",
   "home.title": "Noticias de Argentina en {lang}",
   "home.heroFallbackTitle": "Bienvenido a Plata Today",
-  "home.heroFallbackDesc": "Las noticias de Argentina, escritas de forma nativa en 18 idiomas.",
-  "home.description": "Las noticias más importantes de Argentina hoy en {lang}: política, economía, deportes, cultura. Actualización 24/7, 18 idiomas.",
+  "home.heroFallbackDesc": "Las noticias de Argentina, escritas de forma nativa en 25 idiomas.",
+  "home.description": "Las noticias más importantes de Argentina hoy en {lang}: política, economía, deportes, cultura. Actualización 24/7, 25 idiomas.",
   "home.topStories": "Principales noticias",
   "home.economyBusiness": "Economía y Negocios",
   "home.cultureSociety": "Cultura y Sociedad",
@@ -141,13 +141,13 @@ export const es = {
 
   // About page
   "about.title": "Sobre Plata",
-  "about.description": "Plata lleva las noticias de Argentina al mundo en 18 idiomas. Conocé al fundador y descubrí cómo funciona nuestra redacción.",
+  "about.description": "Plata lleva las noticias de Argentina al mundo en 25 idiomas. Conocé al fundador y descubrí cómo funciona nuestra redacción.",
   "about.tagline": "Las noticias de Argentina. Todos los idiomas. Todas las fuentes.",
   "about.missionTitle": "Nuestra misión",
   "about.missionText": "Creemos que todos merecen acceso a lo que pasa en Argentina, sin importar el idioma que hablen. Plata monitorea más de 13 fuentes argentinas, sintetiza lo que importa y escribe cada nota de forma nativa en tu idioma — con el contexto que necesitan los lectores internacionales.",
   "about.valueNoOpinion": "Transparencia de fuentes",
   "about.valueNoOpinionDesc": "Cada nota cita sus fuentes. Cruzamos múltiples medios para que veas de dónde vienen los hechos.",
-  "about.value18langs": "18 idiomas",
+  "about.value18langs": "25 idiomas",
   "about.value18langsDesc": "Cada artículo se escribe de forma nativa para la audiencia de cada idioma — no se traduce, se crea desde cero.",
   "about.valueFast": "Curado y rápido",
   "about.valueFastDesc": "Monitoreamos más de 13 medios para que no tengas que hacerlo vos. Nuevas notas cada 30 minutos.",
@@ -157,7 +157,7 @@ export const es = {
   "about.step2Title": "Deduplicar",
   "about.step2Desc": "Cuando varios medios cubren el mismo hecho, los identificamos y agrupamos, combinando distintas perspectivas en una sola nota.",
   "about.step3Title": "Reescribir",
-  "about.step3Desc": "Las fuentes agrupadas se sintetizan en un único artículo factual — escrito de forma nativa en cada uno de nuestros 18 idiomas.",
+  "about.step3Desc": "Las fuentes agrupadas se sintetizan en un único artículo factual — escrito de forma nativa en cada uno de nuestros 25 idiomas.",
   "about.step4Title": "Publicar",
   "about.step4Desc": "Los artículos se publican en plata.today con atribución completa de fuentes, datos estructurados e información de mercados en tiempo real.",
   "about.sourcesTitle": "Nuestras fuentes",
@@ -165,7 +165,7 @@ export const es = {
   "about.founderTitle": "Fundador",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Creador y Desarrollador",
-  "about.founderBio": "Bogdan creó Plata para resolver un problema que vivió en carne propia: encontrar noticias confiables sobre Argentina en idiomas distintos al español. Como desarrollador, construyó una redacción que monitorea más de 13 medios argentinos y escribe cada nota de forma nativa en 18 idiomas.",
+  "about.founderBio": "Bogdan creó Plata para resolver un problema que vivió en carne propia: encontrar noticias confiables sobre Argentina en idiomas distintos al español. Como desarrollador, construyó una redacción que monitorea más de 13 medios argentinos y escribe cada nota de forma nativa en 25 idiomas.",
   "about.disclaimerTitle": "Aviso legal",
   "about.disclaimerText": "Los artículos se elaboran a partir de múltiples fuentes periodísticas argentinas. Si bien buscamos la mayor precisión posible, te recomendamos verificar la información importante con las fuentes originales. Siempre acreditamos las publicaciones de las que nos nutrimos.",
   "about.contactTitle": "Contacto",
@@ -402,7 +402,7 @@ export const es = {
   "notFound.description": "Página no encontrada. Explora las últimas noticias de Argentina en Plata Today.",
 
   // Common
-  "common.siteDescription": "Las noticias de Argentina, escritas de forma nativa en 18 idiomas.",
+  "common.siteDescription": "Las noticias de Argentina, escritas de forma nativa en 25 idiomas.",
   "common.breadcrumbHome": "Inicio",
 
   // Feed page
@@ -433,13 +433,13 @@ export const es = {
   "standards.pageTitle": "Estándares editoriales — Plata",
   "standards.description": "Cómo funciona la redacción de Plata: fuentes, verificación y estándares de publicación.",
   "standards.updated": "Última actualización: 14 de marzo de 2026",
-  "standards.lead": "Plata es una plataforma de noticias multilingüe que cubre Argentina en 18 idiomas. En esta página explicamos cómo trabaja nuestra redacción — desde las fuentes hasta la publicación.",
+  "standards.lead": "Plata es una plataforma de noticias multilingüe que cubre Argentina en 25 idiomas. En esta página explicamos cómo trabaja nuestra redacción — desde las fuentes hasta la publicación.",
   "standards.sourcingTitle": "Fuentes",
   "standards.sourcingText": "Monitoreamos más de 13 medios de comunicación argentinos en tres niveles. El nivel 1 incluye los principales medios nacionales como Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista e iProfesional. El nivel 2 cubre fuentes independientes y especializadas como Perfil, Cadena 3 y Olé. El nivel 3 incluye medios regionales como La Gaceta, Misiones Online y El Día. Los artículos se recopilan a través de feeds RSS cada 30 minutos.",
   "standards.verificationTitle": "Verificación",
   "standards.verificationText": "Cada noticia pasa por un proceso de revisión en múltiples etapas. Las fuentes que cubren el mismo evento se agrupan. Cada artículo se verifica contra sus fuentes originales. Las afirmaciones que ninguna fuente respalda se marcan y se eliminan. Las noticias que no superan la verificación dos veces no se publican.",
   "standards.languageTitle": "Calidad lingüística",
-  "standards.languageText": "Los artículos se escriben de forma nativa para cada idioma — no se traducen. Cada versión respeta las convenciones, expresiones y formas de tratamiento propias de su lengua. Ofrecemos 18 idiomas: inglés, portugués, alemán, italiano, francés, ruso, chino, polaco, ucraniano, japonés, coreano, español, sueco, danés, neerlandés, noruego, finés y hindi.",
+  "standards.languageText": "Los artículos se escriben de forma nativa para cada idioma — no se traducen. Cada versión respeta las convenciones, expresiones y formas de tratamiento propias de su lengua. Ofrecemos 25 idiomas: árabe, chino, danés, neerlandés, inglés, finés, francés, alemán, griego, hindi, indonesio, italiano, japonés, coreano, noruego, polaco, portugués, ruso, español, suajili, sueco, tailandés, turco, ucraniano y vietnamita.",
   "standards.attributionTitle": "Atribución de fuentes",
   "standards.attributionText": "Cada artículo de Plata cita los medios en los que se basa. Los nombres de las fuentes aparecen al final de cada artículo. Creemos que los lectores siempre deben saber de dónde proviene la información.",
   "standards.filteringTitle": "Qué no publicamos",

@@ -71,9 +71,9 @@ export const en = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Welcome",
-  "welcome.eyebrow": "18 languages · One mission",
+  "welcome.eyebrow": "25 languages · One mission",
   "welcome.headline": "Argentina's story, open to the world",
-  "welcome.sub": "Every day, we write the news natively in 18 languages — so the whole world can understand what's happening in Argentina.",
+  "welcome.sub": "Every day, we write the news natively in 25 languages — so the whole world can understand what's happening in Argentina.",
 
   // Newsletter
   "newsletter.title": "Stay connected to Argentina",
@@ -97,8 +97,8 @@ export const en = {
   "home.politics": "Politics",
   "home.title": "Argentina News in {lang}",
   "home.heroFallbackTitle": "Welcome to Plata Today",
-  "home.heroFallbackDesc": "Argentina's news, natively written in 18 languages.",
-  "home.description": "Today's top Argentina news in {lang}: politics, economy, sports, culture. Updated 24/7, 18 languages.",
+  "home.heroFallbackDesc": "Argentina's news, natively written in 25 languages.",
+  "home.description": "Today's top Argentina news in {lang}: politics, economy, sports, culture. Updated 24/7, 25 languages.",
   "home.topStories": "Top Stories",
   "home.economyBusiness": "Economy & Business",
   "home.cultureSociety": "Culture & Society",
@@ -141,13 +141,13 @@ export const en = {
 
   // About page
   "about.title": "About Plata",
-  "about.description": "Plata brings Argentina's news to the world in 18 languages. Meet the founder and learn how our newsroom works.",
+  "about.description": "Plata brings Argentina's news to the world in 25 languages. Meet the founder and learn how our newsroom works.",
   "about.tagline": "Argentina's news. Every language. Every source.",
   "about.missionTitle": "Our mission",
   "about.missionText": "We believe everyone deserves access to what's happening in Argentina, regardless of the language they speak. Plata monitors 13+ Argentine news sources, synthesizes what matters, and writes each story natively for your language — with context that international readers need.",
   "about.valueNoOpinion": "Source-transparent",
   "about.valueNoOpinionDesc": "Every story cites its sources. We cross-reference multiple outlets so you see where the facts come from.",
-  "about.value18langs": "18 languages",
+  "about.value18langs": "25 languages",
   "about.value18langsDesc": "Every article is written natively for each language's audience — not translated, but created from scratch.",
   "about.valueFast": "Curated & fast",
   "about.valueFastDesc": "We monitor 13+ outlets so you don't have to. New stories published every 30 minutes.",
@@ -157,7 +157,7 @@ export const en = {
   "about.step2Title": "Deduplicate",
   "about.step2Desc": "When multiple outlets cover the same event, we identify and group them together, combining different perspectives into one story.",
   "about.step3Title": "Rewrite",
-  "about.step3Desc": "The grouped sources are synthesized into a single, factual article — written natively in each of our 18 supported languages.",
+  "about.step3Desc": "The grouped sources are synthesized into a single, factual article — written natively in each of our 25 supported languages.",
   "about.step4Title": "Publish",
   "about.step4Desc": "Articles go live on plata.today with full source attribution, structured data, and real-time market information.",
   "about.sourcesTitle": "Our sources",
@@ -165,7 +165,7 @@ export const en = {
   "about.founderTitle": "Founder",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Creator & Developer",
-  "about.founderBio": "Bogdan built Plata to solve a problem he experienced firsthand: finding reliable news about Argentina in languages other than Spanish. As a developer, he built a newsroom that monitors 13+ Argentine outlets and writes each story natively in 18 languages.",
+  "about.founderBio": "Bogdan built Plata to solve a problem he experienced firsthand: finding reliable news about Argentina in languages other than Spanish. As a developer, he built a newsroom that monitors 13+ Argentine outlets and writes each story natively in 25 languages.",
   "about.disclaimerTitle": "Disclaimer",
   "about.disclaimerText": "Articles are synthesized from multiple Argentine news sources. While we strive for accuracy, please verify important information with original reporting. We always credit the publications we source from.",
   "about.contactTitle": "Contact",
@@ -402,7 +402,7 @@ export const en = {
   "notFound.description": "Page not found. Browse the latest Argentina news on Plata Today.",
 
   // Common
-  "common.siteDescription": "Argentina's news, natively written in 18 languages. Fact-first, source-transparent.",
+  "common.siteDescription": "Argentina's news, natively written in 25 languages. Fact-first, source-transparent.",
   "common.breadcrumbHome": "Home",
 
   // Feed page
@@ -433,13 +433,13 @@ export const en = {
   "standards.pageTitle": "Editorial Standards — Plata",
   "standards.description": "How Plata's newsroom works: sourcing, verification, and publishing standards.",
   "standards.updated": "Last updated: March 14, 2026",
-  "standards.lead": "Plata is a multilingual news platform covering Argentina in 18 languages. This page explains how our newsroom works — from sourcing to publication.",
+  "standards.lead": "Plata is a multilingual news platform covering Argentina in 25 languages. This page explains how our newsroom works — from sourcing to publication.",
   "standards.sourcingTitle": "Sourcing",
   "standards.sourcingText": "We monitor 13+ Argentine news outlets across three tiers. Tier 1 includes major national outlets such as Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, and iProfesional. Tier 2 covers independent and specialized sources like Perfil, Cadena 3, and Olé. Tier 3 includes regional outlets such as La Gaceta, Misiones Online, and El Día. Articles are collected via RSS feeds every 30 minutes.",
   "standards.verificationTitle": "Verification",
   "standards.verificationText": "Every story goes through a multi-stage review process. Sources covering the same event are grouped together. Each article is fact-checked against its original sources. Claims not supported by any source are flagged and removed. Stories that fail verification twice are not published.",
   "standards.languageTitle": "Language quality",
-  "standards.languageText": "Articles are written natively for each language — not translated. Each version follows the conventions, idioms, and address norms of its language. We support 18 languages: English, Portuguese, German, Italian, French, Russian, Chinese, Polish, Ukrainian, Japanese, Korean, Spanish, Swedish, Danish, Dutch, Norwegian, Finnish, and Hindi.",
+  "standards.languageText": "Articles are written natively for each language — not translated. Each version follows the conventions, idioms, and address norms of its language. We support 25 languages: Arabic, Chinese, Danish, Dutch, English, Finnish, French, German, Greek, Hindi, Indonesian, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Russian, Spanish, Swahili, Swedish, Thai, Turkish, Ukrainian, and Vietnamese.",
   "standards.attributionTitle": "Source attribution",
   "standards.attributionText": "Every article on Plata cites the outlets it was sourced from. Source names appear at the bottom of each article. We believe readers should always know where information comes from.",
   "standards.filteringTitle": "What we don't publish",

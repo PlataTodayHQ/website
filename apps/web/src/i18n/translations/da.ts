@@ -71,9 +71,9 @@ export const da = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Velkommen",
-  "welcome.eyebrow": "18 sprog · Én mission",
+  "welcome.eyebrow": "25 sprog · Én mission",
   "welcome.headline": "Argentina, åbent for verden",
-  "welcome.sub": "Hver dag skriver vi nyhederne på modersmålsniveau på 18 sprog — så hele verden kan forstå, hvad der sker i Argentina.",
+  "welcome.sub": "Hver dag skriver vi nyhederne på modersmålsniveau på 25 sprog — så hele verden kan forstå, hvad der sker i Argentina.",
 
   // Newsletter
   "newsletter.title": "Hold dig tæt på Argentina",
@@ -97,8 +97,8 @@ export const da = {
   "home.politics": "Politik",
   "home.title": "Nyheder fra Argentina på {lang}",
   "home.heroFallbackTitle": "Velkommen til Plata Today",
-  "home.heroFallbackDesc": "Nyheder fra Argentina, skrevet nativt på 18 sprog.",
-  "home.description": "Dagens vigtigste nyheder fra Argentina på {lang}: politik, økonomi, sport, kultur. Opdateres døgnet rundt, 18 sprog.",
+  "home.heroFallbackDesc": "Nyheder fra Argentina, skrevet nativt på 25 sprog.",
+  "home.description": "Dagens vigtigste nyheder fra Argentina på {lang}: politik, økonomi, sport, kultur. Opdateres døgnet rundt, 25 sprog.",
   "home.topStories": "Tophistorier",
   "home.economyBusiness": "Økonomi & Erhverv",
   "home.cultureSociety": "Kultur & Samfund",
@@ -141,13 +141,13 @@ export const da = {
 
   // About page
   "about.title": "Om Plata",
-  "about.description": "Plata bringer nyheder fra Argentina til verden på 18 sprog. Mød grundlæggeren og lær, hvordan vores redaktion arbejder.",
+  "about.description": "Plata bringer nyheder fra Argentina til verden på 25 sprog. Mød grundlæggeren og lær, hvordan vores redaktion arbejder.",
   "about.tagline": "Argentinas nyheder. Alle sprog. Alle kilder.",
   "about.missionTitle": "Vores mission",
   "about.missionText": "Vi mener, at alle fortjener adgang til, hvad der sker i Argentina, uanset hvilket sprog de taler. Plata overvåger 13+ argentinske nyhedskilder, syntetiserer det vigtigste og skriver hver historie nativt til dit sprog — med den kontekst, internationale læsere har brug for.",
   "about.valueNoOpinion": "Gennemsigtige kilder",
   "about.valueNoOpinionDesc": "Hver historie angiver sine kilder. Vi krydsrefererer flere medier, så du kan se, hvor fakta stammer fra.",
-  "about.value18langs": "18 sprog",
+  "about.value18langs": "25 sprog",
   "about.value18langsDesc": "Hver artikel skrives til det enkelte sprogs publikum — ikke oversat, men skabt fra bunden.",
   "about.valueFast": "Kurateret & hurtigt",
   "about.valueFastDesc": "Vi overvåger 13+ medier, så du ikke behøver det. Nye historier udgives hver 30. minut.",
@@ -157,7 +157,7 @@ export const da = {
   "about.step2Title": "Deduplikering",
   "about.step2Desc": "Når flere medier dækker den samme begivenhed, identificerer og grupperer vi dem og kombinerer forskellige perspektiver i én historie.",
   "about.step3Title": "Omskrivning",
-  "about.step3Desc": "De grupperede kilder syntetiseres til én faktuel artikel — skrevet nativt på hvert af vores 18 understøttede sprog.",
+  "about.step3Desc": "De grupperede kilder syntetiseres til én faktuel artikel — skrevet nativt på hvert af vores 25 understøttede sprog.",
   "about.step4Title": "Publicering",
   "about.step4Desc": "Artikler offentliggøres på plata.today med fuld kildehenvisning, strukturerede data og markedsinformation i realtid.",
   "about.sourcesTitle": "Vores kilder",
@@ -165,7 +165,7 @@ export const da = {
   "about.founderTitle": "Grundlægger",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Skaber & Udvikler",
-  "about.founderBio": "Bogdan byggede Plata for at løse et problem, han selv oplevede: at finde pålidelige nyheder om Argentina på andre sprog end spansk. Som udvikler skabte han en redaktion, der overvåger 13+ argentinske medier og skriver hver historie nativt på 18 sprog.",
+  "about.founderBio": "Bogdan byggede Plata for at løse et problem, han selv oplevede: at finde pålidelige nyheder om Argentina på andre sprog end spansk. Som udvikler skabte han en redaktion, der overvåger 13+ argentinske medier og skriver hver historie nativt på 25 sprog.",
   "about.disclaimerTitle": "Ansvarsfraskrivelse",
   "about.disclaimerText": "Artikler er syntetiseret fra flere argentinske nyhedskilder. Selvom vi bestræber os på nøjagtighed, bør du verificere vigtig information med den originale rapportering. Vi krediterer altid de publikationer, vi bygger på.",
   "about.contactTitle": "Kontakt",
@@ -402,7 +402,7 @@ export const da = {
   "notFound.description": "Siden blev ikke fundet. Udforsk de seneste nyheder fra Argentina på Plata Today.",
 
   // Common
-  "common.siteDescription": "Nyheder fra Argentina, skrevet nativt på 18 sprog. Fakta først, gennemsigtige kilder.",
+  "common.siteDescription": "Nyheder fra Argentina, skrevet nativt på 25 sprog. Fakta først, gennemsigtige kilder.",
   "common.breadcrumbHome": "Forside",
 
   // Feed page
@@ -433,13 +433,13 @@ export const da = {
   "standards.pageTitle": "Redaktionelle standarder — Plata",
   "standards.description": "Sådan arbejder Platas redaktion: kildearbejde, verificering og publiceringsstandarder.",
   "standards.updated": "Sidst opdateret: 14. marts 2026",
-  "standards.lead": "Plata er en flersproget nyhedsplatform, der dækker Argentina på 18 sprog. Denne side forklarer, hvordan vores redaktion arbejder — fra kildeindsamling til publicering.",
+  "standards.lead": "Plata er en flersproget nyhedsplatform, der dækker Argentina på 25 sprog. Denne side forklarer, hvordan vores redaktion arbejder — fra kildeindsamling til publicering.",
   "standards.sourcingTitle": "Kilder",
   "standards.sourcingText": "Vi overvåger over 13 argentinske nyhedsmedier i tre niveauer. Niveau 1 omfatter store nationale medier som Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista og iProfesional. Niveau 2 dækker uafhængige og specialiserede kilder som Perfil, Cadena 3 og Olé. Niveau 3 inkluderer regionale medier som La Gaceta, Misiones Online og El Día. Artikler indsamles via RSS-feeds hvert 30. minut.",
   "standards.verificationTitle": "Verificering",
   "standards.verificationText": "Hver nyhed gennemgår en flertrinsproces for gennemgang. Kilder, der dækker den samme begivenhed, grupperes sammen. Hver artikel faktatjekkes mod sine originale kilder. Påstande, der ikke understøttes af nogen kilde, markeres og fjernes. Nyheder, der ikke består verificeringen to gange, publiceres ikke.",
   "standards.languageTitle": "Sprogkvalitet",
-  "standards.languageText": "Artikler skrives direkte på hvert sprog — de oversættes ikke. Hver version følger sprogets egne konventioner, idiomer og tiltaleformer. Vi understøtter 18 sprog: engelsk, portugisisk, tysk, italiensk, fransk, russisk, kinesisk, polsk, ukrainsk, japansk, koreansk, spansk, svensk, dansk, nederlandsk, norsk, finsk og hindi.",
+  "standards.languageText": "Artikler skrives direkte på hvert sprog — de oversættes ikke. Hver version følger sprogets egne konventioner, idiomer og tiltaleformer. Vi understøtter 25 sprog: arabisk, kinesisk, dansk, nederlandsk, engelsk, finsk, fransk, tysk, græsk, hindi, indonesisk, italiensk, japansk, koreansk, norsk, polsk, portugisisk, russisk, spansk, swahili, svensk, thailandsk, tyrkisk, ukrainsk og vietnamesisk.",
   "standards.attributionTitle": "Kildehenvisning",
   "standards.attributionText": "Hver artikel på Plata angiver, hvilke medier informationen stammer fra. Kildenavne vises i bunden af hver artikel. Vi mener, at læseren altid bør vide, hvor informationen kommer fra.",
   "standards.filteringTitle": "Hvad vi ikke publicerer",
