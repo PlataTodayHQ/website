@@ -433,7 +433,8 @@ const { lang = "en" } = Astro.props;
     font-variant-numeric: tabular-nums;
     border-right: 1px solid var(--color-border, #e8e8e8);
     transition: background 0.15s;
-    flex: 0 0 auto;
+    flex: 1 0 0;
+    min-width: 100px;
     text-align: center;
     align-items: center;
   }
@@ -500,6 +501,7 @@ const { lang = "en" } = Astro.props;
 
     .ticker :global(.ticker-item) {
       padding: 6px 10px;
+      min-width: 80px;
     }
 
     .ticker :global(.ticker-name) {
