@@ -312,6 +312,48 @@ export const hi = {
   "stock.pageTitle": "अर्जेंटीना बाज़ार",
   "stock.pageDesc": "BYMA पर अर्जेंटीना शेयरों की लाइव कीमत, चार्ट, कंपनी प्रोफ़ाइल और प्रमुख आँकड़े।",
 
+  // Company Overview Hero
+  "stock.companyOverview": "Company Overview",
+  "stock.headquartered": "Headquartered",
+  "stock.readMore": "Read more",
+  "stock.readLess": "Read less",
+
+  // 52-Week Price Range
+  "stock.priceRange52w": "52-Week Price Range",
+  "stock.currentPrice": "Current Price",
+
+  // Financial Health Dashboard
+  "stock.financialHealth": "Financial Health",
+  "stock.profitability": "Profitability",
+  "stock.revenueGrowthLabel": "Revenue Growth",
+  "stock.earningsGrowthLabel": "Earnings Growth",
+  "stock.debtLevel": "Debt Level",
+  "stock.cashPosition": "Cash Position",
+  "stock.liquidityRatio": "Liquidity",
+  "stock.healthy": "Healthy",
+  "stock.caution": "Caution",
+  "stock.concern": "Concern",
+  "stock.strong": "Strong",
+  "stock.moderate": "Moderate",
+  "stock.weak": "Weak",
+  "stock.perShare": "per share",
+
+  // Enhanced Analyst Section
+  "stock.analystConsensus": "Analyst Consensus",
+  "stock.strongBuy": "Strong Buy",
+  "stock.buy": "Buy",
+  "stock.holdRating": "Hold",
+  "stock.sellRating": "Sell",
+  "stock.strongSell": "Strong Sell",
+  "stock.priceTargetRange": "Price Target Range",
+
+  // Quarterly Earnings
+  "stock.quarterlyEarnings": "Quarterly Earnings",
+  "stock.actual": "Actual",
+  "stock.estimateLabel": "Estimate",
+  "stock.beat": "Beat",
+  "stock.miss": "Miss",
+
   // Category page
   "category.latestIn": "{cat} में नवीनतम",
   "category.earlier": "पुराने",

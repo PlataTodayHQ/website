@@ -312,6 +312,48 @@ export const zhTw = {
   "stock.pageTitle": "阿根廷市場",
   "stock.pageDesc": "阿根廷 BYMA 上市股票的即時股價、走勢圖、公司簡介及關鍵統計數據。",
 
+  // Company Overview Hero
+  "stock.companyOverview": "Company Overview",
+  "stock.headquartered": "Headquartered",
+  "stock.readMore": "Read more",
+  "stock.readLess": "Read less",
+
+  // 52-Week Price Range
+  "stock.priceRange52w": "52-Week Price Range",
+  "stock.currentPrice": "Current Price",
+
+  // Financial Health Dashboard
+  "stock.financialHealth": "Financial Health",
+  "stock.profitability": "Profitability",
+  "stock.revenueGrowthLabel": "Revenue Growth",
+  "stock.earningsGrowthLabel": "Earnings Growth",
+  "stock.debtLevel": "Debt Level",
+  "stock.cashPosition": "Cash Position",
+  "stock.liquidityRatio": "Liquidity",
+  "stock.healthy": "Healthy",
+  "stock.caution": "Caution",
+  "stock.concern": "Concern",
+  "stock.strong": "Strong",
+  "stock.moderate": "Moderate",
+  "stock.weak": "Weak",
+  "stock.perShare": "per share",
+
+  // Enhanced Analyst Section
+  "stock.analystConsensus": "Analyst Consensus",
+  "stock.strongBuy": "Strong Buy",
+  "stock.buy": "Buy",
+  "stock.holdRating": "Hold",
+  "stock.sellRating": "Sell",
+  "stock.strongSell": "Strong Sell",
+  "stock.priceTargetRange": "Price Target Range",
+
+  // Quarterly Earnings
+  "stock.quarterlyEarnings": "Quarterly Earnings",
+  "stock.actual": "Actual",
+  "stock.estimateLabel": "Estimate",
+  "stock.beat": "Beat",
+  "stock.miss": "Miss",
+
   // Category page
   "category.latestIn": "{cat}最新消息",
   "category.earlier": "較早",

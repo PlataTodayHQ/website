@@ -312,6 +312,48 @@ export const vi = {
   "stock.pageTitle": "Thị trường Argentina",
   "stock.pageDesc": "Giá cổ phiếu trực tiếp, biểu đồ, hồ sơ công ty và chỉ số chính cho cổ phiếu Argentina trên BYMA.",
 
+  // Company Overview Hero
+  "stock.companyOverview": "Company Overview",
+  "stock.headquartered": "Headquartered",
+  "stock.readMore": "Read more",
+  "stock.readLess": "Read less",
+
+  // 52-Week Price Range
+  "stock.priceRange52w": "52-Week Price Range",
+  "stock.currentPrice": "Current Price",
+
+  // Financial Health Dashboard
+  "stock.financialHealth": "Financial Health",
+  "stock.profitability": "Profitability",
+  "stock.revenueGrowthLabel": "Revenue Growth",
+  "stock.earningsGrowthLabel": "Earnings Growth",
+  "stock.debtLevel": "Debt Level",
+  "stock.cashPosition": "Cash Position",
+  "stock.liquidityRatio": "Liquidity",
+  "stock.healthy": "Healthy",
+  "stock.caution": "Caution",
+  "stock.concern": "Concern",
+  "stock.strong": "Strong",
+  "stock.moderate": "Moderate",
+  "stock.weak": "Weak",
+  "stock.perShare": "per share",
+
+  // Enhanced Analyst Section
+  "stock.analystConsensus": "Analyst Consensus",
+  "stock.strongBuy": "Strong Buy",
+  "stock.buy": "Buy",
+  "stock.holdRating": "Hold",
+  "stock.sellRating": "Sell",
+  "stock.strongSell": "Strong Sell",
+  "stock.priceTargetRange": "Price Target Range",
+
+  // Quarterly Earnings
+  "stock.quarterlyEarnings": "Quarterly Earnings",
+  "stock.actual": "Actual",
+  "stock.estimateLabel": "Estimate",
+  "stock.beat": "Beat",
+  "stock.miss": "Miss",
+
   // Category page
   "category.latestIn": "Mới nhất trong {cat}",
   "category.earlier": "Trước đó",
