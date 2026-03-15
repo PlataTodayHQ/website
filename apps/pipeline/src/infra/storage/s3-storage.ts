@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { S3Client, PutObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import type { IImageStorage } from "../../ports/image-storage.js";
-import { log } from "../../logger.js";
+import { log } from "@plata-today/shared";
 
 const TIMEOUT_MS = 10_000;
 const MAX_SIZE_BYTES = 10 * 1024 * 1024;

@@ -1,14 +1,11 @@
 import type { APIRoute } from "astro";
 import { getDb } from "@/lib/db";
-import { BYMA_EQUITY_URL, fetchT } from "@plata-today/shared";
+import {
+  BYMA_EQUITY_URL, fetchBYMA, parseBYMAStock,
+  optionsResponse, jsonResponse, errorResponse,
+} from "@plata-today/shared";
 
 export const prerender = false;
-
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-};
 
 interface ScreenerRow {
   symbol: string;
@@ -111,57 +108,35 @@ function tryDb(): ScreenerRow[] | null {
   }
 }
 
-async function fetchByma(): Promise<any[]> {
-  const res = await fetchT(BYMA_EQUITY_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: "{}",
-  });
-  if (!res.ok) throw new Error(`BYMA ${res.status}`);
-  const json: any = await res.json();
-  if (!json?.data) throw new Error("No data");
-  return json.data;
-}
-
-export const OPTIONS: APIRoute = () =>
-  new Response(null, { status: 204, headers: CORS_HEADERS });
+export const OPTIONS: APIRoute = () => optionsResponse();
 
 export const GET: APIRoute = async () => {
   try {
     // Try DB first
     const dbRows = tryDb();
-    if (dbRows) {
-      return new Response(JSON.stringify(dbRows), {
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=120",
-          ...CORS_HEADERS,
-        },
-      });
-    }
+    if (dbRows) return jsonResponse(dbRows, 120);
 
     // Fallback to BYMA
-    const raw = await fetchByma();
+    const raw = await fetchBYMA(BYMA_EQUITY_URL);
     const seen = new Set<string>();
     const stocks = raw
       .map((s: any) => {
-        const symbol = (s.symbol ?? "").replace(".BA", "");
-        if (!symbol || seen.has(symbol)) return null;
-        seen.add(symbol);
-        const variation = s.variation ?? s.variacionPorcentual ?? null;
+        const stock = parseBYMAStock(s);
+        if (!stock.symbol || seen.has(stock.symbol)) return null;
+        seen.add(stock.symbol);
         return {
-          symbol,
-          name: STOCK_NAMES[symbol] ?? s.description ?? symbol,
+          symbol: stock.symbol,
+          name: STOCK_NAMES[stock.symbol] ?? stock.description ?? stock.symbol,
           sector: null,
           industry: null,
-          price: s.price ?? s.ultimoPrecio ?? null,
-          change: variation != null ? variation / 100 : null,
-          opening_price: s.openingPrice ?? s.apertura ?? null,
-          previous_close: s.previousClosingPrice ?? s.anteriorCierre ?? null,
-          high: s.highPrice ?? s.maximo ?? null,
-          low: s.lowPrice ?? s.minimo ?? null,
-          volume: s.volume ?? s.volumenNominal ?? 0,
-          market_cap: STOCK_MCAP[symbol] ? STOCK_MCAP[symbol] * 1e6 : null,
+          price: stock.price,
+          change: stock.variation != null ? stock.variation / 100 : null,
+          opening_price: stock.openingPrice,
+          previous_close: stock.previousClose,
+          high: stock.high,
+          low: stock.low,
+          volume: stock.volume,
+          market_cap: STOCK_MCAP[stock.symbol] ? STOCK_MCAP[stock.symbol] * 1e6 : null,
           trailing_pe: null,
           forward_pe: null,
           eps: null,
@@ -175,20 +150,8 @@ export const GET: APIRoute = async () => {
       .filter(Boolean)
       .sort((a: any, b: any) => (b.market_cap ?? 0) - (a.market_cap ?? 0));
 
-    return new Response(JSON.stringify(stocks), {
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=120",
-        ...CORS_HEADERS,
-      },
-    });
+    return jsonResponse(stocks, 120);
   } catch (err: any) {
-    return new Response(
-      JSON.stringify({ error: err.message ?? "Failed to fetch screener data" }),
-      {
-        status: 502,
-        headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-      },
-    );
+    return errorResponse(err.message ?? "Failed to fetch screener data");
   }
 };

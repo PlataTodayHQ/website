@@ -2,7 +2,7 @@ import type { IRawArticleRepository } from "../ports/raw-article-repository.js";
 import type { IEventRepository } from "../ports/event-repository.js";
 import { isClusterMatch } from "../domain/similarity.js";
 import { scoreEvent, getPluralityCategory } from "../domain/scoring.js";
-import { log } from "../logger.js";
+import { log } from "@plata-today/shared";
 
 export function clusterAndScore(
   rawArticleRepo: IRawArticleRepository,

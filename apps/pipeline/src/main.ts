@@ -2,7 +2,7 @@ import { loadConfig } from "./config.js";
 import { openDatabase } from "./db/connection.js";
 import { runMigrations } from "./db/migrate.js";
 import { SOURCES } from "./scraper/sources.js";
-import { log, setLogLevel } from "./logger.js";
+import { log, setLogLevel } from "@plata-today/shared";
 
 // Infrastructure
 import { SQLiteEventRepository } from "./infra/db/sqlite-event-repo.js";

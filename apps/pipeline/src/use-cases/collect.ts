@@ -1,7 +1,7 @@
 import type { IScraper, IFullTextExtractor } from "../ports/scraper.js";
 import type { IRawArticleRepository } from "../ports/raw-article-repository.js";
 import type { IImageStorage } from "../ports/image-storage.js";
-import { log } from "../logger.js";
+import { log } from "@plata-today/shared";
 
 const IMAGE_BATCH_SIZE = 5;
 const MAX_CONCURRENT_EXTRACTIONS = 5;

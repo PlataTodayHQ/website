@@ -1,6 +1,6 @@
 import { Readability } from "@mozilla/readability";
 import { parseHTML } from "linkedom";
-import { log } from "../logger.js";
+import { log } from "@plata-today/shared";
 
 const FETCH_TIMEOUT_MS = 10_000;
 const MAX_BODY_LENGTH = 50_000;
