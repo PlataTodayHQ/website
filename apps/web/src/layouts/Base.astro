@@ -355,6 +355,15 @@ const allJsonLd = [
       </div>
     </div>
 
+    <!-- Pull to refresh indicator -->
+    <div class="ptr" id="ptr" aria-hidden="true">
+      <div class="ptr-spinner">
+        <svg class="ptr-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 4V1L8 5l4 4V6a6 6 0 11-6 6H4a8 8 0 108-8z" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+
     <main class="main" id="main-content" role="main">
       <div class="main-inner">
         <slot />
@@ -618,6 +627,74 @@ const allJsonLd = [
           if (label) label.hidden = true;
         });
       });
+    </script>
+    <!-- Pull to refresh -->
+    <script is:inline>
+      (function() {
+        var ptr = document.getElementById('ptr');
+        if (!ptr || !('ontouchstart' in window)) return;
+
+        var startY = 0;
+        var pulling = false;
+        var threshold = 80;
+        var maxPull = 120;
+        var currentPull = 0;
+
+        function isAtTop() {
+          return window.scrollY <= 0;
+        }
+
+        function hasOpenOverlay() {
+          var overlays = document.querySelectorAll('.mobile-overlay');
+          for (var i = 0; i < overlays.length; i++) {
+            if (!overlays[i].hidden) return true;
+          }
+          return false;
+        }
+
+        document.addEventListener('touchstart', function(e) {
+          if (isAtTop() && !hasOpenOverlay()) {
+            startY = e.touches[0].clientY;
+            pulling = true;
+            currentPull = 0;
+          }
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function(e) {
+          if (!pulling) return;
+          var dy = e.touches[0].clientY - startY;
+          if (dy < 0) { pulling = false; return; }
+          currentPull = Math.min(dy * 0.5, maxPull);
+          if (currentPull > 10) {
+            ptr.classList.add('ptr--visible');
+            ptr.style.transform = 'translateY(' + (currentPull - 50) + 'px)';
+            var rotation = (currentPull / threshold) * 360;
+            var icon = ptr.querySelector('.ptr-icon');
+            if (icon) icon.style.transform = 'rotate(' + rotation + 'deg)';
+            if (currentPull >= threshold) {
+              ptr.classList.add('ptr--ready');
+            } else {
+              ptr.classList.remove('ptr--ready');
+            }
+          }
+        }, { passive: true });
+
+        document.addEventListener('touchend', function() {
+          if (!pulling) return;
+          if (currentPull >= threshold) {
+            ptr.classList.add('ptr--loading');
+            ptr.classList.remove('ptr--ready');
+            ptr.style.transform = 'translateY(10px)';
+            setTimeout(function() { location.reload(); }, 200);
+          } else {
+            ptr.classList.remove('ptr--visible', 'ptr--ready');
+            ptr.style.transform = '';
+          }
+          pulling = false;
+          currentPull = 0;
+          startY = 0;
+        }, { passive: true });
+      })();
     </script>
     <script is:inline>
       if ('serviceWorker' in navigator) {
@@ -1239,5 +1316,58 @@ const allJsonLd = [
     .logo-text {
       font-size: 1.25rem;
     }
+  }
+
+  /* Pull to refresh */
+  .ptr {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    transform: translateY(-50px);
+    transition: none;
+    opacity: 0;
+  }
+
+  .ptr--visible {
+    opacity: 1;
+  }
+
+  .ptr--loading {
+    transition: transform 0.2s ease;
+  }
+
+  .ptr-spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-meta);
+    transition: color 0.15s;
+  }
+
+  .ptr--ready .ptr-spinner {
+    color: var(--color-accent);
+  }
+
+  .ptr--loading .ptr-spinner {
+    color: var(--color-accent);
+    animation: ptr-spin 0.6s linear infinite;
+  }
+
+  .ptr-icon {
+    transition: transform 0.05s linear;
+  }
+
+  @keyframes ptr-spin {
+    to { transform: rotate(360deg); }
   }
 </style>
