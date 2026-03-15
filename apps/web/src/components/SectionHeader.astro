@@ -23,18 +23,29 @@ const { title, href, accentColor } = Astro.props;
 
 <style>
   .section-header {
-    border-top: 3px solid var(--color-accent);
-    padding-top: 12px;
+    border-top: 2px solid var(--color-border-section);
+    padding-top: 10px;
     margin-bottom: var(--spacing-lg);
     margin-top: var(--spacing-2xl);
+    position: relative;
+  }
+
+  .section-header::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-border-section);
   }
 
   .section-title {
     font-family: var(--font-sans);
-    font-size: 1.05rem;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.08em;
   }
 
   .section-title-link {

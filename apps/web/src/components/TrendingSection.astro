@@ -41,16 +41,27 @@ const { items, lang = "en" } = Astro.props;
 <style>
   .trending {
     margin-bottom: var(--spacing-2xl);
-    border-top: 3px solid var(--color-gold);
-    padding-top: 12px;
+    border-top: 2px solid var(--color-gold);
+    padding-top: 10px;
+    position: relative;
+  }
+
+  .trending::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-gold);
   }
 
   .trending-title {
     font-family: var(--font-sans);
-    font-size: 1.05rem;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.08em;
     margin-bottom: var(--spacing-lg);
   }
 

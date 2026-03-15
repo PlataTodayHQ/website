@@ -133,6 +133,11 @@ const allJsonLd = [
     <meta name="theme-color" content="#1e2a3d" />
     <meta name="color-scheme" content="light dark" />
 
+    <!-- Web fonts: Source Serif 4 (headings) + Inter (UI) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet" />
+
     {!noindex && <link rel="canonical" href={resolvedCanonical} />}
     <link rel="alternate" type="application/rss+xml" title="Plata News" href={`${siteUrl}/rss.xml`} />
 
@@ -257,6 +262,15 @@ const allJsonLd = [
       </nav>
     </header>
 
+    <!-- Dateline — classic newspaper edition line -->
+    <div class="dateline-bar">
+      <div class="dateline-inner">
+        <time class="dateline-date" datetime={new Date().toISOString().slice(0, 10)}>
+          {new Date().toLocaleDateString(lang, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+        </time>
+      </div>
+    </div>
+
     <MarketTicker lang={lang} />
 
     <!-- Mobile menu overlay -->
@@ -374,7 +388,10 @@ const allJsonLd = [
       <div class="footer-inner">
         <!-- Logo + tagline -->
         <div class="footer-brand">
-          <a href={`/${lang}/`} class="footer-logo" aria-label="Plata — Home">Plata</a>
+          <div class="footer-brand-row">
+            <a href={`/${lang}/`} class="footer-logo" aria-label="Plata — Home">Plata</a>
+            <span class="footer-est">Est. 2025</span>
+          </div>
           <p class="footer-tagline">{t(lang, "footer.tagline")}</p>
         </div>
 
@@ -773,8 +790,9 @@ const allJsonLd = [
   .logo-text {
     font-size: 1.6rem;
     font-weight: 800;
-    font-family: var(--font-sans);
-    letter-spacing: -0.02em;
+    font-family: var(--font-serif);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   .brand-actions {
@@ -851,6 +869,7 @@ const allJsonLd = [
   .footer {
     background: var(--color-celeste);
     color: rgba(255, 255, 255, 0.8);
+    border-top: 3px solid var(--color-gold);
   }
 
   .footer-inner {
@@ -860,15 +879,30 @@ const allJsonLd = [
   }
 
   .footer-brand {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .footer-brand-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+  }
+
+  .footer-est {
+    font-family: var(--font-serif);
+    font-size: 0.75rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.02em;
   }
 
   .footer-logo {
     color: #fff;
     font-size: 1.5rem;
     font-weight: 800;
-    font-family: var(--font-sans);
-    letter-spacing: -0.02em;
+    font-family: var(--font-serif);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   .footer-logo:hover {
@@ -1356,6 +1390,38 @@ const allJsonLd = [
 
   .ptr--ready .ptr-spinner {
     color: var(--color-accent);
+  }
+
+  /* Dateline bar — newspaper edition line */
+  .dateline-bar {
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .dateline-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 6px var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .dateline-date {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    color: var(--color-text-meta);
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+  }
+
+  @media (max-width: 768px) {
+    .dateline-inner {
+      padding: 5px var(--spacing-md);
+    }
+    .dateline-date {
+      font-size: 0.68rem;
+    }
   }
 
   .ptr--loading .ptr-spinner {

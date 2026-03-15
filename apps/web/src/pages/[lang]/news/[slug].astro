@@ -485,6 +485,7 @@ try {
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
+    border: 1px solid var(--color-border);
   }
 
   .article-image-credit {
@@ -505,6 +506,17 @@ try {
 
   .article-body :global(p) {
     margin-bottom: var(--spacing-lg);
+  }
+
+  .article-body :global(p:first-of-type::first-letter) {
+    font-family: var(--font-serif);
+    font-size: 3.6em;
+    font-weight: 700;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.05em;
+    color: var(--color-text);
   }
 
   .article-body :global(h2) {
@@ -535,16 +547,27 @@ try {
 
   /* Sources */
   .article-sources {
-    border-top: 3px solid var(--color-celeste);
+    border-top: 2px solid var(--color-border-section);
     padding-top: var(--spacing-lg);
+    position: relative;
+  }
+
+  .article-sources::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-border-section);
   }
 
   .article-sources h2 {
     font-family: var(--font-sans);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
     color: var(--color-text-meta);
     margin-bottom: var(--spacing-md);
   }
