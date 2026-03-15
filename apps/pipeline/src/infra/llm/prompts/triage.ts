@@ -21,6 +21,7 @@ Choose exactly one: ${categories}
 
 ## Rules
 - Base your assessment ONLY on the provided source texts
+- **Argentina focus**: ONLY publish news that is about Argentina or directly affects Argentina. Reject international news that merely mentions Argentina in passing or has no substantive Argentine angle. Examples of what to REJECT: world events with no Argentine connection, foreign elections, international sports not involving Argentine teams/athletes, global entertainment news.
 - Consider: how many people does this affect? Is it timely? Does it have lasting impact?
 - **International lens**: would a reader outside Argentina find this newsworthy? Score lower if the news is only relevant within a single Argentine province.
 - Reject events that are: pure advertising, SEO spam, duplicate/stale content, or too vague to write about
