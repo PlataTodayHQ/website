@@ -33,6 +33,13 @@ const {
   style={categoryKey ? `--cat-color: var(--cat-${categoryKey}, var(--color-gold-dark))` : undefined}
 >
   <a href={href} class="card-link">
+    {/* Category header — Instagram-style top bar */}
+    {(category || isNew) && (
+      <div class="card-header">
+        {category && <span class="card-category">{category}</span>}
+        {isNew && <span class="card-badge-new">NEW</span>}
+      </div>
+    )}
     {imageUrl && (
       <div class="card-image">
         <img src={imageUrl} alt={title} loading="lazy" onerror="this.parentElement.style.display='none'" />
@@ -41,21 +48,32 @@ const {
     <div class="card-body">
       <h3 class="card-title">{title}</h3>
       {description && <p class="card-desc">{description}</p>}
-      {(timeAgo || category || isNew) && (
-        <div class="card-meta">
-          {isNew && <span class="card-badge-new">NEW</span>}
-          {timeAgo && <time class="card-time">{timeAgo}</time>}
-          {timeAgo && category && <span class="card-divider" aria-hidden="true">&middot;</span>}
-          {category && <span class="card-category">{category}</span>}
-          {readingTime && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-reading-time">{readingTime}</span></>}
-        </div>
-      )}
-      {sourceLabel && <span class="card-source">via {sourceLabel}</span>}
+      <div class="card-meta">
+        {timeAgo && <time class="card-time">{timeAgo}</time>}
+        {readingTime && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-reading-time">{readingTime}</span></>}
+        {sourceLabel && <><span class="card-divider" aria-hidden="true">&middot;</span><span class="card-source">via {sourceLabel}</span></>}
+      </div>
     </div>
   </a>
 </article>
 
 <style>
+  /* ====================== */
+  /* BASE CARD (Instagram)  */
+  /* ====================== */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
   .card-link {
     display: block;
     color: inherit;
@@ -64,81 +82,91 @@ const {
 
   .card-link:hover {
     text-decoration: none;
+    color: inherit;
   }
 
-  .card-link:hover .card-title {
-    text-decoration: underline;
-  }
-
-  .card-image {
-    overflow: hidden;
-    margin-bottom: 14px;
-  }
-
-  .card-image img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    transition: transform 0.2s;
-    border: 1px solid var(--color-border);
-  }
-
-  .card-link:hover .card-image img {
-    transform: scale(1.02);
-  }
-
-  .card-title {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 8px;
-    color: var(--color-text);
-    letter-spacing: -0.01em;
-  }
-
-  .card-desc {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--color-text-secondary);
-    margin-bottom: 10px;
-  }
-
-  .card-meta {
-    font-size: 0.8rem;
-    color: var(--color-text-meta);
+  .card-header {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    padding: 12px 16px;
   }
 
   .card-category {
     color: var(--cat-color, var(--color-gold-dark));
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
     font-size: 0.7rem;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.06em;
   }
 
   .card-badge-new {
     display: inline-block;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     font-weight: 800;
     letter-spacing: 0.05em;
     background: #b91c1c;
     color: #fff;
-    padding: 1px 5px;
-    border-radius: 2px;
+    padding: 2px 6px;
+    border-radius: 4px;
     text-transform: uppercase;
-    vertical-align: middle;
+  }
+
+  .card-image {
+    overflow: hidden;
+  }
+
+  .card-image img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .card-link:hover .card-image img {
+    transform: scale(1.03);
+  }
+
+  .card-body {
+    padding: 14px 16px 16px;
+  }
+
+  .card-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 6px;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-meta {
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
   }
 
   .card-source {
-    display: block;
-    font-size: 0.65rem;
-    color: var(--color-text-meta);
     font-style: italic;
-    margin-top: 4px;
   }
 
   .card-divider {
@@ -146,26 +174,56 @@ const {
   }
 
   .card-reading-time {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--color-text-meta);
   }
 
-  /* Hero variant */
+  /* ====================== */
+  /* HERO VARIANT            */
+  /* ====================== */
+  .card--hero {
+    border-radius: 16px;
+  }
+
+  .card--hero .card-image img {
+    aspect-ratio: 1 / 1;
+  }
+
+  .card--hero .card-header {
+    padding: 14px 20px;
+  }
+
+  .card--hero .card-body {
+    padding: 16px 20px 20px;
+  }
+
   .card--hero .card-title {
-    font-size: 1.75rem;
-    line-height: 1.2;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    -webkit-line-clamp: 4;
   }
 
   .card--hero .card-desc {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.6;
+    -webkit-line-clamp: 3;
   }
 
-  /* Sidebar variant — no image, compact */
+  /* ========================= */
+  /* SIDEBAR VARIANT            */
+  /* ========================= */
   .card--sidebar {
-    padding-bottom: 16px;
-    margin-bottom: 16px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
     border-bottom: 1px solid var(--color-border);
+  }
+
+  .card--sidebar:hover {
+    box-shadow: none;
+    transform: none;
   }
 
   .card--sidebar:last-child {
@@ -174,30 +232,36 @@ const {
     padding-bottom: 0;
   }
 
+  .card--sidebar .card-header {
+    padding: 0 0 6px;
+  }
+
+  .card--sidebar .card-body {
+    padding: 0;
+  }
+
   .card--sidebar .card-title {
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
 
-  /* Compact variant — horizontal: thumbnail left, text right (BBC-style) */
-  .card--compact .card-link {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 12px;
-    align-items: start;
+  .card--sidebar .card-desc {
+    display: none;
   }
 
-  .card--compact .card-image {
-    margin-bottom: 0;
+  /* ============================== */
+  /* COMPACT VARIANT (Instagram)    */
+  /* ============================== */
+  .card--compact {
+    border-radius: 10px;
   }
 
   .card--compact .card-image img {
-    aspect-ratio: 4 / 3;
-    border-radius: 2px;
+    aspect-ratio: 4 / 5;
   }
 
   .card--compact .card-title {
     font-size: 0.95rem;
-    margin-bottom: 6px;
+    -webkit-line-clamp: 2;
   }
 
   .card--compact .card-desc {
@@ -206,5 +270,28 @@ const {
 
   .card--compact .card-meta {
     font-size: 0.7rem;
+  }
+
+  /* ====================== */
+  /* MOBILE                  */
+  /* ====================== */
+  @media (max-width: 640px) {
+    .card {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
+
+    .card--hero {
+      border-radius: 0;
+    }
+
+    .card--compact {
+      border-radius: 0;
+    }
+
+    .card--hero .card-image img {
+      aspect-ratio: 4 / 5;
+    }
   }
 </style>
