@@ -76,10 +76,13 @@ export const onRequest = defineMiddleware(({ request, url, redirect }, next) => 
     return redirect(normalized + url.search, 301);
   }
 
-  // Root — detect language and redirect
+  // Root — detect language and redirect (302: language varies by user's Accept-Language)
   if (pathname === "/") {
     const lang = detectLang(request.headers.get("accept-language"));
-    return redirect(`/${lang}/`, 302);
+    const response = redirect(`/${lang}/`, 302);
+    // Vary header tells caches/crawlers this redirect depends on Accept-Language
+    response.headers.set("Vary", "Accept-Language");
+    return response;
   }
 
   const segments = pathname.split("/").filter(Boolean);

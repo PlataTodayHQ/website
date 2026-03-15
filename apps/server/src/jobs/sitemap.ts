@@ -29,43 +29,77 @@ const STATIC_PAGES: Array<{ path: string; changefreq: string; priority: number }
 interface ArticleInfo {
   slug: string;
   published_at: string;
+  event_id?: number;
 }
 
 function escapeXml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-function buildUrlEntry(loc: string, lastmod?: string, changefreq?: string, priority?: number): string {
+interface HreflangLink {
+  lang: string;
+  href: string;
+}
+
+function buildUrlEntry(loc: string, lastmod?: string, changefreq?: string, priority?: number, hreflangs?: HreflangLink[]): string {
   let entry = `  <url>\n    <loc>${escapeXml(loc)}</loc>`;
   if (lastmod) entry += `\n    <lastmod>${lastmod}</lastmod>`;
   if (changefreq) entry += `\n    <changefreq>${changefreq}</changefreq>`;
   if (priority !== undefined) entry += `\n    <priority>${priority.toFixed(1)}</priority>`;
+  if (hreflangs) {
+    for (const hl of hreflangs) {
+      entry += `\n    <xhtml:link rel="alternate" hreflang="${hl.lang}" href="${escapeXml(hl.href)}" />`;
+    }
+    entry += `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(hreflangs.find(h => h.lang === 'en')?.href ?? loc)}" />`;
+  }
   entry += "\n  </url>";
   return entry;
 }
 
-function buildLangSitemap(lang: string, articles: ArticleInfo[]): string {
+function buildLangSitemap(
+  lang: string,
+  articles: ArticleInfo[],
+  articleLangSlugs: Map<number, Map<string, string>>,
+): string {
   const entries: string[] = [];
+
+  // Hreflang links for static/category pages (same path in all languages)
+  const staticHreflangs = (pagePath: string): HreflangLink[] =>
+    LANG_CODES.map((code) => ({ lang: code, href: `${SITE}/${code}${pagePath}` }));
 
   // Static pages
   const today = new Date().toISOString().slice(0, 10);
   for (const page of STATIC_PAGES) {
-    entries.push(buildUrlEntry(`${SITE}/${lang}${page.path}`, today, page.changefreq, page.priority));
+    entries.push(buildUrlEntry(
+      `${SITE}/${lang}${page.path}`, today, page.changefreq, page.priority,
+      staticHreflangs(page.path),
+    ));
   }
 
   // Category pages
   for (const cat of CATEGORY_LIST) {
-    entries.push(buildUrlEntry(`${SITE}/${lang}/category/${cat}`, undefined, "hourly", 0.7));
+    entries.push(buildUrlEntry(
+      `${SITE}/${lang}/category/${cat}`, undefined, "hourly", 0.7,
+      staticHreflangs(`/category/${cat}`),
+    ));
   }
 
   // Article pages
   for (const a of articles) {
     const date = a.published_at.slice(0, 10);
-    entries.push(buildUrlEntry(`${SITE}/${lang}/news/${a.slug}`, date, "weekly", 0.8));
+    const slugsByLang = a.event_id ? articleLangSlugs.get(a.event_id) : undefined;
+    const hreflangs: HreflangLink[] | undefined = slugsByLang
+      ? Array.from(slugsByLang.entries()).map(([code, slug]) => ({
+          lang: code,
+          href: `${SITE}/${code}/news/${slug}`,
+        }))
+      : undefined;
+    entries.push(buildUrlEntry(`${SITE}/${lang}/news/${a.slug}`, date, "weekly", 0.8, hreflangs));
   }
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${entries.join("\n")}
 </urlset>`;
 }
@@ -89,28 +123,37 @@ export async function generateSitemaps(db: Database.Database, distDir: string): 
   try {
     const rows = db
       .prepare(
-        `SELECT a.lang, a.slug, a.published_at
+        `SELECT a.lang, a.slug, a.published_at, a.event_id
          FROM articles a JOIN events e ON a.event_id = e.id
          WHERE e.stage = 'published'
          ORDER BY a.published_at DESC`,
       )
-      .all() as Array<{ lang: string; slug: string; published_at: string }>;
+      .all() as Array<{ lang: string; slug: string; published_at: string; event_id: number }>;
 
     // Group by language
     const byLang = new Map<string, ArticleInfo[]>();
+    // Build event_id → { lang → slug } mapping for hreflang
+    const articleLangSlugs = new Map<number, Map<string, string>>();
     for (const row of rows) {
       let list = byLang.get(row.lang);
       if (!list) {
         list = [];
         byLang.set(row.lang, list);
       }
-      list.push({ slug: row.slug, published_at: row.published_at });
+      list.push({ slug: row.slug, published_at: row.published_at, event_id: row.event_id });
+
+      let slugMap = articleLangSlugs.get(row.event_id);
+      if (!slugMap) {
+        slugMap = new Map();
+        articleLangSlugs.set(row.event_id, slugMap);
+      }
+      slugMap.set(row.lang, row.slug);
     }
 
     // Generate per-language sitemaps
     for (const lang of LANG_CODES) {
       const articles = byLang.get(lang) ?? [];
-      const xml = buildLangSitemap(lang, articles);
+      const xml = buildLangSitemap(lang, articles, articleLangSlugs);
       fs.writeFileSync(path.join(distDir, `sitemap-${lang}.xml`), xml, "utf-8");
     }
 

@@ -60,7 +60,7 @@ const currentPath = rawPath === '/' || /^\/[a-z]{2}(-[a-z]{2})?\/$/.test(rawPath
 const fullTitle = `${title} | Plata`;
 const resolvedCanonical = canonicalUrl ?? `${siteUrl}${currentPath}`;
 const resolvedOgUrl = ogUrl ?? resolvedCanonical;
-const defaultOgImage = `${siteUrl}/og-default.png`;
+const defaultOgImage = `${siteUrl}/og-default.svg`;
 const resolvedOgImage = ogImage || defaultOgImage;
 
 // Generate hreflang for all languages if not explicitly provided
@@ -157,11 +157,19 @@ const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
     <meta name="theme-color" content="#112e51" />
     <meta name="color-scheme" content="light dark" />
 
-    <!-- Web fonts: loaded via fonts.ts -->
+    <!-- Web fonts: non-blocking load via preload + swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href={BASE_FONT_URL} rel="stylesheet" />
-    {scriptFontUrl && <link href={scriptFontUrl} rel="stylesheet" />}
+    <link rel="preload" as="style" href={BASE_FONT_URL} />
+    <link href={BASE_FONT_URL} rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href={BASE_FONT_URL} rel="stylesheet" /></noscript>
+    {scriptFontUrl && (
+      <>
+        <link rel="preload" as="style" href={scriptFontUrl} />
+        <link href={scriptFontUrl} rel="stylesheet" media="print" onload="this.media='all'" />
+        <noscript><link href={scriptFontUrl} rel="stylesheet" /></noscript>
+      </>
+    )}
 
     {!noindex && <link rel="canonical" href={resolvedCanonical} />}
     <link rel="alternate" type="application/rss+xml" title="Plata News" href={`${siteUrl}/rss.xml?lang=${lang}`} />
