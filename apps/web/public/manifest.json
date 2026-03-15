@@ -4,8 +4,8 @@
   "description": "Fact-first, source-transparent news from Argentina, natively written in 18 languages.",
   "start_url": "/en/",
   "display": "standalone",
-  "background_color": "#1e2a3d",
-  "theme_color": "#1e2a3d",
+  "background_color": "#112e51",
+  "theme_color": "#112e51",
   "icons": [
     {
       "src": "/icon-192.png",
