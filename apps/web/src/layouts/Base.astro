@@ -483,16 +483,29 @@ const allJsonLd = [
     <script is:inline>
       // --- Smooth header shrink on scroll ---
       (function() {
-        const header = document.querySelector('.header');
-        if (header) {
-          var SCROLL_DISTANCE = 80;
-          var onScroll = function() {
-            var progress = Math.min(window.scrollY / SCROLL_DISTANCE, 1);
+        var header = document.querySelector('.header');
+        if (!header) return;
+        var SCROLL_DISTANCE = 80;
+        var ticking = false;
+        var lastProgress = -1;
+        var update = function() {
+          var progress = Math.min(window.scrollY / SCROLL_DISTANCE, 1);
+          // Round to 3 decimals to avoid excessive style recalcs
+          progress = Math.round(progress * 1000) / 1000;
+          if (progress !== lastProgress) {
             header.style.setProperty('--scroll-progress', progress);
-          };
-          onScroll();
-          window.addEventListener('scroll', onScroll, { passive: true });
-        }
+            lastProgress = progress;
+          }
+          ticking = false;
+        };
+        var onScroll = function() {
+          if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+          }
+        };
+        update();
+        window.addEventListener('scroll', onScroll, { passive: true });
       })();
 
       // --- Overlay system ---
@@ -771,6 +784,7 @@ const allJsonLd = [
     overflow: hidden;
     max-height: calc(32px * (1 - var(--scroll-progress)));
     opacity: calc(1 - var(--scroll-progress));
+    will-change: max-height, opacity;
   }
 
   .utility-inner {
@@ -803,6 +817,7 @@ const allJsonLd = [
     border-bottom-width: calc(1px + 2px * var(--scroll-progress));
     border-bottom-color: color-mix(in srgb, rgba(255, 255, 255, 0.15) calc(100% * (1 - var(--scroll-progress))), var(--color-gold) calc(100% * var(--scroll-progress)));
     position: relative;
+    will-change: border-bottom-width, border-bottom-color;
   }
 
   .masthead-inner {
@@ -811,7 +826,7 @@ const allJsonLd = [
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: calc(var(--spacing-md) * (1 - var(--scroll-progress))) var(--spacing-lg);
+    padding: calc(4px + (var(--spacing-md) - 4px) * (1 - var(--scroll-progress))) var(--spacing-lg);
     position: relative;
   }
 
@@ -845,15 +860,20 @@ const allJsonLd = [
     font-weight: 400;
     font-family: var(--font-display);
     letter-spacing: 0.02em;
+    will-change: font-size;
+    line-height: 1;
   }
 
   /* Nav bar: categories */
   .nav-bar {
     background: var(--color-celeste);
-    border-bottom: 3px solid var(--color-gold);
+    border-bottom-style: solid;
+    border-bottom-width: calc(3px * (1 - var(--scroll-progress)));
+    border-bottom-color: var(--color-gold);
     overflow: hidden;
     max-height: calc(43px * (1 - var(--scroll-progress)));
     opacity: calc(1 - var(--scroll-progress));
+    will-change: max-height, opacity;
   }
 
   .nav-inner {
@@ -880,7 +900,7 @@ const allJsonLd = [
     color: rgba(255, 255, 255, 0.85);
     white-space: nowrap;
     border-bottom: 3px solid transparent;
-    margin-bottom: -3px;
+    margin-bottom: calc(-3px * (1 - var(--scroll-progress)));
     transition: border-color 0.15s, color 0.15s;
   }
 
@@ -1378,7 +1398,7 @@ const allJsonLd = [
     }
 
     .masthead-inner {
-      padding: var(--spacing-sm) var(--spacing-md);
+      padding: calc(4px + (var(--spacing-sm) - 4px) * (1 - var(--scroll-progress))) var(--spacing-md);
     }
 
     .menu-btn {
