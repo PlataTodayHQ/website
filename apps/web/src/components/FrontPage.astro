@@ -1,0 +1,239 @@
+---
+/**
+ * FrontPage — "Digital Broadsheet" above-the-fold layout.
+ * 60/40 split: main story (left) + secondary stories (right).
+ * Shows 5+ stories without scrolling.
+ */
+
+interface Story {
+  title: string;
+  description?: string;
+  href: string;
+  imageUrl?: string;
+  timeAgo?: string;
+  category?: string;
+  categoryKey?: string;
+  readingTime?: string;
+  sourceLabel?: string;
+}
+
+interface Props {
+  lead: Story;
+  secondary: Story[];
+}
+
+const { lead, secondary } = Astro.props;
+---
+
+<section class="front-page" aria-label="Top stories">
+  <div class="fp-grid">
+    <!-- Lead story — left column (60%) -->
+    <article class="fp-lead" style={lead.categoryKey ? `--cat-color: var(--cat-${lead.categoryKey}, var(--color-gold-dark))` : undefined}>
+      <a href={lead.href} class="fp-lead-link">
+        {lead.category && <span class="fp-category">{lead.category}</span>}
+        <h2 class="fp-lead-title">{lead.title}</h2>
+        {lead.description && <p class="fp-lead-desc">{lead.description}</p>}
+        {lead.imageUrl && (
+          <div class="fp-lead-image">
+            <img src={lead.imageUrl} alt={lead.title} loading="eager" onerror="this.parentElement.style.display='none'" />
+          </div>
+        )}
+        <div class="fp-meta">
+          {lead.timeAgo && <time>{lead.timeAgo}</time>}
+          {lead.readingTime && <><span class="fp-dot" aria-hidden="true">&middot;</span><span>{lead.readingTime}</span></>}
+          {lead.sourceLabel && <><span class="fp-dot" aria-hidden="true">&middot;</span><span class="fp-source">via {lead.sourceLabel}</span></>}
+        </div>
+      </a>
+    </article>
+
+    <!-- Secondary stories — right column (40%) -->
+    <div class="fp-sidebar">
+      {secondary.map((story) => (
+        <article class="fp-secondary" style={story.categoryKey ? `--cat-color: var(--cat-${story.categoryKey}, var(--color-gold-dark))` : undefined}>
+          <a href={story.href} class="fp-secondary-link">
+            {story.category && <span class="fp-category">{story.category}</span>}
+            <h3 class="fp-secondary-title">{story.title}</h3>
+            {story.description && <p class="fp-secondary-desc">{story.description}</p>}
+            <div class="fp-meta">
+              {story.timeAgo && <time>{story.timeAgo}</time>}
+              {story.readingTime && <><span class="fp-dot" aria-hidden="true">&middot;</span><span>{story.readingTime}</span></>}
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .front-page {
+    margin-bottom: var(--spacing-2xl);
+    border-top: 3px solid var(--color-border-section);
+    padding-top: var(--spacing-lg);
+  }
+
+  .fp-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  @media (min-width: 768px) {
+    .fp-grid {
+      grid-template-columns: 3fr 2fr;
+      gap: var(--spacing-2xl);
+    }
+  }
+
+  /* Category label */
+  .fp-category {
+    display: inline-block;
+    color: var(--cat-color, var(--color-gold-dark));
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  /* ---- Lead story ---- */
+  .fp-lead-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .fp-lead-link:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .fp-lead-link:hover .fp-lead-title {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .fp-lead-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    color: var(--color-text);
+  }
+
+  @media (min-width: 768px) {
+    .fp-lead-title {
+      font-size: 2.4rem;
+    }
+  }
+
+  .fp-lead-desc {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .fp-lead-image {
+    margin-bottom: 12px;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .fp-lead-image img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ---- Meta line ---- */
+  .fp-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--color-text-meta);
+    font-family: var(--font-sans);
+  }
+
+  .fp-dot {
+    color: var(--color-border);
+  }
+
+  .fp-source {
+    font-style: italic;
+  }
+
+  /* ---- Sidebar / Secondary stories ---- */
+  .fp-sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 768px) {
+    .fp-sidebar {
+      border-left: 1px solid var(--color-border);
+      padding-left: var(--spacing-xl);
+    }
+  }
+
+  .fp-secondary {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .fp-secondary:first-child {
+    padding-top: 0;
+  }
+
+  .fp-secondary:last-child {
+    border-bottom: none;
+  }
+
+  .fp-secondary-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .fp-secondary-link:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .fp-secondary-link:hover .fp-secondary-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .fp-secondary-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    color: var(--color-text);
+  }
+
+  .fp-secondary-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
