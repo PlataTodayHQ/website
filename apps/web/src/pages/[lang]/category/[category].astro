@@ -15,6 +15,11 @@ import {
 export const prerender = false;
 
 const { lang, category } = Astro.params;
+
+if (!lang || !(lang in LANGUAGES)) {
+  return Astro.redirect("/en/", 302);
+}
+
 const catKey = category as Category;
 const catLabel = t(lang!, `cat.${catKey}` as any) || CATEGORIES[catKey] || category;
 const subcats = SUBCATEGORIES[catKey] ?? {};

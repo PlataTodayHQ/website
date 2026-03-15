@@ -17,7 +17,7 @@ const { lang } = Astro.params;
   ogType="website"
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: "Markets", url: `/${lang}/markets` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
     { name: t(lang!, "screener.title"), url: `/${lang}/markets/screener` },
   ]}
 >
