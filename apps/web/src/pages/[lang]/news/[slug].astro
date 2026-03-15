@@ -84,6 +84,28 @@ try {
 }
 const dateISO = publishedDate.toISOString();
 
+// Updated date handling
+let updatedFormatted: string | null = null;
+const updatedISO = row.updated_at ? new Date(row.updated_at).toISOString() : null;
+if (row.updated_at) {
+  const updatedDate = new Date(row.updated_at);
+  try {
+    updatedFormatted = updatedDate.toLocaleDateString(lang, {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } catch {
+    updatedFormatted = updatedDate.toLocaleDateString("en", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+}
+
 // Parse body as markdown → HTML
 // Strip leading markdown heading if it duplicates the title
 const bodyText = row.body.replace(/^#+\s+.*\n+/, "");
@@ -188,6 +210,14 @@ try {
       {row.meta_description && <p class="article-subtitle" itemprop="description">{row.meta_description}</p>}
       <div class="article-meta">
         <time datetime={dateISO.slice(0, 10)} itemprop="datePublished">{dateFormatted}</time>
+        {updatedFormatted && (
+          <>
+            <span class="meta-sep" aria-hidden="true">&middot;</span>
+            <span class="article-updated">
+              {t(lang, "article.updated")}: <time datetime={updatedISO?.slice(0, 10)} itemprop="dateModified">{updatedFormatted}</time>
+            </span>
+          </>
+        )}
         <span class="meta-sep" aria-hidden="true">&middot;</span>
         <span>{computedReadingTime}</span>
       </div>

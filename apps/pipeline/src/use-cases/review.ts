@@ -50,9 +50,9 @@ export async function reviewEvent(
   eventRepo.incrementReviewAttempts(event.id);
   const attempts = (event.review_attempts ?? 0) + 1;
 
-  if (attempts >= 2) {
+  if (attempts >= 3) {
     eventRepo.setStage(event.id, "killed");
-    log.info("Event killed — failed review twice", { eventId: event.id, feedback: result.feedback });
+    log.info("Event killed — failed review 3 times", { eventId: event.id, feedback: result.feedback });
     return "killed";
   }
 

@@ -116,6 +116,7 @@ export const el = {
   "article.shareArticle": "Κοινοποίηση αυτού του άρθρου",
   "article.opensNewTab": "(ανοίγει σε νέα καρτέλα)",
   "article.photoCredit": "Φωτογραφία",
+  "article.updated": "Ενημερώθηκε",
 
   // Footer
   "footer.tagline": "Οι ειδήσεις της Αργεντινής, ανοιχτές στον κόσμο",

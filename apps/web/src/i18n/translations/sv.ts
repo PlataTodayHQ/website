@@ -116,6 +116,7 @@ export const sv = {
   "article.shareArticle": "Dela den här artikeln",
   "article.opensNewTab": "(öppnas i ny flik)",
   "article.photoCredit": "Foto",
+  "article.updated": "Uppdaterad",
 
   // Footer
   "footer.tagline": "Argentinas nyheter, öppna för världen",

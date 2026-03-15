@@ -7,6 +7,11 @@ import { runConcurrent } from "../concurrency.js";
 
 const MIN_WORD_COUNT = 30;
 
+// Languages requiring LLM validation after rewrite (non-Latin scripts)
+const VALIDATE_LANGS = new Set([
+  "ja", "zh", "zh-tw", "ko", "ar", "hi", "bn", "th", "fa", "he", "ur",
+]);
+
 export async function rewriteEvent(
   eventRepo: IEventRepository,
   articleRepo: IArticleRepository,
@@ -47,13 +52,41 @@ export async function rewriteEvent(
         return;
       }
 
+      // Validate non-Latin script rewrites
+      let finalTitle = result.title;
+      let finalBody = result.body;
+      let finalMeta = result.meta_description;
+
+      if (VALIDATE_LANGS.has(lang)) {
+        try {
+          const validation = await llm.validateRewrite(
+            article,
+            { title: result.title, body: result.body, meta_description: result.meta_description },
+            lang,
+          );
+          if (!validation.valid) {
+            if (validation.corrected_body) {
+              finalTitle = validation.corrected_title || finalTitle;
+              finalBody = validation.corrected_body;
+              finalMeta = validation.corrected_meta_description || finalMeta;
+              log.info("Rewrite validation applied corrections", { eventId: event.id, lang, issues: validation.issues });
+            } else {
+              log.warn("Rewrite validation failed, skipping", { eventId: event.id, lang, issues: validation.issues });
+              return;
+            }
+          }
+        } catch (err) {
+          log.warn("Rewrite validation error, proceeding anyway", { eventId: event.id, lang, error: String(err) });
+        }
+      }
+
       articleRepo.insert({
         eventId: event.id,
         lang,
         slug: result.slug,
-        title: result.title,
-        body: result.body,
-        metaDescription: result.meta_description,
+        title: finalTitle,
+        body: finalBody,
+        metaDescription: finalMeta,
         imageUrl: esArticle.image_url,
         imageSource: esArticle.image_source,
         sourceNames: esArticle.source_names,

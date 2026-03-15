@@ -116,6 +116,7 @@ export const ro = {
   "article.shareArticle": "Distribuie acest articol",
   "article.opensNewTab": "(se deschide într-o filă nouă)",
   "article.photoCredit": "Foto",
+  "article.updated": "Actualizat",
 
   // Footer
   "footer.tagline": "Știrile Argentinei, deschise lumii",

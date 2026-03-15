@@ -19,7 +19,7 @@ export function startJobs(db: Database.Database, distDir: string): void {
           runPipeline(db).catch((err) =>
             console.error("[scheduler] Pipeline interval error:", err),
           ),
-        15 * 60 * 1000,
+        10 * 60 * 1000,
       ),
     );
   } else {

@@ -116,6 +116,7 @@ export const nl = {
   "article.shareArticle": "Dit artikel delen",
   "article.opensNewTab": "(opent in nieuw tabblad)",
   "article.photoCredit": "Foto",
+  "article.updated": "Bijgewerkt",
 
   // Footer
   "footer.tagline": "Argentijns nieuws, open voor de wereld",

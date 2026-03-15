@@ -116,6 +116,7 @@ export const ru = {
   "article.shareArticle": "Поделиться статьёй",
   "article.opensNewTab": "(откроется в новой вкладке)",
   "article.photoCredit": "Фото",
+  "article.updated": "Обновлено",
 
   // Footer
   "footer.tagline": "Новости Аргентины, открытые миру",

@@ -40,7 +40,20 @@ function clusterArticles(
       // 1. Match against recently clustered articles
       for (const existing of recentClustered) {
         if (existing.cluster_id && isClusterMatch(article, existing)) {
-          assignedClusterId = existing.cluster_id;
+          // If the existing cluster's event is already published, create a new event
+          // linked via parent_event_id (developing story)
+          const existingStage = eventRepo.getEventStageByClusterId(existing.cluster_id);
+          if (existingStage === "published") {
+            const category = article.category ?? "society";
+            assignedClusterId = eventRepo.createWithParent(category, 0, existing.cluster_id);
+            newClusters++;
+            log.info("Developing story — new event for published cluster", {
+              parentEventId: existing.cluster_id,
+              newEventId: assignedClusterId,
+            });
+          } else {
+            assignedClusterId = existing.cluster_id;
+          }
           break;
         }
       }

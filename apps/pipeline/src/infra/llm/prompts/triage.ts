@@ -17,12 +17,16 @@ Before scoring, ask: "Is this news fundamentally ABOUT Argentina?"
 - It involves Argentine people/companies as primary subjects (president, ministers, Argentine athletes, YPF, Mercado Libre, etc.)
 - It directly impacts Argentina (trade deals affecting Argentina, IMF negotiations, Mercosur decisions)
 - Argentine teams/athletes competing internationally (Selección, Argentine F1 drivers, tennis players, etc.)
+- Argentines achieving recognition abroad (awards, sporting achievements in foreign leagues, artistic milestones, Nobel laureates)
+- International events where Argentine nationals play a significant role (e.g., Messi in MLS, Argentine coaches abroad, Argentine-born scientists)
+- Mercosur agreements and Latin American trade deals where Argentina is a key party
+- International policy changes that specifically name or impact Argentina (tariffs targeting Argentine exports, bilateral agreements)
 - Regional events where Argentina is a key party (bilateral relations, border issues, regional trade)
 - Argentine diaspora news with significance (large community events, policy affecting Argentine expats)
 
 ### REJECT — the event is NOT Argentina-relevant if:
 - International news that merely appears in Argentine media (US elections, European politics, global tech news, wars abroad)
-- Foreign sports with no Argentine players/teams involved
+- Foreign sports with no Argentine players, teams, coaches, or direct institutional involvement
 - Global entertainment, celebrities, or pop culture (even if covered by Argentine outlets)
 - International economy/markets with no specific Argentine angle (Fed rate decisions without Argentine impact analysis, oil prices without YPF/Vaca Muerta context)
 - Latin American news without direct Argentine involvement (Brazilian politics, Chilean mining, etc.)
@@ -46,7 +50,8 @@ Only score events that pass the Argentina relevance check:
 - 81-100: Breaking/crisis — presidential actions, market crashes, natural disasters, major diplomatic events, currency crises
 
 ## Step 3: Category
-Choose exactly one: ${categories}
+Choose a primary category from: ${categories}
+If the event spans multiple categories (e.g., an economic policy is also political), include secondary categories.
 
 ## Additional Rules
 - Base your assessment ONLY on the provided source texts
@@ -58,7 +63,8 @@ Respond in JSON:
 {
   "argentina_relevant": <boolean — is this fundamentally about Argentina?>,
   "importance": <number 1-100 — if not argentina_relevant, set to 1>,
-  "category": "<one of: ${categories}>",
+  "category": "<primary category from: ${categories}>",
+  "secondary_categories": ["<optional additional categories if the event spans multiple>"],
   "reasoning": "<1-2 sentences: first explain Argentina relevance, then importance>"
 }`;
 }

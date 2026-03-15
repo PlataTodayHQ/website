@@ -116,6 +116,7 @@ export const ko = {
   "article.shareArticle": "이 기사 공유하기",
   "article.opensNewTab": "(새 탭에서 열림)",
   "article.photoCredit": "사진",
+  "article.updated": "업데이트",
 
   // Footer
   "footer.tagline": "아르헨티나 뉴스, 세계를 향해 열리다",

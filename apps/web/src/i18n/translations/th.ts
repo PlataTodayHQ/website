@@ -116,6 +116,7 @@ export const th = {
   "article.shareArticle": "แชร์บทความนี้",
   "article.opensNewTab": "(เปิดในแท็บใหม่)",
   "article.photoCredit": "ภาพ",
+  "article.updated": "อัปเดตแล้ว",
 
   // Footer
   "footer.tagline": "ข่าวอาร์เจนตินา เปิดกว้างสู่โลก",

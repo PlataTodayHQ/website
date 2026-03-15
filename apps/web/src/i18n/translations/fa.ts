@@ -116,6 +116,7 @@ export const fa = {
   "article.shareArticle": "اشتراک‌گذاری این مقاله",
   "article.opensNewTab": "(در تب جدید باز می‌شود)",
   "article.photoCredit": "عکس",
+  "article.updated": "به‌روزرسانی شد",
 
   // Footer
   "footer.tagline": "اخبار آرژانتین، باز به روی جهان",

@@ -116,6 +116,7 @@ export const bn = {
   "article.shareArticle": "এই নিবন্ধটি শেয়ার করুন",
   "article.opensNewTab": "(নতুন ট্যাবে খুলবে)",
   "article.photoCredit": "ছবি",
+  "article.updated": "আপডেট করা হয়েছে",
 
   // Footer
   "footer.tagline": "আর্জেন্টিনার সংবাদ, বিশ্বের দরজায়",

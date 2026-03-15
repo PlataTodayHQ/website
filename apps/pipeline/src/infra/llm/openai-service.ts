@@ -1,13 +1,14 @@
 import { sleep, LANGUAGES, type LangCode, log } from "@plata-today/shared";
 import type {
   SourceText, TriageResult, DraftResult,
-  ReviewResult, RewriteResult,
+  ReviewResult, RewriteResult, ValidateRewriteResult,
 } from "../../domain/entities.js";
 import type { ILLMService, DraftInput } from "../../ports/llm-service.js";
 import { buildTriageSystemPrompt, buildTriageUserPrompt } from "./prompts/triage.js";
 import { buildDraftSystemPrompt, buildDraftUserPrompt } from "./prompts/draft.js";
 import { buildReviewSystemPrompt, buildReviewUserPrompt } from "./prompts/review.js";
 import { buildRewriteSystemPrompt, buildRewriteUserPrompt } from "./prompts/rewrite.js";
+import { buildValidateRewriteSystemPrompt, buildValidateRewriteUserPrompt } from "./prompts/validate-rewrite.js";
 
 class LLMAPIError extends Error {
   constructor(
@@ -60,6 +61,13 @@ export class OpenAILLMService implements ILLMService {
     const articles = parseArticleResponse(json);
     if (articles.length === 0) throw new Error("Rewrite returned no articles");
     return { ...articles[0], lang };
+  }
+
+  async validateRewrite(original: DraftInput, rewrite: DraftInput, lang: string): Promise<ValidateRewriteResult> {
+    const langName = LANGUAGES[lang as LangCode].name;
+    const system = buildValidateRewriteSystemPrompt(langName);
+    const user = buildValidateRewriteUserPrompt(original, rewrite, langName);
+    return await this.callJsonWithRetry(system, user) as ValidateRewriteResult;
   }
 
   private async callJson(

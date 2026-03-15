@@ -1,6 +1,6 @@
 import type {
   SourceText, TriageResult, DraftResult,
-  ReviewResult, RewriteResult,
+  ReviewResult, RewriteResult, ValidateRewriteResult,
 } from "../domain/entities.js";
 
 export interface DraftInput {
@@ -14,4 +14,5 @@ export interface ILLMService {
   draft(sources: SourceText[], category: string, date: string): Promise<DraftResult>;
   review(draft: DraftInput, sources: SourceText[]): Promise<ReviewResult>;
   rewrite(article: DraftInput, lang: string, category: string): Promise<RewriteResult>;
+  validateRewrite(original: DraftInput, rewrite: DraftInput, lang: string): Promise<ValidateRewriteResult>;
 }

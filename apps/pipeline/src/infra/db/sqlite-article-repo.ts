@@ -19,7 +19,7 @@ export class SQLiteArticleRepository implements IArticleRepository {
       `SELECT * FROM articles WHERE event_id = ? AND lang = 'es'`,
     );
     this.updateStmt = db.prepare(
-      `UPDATE articles SET title = ?, body = ?, meta_description = ? WHERE id = ?`,
+      `UPDATE articles SET title = ?, body = ?, meta_description = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
     );
     this.getExistingLangsStmt = db.prepare(
       `SELECT lang FROM articles WHERE event_id = ?`,
