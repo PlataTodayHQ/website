@@ -67,11 +67,10 @@ const { lang = "en" } = Astro.props;
 
 <script is:inline>
 (function() {
-  var CACHE_KEY = 'plata-market-v5';
+  var CACHE_KEY = 'plata-market-v6';
   var RATES_URL = '/api/rates';
   var EVO_URL = 'https://api.bluelytics.com.ar/v2/evolution.json?days=10';
-  var BYMA_URL = 'https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price';
-  var YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?interval=1d&range=1d';
+  var MERVAL_URL = '/api/merval';
   var SCREENER_URL = '/api/screener';
   var COMMODITIES_URL = '/api/commodities';
   var CRYPTO_URL = '/api/crypto';
@@ -79,6 +78,13 @@ const { lang = "en" } = Astro.props;
   var lastFetchTime = 0;
 
   var lang = document.documentElement.lang || 'en';
+
+  // Map crypto display names to Yahoo Finance symbols for linking
+  var CRYPTO_YAHOO = {
+    BTC: 'BTC-USD', ETH: 'ETH-USD', XRP: 'XRP-USD', BNB: 'BNB-USD',
+    SOL: 'SOL-USD', ADA: 'ADA-USD', DOGE: 'DOGE-USD', TRX: 'TRX-USD',
+    AVAX: 'AVAX-USD', LINK: 'LINK-USD'
+  };
 
   function pct(current, previous) {
     if (!previous || previous === 0) return null;
@@ -102,6 +108,10 @@ const { lang = "en" } = Astro.props;
     if (val >= 1000) return val.toFixed(0);
     if (val >= 1) return val.toFixed(2);
     return val.toFixed(4);
+  }
+
+  function cleanSymbol(sym) {
+    return (sym || '').replace(/\.BA$/i, '').trim();
   }
 
   function applyItem(key, displayText, percent) {
@@ -148,8 +158,9 @@ const { lang = "en" } = Astro.props;
     var top10 = stocks.slice(0, 10);
     for (var i = 0; i < top10.length; i++) {
       var s = top10[i];
-      var key = 'stock-' + s.symbol;
-      var el = createTickerItem(key, s.symbol, '/' + lang + '/markets/stocks/' + s.symbol, 'ticker-name--stock');
+      var sym = cleanSymbol(s.symbol);
+      var key = 'stock-' + sym;
+      var el = createTickerItem(key, sym, '/' + lang + '/markets/stock?s=' + encodeURIComponent(sym), 'ticker-name--stock');
       container.appendChild(el);
     }
     stocksBuilt = true;
@@ -162,7 +173,7 @@ const { lang = "en" } = Astro.props;
     for (var i = 0; i < commodities.length; i++) {
       var c = commodities[i];
       var key = 'comm-' + c.symbol.replace('=', '');
-      var el = createTickerItem(key, c.name, '/' + lang + '/markets', 'ticker-name--commodity');
+      var el = createTickerItem(key, c.name, '/' + lang + '/markets/stock?s=' + encodeURIComponent(c.symbol), 'ticker-name--commodity');
       container.appendChild(el);
     }
     commoditiesBuilt = true;
@@ -175,7 +186,8 @@ const { lang = "en" } = Astro.props;
     for (var i = 0; i < cryptos.length; i++) {
       var c = cryptos[i];
       var key = 'crypto-' + c.symbol;
-      var el = createTickerItem(key, c.symbol, '/' + lang + '/markets', 'ticker-name--crypto');
+      var yahooSym = CRYPTO_YAHOO[c.symbol] || (c.symbol + '-USD');
+      var el = createTickerItem(key, c.symbol, '/' + lang + '/markets/stock?s=' + encodeURIComponent(yahooSym), 'ticker-name--crypto');
       container.appendChild(el);
     }
     cryptoBuilt = true;
@@ -193,7 +205,8 @@ const { lang = "en" } = Astro.props;
       buildStocks(data.stocks);
       for (var i = 0; i < data.stocks.length; i++) {
         var s = data.stocks[i];
-        var key = 'stock-' + s.symbol;
+        var sym = cleanSymbol(s.symbol);
+        var key = 'stock-' + sym;
         var price = s.price;
         if (price != null) {
           applyItem(key, formatARS(price), s.change != null ? s.change * 100 : null);
@@ -266,6 +279,10 @@ const { lang = "en" } = Astro.props;
     return result;
   }
 
+  function fetchJson(url) {
+    return fetch(url).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
+  }
+
   function fetchAll() {
     var now = Date.now();
     if (now - lastFetchTime < 60000) return;
@@ -274,36 +291,12 @@ const { lang = "en" } = Astro.props;
     var cached = loadCached() || {};
 
     Promise.all([
-      // 1. Rates
-      fetch(RATES_URL).then(function(r) { return r.json(); }).catch(function() { return null; }),
-      // 2. Evolution for % change
-      fetch(EVO_URL).then(function(r) { return r.json(); }).catch(function() { return null; }),
-      // 3. Merval
-      fetch(BYMA_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: '{}' })
-        .then(function(r) { return r.ok ? r.json() : null; })
-        .then(function(d) {
-          if (!d || !d.data) return null;
-          var m = null;
-          for (var i = 0; i < d.data.length; i++) { if (d.data[i].symbol === 'M') { m = d.data[i]; break; } }
-          if (!m) return null;
-          return { price: m.price, previousClose: m.previousClosingPrice, variation: m.variation };
-        })
-        .catch(function() { return null; })
-        .then(function(byma) {
-          if (byma) return byma;
-          return fetch(YAHOO_URL).then(function(r) { return r.ok ? r.json() : null; }).then(function(d) {
-            var meta = d && d.chart && d.chart.result && d.chart.result[0] && d.chart.result[0].meta;
-            if (!meta) return null;
-            var p = meta.regularMarketPrice, pc = meta.chartPreviousClose;
-            return { price: p, previousClose: pc, variation: pc > 0 ? (p - pc) / pc : null };
-          }).catch(function() { return null; });
-        }),
-      // 4. Screener (top 10 stocks)
-      fetch(SCREENER_URL).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; }),
-      // 5. Commodities
-      fetch(COMMODITIES_URL).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; }),
-      // 6. Crypto
-      fetch(CRYPTO_URL).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; })
+      fetchJson(RATES_URL),
+      fetchJson(EVO_URL),
+      fetchJson(MERVAL_URL),
+      fetchJson(SCREENER_URL),
+      fetchJson(COMMODITIES_URL),
+      fetchJson(CRYPTO_URL)
     ]).then(function(results) {
       var rates = results[0];
       var evo = results[1];
@@ -326,7 +319,7 @@ const { lang = "en" } = Astro.props;
       // Dollar rates
       if (rates && rates.oficial) {
         data.oficial = rates.oficial.value_sell;
-        data.blue = rates.blue.value_sell;
+        data.blue = rates.blue ? rates.blue.value_sell : null;
 
         if (evo && evo.length > 0) {
           var parsed = parseEvolution(evo);
@@ -349,7 +342,7 @@ const { lang = "en" } = Astro.props;
         data.cclPct = null;
       }
 
-      // Merval
+      // Merval (from /api/merval proxy — variation is a decimal fraction)
       if (mervalData && mervalData.price) {
         data.merval = mervalData.price;
         data.mervalPct = mervalData.variation != null
@@ -357,20 +350,25 @@ const { lang = "en" } = Astro.props;
           : pct(mervalData.price, mervalData.previousClose);
       }
 
-      // Top 10 stocks
-      if (screenerData && screenerData.length) {
+      // Top 10 stocks (screener returns change as decimal: 0.05 = 5%)
+      if (screenerData && Array.isArray(screenerData) && screenerData.length) {
         data.stocks = screenerData.slice(0, 10).map(function(s) {
-          return { symbol: s.symbol, name: s.name, price: s.price, change: s.change };
+          return {
+            symbol: cleanSymbol(s.symbol),
+            name: s.name || s.symbol,
+            price: s.price,
+            change: s.change
+          };
         });
       }
 
-      // Commodities
-      if (commoditiesData && commoditiesData.length) {
+      // Commodities (change is already a percentage from Yahoo)
+      if (commoditiesData && Array.isArray(commoditiesData) && commoditiesData.length) {
         data.commodities = commoditiesData;
       }
 
-      // Crypto
-      if (cryptoData && cryptoData.length) {
+      // Crypto (change is already a percentage from Binance)
+      if (cryptoData && Array.isArray(cryptoData) && cryptoData.length) {
         data.cryptos = cryptoData;
       }
 

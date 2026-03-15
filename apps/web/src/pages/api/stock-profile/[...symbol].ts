@@ -26,7 +26,7 @@ export const GET: APIRoute = async ({ params }) => {
       );
     }
 
-    if (!/^[\w.\-^]+$/.test(rawSymbol)) {
+    if (!/^[\w.\-^=]+$/.test(rawSymbol)) {
       return new Response(JSON.stringify({ error: "Invalid symbol" }), {
         status: 400,
         headers: { "Content-Type": "application/json", ...CORS_HEADERS },
@@ -34,7 +34,8 @@ export const GET: APIRoute = async ({ params }) => {
     }
 
     let symbol = rawSymbol;
-    if (!symbol.startsWith("^") && !symbol.includes(".")) {
+    // Only append .BA for Argentine stocks (no special chars like - or =)
+    if (!symbol.startsWith("^") && !symbol.includes(".") && !symbol.includes("-") && !symbol.includes("=")) {
       symbol = `${symbol}.BA`;
     }
 
