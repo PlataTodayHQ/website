@@ -91,6 +91,7 @@ export interface NewArticle {
 }
 
 export interface TriageResult {
+  argentina_relevant: boolean;
   importance: number;
   category: string;
   reasoning: string;
