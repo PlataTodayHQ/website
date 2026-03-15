@@ -335,7 +335,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   )}
 
   <!-- MORE NEWS -->
-  <SectionHeader title={t(lang!, "home.moreNews")} />
+  {moreNews.length > 0 && <SectionHeader title={t(lang!, "home.moreNews")} />}
   <section class="feed-grid" id="more-news-grid" aria-label={t(lang!, "home.moreNews")}>
     {moreNews.map((a) => (
       <ArticleCard
@@ -355,7 +355,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
   <!-- LOAD MORE -->
   <div id="load-more-container">
-    <button class="load-more-btn" id="load-more-btn" type="button">
+    <button class="load-more-btn" id="load-more-btn" type="button" style={moreNews.length === 0 ? "display:none" : ""}>
       {t(lang!, "home.loadMore" as any)}
     </button>
     <p class="load-more-end" id="load-more-end" hidden>

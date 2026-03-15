@@ -97,6 +97,9 @@ const breakingArticle = getBreakingNews(lang);
 
 const scriptFontUrl = getScriptFontUrl(lang);
 
+const RTL_LANGUAGES = new Set(["ar", "he", "fa", "ur"]);
+const dir = RTL_LANGUAGES.has(lang) ? "rtl" : "ltr";
+
 const navItems = [
   { label: t(lang, "nav.home"), href: `/${lang}/` },
   { label: t(lang, "nav.feed" as any), href: `/${lang}/feed` },

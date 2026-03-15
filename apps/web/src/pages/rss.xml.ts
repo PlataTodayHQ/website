@@ -45,7 +45,7 @@ export const GET: APIRoute = ({ url }) => {
   <channel>
     <title>Plata Today</title>
     <link>${SITE_URL}/${lang}/</link>
-    <description>Argentina's news, natively written in 18 languages</description>
+    <description>Argentina's news, natively written in 35 languages</description>
     <language>${lang}</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
     <atom:link href="${SITE_URL}/rss.xml?lang=${lang}" rel="self" type="application/rss+xml" />

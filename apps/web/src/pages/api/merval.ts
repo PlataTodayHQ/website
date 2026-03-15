@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import {
-  getMerval, fetchBYMA, parseMervalFromBYMA, fetchYahooChart,
+  getMerval, fetchBYMA, parseMervalFromBYMA,
   optionsResponse, jsonResponse, errorResponse,
   BYMA_INDEX_URL,
 } from "@plata-today/shared";
@@ -15,27 +15,9 @@ export const GET: APIRoute = async () => {
     const cached = getMerval();
     if (cached) return jsonResponse(cached, 15);
 
-    // Fallback: direct fetch if store is empty (cold start)
-    let data: any;
-    try {
-      const bymaData = await fetchBYMA(BYMA_INDEX_URL);
-      data = parseMervalFromBYMA(bymaData);
-    } catch {
-      const result = await fetchYahooChart("%5EMERV", "1d", "1d");
-      if (!result) throw new Error("No Merval data from Yahoo");
-      const meta = result.meta ?? {};
-      const price = meta.regularMarketPrice;
-      const prev = meta.chartPreviousClose;
-      data = {
-        price,
-        high: null,
-        low: null,
-        previousClose: prev,
-        variation: prev > 0 ? (price - prev) / prev : null,
-        volume: null,
-        source: "Yahoo",
-      };
-    }
+    // Fallback: direct fetch from BYMA if store is empty (cold start)
+    const bymaData = await fetchBYMA(BYMA_INDEX_URL);
+    const data = parseMervalFromBYMA(bymaData);
 
     return jsonResponse(data, 60);
   } catch (err: any) {

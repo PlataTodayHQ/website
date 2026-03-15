@@ -1,14 +1,15 @@
 /**
- * Stock prices, candles, and profiles from BYMA + Yahoo.
+ * Stock prices from BYMA, candles aggregated from snapshots.
+ * Profiles still fetched from Yahoo (BYMA doesn't provide fundamentals).
  */
 
 import type Database from "better-sqlite3";
 import {
   BYMA_EQUITY_URL,
-  fetchBYMA, parseBYMAStock, toYahooSymbol, fetchYahooChart,
+  fetchBYMA, parseBYMAStock, toYahooSymbol,
   getYahooCrumb, numVal, strVal, sleep, fetchT, YAHOO_UA,
 } from "@plata-today/shared";
-import { saveCandles } from "./market-storage.js";
+import { aggregateStockCandles } from "./market-storage.js";
 
 export async function fetchStocks(db: Database.Database): Promise<void> {
   try {
@@ -38,30 +39,12 @@ export async function fetchStocks(db: Database.Database): Promise<void> {
 }
 
 export async function fetchStockCandles(db: Database.Database): Promise<void> {
-  const symbols = db.prepare(
-    `SELECT DISTINCT symbol FROM stock_prices
-     WHERE fetched_at > datetime('now', '-1 hour')
-     ORDER BY symbol`,
-  ).all() as Array<{ symbol: string }>;
-
-  let saved = 0;
-  for (const { symbol } of symbols) {
-    try {
-      const yahooSymbol = toYahooSymbol(symbol);
-      const result = await fetchYahooChart(yahooSymbol, "1d", "1mo");
-
-      if (!result) continue;
-
-      saveCandles(db, symbol, "1d", result);
-      saved++;
-
-      await sleep(500);
-    } catch {
-      // skip individual stock errors
-    }
+  try {
+    const saved = aggregateStockCandles(db);
+    if (saved > 0) console.log("[market] Stock candles aggregated", { count: saved });
+  } catch (err) {
+    console.error("[market] Stock candles error:", err);
   }
-
-  if (saved > 0) console.log("[market] Stock candles saved", { count: saved });
 }
 
 export async function fetchStockProfiles(db: Database.Database): Promise<void> {

@@ -1,13 +1,10 @@
 /**
- * Merval index — snapshot from BYMA + candles from Yahoo.
+ * Merval index — snapshot from BYMA, candles aggregated from snapshots.
  */
 
 import type Database from "better-sqlite3";
-import {
-  BYMA_INDEX_URL, YAHOO_UA,
-  fetchBYMA, parseMervalFromBYMA, fetchYahooChart,
-} from "@plata-today/shared";
-import { saveCandles } from "./market-storage.js";
+import { BYMA_INDEX_URL, fetchBYMA, parseMervalFromBYMA } from "@plata-today/shared";
+import { aggregateMervalCandles } from "./market-storage.js";
 
 export async function fetchMerval(db: Database.Database): Promise<void> {
   try {
@@ -27,11 +24,7 @@ export async function fetchMerval(db: Database.Database): Promise<void> {
 
 export async function fetchMervalCandles(db: Database.Database): Promise<void> {
   try {
-    const result = await fetchYahooChart("%5EMERV", "1d", "1mo");
-    if (!result) throw new Error("No Merval chart data");
-
-    saveCandles(db, "^MERV", "1d", result);
-    console.log("[market] Merval candles saved");
+    aggregateMervalCandles(db);
   } catch (err) {
     console.error("[market] Merval candles error:", err);
   }
