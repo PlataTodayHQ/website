@@ -63,7 +63,7 @@ const olderArticles = articles.slice(5);
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": `${catLabel} — Plata`,
-    "description": `Latest ${catLabel.toLowerCase()} news from Argentina`,
+    "description": t(lang!, "category.newsDesc" as any).replace("{cat}", catLabel.toLowerCase()),
     "url": `https://plata.today/${lang}/category/${category}`,
     "inLanguage": lang,
     "isPartOf": {

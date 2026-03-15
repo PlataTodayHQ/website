@@ -61,7 +61,7 @@ const stockI18n = {
 ---
 
 <Base
-  title={symbol ? `${symbol} — ${t(lang, "stock.pageTitle")} — Plata` : `${t(lang, "stock.pageTitle")} — Plata`}
+  title={symbol ? `${symbol} — ${t(lang, "stock.pageTitle")}` : t(lang, "stock.pageTitle")}
   description={t(lang, "stock.pageDesc")}
   lang={lang}
   ogType="website"
@@ -71,6 +71,19 @@ const stockI18n = {
     { name: "Merval", url: `/${lang}/markets/merval` },
     { name: symbol || t(lang, "stock.pageTitle"), url: `/${lang}/markets/stock${symbol ? `?s=${symbol}` : ""}` },
   ]}
+  jsonLd={symbol ? {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": `${symbol} — ${t(lang, "stock.pageTitle")}`,
+    "description": t(lang, "stock.pageDesc"),
+    "url": `https://plata.today/${lang}/markets/stock?s=${symbol}`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  } : undefined}
 >
   <div class="stock-page" data-stock-page data-lang={lang} data-i18n={JSON.stringify(stockI18n)}>
     <!-- Error state (no symbol) -->
@@ -85,7 +98,7 @@ const stockI18n = {
       <header class="mkts-header">
         <div>
           <div class="stock-title-row">
-            <h1 class="mkts-title" data-stock-symbol>&mdash;</h1>
+            <h1 class="mkts-title" data-stock-symbol>{symbol || "\u2014"}</h1>
             <span class="rc-badge rc-badge--merval">BYMA</span>
           </div>
           <p class="mkts-subtitle" data-stock-name>Loading&hellip;</p>

@@ -117,6 +117,7 @@ export const tr = {
   "article.opensNewTab": "(yeni sekmede açılır)",
   "article.photoCredit": "Fotoğraf",
   "article.updated": "Güncellendi",
+  "article.byline": "Yazan",
 
   // Footer
   "footer.tagline": "Arjantin haberleri, dünyaya açık",

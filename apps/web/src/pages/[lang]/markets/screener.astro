@@ -11,8 +11,8 @@ const { lang } = Astro.params;
 ---
 
 <Base
-  title={t(lang!, "screener.title") + " — Plata"}
-  description={t(lang!, "screener.subtitle")}
+  title={t(lang!, "screener.seoTitle")}
+  description={t(lang!, "screener.seoDescription")}
   lang={lang}
   ogType="website"
   breadcrumbs={[
@@ -20,6 +20,19 @@ const { lang } = Astro.params;
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
     { name: t(lang!, "screener.title"), url: `/${lang}/markets/screener` },
   ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "screener.title"),
+    "description": t(lang!, "screener.subtitle"),
+    "url": `https://plata.today/${lang}/markets/screener`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
 >
   <div class="screener-page" data-screener-page data-lang={lang}>
     <header class="mkts-header">

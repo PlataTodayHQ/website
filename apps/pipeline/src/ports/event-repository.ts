@@ -9,7 +9,7 @@ export interface IEventRepository {
   updateScore(id: number, score: number): void;
   updateCategory(id: number, category: string): void;
   setStage(id: number, stage: string): void;
-  triage(id: number, importance: number, category: string, reason: string): void;
+  triage(id: number, importance: number, category: string, reason: string, subcategory?: string): void;
   kill(id: number, importance: number, reason: string): void;
   incrementReviewAttempts(id: number): void;
   killStaleNewEvents(staleHours: number): number;

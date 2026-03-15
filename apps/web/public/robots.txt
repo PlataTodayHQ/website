@@ -34,6 +34,10 @@ Disallow: /*/contact
 Disallow: /*/about
 Disallow: /*/founder
 Disallow: /*/corrections
+Disallow: /*/mission
+Disallow: /*/newsroom
+Disallow: /*/standards
+Disallow: /*/feed
 
 # ===========================================
 # Bing
@@ -60,3 +64,4 @@ Crawl-delay: 2
 # ===========================================
 Host: https://plata.today
 Sitemap: https://plata.today/sitemap-index.xml
+Sitemap: https://plata.today/news-sitemap.xml

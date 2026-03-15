@@ -117,6 +117,7 @@ export const zhTw = {
   "article.opensNewTab": "（在新分頁中開啟）",
   "article.photoCredit": "圖片",
   "article.updated": "更新",
+  "article.byline": "作者",
 
   // Footer
   "footer.tagline": "阿根廷新聞，向世界敞開",

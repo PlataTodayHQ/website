@@ -117,6 +117,7 @@ export const vi = {
   "article.opensNewTab": "(mở trong tab mới)",
   "article.photoCredit": "Ảnh",
   "article.updated": "Đã cập nhật",
+  "article.byline": "Bởi",
 
   // Footer
   "footer.tagline": "Tin tức Argentina, mở ra với thế giới",

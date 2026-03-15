@@ -1,4 +1,4 @@
-import { CATEGORY_LIST, log } from "@plata-today/shared";
+import { CATEGORY_LIST, SUBCATEGORIES, log, type Category } from "@plata-today/shared";
 import type { EventEntity } from "../domain/entities.js";
 import type { IEventRepository } from "../ports/event-repository.js";
 import type { ILLMService } from "../ports/llm-service.js";
@@ -33,6 +33,12 @@ export async function triageEvent(
   const category = CATEGORY_LIST.includes(result.category as any)
     ? result.category
     : event.category;
+  const validSubcategories = CATEGORY_LIST.includes(category as Category)
+    ? Object.keys(SUBCATEGORIES[category as Category])
+    : [];
+  const subcategory = result.subcategory && validSubcategories.includes(result.subcategory)
+    ? result.subcategory
+    : undefined;
   const reasoning = String(result.reasoning ?? "").slice(0, 500);
 
   if (!argentinaRelevant) {
@@ -52,12 +58,7 @@ export async function triageEvent(
     return "killed";
   }
 
-  eventRepo.triage(event.id, importance, category, reasoning);
-
-  // Set subcategory if provided
-  if (result.subcategory) {
-    eventRepo.setSubcategory(event.id, result.subcategory);
-  }
+  eventRepo.triage(event.id, importance, category, reasoning, subcategory);
 
   // Set multi-categories if provided
   const secondaryCategories = Array.isArray(result.secondary_categories)
@@ -65,6 +66,6 @@ export async function triageEvent(
     : [];
   eventRepo.setCategories(event.id, category, secondaryCategories);
 
-  log.info("Event triaged", { eventId: event.id, importance, category, secondaryCategories, reasoning });
+  log.info("Event triaged", { eventId: event.id, importance, category, subcategory, secondaryCategories, reasoning });
   return "triaged";
 }

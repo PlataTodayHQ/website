@@ -35,7 +35,7 @@ const { lead, secondary } = Astro.props;
         {lead.description && <p class="fp-lead-desc">{lead.description}</p>}
         {lead.imageUrl && (
           <div class="fp-lead-image">
-            <img src={lead.imageUrl} alt={lead.title} loading="eager" onerror="this.parentElement.style.display='none'" />
+            <img src={lead.imageUrl} alt={lead.title} loading="eager" fetchpriority="high" width="960" height="540" onerror="this.parentElement.style.display='none'" />
           </div>
         )}
         <div class="fp-meta">
