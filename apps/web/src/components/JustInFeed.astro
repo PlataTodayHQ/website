@@ -118,4 +118,22 @@ const { items, lang = "en" } = Astro.props;
   }
 
   .just-in-link:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .just-in-title {
+      font-size: 0.82rem;
+    }
+
+    .just-in-time {
+      font-size: 0.78rem;
+    }
+
+    .just-in-cat {
+      font-size: 0.72rem;
+    }
+
+    .just-in-link {
+      font-size: 0.95rem;
+    }
+  }
 </style>

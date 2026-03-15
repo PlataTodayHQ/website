@@ -2,6 +2,9 @@
 import Base from "@/layouts/Base.astro";
 import ArticleCard from "@/components/ArticleCard.astro";
 import SectionHeader from "@/components/SectionHeader.astro";
+import FrontPage from "@/components/FrontPage.astro";
+import LeadSection from "@/components/LeadSection.astro";
+import TextListSection from "@/components/TextListSection.astro";
 import TrendingSection from "@/components/TrendingSection.astro";
 import JustInFeed from "@/components/JustInFeed.astro";
 import NewsletterBanner from "@/components/NewsletterBanner.astro";
@@ -91,22 +94,36 @@ const claimByCat = (cat: string, count: number) => {
   return claim(catArticles, count).map(mapRow);
 };
 
-// Hero — most important article
+// ---------------------------------------------------------------------------
+// Front Page — lead + 4 secondary stories (above the fold)
+// ---------------------------------------------------------------------------
 const [heroRow] = claim(byImportance, 1);
-const heroArticle = heroRow
-  ? mapRow(heroRow)
-  : {
-      title: t(lang!, "home.heroFallbackTitle"),
-      description: t(lang!, "home.heroFallbackDesc"),
-      href: `/${lang}/`,
-      imageUrl: "/images/placeholder.svg",
-      timeAgo: "",
-      subcategory: "",
-      category: "",
-      readingTime: "",
-      isNew: false,
-      sourceLabel: undefined as string | undefined,
-    };
+const heroMapped = heroRow ? mapRow(heroRow) : null;
+
+const secondaryRows = claim(byImportance, 4).map(mapRow);
+
+const frontPageLead = heroMapped ?? {
+  title: t(lang!, "home.heroFallbackTitle"),
+  description: t(lang!, "home.heroFallbackDesc"),
+  href: `/${lang}/`,
+  imageUrl: "/images/placeholder.svg",
+  timeAgo: "",
+  category: "",
+  categoryKey: "",
+  readingTime: "",
+  sourceLabel: undefined as string | undefined,
+};
+
+const frontPageSecondary = secondaryRows.map((a) => ({
+  title: a.title,
+  description: a.description,
+  href: a.href,
+  timeAgo: a.timeAgo,
+  category: a.subcategory,
+  categoryKey: a.category,
+  readingTime: a.readingTime,
+  sourceLabel: a.sourceLabel,
+}));
 
 // Trending — top 5 from remaining by trendingScore
 const trendingItems = claim(byImportance, 5).map((a) => ({
@@ -116,8 +133,19 @@ const trendingItems = claim(byImportance, 5).map((a) => ({
   timeAgo: timeAgo(a.published_at, lang!),
 }));
 
-// Politics
+// Politics — Lead + Sidebar (Type A)
 const politicsAll = claimByCat("politics", 4);
+const politicsStories = politicsAll.map((a) => ({
+  title: a.title,
+  description: a.description,
+  href: a.href,
+  imageUrl: a.imageUrl,
+  timeAgo: a.timeAgo,
+  category: a.subcategory,
+  categoryKey: a.category,
+  readingTime: a.readingTime,
+  sourceLabel: a.sourceLabel,
+}));
 
 // Just In — 8 latest, deduplicated
 const justInItems = claim([...allArticles], 8).map((a) => ({
@@ -127,22 +155,53 @@ const justInItems = claim([...allArticles], 8).map((a) => ({
   category: catLabel(a.category),
 }));
 
-// Economy & Business
+// Economy — Lead + Sidebar (Type A)
 const econAll = claimByCat("economy", 4);
+const econStories = econAll.map((a) => ({
+  title: a.title,
+  description: a.description,
+  href: a.href,
+  imageUrl: a.imageUrl,
+  timeAgo: a.timeAgo,
+  category: a.subcategory,
+  categoryKey: a.category,
+  readingTime: a.readingTime,
+  sourceLabel: a.sourceLabel,
+}));
 
-// Sports
+// Sports — Text List (Type B)
 const sportsAll = claimByCat("sports", 4);
+const sportsStories = sportsAll.map((a) => ({
+  title: a.title,
+  description: a.description,
+  href: a.href,
+  timeAgo: a.timeAgo,
+  category: a.subcategory,
+  categoryKey: a.category,
+  readingTime: a.readingTime,
+  sourceLabel: a.sourceLabel,
+}));
 
-// World
+// World — Text List (Type B)
 const worldNews = claimByCat("world", 4);
+const worldStories = worldNews.map((a) => ({
+  title: a.title,
+  description: a.description,
+  href: a.href,
+  timeAgo: a.timeAgo,
+  category: a.subcategory,
+  categoryKey: a.category,
+  readingTime: a.readingTime,
+  sourceLabel: a.sourceLabel,
+}));
 
-// Culture & Society (combined)
+// Culture & Society — Grid (Type C)
 const cultureSociety = [...claimByCat("culture", 2), ...claimByCat("society", 2)];
 
-// Science & Tech
+// Science & Tech — Grid (Type C)
 const scienceTech = claimByCat("science", 4);
 
-// More News — remaining articles with images
+// More News — remaining articles
 const moreNews = claim(allArticles, 8).map(mapRow);
 ---
 
@@ -173,121 +232,68 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     }
   ]}
 >
-  <!-- HERO -->
-  <section class="hero-section" aria-label={t(lang!, "home.featuredStory")}>
-    <ArticleCard
-      title={heroArticle.title}
-      description={heroArticle.description}
-      href={heroArticle.href}
-      imageUrl={heroArticle.imageUrl}
-      timeAgo={heroArticle.timeAgo}
-      category={heroArticle.subcategory}
-      categoryKey={heroArticle.category}
-      readingTime={heroArticle.readingTime}
-      isNew={heroArticle.isNew}
-      sourceLabel={heroArticle.sourceLabel}
-      variant="hero"
-    />
-  </section>
+  <!-- FRONT PAGE — Above the fold -->
+  <FrontPage
+    lead={{
+      title: frontPageLead.title,
+      description: frontPageLead.description,
+      href: frontPageLead.href,
+      imageUrl: frontPageLead.imageUrl,
+      timeAgo: frontPageLead.timeAgo,
+      category: heroMapped?.subcategory ?? "",
+      categoryKey: heroMapped?.category ?? "",
+      readingTime: frontPageLead.readingTime,
+      sourceLabel: frontPageLead.sourceLabel,
+    }}
+    secondary={frontPageSecondary}
+  />
 
   <!-- TRENDING -->
   {trendingItems.length > 0 && <TrendingSection items={trendingItems} lang={lang} />}
 
-  <!-- POLITICS -->
-  {politicsAll.length > 0 && <SectionHeader title={t(lang!, "home.politics")} href={`/${lang}/category/politics`} accentColor="var(--cat-politics)" />}
-  {politicsAll.length > 0 && (
-    <section class="feed-grid" aria-label={t(lang!, "home.politics")}>
-      {politicsAll.map((a) => (
-        <ArticleCard
-          title={a.title}
-          description={a.description}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          categoryKey={a.category}
-          readingTime={a.readingTime}
-          isNew={a.isNew}
-          sourceLabel={a.sourceLabel}
-        />
-      ))}
-    </section>
-  )}
+  <!-- POLITICS — Lead + Sidebar (Type A) -->
+  <LeadSection
+    title={t(lang!, "home.politics")}
+    href={`/${lang}/category/politics`}
+    accentColor="var(--cat-politics)"
+    stories={politicsStories}
+  />
 
   <!-- JUST IN -->
   {justInItems.length > 0 && <JustInFeed items={justInItems} lang={lang} />}
 
-  <!-- ECONOMY & BUSINESS -->
-  {econAll.length > 0 && <SectionHeader title={t(lang!, "home.economyBusiness")} href={`/${lang}/category/economy`} accentColor="var(--cat-economy)" />}
-  {econAll.length > 0 && (
-    <section class="feed-grid" aria-label={t(lang!, "home.economyBusiness")}>
-      {econAll.map((a) => (
-        <ArticleCard
-          title={a.title}
-          description={a.description}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          categoryKey={a.category}
-          readingTime={a.readingTime}
-          isNew={a.isNew}
-          sourceLabel={a.sourceLabel}
-        />
-      ))}
-    </section>
-  )}
+  <!-- ECONOMY — Lead + Sidebar (Type A) -->
+  <LeadSection
+    title={t(lang!, "home.economyBusiness")}
+    href={`/${lang}/category/economy`}
+    accentColor="var(--cat-economy)"
+    stories={econStories}
+  />
 
   <!-- FINANCIAL DASHBOARD -->
   <SectionHeader title={t(lang!, "finDash.title" as any)} href={`/${lang}/markets`} accentColor="var(--cat-economy)" />
   <FinancialDashboard lang={lang} />
 
-  <!-- SPORTS -->
-  {sportsAll.length > 0 && <SectionHeader title={t(lang!, "cat.sports")} href={`/${lang}/category/sports`} accentColor="var(--cat-sports)" />}
-  {sportsAll.length > 0 && (
-    <section class="feed-grid" aria-label={t(lang!, "cat.sports")}>
-      {sportsAll.map((a) => (
-        <ArticleCard
-          title={a.title}
-          description={a.description}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          categoryKey={a.category}
-          readingTime={a.readingTime}
-          isNew={a.isNew}
-          sourceLabel={a.sourceLabel}
-        />
-      ))}
-    </section>
-  )}
+  <!-- SPORTS — Text List (Type B) -->
+  <TextListSection
+    title={t(lang!, "cat.sports")}
+    href={`/${lang}/category/sports`}
+    accentColor="var(--cat-sports)"
+    stories={sportsStories}
+  />
 
   <!-- NEWSLETTER BANNER -->
   <NewsletterBanner lang={lang} />
 
-  <!-- WORLD -->
-  {worldNews.length > 0 && <SectionHeader title={t(lang!, "cat.world")} href={`/${lang}/category/world`} accentColor="var(--cat-world)" />}
-  {worldNews.length > 0 && (
-    <section class="feed-grid" aria-label={t(lang!, "cat.world")}>
-      {worldNews.map((a) => (
-        <ArticleCard
-          title={a.title}
-          description={a.description}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          categoryKey={a.category}
-          readingTime={a.readingTime}
-          isNew={a.isNew}
-          sourceLabel={a.sourceLabel}
-        />
-      ))}
-    </section>
-  )}
+  <!-- WORLD — Text List (Type B) -->
+  <TextListSection
+    title={t(lang!, "cat.world")}
+    href={`/${lang}/category/world`}
+    accentColor="var(--cat-world)"
+    stories={worldStories}
+  />
 
-  <!-- CULTURE & SOCIETY -->
+  <!-- CULTURE & SOCIETY — Grid (Type C) -->
   {cultureSociety.length > 0 && <SectionHeader title={t(lang!, "home.cultureSociety")} href={`/${lang}/category/culture`} accentColor="var(--cat-culture)" />}
   {cultureSociety.length > 0 && (
     <section class="feed-grid" aria-label={t(lang!, "home.cultureSociety")}>
@@ -308,7 +314,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     </section>
   )}
 
-  <!-- SCIENCE & TECH -->
+  <!-- SCIENCE & TECH — Grid (Type C) -->
   {scienceTech.length > 0 && <SectionHeader title={t(lang!, "cat.science")} href={`/${lang}/category/science`} accentColor="var(--cat-science)" />}
   {scienceTech.length > 0 && (
     <section class="feed-grid" aria-label={t(lang!, "cat.science")}>
@@ -394,13 +400,13 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
     var catLabel = catLabels[a.category] || a.category;
     var html = '<a href="' + escapeHtml(a.href) + '" class="card-link">';
-    if (catLabel) {
-      html += '<div class="card-header"><span class="card-category">' + escapeHtml(catLabel) + '</span></div>';
-    }
     if (a.imageUrl) {
       html += '<div class="card-image"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" /></div>';
     }
     html += '<div class="card-body">';
+    if (catLabel) {
+      html += '<div class="card-meta-top"><span class="card-category">' + escapeHtml(catLabel) + '</span></div>';
+    }
     html += '<h3 class="card-title">' + escapeHtml(a.title) + '</h3>';
     html += '<div class="card-meta">';
     if (a.timeAgo) html += '<time class="card-time">' + escapeHtml(a.timeAgo) + '</time>';
@@ -452,36 +458,23 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 </script>
 
 <style>
-  /* ====================== */
-  /* HERO SECTION            */
-  /* ====================== */
-  .hero-section {
-    margin-bottom: var(--spacing-xl);
-  }
-
   /* ========================= */
-  /* FEED GRID (Instagram)     */
+  /* FEED GRID — Type C        */
   /* ========================= */
   .feed-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 24px;
     margin-bottom: var(--spacing-2xl);
   }
 
-  /* ========================= */
-  /* MOBILE                    */
-  /* ========================= */
   @media (max-width: 640px) {
     .feed-grid {
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 0;
     }
   }
 
-  /* ========================= */
-  /* LARGE DESKTOP — 3 cols    */
-  /* ========================= */
   @media (min-width: 1025px) {
     .feed-grid {
       grid-template-columns: repeat(3, 1fr);
@@ -489,7 +482,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   }
 
   /* ========================= */
-  /* LOAD MORE                 */
+  /* LOAD MORE                  */
   /* ========================= */
   #load-more-container {
     text-align: center;
@@ -503,22 +496,21 @@ const moreNews = claim(allArticles, 8).map(mapRow);
 
   .load-more-btn {
     display: inline-block;
-    padding: 14px 48px;
-    font-size: 0.9rem;
+    padding: 12px 40px;
+    font-size: 0.85rem;
     font-weight: 700;
     font-family: var(--font-sans);
     background: transparent;
     color: var(--color-text);
-    border: 2px solid var(--color-border);
-    border-radius: 24px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 2px;
     cursor: pointer;
-    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    transition: border-color 0.2s, color 0.2s;
   }
 
   .load-more-btn:hover {
     border-color: var(--color-gold);
     color: var(--color-gold-dark);
-    background: rgba(246, 180, 14, 0.06);
   }
 
   .load-more-btn:disabled {
@@ -532,21 +524,13 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     font-style: italic;
   }
 
-  /* ========================= */
-  /* DYNAMIC CARD STYLES       */
-  /* (for JS-appended cards)   */
-  /* ========================= */
+  /* ======================================= */
+  /* DYNAMIC CARD STYLES (JS-appended cards) */
+  /* ======================================= */
   #more-news-grid :global(.card) {
-    background: #fff;
-    border-radius: 12px;
     overflow: hidden;
-    border: 1px solid var(--color-border);
-    transition: box-shadow 0.2s, transform 0.2s;
-  }
-
-  #more-news-grid :global(.card:hover) {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
   }
 
   #more-news-grid :global(.card-link) {
@@ -560,45 +544,48 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     color: inherit;
   }
 
-  #more-news-grid :global(.card-header) {
+  #more-news-grid :global(.card-link:hover .card-title) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  #more-news-grid :global(.card-meta-top) {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 16px;
+    margin-bottom: 6px;
   }
 
   #more-news-grid :global(.card-category) {
     color: var(--cat-color, var(--color-gold-dark));
     font-weight: 800;
     text-transform: uppercase;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.06em;
   }
 
   #more-news-grid :global(.card-image) {
     overflow: hidden;
+    border-radius: 2px;
+    margin-bottom: 10px;
   }
 
   #more-news-grid :global(.card-image img) {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  #more-news-grid :global(.card-link:hover .card-image img) {
-    transform: scale(1.03);
   }
 
   #more-news-grid :global(.card-body) {
-    padding: 14px 16px 16px;
+    padding: 0;
   }
 
   #more-news-grid :global(.card-title) {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    line-height: 1.35;
+    line-height: 1.3;
     margin-bottom: 6px;
     color: var(--color-text);
     letter-spacing: -0.01em;
@@ -609,7 +596,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   }
 
   #more-news-grid :global(.card-meta) {
-    font-size: 0.75rem;
+    font-size: 0.73rem;
     color: var(--color-text-meta);
     display: flex;
     align-items: center;
@@ -621,15 +608,7 @@ const moreNews = claim(allArticles, 8).map(mapRow);
   }
 
   #more-news-grid :global(.card-reading-time) {
-    font-size: 0.75rem;
+    font-size: 0.73rem;
     color: var(--color-text-meta);
-  }
-
-  @media (max-width: 640px) {
-    #more-news-grid :global(.card) {
-      border-radius: 0;
-      border-left: none;
-      border-right: none;
-    }
   }
 </style>

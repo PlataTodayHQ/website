@@ -1,0 +1,152 @@
+---
+/**
+ * TextListSection — Type B layout.
+ * Dense text-only list like Reuters/FT. No images.
+ * Used for World, Culture & Society, Sports.
+ */
+import SectionHeader from "./SectionHeader.astro";
+
+interface Story {
+  title: string;
+  description?: string;
+  href: string;
+  timeAgo?: string;
+  category?: string;
+  categoryKey?: string;
+  readingTime?: string;
+  sourceLabel?: string;
+}
+
+interface Props {
+  title: string;
+  href?: string;
+  accentColor?: string;
+  stories: Story[];
+}
+
+const { title, href, accentColor, stories } = Astro.props;
+---
+
+{stories.length > 0 && (
+  <>
+    <SectionHeader title={title} href={href} accentColor={accentColor} />
+    <section class="text-list" aria-label={title}>
+      {stories.map((story) => (
+        <article class="tl-item" style={story.categoryKey ? `--cat-color: var(--cat-${story.categoryKey}, var(--color-gold-dark))` : undefined}>
+          <a href={story.href} class="tl-link">
+            <div class="tl-content">
+              <h3 class="tl-title">{story.title}</h3>
+              {story.description && <p class="tl-desc">{story.description}</p>}
+            </div>
+            <div class="tl-meta">
+              {story.category && <span class="tl-category">{story.category}</span>}
+              {story.timeAgo && <time class="tl-time">{story.timeAgo}</time>}
+            </div>
+          </a>
+        </article>
+      ))}
+    </section>
+  </>
+)}
+
+<style>
+  .text-list {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .tl-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .tl-item:last-child {
+    border-bottom: none;
+  }
+
+  .tl-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tl-link:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tl-link:hover .tl-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .tl-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tl-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    color: var(--color-text);
+  }
+
+  .tl-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .tl-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .tl-category {
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cat-color, var(--color-gold-dark));
+  }
+
+  .tl-time {
+    font-size: 0.72rem;
+    color: var(--color-text-meta);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 640px) {
+    .tl-title {
+      font-size: 1.02rem;
+    }
+
+    .tl-desc {
+      display: none;
+    }
+
+    .tl-category {
+      font-size: 0.75rem;
+    }
+
+    .tl-time {
+      font-size: 0.78rem;
+    }
+  }
+</style>

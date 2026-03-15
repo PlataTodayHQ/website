@@ -536,6 +536,25 @@ try {
     font-style: italic;
   }
 
+  /* CJK: disable drop cap (not idiomatic), adjust line-height */
+  :global(:lang(zh)) .article-body :global(p:first-of-type::first-letter),
+  :global(:lang(ja)) .article-body :global(p:first-of-type::first-letter),
+  :global(:lang(ko)) .article-body :global(p:first-of-type::first-letter) {
+    font-size: inherit;
+    float: none;
+    line-height: inherit;
+    margin-right: 0;
+    margin-top: 0;
+  }
+
+  /* CJK article title: adjust spacing */
+  :global(:lang(zh)) .article-title,
+  :global(:lang(ja)) .article-title,
+  :global(:lang(ko)) .article-title {
+    letter-spacing: 0;
+    line-height: 1.35;
+  }
+
   /* Sources */
   .article-sources {
     border-top: 2px solid var(--color-border-section);
@@ -611,13 +630,54 @@ try {
   }
 
   @media (max-width: 640px) {
+    .article {
+      padding: var(--spacing-lg) 0;
+    }
+
     .article-title {
       font-size: 1.65rem;
     }
 
     .article-subtitle {
-      font-size: 1rem;
+      font-size: 1.05rem;
       max-width: 100%;
+    }
+
+    .article-category {
+      font-size: 0.8rem;
+    }
+
+    .article-meta {
+      font-size: 0.88rem;
+    }
+
+    .article-breadcrumb ol {
+      font-size: 0.82rem;
+    }
+
+    .article-body {
+      font-size: 1.12rem;
+      line-height: 1.85;
+    }
+
+    .article-body :global(h2) {
+      font-size: 1.3rem;
+    }
+
+    .article-body :global(h3) {
+      font-size: 1.12rem;
+    }
+
+    .article-image-credit {
+      font-size: 0.8rem;
+    }
+
+    .source-chip {
+      font-size: 0.88rem;
+    }
+
+    .article-sources h2 {
+      font-size: 0.82rem;
     }
 
     .related-grid {

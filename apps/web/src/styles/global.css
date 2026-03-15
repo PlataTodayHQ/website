@@ -21,7 +21,7 @@
   --color-link: #1a1a1a;
   --color-link-hover: #4a8abf;
 
-  --max-width: 1080px;
+  --max-width: 1200px;
   --content-width: 720px;
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -84,6 +84,55 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.01em;
+}
+
+/* ================================= */
+/* Multilingual font stacks          */
+/* ================================= */
+
+/* Chinese (Simplified) */
+:lang(zh) {
+  --font-sans: "Noto Sans SC", "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-serif: "Noto Serif SC", "Source Serif 4", "Songti SC", "SimSun", serif;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+/* Japanese */
+:lang(ja) {
+  --font-sans: "Noto Sans JP", "Inter", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+  --font-serif: "Noto Serif JP", "Source Serif 4", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+/* Korean */
+:lang(ko) {
+  --font-sans: "Noto Sans KR", "Inter", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-serif: "Noto Serif KR", "Source Serif 4", "Batang", serif;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+/* Hindi (Devanagari) */
+:lang(hi) {
+  --font-sans: "Noto Sans Devanagari", "Inter", "Mangal", sans-serif;
+  --font-serif: "Noto Serif Devanagari", "Source Serif 4", "Kokila", serif;
+  line-height: 1.7;
+}
+
+/* Cyrillic — explicit system fallbacks for Russian/Ukrainian */
+:lang(ru), :lang(uk) {
+  --font-sans: "Inter", "Segoe UI", "Roboto", "Arial", sans-serif;
+  --font-serif: "Source Serif 4", "Georgia", "Times New Roman", serif;
+}
+
+/* CJK: tighter headings spacing */
+:lang(zh) h1, :lang(zh) h2, :lang(zh) h3,
+:lang(ja) h1, :lang(ja) h2, :lang(ja) h3,
+:lang(ko) h1, :lang(ko) h2, :lang(ko) h3 {
+  letter-spacing: 0;
+  line-height: 1.4;
 }
 
 /* Accessibility: screen reader only utility */
@@ -166,6 +215,13 @@ button:focus:not(:focus-visible) {
 .meta-sub { color: var(--color-gold-dark); font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.04em; }
 .meta-reading { font-size: 0.7rem; }
 
+@media (max-width: 640px) {
+  .meta { font-size: 0.82rem; }
+  .meta-time { font-size: 0.82rem; }
+  .meta-sub { font-size: 0.75rem; }
+  .meta-reading { font-size: 0.75rem; }
+}
+
 /* ====================== */
 /* SHARED: Markets header */
 /* ====================== */
@@ -197,6 +253,8 @@ button:focus:not(:focus-visible) {
 
 @media (max-width: 640px) {
   .info-grid { grid-template-columns: 1fr; }
+  .info-card p { font-size: 0.88rem; }
+  .info-disclaimer { font-size: 0.8rem; }
 }
 
 /* ====================== */
@@ -275,8 +333,10 @@ button:focus:not(:focus-visible) {
   .stk-logo { width: 36px; height: 36px; min-width: 36px; border-radius: 8px; }
   .stk-logo img { width: 24px; height: 24px; }
   .stk-symbol { font-size: 0.9rem; }
+  .stk-name { font-size: 0.75rem; }
   .stk-price { font-size: 0.95rem; }
-  .stk-change { font-size: 0.75rem; padding: 3px 8px; }
+  .stk-change { font-size: 0.78rem; padding: 3px 8px; }
+  .stk-vol, .stk-mcap { font-size: 0.75rem; }
   .stk-row2 { padding-top: 6px; }
 }
 
