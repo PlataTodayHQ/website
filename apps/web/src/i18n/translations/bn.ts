@@ -312,6 +312,48 @@ export const bn = {
   "stock.pageTitle": "আর্জেন্টিনীয় বাজার",
   "stock.pageDesc": "BYMA-তে আর্জেন্টিনীয় ইকুইটির সরাসরি শেয়ার মূল্য, চার্ট, কোম্পানি প্রোফাইল এবং মূল পরিসংখ্যান।",
 
+  // Company Overview Hero
+  "stock.companyOverview": "Company Overview",
+  "stock.headquartered": "Headquartered",
+  "stock.readMore": "Read more",
+  "stock.readLess": "Read less",
+
+  // 52-Week Price Range
+  "stock.priceRange52w": "52-Week Price Range",
+  "stock.currentPrice": "Current Price",
+
+  // Financial Health Dashboard
+  "stock.financialHealth": "Financial Health",
+  "stock.profitability": "Profitability",
+  "stock.revenueGrowthLabel": "Revenue Growth",
+  "stock.earningsGrowthLabel": "Earnings Growth",
+  "stock.debtLevel": "Debt Level",
+  "stock.cashPosition": "Cash Position",
+  "stock.liquidityRatio": "Liquidity",
+  "stock.healthy": "Healthy",
+  "stock.caution": "Caution",
+  "stock.concern": "Concern",
+  "stock.strong": "Strong",
+  "stock.moderate": "Moderate",
+  "stock.weak": "Weak",
+  "stock.perShare": "per share",
+
+  // Enhanced Analyst Section
+  "stock.analystConsensus": "Analyst Consensus",
+  "stock.strongBuy": "Strong Buy",
+  "stock.buy": "Buy",
+  "stock.holdRating": "Hold",
+  "stock.sellRating": "Sell",
+  "stock.strongSell": "Strong Sell",
+  "stock.priceTargetRange": "Price Target Range",
+
+  // Quarterly Earnings
+  "stock.quarterlyEarnings": "Quarterly Earnings",
+  "stock.actual": "Actual",
+  "stock.estimateLabel": "Estimate",
+  "stock.beat": "Beat",
+  "stock.miss": "Miss",
+
   // Category page
   "category.latestIn": "{cat} বিভাগে সর্বশেষ",
   "category.earlier": "আগের সংবাদ",
