@@ -158,7 +158,7 @@ const categoryTabs = [
 
     var categoryLabel = catLabels[a.category] || a.category;
     var desc = a.description ? '<p class="card-desc">' + escapeHtml(a.description) + '</p>' : '';
-    var thumb = a.imageUrl ? '<a href="' + escapeHtml(a.href) + '" class="card-thumb" aria-hidden="true" tabindex="-1"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'" /></a>' : '';
+    var thumb = a.imageUrl ? '<a href="' + escapeHtml(a.href) + '" class="card-thumb" aria-hidden="true" tabindex="-1"><img src="' + escapeHtml(a.imageUrl) + '" alt="' + escapeHtml(a.title) + '" onerror="this.parentElement.style.display=\'none\'" /></a>' : '';
 
     article.innerHTML =
       '<div class="card-body">' +
