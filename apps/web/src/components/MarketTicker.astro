@@ -9,6 +9,7 @@ const { lang = "en" } = Astro.props;
 
 <div class="ticker" role="complementary" aria-label="Market data" data-market-ticker>
   <div class="ticker-inner">
+    <!-- Dollar rates -->
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="oficial">
       <span class="ticker-name">USD Oficial</span>
       <span class="ticker-row">
@@ -37,6 +38,10 @@ const { lang = "en" } = Astro.props;
         <span class="ticker-change" data-tc="ccl"></span>
       </span>
     </a>
+
+    <span class="ticker-sep"></span>
+
+    <!-- Merval index -->
     <a href={`/${lang}/markets/merval`} class="ticker-item" data-ticker="merval">
       <span class="ticker-name ticker-name--merval">Merval</span>
       <span class="ticker-row">
@@ -44,26 +49,36 @@ const { lang = "en" } = Astro.props;
         <span class="ticker-change" data-tc="merval"></span>
       </span>
     </a>
-    <a href={`/${lang}/markets`} class="ticker-item" data-ticker="btc">
-      <span class="ticker-name ticker-name--btc">Bitcoin</span>
-      <span class="ticker-row">
-        <span class="ticker-price" data-tv="btc">---</span>
-        <span class="ticker-change" data-tc="btc"></span>
-      </span>
-    </a>
+
+    <!-- Top 10 stocks by market cap (populated dynamically) -->
+    <div id="stocks-container" class="ticker-group"></div>
+
+    <span class="ticker-sep"></span>
+
+    <!-- Commodities -->
+    <div id="commodities-container" class="ticker-group"></div>
+
+    <span class="ticker-sep"></span>
+
+    <!-- Top 10 crypto (populated dynamically) -->
+    <div id="crypto-container" class="ticker-group"></div>
   </div>
 </div>
 
 <script is:inline>
 (function() {
-  var CACHE_KEY = 'plata-market-v4';
+  var CACHE_KEY = 'plata-market-v5';
   var RATES_URL = '/api/rates';
   var EVO_URL = 'https://api.bluelytics.com.ar/v2/evolution.json?days=10';
   var BYMA_URL = 'https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price';
   var YAHOO_URL = 'https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?interval=1d&range=1d';
-  var BINANCE_URL = 'https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT';
+  var SCREENER_URL = '/api/screener';
+  var COMMODITIES_URL = '/api/commodities';
+  var CRYPTO_URL = '/api/crypto';
   var REFRESH_MS = 5 * 60 * 1000;
   var lastFetchTime = 0;
+
+  var lang = document.documentElement.lang || 'en';
 
   function pct(current, previous) {
     if (!previous || previous === 0) return null;
@@ -83,8 +98,10 @@ const { lang = "en" } = Astro.props;
   }
 
   function formatUSD(val) {
-    if (val >= 1000) return Math.round(val).toLocaleString('en-US');
-    return val.toFixed(2);
+    if (val >= 10000) return Math.round(val).toLocaleString('en-US');
+    if (val >= 1000) return val.toFixed(0);
+    if (val >= 1) return val.toFixed(2);
+    return val.toFixed(4);
   }
 
   function applyItem(key, displayText, percent) {
@@ -105,13 +122,108 @@ const { lang = "en" } = Astro.props;
     }
   }
 
+  function createTickerItem(key, label, href, nameClass) {
+    var a = document.createElement('a');
+    a.href = href;
+    a.className = 'ticker-item';
+    a.setAttribute('data-ticker', key);
+    a.innerHTML =
+      '<span class="ticker-name' + (nameClass ? ' ' + nameClass : '') + '">' + label + '</span>' +
+      '<span class="ticker-row">' +
+        '<span class="ticker-price" data-tv="' + key + '">---</span>' +
+        '<span class="ticker-change" data-tc="' + key + '"></span>' +
+      '</span>';
+    return a;
+  }
+
+  // Build dynamic containers on first load
+  var stocksBuilt = false;
+  var commoditiesBuilt = false;
+  var cryptoBuilt = false;
+
+  function buildStocks(stocks) {
+    if (stocksBuilt) return;
+    var container = document.getElementById('stocks-container');
+    if (!container) return;
+    var top10 = stocks.slice(0, 10);
+    for (var i = 0; i < top10.length; i++) {
+      var s = top10[i];
+      var key = 'stock-' + s.symbol;
+      var el = createTickerItem(key, s.symbol, '/' + lang + '/markets/stocks/' + s.symbol, 'ticker-name--stock');
+      container.appendChild(el);
+    }
+    stocksBuilt = true;
+  }
+
+  function buildCommodities(commodities) {
+    if (commoditiesBuilt) return;
+    var container = document.getElementById('commodities-container');
+    if (!container) return;
+    for (var i = 0; i < commodities.length; i++) {
+      var c = commodities[i];
+      var key = 'comm-' + c.symbol.replace('=', '');
+      var el = createTickerItem(key, c.name, '/' + lang + '/markets', 'ticker-name--commodity');
+      container.appendChild(el);
+    }
+    commoditiesBuilt = true;
+  }
+
+  function buildCrypto(cryptos) {
+    if (cryptoBuilt) return;
+    var container = document.getElementById('crypto-container');
+    if (!container) return;
+    for (var i = 0; i < cryptos.length; i++) {
+      var c = cryptos[i];
+      var key = 'crypto-' + c.symbol;
+      var el = createTickerItem(key, c.symbol, '/' + lang + '/markets', 'ticker-name--crypto');
+      container.appendChild(el);
+    }
+    cryptoBuilt = true;
+  }
+
   function render(data) {
     if (data.oficial) applyItem('oficial', formatARS(data.oficial), data.oficialPct);
     if (data.blue) applyItem('blue', formatARS(data.blue), data.bluePct);
     if (data.mep) applyItem('mep', formatARS(data.mep), data.mepPct);
     if (data.ccl) applyItem('ccl', formatARS(data.ccl), data.cclPct);
     if (data.merval) applyItem('merval', formatMerval(data.merval), data.mervalPct);
-    if (data.btc) applyItem('btc', '$' + formatUSD(data.btc), data.btcPct);
+
+    // Stocks
+    if (data.stocks && data.stocks.length) {
+      buildStocks(data.stocks);
+      for (var i = 0; i < data.stocks.length; i++) {
+        var s = data.stocks[i];
+        var key = 'stock-' + s.symbol;
+        var price = s.price;
+        if (price != null) {
+          applyItem(key, formatARS(price), s.change != null ? s.change * 100 : null);
+        }
+      }
+    }
+
+    // Commodities
+    if (data.commodities && data.commodities.length) {
+      buildCommodities(data.commodities);
+      for (var i = 0; i < data.commodities.length; i++) {
+        var c = data.commodities[i];
+        var key = 'comm-' + c.symbol.replace('=', '');
+        if (c.price != null) {
+          applyItem(key, '$' + formatUSD(c.price), c.change);
+        }
+      }
+    }
+
+    // Crypto
+    if (data.cryptos && data.cryptos.length) {
+      buildCrypto(data.cryptos);
+      for (var i = 0; i < data.cryptos.length; i++) {
+        var c = data.cryptos[i];
+        var key = 'crypto-' + c.symbol;
+        if (c.price != null) {
+          applyItem(key, '$' + formatUSD(c.price), c.change);
+        }
+      }
+    }
   }
 
   function loadCached() {
@@ -162,11 +274,11 @@ const { lang = "en" } = Astro.props;
     var cached = loadCached() || {};
 
     Promise.all([
-      // 1. Rates (oficial, blue, mep, ccl)
+      // 1. Rates
       fetch(RATES_URL).then(function(r) { return r.json(); }).catch(function() { return null; }),
       // 2. Evolution for % change
       fetch(EVO_URL).then(function(r) { return r.json(); }).catch(function() { return null; }),
-      // 3. Merval (BYMA → Yahoo fallback)
+      // 3. Merval
       fetch(BYMA_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: '{}' })
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(d) {
@@ -186,13 +298,19 @@ const { lang = "en" } = Astro.props;
             return { price: p, previousClose: pc, variation: pc > 0 ? (p - pc) / pc : null };
           }).catch(function() { return null; });
         }),
-      // 4. BTC from Binance
-      fetch(BINANCE_URL).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; })
+      // 4. Screener (top 10 stocks)
+      fetch(SCREENER_URL).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; }),
+      // 5. Commodities
+      fetch(COMMODITIES_URL).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; }),
+      // 6. Crypto
+      fetch(CRYPTO_URL).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; })
     ]).then(function(results) {
       var rates = results[0];
       var evo = results[1];
       var mervalData = results[2];
-      var btcData = results[3];
+      var screenerData = results[3];
+      var commoditiesData = results[4];
+      var cryptoData = results[5];
 
       var data = {
         oficial: cached.oficial || null, oficialPct: cached.oficialPct || null,
@@ -200,7 +318,9 @@ const { lang = "en" } = Astro.props;
         mep: cached.mep || null, mepPct: cached.mepPct || null,
         ccl: cached.ccl || null, cclPct: cached.cclPct || null,
         merval: cached.merval || null, mervalPct: cached.mervalPct || null,
-        btc: cached.btc || null, btcPct: cached.btcPct || null
+        stocks: cached.stocks || null,
+        commodities: cached.commodities || null,
+        cryptos: cached.cryptos || null
       };
 
       // Dollar rates
@@ -222,7 +342,6 @@ const { lang = "en" } = Astro.props;
       // MEP & CCL
       if (rates && rates.mep) {
         data.mep = rates.mep.value_sell;
-        // No historical data for MEP/CCL % yet — show null
         data.mepPct = null;
       }
       if (rates && rates.ccl) {
@@ -238,10 +357,21 @@ const { lang = "en" } = Astro.props;
           : pct(mervalData.price, mervalData.previousClose);
       }
 
-      // BTC
-      if (btcData && btcData.lastPrice) {
-        data.btc = parseFloat(btcData.lastPrice);
-        data.btcPct = parseFloat(btcData.priceChangePercent);
+      // Top 10 stocks
+      if (screenerData && screenerData.length) {
+        data.stocks = screenerData.slice(0, 10).map(function(s) {
+          return { symbol: s.symbol, name: s.name, price: s.price, change: s.change };
+        });
+      }
+
+      // Commodities
+      if (commoditiesData && commoditiesData.length) {
+        data.commodities = commoditiesData;
+      }
+
+      // Crypto
+      if (cryptoData && cryptoData.length) {
+        data.cryptos = cryptoData;
       }
 
       render(data);
@@ -297,14 +427,14 @@ const { lang = "en" } = Astro.props;
     flex-direction: column;
     justify-content: center;
     gap: 1px;
-    padding: 8px 0;
+    padding: 8px 12px;
     white-space: nowrap;
     text-decoration: none;
     color: var(--color-text);
     font-variant-numeric: tabular-nums;
     border-right: 1px solid var(--color-border, #e8e8e8);
     transition: background 0.15s;
-    flex: 1 1 0%;
+    flex: 0 0 auto;
     text-align: center;
     align-items: center;
   }
@@ -318,8 +448,19 @@ const { lang = "en" } = Astro.props;
     text-decoration: none;
   }
 
+  .ticker-sep {
+    flex: 0 0 auto;
+    width: 3px;
+    background: var(--color-border, #e0e0e0);
+    margin: 4px 0;
+  }
+
+  .ticker-group {
+    display: contents;
+  }
+
   .ticker-name {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: var(--color-text);
     line-height: 1.2;
@@ -327,23 +468,25 @@ const { lang = "en" } = Astro.props;
 
   .ticker-name--blue { color: var(--color-gold-dark); }
   .ticker-name--merval { color: #0056b3; }
-  .ticker-name--btc { color: #f7931a; }
+  .ticker-name--stock { color: #0056b3; }
+  .ticker-name--commodity { color: #b8860b; }
+  .ticker-name--crypto { color: #f7931a; }
 
   .ticker-row {
     display: flex;
     align-items: baseline;
-    gap: 8px;
+    gap: 6px;
   }
 
   .ticker-price {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--color-text);
     line-height: 1.3;
   }
 
   .ticker-change {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
     line-height: 1.3;
   }
@@ -357,11 +500,7 @@ const { lang = "en" } = Astro.props;
     }
 
     .ticker-item {
-      padding: 6px 0;
-      flex: 0 0 auto;
-      min-width: 0;
-      padding-left: 10px;
-      padding-right: 10px;
+      padding: 6px 10px;
     }
 
     .ticker-name {
@@ -377,7 +516,7 @@ const { lang = "en" } = Astro.props;
     }
 
     .ticker-row {
-      gap: 5px;
+      gap: 4px;
     }
   }
 </style>
