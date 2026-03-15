@@ -125,10 +125,12 @@ const allJsonLd = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
-    <meta name="theme-color" content="#3D6B99" />
+    <meta name="theme-color" content="#1e2a3d" />
     <meta name="color-scheme" content="light dark" />
 
     {!noindex && <link rel="canonical" href={resolvedCanonical} />}
@@ -616,6 +618,11 @@ const allJsonLd = [
           if (label) label.hidden = true;
         });
       });
+    </script>
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
     </script>
   </body>
 </html>
