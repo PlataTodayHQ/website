@@ -1,0 +1,218 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "founder.title")}
+  description={t(lang!, "founder.description")}
+  lang={lang}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "about.title"), url: `/${lang}/about` },
+    { name: t(lang!, "founder.title"), url: `/${lang}/founder` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "name": t(lang!, "founder.title"),
+    "url": `https://plata.today/${lang}/founder`,
+    "description": t(lang!, "founder.description"),
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Bogdan Filippov",
+      "jobTitle": "Creator & Developer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Plata",
+        "url": "https://plata.today"
+      }
+    }
+  }}
+>
+  <article class="info-page">
+    <header class="info-header">
+      <h1>{t(lang!, "founder.title")}</h1>
+    </header>
+
+    <div class="info-body">
+      <section>
+        <div class="founder-hero">
+          <div class="founder-avatar" aria-hidden="true">BF</div>
+          <div class="founder-intro">
+            <h2 class="founder-name">{t(lang!, "founder.name")}</h2>
+            <p class="founder-role">{t(lang!, "founder.role")}</p>
+          </div>
+        </div>
+
+        <p>{t(lang!, "founder.bio1")}</p>
+        <p>{t(lang!, "founder.bio2")}</p>
+        <p>{t(lang!, "founder.bio3")}</p>
+
+        <blockquote class="founder-quote">
+          <p>{t(lang!, "founder.quote")}</p>
+        </blockquote>
+      </section>
+
+      <section>
+        <h2>{t(lang!, "founder.connectTitle")}</h2>
+        <div class="connect-links">
+          <div class="connect-item">
+            <span class="connect-label">{t(lang!, "founder.emailLabel")}</span>
+            <a href="mailto:hello@plata.today">hello@plata.today</a>
+          </div>
+          <div class="connect-item">
+            <span class="connect-label">{t(lang!, "founder.githubLabel")}</span>
+            <a href="https://github.com/PlataTodayHQ" target="_blank" rel="noopener noreferrer">PlataTodayHQ</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .info-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-radius: 2px;
+  }
+
+  .info-header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .info-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+  }
+
+  .info-body h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-top: 3px solid var(--color-celeste);
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .info-body p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* Founder hero */
+  .founder-hero {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .founder-avatar {
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-celeste);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    letter-spacing: 0.05em;
+  }
+
+  .founder-name {
+    font-family: var(--font-serif) !important;
+    font-size: 1.5rem !important;
+    text-transform: none !important;
+    border: none !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: var(--spacing-xs) !important;
+  }
+
+  .founder-role {
+    font-size: 0.85rem !important;
+    color: var(--color-text-meta) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0 !important;
+  }
+
+  /* Quote */
+  .founder-quote {
+    border-left: 3px solid var(--color-gold);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+    background: var(--color-bg-secondary);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .founder-quote p {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text);
+    margin-bottom: 0;
+  }
+
+  /* Connect links */
+  .connect-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+  }
+
+  .connect-item {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: baseline;
+  }
+
+  .connect-label {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-text-meta);
+    letter-spacing: 0.04em;
+    min-width: 80px;
+  }
+
+  .connect-item a {
+    color: var(--color-celeste);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .connect-item a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .founder-hero {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

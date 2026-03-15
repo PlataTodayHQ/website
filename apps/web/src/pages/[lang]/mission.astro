@@ -1,0 +1,159 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "mission.title")}
+  description={t(lang!, "mission.description")}
+  lang={lang}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "about.title"), url: `/${lang}/about` },
+    { name: t(lang!, "mission.title"), url: `/${lang}/mission` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "mission.title"),
+    "url": `https://plata.today/${lang}/mission`,
+    "description": t(lang!, "mission.description"),
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <article class="info-page">
+    <header class="info-header">
+      <h1>{t(lang!, "mission.title")}</h1>
+    </header>
+
+    <div class="info-body">
+      <section>
+        <h2>{t(lang!, "mission.heading")}</h2>
+        <p>{t(lang!, "mission.text1")}</p>
+        <p>{t(lang!, "mission.text2")}</p>
+        <p>{t(lang!, "mission.text3")}</p>
+      </section>
+
+      <section>
+        <h2>{t(lang!, "mission.valuesTitle")}</h2>
+        <div class="value-cards">
+          <div class="value-card">
+            <span class="value-icon" aria-hidden="true">&#9878;</span>
+            <h3>{t(lang!, "mission.valueTransparency")}</h3>
+            <p>{t(lang!, "mission.valueTransparencyDesc")}</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon" aria-hidden="true">&#127760;</span>
+            <h3>{t(lang!, "mission.valueNative")}</h3>
+            <p>{t(lang!, "mission.valueNativeDesc")}</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon" aria-hidden="true">&#9889;</span>
+            <h3>{t(lang!, "mission.valueCurated")}</h3>
+            <p>{t(lang!, "mission.valueCuratedDesc")}</p>
+          </div>
+          <div class="value-card">
+            <span class="value-icon" aria-hidden="true">&#9733;</span>
+            <h3>{t(lang!, "mission.valueAccessible")}</h3>
+            <p>{t(lang!, "mission.valueAccessibleDesc")}</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>{t(lang!, "mission.disclaimerTitle")}</h2>
+        <p>{t(lang!, "mission.disclaimerText")}</p>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .info-page {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    border-radius: 2px;
+  }
+
+  .info-header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .info-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+  }
+
+  .info-body h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-top: 3px solid var(--color-celeste);
+    padding-top: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .info-body p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .value-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+  }
+
+  .value-card {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-gold);
+    border-radius: 2px;
+  }
+
+  .value-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .value-card h3 {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .value-card p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--color-text-meta);
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 640px) {
+    .value-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
