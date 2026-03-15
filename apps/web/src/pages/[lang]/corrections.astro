@@ -11,18 +11,18 @@ const { lang } = Astro.params;
 ---
 
 <Base
-  title={t(lang!, "standards.pageTitle")}
-  description={t(lang!, "standards.description")}
+  title={t(lang!, "corrections.pageTitle")}
+  description={t(lang!, "corrections.description")}
   lang={lang}
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "standards.title"), url: `/${lang}/standards` },
+    { name: t(lang!, "corrections.title"), url: `/${lang}/corrections` },
   ]}
   jsonLd={{
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": t(lang!, "standards.title"),
-    "url": `https://plata.today/${lang}/standards`,
+    "name": t(lang!, "corrections.title"),
+    "url": `https://plata.today/${lang}/corrections`,
     "isPartOf": {
       "@type": "WebSite",
       "name": "Plata",
@@ -32,34 +32,28 @@ const { lang } = Astro.params;
 >
   <article class="legal">
     <header class="legal-header">
-      <h1>{t(lang!, "standards.title")}</h1>
-      <p class="legal-updated">{t(lang!, "standards.updated")}</p>
+      <h1>{t(lang!, "corrections.title")}</h1>
+      <p class="legal-updated">{t(lang!, "corrections.updated")}</p>
     </header>
 
     <div class="legal-body">
-      <p class="lead">{t(lang!, "standards.lead")}</p>
+      <p class="lead">{t(lang!, "corrections.lead")}</p>
 
-      <h2>{t(lang!, "standards.sourcingTitle")}</h2>
-      <p>{t(lang!, "standards.sourcingText")}</p>
+      <h2>{t(lang!, "corrections.policyTitle")}</h2>
+      <p>{t(lang!, "corrections.policyText")}</p>
 
-      <h2>{t(lang!, "standards.verificationTitle")}</h2>
-      <p>{t(lang!, "standards.verificationText")}</p>
+      <h2>{t(lang!, "corrections.howTitle")}</h2>
+      <ul class="corrections-list">
+        <li>{t(lang!, "corrections.howMinor")}</li>
+        <li>{t(lang!, "corrections.howFactual")}</li>
+        <li>{t(lang!, "corrections.howMajor")}</li>
+      </ul>
 
-      <h2>{t(lang!, "standards.languageTitle")}</h2>
-      <p>{t(lang!, "standards.languageText")}</p>
+      <h2>{t(lang!, "corrections.reportTitle")}</h2>
+      <p>{t(lang!, "corrections.reportText")}</p>
 
-      <h2>{t(lang!, "standards.attributionTitle")}</h2>
-      <p>{t(lang!, "standards.attributionText")}</p>
-
-      <h2>{t(lang!, "standards.filteringTitle")}</h2>
-      <p>{t(lang!, "standards.filteringText")}</p>
-
-      <h2>{t(lang!, "standards.correctionsTitle")}</h2>
-      <p>{t(lang!, "standards.correctionsText")}</p>
-      <p><a href={`/${lang}/corrections`}>{t(lang!, "corrections.title")} &rarr;</a></p>
-
-      <h2>{t(lang!, "standards.contactTitle")}</h2>
-      <p>{t(lang!, "standards.contactText")}</p>
+      <h2>{t(lang!, "corrections.logTitle")}</h2>
+      <p class="log-empty">{t(lang!, "corrections.logEmpty")}</p>
     </div>
   </article>
 </Base>
@@ -111,5 +105,27 @@ const { lang } = Astro.params;
   .lead {
     font-size: 1.1rem;
     color: var(--color-text);
+  }
+
+  .corrections-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .corrections-list li {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+    padding-left: var(--spacing-md);
+    border-left: 3px solid var(--color-gold);
+  }
+
+  .log-empty {
+    font-style: italic;
+    color: var(--color-text-meta);
   }
 </style>
