@@ -29,29 +29,28 @@ export const GET: APIRoute = async () => {
     }
 
     // Fallback: direct fetch if store is empty (cold start)
-    const [blueRes, dolarRes] = await Promise.all([
-      fetchT(BLUELYTICS_URL),
-      fetchT(DOLARAPI_URL).catch(() => null),
-    ]);
-
-    if (!blueRes.ok) throw new Error(`Bluelytics ${blueRes.status}`);
-    const blueData = await blueRes.json();
-
-    let mep: { value_buy: number; value_sell: number } | null = null;
-    let ccl: { value_buy: number; value_sell: number } | null = null;
-
-    if (dolarRes && dolarRes.ok) {
-      const dolares = await dolarRes.json();
+    // Primary: dolarapi.com — all rates in one call
+    let data: any;
+    try {
+      const res = await fetchT(DOLARAPI_URL);
+      if (!res.ok) throw new Error(`dolarapi ${res.status}`);
+      const dolares: any[] = await res.json();
+      const rates: Record<string, any> = { blue: null, oficial: null, mep: null, ccl: null };
       for (const d of dolares) {
-        if (d.casa === "bolsa") {
-          mep = { value_buy: d.compra, value_sell: d.venta };
-        } else if (d.casa === "contadoconliqui") {
-          ccl = { value_buy: d.compra, value_sell: d.venta };
-        }
+        const pair = { value_buy: d.compra, value_sell: d.venta };
+        if (d.casa === "blue") rates.blue = pair;
+        else if (d.casa === "oficial") rates.oficial = pair;
+        else if (d.casa === "bolsa") rates.mep = pair;
+        else if (d.casa === "contadoconliqui") rates.ccl = pair;
       }
+      data = rates;
+    } catch {
+      // Fallback: Bluelytics — only blue + oficial
+      const res = await fetchT(BLUELYTICS_URL);
+      if (!res.ok) throw new Error(`Bluelytics ${res.status}`);
+      const blueData = await res.json();
+      data = { ...blueData, mep: null, ccl: null };
     }
-
-    const data = { ...blueData, mep, ccl };
 
     return new Response(JSON.stringify(data), {
       headers: {

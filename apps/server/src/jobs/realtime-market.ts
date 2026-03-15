@@ -69,47 +69,51 @@ async function fetchMervalRT(): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
-// Exchange rates (Bluelytics + dolarapi)
+// Exchange rates — dolarapi (primary), Bluelytics (fallback for blue/oficial)
 // ---------------------------------------------------------------------------
+
+function parseDolarApi(dolares: any[]): ExchangeRates {
+  const rates: ExchangeRates = { blue: null, oficial: null, mep: null, ccl: null };
+  for (const d of dolares) {
+    const pair = { value_buy: d.compra, value_sell: d.venta };
+    if (d.casa === "blue") rates.blue = pair;
+    else if (d.casa === "oficial") rates.oficial = pair;
+    else if (d.casa === "bolsa") rates.mep = pair;
+    else if (d.casa === "contadoconliqui") rates.ccl = pair;
+  }
+  return rates;
+}
 
 async function fetchRatesRT(): Promise<void> {
   try {
-    const [blueRes, dolarRes] = await Promise.all([
-      fetchT(BLUELYTICS_URL),
-      fetchT(DOLARAPI_URL).catch(() => null),
-    ]);
-
-    if (!blueRes.ok) throw new Error(`Bluelytics ${blueRes.status}`);
-    const blueData: any = await blueRes.json();
-
-    let mep: ExchangeRates["mep"] = null;
-    let ccl: ExchangeRates["ccl"] = null;
-
-    if (dolarRes && dolarRes.ok) {
-      const dolares: any[] = await dolarRes.json();
-      for (const d of dolares) {
-        if (d.casa === "bolsa") {
-          mep = { value_buy: d.compra, value_sell: d.venta };
-        } else if (d.casa === "contadoconliqui") {
-          ccl = { value_buy: d.compra, value_sell: d.venta };
-        }
-      }
-    }
-
-    const rates: ExchangeRates = {
-      blue: blueData.blue
-        ? { value_buy: blueData.blue.value_buy, value_sell: blueData.blue.value_sell }
-        : null,
-      oficial: blueData.oficial
-        ? { value_buy: blueData.oficial.value_buy, value_sell: blueData.oficial.value_sell }
-        : null,
-      mep,
-      ccl,
-    };
-
-    setRates(rates);
+    // Primary: dolarapi.com — returns blue, oficial, MEP, CCL in one call
+    const res = await fetchT(DOLARAPI_URL);
+    if (!res.ok) throw new Error(`dolarapi ${res.status}`);
+    const dolares: any[] = await res.json();
+    setRates(parseDolarApi(dolares));
+    return;
   } catch (err) {
-    console.error("[realtime] Rates error:", err);
+    console.warn("[realtime] dolarapi failed, falling back to Bluelytics:", err);
+  }
+
+  // Fallback: Bluelytics — only blue + oficial (no MEP/CCL)
+  try {
+    const res = await fetchT(BLUELYTICS_URL);
+    if (!res.ok) throw new Error(`Bluelytics ${res.status}`);
+    const data: any = await res.json();
+
+    setRates({
+      blue: data.blue
+        ? { value_buy: data.blue.value_buy, value_sell: data.blue.value_sell }
+        : null,
+      oficial: data.oficial
+        ? { value_buy: data.oficial.value_buy, value_sell: data.oficial.value_sell }
+        : null,
+      mep: null,
+      ccl: null,
+    });
+  } catch (err) {
+    console.error("[realtime] Rates error (both sources failed):", err);
   }
 }
 
