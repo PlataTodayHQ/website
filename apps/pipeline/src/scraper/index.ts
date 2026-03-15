@@ -1,6 +1,6 @@
 import { fetchRSS, type RSSItem } from "./rss.js";
 import { SOURCES, type SourceConfig } from "./sources.js";
-import { log } from "../logger.js";
+import { log } from "@plata-today/shared";
 
 const MAX_CONCURRENT_TOTAL = 10;
 const MAX_CONCURRENT_PER_DOMAIN = 2;

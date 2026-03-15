@@ -16,3 +16,14 @@ export {
   getDataAge,
 } from "./market-store.js";
 export type { MervalSnapshot, ExchangeRates, StockQuote } from "./market-store.js";
+
+export {
+  CORS_HEADERS, optionsResponse, jsonResponse, errorResponse,
+} from "./api-utils.js";
+
+export {
+  toYahooSymbol, parseMervalFromBYMA, parseBYMAStock, fetchBYMA,
+  fetchYahooChart, fetchExchangeRatesData, extractProfileData,
+} from "./market-utils.js";
+
+export { log, setLogLevel } from "./logger.js";

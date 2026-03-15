@@ -2,7 +2,7 @@ import type { EventEntity } from "../domain/entities.js";
 import type { IEventRepository } from "../ports/event-repository.js";
 import type { IArticleRepository } from "../ports/article-repository.js";
 import type { ILLMService } from "../ports/llm-service.js";
-import { log } from "../logger.js";
+import { log } from "@plata-today/shared";
 
 export async function draftEvent(
   eventRepo: IEventRepository,

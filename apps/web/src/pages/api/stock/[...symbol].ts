@@ -1,49 +1,29 @@
 import type { APIRoute } from "astro";
-import { fetchT } from "@plata-today/shared";
+import {
+  toYahooSymbol, fetchYahooChart,
+  optionsResponse, jsonResponse, errorResponse,
+} from "@plata-today/shared";
 
 export const prerender = false;
-
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-};
 
 const VALID_RANGES = ["1d", "5d", "1mo", "3mo", "6mo", "1y", "2y", "5y"];
 const VALID_INTERVALS = ["5m", "15m", "30m", "1h", "1d", "1wk", "1mo"];
 
-const USER_AGENT =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
-
-export const OPTIONS: APIRoute = () =>
-  new Response(null, { status: 204, headers: CORS_HEADERS });
+export const OPTIONS: APIRoute = () => optionsResponse();
 
 export const GET: APIRoute = async ({ params, url }) => {
   try {
     const rawSymbol = params.symbol ?? "";
 
     if (!rawSymbol) {
-      return new Response(
-        JSON.stringify({ error: "Missing symbol parameter" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-        },
-      );
+      return errorResponse("Missing symbol parameter", 400);
     }
 
     if (!/^[\w.\-^=]+$/.test(rawSymbol)) {
-      return new Response(JSON.stringify({ error: "Invalid symbol" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-      });
+      return errorResponse("Invalid symbol", 400);
     }
 
-    let symbol = rawSymbol;
-    // Only append .BA for Argentine stocks (no special chars like - or =)
-    if (!symbol.startsWith("^") && !symbol.includes(".") && !symbol.includes("-") && !symbol.includes("=")) {
-      symbol = `${symbol}.BA`;
-    }
+    const symbol = toYahooSymbol(rawSymbol);
 
     const range = VALID_RANGES.includes(url.searchParams.get("range") ?? "")
       ? url.searchParams.get("range")!
@@ -54,22 +34,7 @@ export const GET: APIRoute = async ({ params, url }) => {
       ? url.searchParams.get("interval")!
       : "1d";
 
-    const yahooUrl = `https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=${interval}&range=${range}`;
-    let res = await fetchT(yahooUrl, {
-      headers: { "User-Agent": USER_AGENT },
-    });
-
-    if (!res.ok) {
-      const fallbackUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=${interval}&range=${range}`;
-      res = await fetchT(fallbackUrl, {
-        headers: { "User-Agent": USER_AGENT },
-      });
-    }
-
-    if (!res.ok) throw new Error(`Yahoo ${res.status}`);
-    const json: any = await res.json();
-
-    const result = json?.chart?.result?.[0];
+    const result = await fetchYahooChart(symbol, interval, range);
     if (!result) throw new Error("No chart data");
 
     const meta = result.meta ?? {};
@@ -94,22 +59,8 @@ export const GET: APIRoute = async ({ params, url }) => {
       opens: quote.open ?? [],
     };
 
-    return new Response(JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-        "Cache-Control": "public, max-age=300",
-        ...CORS_HEADERS,
-      },
-    });
+    return jsonResponse(data, 300);
   } catch (err: any) {
-    return new Response(
-      JSON.stringify({
-        error: err.message ?? "Failed to fetch stock data",
-      }),
-      {
-        status: 502,
-        headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-      },
-    );
+    return errorResponse(err.message ?? "Failed to fetch stock data");
   }
 };
