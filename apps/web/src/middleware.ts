@@ -71,7 +71,7 @@ export const onRequest = defineMiddleware(({ request, url, redirect }, next) => 
 
   // Normalize: lowercase + trailing slash in one redirect
   const lower = pathname.toLowerCase();
-  const normalized = lower.endsWith("/") ? lower : lower + "/";
+  const normalized = lower.endsWith("/") ? lower : `${lower}/`;
   if (normalized !== pathname) {
     return redirect(normalized + url.search, 301);
   }

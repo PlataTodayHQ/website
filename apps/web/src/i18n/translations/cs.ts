@@ -198,7 +198,7 @@ export const cs = {
   "privacy.childrenTitle": "Děti",
   "privacy.childrenText": "Plata je zpravodajský web pro širokou veřejnost. Vědomě neshromažďujeme osobní údaje dětí mladších 16 let.",
   "privacy.changesTitle": "Změny",
-  "privacy.changesText": "Tyto zásady můžeme čas od času aktualizovat. Datum „Poslední aktualizace" nahoře bude odrážet případné změny.",
+  "privacy.changesText": "Tyto zásady můžeme čas od času aktualizovat. Datum 'Poslední aktualizace' nahoře bude odrážet případné změny.",
   "privacy.contactTitle": "Kontakt",
   "privacy.contactText": "S dotazy ohledně ochrany soukromí nám napište na privacy@plata.today.",
 
@@ -368,7 +368,7 @@ export const cs = {
   "currencies.date": "Datum",
   "currencies.understandTitle": "Vysvětlení kurzů",
   "currencies.officialTitle": "Oficiální kurz",
-  "currencies.officialDesc": "Kurz regulovaný vládou a stanovený centrální bankou (BCRA). Používá se pro formální bankovní operace, import a oficiální obchod. Podléhá měnovým kontrolám známým jako „cepo cambiario".",
+  "currencies.officialDesc": "Kurz regulovaný vládou a stanovený centrální bankou (BCRA). Používá se pro formální bankovní operace, import a oficiální obchod. Podléhá měnovým kontrolám známým jako 'cepo cambiario'.",
   "currencies.blueTitle": "Blue kurz",
   "currencies.blueDesc": "Neoficiální kurz na paralelním trhu, který odráží skutečnou poptávku po dolarech mimo vládní regulaci. Rozdíl mezi oficiálním a blue kurzem signalizuje míru měnových omezení v ekonomice.",
   "currencies.disclaimer": "Data z Bluelytics. Kurzy mohou být zpožděny až o 5 minut. Pouze pro informační účely — nejedná se o finanční poradenství.",

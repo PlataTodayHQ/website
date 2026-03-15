@@ -40,7 +40,7 @@ export const GET: APIRoute = async () => {
     let mep: { value_buy: number; value_sell: number } | null = null;
     let ccl: { value_buy: number; value_sell: number } | null = null;
 
-    if (dolarRes && dolarRes.ok) {
+    if (dolarRes?.ok) {
       const dolares = await dolarRes.json();
       for (const d of dolares) {
         if (d.casa === "bolsa") {
