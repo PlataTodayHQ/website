@@ -4,9 +4,10 @@ import { t } from "@/i18n";
 
 interface Props {
   lang: string;
+  alternateUrls?: Record<string, string>;
 }
 
-const { lang } = Astro.props;
+const { lang, alternateUrls } = Astro.props;
 const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
 ---
 
@@ -27,7 +28,7 @@ const currentLang = LANGUAGES[lang as keyof typeof LANGUAGES];
   <div class="lang-dropdown" role="menu" aria-label={t(lang, "langSwitch.selectLanguage")}>
     {Object.entries(LANGUAGES).map(([code, info]) => (
       <a
-        href={`/${code}/`}
+        href={alternateUrls?.[code] ? new URL(alternateUrls[code]).pathname : `/${code}/`}
         class:list={["lang-option", { active: code === lang }]}
         role="menuitem"
         lang={code}
