@@ -44,7 +44,7 @@ export const GET: APIRoute = async () => {
     if (!json?.data) throw new Error("No data from BYMA");
 
     const stocks = json.data.map((s: any) => ({
-      symbol: s.symbol ?? s.denominacion ?? "",
+      symbol: (s.symbol ?? s.denominacion ?? "").replace(".BA", ""),
       description: s.description ?? s.denominacion ?? "",
       price: s.price ?? s.ultimoPrecio ?? 0,
       variation: s.variation ?? s.variacionPorcentual ?? null,
