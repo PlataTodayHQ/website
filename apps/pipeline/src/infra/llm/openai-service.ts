@@ -145,11 +145,13 @@ function parseArticleResponse(parsed: unknown): RewriteResult[] {
 
   return articles.map((item: unknown) => {
     const a = item as Record<string, unknown>;
+    // Normalize literal \n sequences that sometimes survive JSON parsing
+    const body = String(a.body ?? "").replace(/\\n/g, "\n");
     return {
       title: String(a.title ?? ""),
       slug: sanitizeSlug(String(a.slug ?? "")),
       meta_description: String(a.meta_description ?? "").slice(0, 160),
-      body: String(a.body ?? ""),
+      body,
       lang: a.lang ? String(a.lang) : undefined,
     };
   });
