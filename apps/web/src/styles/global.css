@@ -1,9 +1,6 @@
-:root {
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  --font-serif: "Source Serif 4", Charter, "Bitstream Charter", "Sitka Text", Cambria, serif;
-  --font-display: "Libre Caslon Display", "Source Serif 4", serif;
+@import "./fonts.css";
 
+:root {
   --color-bg: #fdfcfa;
   --color-bg-secondary: #f5f3ef;
   --color-bg-content: #fdfcfa;
@@ -50,14 +47,9 @@
 }
 
 html {
-  font-family: var(--font-sans);
-  font-size: 16px;
   color: var(--color-text);
   background: var(--color-bg);
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -80,65 +72,9 @@ img {
   display: block;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-}
-
 ::selection {
   background: rgba(246, 180, 14, 0.2);
   color: inherit;
-}
-
-/* ================================= */
-/* Multilingual font stacks          */
-/* ================================= */
-
-/* Chinese (Simplified) */
-:lang(zh) {
-  --font-sans: "Noto Sans SC", "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-serif: "Noto Serif SC", "Source Serif 4", "Songti SC", "SimSun", serif;
-  line-height: 1.8;
-  letter-spacing: 0.02em;
-}
-
-/* Japanese */
-:lang(ja) {
-  --font-sans: "Noto Sans JP", "Inter", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-  --font-serif: "Noto Serif JP", "Source Serif 4", "Hiragino Mincho ProN", "Yu Mincho", serif;
-  line-height: 1.8;
-  letter-spacing: 0.02em;
-}
-
-/* Korean */
-:lang(ko) {
-  --font-sans: "Noto Sans KR", "Inter", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  --font-serif: "Noto Serif KR", "Source Serif 4", "Batang", serif;
-  line-height: 1.8;
-  letter-spacing: 0.01em;
-}
-
-/* Hindi (Devanagari) */
-:lang(hi) {
-  --font-sans: "Noto Sans Devanagari", "Inter", "Mangal", sans-serif;
-  --font-serif: "Noto Serif Devanagari", "Source Serif 4", "Kokila", serif;
-  line-height: 1.7;
-}
-
-/* Cyrillic — explicit system fallbacks for Russian/Ukrainian */
-:lang(ru), :lang(uk) {
-  --font-sans: "Inter", "Segoe UI", "Roboto", "Arial", sans-serif;
-  --font-serif: "Source Serif 4", "Georgia", "Times New Roman", serif;
-}
-
-/* CJK: tighter headings spacing */
-:lang(zh) h1, :lang(zh) h2, :lang(zh) h3,
-:lang(ja) h1, :lang(ja) h2, :lang(ja) h3,
-:lang(ko) h1, :lang(ko) h2, :lang(ko) h3 {
-  letter-spacing: 0;
-  line-height: 1.4;
 }
 
 /* Accessibility: screen reader only utility */
@@ -232,7 +168,7 @@ button:focus:not(:focus-visible) {
 /* SHARED: Markets header */
 /* ====================== */
 .mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
-.mkts-title { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1.1; }
+.mkts-title { font-size: 2rem; font-weight: 700; line-height: 1.1; }
 .mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
 .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
 
@@ -253,7 +189,7 @@ button:focus:not(:focus-visible) {
 .info-section { margin-bottom: var(--spacing-2xl); }
 .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
 .info-card { padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
-.info-card h3 { font-family: var(--font-serif); font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.info-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
 .info-card p { font-size: 0.85rem; line-height: 1.6; color: var(--color-text-secondary); }
 .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
 
@@ -266,7 +202,7 @@ button:focus:not(:focus-visible) {
 /* ====================== */
 /* SHARED: Section title  */
 /* ====================== */
-.section-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; margin-bottom: var(--spacing-lg); }
+.section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: var(--spacing-lg); }
 
 @media (max-width: 640px) {
   .section-title { font-size: 1.1rem; }

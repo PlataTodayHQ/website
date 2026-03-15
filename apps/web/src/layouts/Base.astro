@@ -6,6 +6,7 @@ import BreakingNews from "@/components/BreakingNews.astro";
 import MarketTicker from "@/components/MarketTicker.astro";
 import { t } from "@/i18n";
 import { getBreakingNews } from "@/lib/db";
+import { BASE_FONT_URL, getScriptFontUrl } from "@/lib/fonts";
 
 interface BreadcrumbItem {
   name: string;
@@ -89,17 +90,7 @@ const ogLocale = OG_LOCALE[lang] ?? lang;
 
 const breakingArticle = getBreakingNews(lang);
 
-// Script-specific Google Fonts for non-Latin languages
-// Weights must match base fonts: Sans 400;500;600;700, Serif 400;600;700;800
-const SCRIPT_FONTS: Record<string, string> = {
-  zh: "Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;800",
-  ja: "Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;600;700;800",
-  ko: "Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;600;700;800",
-  hi: "Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700;800",
-};
-const scriptFontUrl = SCRIPT_FONTS[lang]
-  ? `https://fonts.googleapis.com/css2?family=${SCRIPT_FONTS[lang]}&display=swap`
-  : null;
+const scriptFontUrl = getScriptFontUrl(lang);
 
 const navItems = [
   { label: t(lang, "nav.home"), href: `/${lang}/` },
@@ -157,10 +148,10 @@ const allJsonLd = [
     <meta name="theme-color" content="#112e51" />
     <meta name="color-scheme" content="light dark" />
 
-    <!-- Web fonts: Libre Caslon Display (logo) + Source Serif 4 (headings) + Inter (UI) -->
+    <!-- Web fonts: loaded via fonts.ts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Caslon+Display&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet" />
+    <link href={BASE_FONT_URL} rel="stylesheet" />
     {scriptFontUrl && <link href={scriptFontUrl} rel="stylesheet" />}
 
     {!noindex && <link rel="canonical" href={resolvedCanonical} />}
@@ -1001,7 +992,6 @@ const allJsonLd = [
   }
 
   .utility-date {
-    font-family: var(--font-sans);
     font-size: 0.72rem;
     color: rgba(255, 255, 255, 0.7);
     letter-spacing: 0.02em;
@@ -1594,7 +1584,6 @@ const allJsonLd = [
   }
 
   .overlay-title {
-    font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 700;
     color: var(--color-text);
