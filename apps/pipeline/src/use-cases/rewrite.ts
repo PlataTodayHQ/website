@@ -6,7 +6,6 @@ import type { ILLMService } from "../ports/llm-service.js";
 import { runConcurrent } from "../concurrency.js";
 import { similarity } from "../domain/similarity.js";
 
-const MIN_WORD_COUNT = 30;
 
 // Languages requiring LLM validation after rewrite (non-Latin scripts)
 const VALIDATE_LANGS = new Set([
@@ -47,12 +46,6 @@ export async function rewriteEvent(
     try {
       const result = await llm.rewrite(article, lang, event.category);
 
-      const wordCount = result.body.split(/\s+/).filter(Boolean).length;
-      if (wordCount < MIN_WORD_COUNT) {
-        log.warn("Rewrite too short, skipping", { eventId: event.id, lang, wordCount });
-        return;
-      }
-
       // Validate non-Latin script rewrites
       let finalTitle = result.title;
       let finalBody = result.body;
@@ -92,7 +85,7 @@ export async function rewriteEvent(
         imageSource: esArticle.image_source,
         sourceNames: esArticle.source_names,
         sourceUrls: esArticle.source_urls,
-        wordCount,
+        wordCount: finalBody.length,
       });
       articlesCreated++;
       log.info("Rewrite created", { eventId: event.id, lang, slug: result.slug });
