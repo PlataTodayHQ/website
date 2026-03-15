@@ -117,6 +117,7 @@ export const sw = {
   "article.opensNewTab": "(inafungua kichupo kipya)",
   "article.photoCredit": "Picha",
   "article.updated": "Imesasishwa",
+  "article.byline": "Na",
 
   // Footer
   "footer.tagline": "Habari za Argentina, wazi kwa ulimwengu",

@@ -117,6 +117,7 @@ export const es = {
   "article.opensNewTab": "(se abre en una nueva pestaña)",
   "article.photoCredit": "Foto",
   "article.updated": "Actualizado",
+  "article.byline": "Por",
 
   // Footer
   "footer.tagline": "Las noticias de Argentina, abiertas al mundo",

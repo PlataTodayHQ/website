@@ -117,6 +117,7 @@ export const ca = {
   "article.opensNewTab": "(s'obre en una pestanya nova)",
   "article.photoCredit": "Foto",
   "article.updated": "Actualitzat",
+  "article.byline": "Per",
 
   // Footer
   "footer.tagline": "Les notícies de l'Argentina, obertes al món",

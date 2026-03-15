@@ -117,6 +117,7 @@ export const bn = {
   "article.opensNewTab": "(নতুন ট্যাবে খুলবে)",
   "article.photoCredit": "ছবি",
   "article.updated": "আপডেট করা হয়েছে",
+  "article.byline": "লেখক",
 
   // Footer
   "footer.tagline": "আর্জেন্টিনার সংবাদ, বিশ্বের দরজায়",

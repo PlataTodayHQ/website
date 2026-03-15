@@ -117,6 +117,7 @@ export const th = {
   "article.opensNewTab": "(เปิดในแท็บใหม่)",
   "article.photoCredit": "ภาพ",
   "article.updated": "อัปเดตแล้ว",
+  "article.byline": "โดย",
 
   // Footer
   "footer.tagline": "ข่าวอาร์เจนตินา เปิดกว้างสู่โลก",

@@ -117,6 +117,7 @@ export const de = {
   "article.opensNewTab": "(öffnet neuen Tab)",
   "article.photoCredit": "Foto",
   "article.updated": "Aktualisiert",
+  "article.byline": "Von",
 
   // Footer
   "footer.tagline": "Argentiniens Nachrichten, offen für die Welt",

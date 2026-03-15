@@ -117,6 +117,7 @@ export const ru = {
   "article.opensNewTab": "(откроется в новой вкладке)",
   "article.photoCredit": "Фото",
   "article.updated": "Обновлено",
+  "article.byline": "Автор",
 
   // Footer
   "footer.tagline": "Новости Аргентины, открытые миру",

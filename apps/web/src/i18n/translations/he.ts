@@ -117,6 +117,7 @@ export const he = {
   "article.opensNewTab": "(נפתח בלשונית חדשה)",
   "article.photoCredit": "צילום",
   "article.updated": "עודכן",
+  "article.byline": "מאת",
 
   // Footer
   "footer.tagline": "חדשות ארגנטינה, פתוחות לעולם",
