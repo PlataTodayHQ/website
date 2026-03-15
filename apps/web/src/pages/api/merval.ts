@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { fetchT } from "@plata-today/shared";
+import { getMerval, fetchT } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -67,6 +67,19 @@ export const OPTIONS: APIRoute = () =>
 
 export const GET: APIRoute = async () => {
   try {
+    // Serve from in-memory store (populated every 30s by background job)
+    const cached = getMerval();
+    if (cached) {
+      return new Response(JSON.stringify(cached), {
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "public, max-age=15",
+          ...CORS_HEADERS,
+        },
+      });
+    }
+
+    // Fallback: direct fetch if store is empty (cold start)
     let data: Record<string, unknown>;
     try {
       data = await fetchBYMA();
