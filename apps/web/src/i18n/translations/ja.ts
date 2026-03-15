@@ -71,9 +71,9 @@ export const ja = {
 
   // Welcome Hero
   "welcome.ariaLabel": "ようこそ",
-  "welcome.eyebrow": "18言語 · ひとつの使命",
+  "welcome.eyebrow": "35言語 · ひとつの使命",
   "welcome.headline": "アルゼンチン、世界に開かれて",
-  "welcome.sub": "毎日18言語でネイティブにニュースを執筆し、世界中の方々にアルゼンチンの今をお届けします。",
+  "welcome.sub": "毎日35言語でネイティブにニュースを執筆し、世界中の方々にアルゼンチンの今をお届けします。",
 
   // Newsletter
   "newsletter.title": "アルゼンチンとつながり続ける",
@@ -97,8 +97,8 @@ export const ja = {
   "home.politics": "政治",
   "home.title": "{lang}で読むアルゼンチンニュース",
   "home.heroFallbackTitle": "Plata Todayへようこそ",
-  "home.heroFallbackDesc": "アルゼンチンのニュースを18言語でネイティブにお届けします。",
-  "home.description": "今日のアルゼンチン主要ニュース（{lang}）：政治、経済、スポーツ、文化。24時間更新、18言語対応。",
+  "home.heroFallbackDesc": "アルゼンチンのニュースを35言語でネイティブにお届けします。",
+  "home.description": "今日のアルゼンチン主要ニュース（{lang}）：政治、経済、スポーツ、文化。24時間更新、35言語対応。",
   "home.topStories": "トップニュース",
   "home.economyBusiness": "経済・ビジネス",
   "home.cultureSociety": "文化・社会",
@@ -141,13 +141,13 @@ export const ja = {
 
   // About page
   "about.title": "Plataについて",
-  "about.description": "Plataはアルゼンチンのニュースを18言語で世界に届けます。創設者の紹介と編集部の仕組みをご覧ください。",
+  "about.description": "Plataはアルゼンチンのニュースを35言語で世界に届けます。創設者の紹介と編集部の仕組みをご覧ください。",
   "about.tagline": "アルゼンチンのニュース。すべての言語で。すべての情報源から。",
   "about.missionTitle": "私たちの使命",
   "about.missionText": "どんな言語を話す人でも、アルゼンチンで起きていることを知る権利があると私たちは考えています。Plataは13以上のアルゼンチンのニュースソースを監視し、重要なニュースを選別し、各言語でネイティブに記事を執筆します。国際的な読者に必要な文脈を添えてお届けします。",
   "about.valueNoOpinion": "情報源の透明性",
   "about.valueNoOpinionDesc": "すべての記事に情報源を明記しています。複数のメディアを照合し、事実の出所を明らかにします。",
-  "about.value18langs": "18言語対応",
+  "about.value18langs": "35言語対応",
   "about.value18langsDesc": "すべての記事は各言語の読者に向けてネイティブに執筆されます。翻訳ではなく、一から作成しています。",
   "about.valueFast": "厳選＆迅速",
   "about.valueFastDesc": "13以上のメディアを監視しているため、ご自身で追う必要はありません。30分ごとに新しい記事を公開。",
@@ -157,7 +157,7 @@ export const ja = {
   "about.step2Title": "重複排除",
   "about.step2Desc": "複数のメディアが同じ出来事を報じている場合、それらを特定・グループ化し、異なる視点を一つの記事にまとめます。",
   "about.step3Title": "再構成",
-  "about.step3Desc": "グループ化された情報源を統合し、一つの事実に基づく記事にまとめます。18の対応言語それぞれでネイティブに執筆されます。",
+  "about.step3Desc": "グループ化された情報源を統合し、一つの事実に基づく記事にまとめます。35の対応言語それぞれでネイティブに執筆されます。",
   "about.step4Title": "公開",
   "about.step4Desc": "記事はplata.todayに公開され、すべての情報源の帰属表示、構造化データ、リアルタイムの市場情報が付与されます。",
   "about.sourcesTitle": "情報源",
@@ -165,7 +165,7 @@ export const ja = {
   "about.founderTitle": "創設者",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "創設者・開発者",
-  "about.founderBio": "Bogdanは自身が直面した課題を解決するためにPlataを作りました。それは、スペイン語以外の言語でアルゼンチンの信頼できるニュースを見つけることの難しさです。開発者として、13以上のアルゼンチンのメディアを監視し、18言語でネイティブに記事を執筆する編集部を構築しました。",
+  "about.founderBio": "Bogdanは自身が直面した課題を解決するためにPlataを作りました。それは、スペイン語以外の言語でアルゼンチンの信頼できるニュースを見つけることの難しさです。開発者として、13以上のアルゼンチンのメディアを監視し、35言語でネイティブに記事を執筆する編集部を構築しました。",
   "about.disclaimerTitle": "免責事項",
   "about.disclaimerText": "記事はアルゼンチンの複数のニュースソースを統合して作成されています。正確性を追求していますが、重要な情報は必ず原典でご確認ください。参照元の出版物には常にクレジットを掲載しています。",
   "about.contactTitle": "お問い合わせ",
@@ -402,7 +402,7 @@ export const ja = {
   "notFound.description": "ページが見つかりません。Plata Todayで最新のアルゼンチンニュースをご覧ください。",
 
   // Common
-  "common.siteDescription": "アルゼンチンのニュースを18言語でネイティブにお届けします",
+  "common.siteDescription": "アルゼンチンのニュースを35言語でネイティブにお届けします",
   "common.breadcrumbHome": "ホーム",
 
   // Feed page
@@ -433,13 +433,13 @@ export const ja = {
   "standards.pageTitle": "編集方針 — Plata",
   "standards.description": "Plata編集部の仕組み：情報源の収集、事実確認、公開基準について。",
   "standards.updated": "最終更新：2026年3月14日",
-  "standards.lead": "Plataは、アルゼンチンのニュースを18言語で伝える多言語ニュースプラットフォームです。このページでは、情報源の収集から記事の公開まで、編集部の仕組みをご説明します。",
+  "standards.lead": "Plataは、アルゼンチンのニュースを35言語で伝える多言語ニュースプラットフォームです。このページでは、情報源の収集から記事の公開まで、編集部の仕組みをご説明します。",
   "standards.sourcingTitle": "情報源の収集",
   "standards.sourcingText": "アルゼンチンの13以上の報道機関を3段階に分けて監視しています。第1層はInfobae、Clarín、La Nación、Ámbito Financiero、El Cronista、iProfesionalなどの主要全国紙。第2層はPerfil、Cadena 3、Oléなどの独立系・専門メディア。第3層はLa Gaceta、Misiones Online、El Díaなどの地方メディアです。記事はRSSフィードを通じて30分ごとに収集されます。",
   "standards.verificationTitle": "事実確認",
   "standards.verificationText": "すべての記事は複数段階の審査を経ています。同じ出来事を扱う情報源はグループ化されます。各記事は元の情報源と照合して確認されます。いずれの情報源にも裏付けのない主張は指摘・削除されます。2度の検証に失敗した記事は公開されません。",
   "standards.languageTitle": "言語品質",
-  "standards.languageText": "記事は翻訳ではなく、各言語でネイティブに執筆されています。各言語版は、その言語の慣用表現、文体、敬語の使い方に従っています。対応言語は18言語：英語、ポルトガル語、ドイツ語、イタリア語、フランス語、ロシア語、中国語、ポーランド語、ウクライナ語、日本語、韓国語、スペイン語、スウェーデン語、デンマーク語、オランダ語、ノルウェー語、フィンランド語、ヒンディー語。",
+  "standards.languageText": "記事は翻訳ではなく、各言語でネイティブに執筆されています。各言語版は、その言語の慣用表現、文体、敬語の使い方に従っています。対応言語は35言語：アラビア語、ウクライナ語、ウルドゥー語、オランダ語、カタルーニャ語、ギリシャ語、スウェーデン語、スペイン語、スワヒリ語、タイ語、タガログ語、チェコ語、デンマーク語、トルコ語、ドイツ語、ノルウェー語、ヒンディー語、フィンランド語、フランス語、ヘブライ語、ベトナム語、ベンガル語、ペルシア語、ポーランド語、ポルトガル語、マレー語、ルーマニア語、ロシア語、英語、韓国語、中国語（簡体字）、中国語（繁体字）、日本語、イタリア語、インドネシア語。",
   "standards.attributionTitle": "情報源の明記",
   "standards.attributionText": "Plataのすべての記事には、情報の出典元が明記されています。各記事の末尾に情報源の名称が表示されます。読者が情報の出所を常に確認できることが重要だと考えています。",
   "standards.filteringTitle": "掲載しないコンテンツ",

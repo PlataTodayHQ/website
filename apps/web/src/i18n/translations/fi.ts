@@ -71,9 +71,9 @@ export const fi = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Tervetuloa",
-  "welcome.eyebrow": "18 kieltä · Yksi tehtävä",
+  "welcome.eyebrow": "35 kieltä · Yksi tehtävä",
   "welcome.headline": "Argentiina, avoin maailmalle",
-  "welcome.sub": "Kirjoitamme uutiset joka päivä äidinkielentasoisesti 18 kielellä — jotta koko maailma voi ymmärtää, mitä Argentiinassa tapahtuu.",
+  "welcome.sub": "Kirjoitamme uutiset joka päivä äidinkielentasoisesti 35 kielellä — jotta koko maailma voi ymmärtää, mitä Argentiinassa tapahtuu.",
 
   // Newsletter
   "newsletter.title": "Pysy yhteydessä Argentiinaan",
@@ -97,8 +97,8 @@ export const fi = {
   "home.politics": "Politiikka",
   "home.title": "Argentiinan uutiset kielellä {lang}",
   "home.heroFallbackTitle": "Tervetuloa Plata Todayhin",
-  "home.heroFallbackDesc": "Argentiinan uutiset kirjoitettuna suoraan 18 kielellä.",
-  "home.description": "Argentiinan tärkeimmät uutiset tänään kielellä {lang}: politiikka, talous, urheilu, kulttuuri. Päivittyy 24/7, 18 kieltä.",
+  "home.heroFallbackDesc": "Argentiinan uutiset kirjoitettuna suoraan 35 kielellä.",
+  "home.description": "Argentiinan tärkeimmät uutiset tänään kielellä {lang}: politiikka, talous, urheilu, kulttuuri. Päivittyy 24/7, 35 kieltä.",
   "home.topStories": "Pääuutiset",
   "home.economyBusiness": "Talous ja liiketoiminta",
   "home.cultureSociety": "Kulttuuri ja yhteiskunta",
@@ -141,13 +141,13 @@ export const fi = {
 
   // About page
   "about.title": "Tietoa Platasta",
-  "about.description": "Plata tuo Argentiinan uutiset maailmalle 18 kielellä. Tutustu perustajaan ja toimituksemme toimintatapoihin.",
+  "about.description": "Plata tuo Argentiinan uutiset maailmalle 35 kielellä. Tutustu perustajaan ja toimituksemme toimintatapoihin.",
   "about.tagline": "Argentiinan uutiset. Jokaisella kielellä. Jokaisesta lähteestä.",
   "about.missionTitle": "Tehtävämme",
   "about.missionText": "Uskomme, että jokaisella on oikeus tietää, mitä Argentiinassa tapahtuu — riippumatta kielestä. Plata seuraa yli 13:a argentiinalaista uutislähdettä, kokoaa olennaisimman ja kirjoittaa jokaisen jutun suoraan omalla kielelläsi — kansainvälisten lukijoiden tarvitsemalla kontekstilla.",
   "about.valueNoOpinion": "Lähdeläpinäkyvyys",
   "about.valueNoOpinionDesc": "Jokainen juttu mainitsee lähteensä. Ristiinvertaamme useita medioita, jotta näet, mistä faktat tulevat.",
-  "about.value18langs": "18 kieltä",
+  "about.value18langs": "35 kieltä",
   "about.value18langsDesc": "Jokainen artikkeli kirjoitetaan alusta alkaen kunkin kieliyleisön tarpeisiin — ei käännetä, vaan luodaan uudelleen.",
   "about.valueFast": "Kuratoitu ja nopea",
   "about.valueFastDesc": "Seuraamme yli 13:a mediaa puolestasi. Uusia juttuja julkaistaan 30 minuutin välein.",
@@ -157,7 +157,7 @@ export const fi = {
   "about.step2Title": "Yhdistämme",
   "about.step2Desc": "Kun useat mediat käsittelevät samaa tapahtumaa, tunnistamme ja ryhmittelemme ne yhteen yhdistäen eri näkökulmat yhdeksi uutiseksi.",
   "about.step3Title": "Kirjoitamme uudelleen",
-  "about.step3Desc": "Ryhmitellyt lähteet kootaan yhdeksi asiapohjaiseksi artikkeliksi — kirjoitettuna alusta asti kullakin 18 tuetulla kielellä.",
+  "about.step3Desc": "Ryhmitellyt lähteet kootaan yhdeksi asiapohjaiseksi artikkeliksi — kirjoitettuna alusta asti kullakin 35 tuetulla kielellä.",
   "about.step4Title": "Julkaisemme",
   "about.step4Desc": "Artikkelit julkaistaan sivustolla plata.today täydellisillä lähdeviittauksilla, rakenteisella datalla ja reaaliaikaisilla markkinatiedoilla.",
   "about.sourcesTitle": "Lähteemme",
@@ -165,7 +165,7 @@ export const fi = {
   "about.founderTitle": "Perustaja",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Luoja ja kehittäjä",
-  "about.founderBio": "Bogdan rakensi Platan ratkaistakseen ongelman, jonka kohtasi itse: luotettavien Argentiinan uutisten löytäminen muilla kielillä kuin espanjaksi. Kehittäjänä hän rakensi toimituksen, joka seuraa yli 13:a argentiinalaista mediaa ja kirjoittaa jokaisen jutun suoraan 18 kielellä.",
+  "about.founderBio": "Bogdan rakensi Platan ratkaistakseen ongelman, jonka kohtasi itse: luotettavien Argentiinan uutisten löytäminen muilla kielillä kuin espanjaksi. Kehittäjänä hän rakensi toimituksen, joka seuraa yli 13:a argentiinalaista mediaa ja kirjoittaa jokaisen jutun suoraan 35 kielellä.",
   "about.disclaimerTitle": "Vastuuvapauslauseke",
   "about.disclaimerText": "Artikkelit kootaan useista argentiinalaisista uutislähteistä. Vaikka pyrimme tarkkuuteen, tarkista tärkeät tiedot aina alkuperäisistä lähteistä. Mainitsemme aina julkaisut, joihin artikkelimme perustuvat.",
   "about.contactTitle": "Yhteystiedot",
@@ -402,7 +402,7 @@ export const fi = {
   "notFound.description": "Sivua ei löytynyt. Selaa viimeisimmät Argentiinan uutiset Plata Todayssa.",
 
   // Common
-  "common.siteDescription": "Argentiinan uutiset kirjoitettuna suoraan 18 kielellä.",
+  "common.siteDescription": "Argentiinan uutiset kirjoitettuna suoraan 35 kielellä.",
   "common.breadcrumbHome": "Etusivu",
 
   // Feed page
@@ -433,13 +433,13 @@ export const fi = {
   "standards.pageTitle": "Toimitukselliset periaatteet — Plata",
   "standards.description": "Näin Platan toimitus työskentelee: lähteiden käyttö, tarkistus ja julkaisuperiaatteet.",
   "standards.updated": "Päivitetty viimeksi: 14. maaliskuuta 2026",
-  "standards.lead": "Plata on monikielinen uutisalusta, joka kattaa Argentiinan 18 kielellä. Tällä sivulla kerromme, miten toimituksemme toimii — lähteistä julkaisuun.",
+  "standards.lead": "Plata on monikielinen uutisalusta, joka kattaa Argentiinan 35 kielellä. Tällä sivulla kerromme, miten toimituksemme toimii — lähteistä julkaisuun.",
   "standards.sourcingTitle": "Lähteiden käyttö",
   "standards.sourcingText": "Seuraamme yli 13:a argentiinalaista uutismediaa kolmella tasolla. Taso 1 kattaa suuret valtakunnalliset mediat, kuten Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista ja iProfesional. Taso 2 sisältää riippumattomat ja erikoistuneet lähteet, kuten Perfil, Cadena 3 ja Olé. Taso 3 kattaa alueelliset mediat, kuten La Gaceta, Misiones Online ja El Día. Artikkelit kerätään RSS-syötteiden kautta 30 minuutin välein.",
   "standards.verificationTitle": "Tarkistus",
   "standards.verificationText": "Jokainen juttu käy läpi monivaiheisen tarkistusprosessin. Samaa tapahtumaa käsittelevät lähteet ryhmitellään yhteen. Jokainen artikkeli tarkistetaan alkuperäislähteitä vasten. Väitteet, joita mikään lähde ei tue, merkitään ja poistetaan. Jutut, jotka eivät läpäise tarkistusta kahdesti, jätetään julkaisematta.",
   "standards.languageTitle": "Kielenlaatu",
-  "standards.languageText": "Artikkelit kirjoitetaan alusta alkaen kullekin kielelle — niitä ei käännetä. Jokainen versio noudattaa kyseisen kielen käytäntöjä, ilmaisutapoja ja puhuttelunormeja. Tuemme 18 kieltä: englanti, portugali, saksa, italia, ranska, venäjä, kiina, puola, ukraina, japani, korea, espanja, ruotsi, tanska, hollanti, norja, suomi ja hindi.",
+  "standards.languageText": "Artikkelit kirjoitetaan alusta alkaen kullekin kielelle — niitä ei käännetä. Jokainen versio noudattaa kyseisen kielen käytäntöjä, ilmaisutapoja ja puhuttelunormeja. Tuemme 35 kieltä: arabia, bengali, englanti, espanja, hollanti, heprea, hindi, indonesia, italia, japani, katalaani, kiina (perinteinen), kiina (yksinkertaistettu), korea, kreikka, malaiji, norja, persia, portugali, puola, ranska, romania, ruotsi, saksa, suomi, swahili, tagalog, tanska, thai, tšekki, turkki, ukraina, urdu, venäjä ja vietnam.",
   "standards.attributionTitle": "Lähdeviittaukset",
   "standards.attributionText": "Jokainen Platan artikkeli mainitsee mediat, joihin se perustuu. Lähteiden nimet näkyvät kunkin artikkelin lopussa. Uskomme, että lukijoiden tulee aina tietää, mistä tieto on peräisin.",
   "standards.filteringTitle": "Mitä emme julkaise",

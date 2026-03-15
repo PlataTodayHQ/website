@@ -71,9 +71,9 @@ export const pl = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Witamy",
-  "welcome.eyebrow": "18 języków · Jedna misja",
+  "welcome.eyebrow": "35 języków · Jedna misja",
   "welcome.headline": "Argentyna, otwarta na świat",
-  "welcome.sub": "Każdego dnia piszemy wiadomości natywnie w 18 językach — aby cały świat mógł zrozumieć, co dzieje się w Argentynie.",
+  "welcome.sub": "Każdego dnia piszemy wiadomości natywnie w 35 językach — aby cały świat mógł zrozumieć, co dzieje się w Argentynie.",
 
   // Newsletter
   "newsletter.title": "Bądź na bieżąco z Argentyną",
@@ -97,8 +97,8 @@ export const pl = {
   "home.politics": "Polityka",
   "home.title": "Wiadomości z Argentyny po {lang}",
   "home.heroFallbackTitle": "Witamy w Plata Today",
-  "home.heroFallbackDesc": "Wiadomości z Argentyny pisane natywnie w 18 językach.",
-  "home.description": "Najważniejsze wiadomości z Argentyny dziś po {lang}: polityka, gospodarka, sport, kultura. Aktualizacja 24/7, 18 języków.",
+  "home.heroFallbackDesc": "Wiadomości z Argentyny pisane natywnie w 35 językach.",
+  "home.description": "Najważniejsze wiadomości z Argentyny dziś po {lang}: polityka, gospodarka, sport, kultura. Aktualizacja 24/7, 35 języków.",
   "home.topStories": "Najważniejsze wiadomości",
   "home.economyBusiness": "Gospodarka i biznes",
   "home.cultureSociety": "Kultura i społeczeństwo",
@@ -141,13 +141,13 @@ export const pl = {
 
   // About page
   "about.title": "O Plata",
-  "about.description": "Plata dostarcza wiadomości z Argentyny w 18 językach. Poznaj założyciela i dowiedz się, jak działa nasza redakcja.",
+  "about.description": "Plata dostarcza wiadomości z Argentyny w 35 językach. Poznaj założyciela i dowiedz się, jak działa nasza redakcja.",
   "about.tagline": "Wiadomości z Argentyny. Każdy język. Każde źródło.",
   "about.missionTitle": "Nasza misja",
   "about.missionText": "Wierzymy, że każdy zasługuje na dostęp do informacji o tym, co dzieje się w Argentynie, niezależnie od języka, którym się posługuje. Plata monitoruje ponad 13 argentyńskich źródeł informacyjnych, wybiera to, co najważniejsze, i pisze każdą relację natywnie w Twoim języku — z kontekstem, którego potrzebują czytelnicy z zagranicy.",
   "about.valueNoOpinion": "Przejrzystość źródeł",
   "about.valueNoOpinionDesc": "Każda relacja podaje swoje źródła. Porównujemy wiele redakcji, dzięki czemu widzisz, skąd pochodzą fakty.",
-  "about.value18langs": "18 języków",
+  "about.value18langs": "35 języków",
   "about.value18langsDesc": "Każdy artykuł jest pisany natywnie dla odbiorców danego języka — nie tłumaczony, lecz tworzony od podstaw.",
   "about.valueFast": "Na bieżąco i szybko",
   "about.valueFastDesc": "Monitorujemy ponad 13 redakcji, żebyś nie musiał tego robić. Nowe artykuły co 30 minut.",
@@ -157,7 +157,7 @@ export const pl = {
   "about.step2Title": "Deduplikacja",
   "about.step2Desc": "Gdy wiele redakcji relacjonuje to samo wydarzenie, identyfikujemy je i grupujemy, łącząc różne perspektywy w jedną relację.",
   "about.step3Title": "Przeredagowanie",
-  "about.step3Desc": "Zgrupowane źródła są syntetyzowane w jeden, oparty na faktach artykuł — napisany natywnie w każdym z 18 obsługiwanych języków.",
+  "about.step3Desc": "Zgrupowane źródła są syntetyzowane w jeden, oparty na faktach artykuł — napisany natywnie w każdym z 35 obsługiwanych języków.",
   "about.step4Title": "Publikacja",
   "about.step4Desc": "Artykuły publikowane są na plata.today z pełnym oznaczeniem źródeł, danymi strukturalnymi i bieżącymi informacjami rynkowymi.",
   "about.sourcesTitle": "Nasze źródła",
@@ -165,7 +165,7 @@ export const pl = {
   "about.founderTitle": "Założyciel",
   "about.founderName": "Bogdan Filippov",
   "about.founderRole": "Twórca i programista",
-  "about.founderBio": "Bogdan stworzył Plata, aby rozwiązać problem, z którym sam się zetknął: znalezienie rzetelnych wiadomości o Argentynie w językach innych niż hiszpański. Jako programista zbudował redakcję, która monitoruje ponad 13 argentyńskich mediów i pisze każdą relację natywnie w 18 językach.",
+  "about.founderBio": "Bogdan stworzył Plata, aby rozwiązać problem, z którym sam się zetknął: znalezienie rzetelnych wiadomości o Argentynie w językach innych niż hiszpański. Jako programista zbudował redakcję, która monitoruje ponad 13 argentyńskich mediów i pisze każdą relację natywnie w 35 językach.",
   "about.disclaimerTitle": "Zastrzeżenie",
   "about.disclaimerText": "Artykuły powstają na podstawie wielu argentyńskich źródeł informacyjnych. Choć dążymy do dokładności, prosimy o weryfikowanie ważnych informacji z oryginalnymi materiałami źródłowymi. Zawsze podajemy publikacje, z których korzystamy.",
   "about.contactTitle": "Kontakt",
@@ -402,7 +402,7 @@ export const pl = {
   "notFound.description": "Strona nie znaleziona. Przeglądaj najnowsze wiadomości z Argentyny na Plata Today.",
 
   // Common
-  "common.siteDescription": "Wiadomości z Argentyny pisane natywnie w 18 językach.",
+  "common.siteDescription": "Wiadomości z Argentyny pisane natywnie w 35 językach.",
   "common.breadcrumbHome": "Strona główna",
 
   // Feed page
@@ -433,13 +433,13 @@ export const pl = {
   "standards.pageTitle": "Standardy redakcyjne — Plata",
   "standards.description": "Jak działa redakcja Plata: pozyskiwanie źródeł, weryfikacja i standardy publikacji.",
   "standards.updated": "Ostatnia aktualizacja: 14 marca 2026",
-  "standards.lead": "Plata to wielojęzyczna platforma informacyjna relacjonująca wydarzenia w Argentynie w 18 językach. Na tej stronie wyjaśniamy, jak działa nasza redakcja — od pozyskiwania źródeł po publikację.",
+  "standards.lead": "Plata to wielojęzyczna platforma informacyjna relacjonująca wydarzenia w Argentynie w 35 językach. Na tej stronie wyjaśniamy, jak działa nasza redakcja — od pozyskiwania źródeł po publikację.",
   "standards.sourcingTitle": "Źródła",
   "standards.sourcingText": "Monitorujemy ponad 13 argentyńskich redakcji w trzech kategoriach. Kategoria 1 obejmuje główne media ogólnokrajowe, takie jak Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista i iProfesional. Kategoria 2 to niezależne i wyspecjalizowane źródła, m.in. Perfil, Cadena 3 i Olé. Kategoria 3 obejmuje media regionalne, takie jak La Gaceta, Misiones Online i El Día. Artykuły są pobierane przez kanały RSS co 30 minut.",
   "standards.verificationTitle": "Weryfikacja",
   "standards.verificationText": "Każdy materiał przechodzi wieloetapowy proces weryfikacji. Źródła opisujące to samo wydarzenie są grupowane razem. Każdy artykuł jest sprawdzany pod kątem zgodności z oryginalnymi źródłami. Twierdzenia niepoparte żadnym źródłem są oznaczane i usuwane. Materiały, które dwukrotnie nie przejdą weryfikacji, nie są publikowane.",
   "standards.languageTitle": "Jakość językowa",
-  "standards.languageText": "Artykuły są pisane natywnie w każdym języku — nie są tłumaczone. Każda wersja językowa zachowuje konwencje, idiomy i normy zwracania się do czytelnika właściwe dla danego języka. Obsługujemy 18 języków: angielski, portugalski, niemiecki, włoski, francuski, rosyjski, chiński, polski, ukraiński, japoński, koreański, hiszpański, szwedzki, duński, niderlandzki, norweski, fiński i hindi.",
+  "standards.languageText": "Artykuły są pisane natywnie w każdym języku — nie są tłumaczone. Każda wersja językowa zachowuje konwencje, idiomy i normy zwracania się do czytelnika właściwe dla danego języka. Obsługujemy 35 języków: angielski, arabski, bengalski, chiński (tradycyjny), chiński (uproszczony), czeski, duński, filipiński (tagalog), fiński, francuski, grecki, hebrajski, hindi, indonezyjski, japoński, kataloński, koreański, malajski, niderlandzki, niemiecki, norweski, perski, polski, portugalski, rosyjski, rumuński, suahili, szwedzki, tajski, turecki, ukraiński, urdu, wietnamski, włoski i hiszpański.",
   "standards.attributionTitle": "Oznaczanie źródeł",
   "standards.attributionText": "Każdy artykuł na Plata podaje redakcje, z których czerpano informacje. Nazwy źródeł znajdują się na dole każdego artykułu. Wierzymy, że czytelnik zawsze powinien wiedzieć, skąd pochodzą informacje.",
   "standards.filteringTitle": "Czego nie publikujemy",
