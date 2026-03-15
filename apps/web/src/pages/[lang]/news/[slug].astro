@@ -16,7 +16,9 @@ import {
   timeAgo,
   readingTime,
   parseSourceNames,
+  parseSourceUrls,
 } from "@/lib/db";
+import { getSourceMeta, getFaviconUrl } from "@/lib/sources";
 
 export const prerender = false;
 
@@ -54,6 +56,18 @@ const alternateUrls = Object.fromEntries(
 
 const catLabel = t(lang, `cat.${row.category}` as any) || CATEGORIES[row.category as Category] || row.category;
 const sourceNames = parseSourceNames(row.source_names);
+const sourceUrls = parseSourceUrls(row.source_urls);
+
+// Build enriched source data with metadata
+const sources = sourceNames.map((name, i) => {
+  const meta = getSourceMeta(name);
+  return {
+    name,
+    url: sourceUrls[i] || (meta ? `https://${meta.domain}` : undefined),
+    favicon: meta ? getFaviconUrl(meta.domain) : undefined,
+    color: meta?.color ?? "var(--color-text-meta)",
+  };
+});
 
 const wordCount = row.word_count || row.body.split(/\s+/).length;
 const computedReadingTime = readingTime(wordCount, lang);
@@ -209,12 +223,33 @@ try {
     <div class="article-body" itemprop="articleBody" set:html={bodyHtml} />
 
     <!-- Sources -->
-    {sourceNames.length > 0 && (
+    {sources.length > 0 && (
       <footer class="article-sources">
         <h2>{t(lang, "article.sources")}</h2>
         <ul>
-          {sourceNames.map((name) => (
-            <li>{name}</li>
+          {sources.map((src) => (
+            <li>
+              {src.url ? (
+                <a href={src.url} target="_blank" rel="noopener noreferrer" class="source-chip">
+                  {src.favicon && (
+                    <img
+                      src={src.favicon}
+                      alt=""
+                      class="source-favicon"
+                      width="16"
+                      height="16"
+                      loading="lazy"
+                    />
+                  )}
+                  <span class="source-name">{src.name}</span>
+                  <svg class="source-external" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              ) : (
+                <span class="source-chip source-chip--plain">
+                  <span class="source-name">{src.name}</span>
+                </span>
+              )}
+            </li>
           ))}
         </ul>
       </footer>
@@ -511,19 +546,57 @@ try {
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--color-text-meta);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
   }
 
   .article-sources ul {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-md);
+    gap: 10px;
   }
 
-  .article-sources li {
-    font-size: 0.9rem;
+  .source-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    font-size: 0.85rem;
     color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  }
+
+  a.source-chip:hover {
+    border-color: var(--color-celeste);
+    background: var(--color-bg);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    color: var(--color-text);
+  }
+
+  .source-favicon {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .source-name {
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .source-external {
+    opacity: 0.35;
+    flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+
+  a.source-chip:hover .source-external {
+    opacity: 0.7;
   }
 
   /* Related Articles */
