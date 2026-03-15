@@ -17,24 +17,35 @@ export const GET: APIRoute = ({ url }) => {
     });
   }
 
-  const { articles, hasMore } = getArticlesFeed(lang, offset, limit, category);
+  try {
+    const { articles, hasMore } = getArticlesFeed(lang, offset, limit, category);
 
-  const mapped = articles.map((a) => ({
-    title: a.title,
-    slug: a.slug,
-    href: `/${lang}/news/${a.slug}`,
-    description: a.meta_description ?? "",
-    imageUrl: a.image_url || "",
-    category: a.category,
-    timeAgo: timeAgo(a.published_at, lang),
-    readingTime: readingTime(a.word_count, lang),
-    publishedAt: a.published_at,
-  }));
+    const mapped = articles.map((a) => ({
+      title: a.title,
+      slug: a.slug,
+      href: `/${lang}/news/${a.slug}`,
+      description: a.meta_description ?? "",
+      imageUrl: a.image_url || "",
+      category: a.category,
+      timeAgo: timeAgo(a.published_at, lang),
+      readingTime: readingTime(a.word_count, lang),
+      publishedAt: a.published_at,
+    }));
 
-  return new Response(JSON.stringify({ articles: mapped, hasMore }), {
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=60",
-    },
-  });
+    return new Response(JSON.stringify({ articles: mapped, hasMore }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "public, max-age=60",
+      },
+    });
+  } catch (err: any) {
+    console.error("[feed] DB error:", err);
+    return new Response(
+      JSON.stringify({ error: "Failed to fetch articles" }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  }
 };

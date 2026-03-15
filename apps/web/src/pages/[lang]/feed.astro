@@ -60,7 +60,7 @@ const categoryTabs = [
     }
   }}
 >
-  <div class="feed-page" data-lang={lang} data-limit={LIMIT}>
+  <div class="feed-page" data-lang={lang} data-limit={LIMIT} data-no-more={t(lang!, "feed.noMore" as any)}>
     <h1 class="feed-heading">{t(lang!, "feed.title" as any)}</h1>
 
     <!-- Category filter tabs -->
@@ -198,6 +198,7 @@ const categoryTabs = [
       })
       .catch(function() {
         loading = false;
+        status.innerHTML = '<p class="feed-end" style="color:#dc2626;">Error loading articles. Please try again.</p>';
       });
   }
 

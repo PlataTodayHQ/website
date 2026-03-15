@@ -99,7 +99,7 @@ const bodyHtml = String(
 let relatedArticles: Array<{title: string; href: string; imageUrl: string; timeAgo: string; category: string; categoryKey: string; readingTime: string}> = [];
 try {
   relatedArticles = getArticlesByLang(lang, 20)
-    .filter((a) => a.slug !== slug)
+    .filter((a) => a.slug !== slug && a.category === row.category)
     .slice(0, 3)
     .map((a) => ({
       title: a.title,

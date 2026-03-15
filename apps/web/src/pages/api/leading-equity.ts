@@ -12,6 +12,9 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
+export const OPTIONS: APIRoute = () =>
+  new Response(null, { status: 204, headers: CORS_HEADERS });
+
 export const GET: APIRoute = async () => {
   try {
     const res = await fetchT(BYMA_URL, {

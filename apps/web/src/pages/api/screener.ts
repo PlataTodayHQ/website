@@ -123,6 +123,9 @@ async function fetchByma(): Promise<any[]> {
   return json.data;
 }
 
+export const OPTIONS: APIRoute = () =>
+  new Response(null, { status: 204, headers: CORS_HEADERS });
+
 export const GET: APIRoute = async () => {
   try {
     // Try DB first
