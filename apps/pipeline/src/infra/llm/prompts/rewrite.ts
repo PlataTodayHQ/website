@@ -39,6 +39,21 @@ Category: ${category}`;
 
 function getLanguageGuidance(langCode: string): string {
   switch (langCode) {
+    case "en":
+      return `
+## English-specific guidelines
+- Use clear, direct prose in the style of Reuters or The Guardian.
+- Follow AP style for numbers, dates, and abbreviations.
+- Use active voice predominantly.
+- Spell out Argentine institutions on first mention with context: "BCRA (Argentina's central bank)".
+- Use U.S. English spelling conventions (unless targeting UK audience).`;
+    case "it":
+      return `
+## Italian-specific guidelines
+- Use formal register as in ANSA or Corriere della Sera reporting.
+- Follow Italian press conventions for number formatting: periods as thousands separators, commas for decimals.
+- Contextualize Argentine institutions with Italian equivalents where helpful (e.g., "la banca centrale argentina, equivalente della Banca d'Italia").
+- Use proper Italian punctuation: guillemets «» for quotes.`;
     case "de":
       return `
 ## German-specific guidelines

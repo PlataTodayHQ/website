@@ -32,9 +32,9 @@ export async function reviewEvent(
   const result = await llm.review(draft, sources);
 
   if (result.approved) {
-    const title = result.corrected_title || esArticle.title;
-    const body = result.corrected_body || esArticle.body;
-    const meta = result.corrected_meta_description || esArticle.meta_description;
+    const title = result.corrected_title?.trim() || esArticle.title;
+    const body = result.corrected_body?.trim() || esArticle.body;
+    const meta = result.corrected_meta_description?.trim() || esArticle.meta_description;
 
     if (title !== esArticle.title || body !== esArticle.body || meta !== esArticle.meta_description) {
       articleRepo.update(esArticle.id, title, body, meta);

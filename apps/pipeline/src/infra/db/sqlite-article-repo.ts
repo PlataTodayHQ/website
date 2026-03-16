@@ -12,7 +12,7 @@ export class SQLiteArticleRepository implements IArticleRepository {
   constructor(db: Database.Database) {
     this.db = db;
     this.insertStmt = db.prepare(`
-      INSERT OR IGNORE INTO articles
+      INSERT OR REPLACE INTO articles
         (event_id, lang, slug, title, body, meta_description, image_url, image_source,
          source_names, source_urls, word_count)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
