@@ -139,7 +139,7 @@ function buildSitemapIndex(langs: string[]): string {
   const now = new Date().toISOString().slice(0, 10);
   const entries = langs.map(
     (lang) =>
-      `  <sitemap>\n    <loc>${SITE}/sitemap-${lang}.xml</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>`,
+      `  <sitemap>\n    <loc>${SITE}/${lang}/sitemap.xml</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>`,
   );
   // Google News sitemap
   entries.push(`  <sitemap>\n    <loc>${SITE}/news-sitemap.xml</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>`);
@@ -187,7 +187,9 @@ export async function generateSitemaps(db: Database.Database, distDir: string): 
     for (const lang of LANG_CODES) {
       const articles = byLang.get(lang) ?? [];
       const xml = buildLangSitemap(lang, articles, articleLangSlugs);
-      fs.writeFileSync(path.join(distDir, `sitemap-${lang}.xml`), xml, "utf-8");
+      const langDir = path.join(distDir, lang);
+      if (!fs.existsSync(langDir)) fs.mkdirSync(langDir, { recursive: true });
+      fs.writeFileSync(path.join(langDir, "sitemap.xml"), xml, "utf-8");
     }
 
     // Generate Google News sitemap

@@ -173,7 +173,7 @@ const allJsonLd = [
     )}
 
     {!noindex && <link rel="canonical" href={resolvedCanonical} />}
-    <link rel="alternate" type="application/rss+xml" title="Plata News" href={`${siteUrl}/rss.xml?lang=${lang}`} />
+    <link rel="alternate" type="application/rss+xml" title="Plata News" href={`${siteUrl}/${lang}/rss`} />
 
     {!noindex && Object.entries(resolvedAlternates).map(([hrefLang, url]) => (
       <link rel="alternate" hreflang={hrefLang} href={url} />
