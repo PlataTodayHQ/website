@@ -77,7 +77,7 @@ export async function fetchStockProfiles(db: Database.Database): Promise<void> {
     try {
       const yahooSymbol = toYahooSymbol(symbol);
 
-      const modules = "assetProfile,summaryDetail,defaultKeyStatistics,financialData,earnings,price";
+      const modules = "assetProfile,summaryDetail,defaultKeyStatistics,financialData,earnings,price,recommendationTrend";
       const yahooUrl = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(yahooSymbol)}?modules=${modules}&crumb=${encodeURIComponent(crumb)}`;
 
       const res = await fetchT(yahooUrl, {
@@ -120,6 +120,7 @@ function saveProfile(
   const financial = result.financialData ?? {};
   const price = result.price ?? {};
   const earnings = result.earnings ?? {};
+  const recTrend = result.recommendationTrend?.trend?.[0] ?? {};
 
   // Upsert company info
   db.prepare(
@@ -165,7 +166,8 @@ function saveProfile(
       current_ratio, quick_ratio, return_on_assets, return_on_equity,
       free_cashflow, operating_cashflow, earnings_growth, current_price,
       target_high_price, target_low_price, target_mean_price,
-      number_of_analyst_opinions, recommendation_key, recommendation_mean
+      number_of_analyst_opinions, recommendation_key, recommendation_mean,
+      rating_strong_buy, rating_buy, rating_hold, rating_sell, rating_strong_sell
     ) VALUES (
       ?,
       ?, ?, ?, ?, ?,
@@ -183,7 +185,8 @@ function saveProfile(
       ?, ?, ?, ?,
       ?, ?, ?, ?,
       ?, ?, ?,
-      ?, ?, ?
+      ?, ?, ?,
+      ?, ?, ?, ?, ?
     )`,
   ).run(
     symbol,
@@ -217,6 +220,8 @@ function saveProfile(
     numVal(financial.targetHighPrice), numVal(financial.targetLowPrice), numVal(financial.targetMeanPrice),
     numVal(financial.numberOfAnalystOpinions),
     financial.recommendationKey || null, numVal(financial.recommendationMean),
+    numVal(recTrend.strongBuy), numVal(recTrend.buy), numVal(recTrend.hold),
+    numVal(recTrend.sell), numVal(recTrend.strongSell),
   );
 
   // Upsert quarterly earnings

@@ -40,7 +40,7 @@ function getDbCandles(symbol: string, interval: string, range: string) {
 
 export const GET: APIRoute = async ({ params, url }) => {
   try {
-    const rawSymbol = params.symbol ?? "";
+    const rawSymbol = decodeURIComponent(params.symbol ?? "");
 
     if (!rawSymbol) {
       return errorResponse("Missing symbol parameter", 400);

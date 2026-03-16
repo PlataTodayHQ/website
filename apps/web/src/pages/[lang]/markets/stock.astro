@@ -57,6 +57,44 @@ const stockI18n = {
   estimateLabel: t(lang, "stock.estimateLabel"),
   beat: t(lang, "stock.beat"),
   miss: t(lang, "stock.miss"),
+  volume: t(lang, "stock.volume"),
+  dayRange: t(lang, "stock.dayRange"),
+  nearLow: t(lang, "stock.nearLow"),
+  midRange: t(lang, "stock.midRange"),
+  nearHigh: t(lang, "stock.nearHigh"),
+  nearAth: t(lang, "stock.nearAth"),
+  fromLow: t(lang, "stock.fromLow"),
+  fromHigh: t(lang, "stock.fromHigh"),
+  grossMargin: t(lang, "stock.grossMargin"),
+  ebitdaMargin: t(lang, "stock.ebitdaMargin"),
+  opMargin: t(lang, "stock.opMargin"),
+  profitMargin: t(lang, "stock.profitMargin"),
+  maSignal: t(lang, "stock.maSignal" as any),
+  bullish: t(lang, "stock.bullish" as any),
+  bearish: t(lang, "stock.bearish" as any),
+  neutral: t(lang, "stock.neutral" as any),
+  above: t(lang, "stock.above" as any),
+  below: t(lang, "stock.below" as any),
+  goldenCross: t(lang, "stock.goldenCross" as any),
+  deathCross: t(lang, "stock.deathCross" as any),
+  divYieldLabel: t(lang, "stock.divYield"),
+  grahamTitle: t(lang, "stock.grahamTitle" as any),
+  grahamVerdict: t(lang, "stock.grahamVerdict" as any),
+  grahamPass: t(lang, "stock.grahamPass" as any),
+  grahamFail: t(lang, "stock.grahamFail" as any),
+  grahamNA: t(lang, "stock.grahamNA" as any),
+  grahamAdequateSize: t(lang, "stock.grahamAdequateSize" as any),
+  grahamStrongFinances: t(lang, "stock.grahamStrongFinances" as any),
+  grahamEarningsStability: t(lang, "stock.grahamEarningsStability" as any),
+  grahamDividendRecord: t(lang, "stock.grahamDividendRecord" as any),
+  grahamModerateGrowth: t(lang, "stock.grahamModerateGrowth" as any),
+  grahamModeratePE: t(lang, "stock.grahamModeratePE" as any),
+  grahamModeratePB: t(lang, "stock.grahamModeratePB" as any),
+  grahamNumber: t(lang, "stock.grahamNumber" as any),
+  grahamMarginSafety: t(lang, "stock.grahamMarginSafety" as any),
+  undervalued: t(lang, "stock.undervalued" as any),
+  fairlyValued: t(lang, "stock.fairlyValued" as any),
+  overvalued: t(lang, "stock.overvalued" as any),
 };
 ---
 
@@ -102,6 +140,7 @@ const stockI18n = {
             <span class="rc-badge rc-badge--merval">BYMA</span>
           </div>
           <p class="mkts-subtitle" data-stock-name>{t(lang!, "common.loading")}</p>
+          <div class="stock-badges" data-stock-badges style="display:none;"></div>
         </div>
         <p class="mkts-updated" data-mkts-updated>{t(lang!, "common.loading")}</p>
       </header>
@@ -112,6 +151,20 @@ const stockI18n = {
           <span class="pc-price" data-stock-price>&mdash;</span>
           <span class="pc-change" data-stock-change></span>
           <span class="pc-currency" data-stock-currency>ARS</span>
+        </div>
+        <!-- Today's Range -->
+        <div class="pc-range" data-pc-range style="display:none;">
+          <div class="pc-range-head">
+            <span class="pc-range-label">{t(lang, "stock.dayRange")}</span>
+          </div>
+          <div class="pc-range-bar">
+            <span class="pc-range-lo" data-pc-range-lo></span>
+            <div class="pc-range-track">
+              <div class="pc-range-fill" data-pc-range-fill></div>
+              <div class="pc-range-dot" data-pc-range-dot></div>
+            </div>
+            <span class="pc-range-hi" data-pc-range-hi></span>
+          </div>
         </div>
         <div class="pc-stats">
           <div class="pc-stat">
@@ -130,8 +183,15 @@ const stockI18n = {
             <span class="pc-sk">{t(lang, "stock.prevClose")}</span>
             <span class="pc-sv" data-stock-prev>&mdash;</span>
           </div>
+          <div class="pc-stat">
+            <span class="pc-sk">{t(lang, "stock.volume")}</span>
+            <span class="pc-sv" data-stock-volume>&mdash;</span>
+          </div>
         </div>
       </div>
+
+      <!-- Section Navigation -->
+      <nav class="section-nav" data-section-nav style="display:none;"></nav>
 
       <!-- Company Overview Hero -->
       <section class="company-hero" data-company-hero style="display:none;">
@@ -169,6 +229,35 @@ const stockI18n = {
         <p class="ch-summary" data-ch-summary></p>
       </section>
 
+      <!-- Quick Facts Strip -->
+      <div class="qf-strip" data-qf-strip style="display:none;">
+        <div class="qf-item" data-qf-pe style="display:none;">
+          <span class="qf-label">{t(lang, "stock.trailingPE")}</span>
+          <span class="qf-val" data-qf-pe-v></span>
+        </div>
+        <div class="qf-item" data-qf-eps style="display:none;">
+          <span class="qf-label">{t(lang, "stock.epsTTM")}</span>
+          <span class="qf-val" data-qf-eps-v></span>
+        </div>
+        <div class="qf-item" data-qf-divy style="display:none;">
+          <span class="qf-label">{t(lang, "stock.divYield")}</span>
+          <span class="qf-val" data-qf-divy-v></span>
+        </div>
+        <div class="qf-item" data-qf-beta style="display:none;">
+          <span class="qf-label">{t(lang, "stock.beta")}</span>
+          <span class="qf-val" data-qf-beta-v></span>
+        </div>
+        <div class="qf-item" data-qf-roe style="display:none;">
+          <span class="qf-label">{t(lang, "stock.roe")}</span>
+          <span class="qf-val" data-qf-roe-v></span>
+        </div>
+      </div>
+
+      <!-- Key Insights -->
+      <div class="key-insights" data-insights style="display:none;">
+        <ul class="ki-list" data-insights-list></ul>
+      </div>
+
       <!-- Chart with Range Selector -->
       <section class="chart-section">
         <div class="chart-header">
@@ -184,12 +273,16 @@ const stockI18n = {
         <div class="chart-wrap">
           <canvas data-stock-chart height="280"></canvas>
         </div>
+        <div class="vol-chart-wrap">
+          <canvas data-vol-chart height="60"></canvas>
+        </div>
       </section>
 
       <!-- 52-Week Price Range Bar -->
       <section class="range52-section" data-range52 style="display:none;">
         <h2 class="section-title">{t(lang, "stock.priceRange52w")}</h2>
         <div class="range52-card">
+          <div class="range52-zone-badge" data-range52-badge></div>
           <div class="range52-bar">
             <span class="range52-label" data-range52-low></span>
             <div class="range52-track">
@@ -200,12 +293,17 @@ const stockI18n = {
             </div>
             <span class="range52-label" data-range52-high></span>
           </div>
+          <div class="range52-stats">
+            <span class="range52-stat" data-range52-from-low></span>
+            <span class="range52-stat" data-range52-from-high></span>
+          </div>
         </div>
       </section>
 
       <!-- Financial Health Dashboard -->
       <section class="detail-section" data-health-section style="display:none;">
         <h2 class="section-title">{t(lang, "stock.financialHealth")}</h2>
+        <div class="health-score" data-health-score style="display:none;"></div>
         <div class="health-grid">
           <!-- Profitability -->
           <div class="health-card" data-hc-profit style="display:none;">
@@ -259,6 +357,18 @@ const stockI18n = {
         </div>
       </section>
 
+      <!-- Margin Comparison Bars -->
+      <section class="detail-section" data-margins-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.margins" as any)}</h2>
+        <div class="margins-chart" data-margins-chart></div>
+      </section>
+
+      <!-- Valuation Snapshot -->
+      <section class="detail-section" data-val-snap style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.valuation" as any)}</h2>
+        <div class="val-cards" data-val-cards></div>
+      </section>
+
       <!-- Key Statistics (Yahoo Finance style) -->
       <section class="detail-section" data-profile-section style="display:none;">
         <h2 class="section-title">{t(lang, "stock.keyStats")}</h2>
@@ -266,39 +376,47 @@ const stockI18n = {
           <div class="stats-col">
             <table class="stats-table">
               <tbody>
-                <tr><td class="st-k">{t(lang, "stock.marketCap")}</td><td class="st-v" data-st-mcap>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.enterpriseValue")}</td><td class="st-v" data-st-ev>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.trailingPE")}</td><td class="st-v" data-st-tpe>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.forwardPE")}</td><td class="st-v" data-st-fpe>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.pegRatio")}</td><td class="st-v" data-st-peg>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.priceBook")}</td><td class="st-v" data-st-pb>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.priceSales")}</td><td class="st-v" data-st-ps>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.evRevenue")}</td><td class="st-v" data-st-evr>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.evEbitda")}</td><td class="st-v" data-st-eve>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.marketCap")} <span class="st-info" data-tip="Total market value of all outstanding shares">i</span></td><td class="st-v" data-st-mcap>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.enterpriseValue")} <span class="st-info" data-tip="Market cap + debt - cash. Represents total company value">i</span></td><td class="st-v" data-st-ev>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.trailingPE")} <span class="st-info" data-tip="Price divided by last 12 months earnings. Lower may indicate value">i</span></td><td class="st-v" data-st-tpe>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.forwardPE")} <span class="st-info" data-tip="Price divided by estimated future earnings">i</span></td><td class="st-v" data-st-fpe>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.pegRatio")} <span class="st-info" data-tip="P/E divided by earnings growth rate. Below 1.0 may indicate value">i</span></td><td class="st-v" data-st-peg>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.priceBook")} <span class="st-info" data-tip="Price divided by book value per share. Below 1.0 means trading below net assets">i</span></td><td class="st-v" data-st-pb>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.priceSales")} <span class="st-info" data-tip="Price divided by revenue per share. Useful for companies without earnings">i</span></td><td class="st-v" data-st-ps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.evRevenue")} <span class="st-info" data-tip="Enterprise value divided by revenue. Compares total value to sales">i</span></td><td class="st-v" data-st-evr>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.evEbitda")} <span class="st-info" data-tip="Enterprise value divided by EBITDA. Common for comparing companies across industries">i</span></td><td class="st-v" data-st-eve>&mdash;</td></tr>
               </tbody>
             </table>
           </div>
           <div class="stats-col">
             <table class="stats-table">
               <tbody>
-                <tr><td class="st-k">{t(lang, "stock.epsTTM")}</td><td class="st-v" data-st-eps>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.forwardEPS")}</td><td class="st-v" data-st-feps>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.beta")}</td><td class="st-v" data-st-beta>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.epsTTM")} <span class="st-info" data-tip="Earnings per share over the trailing 12 months">i</span></td><td class="st-v" data-st-eps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.forwardEPS")} <span class="st-info" data-tip="Estimated earnings per share for the next 12 months">i</span></td><td class="st-v" data-st-feps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.beta")} <span class="st-info" data-tip="Volatility vs the market. Above 1.0 = more volatile, below 1.0 = less volatile">i</span></td><td class="st-v" data-st-beta>&mdash;</td></tr>
                 <tr><td class="st-k">{t(lang, "stock.52wRange")}</td><td class="st-v" data-st-52w>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.50dAvg")}</td><td class="st-v" data-st-50d>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.200dAvg")}</td><td class="st-v" data-st-200d>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.50dAvg")} <span class="st-info" data-tip="Average closing price over the last 50 trading days">i</span></td><td class="st-v" data-st-50d>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.200dAvg")} <span class="st-info" data-tip="Average closing price over the last 200 trading days. Key support/resistance level">i</span></td><td class="st-v" data-st-200d>&mdash;</td></tr>
                 <tr><td class="st-k">{t(lang, "stock.avgVolume")}</td><td class="st-v" data-st-avgvol>&mdash;</td></tr>
                 <tr><td class="st-k">{t(lang, "stock.sharesOut")}</td><td class="st-v" data-st-shares>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.bookValue")}</td><td class="st-v" data-st-bv>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.bookValue")} <span class="st-info" data-tip="Net asset value per share. Used to calculate Price/Book ratio">i</span></td><td class="st-v" data-st-bv>&mdash;</td></tr>
               </tbody>
             </table>
           </div>
         </div>
       </section>
 
+      <!-- Moving Average Signal -->
+      <section class="detail-section" data-ma-signal style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.maSignal" as any)}</h2>
+        <div class="ma-grid" data-ma-grid></div>
+      </section>
+
       <!-- Dividends & Returns -->
       <section class="detail-section" data-dividends-section style="display:none;">
         <h2 class="section-title">{t(lang, "stock.dividends")}</h2>
+        <div class="div-yield-gauge" data-div-gauge style="display:none;"></div>
+        <div class="div-income-card" data-div-income style="display:none;"></div>
         <div class="stats-grid">
           <div class="stats-col">
             <table class="stats-table">
@@ -326,6 +444,8 @@ const stockI18n = {
       <!-- Financial Highlights -->
       <section class="detail-section" data-financials-section style="display:none;">
         <h2 class="section-title">{t(lang, "stock.financials")}</h2>
+        <div class="rev-funnel" data-rev-funnel style="display:none;"></div>
+        <div class="cf-quality" data-cf-quality style="display:none;"></div>
         <div class="stats-grid">
           <div class="stats-col">
             <table class="stats-table">
@@ -359,6 +479,7 @@ const stockI18n = {
       <!-- Balance Sheet Ratios -->
       <section class="detail-section" data-balance-section style="display:none;">
         <h2 class="section-title">{t(lang, "stock.balanceSheet")}</h2>
+        <div class="own-bar-wrap" data-own-bar style="display:none;"></div>
         <div class="stats-grid">
           <div class="stats-col">
             <table class="stats-table">
@@ -392,6 +513,8 @@ const stockI18n = {
               <span class="analyst-count" data-analyst-count></span>
             </div>
           </div>
+          <!-- Rating Distribution -->
+          <div class="rating-dist" data-rating-dist style="display:none;"></div>
           <!-- Analyst Consensus Bar -->
           <div class="consensus-section" data-consensus-bar>
             <div class="consensus-label">{t(lang, "stock.analystConsensus")}</div>
@@ -439,7 +562,14 @@ const stockI18n = {
             <span class="el-item"><span class="el-dot el-dot--estimate"></span> {t(lang, "stock.estimateLabel")}</span>
           </div>
           <div class="earnings-chart" data-earnings-chart></div>
+          <div class="earnings-summary" data-earnings-summary style="display:none;"></div>
         </div>
+      </section>
+
+      <!-- Graham-Style Fundamental Analysis -->
+      <section class="detail-section" data-graham-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.grahamTitle" as any)}</h2>
+        <div class="graham-card" data-graham-card></div>
       </section>
 
       <!-- About the Company (expanded) -->
@@ -483,6 +613,12 @@ const stockI18n = {
         </div>
       </section>
 
+      <!-- Similar Stocks (Peer Comparison) -->
+      <section class="detail-section" data-peers-section style="display:none;">
+        <h2 class="section-title">{t(lang, "stock.similarStocks")}</h2>
+        <div class="peers-grid" data-peers-grid></div>
+      </section>
+
       <a href={`/${lang}/markets/merval`} class="back-link">&larr; {t(lang, "stock.backToMerval")}</a>
     </div>
 
@@ -512,21 +648,22 @@ const stockI18n = {
   // Format large numbers (1.2B, 345M, etc.)
   function fmtBig(n) {
     if (n == null) return '—';
-    if (Math.abs(n) >= 1e12) return (n / 1e12).toFixed(2) + 'T';
-    if (Math.abs(n) >= 1e9) return (n / 1e9).toFixed(2) + 'B';
-    if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(2) + 'M';
-    if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1) + 'K';
-    return n.toLocaleString();
+    if (Math.abs(n) >= 1e12) return (n / 1e12).toLocaleString(lang, { maximumFractionDigits: 2 }) + 'T';
+    if (Math.abs(n) >= 1e9) return (n / 1e9).toLocaleString(lang, { maximumFractionDigits: 2 }) + 'B';
+    if (Math.abs(n) >= 1e6) return (n / 1e6).toLocaleString(lang, { maximumFractionDigits: 2 }) + 'M';
+    if (Math.abs(n) >= 1e3) return (n / 1e3).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'K';
+    return n.toLocaleString(lang);
   }
 
   function fmtPct(n) {
     if (n == null) return '—';
-    return (n * 100).toFixed(2) + '%';
+    return (n * 100).toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
   }
 
   function fmtNum(n, dec) {
     if (n == null) return '—';
-    return n.toFixed(dec != null ? dec : 2);
+    var d = dec != null ? dec : 2;
+    return n.toLocaleString(lang, { minimumFractionDigits: d, maximumFractionDigits: d });
   }
 
   // Read symbol from URL
@@ -570,6 +707,52 @@ const stockI18n = {
 
   var currentChart = null;
 
+  function drawVolumeBars(timestamps, volumes, closes) {
+    var canvas = document.querySelector('[data-vol-chart]');
+    if (!canvas || !timestamps || !volumes || volumes.length < 2) return;
+    var wrap = canvas.parentElement;
+    var wrapStyle = getComputedStyle(wrap);
+    var wrapPadX = parseFloat(wrapStyle.paddingLeft) + parseFloat(wrapStyle.paddingRight);
+    var w = Math.round(wrap.getBoundingClientRect().width - wrapPadX) || 900;
+    var h = 60;
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    var padL = 65, padR = 20, padT = 4, padB = 16;
+    var cW = w - padL - padR;
+    var cH = h - padT - padB;
+    var n = timestamps.length;
+
+    var maxVol = 0;
+    for (var i = 0; i < volumes.length; i++) {
+      if (volumes[i] > maxVol) maxVol = volumes[i];
+    }
+    if (maxVol === 0) return;
+
+    var barW = Math.max(1, (cW / n) - 1);
+
+    for (var j = 0; j < n; j++) {
+      var vol = volumes[j] || 0;
+      var barH = (vol / maxVol) * cH;
+      var x = padL + (j / (n - 1)) * cW - barW / 2;
+      var y = padT + cH - barH;
+      var isUp = closes && j > 0 && closes[j] >= closes[j - 1];
+      ctx.fillStyle = isUp ? 'rgba(34,197,94,0.35)' : 'rgba(239,68,68,0.35)';
+      ctx.fillRect(x, y, barW, barH);
+    }
+
+    // Volume label
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-text-meta').trim() || '#6e6e6e';
+    ctx.font = '10px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(fmtBig(maxVol), padL - 10, padT + 10);
+  }
+
   // ── Load price & chart data ──
   function loadStock(range, interval) {
     var url = '/api/stock/' + encodeURIComponent(symbol) + '?range=' + range + '&interval=' + interval;
@@ -602,6 +785,29 @@ const stockI18n = {
         if (data.opens[last] != null) setEl('[data-stock-open]', C.fmt(data.opens[last]));
         if (data.highs && data.highs[last] != null) setEl('[data-stock-high]', C.fmt(data.highs[last]));
         if (data.lows && data.lows[last] != null) setEl('[data-stock-low]', C.fmt(data.lows[last]));
+
+        // Volume
+        if (data.volumes && data.volumes[last] != null) {
+          setEl('[data-stock-volume]', fmtBig(data.volumes[last]));
+        }
+
+        // Today's Range bar
+        var dayLow = data.lows ? data.lows[last] : null;
+        var dayHigh = data.highs ? data.highs[last] : null;
+        if (dayLow != null && dayHigh != null && data.price) {
+          var rangeEl = document.querySelector('[data-pc-range]');
+          if (rangeEl) {
+            rangeEl.style.display = '';
+            setEl('[data-pc-range-lo]', C.fmt(dayLow));
+            setEl('[data-pc-range-hi]', C.fmt(dayHigh));
+            var dayRange = dayHigh - dayLow;
+            var dayPct = dayRange > 0 ? Math.max(0, Math.min(100, ((data.price - dayLow) / dayRange) * 100)) : 50;
+            var fillEl = document.querySelector('[data-pc-range-fill]');
+            var dotEl = document.querySelector('[data-pc-range-dot]');
+            if (fillEl) fillEl.style.width = dayPct + '%';
+            if (dotEl) dotEl.style.left = dayPct + '%';
+          }
+        }
       }
 
       if (data.timestamps && data.closes) {
@@ -610,6 +816,7 @@ const stockI18n = {
         C.drawChart(document.querySelector('[data-stock-chart]'), [
           { points: points, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)' }
         ]);
+        drawVolumeBars(data.timestamps, data.volumes, data.closes);
       }
     }).catch(function() {
       setEl('[data-stock-name]', 'Failed to load data');
@@ -677,11 +884,15 @@ const stockI18n = {
             if (li) li.style.display = 'none';
           }
 
-          // Sector & industry tags
-          if (co.sector) setEl('[data-ch-sector]', co.sector);
-          else { var sEl = document.querySelector('[data-ch-sector]'); if (sEl) sEl.style.display = 'none'; }
-          if (co.industry) setEl('[data-ch-industry]', co.industry);
-          else { var iEl = document.querySelector('[data-ch-industry]'); if (iEl) iEl.style.display = 'none'; }
+          // Sector & industry tags (tappable)
+          var tagsEl = document.querySelector('[data-ch-tags]');
+          if (tagsEl) {
+            var tagHtml = '';
+            if (co.sector) tagHtml += '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.sector) + '" class="ch-tag ch-tag--sector">' + co.sector + '</a>';
+            if (co.industry) tagHtml += '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.industry) + '" class="ch-tag ch-tag--industry">' + co.industry + '</a>';
+            if (co.country) tagHtml += '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.country) + '" class="ch-tag ch-tag--location">' + co.country + '</a>';
+            tagsEl.innerHTML = tagHtml;
+          }
 
           // Pills (display: flex for proper alignment)
           function showPill(sel) { var el = document.querySelector(sel); if (el) el.style.display = 'flex'; }
@@ -729,6 +940,28 @@ const stockI18n = {
           if (fill52) fill52.style.width = pct52 + '%';
           var marker52 = document.querySelector('[data-range52-marker]');
           if (marker52) marker52.style.left = pct52 + '%';
+
+          // Zone badge
+          var badge52 = document.querySelector('[data-range52-badge]');
+          if (badge52) {
+            var zoneLabel, zoneCls;
+            if (pct52 <= 20) { zoneLabel = i18n.nearLow || 'Near 52w Low'; zoneCls = 'range52-zone--low'; }
+            else if (pct52 <= 70) { zoneLabel = i18n.midRange || 'Mid Range'; zoneCls = 'range52-zone--mid'; }
+            else if (pct52 <= 92) { zoneLabel = i18n.nearHigh || 'Near 52w High'; zoneCls = 'range52-zone--high'; }
+            else { zoneLabel = i18n.nearAth || 'Near ATH'; zoneCls = 'range52-zone--ath'; }
+            badge52.textContent = zoneLabel;
+            badge52.className = 'range52-zone-badge ' + zoneCls;
+          }
+
+          // From low / from high stats
+          if (range > 0) {
+            var fromLowPct = low52 > 0 ? ((curPrice - low52) / low52 * 100).toFixed(1) : '—';
+            var fromHighPct = high52 > 0 ? ((curPrice - high52) / high52 * 100).toFixed(1) : '—';
+            var flEl = document.querySelector('[data-range52-from-low]');
+            var fhEl = document.querySelector('[data-range52-from-high]');
+            if (flEl) flEl.innerHTML = '<span class="range52-stat-val range52-stat--up">+' + fromLowPct + '%</span> ' + (i18n.fromLow || 'from 52w Low');
+            if (fhEl) fhEl.innerHTML = '<span class="range52-stat-val range52-stat--down">' + fromHighPct + '%</span> ' + (i18n.fromHigh || 'from 52w High');
+          }
         }
 
         // ── Financial Health Dashboard ──
@@ -814,7 +1047,51 @@ const stockI18n = {
             }
             if (crBar) crBar.className = 'hc-bar-fill' + (cr > 1.5 ? ' hc-bar--green' : cr >= 1 ? ' hc-bar--yellow' : ' hc-bar--red');
           }
+
+          // Composite Health Score (0-100)
+          var scoreCount = 0, scoreSum = 0;
+          if (fin.profitMargins != null) { scoreCount++; scoreSum += fin.profitMargins > 0.15 ? 100 : fin.profitMargins > 0.05 ? 65 : fin.profitMargins > 0 ? 35 : 10; }
+          if (fin.revenueGrowth != null) { scoreCount++; scoreSum += fin.revenueGrowth > 0.15 ? 100 : fin.revenueGrowth > 0.05 ? 75 : fin.revenueGrowth > 0 ? 50 : 20; }
+          if (fin.debtToEquity != null) { scoreCount++; scoreSum += fin.debtToEquity < 50 ? 100 : fin.debtToEquity < 100 ? 75 : fin.debtToEquity < 200 ? 40 : 10; }
+          if (fin.currentRatio != null) { scoreCount++; scoreSum += fin.currentRatio > 2 ? 100 : fin.currentRatio > 1.5 ? 80 : fin.currentRatio >= 1 ? 50 : 15; }
+          if (fin.operatingCashflow != null && fin.netIncomeToCommon != null && fin.netIncomeToCommon > 0) {
+            scoreCount++; var ocfR = fin.operatingCashflow / fin.netIncomeToCommon;
+            scoreSum += ocfR > 1.2 ? 100 : ocfR > 0.8 ? 70 : ocfR > 0 ? 35 : 10;
+          }
+          if (scoreCount >= 2) {
+            var score = Math.round(scoreSum / scoreCount);
+            var sColor = score >= 70 ? '#16a34a' : score >= 45 ? '#f59e0b' : '#dc2626';
+            var sLabel = score >= 70 ? 'Strong' : score >= 45 ? 'Fair' : 'Weak';
+            var hsEl = document.querySelector('[data-health-score]');
+            if (hsEl) {
+              var hs = '<div class="hs-wrap">';
+              hs += '<div class="hs-gauge"><div class="hs-gauge-fill" style="width:' + score + '%;background:' + sColor + '"></div></div>';
+              hs += '<div class="hs-info">';
+              hs += '<span class="hs-score" style="color:' + sColor + '">' + score + '/100</span>';
+              hs += '<span class="hs-label" style="color:' + sColor + '">' + sLabel + '</span>';
+              hs += '<span class="hs-sub">Based on ' + scoreCount + ' factors</span>';
+              hs += '</div></div>';
+              hsEl.innerHTML = hs;
+              hsEl.style.display = '';
+            }
+          }
         }
+
+        // ── Quick Facts Strip ──
+        var qfShown = false;
+        function showQF(attr, val) {
+          if (val == null) return;
+          var item = document.querySelector('[' + attr + ']');
+          if (item) { item.style.display = ''; qfShown = true; }
+          var vEl = document.querySelector('[' + attr + '-v]');
+          if (vEl) vEl.textContent = val;
+        }
+        showQF('data-qf-pe', s.trailingPE != null ? fmtNum(s.trailingPE) : null);
+        showQF('data-qf-eps', s.eps != null ? fmtNum(s.eps) : null);
+        showQF('data-qf-divy', det.dividendYield != null ? fmtPct(det.dividendYield) : null);
+        showQF('data-qf-beta', s.beta != null ? fmtNum(s.beta) : null);
+        showQF('data-qf-roe', fin.returnOnEquity != null ? fmtPct(fin.returnOnEquity) : null);
+        if (qfShown) showEl('[data-qf-strip]');
 
         // ── Key Statistics ──
         var hasStats = s.marketCap || s.trailingPE || s.eps || s.beta;
@@ -843,6 +1120,87 @@ const stockI18n = {
           setEl('[data-st-avgvol]', fmtBig(det.averageVolume));
         }
 
+        // ── Valuation Snapshot ──
+        var valMetrics = [];
+        if (s.trailingPE != null) valMetrics.push({ label: 'P/E', val: s.trailingPE, low: 10, mid: 20, high: 35 });
+        if (s.priceToBook != null) valMetrics.push({ label: 'P/B', val: s.priceToBook, low: 1, mid: 3, high: 5 });
+        if (s.priceToSales != null) valMetrics.push({ label: 'P/S', val: s.priceToSales, low: 1, mid: 3, high: 8 });
+        if (s.pegRatio != null) valMetrics.push({ label: 'PEG', val: s.pegRatio, low: 0.5, mid: 1.0, high: 2.0 });
+        if (s.enterpriseToEbitda != null) valMetrics.push({ label: 'EV/EBITDA', val: s.enterpriseToEbitda, low: 8, mid: 15, high: 25 });
+        if (valMetrics.length >= 2) {
+          var vcEl = document.querySelector('[data-val-cards]');
+          if (vcEl) {
+            var vhtml = '';
+            for (var vi = 0; vi < valMetrics.length; vi++) {
+              var vm = valMetrics[vi];
+              var assess, color;
+              if (vm.val <= vm.low) { assess = 'Value'; color = '#16a34a'; }
+              else if (vm.val <= vm.mid) { assess = 'Fair'; color = '#eab308'; }
+              else if (vm.val <= vm.high) { assess = 'Rich'; color = '#f97316'; }
+              else { assess = 'Expensive'; color = '#dc2626'; }
+              var gaugePos = Math.min(vm.val / (vm.high * 1.2) * 100, 100).toFixed(1);
+              vhtml += '<div class="vc-card">';
+              vhtml += '<div class="vc-head"><span class="vc-label">' + vm.label + '</span><span class="vc-assess" style="color:' + color + '">' + assess + '</span></div>';
+              vhtml += '<span class="vc-value">' + fmtNum(vm.val) + '</span>';
+              vhtml += '<div class="vc-gauge"><div class="vc-gauge-fill" style="width:' + gaugePos + '%;background:' + color + '"></div></div>';
+              vhtml += '<div class="vc-range"><span>' + vm.low + '</span><span>' + vm.mid + '</span><span>' + vm.high + '+</span></div>';
+              vhtml += '</div>';
+            }
+            vcEl.innerHTML = vhtml;
+            showEl('[data-val-snap]');
+          }
+        }
+
+        // ── Moving Average Signal ──
+        if (det.fiftyDayAverage && det.twoHundredDayAverage && fin.currentPrice) {
+          var price = fin.currentPrice;
+          var ma50 = det.fiftyDayAverage;
+          var ma200 = det.twoHundredDayAverage;
+          var maGrid = document.querySelector('[data-ma-grid]');
+          if (maGrid) {
+            var aboveMa50 = price > ma50;
+            var aboveMa200 = price > ma200;
+            var goldenCross = ma50 > ma200;
+            var overallSignal = (aboveMa50 && aboveMa200 && goldenCross) ? 'bullish' : (!aboveMa50 && !aboveMa200 && !goldenCross) ? 'bearish' : 'neutral';
+            var sigColor = overallSignal === 'bullish' ? '#16a34a' : overallSignal === 'bearish' ? '#dc2626' : '#eab308';
+            var sigLabel = overallSignal === 'bullish' ? (i18n.bullish || 'Bullish') : overallSignal === 'bearish' ? (i18n.bearish || 'Bearish') : (i18n.neutral || 'Neutral');
+            var aboveLabel = i18n.above || 'Above';
+            var belowLabel = i18n.below || 'Below';
+            var html = '<div class="ma-overall" style="border-color:' + sigColor + '">';
+            html += '<span class="ma-overall-label">' + sigLabel + '</span>';
+            html += '<span class="ma-overall-icon" style="color:' + sigColor + '">' + (overallSignal === 'bullish' ? '▲' : overallSignal === 'bearish' ? '▼' : '●') + '</span>';
+            html += '</div>';
+            html += '<div class="ma-cards">';
+            // Price vs 50d
+            var pct50 = ((price - ma50) / ma50 * 100).toFixed(2);
+            var cls50 = aboveMa50 ? 'ma-card--up' : 'ma-card--down';
+            html += '<div class="ma-card ' + cls50 + '">';
+            html += '<span class="ma-card-title">50-Day MA</span>';
+            html += '<span class="ma-card-val">' + C.fmt(ma50) + '</span>';
+            html += '<span class="ma-card-sig">' + (aboveMa50 ? aboveLabel : belowLabel) + ' (' + (pct50 > 0 ? '+' : '') + pct50 + '%)</span>';
+            html += '</div>';
+            // Price vs 200d
+            var pct200 = ((price - ma200) / ma200 * 100).toFixed(2);
+            var cls200 = aboveMa200 ? 'ma-card--up' : 'ma-card--down';
+            html += '<div class="ma-card ' + cls200 + '">';
+            html += '<span class="ma-card-title">200-Day MA</span>';
+            html += '<span class="ma-card-val">' + C.fmt(ma200) + '</span>';
+            html += '<span class="ma-card-sig">' + (aboveMa200 ? aboveLabel : belowLabel) + ' (' + (pct200 > 0 ? '+' : '') + pct200 + '%)</span>';
+            html += '</div>';
+            // Golden/Death cross
+            var crossLabel = goldenCross ? (i18n.goldenCross || 'Golden Cross') : (i18n.deathCross || 'Death Cross');
+            var crossCls = goldenCross ? 'ma-card--up' : 'ma-card--down';
+            html += '<div class="ma-card ' + crossCls + '">';
+            html += '<span class="ma-card-title">50d vs 200d</span>';
+            html += '<span class="ma-card-val">' + crossLabel + '</span>';
+            html += '<span class="ma-card-sig">' + (goldenCross ? '50d > 200d' : '50d < 200d') + '</span>';
+            html += '</div>';
+            html += '</div>';
+            maGrid.innerHTML = html;
+            showEl('[data-ma-signal]');
+          }
+        }
+
         // ── Dividends & Returns ──
         var hasDiv = det.dividendYield || fin.returnOnEquity || fin.earningsGrowth;
         if (hasDiv) {
@@ -855,6 +1213,47 @@ const stockI18n = {
           setEl('[data-st-roe]', fmtPct(fin.returnOnEquity));
           setEl('[data-st-earngr]', fmtPct(fin.earningsGrowth));
           setEl('[data-st-revgr]', fmtPct(fin.revenueGrowth));
+
+          // Dividend Yield Gauge
+          if (det.dividendYield != null && det.dividendYield > 0) {
+            var dyPct = (det.dividendYield * 100).toFixed(2);
+            var dyMax = 15; // gauge max at 15%
+            var dyFill = Math.min(det.dividendYield * 100 / dyMax * 100, 100);
+            var dyColor = det.dividendYield * 100 >= 5 ? '#16a34a' : det.dividendYield * 100 >= 2 ? '#eab308' : '#94a3b8';
+            var gaugeEl = document.querySelector('[data-div-gauge]');
+            if (gaugeEl) {
+              gaugeEl.innerHTML = '<div class="dyg-wrap">' +
+                '<span class="dyg-label">' + (i18n.divYieldLabel || 'Dividend Yield') + '</span>' +
+                '<div class="dyg-track"><div class="dyg-fill" style="width:' + dyFill + '%;background:' + dyColor + '"></div></div>' +
+                '<span class="dyg-val" style="color:' + dyColor + '">' + dyPct + '%</span>' +
+                '</div>';
+              gaugeEl.style.display = '';
+            }
+          }
+
+          // Dividend Income Calculator
+          if (det.dividendRate != null && det.dividendRate > 0 && curPrice > 0) {
+            var incEl = document.querySelector('[data-div-income]');
+            if (incEl) {
+              var annualDiv = det.dividendRate;
+              var yieldPct = det.dividendYield ? (det.dividendYield * 100) : (annualDiv / curPrice * 100);
+              var payoutVal = det.payoutRatio ? (det.payoutRatio * 100) : null;
+              var sharesFor1k = Math.floor(1000 / curPrice);
+              var incomeFor1k = sharesFor1k * annualDiv;
+
+              var dih = '<div class="dii-grid">';
+              dih += '<div class="dii-card"><span class="dii-label">Annual Dividend</span><span class="dii-val">' + fmtNum(annualDiv) + '</span><span class="dii-sub">per share</span></div>';
+              dih += '<div class="dii-card"><span class="dii-label">Yield</span><span class="dii-val" style="color:' + (yieldPct >= 4 ? '#16a34a' : yieldPct >= 2 ? '#eab308' : 'var(--color-text)') + '">' + yieldPct.toFixed(2) + '%</span></div>';
+              if (payoutVal != null) {
+                var payColor = payoutVal <= 60 ? '#16a34a' : payoutVal <= 80 ? '#eab308' : '#dc2626';
+                dih += '<div class="dii-card"><span class="dii-label">Payout Ratio</span><span class="dii-val" style="color:' + payColor + '">' + payoutVal.toFixed(0) + '%</span><span class="dii-sub">' + (payoutVal <= 60 ? 'Sustainable' : payoutVal <= 80 ? 'High' : 'Caution') + '</span></div>';
+              }
+              dih += '<div class="dii-card dii-card--highlight"><span class="dii-label">$1,000 Investment</span><span class="dii-val">' + fmtNum(incomeFor1k) + '/yr</span><span class="dii-sub">' + sharesFor1k + ' shares × ' + fmtNum(annualDiv) + '</span></div>';
+              dih += '</div>';
+              incEl.innerHTML = dih;
+              incEl.style.display = '';
+            }
+          }
         }
 
         // ── Financial Highlights ──
@@ -877,6 +1276,98 @@ const stockI18n = {
           setEl('[data-st-de]', fmtNum(fin.debtToEquity));
         }
 
+        // ── Revenue Funnel ──
+        var funnelSteps = [
+          { label: 'Revenue', val: fin.totalRevenue, color: '#3b82f6' },
+          { label: 'Gross Profit', val: fin.grossProfits, color: '#8b5cf6' },
+          { label: 'EBITDA', val: fin.ebitda, color: '#f59e0b' },
+          { label: 'Net Income', val: fin.netIncomeToCommon, color: '#16a34a' },
+        ].filter(function(s) { return s.val != null && s.val !== 0; });
+        if (funnelSteps.length >= 2 && fin.totalRevenue > 0) {
+          showEl('[data-rev-funnel]');
+          var rf = document.querySelector('[data-rev-funnel]');
+          if (rf) {
+            var maxVal = funnelSteps[0].val;
+            var fhtml = '';
+            for (var fi = 0; fi < funnelSteps.length; fi++) {
+              var fs = funnelSteps[fi];
+              var pct = Math.max((Math.abs(fs.val) / maxVal) * 100, 4);
+              var isNeg = fs.val < 0;
+              var margin = isNeg ? ((fi / funnelSteps.length) * 100).toFixed(1) + '%' : 'auto';
+              fhtml += '<div class="rf-step">';
+              fhtml += '<span class="rf-label">' + fs.label + '</span>';
+              fhtml += '<div class="rf-bar-wrap">';
+              fhtml += '<div class="rf-bar' + (isNeg ? ' rf-bar--neg' : '') + '" style="width:' + pct.toFixed(1) + '%;background:' + fs.color + '"></div>';
+              fhtml += '</div>';
+              fhtml += '<span class="rf-val" style="color:' + (isNeg ? '#dc2626' : fs.color) + '">' + fmtBig(fs.val) + '</span>';
+              fhtml += '</div>';
+            }
+            rf.innerHTML = fhtml;
+          }
+        }
+
+        // ── Cash Flow Quality ──
+        if (fin.operatingCashflow && fin.netIncomeToCommon && fin.netIncomeToCommon !== 0) {
+          var cfRatio = fin.operatingCashflow / fin.netIncomeToCommon;
+          var cfEl = document.querySelector('[data-cf-quality]');
+          if (cfEl) {
+            var cfLabel, cfColor, cfDesc;
+            if (cfRatio >= 1.2) { cfLabel = 'Strong'; cfColor = '#16a34a'; cfDesc = 'Cash flow exceeds reported earnings'; }
+            else if (cfRatio >= 0.8) { cfLabel = 'Healthy'; cfColor = '#f59e0b'; cfDesc = 'Cash flow roughly matches earnings'; }
+            else if (cfRatio >= 0) { cfLabel = 'Weak'; cfColor = '#dc2626'; cfDesc = 'Earnings not fully backed by cash'; }
+            else { cfLabel = 'Negative'; cfColor = '#dc2626'; cfDesc = 'Negative operating cash flow'; }
+
+            var cfHtml = '<div class="cfq-row">';
+            cfHtml += '<div class="cfq-metric"><span class="cfq-label">Cash Flow Quality</span><span class="cfq-assess" style="color:' + cfColor + '">' + cfLabel + '</span></div>';
+            cfHtml += '<div class="cfq-details">';
+            cfHtml += '<div class="cfq-bars">';
+            var maxCf = Math.max(Math.abs(fin.operatingCashflow), Math.abs(fin.netIncomeToCommon));
+            var opcfW = (Math.abs(fin.operatingCashflow) / maxCf * 100).toFixed(1);
+            var niW = (Math.abs(fin.netIncomeToCommon) / maxCf * 100).toFixed(1);
+            cfHtml += '<div class="cfq-bar-row"><span class="cfq-bar-label">Op. Cash Flow</span><div class="cfq-bar-wrap"><div class="cfq-bar" style="width:' + opcfW + '%;background:#3b82f6"></div></div><span class="cfq-bar-val">' + fmtBig(fin.operatingCashflow) + '</span></div>';
+            cfHtml += '<div class="cfq-bar-row"><span class="cfq-bar-label">Net Income</span><div class="cfq-bar-wrap"><div class="cfq-bar" style="width:' + niW + '%;background:#16a34a"></div></div><span class="cfq-bar-val">' + fmtBig(fin.netIncomeToCommon) + '</span></div>';
+            cfHtml += '</div>';
+            cfHtml += '<span class="cfq-ratio">OCF/NI Ratio: ' + cfRatio.toFixed(2) + 'x</span>';
+            cfHtml += '<span class="cfq-desc">' + cfDesc + '</span>';
+            cfHtml += '</div></div>';
+            cfEl.innerHTML = cfHtml;
+            cfEl.style.display = '';
+          }
+        }
+
+        // ── Margin Comparison Bars ──
+        var marginItems = [
+          { label: i18n.grossMargin, val: fin.grossMargins, color: '#3b82f6' },
+          { label: i18n.ebitdaMargin, val: fin.ebitdaMargins, color: '#8b5cf6' },
+          { label: i18n.opMargin, val: fin.operatingMargins, color: '#f59e0b' },
+          { label: i18n.profitMargin, val: fin.profitMargins, color: '#16a34a' },
+        ].filter(function(m) { return m.val != null; });
+        if (marginItems.length >= 2) {
+          showEl('[data-margins-section]');
+          var mc = document.querySelector('[data-margins-chart]');
+          if (mc) {
+            var mhtml = '';
+            for (var mi = 0; mi < marginItems.length; mi++) {
+              var m = marginItems[mi];
+              var pctVal = (m.val * 100);
+              var barW = Math.max(Math.min(Math.abs(pctVal), 100), 2);
+              var isNeg = pctVal < 0;
+              mhtml += '<div class="mg-row">';
+              mhtml += '<span class="mg-label">' + m.label + '</span>';
+              mhtml += '<div class="mg-bar-wrap">';
+              if (isNeg) {
+                mhtml += '<div class="mg-bar mg-bar--neg" style="width:' + barW + '%;background:' + m.color + '"></div>';
+              } else {
+                mhtml += '<div class="mg-bar" style="width:' + barW + '%;background:' + m.color + '"></div>';
+              }
+              mhtml += '</div>';
+              mhtml += '<span class="mg-val" style="color:' + (isNeg ? '#dc2626' : m.color) + '">' + (pctVal >= 0 ? '+' : '') + pctVal.toFixed(1) + '%</span>';
+              mhtml += '</div>';
+            }
+            mc.innerHTML = mhtml;
+          }
+        }
+
         // ── Balance Sheet & Ownership ──
         var hasBal = fin.currentRatio || s.heldPercentInsiders || s.floatShares;
         if (hasBal) {
@@ -887,6 +1378,28 @@ const stockI18n = {
           setEl('[data-st-insiders]', fmtPct(s.heldPercentInsiders));
           setEl('[data-st-inst]', fmtPct(s.heldPercentInstitutions));
           setEl('[data-st-float]', fmtBig(s.floatShares));
+
+          // Ownership breakdown bar
+          if (s.heldPercentInsiders != null || s.heldPercentInstitutions != null) {
+            var insP = (s.heldPercentInsiders || 0) * 100;
+            var instP = (s.heldPercentInstitutions || 0) * 100;
+            var pubP = Math.max(100 - insP - instP, 0);
+            var ownEl = document.querySelector('[data-own-bar]');
+            if (ownEl) {
+              var ohtml = '<div class="own-bar">';
+              if (insP > 0) ohtml += '<div class="own-seg own-seg--ins" style="width:' + insP.toFixed(1) + '%">' + (insP >= 5 ? insP.toFixed(1) + '%' : '') + '</div>';
+              if (instP > 0) ohtml += '<div class="own-seg own-seg--inst" style="width:' + instP.toFixed(1) + '%">' + (instP >= 5 ? instP.toFixed(1) + '%' : '') + '</div>';
+              if (pubP > 0) ohtml += '<div class="own-seg own-seg--pub" style="width:' + pubP.toFixed(1) + '%">' + (pubP >= 5 ? pubP.toFixed(1) + '%' : '') + '</div>';
+              ohtml += '</div>';
+              ohtml += '<div class="own-legend">';
+              ohtml += '<span class="own-leg"><span class="own-dot own-dot--ins"></span>Insiders ' + insP.toFixed(1) + '%</span>';
+              ohtml += '<span class="own-leg"><span class="own-dot own-dot--inst"></span>Institutions ' + instP.toFixed(1) + '%</span>';
+              ohtml += '<span class="own-leg"><span class="own-dot own-dot--pub"></span>Public ' + pubP.toFixed(1) + '%</span>';
+              ohtml += '</div>';
+              ownEl.innerHTML = ohtml;
+              ownEl.style.display = '';
+            }
+          }
         }
 
         // ── Enhanced Analyst Recommendations ──
@@ -913,6 +1426,40 @@ const stockI18n = {
             var cmPos = ((fin.recommendationMean - 1) / 4) * 100;
             var cmMarker = document.querySelector('[data-consensus-marker]');
             if (cmMarker) cmMarker.style.left = cmPos + '%';
+          }
+
+          // Rating distribution breakdown
+          var rd = d.ratingDistribution;
+          if (rd) {
+            var rdTotal = (rd.strongBuy || 0) + (rd.buy || 0) + (rd.hold || 0) + (rd.sell || 0) + (rd.strongSell || 0);
+            if (rdTotal > 0) {
+              var rdEl = document.querySelector('[data-rating-dist]');
+              if (rdEl) {
+                var rdItems = [
+                  { label: i18n.strongBuy || 'Strong Buy', count: rd.strongBuy || 0, cls: 'rd--sbuy' },
+                  { label: i18n.buy || 'Buy', count: rd.buy || 0, cls: 'rd--buy' },
+                  { label: i18n.holdRating || 'Hold', count: rd.hold || 0, cls: 'rd--hold' },
+                  { label: i18n.sellRating || 'Sell', count: rd.sell || 0, cls: 'rd--sell' },
+                  { label: i18n.strongSell || 'Strong Sell', count: rd.strongSell || 0, cls: 'rd--ssell' },
+                ];
+                var rdHtml = '<div class="rd-bar">';
+                rdItems.forEach(function(r) {
+                  if (r.count > 0) {
+                    var pct = (r.count / rdTotal * 100).toFixed(1);
+                    rdHtml += '<div class="rd-seg ' + r.cls + '" style="width:' + pct + '%">' + (parseFloat(pct) >= 8 ? r.count : '') + '</div>';
+                  }
+                });
+                rdHtml += '</div><div class="rd-legend">';
+                rdItems.forEach(function(r) {
+                  if (r.count > 0) {
+                    rdHtml += '<span class="rd-leg-item"><span class="rd-dot ' + r.cls + '"></span>' + r.label + ' <strong>' + r.count + '</strong></span>';
+                  }
+                });
+                rdHtml += '</div>';
+                rdEl.innerHTML = rdHtml;
+                rdEl.style.display = '';
+              }
+            }
           }
 
           // Price target range bar
@@ -961,8 +1508,22 @@ const stockI18n = {
               var estH = q.estimate != null ? Math.max(4, (Math.abs(q.estimate) / maxEps) * 120) : 0;
               var isBeat = q.actual != null && q.estimate != null && q.actual > q.estimate;
               var isMiss = q.actual != null && q.estimate != null && q.actual < q.estimate;
-              var qDate = q.date ? new Date(q.date * 1000) : null;
-              var qLabel = qDate ? ('Q' + (Math.floor(qDate.getMonth() / 3) + 1) + ' ' + qDate.getFullYear().toString().slice(-2)) : '';
+              var qLabel = '';
+              if (q.date) {
+                // Handle Yahoo format "4Q2024" or "1Q2025"
+                var qMatch = String(q.date).match(/^(\d)Q(\d{4})$/);
+                if (qMatch) {
+                  qLabel = 'Q' + qMatch[1] + ' ' + qMatch[2].slice(-2);
+                } else if (typeof q.date === 'string' && q.date.indexOf('-') !== -1) {
+                  // Handle DB format "2025-01-15"
+                  var parts = q.date.split('-');
+                  var m = parseInt(parts[1]);
+                  qLabel = 'Q' + (Math.floor((m - 1) / 3) + 1) + ' ' + parts[0].slice(-2);
+                } else if (typeof q.date === 'number') {
+                  var qDate = new Date(q.date * 1000);
+                  qLabel = 'Q' + (Math.floor(qDate.getMonth() / 3) + 1) + ' ' + qDate.getFullYear().toString().slice(-2);
+                }
+              }
 
               html += '<div class="eq-group">';
               html += '<div class="eq-bars">';
@@ -978,6 +1539,195 @@ const stockI18n = {
               html += '</div>';
             });
             chartEl.innerHTML = html;
+          }
+          // Earnings summary stats
+          var beats = 0, misses = 0, total = 0, avgSurprise = 0;
+          eh.forEach(function(q) {
+            if (q.actual != null && q.estimate != null) {
+              total++;
+              if (q.actual > q.estimate) beats++;
+              else if (q.actual < q.estimate) misses++;
+              avgSurprise += ((q.actual - q.estimate) / Math.abs(q.estimate || 1)) * 100;
+            }
+          });
+          if (total > 0) {
+            avgSurprise = avgSurprise / total;
+            var sumEl = document.querySelector('[data-earnings-summary]');
+            if (sumEl) {
+              var shtml = '<div class="es-stats">';
+              shtml += '<div class="es-stat"><span class="es-val es-val--beat">' + beats + '/' + total + '</span><span class="es-label">Beats</span></div>';
+              shtml += '<div class="es-stat"><span class="es-val es-val--miss">' + misses + '/' + total + '</span><span class="es-label">Misses</span></div>';
+              shtml += '<div class="es-stat"><span class="es-val" style="color:' + (avgSurprise >= 0 ? '#16a34a' : '#dc2626') + '">' + (avgSurprise >= 0 ? '+' : '') + avgSurprise.toFixed(1) + '%</span><span class="es-label">Avg Surprise</span></div>';
+              shtml += '</div>';
+              sumEl.innerHTML = shtml;
+              sumEl.style.display = '';
+            }
+          }
+        }
+
+        // ── Graham-Style Fundamental Analysis ──
+        (function() {
+          var criteria = [];
+          var passCount = 0;
+          var totalCount = 0;
+          var gn = i18n;
+
+          // 1. Adequate Size (market cap > $2B for defensive, > $100M for enterprising)
+          if (s.marketCap != null) {
+            totalCount++;
+            var sizePass = s.marketCap >= 2e9;
+            if (sizePass) passCount++;
+            criteria.push({ label: gn.grahamAdequateSize || 'Adequate Size', pass: sizePass, val: fmtBig(s.marketCap), note: '> $2B' });
+          }
+
+          // 2. Strong Finances (current ratio > 2)
+          if (fin.currentRatio != null) {
+            totalCount++;
+            var crPass = fin.currentRatio >= 2;
+            if (crPass) passCount++;
+            criteria.push({ label: gn.grahamStrongFinances || 'Strong Finances', pass: crPass, val: fmtNum(fin.currentRatio), note: 'Current Ratio ≥ 2.0' });
+          }
+
+          // 3. Earnings Stability (positive earnings — EPS > 0)
+          if (s.eps != null) {
+            totalCount++;
+            var epsPass = s.eps > 0;
+            if (epsPass) passCount++;
+            criteria.push({ label: gn.grahamEarningsStability || 'Earnings Stability', pass: epsPass, val: fmtNum(s.eps), note: 'EPS > 0' });
+          }
+
+          // 4. Dividend Record
+          if (det.dividendYield != null) {
+            totalCount++;
+            var divPass = det.dividendYield > 0;
+            if (divPass) passCount++;
+            criteria.push({ label: gn.grahamDividendRecord || 'Dividend Record', pass: divPass, val: fmtPct(det.dividendYield), note: 'Pays dividends' });
+          }
+
+          // 5. Moderate Growth (earnings growth > 0)
+          if (fin.earningsGrowth != null) {
+            totalCount++;
+            var growPass = fin.earningsGrowth > 0;
+            if (growPass) passCount++;
+            criteria.push({ label: gn.grahamModerateGrowth || 'Earnings Growth', pass: growPass, val: fmtPct(fin.earningsGrowth), note: '> 0%' });
+          }
+
+          // 6. Moderate P/E Ratio (< 15)
+          if (s.trailingPE != null && s.trailingPE > 0) {
+            totalCount++;
+            var pePass = s.trailingPE <= 15;
+            if (pePass) passCount++;
+            criteria.push({ label: gn.grahamModeratePE || 'Moderate P/E', pass: pePass, val: fmtNum(s.trailingPE), note: '≤ 15' });
+          }
+
+          // 7. Moderate P/B Ratio (< 1.5)
+          if (s.priceToBook != null && s.priceToBook > 0) {
+            totalCount++;
+            var pbPass = s.priceToBook <= 1.5;
+            if (pbPass) passCount++;
+            criteria.push({ label: gn.grahamModeratePB || 'Moderate P/B', pass: pbPass, val: fmtNum(s.priceToBook), note: '≤ 1.5' });
+          }
+
+          // Graham Number = sqrt(22.5 * EPS * Book Value)
+          var grahamNum = null;
+          if (s.eps != null && s.eps > 0 && s.bookValue != null && s.bookValue > 0) {
+            grahamNum = Math.sqrt(22.5 * s.eps * s.bookValue);
+          }
+
+          if (totalCount >= 3) {
+            var gc = document.querySelector('[data-graham-card]');
+            if (gc) {
+              var score = Math.round((passCount / totalCount) * 100);
+              var sColor = score >= 70 ? '#16a34a' : score >= 45 ? '#eab308' : '#dc2626';
+              var verdict = score >= 70 ? (gn.undervalued || 'Potentially Undervalued') : score >= 45 ? (gn.fairlyValued || 'Fairly Valued') : (gn.overvalued || 'Possibly Overvalued');
+
+              var gh = '<div class="grm-header">';
+              gh += '<div class="grm-score-wrap">';
+              gh += '<div class="grm-gauge"><div class="grm-gauge-fill" style="width:' + score + '%;background:' + sColor + '"></div></div>';
+              gh += '<span class="grm-score" style="color:' + sColor + '">' + passCount + '/' + totalCount + '</span>';
+              gh += '</div>';
+              gh += '<div class="grm-verdict" style="color:' + sColor + '">' + verdict + '</div>';
+              gh += '</div>';
+
+              // Graham Number
+              if (grahamNum != null && curPrice) {
+                var margin = ((grahamNum - curPrice) / curPrice * 100);
+                var mColor = margin > 0 ? '#16a34a' : '#dc2626';
+                var mLabel = margin > 0 ? (gn.grahamMarginSafety || 'Margin of Safety') : (gn.overvalued || 'Overvalued');
+                gh += '<div class="grm-number">';
+                gh += '<div class="grm-num-row">';
+                gh += '<span class="grm-num-label">' + (gn.grahamNumber || 'Graham Number') + '</span>';
+                gh += '<span class="grm-num-val">' + C.fmt(Math.round(grahamNum)) + '</span>';
+                gh += '</div>';
+                gh += '<div class="grm-num-row">';
+                gh += '<span class="grm-num-label">' + (i18n.currentPrice || 'Current Price') + '</span>';
+                gh += '<span class="grm-num-val">' + C.fmt(Math.round(curPrice)) + '</span>';
+                gh += '</div>';
+                gh += '<div class="grm-margin" style="color:' + mColor + '">' + mLabel + ': ' + (margin >= 0 ? '+' : '') + margin.toFixed(1) + '%</div>';
+                gh += '</div>';
+              }
+
+              // Criteria list
+              gh += '<div class="grm-criteria">';
+              for (var gi = 0; gi < criteria.length; gi++) {
+                var cr = criteria[gi];
+                var icon = cr.pass ? '✓' : '✗';
+                var iCls = cr.pass ? 'grm-pass' : 'grm-fail';
+                gh += '<div class="grm-row ' + iCls + '">';
+                gh += '<span class="grm-icon">' + icon + '</span>';
+                gh += '<span class="grm-label">' + cr.label + '</span>';
+                gh += '<span class="grm-val">' + cr.val + '</span>';
+                gh += '<span class="grm-note">' + cr.note + '</span>';
+                gh += '</div>';
+              }
+              gh += '</div>';
+
+              gc.innerHTML = gh;
+              showEl('[data-graham-section]');
+            }
+          }
+        })();
+
+        // ── Key Insights ──
+        var insights = [];
+        if (det.fiftyDayAverage && det.twoHundredDayAverage && fin.currentPrice) {
+          if (fin.currentPrice > det.fiftyDayAverage && fin.currentPrice > det.twoHundredDayAverage) {
+            insights.push('Trading above both 50-day and 200-day moving averages — bullish momentum');
+          } else if (fin.currentPrice < det.fiftyDayAverage && fin.currentPrice < det.twoHundredDayAverage) {
+            insights.push('Trading below both 50-day and 200-day moving averages — bearish pressure');
+          }
+        }
+        if (s.trailingPE != null && s.trailingPE > 0 && s.trailingPE < 10) {
+          insights.push('Low P/E ratio (' + fmtNum(s.trailingPE) + ') — potential value opportunity');
+        } else if (s.trailingPE != null && s.trailingPE > 30) {
+          insights.push('High P/E ratio (' + fmtNum(s.trailingPE) + ') — premium valuation, growth expectations priced in');
+        }
+        if (fin.profitMargins != null && fin.profitMargins > 0.2) {
+          insights.push('Strong profit margins at ' + (fin.profitMargins * 100).toFixed(1) + '%');
+        } else if (fin.profitMargins != null && fin.profitMargins < 0) {
+          insights.push('Currently unprofitable with ' + (fin.profitMargins * 100).toFixed(1) + '% profit margin');
+        }
+        if (fin.revenueGrowth != null && fin.revenueGrowth > 0.2) {
+          insights.push('Strong revenue growth at ' + (fin.revenueGrowth * 100).toFixed(1) + '% YoY');
+        }
+        if (det.dividendYield != null && det.dividendYield > 0.04) {
+          insights.push('High dividend yield of ' + (det.dividendYield * 100).toFixed(2) + '%');
+        }
+        if (s.beta != null) {
+          if (s.beta < 0.5) insights.push('Low beta (' + fmtNum(s.beta) + ') — less volatile than the market');
+          else if (s.beta > 1.5) insights.push('High beta (' + fmtNum(s.beta) + ') — significantly more volatile than the market');
+        }
+        if (s.heldPercentInsiders != null && s.heldPercentInsiders > 0.3) {
+          insights.push('High insider ownership at ' + (s.heldPercentInsiders * 100).toFixed(1) + '% — management has skin in the game');
+        }
+        if (fin.debtToEquity != null && fin.debtToEquity > 200) {
+          insights.push('High debt-to-equity ratio (' + fmtNum(fin.debtToEquity) + ') — elevated leverage');
+        }
+        if (insights.length > 0) {
+          var iEl = document.querySelector('[data-insights-list]');
+          if (iEl) {
+            iEl.innerHTML = insights.map(function(t) { return '<li class="ki-item">' + t + '</li>'; }).join('');
+            showEl('[data-insights]');
           }
         }
 
@@ -1007,6 +1757,18 @@ const stockI18n = {
             }
           }
 
+          // Header badges
+          var badgesEl = document.querySelector('[data-stock-badges]');
+          if (badgesEl && (co.sector || co.industry)) {
+            var bHtml = '';
+            var scrBase = '/' + lang + '/markets/screener?sector=';
+            if (co.sector) bHtml += '<a href="' + scrBase + encodeURIComponent(co.sector) + '" class="stk-badge stk-badge--sector">' + co.sector + '</a>';
+            if (co.industry) bHtml += '<a href="' + scrBase + encodeURIComponent(co.industry) + '" class="stk-badge stk-badge--industry">' + co.industry + '</a>';
+            if (co.country) bHtml += '<a href="' + scrBase + encodeURIComponent(co.country) + '" class="stk-badge stk-badge--location">' + co.country + '</a>';
+            badgesEl.innerHTML = bHtml;
+            badgesEl.style.display = '';
+          }
+
           // Details grid
           if (co.sector) { showEl('[data-ad-sector]'); setEl('[data-ad-sector-v]', co.sector); }
           if (co.industry) { showEl('[data-ad-industry]'); setEl('[data-ad-industry-v]', co.industry); }
@@ -1019,15 +1781,264 @@ const stockI18n = {
           }
           if (co.phone) { showEl('[data-ad-phone]'); setEl('[data-ad-phone-v]', co.phone); }
         }
+
+        // ── Load Peer Stocks ──
+        if (co.sector) {
+          loadPeers(co.sector, symbol);
+        }
+
+        // ── Section Navigation ──
+        setTimeout(function() {
+          var navEl = document.querySelector('[data-section-nav]');
+          if (!navEl) return;
+          var sections = [
+            { sel: '[data-health-section]', label: 'Health' },
+            { sel: '[data-val-snap]', label: 'Valuation' },
+            { sel: '[data-ma-signal]', label: 'MA Signal' },
+            { sel: '[data-financials-section]', label: 'Financials' },
+            { sel: '[data-balance-section]', label: 'Balance Sheet' },
+            { sel: '[data-analyst-section]', label: 'Analyst' },
+            { sel: '[data-earnings-section]', label: 'Earnings' },
+            { sel: '[data-about-section]', label: 'About' },
+            { sel: '[data-peers-section]', label: 'Peers' },
+          ];
+          var navHtml = '';
+          for (var ni = 0; ni < sections.length; ni++) {
+            var sec = document.querySelector(sections[ni].sel);
+            if (sec && sec.style.display !== 'none') {
+              navHtml += '<a class="sn-link" href="#" data-sn-target="' + sections[ni].sel + '">' + sections[ni].label + '</a>';
+            }
+          }
+          if (navHtml) {
+            navEl.innerHTML = navHtml;
+            navEl.style.display = '';
+            navEl.querySelectorAll('.sn-link').forEach(function(link) {
+              link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var target = document.querySelector(link.getAttribute('data-sn-target'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              });
+            });
+          }
+        }, 500);
       })
       .catch(function() {
         // Silently fail — profile is supplementary
       });
   }
 
+  function loadPeers(sector, currentSymbol) {
+    // Try screener API first (has sector data), fallback to BYMA direct
+    fetch('/api/screener')
+      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(data) {
+        if (!Array.isArray(data) || data.length === 0) throw new Error('bad');
+        // Filter by sector if available
+        var peers = data.filter(function(s) {
+          return s.sector === sector && s.symbol !== currentSymbol;
+        });
+        // Fallback: if no sector matches, just show top stocks excluding current
+        if (peers.length === 0) {
+          peers = data.filter(function(s) { return s.symbol !== currentSymbol; });
+        }
+        return peers.slice(0, 6).map(function(s) {
+          return { symbol: s.symbol, name: s.name, price: s.price, change: s.change, marketCap: s.market_cap, pe: s.pe || null, volume: s.volume || null };
+        });
+      })
+      .catch(function() {
+        // Fallback to BYMA direct
+        return fetch('https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/leading-equity', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}'
+        }).then(function(r) { return r.json(); }).then(function(d) {
+          var arr = (d && d.data) || d || [];
+          if (!Array.isArray(arr)) return [];
+          var NAMES = {
+            YPFD:'YPF', GGAL:'Grupo Fin. Galicia', BMA:'Banco Macro', BBAR:'BBVA Argentina',
+            PAMP:'Pampa Energía', TECO2:'Telecom Argentina', CEPU:'Central Puerto',
+            TXAR:'Ternium Argentina', TGSU2:'Transp. Gas del Sur', LOMA:'Loma Negra',
+            SUPV:'Grupo Supervielle', ALUA:'Aluar Aluminio', TRAN:'Transener', EDN:'Edenor'
+          };
+          var seen = {};
+          return arr.filter(function(s) {
+            var sym = (s.symbol || '').replace('.BA', '');
+            if (!sym || sym === currentSymbol || !(s.trade || s.closingPrice) || seen[sym]) return false;
+            seen[sym] = true;
+            return true;
+          }).slice(0, 6).map(function(s) {
+            var sym = (s.symbol || '').replace('.BA', '');
+            return {
+              symbol: sym, name: NAMES[sym] || s.securityDesc || sym,
+              price: s.trade || s.closingPrice,
+              change: s.imbalance != null ? s.imbalance : (s.variation != null ? s.variation / 100 : null),
+              marketCap: null
+            };
+          });
+        }).catch(function() { return []; });
+      })
+      .then(function(peers) {
+        if (!peers || peers.length === 0) return;
+        renderPeers(peers);
+      });
+  }
+
+  function renderPeers(peers) {
+    showEl('[data-peers-section]');
+    var grid = document.querySelector('[data-peers-grid]');
+    if (!grid) return;
+
+    var html = '';
+    for (var i = 0; i < peers.length; i++) {
+      var p = peers[i];
+      var pct = p.change != null ? p.change * 100 : null;
+      var cls = pct != null ? (pct >= 0 ? 'rc-up' : 'rc-down') : '';
+      var arrow = pct != null ? (pct >= 0 ? '▲' : '▼') : '';
+      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(p.symbol);
+      html += '<a href="' + link + '" class="peer-card">';
+      html += '<div class="peer-top">';
+      html += '<span class="peer-symbol">' + p.symbol + '</span>';
+      html += '<span class="peer-pct ' + cls + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toFixed(2) + '%' : '—') + '</span>';
+      html += '</div>';
+      html += '<span class="peer-name">' + (p.name || p.symbol) + '</span>';
+      html += '<span class="peer-price">ARS ' + (p.price ? C.fmt(p.price) : '—') + '</span>';
+      html += '<div class="peer-meta">';
+      if (p.marketCap) html += '<span class="peer-cap">Cap $' + fmtBig(p.marketCap) + '</span>';
+      if (p.pe != null) html += '<span class="peer-pe">P/E ' + p.pe.toFixed(1) + '</span>';
+      html += '</div>';
+      html += '</a>';
+    }
+    grid.innerHTML = html;
+  }
+
+  // ── Crypto-specific profile (CoinGecko) ──
+  function loadCryptoProfile() {
+    var coinSym = symbol.replace('-USD', '').toLowerCase();
+    // Map common symbols to CoinGecko IDs
+    var COIN_IDS = { btc:'bitcoin', eth:'ethereum', xrp:'ripple', bnb:'binancecoin', sol:'solana', ada:'cardano', doge:'dogecoin', trx:'tron', avax:'avalanche-2', link:'chainlink', dot:'polkadot', matic:'matic-network', shib:'shiba-inu', ltc:'litecoin', atom:'cosmos', uni:'uniswap', xlm:'stellar', near:'near', icp:'internet-computer', apt:'aptos' };
+    var coinId = COIN_IDS[coinSym] || coinSym;
+
+    fetch('https://api.coingecko.com/api/v3/coins/' + coinId + '?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=true')
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(d) {
+        if (!d) return;
+
+        // Company hero for crypto
+        showEl('[data-company-hero]');
+        var nameEl = document.querySelector('[data-ch-name]');
+        if (nameEl) nameEl.textContent = d.name || displaySymbol;
+
+        // Logo
+        if (d.image && d.image.small) {
+          var li = document.querySelector('[data-ch-logo-img]');
+          if (li) { li.src = d.image.small; li.alt = d.name; li.style.display = ''; }
+          var fb = document.querySelector('[data-ch-logo-fb]');
+          if (fb) fb.style.display = 'none';
+        }
+
+        // Tags
+        var tagsEl = document.querySelector('[data-ch-tags]');
+        if (tagsEl) {
+          var tagHtml = '<span class="ch-tag ch-tag--sector">Cryptocurrency</span>';
+          if (d.categories && d.categories[0]) tagHtml += '<span class="ch-tag ch-tag--industry">' + d.categories[0] + '</span>';
+          tagsEl.innerHTML = tagHtml;
+        }
+
+        // Summary
+        var sumEl = document.querySelector('[data-ch-summary]');
+        if (sumEl && d.description && d.description.en) {
+          var desc = d.description.en.replace(/<[^>]+>/g, '').substring(0, 400);
+          sumEl.textContent = desc + (d.description.en.length > 400 ? '…' : '');
+        }
+
+        // Pills
+        var md = d.market_data;
+        if (md) {
+          if (md.market_cap && md.market_cap.usd) {
+            var mcPill = document.querySelector('[data-ch-mcap-pill]');
+            if (mcPill) { mcPill.style.display = 'flex'; setEl('[data-ch-mcap-v]', '$' + fmtBig(md.market_cap.usd)); }
+          }
+
+          // Crypto-specific Quick Facts
+          var qfEl = document.querySelector('[data-qf-strip]');
+          if (qfEl) {
+            var qfHtml = '';
+            if (md.market_cap_rank) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">Rank</span><span class="qf-val">#' + md.market_cap_rank + '</span></div>';
+            if (md.total_volume && md.total_volume.usd) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">24h Volume</span><span class="qf-val">$' + fmtBig(md.total_volume.usd) + '</span></div>';
+            if (md.circulating_supply) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">Circulating</span><span class="qf-val">' + fmtBig(md.circulating_supply) + '</span></div>';
+            if (md.max_supply) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">Max Supply</span><span class="qf-val">' + fmtBig(md.max_supply) + '</span></div>';
+            if (md.ath && md.ath.usd) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">ATH</span><span class="qf-val">$' + C.fmt(md.ath.usd) + '</span></div>';
+            if (md.ath_change_percentage && md.ath_change_percentage.usd) {
+              var athPct = md.ath_change_percentage.usd;
+              qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">From ATH</span><span class="qf-val" style="color:' + (athPct >= 0 ? '#16a34a' : '#dc2626') + '">' + athPct.toFixed(1) + '%</span></div>';
+            }
+            qfEl.innerHTML = qfHtml;
+            qfEl.style.display = '';
+          }
+
+          // 52-week range from crypto data
+          if (md.high_24h && md.high_24h.usd && md.low_24h && md.low_24h.usd) {
+            var rangeEl = document.querySelector('[data-pc-range]');
+            if (rangeEl && md.current_price && md.current_price.usd) {
+              rangeEl.style.display = '';
+              setEl('[data-pc-range-lo]', '$' + C.fmt(md.low_24h.usd));
+              setEl('[data-pc-range-hi]', '$' + C.fmt(md.high_24h.usd));
+              var dayR = md.high_24h.usd - md.low_24h.usd;
+              var dayP = dayR > 0 ? Math.max(0, Math.min(100, ((md.current_price.usd - md.low_24h.usd) / dayR) * 100)) : 50;
+              var fillE = document.querySelector('[data-pc-range-fill]');
+              var dotE = document.querySelector('[data-pc-range-dot]');
+              if (fillE) fillE.style.width = dayP + '%';
+              if (dotE) dotE.style.left = dayP + '%';
+            }
+          }
+
+          // Website
+          if (d.links && d.links.homepage && d.links.homepage[0]) {
+            var webPill = document.querySelector('[data-ch-web-pill]');
+            var webLink = document.querySelector('[data-ch-web-v]');
+            if (webPill && webLink) {
+              webPill.style.display = 'flex';
+              webLink.href = d.links.homepage[0];
+              webLink.textContent = d.links.homepage[0].replace(/^https?:\/\//, '').replace(/\/$/, '');
+            }
+          }
+        }
+
+        // Section nav for crypto
+        setTimeout(function() {
+          var navEl = document.querySelector('[data-section-nav]');
+          if (!navEl) return;
+          var sections = [
+            { sel: '[data-company-hero]', label: 'About' },
+            { sel: '[data-range52]', label: '52W Range' },
+          ];
+          var links = [];
+          for (var k = 0; k < sections.length; k++) {
+            var el = document.querySelector(sections[k].sel);
+            if (el && el.style.display !== 'none' && el.offsetParent !== null) {
+              links.push({ el: el, label: sections[k].label });
+            }
+          }
+          if (links.length > 1) {
+            var navHtml = '';
+            for (var m = 0; m < links.length; m++) {
+              navHtml += '<a class="sn-link" data-sn-target="' + m + '">' + links[m].label + '</a>';
+            }
+            navEl.innerHTML = navHtml;
+            navEl.style.display = '';
+            navEl.querySelectorAll('[data-sn-target]').forEach(function(a, idx) {
+              a.addEventListener('click', function() { links[idx].el.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+            });
+          }
+        }, 600);
+      }).catch(function() {});
+  }
+
   // Initial load — chart + profile in parallel
   loadStock('1mo', '1d');
-  loadProfile();
+  if (isCrypto) {
+    loadCryptoProfile();
+  } else {
+    loadProfile();
+  }
 
   // Range selector
   document.querySelectorAll('[data-range-buttons] button').forEach(function(btn) {
@@ -1048,7 +2059,15 @@ const stockI18n = {
       C.drawChart(document.querySelector('[data-stock-chart]'), [
         { points: points, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)' }
       ]);
+      drawVolumeBars(currentChart.timestamps, currentChart.volumes, currentChart.closes);
     }, 200);
+  });
+
+  // Tooltip toggle for mobile
+  document.addEventListener('click', function(e) {
+    var info = e.target.closest('.st-info');
+    document.querySelectorAll('.st-info--active').forEach(function(el) { if (el !== info) el.classList.remove('st-info--active'); });
+    if (info) info.classList.toggle('st-info--active');
   });
 })();
 </script>
@@ -1060,17 +2079,43 @@ const stockI18n = {
   .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
 
   .stock-title-row { display: flex; align-items: center; gap: var(--spacing-sm); }
+  :global(.stock-badges) { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+  :global(.stk-badge) { font-size: 0.62rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.03em; }
+  :global(.stk-badge--sector) { background: rgba(246,180,14,0.15); color: var(--color-gold); }
+  :global(.stk-badge--industry) { background: rgba(117,170,219,0.12); color: #75AADB; }
+  :global(.stk-badge--location) { background: rgba(22,163,74,0.12); color: #16a34a; }
+  :global(.stk-badge) { text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
+  :global(.stk-badge:hover) { opacity: 0.8; text-decoration: none; }
+  :global(.ch-tag--location) { background: rgba(22,163,74,0.1); color: #16a34a; }
+  :global(.ch-tag) { text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
+  :global(.ch-tag:hover) { opacity: 0.8; text-decoration: none; }
 
   /* Empty state */
   .stock-empty { text-align: center; padding: var(--spacing-2xl) 0; }
   .stock-empty-msg { font-size: 1rem; color: var(--color-text-meta); margin: var(--spacing-md) 0 var(--spacing-xl); }
 
   /* Price Card */
+  /* Section Navigation */
+  :global(.section-nav) { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--spacing-lg); padding: 10px 0; border-bottom: 1px solid var(--color-border); }
+  :global(.sn-link) { font-size: 0.7rem; font-weight: 700; color: var(--color-text-meta); text-decoration: none; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--color-border); transition: all 0.15s ease; }
+  :global(.sn-link:hover) { color: var(--color-gold); border-color: var(--color-gold); background: rgba(246,180,14,0.08); }
+
   .price-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
   .pc-main { display: flex; align-items: baseline; gap: 12px; margin-bottom: var(--spacing-lg); }
   .pc-price { font-size: 2.4rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; }
   .pc-change { font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
   .pc-currency { font-size: 0.85rem; color: var(--color-text-meta); font-weight: 600; }
+  /* Today's Range */
+  .pc-range { margin-bottom: var(--spacing-md); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); }
+  .pc-range-head { margin-bottom: 8px; }
+  .pc-range-label { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .pc-range-bar { display: flex; align-items: center; gap: 10px; }
+  .pc-range-lo, .pc-range-hi { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text-meta); white-space: nowrap; min-width: 50px; }
+  .pc-range-hi { text-align: right; }
+  .pc-range-track { flex: 1; height: 6px; background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); border-radius: 3px; position: relative; }
+  .pc-range-fill { display: none; }
+  .pc-range-dot { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--color-celeste); border: 2.5px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2); z-index: 1; }
+
   .pc-stats { display: flex; gap: var(--spacing-xl); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); flex-wrap: wrap; }
   .pc-stat { display: flex; flex-direction: column; gap: 2px; }
   .pc-sk { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
@@ -1087,8 +2132,10 @@ const stockI18n = {
   .chart-section { margin-bottom: var(--spacing-2xl); }
   .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md); flex-wrap: wrap; gap: var(--spacing-sm); }
   .section-title { font-size: 1.3rem; font-weight: 700; }
-  .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-md); }
+  .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px 8px 0 0; border-bottom: none; padding: var(--spacing-md); padding-bottom: 0; }
   .chart-wrap canvas { width: 100%; display: block; }
+  .vol-chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 0 0 8px 8px; padding: 0 var(--spacing-md) var(--spacing-md); }
+  .vol-chart-wrap canvas { width: 100%; display: block; }
 
   /* Range Buttons */
   .range-buttons { display: flex; gap: 4px; }
@@ -1120,6 +2167,22 @@ const stockI18n = {
   .stats-table td { padding: 10px 14px; font-size: 0.85rem; }
   .st-k { color: var(--color-text-meta); font-weight: 500; white-space: nowrap; }
   .st-v { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); white-space: nowrap; }
+  .st-info {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px; border-radius: 50%; font-size: 0.55rem; font-weight: 800;
+    font-style: italic; background: rgba(117,170,219,0.15); color: var(--color-celeste);
+    cursor: help; position: relative; vertical-align: middle; margin-left: 4px;
+    user-select: none; line-height: 1;
+  }
+  .st-info::after {
+    content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%;
+    transform: translateX(-50%); background: var(--color-bg); border: 1px solid var(--color-border);
+    color: var(--color-text); font-size: 0.72rem; font-weight: 500; font-style: normal;
+    padding: 6px 10px; border-radius: 6px; white-space: normal; width: 220px;
+    pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); line-height: 1.4;
+  }
+  .st-info:hover::after, .st-info.st-info--active::after { opacity: 1; }
 
   /* ─── Analyst Card ─── */
   .analyst-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); }
@@ -1140,7 +2203,44 @@ const stockI18n = {
   .analyst-label { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em; }
   .analyst-count { font-size: 0.85rem; color: var(--color-text-secondary); }
 
+  /* ─── Rating Distribution ─── */
+  .rating-dist { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
+  :global(.rd-bar) { display: flex; height: 28px; border-radius: 6px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
+  :global(.rd-seg) { display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #fff; min-width: 4px; transition: width 0.4s ease; }
+  :global(.rd-seg.rd--sbuy) { background: #15803d; }
+  :global(.rd-seg.rd--buy) { background: #4ade80; color: #15803d; }
+  :global(.rd-seg.rd--hold) { background: #facc15; color: #854d0e; }
+  :global(.rd-seg.rd--sell) { background: #f87171; color: #7f1d1d; }
+  :global(.rd-seg.rd--ssell) { background: #dc2626; }
+  :global(.rd-legend) { display: flex; flex-wrap: wrap; gap: 10px 16px; }
+  :global(.rd-leg-item) { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--color-text-secondary); }
+  :global(.rd-dot) { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  :global(.rd-dot.rd--sbuy) { background: #15803d; }
+  :global(.rd-dot.rd--buy) { background: #4ade80; }
+  :global(.rd-dot.rd--hold) { background: #facc15; }
+  :global(.rd-dot.rd--sell) { background: #f87171; }
+  :global(.rd-dot.rd--ssell) { background: #dc2626; }
+
   /* ─── Company Overview Hero ─── */
+  /* ─── Key Insights ─── */
+  .key-insights {
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-left: 3px solid var(--color-gold);
+    border-radius: 8px; padding: 14px 18px; margin-bottom: var(--spacing-xl);
+  }
+  :global(.ki-list) { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  :global(.ki-item) {
+    font-size: 0.82rem; color: var(--color-text-secondary); line-height: 1.5;
+    padding-left: 16px; position: relative;
+  }
+  :global(.ki-item::before) { content: '•'; position: absolute; left: 0; color: var(--color-gold); font-weight: 700; }
+
+  /* ─── Quick Facts Strip ─── */
+  .qf-strip { display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-xl); flex-wrap: wrap; }
+  .qf-item { flex: 1; min-width: 100px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 14px; display: flex; flex-direction: column; gap: 3px; }
+  .qf-label { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .qf-val { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  @media (max-width: 640px) { .qf-strip { gap: 8px; } .qf-item { min-width: 80px; padding: 8px 10px; } .qf-val { font-size: 0.95rem; } }
+
   .company-hero { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
   .ch-identity { display: flex; align-items: center; gap: var(--spacing-lg); margin-bottom: var(--spacing-md); }
   .ch-logo { width: 64px; height: 64px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: var(--color-bg); border: 1px solid var(--color-border); }
@@ -1162,14 +2262,121 @@ const stockI18n = {
   /* ─── 52-Week Price Range ─── */
   .range52-section { margin-bottom: var(--spacing-2xl); }
   .range52-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); }
+  .range52-zone-badge {
+    display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 3px 8px; border-radius: 4px; margin-bottom: 12px;
+  }
+  :global(.range52-zone--low) { background: rgba(220,38,38,0.15); color: #ef4444; }
+  :global(.range52-zone--mid) { background: rgba(234,179,8,0.15); color: #eab308; }
+  :global(.range52-zone--high) { background: rgba(22,163,74,0.15); color: #16a34a; }
+  :global(.range52-zone--ath) { background: rgba(246,180,14,0.2); color: var(--color-gold); }
   .range52-bar { display: flex; align-items: center; gap: var(--spacing-md); }
   .range52-label { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text-meta); white-space: nowrap; min-width: 60px; }
   .range52-track { flex: 1; height: 10px; background: var(--color-border); border-radius: 5px; position: relative; overflow: visible; }
   .range52-fill { height: 100%; background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); border-radius: 5px; transition: width 0.4s ease; }
   .range52-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; background: var(--color-gold); border: 3px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: left 0.4s ease; z-index: 1; }
   .range52-marker-label { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); font-size: 0.75rem; font-weight: 700; color: var(--color-text); white-space: nowrap; background: var(--color-bg-secondary); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--color-border); }
+  .range52-stats {
+    display: flex; justify-content: space-between; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--color-border);
+  }
+  .range52-stats :global(.range52-stat) { font-size: 0.78rem; color: var(--color-text-meta); }
+  .range52-stats :global(.range52-stat-val) { font-weight: 700; }
+  .range52-stats :global(.range52-stat--up) { color: var(--color-positive); }
+  .range52-stats :global(.range52-stat--down) { color: var(--color-negative); }
+
+  /* ─── Cash Flow Quality ─── */
+  :global(.cf-quality) { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
+  :global(.cfq-row) { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+  :global(.cfq-metric) { display: flex; align-items: center; gap: var(--spacing-md); }
+  :global(.cfq-label) { font-size: 0.82rem; font-weight: 700; color: var(--color-text); }
+  :global(.cfq-assess) { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+  :global(.cfq-details) { display: flex; flex-direction: column; gap: 6px; }
+  :global(.cfq-bar-row) { display: grid; grid-template-columns: 100px 1fr 80px; align-items: center; gap: 10px; }
+  :global(.cfq-bar-label) { font-size: 0.72rem; font-weight: 600; color: var(--color-text-meta); }
+  :global(.cfq-bar-wrap) { height: 16px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
+  :global(.cfq-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  :global(.cfq-bar-val) { font-size: 0.78rem; font-weight: 800; text-align: right; color: var(--color-text); font-variant-numeric: tabular-nums; }
+  :global(.cfq-ratio) { font-size: 0.72rem; font-weight: 700; color: var(--color-text-secondary); }
+  :global(.cfq-desc) { font-size: 0.68rem; color: var(--color-text-meta); font-style: italic; }
+
+  /* ─── Revenue Funnel ─── */
+  :global(.rev-funnel) { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
+  :global(.rf-step) { display: grid; grid-template-columns: 100px 1fr 80px; align-items: center; gap: 12px; padding: 6px 0; }
+  :global(.rf-step + .rf-step) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.rf-label) { font-size: 0.75rem; font-weight: 600; color: var(--color-text-meta); }
+  :global(.rf-bar-wrap) { height: 22px; background: var(--color-border); border-radius: 6px; overflow: hidden; }
+  :global(.rf-bar) { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+  :global(.rf-bar--neg) { opacity: 0.7; }
+  :global(.rf-val) { font-size: 0.82rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+
+  /* ─── Margin Comparison Bars ─── */
+  :global(.mg-row) {
+    display: grid; grid-template-columns: 140px 1fr 75px; align-items: center; gap: 12px;
+    padding: 8px 0;
+  }
+  :global(.mg-row + .mg-row) { border-top: 1px solid rgba(128,128,128,0.08); }
+  :global(.mg-label) { font-size: 0.78rem; font-weight: 600; color: var(--color-text-meta); }
+  :global(.mg-bar-wrap) { height: 18px; background: var(--color-border); border-radius: 4px; overflow: hidden; position: relative; }
+  :global(.mg-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  :global(.mg-bar--neg) { position: absolute; right: 0; height: 100%; border-radius: 4px; }
+  :global(.mg-val) { font-size: 0.85rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+
+  /* ─── Valuation Snapshot ─── */
+  :global(.val-cards) { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--spacing-md); }
+  :global(.vc-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+  :global(.vc-head) { display: flex; justify-content: space-between; align-items: center; }
+  :global(.vc-label) { font-size: 0.72rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
+  :global(.vc-assess) { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+  :global(.vc-value) { font-size: 1.3rem; font-weight: 800; color: var(--color-text); font-variant-numeric: tabular-nums; }
+  :global(.vc-gauge) { height: 6px; background: var(--color-border); border-radius: 3px; overflow: hidden; }
+  :global(.vc-gauge-fill) { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+  :global(.vc-range) { display: flex; justify-content: space-between; font-size: 0.58rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+
+  /* ─── Moving Average Signal ─── */
+  :global(.ma-overall) { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 20px; border: 2px solid; border-radius: 10px; margin-bottom: var(--spacing-md); background: var(--color-bg-secondary); }
+  :global(.ma-overall-label) { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text); }
+  :global(.ma-overall-icon) { font-size: 1.2rem; }
+  :global(.ma-cards) { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
+  :global(.ma-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 4px; border-top: 3px solid transparent; }
+  :global(.ma-card--up) { border-top-color: #16a34a; }
+  :global(.ma-card--down) { border-top-color: #dc2626; }
+  :global(.ma-card-title) { font-size: 0.72rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
+  :global(.ma-card-val) { font-size: 1rem; font-weight: 800; color: var(--color-text); }
+  :global(.ma-card-sig) { font-size: 0.78rem; font-weight: 600; color: var(--color-text-secondary); }
+
+  /* ─── Dividend Yield Gauge ─── */
+  .div-yield-gauge { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
+  :global(.dyg-wrap) { display: flex; align-items: center; gap: 12px; }
+  :global(.dyg-label) { font-size: 0.78rem; font-weight: 600; color: var(--color-text-meta); min-width: 100px; }
+  :global(.dyg-track) { flex: 1; height: 12px; background: var(--color-border); border-radius: 6px; overflow: hidden; }
+  :global(.dyg-fill) { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
+  :global(.dyg-val) { font-size: 1rem; font-weight: 800; font-variant-numeric: tabular-nums; min-width: 60px; text-align: right; }
+
+  /* ─── Ownership Breakdown Bar ─── */
+  .own-bar-wrap { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
+  :global(.own-bar) { display: flex; height: 28px; border-radius: 6px; overflow: hidden; gap: 2px; margin-bottom: 10px; }
+  :global(.own-seg) { display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: #fff; min-width: 4px; transition: width 0.4s ease; }
+  :global(.own-seg--ins) { background: #f59e0b; }
+  :global(.own-seg--inst) { background: #3b82f6; }
+  :global(.own-seg--pub) { background: #6b7280; }
+  :global(.own-legend) { display: flex; flex-wrap: wrap; gap: 12px; }
+  :global(.own-leg) { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--color-text-secondary); }
+  :global(.own-dot) { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  :global(.own-dot--ins) { background: #f59e0b; }
+  :global(.own-dot--inst) { background: #3b82f6; }
+  :global(.own-dot--pub) { background: #6b7280; }
 
   /* ─── Financial Health Dashboard ─── */
+  /* Health Score */
+  :global(.health-score) { margin-bottom: var(--spacing-lg); }
+  :global(.hs-wrap) { display: flex; align-items: center; gap: var(--spacing-lg); }
+  :global(.hs-gauge) { flex: 1; height: 12px; background: var(--color-border); border-radius: 6px; overflow: hidden; }
+  :global(.hs-gauge-fill) { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+  :global(.hs-info) { display: flex; align-items: center; gap: var(--spacing-sm); flex-shrink: 0; }
+  :global(.hs-score) { font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  :global(.hs-label) { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+  :global(.hs-sub) { font-size: 0.65rem; color: var(--color-text-meta); }
+
   .health-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
   .health-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-lg); display: block; }
   .hc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
@@ -1229,6 +2436,13 @@ const stockI18n = {
   .eq-indicator--miss { background: rgba(220,38,38,0.12); color: #dc2626; }
   .eq-label { font-size: 0.68rem; color: var(--color-text-meta); font-weight: 600; }
   .eq-values { font-size: 0.7rem; font-weight: 700; color: var(--color-text); font-variant-numeric: tabular-nums; }
+  :global(.earnings-summary) { margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); }
+  :global(.es-stats) { display: flex; gap: var(--spacing-xl); justify-content: center; }
+  :global(.es-stat) { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  :global(.es-val) { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  :global(.es-val--beat) { color: #16a34a; }
+  :global(.es-val--miss) { color: #dc2626; }
+  :global(.es-label) { font-size: 0.68rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
 
   /* ─── About the Company (expanded) ─── */
   .about-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
@@ -1244,11 +2458,62 @@ const stockI18n = {
   .ad-link { font-size: 0.9rem; font-weight: 600; color: var(--color-accent); text-decoration: none; }
   .ad-link:hover { text-decoration: underline; }
 
+  /* ─── Peer Stocks Grid ─── */
+  :global(.peers-grid) { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
+  :global(.peer-card) {
+    display: flex; flex-direction: column; gap: 4px;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px;
+    padding: 14px 16px; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.1s;
+  }
+  :global(.peer-card:hover) { border-color: var(--color-gold); transform: translateY(-1px); }
+  :global(.peer-top) { display: flex; justify-content: space-between; align-items: center; }
+  :global(.peer-symbol) { font-weight: 800; font-size: 0.9rem; color: var(--color-text); }
+  :global(.peer-pct) { font-size: 0.75rem; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+  :global(.peer-pct.rc-up) { color: #16a34a; background: rgba(22,163,74,0.1); }
+  :global(.peer-pct.rc-down) { color: #dc2626; background: rgba(220,38,38,0.1); }
+  :global(.peer-name) { font-size: 0.7rem; color: var(--color-text-meta); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  :global(.peer-price) { font-size: 0.88rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); margin-top: 4px; }
+  :global(.peer-meta) { display: flex; gap: 8px; align-items: center; }
+  :global(.peer-cap) { font-size: 0.68rem; color: var(--color-text-meta); }
+  :global(.peer-pe) { font-size: 0.68rem; color: var(--color-text-secondary); font-weight: 600; }
+
   /* Back link */
   .back-link { display: inline-block; font-size: 0.9rem; font-weight: 600; color: var(--color-accent); text-decoration: none; margin-bottom: var(--spacing-2xl); }
   .back-link:hover { text-decoration: underline; }
 
   .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
+
+  /* ─── Dividend Income Card ─── */
+  :global(.div-income-card) { margin-bottom: var(--spacing-md); }
+  :global(.dii-grid) { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--spacing-sm); }
+  :global(.dii-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 12px; text-align: center; display: flex; flex-direction: column; gap: 2px; }
+  :global(.dii-card--highlight) { border-color: var(--color-gold); background: rgba(246,180,14,0.04); }
+  :global(.dii-label) { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+  :global(.dii-val) { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  :global(.dii-sub) { font-size: 0.68rem; color: var(--color-text-meta); }
+
+  /* ─── Graham Analysis ─── */
+  :global(.graham-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px; padding: var(--spacing-lg); }
+  :global(.grm-header) { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); }
+  :global(.grm-score-wrap) { display: flex; align-items: center; gap: var(--spacing-md); flex: 1; }
+  :global(.grm-gauge) { flex: 1; height: 8px; background: var(--color-border); border-radius: 4px; overflow: hidden; max-width: 200px; }
+  :global(.grm-gauge-fill) { height: 100%; border-radius: 4px; transition: width 0.5s; }
+  :global(.grm-score) { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  :global(.grm-verdict) { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  :global(.grm-number) { background: rgba(128,128,128,0.06); border-radius: 8px; padding: 12px 16px; margin-bottom: var(--spacing-md); }
+  :global(.grm-num-row) { display: flex; justify-content: space-between; align-items: baseline; padding: 2px 0; }
+  :global(.grm-num-label) { font-size: 0.78rem; color: var(--color-text-meta); font-weight: 600; }
+  :global(.grm-num-val) { font-size: 1rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  :global(.grm-margin) { font-size: 0.82rem; font-weight: 700; text-align: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--color-border); }
+  :global(.grm-criteria) { display: flex; flex-direction: column; gap: 2px; }
+  :global(.grm-row) { display: grid; grid-template-columns: 24px 1fr auto auto; align-items: center; gap: 8px; padding: 8px 6px; border-radius: 6px; }
+  :global(.grm-row:nth-child(even)) { background: rgba(128,128,128,0.04); }
+  :global(.grm-icon) { font-size: 0.9rem; font-weight: 800; text-align: center; }
+  :global(.grm-pass .grm-icon) { color: #16a34a; }
+  :global(.grm-fail .grm-icon) { color: #dc2626; }
+  :global(.grm-label) { font-size: 0.82rem; font-weight: 600; color: var(--color-text); }
+  :global(.grm-val) { font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); text-align: right; }
+  :global(.grm-note) { font-size: 0.68rem; color: var(--color-text-meta); text-align: right; min-width: 70px; }
 
   /* ─── Dark Mode ─── */
   :global([data-theme="dark"]) .rc-badge--merval { color: #60a5fa; }
@@ -1269,6 +2534,7 @@ const stockI18n = {
     .analyst-targets { flex-wrap: wrap; gap: var(--spacing-md); }
     .health-grid { grid-template-columns: repeat(2, 1fr); }
     .about-details { grid-template-columns: 1fr 1fr; }
+    :global(.peers-grid) { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 640px) {

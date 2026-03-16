@@ -158,6 +158,7 @@ export function extractProfileData(
   const financial = result.financialData ?? {};
   const price = result.price ?? {};
   const earnings = result.earnings ?? {};
+  const recTrend = result.recommendationTrend?.trend?.[0] ?? {};
 
   return {
     symbol: rawSymbol,
@@ -242,6 +243,13 @@ export function extractProfileData(
       recommendationKey: financial.recommendationKey || null,
       recommendationMean: numVal(financial.recommendationMean),
     },
+    ratingDistribution: recTrend.strongBuy != null ? {
+      strongBuy: numVal(recTrend.strongBuy) ?? 0,
+      buy: numVal(recTrend.buy) ?? 0,
+      hold: numVal(recTrend.hold) ?? 0,
+      sell: numVal(recTrend.sell) ?? 0,
+      strongSell: numVal(recTrend.strongSell) ?? 0,
+    } : null,
     earningsHistory:
       earnings.earningsChart?.quarterly?.map((q: any) => ({
         date: q.date,

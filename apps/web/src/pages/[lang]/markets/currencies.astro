@@ -118,39 +118,118 @@ const { lang } = Astro.params;
       </div>
     </div>
 
+    <!-- Quick Converter -->
+    <section class="fx-converter">
+      <h2 class="fx-converter-title">{t(lang!, "currencies.converter")}</h2>
+      <div class="fx-conv-row">
+        <div class="fx-conv-input-wrap">
+          <label class="fx-conv-label" data-conv-from-label>USD</label>
+          <input type="number" class="fx-conv-input" data-conv-from value="100" min="0" step="1" />
+        </div>
+        <button class="fx-conv-swap" data-conv-swap title="Swap" aria-label="Swap currencies">⇄</button>
+        <div class="fx-conv-input-wrap">
+          <label class="fx-conv-label" data-conv-to-label>ARS</label>
+          <input type="text" class="fx-conv-input fx-conv-input--readonly" data-conv-to readonly />
+        </div>
+        <div class="fx-conv-rate-select">
+          <select class="fx-conv-select" data-conv-rate>
+            <option value="oficial">{t(lang!, "currencies.usdOfficial")}</option>
+            <option value="blue" selected>{t(lang!, "currencies.usdBlue")}</option>
+            <option value="mep">{t(lang!, "currencies.usdMep")}</option>
+            <option value="ccl">{t(lang!, "currencies.usdCcl")}</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- What $100 USD Gets You -->
+    <section class="fx-ppp-section" data-fx-ppp style="display:none;">
+      <h2 class="fx-section-title">{t(lang!, "currencies.whatYouGet" as any)}</h2>
+      <div class="fx-ppp-grid" data-fx-ppp-grid></div>
+    </section>
+
+    <!-- 30-Day Performance -->
+    <section class="fx-perf-section" data-fx-perf style="display:none;">
+      <h2 class="fx-section-title">{t(lang!, "currencies.performance")}</h2>
+      <div class="fx-perf-grid">
+        <div class="fx-perf-card">
+          <span class="fx-perf-label">{t(lang!, "currencies.usdOfficial")}</span>
+          <div class="fx-perf-stats">
+            <div class="fx-perf-stat">
+              <span class="fx-perf-sk">{t(lang!, "currencies.thirtyDayChg")}</span>
+              <span class="fx-perf-sv" data-perf-chg="oficial">—</span>
+            </div>
+            <div class="fx-perf-stat">
+              <span class="fx-perf-sk">{t(lang!, "currencies.periodHigh")}</span>
+              <span class="fx-perf-sv" data-perf-high="oficial">—</span>
+            </div>
+            <div class="fx-perf-stat">
+              <span class="fx-perf-sk">{t(lang!, "currencies.periodLow")}</span>
+              <span class="fx-perf-sv" data-perf-low="oficial">—</span>
+            </div>
+          </div>
+          <div class="fx-perf-bar-wrap">
+            <div class="fx-perf-bar" data-perf-bar="oficial"></div>
+          </div>
+        </div>
+        <div class="fx-perf-card">
+          <span class="fx-perf-label">{t(lang!, "currencies.usdBlue")}</span>
+          <div class="fx-perf-stats">
+            <div class="fx-perf-stat">
+              <span class="fx-perf-sk">{t(lang!, "currencies.thirtyDayChg")}</span>
+              <span class="fx-perf-sv" data-perf-chg="blue">—</span>
+            </div>
+            <div class="fx-perf-stat">
+              <span class="fx-perf-sk">{t(lang!, "currencies.periodHigh")}</span>
+              <span class="fx-perf-sv" data-perf-high="blue">—</span>
+            </div>
+            <div class="fx-perf-stat">
+              <span class="fx-perf-sk">{t(lang!, "currencies.periodLow")}</span>
+              <span class="fx-perf-sv" data-perf-low="blue">—</span>
+            </div>
+          </div>
+          <div class="fx-perf-bar-wrap">
+            <div class="fx-perf-bar" data-perf-bar="blue"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rate Spread Matrix -->
+    <section class="fx-spread-section" data-fx-spread style="display:none;">
+      <h2 class="fx-section-title">{t(lang!, "currencies.spreadMatrix" as any)}</h2>
+      <div class="fx-spread-grid" data-fx-spread-grid></div>
+    </section>
+
+    <!-- Visual Rate Comparison -->
+    <section class="fx-bars-section" data-fx-bars style="display:none;">
+      <h2 class="fx-section-title">{t(lang!, "currencies.rateComparison" as any)}</h2>
+      <div class="fx-bars" data-fx-bars-grid></div>
+    </section>
+
+    <!-- Volatility & Daily Changes -->
+    <section class="fx-vol-section" data-fx-vol style="display:none;">
+      <h2 class="fx-section-title">{t(lang!, "currencies.volatility" as any)}</h2>
+      <div class="fx-vol-grid" data-fx-vol-grid></div>
+    </section>
+
     <!-- Chart -->
     <section class="fx-chart-section">
       <div class="fx-chart-head">
         <h2 class="fx-chart-title">{t(lang!, "currencies.evoTitle")}</h2>
-        <div class="fx-legend">
-          <span class="fx-leg fx-leg--official"><span class="fx-dot"></span> {t(lang!, "markets.official")}</span>
-          <span class="fx-leg fx-leg--blue"><span class="fx-dot"></span> {t(lang!, "markets.blue")}</span>
-        </div>
       </div>
       <div class="fx-chart-wrap">
         <canvas data-evo-chart height="320"></canvas>
       </div>
     </section>
 
-    <!-- History Table -->
-    <section class="fx-table-section">
-      <h2 class="fx-section-title">{t(lang!, "currencies.recentHistory")}</h2>
-      <div class="fx-table-wrap">
-        <table class="fx-table" data-comparison-table>
-          <thead>
-            <tr>
-              <th>{t(lang!, "currencies.date")}</th>
-              <th class="r">{t(lang!, "markets.official")}</th>
-              <th class="r">{t(lang!, "markets.blue")}</th>
-              <th class="r">{t(lang!, "markets.spread")}</th>
-              <th class="r">{t(lang!, "currencies.gap")}</th>
-            </tr>
-          </thead>
-          <tbody data-comparison-body>
-            <tr><td colspan="5" class="fx-loading">{t(lang!, "common.loadingData")}</td></tr>
-          </tbody>
-        </table>
+    <!-- Gap Trend -->
+    <section class="fx-gap-section" data-fx-gap style="display:none;">
+      <h2 class="fx-section-title">{t(lang!, "currencies.gapTrend" as any)}</h2>
+      <div class="fx-gap-chart-wrap">
+        <canvas data-gap-chart height="180"></canvas>
       </div>
+      <div class="fx-gap-stats" data-fx-gap-stats></div>
     </section>
 
     <p class="fx-disclaimer">{t(lang!, "currencies.disclaimer")}</p>
@@ -225,6 +304,89 @@ const { lang } = Astro.params;
           fillSpread('ccl', apiRates.ccl.value_sell, latest.oficial.value_sell);
         }
       }
+
+      // Build spread matrix
+      var rates = {};
+      if (latest.oficial) rates['Official'] = latest.oficial.value_sell;
+      if (latest.blue) rates['Blue'] = latest.blue.value_sell;
+      if (apiRates && apiRates.mep) rates['MEP'] = apiRates.mep.value_sell;
+      if (apiRates && apiRates.ccl) rates['CCL'] = apiRates.ccl.value_sell;
+
+      var rateKeys = Object.keys(rates);
+      if (rateKeys.length >= 3) {
+        var spreadGrid = document.querySelector('[data-fx-spread-grid]');
+        var spreadSection = document.querySelector('[data-fx-spread]');
+        if (spreadGrid && spreadSection) {
+          var sHtml = '';
+          for (var si = 1; si < rateKeys.length; si++) {
+            var rk = rateKeys[si];
+            var rv = rates[rk];
+            var ofv = rates['Official'];
+            var gap = ofv > 0 ? ((rv - ofv) / ofv * 100) : 0;
+            var diff = rv - ofv;
+            var gCls = gap > 5 ? 'fx-sp--high' : gap > 2 ? 'fx-sp--mid' : 'fx-sp--low';
+            sHtml += '<div class="fx-sp-card ' + gCls + '">';
+            sHtml += '<div class="fx-sp-name">' + rk + ' <span class="fx-sp-vs">vs Official</span></div>';
+            sHtml += '<div class="fx-sp-gap">+' + gap.toFixed(1) + '%</div>';
+            sHtml += '<div class="fx-sp-diff">+ARS ' + C.fmt(diff) + '</div>';
+            sHtml += '</div>';
+          }
+          spreadGrid.innerHTML = sHtml;
+          spreadSection.style.display = '';
+        }
+      }
+
+      // What $100 USD gets you
+      if (rateKeys.length >= 2) {
+        var pppGrid = document.querySelector('[data-fx-ppp-grid]');
+        var pppSection = document.querySelector('[data-fx-ppp]');
+        if (pppGrid && pppSection) {
+          var pppColors = { Official: '#75AADB', Blue: '#F6B40E', MEP: '#22c55e', CCL: '#a855f7' };
+          var bestRate = 0, bestName = '';
+          for (var pk in rates) { if (rates[pk] > bestRate) { bestRate = rates[pk]; bestName = pk; } }
+          var pHtml = '';
+          for (var pi = 0; pi < rateKeys.length; pi++) {
+            var pn = rateKeys[pi];
+            var pv = rates[pn];
+            var arsVal = pv * 100;
+            var isBest = pn === bestName;
+            var col = pppColors[pn] || '#9ca3af';
+            pHtml += '<div class="fx-ppp-card' + (isBest ? ' fx-ppp-card--best' : '') + '" style="border-top-color:' + col + '">';
+            pHtml += '<span class="fx-ppp-name">' + pn + '</span>';
+            pHtml += '<span class="fx-ppp-ars">ARS ' + C.fmt(Math.round(arsVal)) + '</span>';
+            pHtml += '<span class="fx-ppp-rate">@ ' + C.fmt(pv) + '/USD</span>';
+            if (isBest) pHtml += '<span class="fx-ppp-best">Best rate</span>';
+            pHtml += '</div>';
+          }
+          pppGrid.innerHTML = pHtml;
+          pppSection.style.display = '';
+        }
+      }
+
+      // Visual rate comparison bars
+      var barColors = { Official: '#75AADB', Blue: '#F6B40E', MEP: '#22c55e', CCL: '#a855f7' };
+      var maxRate = 0;
+      for (var mk in rates) { if (rates[mk] > maxRate) maxRate = rates[mk]; }
+      if (maxRate > 0 && rateKeys.length >= 2) {
+        var bGrid = document.querySelector('[data-fx-bars-grid]');
+        var bSection = document.querySelector('[data-fx-bars]');
+        if (bGrid && bSection) {
+          var bHtml = '';
+          for (var bi = 0; bi < rateKeys.length; bi++) {
+            var bk = rateKeys[bi];
+            var bv = rates[bk];
+            var bPct = (bv / maxRate * 100).toFixed(1);
+            var bColor = barColors[bk] || '#9ca3af';
+            bHtml += '<div class="fx-bar-row">';
+            bHtml += '<span class="fx-bar-label">' + bk + '</span>';
+            bHtml += '<div class="fx-bar-track"><div class="fx-bar-fill" style="width:' + bPct + '%;background:' + bColor + '"></div></div>';
+            bHtml += '<span class="fx-bar-val">ARS ' + C.fmt(bv) + '</span>';
+            bHtml += '</div>';
+          }
+          bGrid.innerHTML = bHtml;
+          bSection.style.display = '';
+        }
+      }
     }
 
     if (evoRaw && evoRaw.length > 0) {
@@ -248,11 +410,13 @@ const { lang } = Astro.params;
       }
 
       C.drawChart(document.querySelector('[data-evo-chart]'), [
-        { points: parsed.official, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.08)', label: 'Official' },
-        { points: parsed.blue, lineColor: '#F6B40E', fillColor: 'rgba(246,180,14,0.08)', label: 'Blue' }
+        { points: parsed.blue, lineColor: '#F6B40E', fillColor: 'rgba(246,180,14,0.10)' }
       ], { height: 320 });
 
       buildComparisonTable(parsed);
+      buildPerformance(parsed);
+      buildVolatility(parsed);
+      buildGapTrend(parsed);
     }
   }).catch(function() {
     setEl('[data-mkts-updated]', '—');
@@ -291,6 +455,178 @@ const { lang } = Astro.params;
     tbody.innerHTML = html;
   }
 
+  function buildPerformance(parsed) {
+    function fillPerf(key, points) {
+      if (!points || points.length < 2) return;
+      var vals = points.map(function(p) { return p.v; });
+      var first = vals[0];
+      var last = vals[vals.length - 1];
+      var high = Math.max.apply(null, vals);
+      var low = Math.min.apply(null, vals);
+      var chg = first > 0 ? ((last - first) / first) * 100 : 0;
+
+      var chgEl = document.querySelector('[data-perf-chg="' + key + '"]');
+      if (chgEl) {
+        var sign = chg >= 0 ? '+' : '';
+        chgEl.textContent = sign + chg.toFixed(2) + '%';
+        chgEl.className = 'fx-perf-sv ' + (chg >= 0 ? 'rc-up' : 'rc-down');
+      }
+      setEl('[data-perf-high="' + key + '"]', 'ARS ' + C.fmt(high));
+      setEl('[data-perf-low="' + key + '"]', 'ARS ' + C.fmt(low));
+
+      // Range bar: where current price is between low and high
+      var range = high - low || 1;
+      var pct = ((last - low) / range * 100).toFixed(1);
+      var bar = document.querySelector('[data-perf-bar="' + key + '"]');
+      if (bar) bar.style.width = pct + '%';
+    }
+    fillPerf('oficial', parsed.official);
+    fillPerf('blue', parsed.blue);
+    var section = document.querySelector('[data-fx-perf]');
+    if (section) section.style.display = '';
+  }
+
+  // ─── Gap Trend ───
+  function buildGapTrend(parsed) {
+    if (!parsed.official || !parsed.blue || parsed.official.length < 3) return;
+    // Compute daily gap percentage
+    var dateMap = {};
+    parsed.official.forEach(function(p) { dateMap[p.d] = dateMap[p.d] || {}; dateMap[p.d].o = p.v; });
+    parsed.blue.forEach(function(p) { dateMap[p.d] = dateMap[p.d] || {}; dateMap[p.d].b = p.v; });
+    var gapPoints = [];
+    var dates = Object.keys(dateMap).sort();
+    for (var i = 0; i < dates.length; i++) {
+      var row = dateMap[dates[i]];
+      if (row.o && row.b && row.o > 0) {
+        var gap = ((row.b - row.o) / row.o) * 100;
+        gapPoints.push({ d: dates[i], v: gap });
+      }
+    }
+    if (gapPoints.length < 3) return;
+
+    // Draw gap chart
+    C.drawChart(document.querySelector('[data-gap-chart]'), [
+      { points: gapPoints, lineColor: '#f59e0b', fillColor: 'rgba(245,158,11,0.1)', label: 'Blue/Official Gap %' }
+    ], { height: 180 });
+
+    // Stats
+    var vals = gapPoints.map(function(p) { return p.v; });
+    var current = vals[vals.length - 1];
+    var avg = vals.reduce(function(a, b) { return a + b; }, 0) / vals.length;
+    var maxGap = Math.max.apply(null, vals);
+    var minGap = Math.min.apply(null, vals);
+    var trend = current > avg ? 'Widening' : 'Narrowing';
+    var trendCls = current > avg ? 'rc-down' : 'rc-up';
+
+    var statsEl = document.querySelector('[data-fx-gap-stats]');
+    if (statsEl) {
+      var h = '<div class="fxg-stats">';
+      h += '<div class="fxg-stat"><span class="fxg-sk">Current</span><span class="fxg-sv">' + current.toFixed(1) + '%</span></div>';
+      h += '<div class="fxg-stat"><span class="fxg-sk">30d Avg</span><span class="fxg-sv">' + avg.toFixed(1) + '%</span></div>';
+      h += '<div class="fxg-stat"><span class="fxg-sk">Max</span><span class="fxg-sv">' + maxGap.toFixed(1) + '%</span></div>';
+      h += '<div class="fxg-stat"><span class="fxg-sk">Min</span><span class="fxg-sv">' + minGap.toFixed(1) + '%</span></div>';
+      h += '<div class="fxg-stat"><span class="fxg-sk">Trend</span><span class="fxg-sv ' + trendCls + '">' + trend + '</span></div>';
+      h += '</div>';
+      statsEl.innerHTML = h;
+    }
+
+    document.querySelector('[data-fx-gap]').style.display = '';
+  }
+
+  // ─── Volatility ───
+  function buildVolatility(parsed) {
+    function calcVol(points) {
+      if (!points || points.length < 3) return null;
+      var changes = [];
+      for (var vi = 1; vi < points.length; vi++) {
+        if (points[vi - 1].v > 0) changes.push((points[vi].v - points[vi - 1].v) / points[vi - 1].v * 100);
+      }
+      if (changes.length < 2) return null;
+      var mean = changes.reduce(function(a, b) { return a + b; }, 0) / changes.length;
+      var variance = changes.reduce(function(a, b) { return a + (b - mean) * (b - mean); }, 0) / changes.length;
+      var stdev = Math.sqrt(variance);
+      var maxChg = Math.max.apply(null, changes.map(function(c) { return Math.abs(c); }));
+      return { stdev: stdev, maxDailyChg: maxChg, avgDailyChg: mean, changes: changes };
+    }
+
+    var offVol = calcVol(parsed.official);
+    var blueVol = calcVol(parsed.blue);
+    if (!offVol && !blueVol) return;
+
+    var volGrid = document.querySelector('[data-fx-vol-grid]');
+    var volSection = document.querySelector('[data-fx-vol]');
+    if (!volGrid || !volSection) return;
+
+    var vhtml = '';
+    var items = [];
+    if (offVol) items.push({ name: 'Official', vol: offVol, color: '#75AADB' });
+    if (blueVol) items.push({ name: 'Blue', vol: blueVol, color: '#F6B40E' });
+
+    var maxStdev = Math.max.apply(null, items.map(function(i) { return i.vol.stdev; }));
+
+    for (var vi = 0; vi < items.length; vi++) {
+      var item = items[vi];
+      var v = item.vol;
+      var level = v.stdev > 2 ? 'High' : v.stdev > 0.5 ? 'Moderate' : 'Low';
+      var levelCls = v.stdev > 2 ? 'fxv--high' : v.stdev > 0.5 ? 'fxv--mid' : 'fxv--low';
+      var barW = maxStdev > 0 ? (v.stdev / (maxStdev * 1.3) * 100).toFixed(1) : 50;
+      vhtml += '<div class="fxv-card ' + levelCls + '">';
+      vhtml += '<div class="fxv-head"><span class="fxv-name">' + item.name + '</span><span class="fxv-level">' + level + '</span></div>';
+      vhtml += '<div class="fxv-bar-wrap"><div class="fxv-bar" style="width:' + barW + '%;background:' + item.color + '"></div></div>';
+      vhtml += '<div class="fxv-stats">';
+      vhtml += '<div class="fxv-stat"><span class="fxv-sk">30d Volatility</span><span class="fxv-sv">' + v.stdev.toFixed(3) + '%</span></div>';
+      vhtml += '<div class="fxv-stat"><span class="fxv-sk">Max Daily</span><span class="fxv-sv">' + v.maxDailyChg.toFixed(3) + '%</span></div>';
+      vhtml += '<div class="fxv-stat"><span class="fxv-sk">Avg Daily</span><span class="fxv-sv">' + (v.avgDailyChg >= 0 ? '+' : '') + v.avgDailyChg.toFixed(3) + '%</span></div>';
+      vhtml += '</div></div>';
+    }
+    volGrid.innerHTML = vhtml;
+    volSection.style.display = '';
+  }
+
+  // ─── Converter ───
+  var convRates = {};
+  var convDirection = 'usd-ars'; // or 'ars-usd'
+
+  function updateConverter() {
+    var fromInput = document.querySelector('[data-conv-from]');
+    var toInput = document.querySelector('[data-conv-to]');
+    var rateSelect = document.querySelector('[data-conv-rate]');
+    if (!fromInput || !toInput || !rateSelect) return;
+    var val = parseFloat(fromInput.value) || 0;
+    var rateKey = rateSelect.value;
+    var sell = convRates[rateKey] || 0;
+    if (sell <= 0) { toInput.value = '—'; return; }
+    if (convDirection === 'usd-ars') {
+      toInput.value = 'ARS ' + C.fmt(val * sell);
+    } else {
+      toInput.value = 'USD ' + (val / sell).toFixed(2);
+    }
+  }
+
+  function storeConvRate(key, sell) { convRates[key] = sell; }
+
+  // Hook converter to rate data
+  var origFillRate = fillRate;
+  fillRate = function(key, data) {
+    origFillRate(key, data);
+    if (data && data.value_sell) storeConvRate(key, data.value_sell);
+    updateConverter();
+  };
+
+  var fromEl = document.querySelector('[data-conv-from]');
+  var rateEl = document.querySelector('[data-conv-rate]');
+  var swapEl = document.querySelector('[data-conv-swap]');
+  if (fromEl) fromEl.addEventListener('input', updateConverter);
+  if (rateEl) rateEl.addEventListener('change', updateConverter);
+  if (swapEl) swapEl.addEventListener('click', function() {
+    convDirection = convDirection === 'usd-ars' ? 'ars-usd' : 'usd-ars';
+    var fromLabel = document.querySelector('[data-conv-from-label]');
+    var toLabel = document.querySelector('[data-conv-to-label]');
+    if (fromLabel) fromLabel.textContent = convDirection === 'usd-ars' ? 'USD' : 'ARS';
+    if (toLabel) toLabel.textContent = convDirection === 'usd-ars' ? 'ARS' : 'USD';
+    updateConverter();
+  });
+
   var rTimer;
   window.addEventListener('resize', function() {
     clearTimeout(rTimer);
@@ -299,8 +635,7 @@ const { lang } = Astro.params;
       C.drawSpark(document.querySelector('[data-spark="official"]'), chartData.official.map(function(p) { return p.v; }), '#75AADB', 'rgba(117,170,219,0.18)');
       C.drawSpark(document.querySelector('[data-spark="blue"]'), chartData.blue.map(function(p) { return p.v; }), '#F6B40E', 'rgba(246,180,14,0.18)');
       C.drawChart(document.querySelector('[data-evo-chart]'), [
-        { points: chartData.official, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.08)', label: 'Official' },
-        { points: chartData.blue, lineColor: '#F6B40E', fillColor: 'rgba(246,180,14,0.08)', label: 'Blue' }
+        { points: chartData.blue, lineColor: '#F6B40E', fillColor: 'rgba(246,180,14,0.10)' }
       ], { height: 320 });
     }, 200);
   });
@@ -345,7 +680,68 @@ const { lang } = Astro.params;
   .fx-spark { margin-top: auto; }
   .fx-spark canvas { width: 100%; display: block; }
 
+  /* Converter */
+  .fx-converter { margin-bottom: var(--spacing-xl); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px; padding: 16px 20px; }
+  .fx-converter-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); margin-bottom: 12px; }
+  .fx-conv-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .fx-conv-input-wrap { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 120px; }
+  .fx-conv-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+  .fx-conv-input {
+    padding: 10px 14px; border: 1px solid var(--color-border); border-radius: 8px;
+    background: var(--color-bg); color: var(--color-text);
+    font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums;
+    outline: none; transition: border-color 0.15s; width: 100%;
+  }
+  .fx-conv-input:focus { border-color: var(--color-gold); }
+  .fx-conv-input--readonly { background: var(--color-bg-secondary); color: var(--color-text); cursor: default; }
+  .fx-conv-swap {
+    font-size: 1.2rem; color: var(--color-text-meta); font-weight: 700; flex-shrink: 0;
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 50%;
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: border-color 0.15s, color 0.15s, transform 0.2s;
+  }
+  .fx-conv-swap:hover { border-color: var(--color-gold); color: var(--color-gold); transform: rotate(180deg); }
+  .fx-conv-rate-select { flex-shrink: 0; }
+  .fx-conv-select {
+    padding: 10px 14px; border: 1px solid var(--color-border); border-radius: 8px;
+    background: var(--color-bg); color: var(--color-text);
+    font-size: 0.85rem; font-weight: 700; cursor: pointer; outline: none;
+  }
+  .fx-conv-select:focus { border-color: var(--color-gold); }
+
   /* Chart Section */
+  /* Performance Section */
+  /* What $100 USD Gets You */
+  .fx-ppp-section { margin-bottom: var(--spacing-xl); }
+  :global(.fx-ppp-grid) { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--spacing-md); }
+  :global(.fx-ppp-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-top: 3px solid; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+  :global(.fx-ppp-card--best) { box-shadow: 0 0 0 1px var(--color-gold); }
+  :global(.fx-ppp-name) { font-size: 0.72rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
+  :global(.fx-ppp-ars) { font-size: 1.4rem; font-weight: 800; color: var(--color-text); font-variant-numeric: tabular-nums; }
+  :global(.fx-ppp-rate) { font-size: 0.72rem; color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
+  :global(.fx-ppp-best) { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--color-gold); letter-spacing: 0.06em; margin-top: 2px; }
+
+  .fx-perf-section { margin-bottom: var(--spacing-xl); }
+  .fx-perf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); }
+  .fx-perf-card {
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    border-radius: 8px; padding: var(--spacing-lg);
+  }
+  .fx-perf-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+  .fx-perf-stats { display: flex; gap: var(--spacing-lg); margin-top: var(--spacing-sm); flex-wrap: wrap; }
+  .fx-perf-stat { display: flex; flex-direction: column; gap: 2px; }
+  .fx-perf-sk { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .fx-perf-sv { font-size: 0.95rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .fx-perf-bar-wrap {
+    margin-top: var(--spacing-sm); height: 6px; border-radius: 3px;
+    background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); position: relative; overflow: hidden;
+  }
+  .fx-perf-bar-wrap :global(.fx-perf-bar) {
+    position: absolute; top: 0; left: 0; height: 100%; background: rgba(117,170,219,0.4); border-radius: 3px;
+    transition: width 0.5s;
+  }
+  @media (max-width: 640px) { .fx-perf-grid { grid-template-columns: 1fr; } }
+
   .fx-chart-section { margin-bottom: var(--spacing-xl); }
   .fx-chart-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-sm); }
   .fx-chart-title { font-size: 1rem; font-weight: 700; }
@@ -356,6 +752,62 @@ const { lang } = Astro.params;
   .fx-leg--blue .fx-dot { background: #F6B40E; }
   .fx-chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-sm) var(--spacing-md); }
   .fx-chart-wrap canvas { width: 100%; display: block; }
+
+  /* Spread Matrix */
+  .fx-spread-section { margin-bottom: var(--spacing-xl); }
+  .fx-spread-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .fx-spread-grid :global(.fx-sp-card) {
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px;
+    padding: 14px; display: flex; flex-direction: column; gap: 4px; border-top: 3px solid transparent;
+  }
+  .fx-spread-grid :global(.fx-sp--low) { border-top-color: #16a34a; }
+  .fx-spread-grid :global(.fx-sp--mid) { border-top-color: #eab308; }
+  .fx-spread-grid :global(.fx-sp--high) { border-top-color: #dc2626; }
+  .fx-spread-grid :global(.fx-sp-name) { font-size: 0.8rem; font-weight: 700; color: var(--color-text); }
+  .fx-spread-grid :global(.fx-sp-vs) { font-size: 0.65rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; }
+  .fx-spread-grid :global(.fx-sp-gap) { font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .fx-spread-grid :global(.fx-sp-diff) { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+  @media (max-width: 600px) { .fx-spread-grid { grid-template-columns: 1fr; } }
+
+  /* Visual Rate Comparison Bars */
+  .fx-bars-section { margin-bottom: var(--spacing-xl); }
+  :global(.fx-bars) { display: flex; flex-direction: column; gap: 10px; }
+  :global(.fx-bar-row) { display: flex; align-items: center; gap: 12px; }
+  :global(.fx-bar-label) { width: 60px; font-size: 0.75rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; flex-shrink: 0; }
+  :global(.fx-bar-track) { flex: 1; height: 24px; background: rgba(128,128,128,0.08); border-radius: 6px; overflow: hidden; }
+  :global(.fx-bar-fill) { height: 100%; border-radius: 6px; transition: width 0.5s ease; min-width: 2px; }
+  :global(.fx-bar-val) { width: 110px; text-align: right; font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); flex-shrink: 0; }
+  @media (max-width: 480px) { :global(.fx-bar-val) { width: 90px; font-size: 0.78rem; } :global(.fx-bar-label) { width: 50px; font-size: 0.7rem; } }
+
+  /* Gap Trend Section */
+  .fx-gap-section { margin-bottom: var(--spacing-xl); }
+  .fx-gap-chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-sm) var(--spacing-md); margin-bottom: var(--spacing-md); }
+  .fx-gap-chart-wrap canvas { width: 100%; display: block; }
+  :global(.fxg-stats) { display: flex; gap: var(--spacing-xl); flex-wrap: wrap; }
+  :global(.fxg-stat) { display: flex; flex-direction: column; gap: 2px; }
+  :global(.fxg-sk) { font-size: 0.62rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  :global(.fxg-sv) { font-size: 0.95rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
+
+  /* Volatility Section */
+  .fx-vol-section { margin-bottom: var(--spacing-xl); }
+  :global(.fx-vol-grid) { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); }
+  :global(.fxv-card) {
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px;
+    padding: var(--spacing-lg); border-top: 3px solid transparent;
+  }
+  :global(.fxv--low) { border-top-color: #16a34a; }
+  :global(.fxv--mid) { border-top-color: #eab308; }
+  :global(.fxv--high) { border-top-color: #dc2626; }
+  :global(.fxv-head) { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  :global(.fxv-name) { font-size: 0.85rem; font-weight: 700; color: var(--color-text); }
+  :global(.fxv-level) { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 3px; background: rgba(128,128,128,0.1); color: var(--color-text-meta); }
+  :global(.fxv-bar-wrap) { height: 8px; background: var(--color-border); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+  :global(.fxv-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  :global(.fxv-stats) { display: flex; gap: var(--spacing-lg); flex-wrap: wrap; }
+  :global(.fxv-stat) { display: flex; flex-direction: column; gap: 2px; }
+  :global(.fxv-sk) { font-size: 0.62rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  :global(.fxv-sv) { font-size: 0.88rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  @media (max-width: 640px) { :global(.fx-vol-grid) { grid-template-columns: 1fr; } }
 
   /* Table Section */
   .fx-table-section { margin-bottom: var(--spacing-xl); }

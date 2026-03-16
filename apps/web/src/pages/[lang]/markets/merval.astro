@@ -75,12 +75,113 @@ const { lang } = Astro.params;
       </div>
     </div>
 
+    <!-- Market Summary Stats -->
+    <div class="mkt-summary" data-mkt-summary style="display:none;">
+      <div class="mkt-sum-item">
+        <span class="mkt-sum-label">{t(lang!, "merval.totalVolume")}</span>
+        <span class="mkt-sum-val" data-mkt-totvol>—</span>
+      </div>
+      <div class="mkt-sum-item">
+        <span class="mkt-sum-label">{t(lang!, "merval.avgChange")}</span>
+        <span class="mkt-sum-val" data-mkt-avgchg>—</span>
+      </div>
+      <div class="mkt-sum-item">
+        <span class="mkt-sum-label">{t(lang!, "merval.stocksTraded")}</span>
+        <span class="mkt-sum-val" data-mkt-traded>—</span>
+      </div>
+      <div class="mkt-sum-item">
+        <span class="mkt-sum-label">{t(lang!, "merval.totalMcap")}</span>
+        <span class="mkt-sum-val" data-mkt-totmcap>—</span>
+      </div>
+    </div>
+
     <!-- Merval Chart -->
     <section class="chart-section">
-      <h2 class="section-title">{t(lang!, "merval.chartTitle")}</h2>
+      <div class="chart-header">
+        <h2 class="section-title">{t(lang!, "merval.chartTitle")}</h2>
+        <div class="range-buttons" data-merval-range>
+          <button data-mrange="5d" data-minterval="15m">5D</button>
+          <button data-mrange="1mo" data-minterval="1d" class="active">1M</button>
+          <button data-mrange="3mo" data-minterval="1d">3M</button>
+          <button data-mrange="6mo" data-minterval="1d">6M</button>
+          <button data-mrange="1y" data-minterval="1d">1Y</button>
+        </div>
+      </div>
       <div class="chart-wrap">
         <canvas data-merval-chart height="280"></canvas>
       </div>
+    </section>
+
+    <!-- Market Breadth -->
+    <section class="breadth-section" data-breadth>
+      <div class="breadth-bar">
+        <div class="breadth-side breadth-up">
+          <span class="breadth-count" data-breadth-up>0</span>
+          <span class="breadth-label">{t(lang!, "markets.advances")}</span>
+        </div>
+        <div class="breadth-track">
+          <div class="breadth-fill" data-breadth-fill style="width:50%"></div>
+        </div>
+        <div class="breadth-side breadth-down">
+          <span class="breadth-count" data-breadth-down>0</span>
+          <span class="breadth-label">{t(lang!, "markets.declines")}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Movers -->
+    <section class="movers-section" data-movers style="display:none;">
+      <div class="movers-grid">
+        <div class="movers-col">
+          <h2 class="movers-title movers-title--up">{t(lang!, "merval.topGainers")}</h2>
+          <div class="movers-list" data-movers-up></div>
+        </div>
+        <div class="movers-col">
+          <h2 class="movers-title movers-title--down">{t(lang!, "merval.topLosers")}</h2>
+          <div class="movers-list" data-movers-down></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Market Heatmap -->
+    <section class="heatmap-section" data-heatmap-section style="display:none;">
+      <h2 class="section-title">{t(lang!, "merval.heatmap")}</h2>
+      <div class="heatmap" data-heatmap></div>
+    </section>
+
+    <!-- Sector Breakdown -->
+    <section class="sector-section" data-sector-section style="display:none;">
+      <h2 class="section-title">{t(lang!, "merval.sectorBreakdown")}</h2>
+      <div class="sector-grid">
+        <div class="sector-chart-wrap">
+          <canvas data-sector-chart width="220" height="220"></canvas>
+        </div>
+        <div class="sector-legend" data-sector-legend></div>
+      </div>
+    </section>
+
+    <!-- Market Cap Concentration -->
+    <section class="mcap-conc-section" data-mcap-conc style="display:none;">
+      <h2 class="section-title">{t(lang!, "merval.mcapConcentration" as any)}</h2>
+      <div class="mcap-conc-body" data-mcap-conc-body></div>
+    </section>
+
+    <!-- Sector Performance -->
+    <section class="sector-perf-section" data-sector-perf style="display:none;">
+      <h2 class="section-title">{t(lang!, "merval.sectorPerf" as any)}</h2>
+      <div class="sector-perf-chart" data-sector-perf-chart></div>
+    </section>
+
+    <!-- Volume Distribution -->
+    <section class="vol-dist-section" data-vol-dist style="display:none;">
+      <h2 class="section-title">{t(lang!, "merval.volumeDist" as any)}</h2>
+      <div class="vol-dist-chart" data-vol-dist-chart></div>
+    </section>
+
+    <!-- Volatility Leaders -->
+    <section class="vol-leaders-section" data-vol-leaders style="display:none;">
+      <h2 class="section-title">{t(lang!, "merval.volLeaders" as any)}</h2>
+      <div class="vol-leaders-grid" data-vol-leaders-grid></div>
     </section>
 
     <!-- Constituent Stocks -->
@@ -279,20 +380,38 @@ const { lang } = Astro.params;
     return null;
   }
 
-  function loadChartData() {
-    // Primary: our API proxy (works in both dev via Vite proxy and prod via Pages Function)
-    return fetch('/api/stock/%5EMERV?range=1mo&interval=1d')
+  function loadChartData(range, interval) {
+    range = range || '1mo';
+    interval = interval || '1d';
+    return fetch('/api/stock/%5EMERV?range=' + range + '&interval=' + interval)
       .then(function(r) { if (!r.ok) throw new Error('proxy ' + r.status); return r.json(); })
       .then(normalizeChartResponse)
       .then(function(d) { if (!d) throw new Error('no data'); return d; })
       .catch(function() {
-        // Fallback: try Yahoo Finance directly (usually CORS-blocked, but worth trying)
-        return fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?interval=1d&range=1mo')
+        return fetch('https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?interval=' + interval + '&range=' + range)
           .then(function(r) { if (!r.ok) throw new Error('yahoo'); return r.json(); })
           .then(parseYahooChart)
           .catch(function() { return null; });
       });
   }
+
+  // Range buttons for chart
+  document.querySelectorAll('[data-mrange]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('[data-mrange]').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var range = btn.getAttribute('data-mrange');
+      var interval = btn.getAttribute('data-minterval');
+      loadChartData(range, interval).then(function(d) {
+        if (d && d.timestamps && d.closes) {
+          var pts = C.yahooToPoints(d.timestamps, d.closes);
+          C.drawChart(document.querySelector('[data-merval-chart]'), [
+            { points: pts, lineColor: '#60a5fa', fillColor: 'rgba(96,165,250,0.12)' }
+          ], { yFormat: C.fmtM });
+        }
+      });
+    });
+  });
 
   // ─── Fetch all data in parallel ───
   Promise.all([
@@ -337,9 +456,46 @@ const { lang } = Astro.params;
       if (chartWrap) chartWrap.innerHTML = '<div class="chart-unavailable">Chart data temporarily unavailable</div>';
     }
 
-    // Stocks cards
+    // Stocks cards + breadth
     if (stocks && Array.isArray(stocks) && stocks.length > 0) {
       stocksData = stocks;
+      // Market breadth
+      var up = 0, dn = 0;
+      for (var bi = 0; bi < stocks.length; bi++) {
+        var bv = stocks[bi].variation;
+        if (bv != null) { if (bv >= 0) up++; else dn++; }
+      }
+      setEl('[data-breadth-up]', up);
+      setEl('[data-breadth-down]', dn);
+      var total = up + dn || 1;
+      var fillEl = document.querySelector('[data-breadth-fill]');
+      if (fillEl) fillEl.style.width = Math.round(up / total * 100) + '%';
+      // Market summary stats
+      var totalVol = 0, totalMcap = 0, chgSum = 0, chgCount = 0;
+      for (var si = 0; si < stocks.length; si++) {
+        totalVol += stocks[si].volume || 0;
+        if (STOCK_MCAP[stocks[si].symbol]) totalMcap += STOCK_MCAP[stocks[si].symbol];
+        if (stocks[si].variation != null) { chgSum += stocks[si].variation * 100; chgCount++; }
+      }
+      setEl('[data-mkt-totvol]', C.fmtVol(totalVol));
+      setEl('[data-mkt-traded]', stocks.length.toString());
+      setEl('[data-mkt-totmcap]', '~$' + C.fmtVol(totalMcap * 1e6));
+      var avgChg = chgCount > 0 ? chgSum / chgCount : 0;
+      var avgEl = document.querySelector('[data-mkt-avgchg]');
+      if (avgEl) {
+        avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toFixed(2) + '%';
+        avgEl.classList.add(avgChg >= 0 ? 'rc-up' : 'rc-down');
+      }
+      var sumEl = document.querySelector('[data-mkt-summary]');
+      if (sumEl) sumEl.style.display = '';
+
+      renderMovers(stocks);
+      renderHeatmap(stocks);
+      renderSectorChart(stocks);
+      renderMcapConc(stocks);
+      renderVolDist(stocks);
+      renderSectorPerf(stocks);
+      renderVolLeaders(stocks);
       renderStocks();
     } else {
       var grid = document.querySelector('[data-stocks-grid]');
@@ -417,6 +573,346 @@ const { lang } = Astro.params;
     logoDiv.innerHTML = sym.substring(0, 2);
   }, true);
 
+  // ─── Render top movers ───
+  function renderMovers(stocks) {
+    var withChange = stocks.filter(function(s) { return s.variation != null; });
+    var sorted = withChange.slice().sort(function(a, b) { return (b.variation || 0) - (a.variation || 0); });
+    var gainers = sorted.slice(0, 5);
+    var losers = sorted.slice(-5).reverse();
+
+    function moverRow(s) {
+      var pct = s.variation != null ? s.variation * 100 : 0;
+      var cls = pct >= 0 ? 'rc-up' : 'rc-down';
+      var arrow = pct >= 0 ? '▲' : '▼';
+      var name = STOCK_NAMES[s.symbol] || s.description || s.symbol;
+      return '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="mover-item">' +
+        logoHtml(s.symbol) +
+        '<div class="mover-info"><span class="mover-sym">' + s.symbol + '</span><span class="mover-name">' + name + '</span></div>' +
+        '<div class="mover-right">' +
+        '<span class="mover-price">ARS ' + (s.price ? C.fmt(s.price) : '—') + '</span>' +
+        '<span class="mover-pct ' + cls + '">' + arrow + ' ' + Math.abs(pct).toFixed(2) + '%</span>' +
+        '</div></a>';
+    }
+
+    var upHtml = '', dnHtml = '';
+    gainers.forEach(function(s) { upHtml += moverRow(s); });
+    losers.forEach(function(s) { dnHtml += moverRow(s); });
+
+    var upEl = document.querySelector('[data-movers-up]');
+    var dnEl = document.querySelector('[data-movers-down]');
+    if (upEl) upEl.innerHTML = upHtml;
+    if (dnEl) dnEl.innerHTML = dnHtml;
+    var moversEl = document.querySelector('[data-movers]');
+    if (moversEl && (gainers.length > 0 || losers.length > 0)) moversEl.style.display = '';
+  }
+
+  // ─── Render heatmap ───
+  function renderHeatmap(stocks) {
+    var container = document.querySelector('[data-heatmap]');
+    var section = document.querySelector('[data-heatmap-section]');
+    if (!container || !section) return;
+    // Filter to stocks with market cap and variation
+    var items = stocks.filter(function(s) { return s.mcap > 0 && s.variation != null; })
+      .sort(function(a, b) { return b.mcap - a.mcap; })
+      .slice(0, 20);
+    if (items.length === 0) return;
+
+    var totalMcap = 0;
+    for (var i = 0; i < items.length; i++) totalMcap += items[i].mcap;
+
+    function heatColor(pct) {
+      // pct is decimal (0.01 = 1%)
+      var v = Math.min(Math.abs(pct * 100), 5) / 5; // normalize to 0-1 (5% max)
+      if (pct >= 0) return 'rgba(22,163,74,' + (0.15 + v * 0.65).toFixed(2) + ')';
+      return 'rgba(220,38,38,' + (0.15 + v * 0.65).toFixed(2) + ')';
+    }
+
+    var html = '';
+    for (var j = 0; j < items.length; j++) {
+      var s = items[j];
+      var pct = s.variation || 0;
+      var pctText = (pct >= 0 ? '+' : '') + (pct * 100).toFixed(2) + '%';
+      var weight = (s.mcap / totalMcap * 100).toFixed(2);
+      var bg = heatColor(pct);
+      var tipName = STOCK_NAMES[s.symbol] || s.name || s.symbol;
+      var tipPrice = 'ARS ' + C.fmt(s.price || 0);
+      var tipVol = s.volume ? C.fmtVol(s.volume) : '—';
+      var tipMcap = C.fmtVol(s.mcap * 1e6);
+      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex-basis:' + weight + '%;background:' + bg + '">';
+      html += '<span class="hm-sym">' + s.symbol + '</span>';
+      html += '<span class="hm-pct">' + pctText + '</span>';
+      html += '<div class="hm-tip"><strong>' + tipName + '</strong><span>' + tipPrice + ' ' + pctText + '</span><span>Vol: ' + tipVol + '</span><span>Cap: ' + tipMcap + '</span></div>';
+      html += '</a>';
+    }
+    container.innerHTML = html;
+    section.style.display = '';
+  }
+
+  // ─── Sector mapping ───
+  var STOCK_SECTORS = {
+    YPFD: 'Energy', PAMP: 'Energy', CEPU: 'Energy', TGSU2: 'Energy', TGNO4: 'Energy',
+    EDN: 'Energy', METR: 'Energy', CAPX: 'Energy', CGPA2: 'Energy', GBAN: 'Energy', DGCU2: 'Energy',
+    GGAL: 'Finance', BMA: 'Finance', BBAR: 'Finance', SUPV: 'Finance', BYMA: 'Finance',
+    VALO: 'Finance', BHIP: 'Finance', BPAT: 'Finance', IRSA: 'Finance', CTIO: 'Finance',
+    TECO2: 'Telecom', CVH: 'Telecom',
+    TXAR: 'Materials', ALUA: 'Materials', LOMA: 'Materials', HARG: 'Materials',
+    CELU: 'Materials', FERR: 'Materials', RIGO: 'Materials',
+    CRES: 'Agriculture', AGRO: 'Agriculture', MOLI: 'Agriculture', SEMI: 'Agriculture',
+    LEDE: 'Agriculture', MORI: 'Agriculture', RICH: 'Agriculture',
+    MIRG: 'Industry', TRAN: 'Industry', BOLT: 'Industry', LONG: 'Industry',
+    COME: 'Holding', GCLA: 'Media', HAVA: 'Consumer', CADO: 'Real Estate'
+  };
+
+  var SECTOR_COLORS = {
+    'Energy': '#f59e0b', 'Finance': '#3b82f6', 'Telecom': '#8b5cf6',
+    'Materials': '#6b7280', 'Agriculture': '#22c55e', 'Industry': '#ef4444',
+    'Holding': '#06b6d4', 'Media': '#ec4899', 'Consumer': '#14b8a6',
+    'Real Estate': '#a855f7', 'Other': '#9ca3af'
+  };
+
+  function renderSectorChart(stocks) {
+    var sectorMap = {};
+    for (var i = 0; i < stocks.length; i++) {
+      var sec = STOCK_SECTORS[stocks[i].symbol] || 'Other';
+      if (!sectorMap[sec]) sectorMap[sec] = { mcap: 0, count: 0, avgChange: 0, totalChange: 0 };
+      sectorMap[sec].mcap += stocks[i].mcap || 0;
+      sectorMap[sec].count++;
+      if (stocks[i].variation != null) sectorMap[sec].totalChange += stocks[i].variation;
+    }
+    var sectors = [];
+    var totalMcap = 0;
+    for (var sec in sectorMap) {
+      var d = sectorMap[sec];
+      d.avgChange = d.count > 0 ? d.totalChange / d.count : 0;
+      sectors.push({ name: sec, mcap: d.mcap, count: d.count, avgChange: d.avgChange });
+      totalMcap += d.mcap;
+    }
+    if (totalMcap === 0 || sectors.length === 0) return;
+    sectors.sort(function(a, b) { return b.mcap - a.mcap; });
+
+    // Draw donut
+    var canvas = document.querySelector('[data-sector-chart]');
+    if (!canvas) return;
+    var dpr = window.devicePixelRatio || 1;
+    var size = 220;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    var cx = size / 2, cy = size / 2, r = 90, inner = 55;
+    var angle = -Math.PI / 2;
+
+    for (var j = 0; j < sectors.length; j++) {
+      var pct = sectors[j].mcap / totalMcap;
+      var sweep = pct * Math.PI * 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, angle, angle + sweep);
+      ctx.arc(cx, cy, inner, angle + sweep, angle, true);
+      ctx.closePath();
+      ctx.fillStyle = SECTOR_COLORS[sectors[j].name] || '#9ca3af';
+      ctx.fill();
+      angle += sweep;
+    }
+
+    // Center text
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-text').trim() || '#fff';
+    ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(sectors.length + ' sectors', cx, cy);
+
+    // Legend
+    var legEl = document.querySelector('[data-sector-legend]');
+    if (!legEl) return;
+    var html = '';
+    for (var k = 0; k < sectors.length; k++) {
+      var s = sectors[k];
+      var pctVal = (s.mcap / totalMcap * 100).toFixed(1);
+      var chg = s.avgChange * 100;
+      var chgCls = chg >= 0 ? 'rc-up' : 'rc-down';
+      var chgArrow = chg >= 0 ? '▲' : '▼';
+      html += '<div class="sec-leg-item">';
+      html += '<span class="sec-dot" style="background:' + (SECTOR_COLORS[s.name] || '#9ca3af') + '"></span>';
+      html += '<span class="sec-name">' + s.name + '</span>';
+      html += '<span class="sec-pct">' + pctVal + '%</span>';
+      html += '<span class="sec-count">' + s.count + ' stocks</span>';
+      html += '<span class="sec-chg ' + chgCls + '">' + chgArrow + ' ' + Math.abs(chg).toFixed(2) + '%</span>';
+      html += '</div>';
+    }
+    legEl.innerHTML = html;
+    var section = document.querySelector('[data-sector-section]');
+    if (section) section.style.display = '';
+  }
+
+  // ─── Market Cap Concentration ───
+  function renderMcapConc(stocks) {
+    var sorted = stocks.filter(function(s) { return s.mcap > 0; })
+      .sort(function(a, b) { return b.mcap - a.mcap; });
+    if (sorted.length < 3) return;
+    var totalMcap = 0;
+    for (var i = 0; i < sorted.length; i++) totalMcap += sorted[i].mcap;
+    if (totalMcap === 0) return;
+
+    var top5 = sorted.slice(0, 5);
+    var top5Mcap = 0;
+    for (var j = 0; j < top5.length; j++) top5Mcap += top5[j].mcap;
+    var top5Pct = (top5Mcap / totalMcap * 100).toFixed(1);
+    var restPct = (100 - parseFloat(top5Pct)).toFixed(1);
+
+    var html = '<div class="mcc-summary">';
+    html += '<div class="mcc-stat"><span class="mcc-stat-val">' + top5Pct + '%</span><span class="mcc-stat-label">Top 5 concentration</span></div>';
+    html += '<div class="mcc-stat"><span class="mcc-stat-val">' + sorted.length + '</span><span class="mcc-stat-label">Total stocks</span></div>';
+    html += '</div>';
+
+    // Stacked bar
+    html += '<div class="mcc-bar">';
+    for (var k = 0; k < top5.length; k++) {
+      var pct = (top5[k].mcap / totalMcap * 100);
+      var sec = STOCK_SECTORS[top5[k].symbol] || 'Other';
+      var col = SECTOR_COLORS[sec] || '#9ca3af';
+      html += '<div class="mcc-seg" style="width:' + pct.toFixed(1) + '%;background:' + col + '" title="' + top5[k].symbol + ' ' + pct.toFixed(1) + '%"></div>';
+    }
+    html += '<div class="mcc-seg mcc-seg--rest" style="width:' + restPct + '%"></div>';
+    html += '</div>';
+
+    // Legend rows
+    html += '<div class="mcc-list">';
+    for (var m = 0; m < top5.length; m++) {
+      var s = top5[m];
+      var w = (s.mcap / totalMcap * 100).toFixed(1);
+      var sec2 = STOCK_SECTORS[s.symbol] || 'Other';
+      var col2 = SECTOR_COLORS[sec2] || '#9ca3af';
+      var chg = s.variation != null ? (s.variation * 100) : 0;
+      var chgCls = chg >= 0 ? 'rc-up' : 'rc-down';
+      html += '<div class="mcc-row">';
+      html += '<span class="mcc-rank">' + (m + 1) + '</span>';
+      html += '<span class="mcc-dot" style="background:' + col2 + '"></span>';
+      html += '<a class="mcc-sym" href="/' + (document.querySelector('[data-merval-page]')?.getAttribute('data-lang') || 'en') + '/markets/stock?s=' + s.symbol + '">' + s.symbol + '</a>';
+      html += '<span class="mcc-w">' + w + '%</span>';
+      html += '<span class="mcc-cap">$' + C.fmtVol(s.mcap * 1e6) + '</span>';
+      html += '<span class="' + chgCls + '">' + (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%</span>';
+      html += '</div>';
+    }
+    html += '<div class="mcc-row mcc-row--rest">';
+    html += '<span class="mcc-rank"></span><span class="mcc-dot" style="background:#4b5563"></span>';
+    html += '<span class="mcc-sym">Others (' + (sorted.length - 5) + ')</span>';
+    html += '<span class="mcc-w">' + restPct + '%</span>';
+    html += '<span class="mcc-cap"></span><span></span>';
+    html += '</div>';
+    html += '</div>';
+
+    var body = document.querySelector('[data-mcap-conc-body]');
+    if (body) body.innerHTML = html;
+    var section = document.querySelector('[data-mcap-conc]');
+    if (section) section.style.display = '';
+  }
+
+  // ─── Sector Performance ───
+  function renderSectorPerf(stocks) {
+    var sectorMap = {};
+    for (var i = 0; i < stocks.length; i++) {
+      var sec = STOCK_SECTORS[stocks[i].symbol] || 'Other';
+      if (!sectorMap[sec]) sectorMap[sec] = { totalChange: 0, count: 0 };
+      if (stocks[i].variation != null) {
+        sectorMap[sec].totalChange += stocks[i].variation;
+        sectorMap[sec].count++;
+      }
+    }
+    var sectors = [];
+    for (var sec in sectorMap) {
+      if (sectorMap[sec].count > 0) {
+        sectors.push({ name: sec, avgChange: sectorMap[sec].totalChange / sectorMap[sec].count * 100, count: sectorMap[sec].count });
+      }
+    }
+    if (sectors.length < 2) return;
+    sectors.sort(function(a, b) { return b.avgChange - a.avgChange; });
+    var maxAbs = Math.max.apply(null, sectors.map(function(s) { return Math.abs(s.avgChange); }));
+    if (maxAbs === 0) maxAbs = 1;
+
+    var chart = document.querySelector('[data-sector-perf-chart]');
+    if (!chart) return;
+    var html = '';
+    for (var j = 0; j < sectors.length; j++) {
+      var s = sectors[j];
+      var isPos = s.avgChange >= 0;
+      var barW = (Math.abs(s.avgChange) / maxAbs * 50).toFixed(1);
+      var color = isPos ? '#16a34a' : '#dc2626';
+      html += '<div class="sp-row">';
+      html += '<span class="sp-name">' + s.name + ' <span class="sp-cnt">(' + s.count + ')</span></span>';
+      html += '<div class="sp-bar-area">';
+      if (isPos) {
+        html += '<div class="sp-bar-left"></div><div class="sp-bar-center"></div>';
+        html += '<div class="sp-bar-right"><div class="sp-bar-fill" style="width:' + barW + '%;background:' + color + '"></div></div>';
+      } else {
+        html += '<div class="sp-bar-left"><div class="sp-bar-fill sp-bar-fill--neg" style="width:' + barW + '%;background:' + color + '"></div></div>';
+        html += '<div class="sp-bar-center"></div><div class="sp-bar-right"></div>';
+      }
+      html += '</div>';
+      html += '<span class="sp-val ' + (isPos ? 'rc-up' : 'rc-down') + '">' + (isPos ? '+' : '') + s.avgChange.toFixed(2) + '%</span>';
+      html += '</div>';
+    }
+    chart.innerHTML = html;
+    document.querySelector('[data-sector-perf]').style.display = '';
+  }
+
+  // ─── Volatility Leaders ───
+  function renderVolLeaders(stocks) {
+    var withChange = stocks.filter(function(s) { return s.variation != null; });
+    withChange.sort(function(a, b) { return Math.abs(b.variation) - Math.abs(a.variation); });
+    var leaders = withChange.slice(0, 5);
+    if (leaders.length < 3) return;
+
+    var maxAbs = Math.abs(leaders[0].variation) * 100;
+    if (maxAbs < 0.1) return;
+
+    var grid = document.querySelector('[data-vol-leaders-grid]');
+    if (!grid) return;
+
+    var html = '';
+    for (var i = 0; i < leaders.length; i++) {
+      var s = leaders[i];
+      var pct = s.variation * 100;
+      var isUp = pct >= 0;
+      var barW = (Math.abs(pct) / maxAbs * 100).toFixed(1);
+      var color = isUp ? '#16a34a' : '#dc2626';
+      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol);
+      html += '<a href="' + link + '" class="vl-row">';
+      html += '<span class="vl-sym">' + s.symbol + '</span>';
+      html += '<div class="vl-bar-wrap"><div class="vl-bar" style="width:' + barW + '%;background:' + color + '"></div></div>';
+      html += '<span class="vl-pct" style="color:' + color + '">' + (isUp ? '+' : '') + pct.toFixed(2) + '%</span>';
+      html += '</a>';
+    }
+    grid.innerHTML = html;
+    document.querySelector('[data-vol-leaders]').style.display = '';
+  }
+
+  // ─── Volume Distribution ───
+  function renderVolDist(stocks) {
+    var byVol = stocks.slice().sort(function(a, b) { return (b.volume || 0) - (a.volume || 0); }).slice(0, 10);
+    if (byVol.length === 0 || !byVol[0].volume) return;
+    var maxVol = byVol[0].volume || 1;
+    var chart = document.querySelector('[data-vol-dist-chart]');
+    if (!chart) return;
+    var html = '';
+    for (var i = 0; i < byVol.length; i++) {
+      var s = byVol[i];
+      var sym = (s.symbol || '').replace('.BA', '');
+      var pct = ((s.volume || 0) / maxVol * 100).toFixed(1);
+      var chg = s.variation != null ? s.variation * 100 : 0;
+      var barColor = chg >= 0 ? '#16a34a' : '#dc2626';
+      html += '<div class="vd-row">';
+      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(sym) + '" class="vd-sym">' + sym + '</a>';
+      html += '<div class="vd-bar-track"><div class="vd-bar-fill" style="width:' + pct + '%;background:' + barColor + '"></div></div>';
+      html += '<span class="vd-vol">' + C.fmtVol(s.volume || 0) + '</span>';
+      html += '</div>';
+    }
+    chart.innerHTML = html;
+    document.querySelector('[data-vol-dist]').style.display = '';
+  }
+
   // ─── Render stock cards ───
   function renderStocks() {
     var grid = document.querySelector('[data-stocks-grid]');
@@ -433,6 +929,12 @@ const { lang } = Astro.params;
       return currentSort.dir === 'desc' ? -cmp : cmp;
     });
 
+    // Find max volume for relative bar
+    var maxVol = 0;
+    for (var vi = 0; vi < sorted.length; vi++) {
+      if (sorted[vi].volume > maxVol) maxVol = sorted[vi].volume;
+    }
+
     var html = '';
     for (var i = 0; i < sorted.length; i++) {
       var s = sorted[i];
@@ -440,8 +942,11 @@ const { lang } = Astro.params;
       var pctClass = pct != null ? (pct >= 0 ? 'rc-up' : 'rc-down') : '';
       var arrow = pct != null ? (pct >= 0 ? '▲' : '▼') : '';
       var borderColor = pct != null ? (pct >= 0 ? '#16a34a' : '#dc2626') : 'var(--color-border)';
+      var volPct = s.volume && maxVol > 0 ? (s.volume / maxVol * 100).toFixed(1) : 0;
+      var volColor = pct != null ? (pct >= 0 ? 'rgba(22,163,74,0.15)' : 'rgba(220,38,38,0.15)') : 'rgba(128,128,128,0.1)';
 
       html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="stk-card" style="--stk-accent:' + borderColor + '">';
+      html += '<div class="stk-vol-bg" style="width:' + volPct + '%;background:' + volColor + '"></div>';
       html += '<div class="stk-row1">';
       html += logoHtml(s.symbol);
       html += '<div class="stk-id">';
@@ -457,6 +962,11 @@ const { lang } = Astro.params;
       if (STOCK_MCAP[s.symbol]) html += '<span class="stk-mcap">Cap ~$' + C.fmtVol(STOCK_MCAP[s.symbol] * 1e6) + '</span>';
       html += '</span>';
       html += '</div>';
+      var sec = STOCK_SECTORS[s.symbol];
+      if (sec && sec !== 'Other') {
+        var secCol = SECTOR_COLORS[sec] || '#9ca3af';
+        html += '<div class="stk-row3"><span class="stk-sector" style="color:' + secCol + ';border-color:' + secCol + '">' + sec + '</span></div>';
+      }
       html += '</a>';
     }
     grid.innerHTML = html;
@@ -509,11 +1019,181 @@ const { lang } = Astro.params;
   .rc-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; }
   .rc-badge--merval { background: rgba(96,165,250,0.15); color: #3b82f6; }
 
+  /* Market Summary */
+  .mkt-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); margin-bottom: var(--spacing-xl); }
+  .mkt-sum-item { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .mkt-sum-label { font-size: 0.68rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .mkt-sum-val { font-size: 1.15rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  @media (max-width: 768px) { .mkt-summary { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .mkt-summary { grid-template-columns: 1fr 1fr; gap: 8px; } .mkt-sum-item { padding: 10px 12px; } .mkt-sum-val { font-size: 1rem; } }
+
+  /* Top Movers */
+  .movers-section { margin-bottom: var(--spacing-2xl); }
+  .movers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); }
+  .movers-col { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
+  .movers-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 16px; border-bottom: 1px solid var(--color-border); }
+  .movers-title--up { color: #16a34a; }
+  .movers-title--down { color: #dc2626; }
+  :global(.mover-item) { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid rgba(128,128,128,0.08); text-decoration: none; color: inherit; transition: background 0.1s; }
+  :global(.mover-item:last-child) { border-bottom: none; }
+  :global(.mover-item:hover) { background: rgba(246,180,14,0.06); }
+  :global(.mover-info) { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  :global(.mover-sym) { font-weight: 800; font-size: 0.85rem; color: var(--color-text); }
+  :global(.mover-name) { font-size: 0.68rem; color: var(--color-text-meta); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  :global(.mover-right) { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  :global(.mover-price) { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); white-space: nowrap; }
+  :global(.mover-pct) { font-size: 0.75rem; font-weight: 700; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
+  :global(.mover-pct.rc-up) { color: #16a34a; background: rgba(22,163,74,0.1); }
+  :global(.mover-pct.rc-down) { color: #dc2626; background: rgba(220,38,38,0.1); }
+
   /* Chart */
   .chart-section { margin-bottom: var(--spacing-2xl); }
   .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-md); }
   .chart-wrap canvas { width: 100%; display: block; }
+  .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm); }
+  .chart-header .section-title { margin-bottom: 0; }
+  .range-buttons { display: flex; gap: 4px; }
+  .range-buttons button {
+    padding: 5px 12px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em;
+    border: 1px solid var(--color-border); border-radius: 6px;
+    background: transparent; color: var(--color-text-meta); cursor: pointer; transition: all 0.15s;
+  }
+  .range-buttons button:hover { color: var(--color-text); border-color: var(--color-text-meta); }
+  .range-buttons button.active { background: var(--color-gold); color: #000; border-color: var(--color-gold); }
   .chart-unavailable { text-align: center; color: var(--color-text-meta); padding: var(--spacing-2xl) var(--spacing-md); font-size: 0.85rem; font-style: italic; }
+
+  /* Market Breadth */
+  .breadth-section { margin-bottom: var(--spacing-xl); }
+  .breadth-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
+  .breadth-side { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 50px; }
+  .breadth-count { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .breadth-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+  .breadth-up .breadth-count { color: #16a34a; }
+  .breadth-down .breadth-count { color: #dc2626; }
+  :global([data-theme="dark"]) .breadth-up .breadth-count { color: #4ade80; }
+  :global([data-theme="dark"]) .breadth-down .breadth-count { color: #f87171; }
+  .breadth-track { flex: 1; height: 8px; background: rgba(220,38,38,0.2); border-radius: 4px; overflow: hidden; }
+  .breadth-fill { height: 100%; background: rgba(22,163,74,0.6); border-radius: 4px; transition: width 0.5s; }
+  :global([data-theme="dark"]) .breadth-track { background: rgba(248,113,113,0.2); }
+  :global([data-theme="dark"]) .breadth-fill { background: rgba(74,222,128,0.5); }
+
+  /* Heatmap */
+  .heatmap-section { margin-bottom: var(--spacing-2xl); }
+  .heatmap {
+    display: flex; flex-wrap: wrap; gap: 3px;
+    border-radius: 8px; overflow: visible; min-height: 80px;
+  }
+  .heatmap :global(.hm-cell) {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-width: 60px; min-height: 60px; flex-grow: 1;
+    border-radius: 6px; text-decoration: none; color: #fff;
+    transition: transform 0.15s, box-shadow 0.15s;
+    padding: 6px 4px; text-align: center; position: relative;
+  }
+  .heatmap :global(.hm-cell:hover) { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 2; text-decoration: none; color: #fff; }
+  .heatmap :global(.hm-sym) { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.02em; line-height: 1.2; }
+  .heatmap :global(.hm-pct) { font-size: 0.65rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; opacity: 0.9; }
+  .heatmap :global(.hm-tip) {
+    display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 6px;
+    padding: 8px 10px; min-width: 140px; z-index: 10; pointer-events: none;
+    flex-direction: column; gap: 3px; text-align: left; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .heatmap :global(.hm-tip strong) { font-size: 0.72rem; color: var(--color-text); white-space: nowrap; }
+  .heatmap :global(.hm-tip span) { font-size: 0.65rem; color: var(--color-text-meta); font-weight: 600; white-space: nowrap; }
+  .heatmap :global(.hm-cell:hover .hm-tip) { display: flex; }
+
+  /* Sector Breakdown */
+  .sector-section { margin-bottom: var(--spacing-2xl); }
+  .sector-grid {
+    display: flex; align-items: center; gap: var(--spacing-xl);
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    border-radius: 8px; padding: var(--spacing-xl);
+  }
+  .sector-chart-wrap { flex-shrink: 0; }
+  .sector-legend { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .sector-legend :global(.sec-leg-item) {
+    display: flex; align-items: center; gap: 10px; padding: 6px 0;
+    border-bottom: 1px solid rgba(128,128,128,0.08); font-size: 0.85rem;
+  }
+  .sector-legend :global(.sec-leg-item:last-child) { border-bottom: none; }
+  .sector-legend :global(.sec-dot) { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .sector-legend :global(.sec-name) { font-weight: 700; min-width: 90px; color: var(--color-text); }
+  .sector-legend :global(.sec-pct) { font-weight: 800; font-variant-numeric: tabular-nums; min-width: 50px; color: var(--color-text); }
+  .sector-legend :global(.sec-count) { font-size: 0.75rem; color: var(--color-text-meta); min-width: 60px; }
+  .sector-legend :global(.sec-chg) { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-left: auto; }
+  .sector-legend :global(.sec-chg.rc-up) { color: #16a34a; }
+  .sector-legend :global(.sec-chg.rc-down) { color: #dc2626; }
+
+  @media (max-width: 640px) {
+    .sector-grid { flex-direction: column; }
+  }
+
+  /* Market Cap Concentration */
+  .mcap-conc-section { margin-bottom: var(--spacing-2xl); }
+  :global(.mcc-summary) { display: flex; gap: var(--spacing-xl); margin-bottom: var(--spacing-md); }
+  :global(.mcc-stat) { display: flex; flex-direction: column; }
+  :global(.mcc-stat-val) { font-size: 1.6rem; font-weight: 800; color: var(--color-text); font-variant-numeric: tabular-nums; }
+  :global(.mcc-stat-label) { font-size: 0.72rem; color: var(--color-text-meta); font-weight: 600; }
+  :global(.mcc-bar) { display: flex; height: 24px; border-radius: 6px; overflow: hidden; margin-bottom: var(--spacing-md); gap: 2px; }
+  :global(.mcc-seg) { transition: width 0.5s ease; min-width: 2px; }
+  :global(.mcc-seg--rest) { background: #4b5563; }
+  :global(.mcc-list) { display: flex; flex-direction: column; gap: 2px; }
+  :global(.mcc-row) { display: grid; grid-template-columns: 24px 10px 70px 50px 80px 70px; align-items: center; gap: 8px; padding: 6px 0; font-size: 0.78rem; }
+  :global(.mcc-row + .mcc-row) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.mcc-row--rest) { color: var(--color-text-meta); }
+  :global(.mcc-rank) { font-weight: 700; color: var(--color-text-meta); text-align: center; font-size: 0.7rem; }
+  :global(.mcc-dot) { width: 10px; height: 10px; border-radius: 50%; }
+  :global(.mcc-sym) { font-weight: 800; color: var(--color-accent); text-decoration: none; }
+  :global(.mcc-sym:hover) { text-decoration: underline; }
+  :global(.mcc-w) { font-weight: 700; color: var(--color-text); font-variant-numeric: tabular-nums; text-align: right; }
+  :global(.mcc-cap) { font-weight: 600; color: var(--color-text-meta); font-variant-numeric: tabular-nums; text-align: right; }
+
+  /* Volatility Leaders */
+  .vol-leaders-section { margin-bottom: var(--spacing-2xl); }
+  :global(.vl-row) { display: grid; grid-template-columns: 70px 1fr 70px; align-items: center; gap: 10px; padding: 7px 0; text-decoration: none; }
+  :global(.vl-row + .vl-row) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.vl-row:hover) { background: rgba(246,180,14,0.06); }
+  :global(.vl-sym) { font-size: 0.82rem; font-weight: 800; color: var(--color-accent); }
+  :global(.vl-bar-wrap) { height: 18px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
+  :global(.vl-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  :global(.vl-pct) { font-size: 0.82rem; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Volume Distribution */
+  /* Sector Performance */
+  .sector-perf-section { margin-bottom: var(--spacing-2xl); }
+  :global(.sp-row) {
+    display: grid; grid-template-columns: 120px 1fr 70px; align-items: center; gap: 10px;
+    padding: 7px 0;
+  }
+  :global(.sp-row + .sp-row) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.sp-name) { font-size: 0.78rem; font-weight: 700; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  :global(.sp-cnt) { font-size: 0.65rem; color: var(--color-text-meta); font-weight: 600; }
+  :global(.sp-bar-area) { display: grid; grid-template-columns: 1fr 2px 1fr; align-items: center; height: 20px; }
+  :global(.sp-bar-left) { display: flex; justify-content: flex-end; height: 100%; }
+  :global(.sp-bar-center) { background: var(--color-border); height: 100%; }
+  :global(.sp-bar-right) { display: flex; justify-content: flex-start; height: 100%; }
+  :global(.sp-bar-fill) { height: 100%; border-radius: 3px; transition: width 0.5s ease; min-width: 2px; }
+  :global(.sp-bar-fill--neg) { margin-left: auto; }
+  :global(.sp-val) { font-size: 0.82rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+
+  .vol-dist-section { margin-bottom: var(--spacing-2xl); }
+  :global(.vd-row) {
+    display: grid; grid-template-columns: 60px 1fr 70px; align-items: center; gap: 10px;
+    padding: 6px 0;
+  }
+  :global(.vd-row + .vd-row) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.vd-sym) {
+    font-size: 0.82rem; font-weight: 800; color: var(--color-text);
+    text-decoration: none; transition: color 0.15s;
+  }
+  :global(.vd-sym:hover) { color: var(--color-gold); text-decoration: none; }
+  :global(.vd-bar-track) { height: 18px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
+  :global(.vd-bar-fill) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  :global(.vd-vol) {
+    font-size: 0.78rem; font-weight: 700; color: var(--color-text-meta);
+    text-align: right; font-variant-numeric: tabular-nums;
+  }
 
   /* Stocks Section */
   .stocks-section { margin-bottom: var(--spacing-2xl); }
@@ -534,6 +1214,7 @@ const { lang } = Astro.params;
   @media (max-width: 640px) {
     .idx-price { font-size: 1.6rem; }
     .idx-stats { gap: var(--spacing-md); }
+    .movers-grid { grid-template-columns: 1fr; }
     .stocks-header { flex-direction: column; align-items: flex-start; }
   }
 </style>

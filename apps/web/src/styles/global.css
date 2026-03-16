@@ -230,6 +230,10 @@ button:focus:not(:focus-visible) {
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   position: relative; overflow: hidden;
 }
+.stk-vol-bg {
+  position: absolute; left: 0; top: 0; bottom: 0; border-radius: 10px 0 0 10px;
+  pointer-events: none; transition: width 0.4s ease;
+}
 .stk-card::after {
   content: '\2192'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
   font-size: 1rem; color: var(--color-text-meta); opacity: 0;
@@ -242,7 +246,7 @@ button:focus:not(:focus-visible) {
 }
 .stk-card:hover::after { opacity: 0.5; right: 12px; }
 
-.stk-row1 { display: flex; align-items: center; gap: 12px; }
+.stk-row1 { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
 .stk-logo {
   width: 40px; height: 40px; min-width: 40px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
@@ -263,10 +267,14 @@ button:focus:not(:focus-visible) {
 .stk-row2 {
   display: flex; justify-content: space-between; align-items: baseline;
   padding-top: 8px; border-top: 1px solid rgba(128,128,128,0.15);
+  position: relative; z-index: 1;
 }
 .stk-price { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.01em; }
 .stk-meta { display: flex; gap: 12px; align-items: baseline; }
-.stk-vol, .stk-mcap { font-size: 0.68rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+.stk-vol, .stk-mcap, .stk-pe { font-size: 0.68rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+.stk-pe { font-weight: 600; }
+.stk-row3 { padding-top: 4px; }
+.stk-sector { font-size: 0.6rem; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 1px solid; border-radius: 3px; padding: 1px 6px; display: inline-block; opacity: 0.85; }
 
 @media (max-width: 640px) {
   .stocks-grid { grid-template-columns: 1fr; gap: 0.5rem; }

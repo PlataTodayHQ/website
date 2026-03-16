@@ -113,6 +113,13 @@ function getDbProfile(symbol: string) {
       recommendationKey: f.recommendation_key ?? null,
       recommendationMean: f.recommendation_mean ?? null,
     },
+    ratingDistribution: f.rating_strong_buy != null ? {
+      strongBuy: f.rating_strong_buy ?? 0,
+      buy: f.rating_buy ?? 0,
+      hold: f.rating_hold ?? 0,
+      sell: f.rating_sell ?? 0,
+      strongSell: f.rating_strong_sell ?? 0,
+    } : null,
     earningsHistory: earnings.map((e) => ({
       date: e.quarter_date,
       actual: e.actual_eps,
@@ -124,7 +131,7 @@ function getDbProfile(symbol: string) {
 
 export const GET: APIRoute = async ({ params }) => {
   try {
-    const rawSymbol = params.symbol ?? "";
+    const rawSymbol = decodeURIComponent(params.symbol ?? "");
 
     if (!rawSymbol) {
       return errorResponse("Missing symbol parameter", 400);
@@ -151,6 +158,7 @@ export const GET: APIRoute = async ({ params }) => {
       "financialData",
       "earnings",
       "price",
+      "recommendationTrend",
     ].join(",");
 
     const yahooUrl = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(symbol)}?modules=${modules}&crumb=${encodeURIComponent(crumb)}`;

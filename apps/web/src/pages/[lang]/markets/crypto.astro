@@ -1,0 +1,1011 @@
+---
+import Base from "@/layouts/Base.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "crypto.seoTitle")}
+  description={t(lang!, "crypto.seoDescription")}
+  lang={lang}
+  ogType="website"
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
+    { name: t(lang!, "crypto.title"), url: `/${lang}/markets/crypto` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "crypto.title"),
+    "description": t(lang!, "crypto.subtitle"),
+    "url": `https://plata.today/${lang}/markets/crypto`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <div class="crypto-page" data-crypto-page data-lang={lang}>
+    <header class="mkts-header">
+      <div>
+        <h1 class="mkts-title">{t(lang!, "crypto.title")}</h1>
+        <p class="mkts-subtitle">{t(lang!, "crypto.subtitle")}</p>
+      </div>
+      <p class="mkts-updated" data-mkts-updated>{t(lang!, "common.loading")}</p>
+    </header>
+
+    <!-- Market Overview -->
+    <div class="cr-overview" data-cr-overview style="display:none;">
+      <div class="cr-ov-card">
+        <span class="cr-ov-label">{t(lang!, "crypto.totalMcap")}</span>
+        <span class="cr-ov-val" data-cr-total-mcap>—</span>
+      </div>
+      <div class="cr-ov-card">
+        <span class="cr-ov-label">{t(lang!, "crypto.vol24h")}</span>
+        <span class="cr-ov-val" data-cr-total-vol>—</span>
+      </div>
+      <div class="cr-ov-card">
+        <span class="cr-ov-label">{t(lang!, "crypto.btcDom")}</span>
+        <span class="cr-ov-val" data-cr-btc-dom>—</span>
+      </div>
+      <div class="cr-ov-card cr-ov-card--fg" data-cr-fg-card style="display:none;">
+        <span class="cr-ov-label">{t(lang!, "crypto.fearGreed")}</span>
+        <div class="cr-fg">
+          <div class="cr-fg-gauge">
+            <div class="cr-fg-bar">
+              <div class="cr-fg-needle" data-cr-fg-needle></div>
+            </div>
+          </div>
+          <div class="cr-fg-info">
+            <span class="cr-fg-val" data-cr-fg-val>—</span>
+            <span class="cr-fg-label" data-cr-fg-label>—</span>
+          </div>
+        </div>
+      </div>
+      <div class="cr-ov-card cr-ov-card--wide">
+        <span class="cr-ov-label">{t(lang!, "crypto.dominance")}</span>
+        <div class="cr-dom-bar" data-cr-dom-bar></div>
+        <div class="cr-dom-legend" data-cr-dom-legend></div>
+      </div>
+    </div>
+
+    <!-- Top Movers -->
+    <div class="cr-movers" data-cr-movers style="display:none;">
+      <div class="cr-movers-col" data-cr-gainers>
+        <h3 class="cr-movers-title cr-movers-title--up">{t(lang!, "crypto.topGainers" as any)}</h3>
+      </div>
+      <div class="cr-movers-col" data-cr-losers>
+        <h3 class="cr-movers-title cr-movers-title--down">{t(lang!, "crypto.topLosers" as any)}</h3>
+      </div>
+    </div>
+
+    <!-- 7-Day Performance -->
+    <div class="cr-perf7d" data-cr-perf7d style="display:none;">
+      <h3 class="cr-perf7d-title">{t(lang!, "crypto.perf7d" as any)}</h3>
+      <div class="cr-perf7d-chart" data-cr-perf7d-chart></div>
+    </div>
+
+    <!-- Liquidity Overview -->
+    <div class="cr-liquidity" data-cr-liquidity style="display:none;">
+      <h3 class="cr-liq-title">{t(lang!, "crypto.liquidity" as any)}</h3>
+      <div class="cr-liq-grid" data-cr-liq-grid></div>
+    </div>
+
+    <!-- ATH Distance -->
+    <div class="cr-ath-section" data-cr-ath style="display:none;">
+      <h3 class="cr-ath-title">{t(lang!, "crypto.athDistance" as any)}</h3>
+      <div class="cr-ath-grid" data-cr-ath-grid></div>
+    </div>
+
+    <!-- Supply Pressure -->
+    <div class="cr-supply-section" data-cr-supply style="display:none;">
+      <h3 class="cr-supply-title">{t(lang!, "crypto.supplyPressure" as any)}</h3>
+      <div class="cr-supply-grid" data-cr-supply-grid></div>
+    </div>
+
+    <!-- Market Cap Treemap -->
+    <div class="cr-treemap-section" data-cr-treemap style="display:none;">
+      <h3 class="cr-treemap-title">{t(lang!, "crypto.mcapTreemap" as any)}</h3>
+      <div class="cr-treemap" data-cr-treemap-grid></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="cr-toolbar">
+      <div class="cr-search-wrap">
+        <svg class="cr-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="cr-search" data-cr-search placeholder={t(lang!, "screener.search")} autocomplete="off" />
+      </div>
+      <span class="cr-count" data-cr-count></span>
+    </div>
+
+    <!-- Desktop table -->
+    <div class="cr-table-wrap" data-cr-table-wrap>
+      <table class="cr-table">
+        <thead>
+          <tr>
+            <th class="cr-th cr-th--rank cr-th--active" data-sort="rank" data-dir="asc"><span class="cr-th-inner">{t(lang!, "crypto.colRank")}<svg class="cr-sort-icon" width="10" height="14" viewBox="0 0 10 14"><path class="cr-sort-up" d="M5 0L10 5H0z"/><path class="cr-sort-down" d="M5 14L0 9h10z"/></svg></span></th>
+            <th class="cr-th cr-th--name" data-sort="name"><span class="cr-th-inner">{t(lang!, "crypto.colCoin")}<svg class="cr-sort-icon" width="10" height="14" viewBox="0 0 10 14"><path class="cr-sort-up" d="M5 0L10 5H0z"/><path class="cr-sort-down" d="M5 14L0 9h10z"/></svg></span></th>
+            <th class="cr-th cr-th--num" data-sort="price"><span class="cr-th-inner">{t(lang!, "crypto.colPrice")}<svg class="cr-sort-icon" width="10" height="14" viewBox="0 0 10 14"><path class="cr-sort-up" d="M5 0L10 5H0z"/><path class="cr-sort-down" d="M5 14L0 9h10z"/></svg></span></th>
+            <th class="cr-th cr-th--num" data-sort="change"><span class="cr-th-inner">{t(lang!, "crypto.col24h")}<svg class="cr-sort-icon" width="10" height="14" viewBox="0 0 10 14"><path class="cr-sort-up" d="M5 0L10 5H0z"/><path class="cr-sort-down" d="M5 14L0 9h10z"/></svg></span></th>
+            <th class="cr-th cr-th--num" data-sort="change7d"><span class="cr-th-inner">{t(lang!, "crypto.col7d")}<svg class="cr-sort-icon" width="10" height="14" viewBox="0 0 10 14"><path class="cr-sort-up" d="M5 0L10 5H0z"/><path class="cr-sort-down" d="M5 14L0 9h10z"/></svg></span></th>
+            <th class="cr-th cr-th--num cr-th--hide-mobile" data-sort="marketCap"><span class="cr-th-inner">{t(lang!, "crypto.colMcap")}<svg class="cr-sort-icon" width="10" height="14" viewBox="0 0 10 14"><path class="cr-sort-up" d="M5 0L10 5H0z"/><path class="cr-sort-down" d="M5 14L0 9h10z"/></svg></span></th>
+            <th class="cr-th cr-th--num cr-th--hide-mobile" data-sort="volume"><span class="cr-th-inner">{t(lang!, "crypto.colVolume")}<svg class="cr-sort-icon" width="10" height="14" viewBox="0 0 10 14"><path class="cr-sort-up" d="M5 0L10 5H0z"/><path class="cr-sort-down" d="M5 14L0 9h10z"/></svg></span></th>
+            <th class="cr-th cr-th--num cr-th--hide-tablet" data-sort="circulatingSupply"><span class="cr-th-inner">{t(lang!, "crypto.colSupply")}<svg class="cr-sort-icon" width="10" height="14" viewBox="0 0 10 14"><path class="cr-sort-up" d="M5 0L10 5H0z"/><path class="cr-sort-down" d="M5 14L0 9h10z"/></svg></span></th>
+            <th class="cr-th cr-th--num cr-th--hide-tablet cr-th--spark">7d</th>
+          </tr>
+        </thead>
+        <tbody data-cr-tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Mobile cards -->
+    <div class="cr-cards" data-cr-cards></div>
+
+    <p class="cr-disclaimer">Data from CoinGecko. Prices may be delayed. For informational purposes only — not financial advice.</p>
+  </div>
+</Base>
+
+<script define:vars={{ lang, i18nCoins: t(lang!, "crypto.coins" as any), i18nNoCoins: t(lang!, "crypto.noCoins" as any), i18nOthers: t(lang!, "crypto.others" as any), i18nExtremeFear: t(lang!, "crypto.extremeFear" as any), i18nFear: t(lang!, "crypto.fear" as any), i18nNeutral: t(lang!, "crypto.neutral" as any), i18nGreed: t(lang!, "crypto.greed" as any), i18nExtremeGreed: t(lang!, "crypto.extremeGreed" as any) }}>
+(function() {
+  'use strict';
+
+  var allCoins = [];
+  var searchTerm = '';
+  var sortKey = 'rank';
+  var sortAsc = true;
+
+  function setEl(sel, text) {
+    var el = document.querySelector(sel);
+    if (el) el.textContent = text;
+  }
+
+  function fmtPrice(n) {
+    if (n == null) return '—';
+    if (n >= 1) return '$' + n.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (n >= 0.01) return '$' + n.toFixed(4);
+    return '$' + n.toFixed(6);
+  }
+
+  function fmtCap(n) {
+    if (n == null) return '—';
+    if (n >= 1e12) return '$' + (n / 1e12).toLocaleString(lang, { maximumFractionDigits: 2 }) + 'T';
+    if (n >= 1e9) return '$' + (n / 1e9).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'B';
+    if (n >= 1e6) return '$' + (n / 1e6).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'M';
+    return '$' + n.toLocaleString(lang);
+  }
+
+  function fmtVol(n) {
+    if (n == null) return '—';
+    if (n >= 1e9) return '$' + (n / 1e9).toFixed(1) + 'B';
+    if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return '$' + (n / 1e3).toFixed(0) + 'K';
+    return '$' + n.toFixed(0);
+  }
+
+  function fmtSupply(n, sym) {
+    if (n == null) return '—';
+    var v = n >= 1e9 ? (n / 1e9).toFixed(2) + 'B' : n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e3 ? (n / 1e3).toFixed(0) + 'K' : n.toFixed(0);
+    return v + ' ' + (sym || '');
+  }
+
+  function supplyCell(c) {
+    var text = fmtSupply(c.circulatingSupply, c.symbol);
+    if (c.maxSupply && c.circulatingSupply) {
+      var pct = (c.circulatingSupply / c.maxSupply * 100).toFixed(0);
+      return text + '<div class="cr-supply-bar"><div class="cr-supply-fill" style="width:' + pct + '%"></div></div>';
+    }
+    return text;
+  }
+
+  function pctHtml(val) {
+    if (val == null) return '<span style="color:var(--color-text-meta)">—</span>';
+    var cls = val >= 0 ? 'cr-up' : 'cr-down';
+    var arrow = val >= 0 ? '▲' : '▼';
+    return '<span class="cr-pct ' + cls + '">' + arrow + ' ' + Math.abs(val).toFixed(2) + '%</span>';
+  }
+
+  function miniSparkline(data, up) {
+    if (!data || data.length < 4) return '';
+    var w = 80, h = 28;
+    var min = Infinity, max = -Infinity;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i] < min) min = data[i];
+      if (data[i] > max) max = data[i];
+    }
+    if (max === min) return '';
+    var pts = [];
+    for (var j = 0; j < data.length; j++) {
+      var x = (j / (data.length - 1)) * w;
+      var y = h - ((data[j] - min) / (max - min)) * h;
+      pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+    }
+    var color = up ? '#16a34a' : '#dc2626';
+    return '<svg class="cr-spark" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none"><polyline fill="none" stroke="' + color + '" stroke-width="1.5" points="' + pts.join(' ') + '"/></svg>';
+  }
+
+  function getFiltered() {
+    var q = searchTerm.toLowerCase();
+    var filtered = allCoins;
+    if (q) {
+      filtered = allCoins.filter(function(c) {
+        return c.symbol.toLowerCase().indexOf(q) !== -1 ||
+               (c.name && c.name.toLowerCase().indexOf(q) !== -1);
+      });
+    }
+    filtered = filtered.slice().sort(function(a, b) {
+      var va = a[sortKey], vb = b[sortKey];
+      if (va == null) va = sortKey === 'name' ? 'zzz' : -Infinity;
+      if (vb == null) vb = sortKey === 'name' ? 'zzz' : -Infinity;
+      if (typeof va === 'string') {
+        var cmp = va.localeCompare(vb);
+        return sortAsc ? cmp : -cmp;
+      }
+      return sortAsc ? va - vb : vb - va;
+    });
+    return filtered;
+  }
+
+  function renderTable() {
+    var filtered = getFiltered();
+    var tbody = document.querySelector('[data-cr-tbody]');
+    var cards = document.querySelector('[data-cr-cards]');
+    setEl('[data-cr-count]', filtered.length + ' ' + i18nCoins);
+
+    // Desktop table
+    var html = '';
+    for (var i = 0; i < filtered.length; i++) {
+      var c = filtered[i];
+      var chg = c.change || 0;
+      var cls = chg >= 0 ? 'cr-up' : 'cr-down';
+      var arrow = chg >= 0 ? '▲' : '▼';
+      var yahooSym = c.symbol + '-USD';
+      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(yahooSym);
+      var imgHtml = c.image
+        ? '<img class="cr-coin-img" src="' + c.image + '" alt="' + c.symbol + '" width="24" height="24" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+          + '<span class="cr-coin-icon" style="display:none">' + c.symbol.charAt(0) + '</span>'
+        : '<span class="cr-coin-icon">' + c.symbol.charAt(0) + '</span>';
+
+      html += '<tr class="cr-row" onclick="window.location=\'' + link + '\'">';
+      html += '<td class="cr-td cr-td--rank">' + c.rank + '</td>';
+      html += '<td class="cr-td cr-td--name"><a href="' + link + '" class="cr-name-link">'
+        + imgHtml
+        + '<span class="cr-name-text"><strong class="cr-symbol">' + c.symbol + '</strong><span class="cr-company">' + (c.name || '') + '</span></span>'
+        + '</a></td>';
+      var athBadge = (c.athChangePercentage != null && c.athChangePercentage > -10) ? '<span class="cr-ath-badge" title="Near ATH (' + c.athChangePercentage.toFixed(1) + '%)">ATH</span>' : '';
+      html += '<td class="cr-td cr-td--num">' + fmtPrice(c.price) + athBadge + '</td>';
+      html += '<td class="cr-td cr-td--num">' + pctHtml(chg) + '</td>';
+      html += '<td class="cr-td cr-td--num">' + pctHtml(c.change7d) + '</td>';
+      html += '<td class="cr-td cr-td--num cr-td--hide-mobile">' + fmtCap(c.marketCap) + '</td>';
+      html += '<td class="cr-td cr-td--num cr-td--hide-mobile">' + fmtVol(c.volume) + '</td>';
+      html += '<td class="cr-td cr-td--num cr-td--hide-tablet">' + supplyCell(c) + '</td>';
+      html += '<td class="cr-td cr-td--num cr-td--hide-tablet cr-td--spark">' + miniSparkline(c.sparkline, chg >= 0) + '</td>';
+      html += '</tr>';
+    }
+    if (tbody) tbody.innerHTML = html || '<tr><td colspan="9" class="cr-empty">' + i18nNoCoins + '</td></tr>';
+
+    // Mobile cards
+    var cardHtml = '';
+    for (var j = 0; j < filtered.length; j++) {
+      var co = filtered[j];
+      var ch = co.change || 0;
+      var cc = ch >= 0 ? 'cr-up' : 'cr-down';
+      var ar = ch >= 0 ? '▲' : '▼';
+      var ys = co.symbol + '-USD';
+      var lk = '/' + lang + '/markets/stock?s=' + encodeURIComponent(ys);
+      var border = ch >= 0 ? 'var(--color-positive)' : 'var(--color-negative)';
+      var imgCard = co.image
+        ? '<img class="cr-coin-img" src="' + co.image + '" alt="' + co.symbol + '" width="32" height="32" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+          + '<span class="cr-coin-icon cr-coin-icon--card" style="display:none">' + co.symbol.charAt(0) + '</span>'
+        : '<span class="cr-coin-icon cr-coin-icon--card">' + co.symbol.charAt(0) + '</span>';
+
+      cardHtml += '<a href="' + lk + '" class="cr-card" style="border-left-color:' + border + '">';
+      cardHtml += '<div class="cr-card-header">';
+      cardHtml += '<span class="cr-card-rank">' + co.rank + '</span>';
+      cardHtml += imgCard;
+      cardHtml += '<div class="cr-card-name"><strong>' + co.symbol + '</strong><span class="cr-card-fullname">' + (co.name || '') + '</span></div>';
+      cardHtml += '<span class="cr-pct ' + cc + '">' + ar + ' ' + Math.abs(ch).toFixed(2) + '%</span>';
+      cardHtml += '</div>';
+      cardHtml += '<div class="cr-card-body">';
+      cardHtml += '<span class="cr-card-price">' + fmtPrice(co.price) + '</span>';
+      if (co.change7d != null) {
+        var c7cls = co.change7d >= 0 ? 'cr-up' : 'cr-down';
+        var c7ar = co.change7d >= 0 ? '▲' : '▼';
+        cardHtml += '<span class="cr-pct cr-pct--sm ' + c7cls + '">7d ' + c7ar + ' ' + Math.abs(co.change7d).toFixed(1) + '%</span>';
+      }
+      cardHtml += '<span class="cr-card-meta">Cap ' + fmtCap(co.marketCap) + '</span>';
+      cardHtml += '</div>';
+      cardHtml += '</a>';
+    }
+    if (cards) cards.innerHTML = cardHtml || '<div class="cr-empty">' + i18nNoCoins + '</div>';
+  }
+
+  // Sorting
+  document.querySelectorAll('[data-sort]').forEach(function(th) {
+    th.addEventListener('click', function() {
+      var key = th.getAttribute('data-sort');
+      if (sortKey === key) { sortAsc = !sortAsc; }
+      else { sortKey = key; sortAsc = key === 'name' ? true : (key === 'rank' ? true : false); }
+      document.querySelectorAll('[data-sort]').forEach(function(h) {
+        h.classList.remove('cr-th--active');
+        h.removeAttribute('data-dir');
+      });
+      th.classList.add('cr-th--active');
+      th.setAttribute('data-dir', sortAsc ? 'asc' : 'desc');
+      renderTable();
+    });
+  });
+
+  // Search
+  var searchInput = document.querySelector('[data-cr-search]');
+  var searchTimer;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function() {
+      searchTerm = searchInput.value.trim();
+      renderTable();
+    }, 200);
+  });
+
+  // Load data
+  function renderOverview(coins) {
+    var totalMcap = 0, totalVol = 0;
+    var top5 = [];
+    for (var i = 0; i < coins.length; i++) {
+      totalMcap += coins[i].marketCap || 0;
+      totalVol += coins[i].volume || 0;
+    }
+    // Top 5 by market cap for dominance
+    var sorted = coins.slice().sort(function(a,b) { return (b.marketCap||0) - (a.marketCap||0); });
+    for (var j = 0; j < Math.min(5, sorted.length); j++) {
+      if (sorted[j].marketCap > 0) top5.push(sorted[j]);
+    }
+    setEl('[data-cr-total-mcap]', fmtCap(totalMcap));
+    setEl('[data-cr-total-vol]', fmtVol(totalVol));
+    if (top5.length > 0 && totalMcap > 0) {
+      var btcDom = top5[0].symbol === 'BTC' ? (top5[0].marketCap / totalMcap * 100).toFixed(1) + '%' : '—';
+      setEl('[data-cr-btc-dom]', btcDom);
+
+      // Dominance bar
+      var barEl = document.querySelector('[data-cr-dom-bar]');
+      var legEl = document.querySelector('[data-cr-dom-legend]');
+      var colors = ['#f7931a','#627eea','#26a17b','#f3ba2f','#8247e5'];
+      var barHtml = '', legHtml = '';
+      var othPct = 100;
+      for (var k = 0; k < top5.length; k++) {
+        var pct = (top5[k].marketCap / totalMcap * 100);
+        othPct -= pct;
+        barHtml += '<div class="cr-dom-seg" style="width:' + pct.toFixed(1) + '%;background:' + colors[k] + '" title="' + top5[k].symbol + ' ' + pct.toFixed(1) + '%"></div>';
+        legHtml += '<span class="cr-dom-leg"><span class="cr-dom-dot" style="background:' + colors[k] + '"></span>' + top5[k].symbol + ' ' + pct.toFixed(1) + '%</span>';
+      }
+      if (othPct > 0.5) {
+        barHtml += '<div class="cr-dom-seg" style="width:' + othPct.toFixed(1) + '%;background:var(--color-text-meta);opacity:0.3"></div>';
+        legHtml += '<span class="cr-dom-leg"><span class="cr-dom-dot" style="background:var(--color-text-meta)"></span>' + i18nOthers + ' ' + othPct.toFixed(1) + '%</span>';
+      }
+      if (barEl) barEl.innerHTML = barHtml;
+      if (legEl) legEl.innerHTML = legHtml;
+    }
+    var ov = document.querySelector('[data-cr-overview]');
+    if (ov) ov.style.display = '';
+  }
+
+  function renderMovers(coins) {
+    var moversEl = document.querySelector('[data-cr-movers]');
+    var gainersEl = document.querySelector('[data-cr-gainers]');
+    var losersEl = document.querySelector('[data-cr-losers]');
+    if (!moversEl || !gainersEl || !losersEl) return;
+
+    var withChange = coins.filter(function(c) { return c.change != null && c.marketCap > 0; });
+    var sorted = withChange.slice().sort(function(a, b) { return (b.change || 0) - (a.change || 0); });
+    var gainers = sorted.slice(0, 3);
+    var losers = sorted.slice(-3).reverse();
+
+    function moverCard(c, isGainer) {
+      var ch = c.change || 0;
+      var cls = isGainer ? 'cr-mv-card--up' : 'cr-mv-card--down';
+      var arrow = ch >= 0 ? '▲' : '▼';
+      var yahooSym = c.symbol + '-USD';
+      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(yahooSym);
+      var imgH = c.image
+        ? '<img class="cr-mv-img" src="' + c.image + '" alt="' + c.symbol + '" width="28" height="28" loading="lazy" onerror="this.style.display=\'none\'">'
+        : '';
+      return '<a href="' + link + '" class="cr-mv-card ' + cls + '">'
+        + '<div class="cr-mv-left">' + imgH + '<div class="cr-mv-info"><strong>' + c.symbol + '</strong><span>' + (c.name || '') + '</span></div></div>'
+        + '<div class="cr-mv-right"><span class="cr-mv-price">' + fmtPrice(c.price) + '</span>'
+        + '<span class="cr-mv-chg">' + arrow + ' ' + Math.abs(ch).toFixed(2) + '%</span></div>'
+        + '</a>';
+    }
+
+    var gHtml = '', lHtml = '';
+    for (var i = 0; i < gainers.length; i++) gHtml += moverCard(gainers[i], true);
+    for (var j = 0; j < losers.length; j++) lHtml += moverCard(losers[j], false);
+    // Keep title, append cards
+    var gTitle = gainersEl.querySelector('.cr-movers-title');
+    var lTitle = losersEl.querySelector('.cr-movers-title');
+    gainersEl.innerHTML = (gTitle ? gTitle.outerHTML : '') + gHtml;
+    losersEl.innerHTML = (lTitle ? lTitle.outerHTML : '') + lHtml;
+    moversEl.style.display = '';
+  }
+
+  function renderPerf7d(coins) {
+    var perf = coins.filter(function(c) { return c.change7d != null; }).slice(0, 15);
+    if (perf.length < 3) return;
+    // Sort by 7d change descending
+    perf.sort(function(a, b) { return (b.change7d || 0) - (a.change7d || 0); });
+    var maxAbs = 0;
+    for (var i = 0; i < perf.length; i++) {
+      var abs = Math.abs(perf[i].change7d || 0);
+      if (abs > maxAbs) maxAbs = abs;
+    }
+    if (maxAbs < 0.1) maxAbs = 1;
+    var chart = document.querySelector('[data-cr-perf7d-chart]');
+    if (!chart) return;
+    var html = '';
+    for (var j = 0; j < perf.length; j++) {
+      var c = perf[j];
+      var v = c.change7d || 0;
+      var barW = (Math.abs(v) / maxAbs * 45).toFixed(1);
+      var isPos = v >= 0;
+      var color = isPos ? '#16a34a' : '#dc2626';
+      var imgH = c.image
+        ? '<img src="' + c.image + '" alt="" width="18" height="18" style="border-radius:50%" loading="lazy" onerror="this.style.display=\'none\'">'
+        : '';
+      html += '<div class="cr-p7-row">';
+      html += '<div class="cr-p7-coin">' + imgH + '<span class="cr-p7-sym">' + c.symbol + '</span></div>';
+      html += '<div class="cr-p7-bar-wrap">';
+      if (isPos) {
+        html += '<div class="cr-p7-left"></div>';
+        html += '<div class="cr-p7-center"></div>';
+        html += '<div class="cr-p7-right"><div class="cr-p7-fill" style="width:' + barW + '%;background:' + color + '"></div></div>';
+      } else {
+        html += '<div class="cr-p7-left"><div class="cr-p7-fill cr-p7-fill--neg" style="width:' + barW + '%;background:' + color + '"></div></div>';
+        html += '<div class="cr-p7-center"></div>';
+        html += '<div class="cr-p7-right"></div>';
+      }
+      html += '</div>';
+      html += '<span class="cr-p7-val" style="color:' + color + '">' + (v >= 0 ? '+' : '') + v.toFixed(2) + '%</span>';
+      html += '</div>';
+    }
+    chart.innerHTML = html;
+    document.querySelector('[data-cr-perf7d]').style.display = '';
+  }
+
+  function renderLiquidity(coins) {
+    var items = coins.filter(function(c) { return c.volume > 0 && c.marketCap > 0; })
+      .map(function(c) {
+        return { symbol: c.symbol, name: c.name, image: c.image, ratio: c.volume / c.marketCap, volume: c.volume, mcap: c.marketCap };
+      })
+      .sort(function(a, b) { return b.ratio - a.ratio; })
+      .slice(0, 10);
+    if (items.length < 3) return;
+
+    var maxRatio = items[0].ratio;
+    var grid = document.querySelector('[data-cr-liq-grid]');
+    if (!grid) return;
+    var html = '';
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      var pct = (it.ratio / maxRatio * 100).toFixed(1);
+      var ratioPct = (it.ratio * 100).toFixed(2);
+      var level = it.ratio > 0.3 ? 'high' : it.ratio > 0.1 ? 'mid' : 'low';
+      var color = level === 'high' ? '#16a34a' : level === 'mid' ? '#f59e0b' : '#6b7280';
+      var imgH = it.image
+        ? '<img src="' + it.image + '" alt="" width="18" height="18" style="border-radius:50%" loading="lazy" onerror="this.style.display=\'none\'">'
+        : '';
+      html += '<div class="cr-liq-row">';
+      html += '<div class="cr-liq-coin">' + imgH + '<span class="cr-liq-sym">' + it.symbol + '</span></div>';
+      html += '<div class="cr-liq-bar-wrap"><div class="cr-liq-bar" style="width:' + pct + '%;background:' + color + '"></div></div>';
+      html += '<span class="cr-liq-val" style="color:' + color + '">' + ratioPct + '%</span>';
+      html += '</div>';
+    }
+    grid.innerHTML = html;
+    document.querySelector('[data-cr-liquidity]').style.display = '';
+  }
+
+  function renderAthDistance(coins) {
+    var items = coins.filter(function(c) { return c.athChangePercentage != null && c.marketCap > 0; })
+      .sort(function(a, b) { return b.athChangePercentage - a.athChangePercentage; })
+      .slice(0, 10);
+    if (items.length < 5) return;
+
+    var grid = document.querySelector('[data-cr-ath-grid]');
+    if (!grid) return;
+
+    var html = '';
+    for (var i = 0; i < items.length; i++) {
+      var c = items[i];
+      var pct = c.athChangePercentage;
+      var recovered = 100 + pct; // how much of ATH price recovered (e.g., -20% = 80% recovered)
+      var barW = Math.max(recovered, 2).toFixed(1);
+      var color = recovered >= 90 ? '#16a34a' : recovered >= 60 ? '#f59e0b' : '#dc2626';
+      var imgH = c.image ? '<img src="' + c.image + '" alt="" width="18" height="18" style="border-radius:50%" loading="lazy" onerror="this.style.display=\'none\'">' : '';
+      html += '<div class="cr-ath-row">';
+      html += '<div class="cr-ath-coin">' + imgH + '<span class="cr-ath-sym">' + c.symbol + '</span></div>';
+      html += '<div class="cr-ath-bar-wrap"><div class="cr-ath-bar" style="width:' + barW + '%;background:' + color + '"></div></div>';
+      html += '<span class="cr-ath-val" style="color:' + color + '">' + pct.toFixed(1) + '%</span>';
+      html += '</div>';
+    }
+    grid.innerHTML = html;
+    document.querySelector('[data-cr-ath]').style.display = '';
+  }
+
+  function renderSupplyPressure(coins) {
+    var items = coins.filter(function(c) {
+      return c.circulatingSupply > 0 && c.maxSupply > 0 && c.maxSupply > c.circulatingSupply;
+    }).map(function(c) {
+      var pct = (c.circulatingSupply / c.maxSupply * 100);
+      var remaining = c.maxSupply - c.circulatingSupply;
+      return { symbol: c.symbol, name: c.name, image: c.image, pct: pct, remaining: remaining, maxSupply: c.maxSupply, circulating: c.circulatingSupply };
+    }).sort(function(a, b) { return b.pct - a.pct; }).slice(0, 12);
+    if (items.length < 3) return;
+
+    var grid = document.querySelector('[data-cr-supply-grid]');
+    if (!grid) return;
+    var html = '';
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      var color = it.pct >= 90 ? '#dc2626' : it.pct >= 70 ? '#f59e0b' : '#16a34a';
+      var label = it.pct >= 90 ? 'Scarce' : it.pct >= 70 ? 'Moderate' : 'Abundant';
+      var imgH = it.image ? '<img src="' + it.image + '" alt="" width="18" height="18" style="border-radius:50%" loading="lazy" onerror="this.style.display=\'none\'">' : '';
+      html += '<div class="cr-sp-row">';
+      html += '<div class="cr-sp-coin">' + imgH + '<span class="cr-sp-sym">' + it.symbol + '</span></div>';
+      html += '<div class="cr-sp-bar-wrap"><div class="cr-sp-bar" style="width:' + it.pct.toFixed(1) + '%;background:' + color + '"></div></div>';
+      html += '<div class="cr-sp-meta"><span class="cr-sp-pct" style="color:' + color + '">' + it.pct.toFixed(1) + '%</span><span class="cr-sp-label">' + label + '</span></div>';
+      html += '</div>';
+    }
+    grid.innerHTML = html;
+    document.querySelector('[data-cr-supply]').style.display = '';
+  }
+
+  function renderTreemap(coins) {
+    var items = coins.filter(function(c) { return c.marketCap > 0; })
+      .sort(function(a, b) { return b.marketCap - a.marketCap; })
+      .slice(0, 20);
+    if (items.length < 5) return;
+
+    var totalMcap = 0;
+    for (var i = 0; i < items.length; i++) totalMcap += items[i].marketCap;
+
+    var grid = document.querySelector('[data-cr-treemap-grid]');
+    if (!grid) return;
+
+    var html = '';
+    for (var j = 0; j < items.length; j++) {
+      var c = items[j];
+      var pct = (c.marketCap / totalMcap * 100);
+      var chg = c.change || 0;
+      var bgColor = chg >= 0 ? 'rgba(22,163,74,' + Math.min(0.15 + Math.abs(chg) * 0.03, 0.6) + ')' : 'rgba(220,38,38,' + Math.min(0.15 + Math.abs(chg) * 0.03, 0.6) + ')';
+      var borderColor = chg >= 0 ? 'rgba(22,163,74,0.4)' : 'rgba(220,38,38,0.4)';
+      var flex = Math.max(pct, 2).toFixed(2);
+      var imgH = c.image ? '<img src="' + c.image + '" alt="" width="16" height="16" style="border-radius:50%" loading="lazy" onerror="this.style.display=\'none\'">' : '';
+      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(c.symbol + '-USD');
+      html += '<a href="' + link + '" class="cr-tm-cell" style="flex:' + flex + ';background:' + bgColor + ';border-color:' + borderColor + '">';
+      html += '<div class="cr-tm-top">' + imgH + '<strong>' + c.symbol + '</strong></div>';
+      html += '<span class="cr-tm-pct">' + (chg >= 0 ? '+' : '') + chg.toFixed(1) + '%</span>';
+      html += '<span class="cr-tm-mcap">' + fmtCap(c.marketCap) + '</span>';
+      html += '</a>';
+    }
+    grid.innerHTML = html;
+    document.querySelector('[data-cr-treemap]').style.display = '';
+  }
+
+  function onData(coins) {
+    allCoins = coins;
+    setEl('[data-mkts-updated]', 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    renderOverview(coins);
+    renderMovers(coins);
+    renderPerf7d(coins);
+    renderLiquidity(coins);
+    renderAthDistance(coins);
+    renderSupplyPressure(coins);
+    renderTreemap(coins);
+    renderTable();
+  }
+
+  // Client-side CoinGecko fallback
+  function fetchCoinGeckoDirect() {
+    return fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=7d')
+      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(raw) {
+        return raw.map(function(coin, i) {
+          return {
+            rank: i + 1,
+            symbol: (coin.symbol || '').toUpperCase(),
+            name: coin.name,
+            price: coin.current_price,
+            change: coin.price_change_percentage_24h,
+            change7d: coin.price_change_percentage_7d_in_currency,
+            marketCap: coin.market_cap,
+            volume: coin.total_volume,
+            circulatingSupply: coin.circulating_supply || null,
+            maxSupply: coin.max_supply || null,
+            athChangePercentage: coin.ath_change_percentage || null,
+            image: coin.image,
+            sparkline: coin.sparkline_in_7d ? coin.sparkline_in_7d.price : null,
+          };
+        });
+      });
+  }
+
+  // Client-side Binance fallback (top coins only)
+  function fetchBinanceDirect() {
+    return fetch('https://api.binance.com/api/v3/ticker/24hr')
+      .then(function(r) { return r.json(); })
+      .then(function(raw) {
+        var usdtPairs = raw.filter(function(t) {
+          return t.symbol.endsWith('USDT') && parseFloat(t.quoteVolume) > 1000000;
+        });
+        usdtPairs.sort(function(a, b) { return parseFloat(b.quoteVolume) - parseFloat(a.quoteVolume); });
+        return usdtPairs.slice(0, 100).map(function(t, i) {
+          var sym = t.symbol.replace('USDT', '');
+          return {
+            rank: i + 1,
+            symbol: sym,
+            name: sym,
+            price: parseFloat(t.lastPrice),
+            change: parseFloat(t.priceChangePercent),
+            marketCap: null,
+            volume: parseFloat(t.quoteVolume),
+            image: null,
+          };
+        });
+      });
+  }
+
+  // Fear & Greed Index
+  function fgLabel(val) {
+    if (val <= 20) return i18nExtremeFear;
+    if (val <= 40) return i18nFear;
+    if (val <= 60) return i18nNeutral;
+    if (val <= 80) return i18nGreed;
+    return i18nExtremeGreed;
+  }
+
+  function renderFearGreed(val) {
+    var card = document.querySelector('[data-cr-fg-card]');
+    var needle = document.querySelector('[data-cr-fg-needle]');
+    var valEl = document.querySelector('[data-cr-fg-val]');
+    var labelEl = document.querySelector('[data-cr-fg-label]');
+    if (!card || !needle || !valEl || !labelEl) return;
+    valEl.textContent = val;
+    labelEl.textContent = fgLabel(val);
+    labelEl.className = 'cr-fg-label cr-fg-label--' + (val <= 20 ? 'exfear' : val <= 40 ? 'fear' : val <= 60 ? 'neutral' : val <= 80 ? 'greed' : 'exgreed');
+    needle.style.left = val + '%';
+    card.style.display = '';
+  }
+
+  fetch('https://api.alternative.me/fng/?limit=1')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.data && d.data[0]) renderFearGreed(parseInt(d.data[0].value));
+    })
+    .catch(function() {});
+
+  fetch('/api/crypto?limit=100')
+    .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(data) {
+      if (!Array.isArray(data) || data.length === 0) throw new Error('empty');
+      onData(data);
+    })
+    .catch(function() {
+      fetchCoinGeckoDirect()
+        .then(onData)
+        .catch(function() {
+          fetchBinanceDirect()
+            .then(onData)
+            .catch(function() {
+              setEl('[data-mkts-updated]', 'Unable to load data');
+            });
+        });
+    });
+  // Keyboard shortcut: / to focus search, Esc to clear
+  document.addEventListener('keydown', function(e) {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      var s = document.querySelector('[data-cr-search]');
+      if (s) s.focus();
+    }
+    if (e.key === 'Escape') {
+      var s = document.querySelector('[data-cr-search]');
+      if (s && document.activeElement === s) {
+        s.blur(); s.value = ''; searchTerm = ''; renderTable();
+      }
+    }
+  });
+})();
+</script>
+
+<style>
+  /* Overview */
+  .cr-overview {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--color-border); border: 1px solid var(--color-border); border-radius: 10px;
+    overflow: hidden; margin-bottom: var(--spacing-xl);
+  }
+  .cr-ov-card {
+    background: var(--color-bg); padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .cr-ov-card--wide { grid-column: 1 / -1; }
+  .cr-ov-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+  .cr-ov-val { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .cr-dom-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 2px; margin-top: 6px; }
+  .cr-dom-bar :global(.cr-dom-seg) { border-radius: 4px; transition: width 0.5s; min-width: 4px; }
+  .cr-dom-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .cr-dom-legend :global(.cr-dom-leg) { font-size: 0.65rem; font-weight: 600; color: var(--color-text-meta); display: flex; align-items: center; gap: 4px; }
+  .cr-dom-legend :global(.cr-dom-dot) { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Fear & Greed */
+  .cr-ov-card--fg { }
+  .cr-fg { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+  .cr-fg-gauge { position: relative; }
+  .cr-fg-bar {
+    height: 8px; border-radius: 4px; position: relative;
+    background: linear-gradient(to right, #ea3943, #ea8c00, #c4c400, #16c784, #16c784);
+  }
+  .cr-fg-bar :global(.cr-fg-needle) {
+    position: absolute; top: -3px; width: 3px; height: 14px; border-radius: 2px;
+    background: var(--color-text); transform: translateX(-50%); transition: left 0.6s ease;
+  }
+  .cr-fg-info { display: flex; align-items: baseline; gap: 8px; }
+  .cr-fg-val { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .cr-fg-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+  :global(.cr-fg-label--exfear) { color: #ea3943; }
+  :global(.cr-fg-label--fear) { color: #ea8c00; }
+  :global(.cr-fg-label--neutral) { color: #c4c400; }
+  :global(.cr-fg-label--greed) { color: #16c784; }
+  :global(.cr-fg-label--exgreed) { color: #16c784; }
+
+  @media (max-width: 900px) {
+    .cr-overview { grid-template-columns: repeat(2, 1fr); }
+    .cr-ov-card--wide { grid-column: span 2; }
+  }
+  @media (max-width: 520px) {
+    .cr-overview { grid-template-columns: 1fr 1fr; }
+    .cr-ov-card--wide { grid-column: span 2; }
+    .cr-ov-val { font-size: 1rem; }
+  }
+
+  /* Top Movers */
+  .cr-movers {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: var(--spacing-xl);
+  }
+  .cr-movers-col { display: flex; flex-direction: column; gap: 8px; }
+  :global(.cr-movers-title) { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin: 0; }
+  :global(.cr-movers-title--up) { color: var(--color-positive); }
+  :global(.cr-movers-title--down) { color: var(--color-negative); }
+  :global(.cr-mv-card) {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; border-radius: 8px; text-decoration: none; color: inherit;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    transition: transform 0.1s, border-color 0.15s;
+  }
+  :global(.cr-mv-card:hover) { transform: translateY(-1px); }
+  :global(.cr-mv-card--up) { border-left: 3px solid var(--color-positive); }
+  :global(.cr-mv-card--down) { border-left: 3px solid var(--color-negative); }
+  :global(.cr-mv-left) { display: flex; align-items: center; gap: 10px; }
+  :global(.cr-mv-img) { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; }
+  :global(.cr-mv-info) { display: flex; flex-direction: column; gap: 1px; }
+  :global(.cr-mv-info strong) { font-size: 0.85rem; }
+  :global(.cr-mv-info span) { font-size: 0.68rem; color: var(--color-text-meta); }
+  :global(.cr-mv-right) { text-align: right; display: flex; flex-direction: column; gap: 2px; }
+  :global(.cr-mv-price) { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  :global(.cr-mv-chg) { font-size: 0.75rem; font-weight: 700; }
+  :global(.cr-mv-card--up .cr-mv-chg) { color: var(--color-positive); }
+  :global(.cr-mv-card--down .cr-mv-chg) { color: var(--color-negative); }
+  @media (max-width: 600px) {
+    .cr-movers { grid-template-columns: 1fr; }
+  }
+
+  /* 7-Day Performance */
+  .cr-perf7d {
+    margin-bottom: 1.5rem; padding: 16px;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px;
+  }
+  .cr-perf7d-title {
+    font-size: 0.78rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--color-text); margin-bottom: 12px;
+  }
+  :global(.cr-p7-row) {
+    display: grid; grid-template-columns: 90px 1fr 70px; align-items: center; gap: 10px;
+    padding: 5px 0;
+  }
+  :global(.cr-p7-row + .cr-p7-row) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.cr-p7-coin) { display: flex; align-items: center; gap: 6px; }
+  :global(.cr-p7-coin img) { flex-shrink: 0; }
+  :global(.cr-p7-sym) { font-size: 0.75rem; font-weight: 800; color: var(--color-text); }
+  :global(.cr-p7-bar-wrap) {
+    display: grid; grid-template-columns: 1fr 2px 1fr; align-items: center; height: 20px;
+  }
+  :global(.cr-p7-left) { display: flex; justify-content: flex-end; height: 100%; }
+  :global(.cr-p7-center) { background: var(--color-text-meta); opacity: 0.3; height: 100%; }
+  :global(.cr-p7-right) { display: flex; height: 100%; }
+  :global(.cr-p7-fill) { border-radius: 0 4px 4px 0; transition: width 0.4s; min-width: 2px; }
+  :global(.cr-p7-fill--neg) { border-radius: 4px 0 0 4px; margin-left: auto; }
+  :global(.cr-p7-val) { font-size: 0.8rem; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Liquidity */
+  .cr-liquidity { margin-bottom: var(--spacing-2xl); }
+  :global(.cr-liq-title) { font-size: 1rem; font-weight: 800; margin-bottom: var(--spacing-md); color: var(--color-text); }
+  :global(.cr-liq-row) { display: grid; grid-template-columns: 90px 1fr 60px; align-items: center; gap: 10px; padding: 5px 0; }
+  :global(.cr-liq-row + .cr-liq-row) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.cr-liq-coin) { display: flex; align-items: center; gap: 6px; }
+  :global(.cr-liq-sym) { font-size: 0.78rem; font-weight: 800; color: var(--color-text); }
+  :global(.cr-liq-bar-wrap) { height: 16px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
+  :global(.cr-liq-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  :global(.cr-liq-val) { font-size: 0.78rem; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* ATH Distance */
+  .cr-ath-section { margin-bottom: var(--spacing-2xl); }
+  :global(.cr-ath-title) { font-size: 1rem; font-weight: 800; margin-bottom: var(--spacing-md); color: var(--color-text); }
+  :global(.cr-ath-row) { display: grid; grid-template-columns: 90px 1fr 60px; align-items: center; gap: 10px; padding: 5px 0; }
+  :global(.cr-ath-row + .cr-ath-row) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.cr-ath-coin) { display: flex; align-items: center; gap: 6px; }
+  :global(.cr-ath-sym) { font-size: 0.78rem; font-weight: 800; color: var(--color-text); }
+  :global(.cr-ath-bar-wrap) { height: 16px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
+  :global(.cr-ath-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  :global(.cr-ath-val) { font-size: 0.78rem; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Supply Pressure */
+  .cr-supply-section { margin-bottom: var(--spacing-2xl); }
+  :global(.cr-supply-title) { font-size: 1rem; font-weight: 800; margin-bottom: var(--spacing-md); color: var(--color-text); }
+  :global(.cr-sp-row) { display: grid; grid-template-columns: 90px 1fr 80px; align-items: center; gap: 10px; padding: 5px 0; }
+  :global(.cr-sp-row + .cr-sp-row) { border-top: 1px solid rgba(128,128,128,0.06); }
+  :global(.cr-sp-coin) { display: flex; align-items: center; gap: 6px; }
+  :global(.cr-sp-sym) { font-size: 0.78rem; font-weight: 800; color: var(--color-text); }
+  :global(.cr-sp-bar-wrap) { height: 16px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
+  :global(.cr-sp-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  :global(.cr-sp-meta) { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+  :global(.cr-sp-pct) { font-size: 0.78rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  :global(.cr-sp-label) { font-size: 0.55rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-text-meta); }
+
+  /* Treemap */
+  .cr-treemap-section { margin-bottom: var(--spacing-2xl); }
+  :global(.cr-treemap-title) { font-size: 1rem; font-weight: 800; margin-bottom: var(--spacing-md); color: var(--color-text); }
+  :global(.cr-treemap) { display: flex; flex-wrap: wrap; gap: 3px; min-height: 120px; }
+  :global(.cr-tm-cell) {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    padding: 8px 6px; border-radius: 6px; border: 1px solid; min-width: 60px; min-height: 60px;
+    text-decoration: none; color: #fff; transition: transform 0.15s ease;
+  }
+  :global(.cr-tm-cell:hover) { transform: scale(1.04); z-index: 1; text-decoration: none; color: #fff; }
+  :global(.cr-tm-top) { display: flex; align-items: center; gap: 4px; font-size: 0.72rem; font-weight: 800; }
+  :global(.cr-tm-pct) { font-size: 0.68rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  :global(.cr-tm-mcap) { font-size: 0.58rem; opacity: 0.8; font-weight: 600; }
+
+  /* Toolbar */
+  .cr-toolbar {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+  }
+  .cr-search-wrap {
+    position: relative; flex: 1; max-width: 400px;
+  }
+  .cr-search-icon {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-text-meta); pointer-events: none;
+  }
+  .cr-search {
+    width: 100%; padding: 10px 12px 10px 36px; border: 1px solid var(--color-border);
+    border-radius: 6px; font-size: 0.9rem; background: var(--color-bg); color: var(--color-text);
+  }
+  .cr-search:focus { border-color: var(--color-gold); }
+  .cr-search::placeholder { color: var(--color-text-meta); }
+  .cr-count {
+    font-size: 0.85rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
+  }
+
+  /* Table */
+  .cr-table-wrap { overflow-x: auto; }
+  .cr-table { width: 100%; border-collapse: collapse; }
+
+  :global(.cr-th) {
+    padding: 10px 12px; text-align: left; font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--color-text-meta); font-weight: 600;
+    border-bottom: 2px solid var(--color-border); white-space: nowrap; user-select: none;
+    cursor: pointer; transition: color 0.15s;
+  }
+  :global(.cr-th:hover) { color: var(--color-text); }
+  :global(.cr-th--num) { text-align: right; }
+  :global(.cr-th--rank) { width: 40px; text-align: center; }
+  :global(.cr-th--name) { min-width: 200px; }
+  :global(.cr-th--spark) { width: 90px; cursor: default; }
+  :global(.cr-th--spark:hover) { color: var(--color-text-meta); }
+  :global(.cr-th-inner) { display: inline-flex; align-items: center; gap: 4px; }
+  :global(.cr-sort-icon) { flex-shrink: 0; }
+  :global(.cr-sort-icon .cr-sort-up),
+  :global(.cr-sort-icon .cr-sort-down) { fill: var(--color-text-meta); opacity: 0.3; transition: opacity 0.15s, fill 0.15s; }
+  :global(.cr-th--active) { color: var(--color-gold); }
+  :global(.cr-th--active:hover) { color: var(--color-gold); }
+  :global(.cr-th--active[data-dir="asc"] .cr-sort-up) { fill: var(--color-gold); opacity: 1; }
+  :global(.cr-th--active[data-dir="asc"] .cr-sort-down) { opacity: 0.15; }
+  :global(.cr-th--active[data-dir="desc"] .cr-sort-down) { fill: var(--color-gold); opacity: 1; }
+  :global(.cr-th--active[data-dir="desc"] .cr-sort-up) { opacity: 0.15; }
+
+  :global(.cr-row) { cursor: pointer; transition: background 0.15s; }
+  :global(.cr-row:hover) { background: var(--color-bg-secondary); }
+  :global(.cr-td) { padding: 10px 12px; border-bottom: 1px solid var(--color-border); font-size: 0.9rem; vertical-align: middle; }
+  :global(.cr-td--rank) { text-align: center; color: var(--color-text-meta); font-size: 0.8rem; }
+  :global(.cr-td--name) { min-width: 200px; }
+  :global(.cr-td--num) { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  :global(.cr-name-link) {
+    display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;
+  }
+  :global(.cr-coin-img) { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; }
+  :global(.cr-coin-icon) {
+    width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(117,170,219,0.15); color: #75AADB; font-weight: 700; font-size: 0.7rem;
+  }
+  :global(.cr-coin-icon--card) { width: 32px; height: 32px; font-size: 0.85rem; }
+  :global(.cr-name-text) { display: flex; flex-direction: column; gap: 1px; }
+  :global(.cr-symbol) { font-size: 0.9rem; font-weight: 600; }
+  :global(.cr-company) { font-size: 0.75rem; color: var(--color-text-meta); }
+
+  :global(.cr-pct) { font-size: 0.85rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  :global(.cr-up) { color: var(--color-positive); background: rgba(34,197,94,0.1); }
+  :global(.cr-down) { color: var(--color-negative); background: rgba(239,68,68,0.1); }
+
+  :global(.cr-ath-badge) {
+    display: inline-block; font-size: 0.55rem; font-weight: 800; letter-spacing: 0.04em;
+    padding: 1px 5px; border-radius: 3px; margin-left: 6px; vertical-align: middle;
+    background: rgba(246,180,14,0.15); color: var(--color-gold);
+  }
+
+  :global(.cr-supply-bar) { width: 100%; height: 4px; background: rgba(128,128,128,0.15); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+  :global(.cr-supply-fill) { height: 100%; border-radius: 2px; background: var(--color-gold); transition: width 0.3s; }
+  :global(.cr-spark) { display: block; }
+  :global(.cr-td--spark) { width: 90px; padding: 6px 8px; }
+  .cr-empty { text-align: center; padding: 2rem; color: var(--color-text-meta); }
+  .cr-disclaimer {
+    text-align: center; font-size: 0.75rem; color: var(--color-text-meta);
+    margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); font-style: italic;
+  }
+
+  /* Mobile cards */
+  .cr-cards { display: none; }
+
+  :global(.cr-card) {
+    display: block; padding: 12px 16px; margin-bottom: 8px;
+    background: var(--color-bg-secondary); border-radius: 8px;
+    border-left: 3px solid var(--color-border); text-decoration: none; color: inherit;
+    transition: transform 0.1s;
+  }
+  :global(.cr-card:active) { transform: scale(0.98); }
+  :global(.cr-card-header) {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+  }
+  :global(.cr-card-rank) { font-size: 0.75rem; color: var(--color-text-meta); min-width: 20px; }
+  :global(.cr-card-name) { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+  :global(.cr-card-name strong) { font-size: 0.9rem; }
+  :global(.cr-card-fullname) { font-size: 0.75rem; color: var(--color-text-meta); }
+  :global(.cr-card-body) {
+    display: flex; align-items: baseline; gap: 12px; padding-top: 8px; border-top: 1px solid var(--color-border);
+  }
+  :global(.cr-card-price) { font-size: 1.1rem; font-weight: 700; }
+  :global(.cr-card-meta) { font-size: 0.75rem; color: var(--color-text-meta); }
+
+  /* Dark mode */
+  :global([data-theme="dark"]) .cr-search { background: var(--color-bg-secondary); color: var(--color-text); border-color: var(--color-border); }
+
+  :global(.cr-pct--sm) { font-size: 0.72rem; padding: 1px 6px; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    :global(.cr-th--hide-tablet), :global(.cr-td--hide-tablet) { display: none; }
+  }
+  @media (max-width: 768px) {
+    .cr-table-wrap { display: none; }
+    .cr-cards { display: block; }
+    .cr-toolbar { max-width: none; }
+    .cr-search-wrap { max-width: none; }
+    :global(.cr-th--hide-mobile), :global(.cr-td--hide-mobile) { display: none; }
+  }
+</style>

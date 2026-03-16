@@ -103,6 +103,7 @@ const dir = RTL_LANGUAGES.has(lang) ? "rtl" : "ltr";
 const navItems = [
   { label: t(lang, "nav.home"), href: `/${lang}/` },
   { label: t(lang, "nav.feed" as any), href: `/${lang}/feed` },
+  { label: t(lang, "nav.markets" as any), href: `/${lang}/markets`, category: "economy" as any },
   ...CATEGORY_LIST.map((key) => ({
     label: t(lang, `cat.${key}` as any),
     href: `/${lang}/category/${key}`,

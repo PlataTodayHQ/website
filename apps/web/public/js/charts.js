@@ -437,19 +437,22 @@
 
   // ─── Formatting helpers ───
 
-  function fmt(n) { return Math.round(n).toLocaleString('es-AR'); }
+  function fmt(n) {
+    var locale = (document.documentElement.lang || 'es-AR');
+    return Math.round(n).toLocaleString(locale);
+  }
 
   function fmtM(v) {
     if (v >= 1e6) return (v / 1e6).toFixed(2) + 'M';
     if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
-    return Math.round(v).toLocaleString('es-AR');
+    return fmt(v);
   }
 
   function fmtVol(v) {
     if (v >= 1e9) return (v / 1e9).toFixed(1) + 'B';
     if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
     if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
-    return Math.round(v).toLocaleString('es-AR');
+    return fmt(v);
   }
 
   function pctText(pct) {

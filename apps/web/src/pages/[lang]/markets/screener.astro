@@ -38,10 +38,50 @@ const { lang } = Astro.params;
     <header class="mkts-header">
       <div>
         <h1 class="mkts-title">{t(lang!, "screener.title")}</h1>
-        <p class="mkts-subtitle">{t(lang!, "screener.subtitle")}</p>
+        <p class="mkts-subtitle">Buenos Aires Stock Exchange — Panel Líder & General</p>
       </div>
       <p class="mkts-updated" data-mkts-updated>{t(lang!, "common.loading")}</p>
     </header>
+
+    <!-- Panel Tabs -->
+    <div class="scr-tabs" data-scr-tabs>
+      <button class="scr-tab scr-tab--active" data-panel="all">All</button>
+      <button class="scr-tab" data-panel="lider">Panel Líder</button>
+      <button class="scr-tab" data-panel="general">Panel General</button>
+    </div>
+
+    <!-- Market Breadth -->
+    <div class="scr-breadth" data-scr-breadth style="display:none;">
+      <div class="scr-breadth-header">
+        <span class="scr-breadth-title">{t(lang!, "screener.breadth" as any)}</span>
+        <div class="scr-breadth-counts" data-scr-breadth-counts></div>
+      </div>
+      <div class="scr-breadth-bar" data-scr-breadth-bar>
+        <div class="scr-breadth-seg scr-breadth-seg--up" data-scr-breadth-up></div>
+        <div class="scr-breadth-seg scr-breadth-seg--unch" data-scr-breadth-unch></div>
+        <div class="scr-breadth-seg scr-breadth-seg--down" data-scr-breadth-down></div>
+      </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="scr-stats" data-scr-stats style="display:none;">
+      <div class="scr-stat-item">
+        <span class="scr-stat-label">{t(lang!, "screener.gainers" as any)}</span>
+        <span class="scr-stat-val rc-up" data-scr-gainers>0</span>
+      </div>
+      <div class="scr-stat-item">
+        <span class="scr-stat-label">{t(lang!, "screener.losers" as any)}</span>
+        <span class="scr-stat-val rc-down" data-scr-losers>0</span>
+      </div>
+      <div class="scr-stat-item">
+        <span class="scr-stat-label">{t(lang!, "screener.totalVolume" as any)}</span>
+        <span class="scr-stat-val" data-scr-totvol>—</span>
+      </div>
+      <div class="scr-stat-item">
+        <span class="scr-stat-label">{t(lang!, "screener.avgChange" as any)}</span>
+        <span class="scr-stat-val" data-scr-avgchg>—</span>
+      </div>
+    </div>
 
     <!-- Toolbar -->
     <div class="scr-toolbar">
@@ -49,10 +89,24 @@ const { lang } = Astro.params;
         <svg class="scr-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input type="text" class="scr-search" data-scr-search placeholder={t(lang!, "screener.search")} autocomplete="off" />
       </div>
+      <select class="scr-sector-filter" data-scr-sector-filter>
+        <option value="">{t(lang!, "screener.allSectors")}</option>
+      </select>
+      <div class="scr-view-toggle">
+        <button class="scr-view-btn scr-view-btn--active" data-view="table" title={t(lang!, "screener.viewTable" as any)}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button class="scr-view-btn" data-view="heatmap" title={t(lang!, "screener.viewHeatmap" as any)}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+        </button>
+      </div>
       <div class="scr-meta">
         <span class="scr-count" data-scr-count></span>
       </div>
     </div>
+
+    <!-- Sector Chips -->
+    <div class="scr-chips" data-scr-chips style="display:none;"></div>
 
     <!-- Table (desktop) -->
     <div class="scr-table-wrap">
@@ -65,13 +119,14 @@ const { lang } = Astro.params;
             <th class="scr-th scr-th--num" data-sort-col="volume">{t(lang!, "screener.col.volume")} <span class="scr-arrow" data-arrow="volume"></span></th>
             <th class="scr-th scr-th--num scr-th--active" data-sort-col="marketCap">{t(lang!, "screener.col.marketCap")} <span class="scr-arrow" data-arrow="marketCap">▼</span></th>
             <th class="scr-th scr-th--num" data-sort-col="pe">{t(lang!, "screener.col.pe")} <span class="scr-arrow" data-arrow="pe"></span></th>
+            <th class="scr-th scr-th--num scr-th--hide-mobile" data-sort-col="forwardPe">{t(lang!, "screener.col.forwardPe" as any)} <span class="scr-arrow" data-arrow="forwardPe"></span></th>
             <th class="scr-th scr-th--num scr-th--hide-mobile" data-sort-col="eps">{t(lang!, "screener.col.eps")} <span class="scr-arrow" data-arrow="eps"></span></th>
             <th class="scr-th scr-th--range scr-th--hide-mobile">{t(lang!, "screener.col.range")}</th>
             <th class="scr-th scr-th--text scr-th--hide-tablet" data-sort-col="sector">{t(lang!, "screener.col.sector")} <span class="scr-arrow" data-arrow="sector"></span></th>
           </tr>
         </thead>
         <tbody data-scr-tbody>
-          <tr><td colspan="9" class="scr-loading"><div class="loading-spinner"></div> Loading…</td></tr>
+          <tr><td colspan="10" class="scr-loading"><div class="loading-spinner"></div> Loading…</td></tr>
         </tbody>
       </table>
     </div>
@@ -80,6 +135,9 @@ const { lang } = Astro.params;
     <div class="scr-cards" data-scr-cards>
       <div class="scr-loading"><div class="loading-spinner"></div> Loading…</div>
     </div>
+
+    <!-- Heatmap -->
+    <div class="scr-heatmap" data-scr-heatmap style="display:none;"></div>
 
     <!-- No results -->
     <div class="scr-empty" data-scr-empty style="display:none">{t(lang!, "screener.noResults")}</div>
@@ -92,16 +150,20 @@ const { lang } = Astro.params;
 <script is:inline>
 (function() {
   var C = window.PlataCharts || {};
-  var fmt = C.fmt || function(n) { return Math.round(n).toLocaleString('es-AR'); };
-  var fmtM = C.fmtM || function(v) { return v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : Math.round(v).toLocaleString('es-AR'); };
+  var fmt = C.fmt || function(n) { return Math.round(n).toLocaleString(lang); };
+  var fmtM = C.fmtM || function(v) { return v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : Math.round(v).toLocaleString(lang); };
   var fmtVol = C.fmtVol || function(v) { return v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : v >= 1e3 ? (v/1e3).toFixed(1)+'K' : v; };
 
   var page = document.querySelector('[data-screener-page]');
   var lang = page.getAttribute('data-lang') || 'en';
 
   var allStocks = [];
+  var liderSymbols = {};
+  var currentPanel = 'all';
+  var currentSector = '';
   var currentSort = { key: 'marketCap', dir: 'desc' };
   var searchTerm = '';
+  var currentView = 'table';
 
   // ─── Stock logos ───
   var STOCK_LOGOS = {
@@ -238,8 +300,18 @@ const { lang } = Astro.params;
   function getFiltered() {
     var q = searchTerm.toLowerCase();
     var filtered = allStocks;
+    // Panel filter
+    if (currentPanel === 'lider') {
+      filtered = filtered.filter(function(s) { return s._panel === 'lider'; });
+    } else if (currentPanel === 'general') {
+      filtered = filtered.filter(function(s) { return s._panel === 'general'; });
+    }
+    // Sector filter
+    if (currentSector) {
+      filtered = filtered.filter(function(s) { return s.sector === currentSector; });
+    }
     if (q) {
-      filtered = allStocks.filter(function(s) {
+      filtered = filtered.filter(function(s) {
         return s.symbol.toLowerCase().indexOf(q) !== -1 ||
                (s.name && s.name.toLowerCase().indexOf(q) !== -1) ||
                (s.sector && s.sector.toLowerCase().indexOf(q) !== -1);
@@ -270,13 +342,21 @@ const { lang } = Astro.params;
     // Count
     setEl('[data-scr-count]', filtered.length + ' ' + (filtered.length === 1 ? 'stock' : 'stocks'));
 
+    updateBreadthAndStats(filtered);
+
     if (filtered.length === 0) {
       tbody.innerHTML = '';
       cards.innerHTML = '';
       empty.style.display = 'block';
+      if (currentView === 'heatmap') document.querySelector('[data-scr-heatmap]').innerHTML = '';
       return;
     }
     empty.style.display = 'none';
+
+    if (currentView === 'heatmap') {
+      renderHeatmap(filtered);
+      return;
+    }
 
     // Table rows
     var html = '';
@@ -303,6 +383,8 @@ const { lang } = Astro.params;
       html += '<td class="scr-td scr-td--num">' + (s.marketCap ? '$' + fmtVol(s.marketCap) : '<span class="scr-dim">—</span>') + '</td>';
       // P/E
       html += '<td class="scr-td scr-td--num">' + (s.pe != null ? s.pe.toFixed(1) : '<span class="scr-dim">—</span>') + '</td>';
+      // Forward P/E
+      html += '<td class="scr-td scr-td--num scr-td--hide-mobile">' + (s.forwardPe != null ? s.forwardPe.toFixed(1) : '<span class="scr-dim">—</span>') + '</td>';
       // EPS
       html += '<td class="scr-td scr-td--num scr-td--hide-mobile">' + (s.eps != null ? s.eps.toFixed(2) : '<span class="scr-dim">—</span>') + '</td>';
       // 52W Range
@@ -312,6 +394,16 @@ const { lang } = Astro.params;
       html += '</tr>';
     }
     tbody.innerHTML = html;
+
+    // Make entire row clickable
+    tbody.querySelectorAll('.scr-row').forEach(function(row) {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', function(e) {
+        if (e.target.closest('a')) return; // let actual links work
+        var sym = row.getAttribute('data-symbol');
+        if (sym) window.location.href = '/' + lang + '/markets/stock?s=' + encodeURIComponent(sym);
+      });
+    });
 
     // Mobile cards
     var cardsHtml = '';
@@ -334,10 +426,14 @@ const { lang } = Astro.params;
       cardsHtml += '<div class="stk-row2">';
       cardsHtml += '<span class="stk-price">' + (st.price != null ? 'ARS ' + fmt(st.price) : '—') + '</span>';
       cardsHtml += '<span class="stk-meta">';
+      if (st.pe != null) cardsHtml += '<span class="stk-pe">P/E ' + st.pe.toFixed(1) + '</span>';
+      if (st.marketCap) cardsHtml += '<span class="stk-mcap">Cap $' + fmtVol(st.marketCap) + '</span>';
       if (st.volume) cardsHtml += '<span class="stk-vol">Vol ' + fmtVol(st.volume) + '</span>';
-      if (st.marketCap) cardsHtml += '<span class="stk-mcap">Cap $' + fmtM(st.marketCap) + '</span>';
       cardsHtml += '</span>';
       cardsHtml += '</div>';
+      if (st.sector) {
+        cardsHtml += '<div class="stk-row3"><span class="stk-sector">' + st.sector + '</span></div>';
+      }
       cardsHtml += '</a>';
     }
     cards.innerHTML = cardsHtml;
@@ -404,7 +500,7 @@ const { lang } = Astro.params;
     GCLA: 140
   };
 
-  function normalizeBYMA(arr) {
+  function normalizeBYMA(arr, panel) {
     var seen = {};
     var result = [];
     for (var i = 0; i < arr.length; i++) {
@@ -413,11 +509,13 @@ const { lang } = Astro.params;
       if (!sym || seen[sym]) continue;
       seen[sym] = true;
       var variation = s.imbalance != null ? s.imbalance : (s.variation != null ? s.variation / 100 : null);
+      var price = s.trade || s.price || s.closingPrice;
+      if (!price || price <= 0) continue;
       result.push({
         symbol: sym,
-        name: STOCK_NAMES[sym] || s.description || sym,
+        name: STOCK_NAMES[sym] || s.securityDesc || s.description || sym,
         sector: null, industry: null,
-        price: s.trade || s.price || s.closingPrice,
+        price: price,
         change: variation,
         volume: s.volume || s.tradeVolume || 0,
         marketCap: STOCK_MCAP[sym] ? STOCK_MCAP[sym] * 1e6 : null,
@@ -425,15 +523,172 @@ const { lang } = Astro.params;
         dividendYield: null, beta: null,
         fiftyTwoWeekHigh: null, fiftyTwoWeekLow: null,
         fifty_two_week_high: null, fifty_two_week_low: null,
-        recommendation: null
+        recommendation: null,
+        _panel: panel || 'lider'
       });
     }
     return result.sort(function(a, b) { return (b.marketCap || 0) - (a.marketCap || 0); });
   }
 
-  // ─── Load data: try /api/screener, fallback to BYMA direct, fallback to /api/leading-equity ───
+  // ─── Panel tabs ───
+  document.querySelectorAll('[data-panel]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      currentPanel = btn.getAttribute('data-panel');
+      document.querySelectorAll('[data-panel]').forEach(function(b) { b.classList.remove('scr-tab--active'); });
+      btn.classList.add('scr-tab--active');
+      renderTable();
+    });
+  });
+
+  // ─── Sector filter ───
+  var sectorSelect = document.querySelector('[data-scr-sector-filter]');
+  if (sectorSelect) {
+    sectorSelect.addEventListener('change', function() {
+      currentSector = sectorSelect.value;
+      renderTable();
+    });
+  }
+
+  function populateSectors() {
+    if (!sectorSelect) return;
+    var sectorCounts = {};
+    allStocks.forEach(function(s) { if (s.sector) sectorCounts[s.sector] = (sectorCounts[s.sector] || 0) + 1; });
+    var sorted = Object.keys(sectorCounts).sort();
+    // Keep existing first option ("All Sectors")
+    var html = sectorSelect.options[0].outerHTML;
+    sorted.forEach(function(sec) {
+      html += '<option value="' + sec + '">' + sec + '</option>';
+    });
+    sectorSelect.innerHTML = html;
+    if (currentSector) sectorSelect.value = currentSector;
+
+    // Sector chips
+    var chipsEl = document.querySelector('[data-scr-chips]');
+    if (chipsEl && sorted.length >= 2) {
+      var chtml = '<button class="scr-chip scr-chip--active" data-chip="">All</button>';
+      sorted.forEach(function(sec) {
+        var active = currentSector === sec ? ' scr-chip--active' : '';
+        chtml += '<button class="scr-chip' + active + '" data-chip="' + sec + '">' + sec + ' <span class="scr-chip-count">' + sectorCounts[sec] + '</span></button>';
+      });
+      chipsEl.innerHTML = chtml;
+      chipsEl.style.display = '';
+      chipsEl.querySelectorAll('.scr-chip').forEach(function(chip) {
+        chip.addEventListener('click', function() {
+          currentSector = chip.getAttribute('data-chip');
+          chipsEl.querySelectorAll('.scr-chip').forEach(function(c) { c.classList.remove('scr-chip--active'); });
+          chip.classList.add('scr-chip--active');
+          if (sectorSelect) sectorSelect.value = currentSector;
+          renderTable();
+        });
+      });
+    }
+  }
+
+  // ─── Market Breadth & Stats ───
+  function updateBreadthAndStats(filtered) {
+    var gainers = 0, losers = 0, unchanged = 0;
+    var totalVol = 0, chgSum = 0, chgCount = 0;
+    for (var i = 0; i < filtered.length; i++) {
+      var s = filtered[i];
+      totalVol += s.volume || 0;
+      if (s.change != null) {
+        var pct = s.change * 100;
+        if (pct > 0.01) gainers++;
+        else if (pct < -0.01) losers++;
+        else unchanged++;
+        chgSum += pct;
+        chgCount++;
+      } else { unchanged++; }
+    }
+    var total = gainers + losers + unchanged;
+    if (total > 0) {
+      var upPct = (gainers / total * 100).toFixed(1);
+      var unchPct = (unchanged / total * 100).toFixed(1);
+      var downPct = (losers / total * 100).toFixed(1);
+      var upSeg = document.querySelector('[data-scr-breadth-up]');
+      var unchSeg = document.querySelector('[data-scr-breadth-unch]');
+      var downSeg = document.querySelector('[data-scr-breadth-down]');
+      if (upSeg) upSeg.style.width = upPct + '%';
+      if (unchSeg) unchSeg.style.width = unchPct + '%';
+      if (downSeg) downSeg.style.width = downPct + '%';
+      var countsEl = document.querySelector('[data-scr-breadth-counts]');
+      if (countsEl) {
+        countsEl.innerHTML = '<span class="rc-up">' + gainers + ' ▲</span>' +
+          '<span class="scr-breadth-unch-label">' + unchanged + ' —</span>' +
+          '<span class="rc-down">' + losers + ' ▼</span>';
+      }
+      document.querySelector('[data-scr-breadth]').style.display = '';
+    }
+    setEl('[data-scr-gainers]', gainers.toString());
+    setEl('[data-scr-losers]', losers.toString());
+    setEl('[data-scr-totvol]', fmtVol(totalVol));
+    var avgChg = chgCount > 0 ? (chgSum / chgCount) : 0;
+    var avgEl = document.querySelector('[data-scr-avgchg]');
+    if (avgEl) {
+      avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toFixed(2) + '%';
+      avgEl.className = 'scr-stat-val ' + (avgChg >= 0 ? 'rc-up' : 'rc-down');
+    }
+    document.querySelector('[data-scr-stats]').style.display = '';
+  }
+
+  // ─── Heatmap ───
+  function renderHeatmap(filtered) {
+    var container = document.querySelector('[data-scr-heatmap]');
+    if (!container) return;
+    if (filtered.length === 0) { container.innerHTML = ''; return; }
+    // Calculate total mcap for sizing
+    var totalMcap = 0;
+    for (var i = 0; i < filtered.length; i++) totalMcap += filtered[i].marketCap || 1e6;
+    var html = '';
+    for (var i = 0; i < filtered.length; i++) {
+      var s = filtered[i];
+      var pct = s.change != null ? s.change * 100 : 0;
+      var color, bg;
+      if (pct > 3) { bg = 'rgba(22,163,74,0.45)'; color = '#dcfce7'; }
+      else if (pct > 1) { bg = 'rgba(22,163,74,0.3)'; color = '#bbf7d0'; }
+      else if (pct > 0.01) { bg = 'rgba(22,163,74,0.15)'; color = '#16a34a'; }
+      else if (pct < -3) { bg = 'rgba(220,38,38,0.45)'; color = '#fecaca'; }
+      else if (pct < -1) { bg = 'rgba(220,38,38,0.3)'; color = '#fca5a5'; }
+      else if (pct < -0.01) { bg = 'rgba(220,38,38,0.15)'; color = '#dc2626'; }
+      else { bg = 'rgba(128,128,128,0.12)'; color = 'var(--color-text-meta)'; }
+      var weight = (s.marketCap || 1e6) / totalMcap;
+      var flex = Math.max(weight * 100, 2).toFixed(2);
+      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex:' + flex + ' 1 0;background:' + bg + '">';
+      html += '<span class="hm-sym">' + s.symbol + '</span>';
+      html += '<span class="hm-pct" style="color:' + color + '">' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%</span>';
+      if (s.price != null) html += '<span class="hm-price">' + fmt(s.price) + '</span>';
+      html += '</a>';
+    }
+    container.innerHTML = html;
+  }
+
+  // ─── View toggle ───
+  document.querySelectorAll('[data-view]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      currentView = btn.getAttribute('data-view');
+      document.querySelectorAll('[data-view]').forEach(function(b) { b.classList.remove('scr-view-btn--active'); });
+      btn.classList.add('scr-view-btn--active');
+      var tableWrap = document.querySelector('.scr-table-wrap');
+      var heatmap = document.querySelector('[data-scr-heatmap]');
+      var cards = document.querySelector('[data-scr-cards]');
+      if (currentView === 'heatmap') {
+        if (tableWrap) tableWrap.style.display = 'none';
+        if (cards) cards.style.display = 'none';
+        if (heatmap) heatmap.style.display = '';
+        renderHeatmap(getFiltered());
+      } else {
+        if (tableWrap) tableWrap.style.display = '';
+        if (heatmap) heatmap.style.display = 'none';
+        // cards visibility handled by CSS media query
+        if (cards) cards.style.display = '';
+      }
+    });
+  });
+
+  // ─── Load data: try /api/screener, fallback to BYMA direct (both panels) ───
   function onData(stocks) {
     allStocks = stocks;
+    populateSectors();
     setEl('[data-mkts-updated]', 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     renderTable();
   }
@@ -444,37 +699,119 @@ const { lang } = Astro.params;
     document.querySelector('[data-scr-cards]').innerHTML = '<div class="scr-loading">Unable to load stock data</div>';
   }
 
+  function postBYMA(url) {
+    return fetch(url, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}'
+    }).then(function(r) { return r.json(); });
+  }
+
+  function fetchBothPanels() {
+    var BYMA_LIDER = 'https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/leading-equity';
+    var BYMA_GENERAL = 'https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/general-equity';
+
+    return Promise.all([
+      postBYMA(BYMA_LIDER).catch(function() { return null; }),
+      postBYMA(BYMA_GENERAL).catch(function() { return null; })
+    ]).then(function(results) {
+      var liderData = results[0];
+      var generalData = results[1];
+      var liderArr = (liderData && liderData.data) || liderData || [];
+      var generalArr = (generalData && generalData.data) || generalData || [];
+      if (!Array.isArray(liderArr)) liderArr = [];
+      if (!Array.isArray(generalArr)) generalArr = [];
+
+      // Track líder symbols
+      var liderStocks = normalizeBYMA(liderArr, 'lider');
+      var liderSet = {};
+      liderStocks.forEach(function(s) { liderSet[s.symbol] = true; });
+
+      // General stocks, excluding those already in líder
+      var generalStocks = normalizeBYMA(generalArr, 'general').filter(function(s) {
+        return !liderSet[s.symbol];
+      });
+
+      var all = liderStocks.concat(generalStocks);
+      all.sort(function(a, b) { return (b.marketCap || 0) - (a.marketCap || 0) || (b.volume || 0) - (a.volume || 0); });
+      return all;
+    });
+  }
+
   fetch('/api/screener')
     .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function(data) {
-      if (!Array.isArray(data)) throw new Error('bad');
-      onData(normalize(data));
-    })
-    .catch(function() {
-      // Fallback: try BYMA direct
-      fetch('https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/leading-equity', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}'
-      }).then(function(r) { return r.json(); })
+      if (!Array.isArray(data) || data.length === 0) throw new Error('bad');
+      // Mark all from API as líder (since API currently only returns líder)
+      var stocks = normalize(data);
+      stocks.forEach(function(s) { s._panel = s._panel || 'lider'; });
+      onData(stocks);
+      // Also fetch general panel to merge
+      postBYMA('https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/general-equity')
         .then(function(d) {
           var arr = (d && d.data) || d || [];
-          if (!Array.isArray(arr) || arr.length === 0) throw new Error('empty');
-          onData(normalizeBYMA(arr));
+          if (!Array.isArray(arr) || arr.length === 0) return;
+          var liderSet = {};
+          allStocks.forEach(function(s) { liderSet[s.symbol] = true; });
+          var generalStocks = normalizeBYMA(arr, 'general').filter(function(s) { return !liderSet[s.symbol]; });
+          if (generalStocks.length > 0) {
+            allStocks = allStocks.concat(generalStocks);
+            allStocks.sort(function(a, b) { return (b.marketCap || 0) - (a.marketCap || 0) || (b.volume || 0) - (a.volume || 0); });
+            renderTable();
+          }
+        }).catch(function() {});
+    })
+    .catch(function() {
+      // Fallback: try BYMA direct (both panels)
+      fetchBothPanels()
+        .then(function(stocks) {
+          if (stocks.length === 0) throw new Error('empty');
+          onData(stocks);
         })
         .catch(function() {
-          // Last resort: proxy
+          // Last resort: proxy for líder only
           fetch('/api/leading-equity')
             .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
             .then(function(arr) {
               if (!Array.isArray(arr) || arr.length === 0) throw new Error('empty');
-              onData(normalizeBYMA(arr));
+              onData(normalizeBYMA(arr, 'lider'));
             })
             .catch(onError);
         });
     });
+  // Keyboard shortcut: / to focus search
+  document.addEventListener('keydown', function(e) {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      var searchInput = document.querySelector('[data-scr-search]');
+      if (searchInput) searchInput.focus();
+    }
+    if (e.key === 'Escape') {
+      var searchInput = document.querySelector('[data-scr-search]');
+      if (searchInput && document.activeElement === searchInput) {
+        searchInput.blur();
+        searchInput.value = '';
+        searchTerm = '';
+        renderTable();
+      }
+    }
+  });
 })();
 </script>
 
 <style>
+  /* Panel Tabs */
+  .scr-tabs {
+    display: flex; gap: 4px; margin-bottom: 1rem;
+    border-bottom: 2px solid var(--color-border); padding-bottom: 0;
+  }
+  .scr-tab {
+    padding: 8px 16px; border: none; background: none;
+    color: var(--color-text-meta); font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .scr-tab:hover { color: var(--color-text); }
+  .scr-tab--active { color: var(--color-gold); border-bottom-color: var(--color-gold); }
+
   /* Toolbar */
   .scr-toolbar {
     display: flex; align-items: center; gap: var(--spacing-md);
@@ -497,6 +834,29 @@ const { lang } = Astro.params;
   }
   .scr-search:focus { border-color: var(--color-gold); }
   .scr-search::placeholder { color: var(--color-text-meta); }
+  .scr-sector-filter {
+    padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 8px;
+    background: var(--color-bg-secondary); color: var(--color-text);
+    font-size: 0.85rem; outline: none; cursor: pointer;
+    transition: border-color 0.15s; min-width: 140px;
+  }
+  .scr-sector-filter:focus { border-color: var(--color-gold); }
+  :global([data-theme="dark"]) .scr-sector-filter { background: var(--color-bg-secondary); color: var(--color-text); border-color: var(--color-border); }
+
+  /* Sector Chips */
+  .scr-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--spacing-md);
+  }
+  :global(.scr-chip) {
+    padding: 5px 12px; border: 1px solid var(--color-border); border-radius: 20px;
+    background: var(--color-bg-secondary); color: var(--color-text-secondary);
+    font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  :global(.scr-chip:hover) { border-color: var(--color-gold); color: var(--color-text); }
+  :global(.scr-chip--active) { background: var(--color-gold); color: #000; border-color: var(--color-gold); font-weight: 700; }
+  :global(.scr-chip-count) { font-size: 0.62rem; opacity: 0.7; margin-left: 2px; }
+
   .scr-meta { margin-left: auto; }
   .scr-count {
     font-size: 0.75rem; color: var(--color-text-meta);
@@ -512,6 +872,7 @@ const { lang } = Astro.params;
   .scr-table {
     width: 100%; border-collapse: collapse;
     font-variant-numeric: tabular-nums;
+    table-layout: auto;
   }
 
   .scr-th {
@@ -538,14 +899,14 @@ const { lang } = Astro.params;
     display: inline-block; min-width: 8px;
   }
 
-  /* Rows */
-  .scr-row {
+  /* Rows — :global() for JS-injected rows */
+  :global(.scr-row) {
     transition: background 0.1s;
   }
-  .scr-row:nth-child(even) { background: rgba(128,128,128,0.04); }
-  .scr-row:hover { background: rgba(246,180,14,0.06); }
+  :global(.scr-row:nth-child(even)) { background: rgba(128,128,128,0.04); }
+  :global(.scr-row:hover) { background: rgba(246,180,14,0.06); }
 
-  .scr-td {
+  :global(.scr-td) {
     padding: 8px 14px;
     font-size: 0.85rem;
     color: var(--color-text);
@@ -553,48 +914,51 @@ const { lang } = Astro.params;
     white-space: nowrap;
     vertical-align: middle;
   }
-  .scr-td--num { text-align: right; font-weight: 600; }
-  .scr-td--text { font-size: 0.75rem; color: var(--color-text-secondary); max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
-  .scr-td--name { padding-left: 12px; }
+  :global(.scr-td--num) { text-align: right; font-weight: 600; }
+  :global(.scr-td--text) { font-size: 0.75rem; color: var(--color-text-secondary); max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
+  :global(.scr-td--name) { padding-left: 12px; min-width: 200px; }
 
-  /* Name cell */
-  .scr-name-link {
-    display: flex; align-items: center; gap: 10px;
+  /* Name cell — :global() needed because HTML is injected via JS innerHTML */
+  .scr-th--name { min-width: 200px; width: 22%; }
+  .scr-td--name { min-width: 200px; }
+  :global(.scr-name-link) {
+    display: flex !important; align-items: center; gap: 10px;
     text-decoration: none; color: inherit;
   }
-  .scr-logo {
+  :global(.scr-name-link:hover) { text-decoration: none; color: inherit; }
+  :global(.scr-logo) {
     width: 32px; height: 32px; min-width: 32px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; overflow: hidden;
   }
-  .scr-logo img { width: 22px; height: 22px; object-fit: contain; border-radius: 3px; display: block; }
-  .scr-logo--fallback { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.02em; }
-  .scr-name-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-  .scr-symbol { font-weight: 800; font-size: 0.85rem; color: var(--color-text); letter-spacing: 0.02em; line-height: 1.2; }
-  .scr-company { font-size: 0.68rem; color: var(--color-text-meta); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
+  :global(.scr-logo img) { width: 22px; height: 22px; object-fit: contain; border-radius: 3px; display: block; }
+  :global(.scr-logo--fallback) { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.02em; }
+  :global(.scr-name-text) { display: flex; flex-direction: column; gap: 1px; min-width: 0; overflow: hidden; }
+  :global(.scr-symbol) { font-weight: 800; font-size: 0.85rem; color: var(--color-text); letter-spacing: 0.02em; line-height: 1.2; white-space: nowrap; }
+  :global(.scr-company) { font-size: 0.68rem; color: var(--color-text-meta); line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  /* Change pill */
-  .scr-pct {
+  /* Change pill — :global() for JS-injected HTML */
+  :global(.scr-pct) {
     display: inline-block; padding: 2px 8px; border-radius: 4px;
     font-size: 0.78rem; font-weight: 700;
   }
-  .scr-pct.rc-up { background: rgba(22,163,74,0.12); color: #16a34a; }
-  .scr-pct.rc-down { background: rgba(220,38,38,0.12); color: #dc2626; }
+  :global(.scr-pct.rc-up) { background: rgba(22,163,74,0.12); color: #16a34a; }
+  :global(.scr-pct.rc-down) { background: rgba(220,38,38,0.12); color: #dc2626; }
 
-  .scr-dim { color: var(--color-text-meta); font-weight: 400; }
+  :global(.scr-dim) { color: var(--color-text-meta); font-weight: 400; }
 
   /* 52W Range bar */
-  .scr-range { display: flex; align-items: center; gap: 6px; min-width: 140px; }
-  .scr-range-lo, .scr-range-hi { font-size: 0.65rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .scr-range-bar {
+  :global(.scr-range) { display: flex; align-items: center; gap: 6px; min-width: 140px; }
+  :global(.scr-range-lo), :global(.scr-range-hi) { font-size: 0.65rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  :global(.scr-range-bar) {
     flex: 1; height: 4px; background: var(--color-border); border-radius: 2px;
     position: relative; min-width: 60px;
   }
-  .scr-range-fill {
+  :global(.scr-range-fill) {
     height: 100%; background: var(--color-gold); border-radius: 2px;
     opacity: 0.5;
   }
-  .scr-range-dot {
+  :global(.scr-range-dot) {
     position: absolute; top: 50%; transform: translate(-50%, -50%);
     width: 8px; height: 8px; background: var(--color-gold);
     border-radius: 50%; border: 1.5px solid var(--color-bg);
@@ -611,6 +975,83 @@ const { lang } = Astro.params;
   /* Cards: hidden on desktop */
   .scr-cards { display: none; }
 
+  /* Market Breadth */
+  .scr-breadth {
+    margin-bottom: 1rem; padding: 12px 16px;
+    background: var(--color-bg-secondary); border-radius: 10px;
+    border: 1px solid var(--color-border);
+  }
+  .scr-breadth-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+  }
+  .scr-breadth-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--color-text-meta);
+  }
+  :global(.scr-breadth-counts) {
+    display: flex; gap: 12px; font-size: 0.75rem; font-weight: 700;
+  }
+  :global(.scr-breadth-unch-label) { color: var(--color-text-meta); }
+  .scr-breadth-bar {
+    display: flex; height: 10px; border-radius: 5px; overflow: hidden;
+    background: var(--color-border);
+  }
+  .scr-breadth-seg { transition: width 0.4s ease; min-width: 0; }
+  .scr-breadth-seg--up { background: #16a34a; border-radius: 5px 0 0 5px; }
+  .scr-breadth-seg--unch { background: #a3a3a3; }
+  .scr-breadth-seg--down { background: #dc2626; border-radius: 0 5px 5px 0; }
+
+  /* Summary Stats */
+  .scr-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .scr-stat-item {
+    display: flex; flex-direction: column; gap: 2px; padding: 10px 14px;
+    background: var(--color-bg-secondary); border-radius: 8px;
+    border: 1px solid var(--color-border);
+  }
+  .scr-stat-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--color-text-meta);
+  }
+  :global(.scr-stat-val) {
+    font-size: 1.05rem; font-weight: 800; font-variant-numeric: tabular-nums;
+    color: var(--color-text);
+  }
+  :global(.scr-stat-val.rc-up) { color: #16a34a; }
+  :global(.scr-stat-val.rc-down) { color: #dc2626; }
+
+  /* View Toggle */
+  .scr-view-toggle { display: flex; gap: 2px; }
+  .scr-view-btn {
+    padding: 6px 10px; border: 1px solid var(--color-border); background: none;
+    color: var(--color-text-meta); cursor: pointer; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .scr-view-btn:hover { color: var(--color-text); border-color: var(--color-text-meta); }
+  .scr-view-btn--active { color: var(--color-gold); border-color: var(--color-gold); background: rgba(246,180,14,0.08); }
+
+  /* Heatmap */
+  :global(.scr-heatmap) {
+    display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: var(--spacing-xl);
+    min-height: 200px;
+  }
+  :global(.hm-cell) {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 10px 6px; border-radius: 6px; min-height: 70px; min-width: 60px;
+    text-decoration: none; color: inherit; transition: transform 0.1s, box-shadow 0.15s;
+    cursor: pointer; overflow: hidden;
+  }
+  :global(.hm-cell:hover) {
+    transform: scale(1.04); box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 2; text-decoration: none; color: inherit;
+  }
+  :global(.hm-sym) { font-size: 0.75rem; font-weight: 800; color: var(--color-text); line-height: 1.2; }
+  :global(.hm-pct) { font-size: 0.8rem; font-weight: 700; line-height: 1.3; }
+  :global(.hm-price) { font-size: 0.6rem; color: var(--color-text-meta); margin-top: 2px; }
+
   /* Dark mode fixes */
   :global([data-theme="dark"]) .scr-search { background: var(--color-bg-secondary); color: var(--color-text); border-color: var(--color-border); }
   :global([data-theme="dark"]) .scr-table-wrap { background: var(--color-bg-secondary); }
@@ -619,10 +1060,14 @@ const { lang } = Astro.params;
 
   /* Responsive: hide columns progressively */
   @media (max-width: 1100px) {
-    .scr-th--hide-tablet, .scr-td--hide-tablet { display: none; }
+    .scr-th--hide-tablet, :global(.scr-td--hide-tablet) { display: none; }
   }
   @media (max-width: 900px) {
-    .scr-th--hide-mobile, .scr-td--hide-mobile { display: none; }
+    .scr-th--hide-mobile, :global(.scr-td--hide-mobile) { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    .scr-stats { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* Mobile: switch to cards */
@@ -630,6 +1075,8 @@ const { lang } = Astro.params;
     .scr-table-wrap { display: none; }
     .scr-cards { display: grid; grid-template-columns: 1fr; gap: 0.5rem; margin-bottom: var(--spacing-xl); }
     .scr-search-wrap { max-width: none; }
+    .scr-view-toggle { display: none; }
+    :global(.scr-heatmap) { display: none !important; }
   }
 </style>
 
