@@ -274,7 +274,6 @@ export const en = {
   "stock.divRate": "Dividend Rate",
   "stock.divYield": "Dividend Yield",
   "stock.exDivDate": "Ex-Dividend Date",
-  "stock.payoutRatio": "Payout Ratio",
   "stock.roa": "Return on Assets",
   "stock.roe": "Return on Equity",
   "stock.earningsGrowth": "Earnings Growth",

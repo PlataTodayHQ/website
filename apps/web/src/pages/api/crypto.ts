@@ -13,8 +13,7 @@ export const OPTIONS: APIRoute = () => optionsResponse();
 
 export const GET: APIRoute = async ({ url }) => {
   try {
-    const limit = Math.min(parseInt(url.searchParams.get("limit") || "100"), 250);
-    const cacheKey = `crypto_${limit}`;
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "100", 10), 250);
 
     if (cache && cache.data?.length >= limit && Date.now() - cache.ts < CACHE_TTL) {
       return jsonResponse(cache.data.slice(0, limit), 120);
