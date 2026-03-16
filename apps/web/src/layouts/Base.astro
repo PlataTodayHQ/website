@@ -329,16 +329,9 @@ const allJsonLd = [
         </button>
       </div>
 
-      <!-- Quick actions row -->
-      <div class="drawer-actions">
-        <button class="drawer-action-btn" data-drawer-search aria-label={t(lang, "nav.search")}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-            <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <span>{t(lang, "nav.search")}</span>
-        </button>
-        <button class="drawer-action-btn" data-drawer-theme aria-label={t(lang, "theme.toDark")}>
+      <!-- Drawer utility row -->
+      <div class="drawer-utility">
+        <button class="drawer-util-btn" data-drawer-theme aria-label={t(lang, "theme.toDark")}>
           <svg class="drawer-theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
             <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -346,10 +339,9 @@ const allJsonLd = [
           <svg class="drawer-theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span class="drawer-theme-label">{t(lang, "theme.toDark")}</span>
         </button>
-        <button class="drawer-action-btn" data-drawer-lang aria-label={t(lang, "nav.language")}>
-          <span class="drawer-action-flag" aria-hidden="true">{LANGUAGES[lang as keyof typeof LANGUAGES]?.flag}</span>
+        <button class="drawer-util-btn" data-drawer-lang aria-label={t(lang, "nav.language")}>
+          <span class="drawer-util-flag" aria-hidden="true">{LANGUAGES[lang as keyof typeof LANGUAGES]?.flag}</span>
           <span>{LANGUAGES[lang as keyof typeof LANGUAGES]?.nativeName}</span>
         </button>
       </div>
@@ -361,7 +353,6 @@ const allJsonLd = [
             (item.href.includes('/category/') && currentPath.startsWith(item.href));
           const catKey = (item as any).category;
           const color = catKey ? CATEGORY_COLORS[catKey] : undefined;
-          const subs = catKey ? SUBCATEGORIES[catKey as keyof typeof SUBCATEGORIES] : undefined;
           return (
             <div class="drawer-nav-group" style={`--anim-delay: ${index * 30}ms`}>
               <a
@@ -373,15 +364,6 @@ const allJsonLd = [
                 <span class="drawer-nav-label">{item.label}</span>
                 {isActive && <span class="drawer-active-indicator" aria-hidden="true" />}
               </a>
-              {subs && Object.entries(subs).length > 0 && (
-                <div class="drawer-subs">
-                  {Object.entries(subs).map(([subKey, _subLabel]) => (
-                    <a href={item.href} class="drawer-sub-link">
-                      {t(lang, `sub.${subKey}` as any)}
-                    </a>
-                  ))}
-                </div>
-              )}
             </div>
           );
         })}
@@ -563,6 +545,42 @@ const allJsonLd = [
       </div>
     </footer>
 
+    <!-- Mobile bottom navigation -->
+    <nav class="bottom-nav" id="bottom-nav" aria-label="Quick navigation">
+      <a href={`/${lang}/`} class:list={["bottom-nav-item", { active: currentPath === `/${lang}/` || currentPath === `/${lang}` }]} aria-current={currentPath === `/${lang}/` || currentPath === `/${lang}` ? "page" : undefined}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1m-2 0h2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{t(lang, "nav.home")}</span>
+      </a>
+      <a href={`/${lang}/feed`} class:list={["bottom-nav-item", { active: currentPath === `/${lang}/feed` }]} aria-current={currentPath === `/${lang}/feed` ? "page" : undefined}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{t(lang, "nav.feed" as any)}</span>
+      </a>
+      <a href={`/${lang}/markets`} class:list={["bottom-nav-item", { active: currentPath === `/${lang}/markets` }]} aria-current={currentPath === `/${lang}/markets` ? "page" : undefined}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17 7h4v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>{t(lang, "nav.markets" as any)}</span>
+      </a>
+      <button class="bottom-nav-item" data-bottom-search aria-label={t(lang, "nav.search")}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+          <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>{t(lang, "nav.search")}</span>
+      </button>
+      <button class="bottom-nav-item" data-bottom-menu aria-label={t(lang, "nav.openMenu")} aria-expanded="false" aria-controls="mobile-menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>{t(lang, "nav.menu")}</span>
+      </button>
+    </nav>
+
     <!-- Language suggestion CTA (mobile) -->
     <div class="lang-cta" id="lang-cta" hidden role="complementary" aria-label="Language suggestion">
       <div class="lang-cta-inner">
@@ -707,17 +725,20 @@ const allJsonLd = [
       const drawerCloseBtn = menuOverlay?.querySelector('.drawer-close');
       if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', () => closeDrawer());
 
-      // Drawer quick actions
-      const drawerSearchBtn = menuOverlay?.querySelector('[data-drawer-search]');
-      if (drawerSearchBtn && searchOverlay) {
-        drawerSearchBtn.addEventListener('click', () => {
-          closeDrawer();
-          setTimeout(() => {
-            openOverlay(searchOverlay, menuBtn);
-            const input = searchOverlay.querySelector('.search-input');
-            if (input) setTimeout(() => input.focus(), 50);
-          }, 320);
+      // Bottom nav: search button
+      const bottomSearchBtn = document.querySelector('[data-bottom-search]');
+      if (bottomSearchBtn && searchOverlay) {
+        bottomSearchBtn.addEventListener('click', () => {
+          openOverlay(searchOverlay, bottomSearchBtn);
+          const input = searchOverlay.querySelector('.search-input');
+          if (input) setTimeout(() => input.focus(), 50);
         });
+      }
+
+      // Bottom nav: menu button
+      const bottomMenuBtn = document.querySelector('[data-bottom-menu]');
+      if (bottomMenuBtn) {
+        bottomMenuBtn.addEventListener('click', () => openDrawer());
       }
 
       const drawerLangBtn = menuOverlay?.querySelector('[data-drawer-lang]');
@@ -1411,41 +1432,38 @@ const allJsonLd = [
 
   .drawer-close:hover { background: rgba(255, 255, 255, 0.2); }
 
-  /* Quick actions */
-  .drawer-actions {
+  /* Drawer utility row */
+  .drawer-utility {
     display: flex;
-    gap: 0;
-    padding: 0;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
     border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
   }
 
-  .drawer-action-btn {
-    flex: 1;
+  .drawer-util-btn {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 14px 8px;
-    background: none;
-    border: none;
-    border-right: 1px solid var(--color-border);
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
     color: var(--color-text-secondary);
     cursor: pointer;
     font-family: var(--font-sans);
-    font-size: 0.7rem;
+    font-size: 0.78rem;
     transition: background 0.15s, color 0.15s;
   }
 
-  .drawer-action-btn:last-child { border-right: none; }
-
-  .drawer-action-btn:hover,
-  .drawer-action-btn:active {
-    background: var(--color-bg-secondary);
+  .drawer-util-btn:hover,
+  .drawer-util-btn:active {
+    background: var(--color-border);
     color: var(--color-text);
   }
 
-  .drawer-action-flag { font-size: 1.1rem; line-height: 1; }
+  .drawer-util-flag { font-size: 1rem; line-height: 1; }
 
   /* Theme icon visibility in drawer */
   .drawer-theme-moon { display: none; }
@@ -1525,32 +1543,6 @@ const allJsonLd = [
     background: var(--color-gold);
     border-radius: 2px;
     flex-shrink: 0;
-  }
-
-  /* Subcategories */
-  .drawer-subs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    padding: 0 20px 10px 40px;
-  }
-
-  .drawer-sub-link {
-    font-size: 0.78rem;
-    color: var(--color-text-meta);
-    padding: 3px 10px;
-    border-radius: 100px;
-    background: var(--color-bg-secondary);
-    margin: 0 4px 4px 0;
-    text-decoration: none;
-    transition: background 0.15s, color 0.15s;
-    white-space: nowrap;
-  }
-
-  .drawer-sub-link:hover {
-    background: var(--color-border);
-    color: var(--color-text);
-    text-decoration: none;
   }
 
   /* Drawer footer */
@@ -1837,6 +1829,64 @@ const allJsonLd = [
     .lang-cta { display: none !important; }
   }
 
+  /* Bottom navigation (mobile) */
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .bottom-nav {
+      display: flex;
+      align-items: stretch;
+    }
+  }
+
+  .bottom-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 4px 6px;
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--color-text-meta);
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  .bottom-nav-item:hover,
+  .bottom-nav-item:active {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .bottom-nav-item.active {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .bottom-nav-item svg {
+    flex-shrink: 0;
+  }
+
   /* Mobile */
   @media (max-width: 768px) {
     .utility-inner {
@@ -1848,12 +1898,19 @@ const allJsonLd = [
     }
 
     .menu-btn {
-      display: flex;
-      left: var(--spacing-md);
+      display: none;
     }
 
     .nav-bar {
       display: none;
+    }
+
+    body {
+      padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .lang-cta {
+      bottom: calc(56px + env(safe-area-inset-bottom, 0px));
     }
 
     .main-inner {
