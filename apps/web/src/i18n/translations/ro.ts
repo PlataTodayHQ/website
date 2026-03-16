@@ -509,6 +509,21 @@ export const ro = {
   "corrections.reportText": "Dacă observați o inexactitate într-un articol Plata, vă rugăm să ne scrieți la hello@plata.today cu URL-ul articolului și o descriere a erorii. Analizăm fiecare raport.",
   "corrections.logTitle": "Registrul de corecturi",
   "corrections.logEmpty": "Nu au fost emise corecturi până acum.",
+  // Common & UI labels
+  "common.loading": "Se încarcă…",
+  "common.loadingData": "Se încarcă datele…",
+  "common.marketData": "Date de piață",
+  "common.topStories": "Știri principale",
+  "article.badgeNew": "NOU",
+  "article.via": "via",
+  "ticker.usdOficial": "USD oficial",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Articole anterioare",
+  "category.featuredAria": "Articol recomandat",
+  "feed.filterByCategory": "Filtrare după categorie",
 } as const;
 
 export type Translations = typeof ro;

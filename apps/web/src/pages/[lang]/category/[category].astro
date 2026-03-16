@@ -87,8 +87,9 @@ const olderArticles = articles.slice(5);
 
   <!-- Featured article -->
   {featured && (
-    <section class="cat-featured" aria-label={`Featured ${catLabel.toLowerCase()} article`}>
+    <section class="cat-featured" aria-label={t(lang!, "category.featuredAria")}>
       <ArticleCard
+        lang={lang}
         title={featured.title}
         description={featured.description}
         href={featured.href}
@@ -108,6 +109,7 @@ const olderArticles = articles.slice(5);
     <section class="cat-grid" aria-label={t(lang!, "category.latestIn" as any).replace("{cat}", catLabel)}>
       {latestArticles.map((a) => (
         <ArticleCard
+          lang={lang}
           title={a.title}
           href={a.href}
           imageUrl={a.imageUrl}
@@ -124,9 +126,10 @@ const olderArticles = articles.slice(5);
   <!-- Older articles -->
   {olderArticles.length > 0 && <SectionHeader title={t(lang!, "category.earlier" as any)} />}
   {olderArticles.length > 0 && (
-    <section class="cat-list" aria-label="Earlier articles">
+    <section class="cat-list" aria-label={t(lang!, "category.earlierAria")}>
       {olderArticles.map((a) => (
         <ArticleCard
+          lang={lang}
           title={a.title}
           description={a.description}
           href={a.href}

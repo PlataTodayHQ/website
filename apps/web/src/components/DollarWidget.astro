@@ -8,16 +8,16 @@ interface Props {
 const { lang = "en" } = Astro.props;
 ---
 
-<div class="market-widget" role="complementary" aria-label="Market data" data-market-widget>
+<div class="market-widget" role="complementary" aria-label={t(lang, "common.marketData")} data-market-widget>
   <a href={`/${lang}/markets/currencies`} class="mw-group" aria-label={t(lang, "dollar.exchangeRates")}>
     <div class="mw-rate">
-      <span class="mw-label">USD</span>
+      <span class="mw-label">{t(lang, "ticker.usdOficial")}</span>
       <span class="mw-value" data-mw-official>---</span>
       <span class="mw-change" data-mw-official-change aria-label=""></span>
     </div>
     <span class="mw-sep" aria-hidden="true">/</span>
     <div class="mw-rate">
-      <span class="mw-label mw-blue-label">Blue</span>
+      <span class="mw-label mw-blue-label">{t(lang, "ticker.usdBlue")}</span>
       <span class="mw-value" data-mw-blue>---</span>
       <span class="mw-change" data-mw-blue-change aria-label=""></span>
     </div>
@@ -25,7 +25,7 @@ const { lang = "en" } = Astro.props;
   <span class="mw-sep mw-sep--outer" aria-hidden="true">/</span>
   <a href={`/${lang}/markets/merval`} class="mw-group" aria-label={t(lang, "dollar.mervalIndex")}>
     <div class="mw-rate">
-      <span class="mw-label mw-merval-label">Merval</span>
+      <span class="mw-label mw-merval-label">{t(lang, "ticker.merval")}</span>
       <span class="mw-value" data-mw-merval>---</span>
       <span class="mw-change" data-mw-merval-change aria-label=""></span>
     </div>

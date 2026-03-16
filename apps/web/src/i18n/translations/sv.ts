@@ -607,6 +607,21 @@ export const sv = {
   "footer.mission": "Uppdrag",
   "footer.newsroom": "Redaktion",
   "footer.founder": "Grundare",
+  // Common & UI labels
+  "common.loading": "Laddar…",
+  "common.loadingData": "Laddar data…",
+  "common.marketData": "Marknadsdata",
+  "common.topStories": "Toppnyheter",
+  "article.badgeNew": "NY",
+  "article.via": "via",
+  "ticker.usdOficial": "USD officiell",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Äldre artiklar",
+  "category.featuredAria": "Utvald artikel",
+  "feed.filterByCategory": "Filtrera efter kategori",
 } as const;
 
 export type Translations = typeof sv;

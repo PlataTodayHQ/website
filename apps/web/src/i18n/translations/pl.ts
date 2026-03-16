@@ -607,6 +607,21 @@ export const pl = {
   "footer.mission": "Misja",
   "footer.newsroom": "Redakcja",
   "footer.founder": "Założyciel",
+  // Common & UI labels
+  "common.loading": "Ładowanie…",
+  "common.loadingData": "Ładowanie danych…",
+  "common.marketData": "Dane rynkowe",
+  "common.topStories": "Najważniejsze wiadomości",
+  "article.badgeNew": "NOWE",
+  "article.via": "źródło",
+  "ticker.usdOficial": "USD oficjalny",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Starsze artykuły",
+  "category.featuredAria": "Artykuł wyróżniony",
+  "feed.filterByCategory": "Filtruj według kategorii",
 } as const;
 
 export type Translations = typeof pl;

@@ -509,6 +509,21 @@ export const id = {
   "corrections.reportText": "Jika Anda menemukan ketidakakuratan dalam artikel Plata mana pun, silakan kirim email ke hello@plata.today dengan URL artikel dan deskripsi kesalahannya. Kami meninjau setiap laporan.",
   "corrections.logTitle": "Catatan koreksi",
   "corrections.logEmpty": "Belum ada koreksi yang dikeluarkan.",
+  // Common & UI labels
+  "common.loading": "Memuat…",
+  "common.loadingData": "Memuat data…",
+  "common.marketData": "Data pasar",
+  "common.topStories": "Berita utama",
+  "article.badgeNew": "BARU",
+  "article.via": "via",
+  "ticker.usdOficial": "USD Resmi",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Artikel sebelumnya",
+  "category.featuredAria": "Artikel unggulan",
+  "feed.filterByCategory": "Filter menurut kategori",
 } as const;
 
 export type Translations = typeof id;

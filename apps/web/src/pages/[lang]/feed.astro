@@ -64,7 +64,7 @@ const categoryTabs = [
     <h1 class="feed-heading">{t(lang!, "feed.title" as any)}</h1>
 
     <!-- Category filter tabs -->
-    <nav class="feed-tabs" aria-label="Filter by category">
+    <nav class="feed-tabs" aria-label={t(lang!, "feed.filterByCategory")}>
       {categoryTabs.map((tab) => (
         <button
           class:list={["feed-tab", { active: tab.key === "" }]}
@@ -80,6 +80,7 @@ const categoryTabs = [
     <div class="feed-list" id="feed-list">
       {articles.map((a) => (
         <ArticleCard
+          lang={lang}
           title={a.title}
           description={a.description}
           href={a.href}

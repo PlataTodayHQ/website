@@ -509,6 +509,21 @@ export const cs = {
   "corrections.reportText": "Pokud v některém článku Plata zjistíte nepřesnost, napište nám na hello@plata.today s URL článku a popisem chyby. Každé hlášení prověříme.",
   "corrections.logTitle": "Záznam oprav",
   "corrections.logEmpty": "Dosud nebyly provedeny žádné opravy.",
+  // Common & UI labels
+  "common.loading": "Načítání…",
+  "common.loadingData": "Načítání dat…",
+  "common.marketData": "Tržní data",
+  "common.topStories": "Hlavní zprávy",
+  "article.badgeNew": "NOVÉ",
+  "article.via": "zdroj",
+  "ticker.usdOficial": "USD oficální",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Starší články",
+  "category.featuredAria": "Doporučený článek",
+  "feed.filterByCategory": "Filtrovat podle kategorie",
 } as const;
 
 export type Translations = typeof cs;

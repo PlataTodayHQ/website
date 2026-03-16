@@ -484,6 +484,26 @@ export const en = {
   // Common
   "common.siteDescription": "Argentina's news, natively written in 35 languages. Fact-first, source-transparent.",
   "common.breadcrumbHome": "Home",
+  "common.loading": "Loading…",
+  "common.loadingData": "Loading data…",
+  "common.marketData": "Market data",
+  "common.topStories": "Top stories",
+
+  // Article badges & labels
+  "article.badgeNew": "NEW",
+  "article.via": "via",
+
+  // Ticker labels
+  "ticker.usdOficial": "USD Official",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+
+  // Aria labels
+  "category.earlierAria": "Earlier articles",
+  "category.featuredAria": "Featured article",
+  "feed.filterByCategory": "Filter by category",
 
   // Feed page
   "nav.feed": "Feed",

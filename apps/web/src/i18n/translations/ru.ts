@@ -607,6 +607,21 @@ export const ru = {
   "footer.mission": "Миссия",
   "footer.newsroom": "Редакция",
   "footer.founder": "Основатель",
+  // Common & UI labels
+  "common.loading": "Загрузка…",
+  "common.loadingData": "Загрузка данных…",
+  "common.marketData": "Данные рынка",
+  "common.topStories": "Главные новости",
+  "article.badgeNew": "НОВОЕ",
+  "article.via": "источник",
+  "ticker.usdOficial": "USD официальный",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Более ранние статьи",
+  "category.featuredAria": "Рекомендуемая статья",
+  "feed.filterByCategory": "Фильтр по категории",
 } as const;
 
 export type Translations = typeof ru;

@@ -607,6 +607,21 @@ export const uk = {
   "footer.mission": "Місія",
   "footer.newsroom": "Редакція",
   "footer.founder": "Засновник",
+  // Common & UI labels
+  "common.loading": "Завантаження…",
+  "common.loadingData": "Завантаження даних…",
+  "common.marketData": "Дані ринку",
+  "common.topStories": "Головні новини",
+  "article.badgeNew": "НОВЕ",
+  "article.via": "джерело",
+  "ticker.usdOficial": "USD офіційний",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Попередні статті",
+  "category.featuredAria": "Рекомендована стаття",
+  "feed.filterByCategory": "Фільтрувати за категорією",
 } as const;
 
 export type Translations = typeof uk;

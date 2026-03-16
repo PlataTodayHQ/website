@@ -509,6 +509,21 @@ export const el = {
   "corrections.reportText": "Εάν εντοπίσετε ανακρίβεια σε κάποιο άρθρο του Plata, στείλτε μας email στο hello@plata.today με τη διεύθυνση URL του άρθρου και μια περιγραφή του σφάλματος. Εξετάζουμε κάθε αναφορά.",
   "corrections.logTitle": "Αρχείο διορθώσεων",
   "corrections.logEmpty": "Δεν έχουν εκδοθεί διορθώσεις ακόμη.",
+  // Common & UI labels
+  "common.loading": "Φόρτωση…",
+  "common.loadingData": "Φόρτωση δεδομένων…",
+  "common.marketData": "Δεδομένα αγοράς",
+  "common.topStories": "Κορυφαίες ειδήσεις",
+  "article.badgeNew": "ΝΕΟ",
+  "article.via": "μέσω",
+  "ticker.usdOficial": "USD επίσημο",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Παλαιότερα άρθρα",
+  "category.featuredAria": "Προτεινόμενο άρθρο",
+  "feed.filterByCategory": "Φιλτράρισμα ανά κατηγορία",
 } as const;
 
 export type Translations = typeof el;

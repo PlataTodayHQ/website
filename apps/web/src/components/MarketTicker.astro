@@ -7,32 +7,32 @@ interface Props {
 const { lang = "en" } = Astro.props;
 ---
 
-<div class="ticker" role="complementary" aria-label="Market data" data-market-ticker>
+<div class="ticker" role="complementary" aria-label={t(lang, "common.marketData")} data-market-ticker>
   <div class="ticker-inner">
     <!-- Dollar rates -->
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="oficial">
-      <span class="ticker-name">USD Oficial</span>
+      <span class="ticker-name">{t(lang, "ticker.usdOficial")}</span>
       <span class="ticker-row">
         <span class="ticker-price" data-tv="oficial">---</span>
         <span class="ticker-change" data-tc="oficial"></span>
       </span>
     </a>
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="blue">
-      <span class="ticker-name ticker-name--blue">USD Blue</span>
+      <span class="ticker-name ticker-name--blue">{t(lang, "ticker.usdBlue")}</span>
       <span class="ticker-row">
         <span class="ticker-price" data-tv="blue">---</span>
         <span class="ticker-change" data-tc="blue"></span>
       </span>
     </a>
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="mep">
-      <span class="ticker-name">Dólar MEP</span>
+      <span class="ticker-name">{t(lang, "ticker.mep")}</span>
       <span class="ticker-row">
         <span class="ticker-price" data-tv="mep">---</span>
         <span class="ticker-change" data-tc="mep"></span>
       </span>
     </a>
     <a href={`/${lang}/markets/currencies`} class="ticker-item" data-ticker="ccl">
-      <span class="ticker-name">Dólar CCL</span>
+      <span class="ticker-name">{t(lang, "ticker.ccl")}</span>
       <span class="ticker-row">
         <span class="ticker-price" data-tv="ccl">---</span>
         <span class="ticker-change" data-tc="ccl"></span>
@@ -43,7 +43,7 @@ const { lang = "en" } = Astro.props;
 
     <!-- Merval index -->
     <a href={`/${lang}/markets/merval`} class="ticker-item" data-ticker="merval">
-      <span class="ticker-name ticker-name--merval">Merval</span>
+      <span class="ticker-name ticker-name--merval">{t(lang, "ticker.merval")}</span>
       <span class="ticker-row">
         <span class="ticker-price" data-tv="merval">---</span>
         <span class="ticker-change" data-tc="merval"></span>

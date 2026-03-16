@@ -509,6 +509,21 @@ export const ca = {
   "corrections.reportText": "Si detecteu una inexactitud en qualsevol article de Plata, envieu-nos un correu a hello@plata.today amb l'URL de l'article i una descripció de l'error. Revisem cada informe.",
   "corrections.logTitle": "Registre de correccions",
   "corrections.logEmpty": "Encara no s'ha emès cap correcció.",
+  // Common & UI labels
+  "common.loading": "Carregant…",
+  "common.loadingData": "Carregant dades…",
+  "common.marketData": "Dades de mercat",
+  "common.topStories": "Notícies destacades",
+  "article.badgeNew": "NOU",
+  "article.via": "via",
+  "ticker.usdOficial": "USD Oficial",
+  "ticker.usdBlue": "USD Blue",
+  "ticker.mep": "USD MEP",
+  "ticker.ccl": "USD CCL",
+  "ticker.merval": "Merval",
+  "category.earlierAria": "Articles anteriors",
+  "category.featuredAria": "Article destacat",
+  "feed.filterByCategory": "Filtrar per categoria",
 } as const;
 
 export type Translations = typeof ca;
