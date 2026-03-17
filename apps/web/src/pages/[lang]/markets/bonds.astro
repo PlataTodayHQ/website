@@ -37,6 +37,13 @@ const { lang } = Astro.params;
     data-i18n-retry={t(lang!, "common.retry" as any)}
     data-i18n-error={t(lang!, "bonds.loadError" as any)}
     data-i18n-no-results={t(lang!, "screener.noResults")}
+    data-i18n-prev-close={t(lang!, "bonds.prevClose" as any)}
+    data-i18n-high={t(lang!, "stock.high" as any)}
+    data-i18n-low={t(lang!, "stock.low" as any)}
+    data-i18n-tag-law-ar={t(lang!, "bonds.tagLawAR" as any)}
+    data-i18n-tag-law-ny={t(lang!, "bonds.tagLawNY" as any)}
+    data-i18n-tag-cer={t(lang!, "bonds.tagCER" as any)}
+    data-i18n-tag-dual={t(lang!, "bonds.tagDualCurrency" as any)}
     data-stock-url={`/${lang}/markets/stock`}
   >
     <MarketNav lang={lang!} active="bonds" />
@@ -50,7 +57,7 @@ const { lang } = Astro.params;
     </header>
 
     <!-- Educational Info Panel -->
-    <details class="fi-info-panel" data-fi-info>
+    <details class="fi-info-panel" data-fi-info open>
       <summary class="fi-info-toggle">
         <svg class="fi-info-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
         <span>{t(lang!, "bonds.infoTitle" as any)}</span>
@@ -103,7 +110,7 @@ const { lang } = Astro.params;
         <thead>
           <tr>
             <th class="at-th at-th--name" data-sort="symbol">{t(lang!, "screener.col.symbol")} <span class="at-arrow" data-arrow="symbol"></span></th>
-            <th class="at-th at-th--num" data-sort="price">{t(lang!, "screener.col.price")} <span class="at-arrow" data-arrow="price"></span></th>
+            <th class="at-th at-th--num" data-sort="price">{t(lang!, "bonds.col.price" as any)} <span class="at-arrow" data-arrow="price"></span></th>
             <th class="at-th at-th--num" data-sort="change">{t(lang!, "screener.col.change")} <span class="at-arrow" data-arrow="change"></span></th>
             <th class="at-th at-th--num at-th--active" data-sort="volume">{t(lang!, "screener.col.volume")} <span class="at-arrow" data-arrow="volume">▼</span></th>
             <th class="at-th at-th--num at-th--hide-mobile" data-sort="previousClose">{t(lang!, "bonds.prevClose" as any)}</th>
@@ -152,7 +159,7 @@ const { lang } = Astro.params;
   </div>
 </Base>
 
-<script is:inline src="/js/asset-listing.js?v=2"></script>
+<script is:inline src="/js/asset-listing.js?v=3"></script>
 
 <style>
   /* Asset listing shared styles */
@@ -203,6 +210,9 @@ const { lang } = Astro.params;
   .at-td--hide-mobile {}
 
   .at-sym { font-weight: 700; }
+  .at-name-wrap { display: flex; align-items: center; gap: 6px; }
+  .at-bond-tag { font-size: 0.65rem; font-weight: 600; color: var(--color-gold); background: rgba(246,180,14,0.1); padding: 1px 6px; border-radius: 3px; white-space: nowrap; letter-spacing: 0.02em; }
+  .at-card-name-wrap { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
   .at-desc { font-size: 0.72rem; color: var(--color-text-meta); display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
   .at-change-badge {
