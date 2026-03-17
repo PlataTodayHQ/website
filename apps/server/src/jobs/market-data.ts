@@ -15,7 +15,8 @@
 import type Database from "better-sqlite3";
 import {
   isMarketOpen, alertOnFailure, resetFailureCount,
-  BYMA_CEDEARS_URL, BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
+  BYMA_CEDEARS_URL, BYMA_CEDEARS_FALLBACK_URL,
+  BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
 } from "@plata-today/shared";
 import { recordJobStart, recordJobEnd } from "./job-tracking.js";
 import { fetchExchangeRates, fetchExchangeRateHistory } from "./market-exchanges.js";
@@ -46,7 +47,7 @@ export async function fetchMarketData(db: Database.Database): Promise<void> {
     if (marketOpen) {
       coreJobs.push(
         fetchStocks(db),
-        fetchAssetPrices(db, BYMA_CEDEARS_URL, "cedear"),
+        fetchAssetPricesWithFallback(db, BYMA_CEDEARS_URL, BYMA_CEDEARS_FALLBACK_URL, "cedear"),
         fetchAssetPrices(db, BYMA_PUBLIC_BONDS_URL, "government_bond"),
         fetchAssetPrices(db, BYMA_CORPORATE_BONDS_URL, "corporate_bond"),
         fetchAssetPrices(db, BYMA_LETRAS_URL, "letra"),
@@ -84,5 +85,18 @@ async function runWithAlert(name: string, fn: () => Promise<void>): Promise<void
     resetFailureCount(name);
   } catch (err) {
     await alertOnFailure(name, err);
+  }
+}
+
+async function fetchAssetPricesWithFallback(
+  db: Database.Database,
+  url: string,
+  fallbackUrl: string,
+  assetType: Parameters<typeof fetchAssetPrices>[2],
+): Promise<void> {
+  try {
+    await fetchAssetPrices(db, url, assetType);
+  } catch {
+    await fetchAssetPrices(db, fallbackUrl, assetType);
   }
 }

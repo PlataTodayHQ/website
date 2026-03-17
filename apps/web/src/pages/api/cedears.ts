@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import {
-  getCedears, BYMA_CEDEARS_URL,
+  getCedears, BYMA_CEDEARS_URL, BYMA_CEDEARS_FALLBACK_URL,
   fetchBYMA, parseBYMAAsset,
   optionsResponse, jsonResponse, errorResponse,
 } from "@plata-today/shared";
@@ -14,7 +14,13 @@ export const GET: APIRoute = async () => {
     const cached = getCedears();
     if (cached) return jsonResponse(cached, 15);
 
-    const data = await fetchBYMA(BYMA_CEDEARS_URL);
+    let data: any[];
+    try {
+      data = await fetchBYMA(BYMA_CEDEARS_URL);
+    } catch {
+      // Primary endpoint failed, try fallback URL
+      data = await fetchBYMA(BYMA_CEDEARS_FALLBACK_URL);
+    }
     const cedears = data.map((s: any) => parseBYMAAsset(s, "cedear"));
     cedears.sort((a, b) => (b.volume ?? 0) - (a.volume ?? 0));
 

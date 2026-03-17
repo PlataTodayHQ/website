@@ -77,8 +77,11 @@ export async function fetchBYMA(url: string): Promise<any[]> {
   });
   if (!res.ok) throw new Error(`BYMA ${res.status}`);
   const json: any = await res.json();
-  if (!json?.data) throw new Error("BYMA: no data");
-  return json.data;
+  // BYMA returns { data: [...] } for most endpoints, but some may return
+  // { content: [...] } or a plain array.
+  const arr = json?.data ?? json?.content ?? (Array.isArray(json) ? json : null);
+  if (!arr || !Array.isArray(arr)) throw new Error("BYMA: no data");
+  return arr;
 }
 
 // ---------------------------------------------------------------------------

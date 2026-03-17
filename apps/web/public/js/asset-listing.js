@@ -220,9 +220,12 @@
   // Fetch data
   function fetchData() {
     fetch(apiUrl)
-      .then(function(r) { return r.json(); })
+      .then(function(r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      })
       .then(function(data) {
-        allItems = Array.isArray(data) ? data : [];
+        allItems = Array.isArray(data) ? data : (data && Array.isArray(data.data) ? data.data : []);
         render();
         if (updatedEl) {
           var now = new Date();
@@ -233,6 +236,8 @@
         if (updatedEl) updatedEl.textContent = i18nError;
         if (tbody) tbody.innerHTML = '<tr><td colspan="' + colCount + '" class="asset-empty">' + i18nError +
           ' <button onclick="location.reload()" style="margin-left:8px;cursor:pointer;text-decoration:underline;border:none;background:none;color:var(--color-gold);font-weight:600;">' + i18nRetry + '</button></td></tr>';
+        if (cards) cards.innerHTML = '<div class="asset-empty">' + i18nError +
+          ' <button onclick="location.reload()" style="margin-left:8px;cursor:pointer;text-decoration:underline;border:none;background:none;color:var(--color-gold);font-weight:600;">' + i18nRetry + '</button></div>';
       });
   }
 
