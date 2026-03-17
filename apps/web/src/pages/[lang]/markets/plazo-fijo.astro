@@ -1,0 +1,480 @@
+---
+import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
+import { LANGUAGES, getEconomicIndicators } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export const prerender = false;
+
+const { lang } = Astro.params;
+if (!lang || !(lang in LANGUAGES)) {
+  return Astro.redirect("/en/", 302);
+}
+
+// Fetch fresh rates for SEO meta tags
+const indicators = getEconomicIndicators();
+const tna = indicators?.plazoFijoTNA;
+const seoTitle = tna
+  ? `Plazo Fijo TNA: ${tna.toFixed(1)}% — ${t(lang, "plazoFijo.title" as any)}`
+  : t(lang, "plazoFijo.title" as any);
+---
+
+<Base
+  title={seoTitle}
+  description={t(lang!, "plazoFijo.subtitle" as any)}
+  lang={lang}
+  ogType="website"
+  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/plazo-fijo`]))}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
+    { name: "Plazo Fijo", url: `/${lang}/markets/plazo-fijo` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "plazoFijo.title" as any),
+    "description": t(lang!, "plazoFijo.subtitle" as any),
+    "url": `https://plata.today/${lang}/markets/plazo-fijo`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <div class="pf-page" data-pf-page
+    data-lang={lang}
+    data-i18n-title={t(lang!, "plazoFijo.title" as any)}
+    data-i18n-subtitle={t(lang!, "plazoFijo.subtitle" as any)}
+    data-i18n-amount={t(lang!, "plazoFijo.amount" as any)}
+    data-i18n-term={t(lang!, "plazoFijo.term" as any)}
+    data-i18n-days={t(lang!, "plazoFijo.days" as any)}
+    data-i18n-rate={t(lang!, "plazoFijo.rate" as any)}
+    data-i18n-gross-interest={t(lang!, "plazoFijo.grossInterest" as any)}
+    data-i18n-total={t(lang!, "plazoFijo.total" as any)}
+    data-i18n-monthly-rate={t(lang!, "plazoFijo.monthlyRate" as any)}
+    data-i18n-annual-rate={t(lang!, "plazoFijo.annualRate" as any)}
+    data-i18n-calculate={t(lang!, "plazoFijo.calculate" as any)}
+    data-i18n-source={t(lang!, "plazoFijo.source" as any)}
+    data-i18n-error={t(lang!, "markets.failedToLoad" as any)}
+    data-i18n-retry={t(lang!, "common.retry" as any)}
+  >
+    <MarketNav lang={lang!} active="plazo-fijo" />
+
+    <!-- Header -->
+    <header class="pf-header">
+      <div class="pf-header-left">
+        <h1 class="pf-title">{t(lang!, "plazoFijo.title" as any)}</h1>
+        <span class="pf-subtitle">{t(lang!, "plazoFijo.subtitle" as any)}</span>
+      </div>
+      <div class="pf-header-rate" data-pf-hero-rate>
+        <span class="pf-hero-label">TNA</span>
+        <span class="pf-hero-value" data-pf-hero-tna>&mdash;</span>
+      </div>
+    </header>
+
+    <!-- Calculator -->
+    <section class="pf-calc">
+      <h2 class="pf-section-title">{t(lang!, "plazoFijo.calculate" as any)}</h2>
+      <div class="pf-calc-inputs">
+        <div class="pf-calc-field">
+          <label class="pf-calc-label" for="pf-amount">{t(lang!, "plazoFijo.amount" as any)}</label>
+          <div class="pf-input-wrap">
+            <span class="pf-input-prefix">ARS</span>
+            <input type="number" id="pf-amount" class="pf-calc-input" data-pf-amount value="1000000" min="0" step="1000" inputmode="numeric" />
+          </div>
+        </div>
+        <div class="pf-calc-field">
+          <label class="pf-calc-label" for="pf-term">{t(lang!, "plazoFijo.term" as any)}</label>
+          <div class="pf-term-buttons" data-pf-term-buttons>
+            <button class="pf-term-btn pf-term-btn--active" data-pf-term-btn="30">30 {t(lang!, "plazoFijo.days" as any)}</button>
+            <button class="pf-term-btn" data-pf-term-btn="60">60 {t(lang!, "plazoFijo.days" as any)}</button>
+            <button class="pf-term-btn" data-pf-term-btn="90">90 {t(lang!, "plazoFijo.days" as any)}</button>
+            <button class="pf-term-btn" data-pf-term-btn="180">180 {t(lang!, "plazoFijo.days" as any)}</button>
+            <button class="pf-term-btn" data-pf-term-btn="365">365 {t(lang!, "plazoFijo.days" as any)}</button>
+          </div>
+        </div>
+        <div class="pf-calc-field">
+          <label class="pf-calc-label" for="pf-rate">{t(lang!, "plazoFijo.rate" as any)} (TNA %)</label>
+          <input type="number" id="pf-rate" class="pf-calc-input pf-calc-input--rate" data-pf-rate value="" min="0" max="999" step="0.1" inputmode="decimal" />
+        </div>
+      </div>
+
+      <div class="pf-calc-results" data-pf-results>
+        <div class="pf-result-card pf-result-card--primary">
+          <span class="pf-result-label">{t(lang!, "plazoFijo.grossInterest" as any)}</span>
+          <span class="pf-result-value" data-pf-interest>&mdash;</span>
+        </div>
+        <div class="pf-result-card pf-result-card--primary">
+          <span class="pf-result-label">{t(lang!, "plazoFijo.total" as any)}</span>
+          <span class="pf-result-value" data-pf-total>&mdash;</span>
+        </div>
+        <div class="pf-result-card">
+          <span class="pf-result-label">{t(lang!, "plazoFijo.monthlyRate" as any)}</span>
+          <span class="pf-result-value" data-pf-monthly>&mdash;</span>
+        </div>
+        <div class="pf-result-card">
+          <span class="pf-result-label">{t(lang!, "plazoFijo.annualRate" as any)} (TEA)</span>
+          <span class="pf-result-value" data-pf-tea>&mdash;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rate Comparison Cards -->
+    <section class="pf-rates">
+      <h2 class="pf-section-title">Current Rates</h2>
+      <div class="pf-rates-grid">
+        <div class="pf-rate-card" data-pf-card="tna30">
+          <span class="pf-rate-name">Plazo Fijo TNA (30d)</span>
+          <span class="pf-rate-value" data-pf-val="tna30">&mdash;</span>
+          <span class="pf-rate-unit">%</span>
+        </div>
+        <div class="pf-rate-card" data-pf-card="badlar">
+          <span class="pf-rate-name">BADLAR</span>
+          <span class="pf-rate-value" data-pf-val="badlar">&mdash;</span>
+          <span class="pf-rate-unit">%</span>
+        </div>
+        <div class="pf-rate-card" data-pf-card="cer">
+          <span class="pf-rate-name">CER</span>
+          <span class="pf-rate-value" data-pf-val="cer">&mdash;</span>
+          <span class="pf-rate-unit">index</span>
+        </div>
+        <div class="pf-rate-card" data-pf-card="uva">
+          <span class="pf-rate-name">UVA</span>
+          <span class="pf-rate-value" data-pf-val="uva">&mdash;</span>
+          <span class="pf-rate-unit">ARS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Educational Panel -->
+    <section class="pf-info">
+      <details class="pf-details" data-pf-details open>
+        <summary class="pf-details-summary">About Plazo Fijo &amp; Argentine Rates</summary>
+        <div class="pf-details-body">
+          <div class="pf-info-grid">
+            <div class="pf-info-item">
+              <h3>What is a Plazo Fijo?</h3>
+              <p>A <strong>plazo fijo</strong> (fixed-term deposit) is the most common savings instrument in Argentina. You deposit a sum of Argentine pesos at a bank for a fixed period (minimum 30 days) and receive interest at maturity. Early withdrawal forfeits all interest.</p>
+            </div>
+            <div class="pf-info-item">
+              <h3>TNA vs TEA</h3>
+              <p><strong>TNA</strong> (Tasa Nominal Anual) is the nominal annual rate quoted by banks. <strong>TEA</strong> (Tasa Efectiva Anual) is the effective annual rate accounting for compounding &mdash; what you actually earn if you reinvest every 30 days for a year. TEA is always higher than TNA.</p>
+            </div>
+            <div class="pf-info-item">
+              <h3>What is BADLAR?</h3>
+              <p><strong>BADLAR</strong> is the benchmark rate paid by private banks on deposits over ARS 1 million for 30&ndash;35 day terms. It is published daily by the BCRA and serves as a reference rate for many financial products in Argentina.</p>
+            </div>
+            <div class="pf-info-item">
+              <h3>UVA-Adjusted Plazo Fijo</h3>
+              <p>A <strong>UVA plazo fijo</strong> adjusts your principal by the UVA index (tied to CPI inflation), plus a small fixed rate. Minimum term is 90 days. It protects against inflation but locks your money for longer.</p>
+            </div>
+            <div class="pf-info-item">
+              <h3>Risks</h3>
+              <p><strong>Inflation erosion:</strong> If inflation exceeds the TNA, your real return is negative. <strong>Early withdrawal:</strong> Breaking a plazo fijo before maturity means you lose all accrued interest. <strong>Currency risk:</strong> The deposit is in ARS; peso depreciation affects purchasing power.</p>
+            </div>
+            <div class="pf-info-item">
+              <h3>Who uses Plazo Fijo?</h3>
+              <p>Any individual or business with ARS savings. It is the default short-term savings vehicle in Argentina, especially since access to foreign currency is often restricted (the <em>cepo</em> or capital controls).</p>
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Data Source -->
+    <p class="pf-disclaimer">{t(lang!, "plazoFijo.source" as any)}</p>
+    <noscript><p class="pf-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+  </div>
+</Base>
+
+<script is:inline>
+(function() {
+  var pg = document.querySelector('[data-pf-page]');
+  if (!pg) return;
+  var lang = pg.getAttribute('data-lang') || 'en';
+
+  // --- i18n helper ---
+  function i18n(key, fallback) { return pg.getAttribute('data-i18n-' + key) || fallback; }
+
+  // --- Number formatting ---
+  function fmtARS(n) {
+    return n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function fmtPct(n) {
+    return n.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+  }
+  function fmtNum(n, dec) {
+    return n.toLocaleString('es-AR', { minimumFractionDigits: dec || 2, maximumFractionDigits: dec || 2 });
+  }
+
+  // --- State ---
+  var state = { amount: 1000000, days: 30, tna: null };
+
+  // --- DOM refs ---
+  var amountInput = pg.querySelector('[data-pf-amount]');
+  var rateInput = pg.querySelector('[data-pf-rate]');
+  var termBtns = pg.querySelectorAll('[data-pf-term-btn]');
+  var heroTna = pg.querySelector('[data-pf-hero-tna]');
+  var interestEl = pg.querySelector('[data-pf-interest]');
+  var totalEl = pg.querySelector('[data-pf-total]');
+  var monthlyEl = pg.querySelector('[data-pf-monthly]');
+  var teaEl = pg.querySelector('[data-pf-tea]');
+
+  // --- Calculator ---
+  function calculate() {
+    var amount = parseFloat(amountInput.value) || 0;
+    var days = state.days;
+    var tna = parseFloat(rateInput.value);
+    if (isNaN(tna) || tna <= 0 || amount <= 0) {
+      interestEl.textContent = '\u2014';
+      totalEl.textContent = '\u2014';
+      monthlyEl.textContent = '\u2014';
+      teaEl.textContent = '\u2014';
+      return;
+    }
+
+    // Interest = Amount * (TNA/100) * (days/365)
+    var interest = amount * (tna / 100) * (days / 365);
+    var total = amount + interest;
+
+    // Monthly effective rate = (TNA/100) * (30/365) * 100
+    var monthlyRate = (tna / 100) * (30 / 365) * 100;
+
+    // TEA = ((1 + TNA/365 * days)^(365/days) - 1) * 100
+    var tea = (Math.pow(1 + (tna / 100) * (days / 365), 365 / days) - 1) * 100;
+
+    interestEl.textContent = '$ ' + fmtARS(interest);
+    totalEl.textContent = '$ ' + fmtARS(total);
+    monthlyEl.textContent = fmtPct(monthlyRate);
+    teaEl.textContent = fmtPct(tea);
+  }
+
+  // --- Term buttons ---
+  termBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      termBtns.forEach(function(b) { b.classList.remove('pf-term-btn--active'); });
+      btn.classList.add('pf-term-btn--active');
+      state.days = parseInt(btn.getAttribute('data-pf-term-btn'), 10);
+      calculate();
+    });
+  });
+
+  // --- Input listeners ---
+  amountInput.addEventListener('input', calculate);
+  rateInput.addEventListener('input', calculate);
+
+  // --- Educational panel dismiss ---
+  var details = pg.querySelector('[data-pf-details]');
+  var DISMISS_KEY = 'plata_pf_info_seen';
+  if (details) {
+    try {
+      if (localStorage.getItem(DISMISS_KEY) === '1') {
+        details.removeAttribute('open');
+      }
+    } catch (e) {}
+    details.addEventListener('toggle', function() {
+      try {
+        if (!details.open) {
+          localStorage.setItem(DISMISS_KEY, '1');
+        } else {
+          localStorage.removeItem(DISMISS_KEY);
+        }
+      } catch (e) {}
+    });
+  }
+
+  // --- Fetch data ---
+  function loadData() {
+    fetch('/api/plazo-fijo')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        // Hero TNA
+        if (data.tna30 != null) {
+          heroTna.textContent = fmtPct(data.tna30);
+          heroTna.classList.add('pf-hero-value--loaded');
+          // Set rate input if user hasn't modified it
+          if (!rateInput.value || rateInput.value === '') {
+            rateInput.value = data.tna30;
+            state.tna = data.tna30;
+            calculate();
+          }
+        }
+
+        // Rate cards
+        var cards = { tna30: data.tna30, badlar: data.badlar, cer: data.cer, uva: data.uva };
+        Object.keys(cards).forEach(function(key) {
+          var el = pg.querySelector('[data-pf-val="' + key + '"]');
+          if (!el) return;
+          if (cards[key] != null) {
+            el.textContent = (key === 'cer' || key === 'uva') ? fmtNum(cards[key], 2) : fmtPct(cards[key]);
+            el.closest('[data-pf-card]').classList.add('pf-rate-card--loaded');
+          }
+        });
+      })
+      .catch(function(err) {
+        console.error('Failed to load plazo fijo data:', err);
+      });
+  }
+
+  loadData();
+  // Refresh every 5 minutes
+  setInterval(loadData, 5 * 60 * 1000);
+})();
+</script>
+
+<style>
+  /* ═══ Plazo Fijo Page ═══ */
+  .pf-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
+
+  /* Header */
+  .pf-header {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border); flex-wrap: wrap;
+  }
+  .pf-header-left { display: flex; flex-direction: column; gap: 4px; }
+  .pf-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+  .pf-subtitle { font-size: 0.85rem; color: var(--color-text-meta); }
+
+  .pf-header-rate {
+    display: flex; align-items: baseline; gap: 8px;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    border-radius: 12px; padding: 12px 20px;
+  }
+  .pf-hero-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-meta); }
+  .pf-hero-value { font-size: 1.8rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; color: var(--color-text-meta); transition: color 0.3s; }
+  .pf-hero-value--loaded { color: var(--color-gold); }
+
+  /* Section titles */
+  .pf-section-title {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--color-text-meta); margin-bottom: 16px;
+  }
+
+  /* Calculator */
+  .pf-calc {
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    border-radius: 12px; padding: 24px; margin-bottom: var(--spacing-xl);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .pf-calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .pf-calc-field { display: flex; flex-direction: column; gap: 6px; }
+  .pf-calc-field:nth-child(2) { grid-column: 1 / -1; }
+  .pf-calc-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+
+  .pf-input-wrap { display: flex; align-items: center; gap: 0; }
+  .pf-input-prefix {
+    padding: 10px 12px; background: var(--color-border); border: 1px solid var(--color-border);
+    border-right: none; border-radius: 10px 0 0 10px; font-size: 0.8rem; font-weight: 700;
+    color: var(--color-text-meta); white-space: nowrap;
+  }
+  .pf-input-wrap .pf-calc-input { border-radius: 0 10px 10px 0; }
+
+  .pf-calc-input {
+    padding: 10px 14px; border: 1px solid var(--color-border); border-radius: 10px;
+    background: var(--color-bg); color: var(--color-text);
+    font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums;
+    outline: none; transition: border-color 0.15s, box-shadow 0.15s; width: 100%;
+  }
+  .pf-calc-input:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(246,180,14,0.1); }
+  .pf-calc-input:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .pf-calc-input--rate { max-width: 160px; }
+
+  /* Term buttons */
+  .pf-term-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pf-term-btn {
+    padding: 8px 16px; border-radius: 20px; font-size: 0.78rem; font-weight: 700;
+    background: var(--color-bg); border: 1px solid var(--color-border);
+    color: var(--color-text-meta); cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .pf-term-btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+  .pf-term-btn--active { background: var(--color-gold); color: #fff; border-color: var(--color-gold); }
+  .pf-term-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+  /* Results */
+  .pf-calc-results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; }
+  .pf-result-card {
+    background: var(--color-bg); padding: 16px; display: flex; flex-direction: column; gap: 4px;
+    transition: background 0.15s;
+  }
+  .pf-result-card:hover { background: var(--color-bg-secondary); }
+  .pf-result-card--primary { background: color-mix(in srgb, var(--color-gold) 4%, var(--color-bg)); }
+  .pf-result-card--primary:hover { background: color-mix(in srgb, var(--color-gold) 8%, var(--color-bg)); }
+  .pf-result-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+  .pf-result-value { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; color: var(--color-text); }
+
+  /* Rate Comparison Cards */
+  .pf-rates { margin-bottom: var(--spacing-xl); }
+  .pf-rates-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .pf-rate-card {
+    background: var(--color-bg); padding: 20px 16px; display: flex; flex-direction: column; gap: 6px;
+    transition: background 0.15s; position: relative;
+  }
+  .pf-rate-card:hover { background: var(--color-bg-secondary); }
+  .pf-rate-card--loaded {}
+  .pf-rate-name { font-size: 0.72rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; }
+  .pf-rate-value { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; color: var(--color-text); line-height: 1.1; }
+  .pf-rate-unit { font-size: 0.7rem; font-weight: 600; color: var(--color-text-meta); }
+
+  /* Educational Panel */
+  .pf-info { margin-bottom: var(--spacing-xl); }
+  .pf-details {
+    border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .pf-details-summary {
+    padding: 16px 20px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    background: var(--color-bg-secondary); color: var(--color-text);
+    list-style: none; display: flex; align-items: center; gap: 8px;
+    transition: background 0.15s;
+  }
+  .pf-details-summary::-webkit-details-marker { display: none; }
+  .pf-details-summary::before { content: '\25B6'; font-size: 0.6rem; color: var(--color-text-meta); transition: transform 0.2s; }
+  .pf-details[open] > .pf-details-summary::before { transform: rotate(90deg); }
+  .pf-details-summary:hover { background: var(--color-bg-secondary); }
+  .pf-details-body { padding: 20px; }
+
+  .pf-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .pf-info-item h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; color: var(--color-text); }
+  .pf-info-item p { font-size: 0.8rem; line-height: 1.6; color: var(--color-text-meta); margin: 0; }
+
+  /* Disclaimer */
+  .pf-disclaimer { font-size: 0.72rem; color: var(--color-text-meta); text-align: center; padding: var(--spacing-md) 0; }
+
+  /* ═══ Dark theme ═══ */
+  :global([data-theme="dark"]) .pf-input-prefix { background: var(--color-bg-secondary); }
+  :global([data-theme="dark"]) .pf-result-card--primary { background: color-mix(in srgb, var(--color-gold) 6%, var(--color-bg)); }
+  :global([data-theme="dark"]) .pf-result-card--primary:hover { background: color-mix(in srgb, var(--color-gold) 10%, var(--color-bg)); }
+
+  /* ═══ Responsive ═══ */
+  @media (max-width: 768px) {
+    .pf-calc-inputs { grid-template-columns: 1fr; }
+    .pf-calc-field:nth-child(2) { grid-column: auto; }
+    .pf-calc-results { grid-template-columns: 1fr 1fr; }
+    .pf-rates-grid { grid-template-columns: 1fr 1fr; }
+    .pf-info-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .pf-header { flex-direction: column; }
+    .pf-header-rate { align-self: flex-start; }
+    .pf-calc-results { grid-template-columns: 1fr; }
+    .pf-rates-grid { grid-template-columns: 1fr; }
+    .pf-calc-input--rate { max-width: 100%; }
+    .pf-term-buttons { gap: 4px; }
+    .pf-term-btn { padding: 6px 12px; font-size: 0.72rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pf-term-btn, .pf-calc-input, .pf-result-card, .pf-rate-card, .pf-hero-value { transition: none; }
+  }
+
+  @media print {
+    .pf-calc { break-inside: avoid; }
+  }
+</style>

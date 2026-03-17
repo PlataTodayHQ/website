@@ -1,0 +1,389 @@
+---
+import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={`My Watchlist — Plata`}
+  description="Track your favorite Argentine assets — stocks, bonds, CEDEARs, and letras."
+  lang={lang}
+  ogType="website"
+  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/watchlist`]))}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
+    { name: "Watchlist", url: `/${lang}/markets/watchlist` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "My Watchlist",
+    "description": "Track your favorite Argentine assets",
+    "url": `https://plata.today/${lang}/markets/watchlist`,
+    "inLanguage": lang,
+    "isPartOf": { "@type": "WebSite", "name": "Plata", "url": "https://plata.today" }
+  }}
+>
+  <div class="wl-page" data-wl-page data-lang={lang} data-stock-url={`/${lang}/markets/stock`}>
+    <MarketNav lang={lang!} active="watchlist" />
+
+    <header class="mkts-header">
+      <div>
+        <h1 class="mkts-title">My Watchlist</h1>
+        <p class="mkts-subtitle">Track your favorite Argentine assets</p>
+      </div>
+      <p class="mkts-updated" data-wl-updated aria-live="polite" role="status"></p>
+    </header>
+
+    <!-- Loading state -->
+    <div class="wl-loading" data-wl-loading>
+      <div class="wl-loading-spinner"></div>
+      <span>Loading watchlist...</span>
+    </div>
+
+    <!-- Empty state -->
+    <div class="wl-empty" data-wl-empty style="display:none;">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--color-text-meta);opacity:0.4;margin-bottom:12px;">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      <p class="wl-empty-title">Your watchlist is empty</p>
+      <p class="wl-empty-text">Add assets by clicking the <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;color:var(--color-text-meta);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> star icon on any market page.</p>
+      <div class="wl-empty-links">
+        <a href={`/${lang}/markets`}>Markets</a>
+        <a href={`/${lang}/markets/screener`}>Screener</a>
+        <a href={`/${lang}/markets/bonds`}>Bonds</a>
+        <a href={`/${lang}/markets/cedears`}>CEDEARs</a>
+      </div>
+    </div>
+
+    <!-- Asset groups will be inserted here by JS -->
+    <div data-wl-groups></div>
+
+    <p class="info-disclaimer" data-wl-disclaimer style="display:none;">{t(lang!, "stock.disclaimer")}</p>
+    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+  </div>
+</Base>
+
+<script is:inline src="/js/watchlist.js?v=1"></script>
+<script is:inline>
+(function() {
+  var page = document.querySelector('[data-wl-page]');
+  if (!page || !window.PlataWatchlist) return;
+
+  var lang = page.getAttribute('data-lang') || 'en';
+  var stockUrl = page.getAttribute('data-stock-url') || '/' + lang + '/markets/stock';
+  var loadingEl = page.querySelector('[data-wl-loading]');
+  var emptyEl = page.querySelector('[data-wl-empty]');
+  var groupsEl = page.querySelector('[data-wl-groups]');
+  var updatedEl = page.querySelector('[data-wl-updated]');
+  var disclaimerEl = page.querySelector('[data-wl-disclaimer]');
+
+  var API_MAP = {
+    stock: '/api/leading-equity',
+    government_bond: '/api/bonds',
+    corporate_bond: '/api/bonds?type=corporate',
+    cedear: '/api/cedears',
+    letra: '/api/letras'
+  };
+
+  var TYPE_LABELS = {
+    stock: 'Stocks',
+    government_bond: 'Government Bonds',
+    corporate_bond: 'Corporate Bonds',
+    cedear: 'CEDEARs',
+    letra: 'Letras'
+  };
+
+  function fmt(n) {
+    if (n == null || isNaN(n)) return '\u2014';
+    return n.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function fmtVol(v) {
+    if (v == null || isNaN(v)) return '\u2014';
+    if (v >= 1e9) return (v / 1e9).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'B';
+    if (v >= 1e6) return (v / 1e6).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'M';
+    if (v >= 1e3) return (v / 1e3).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'K';
+    return Math.round(v).toLocaleString(lang);
+  }
+
+  function changeClass(v) {
+    if (v == null || v === 0) return 'rc-unch';
+    return v > 0 ? 'rc-up' : 'rc-down';
+  }
+
+  function changeText(v) {
+    if (v == null) return '\u2014';
+    var sign = v > 0 ? '+' : '';
+    return sign + v.toFixed(2) + '%';
+  }
+
+  function escHtml(s) {
+    if (!s) return '';
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function groupByType(items) {
+    var groups = {};
+    for (var i = 0; i < items.length; i++) {
+      var type = items[i].assetType || 'stock';
+      if (!groups[type]) groups[type] = [];
+      groups[type].push(items[i]);
+    }
+    return groups;
+  }
+
+  function buildGroupHtml(type, items, priceMap) {
+    var label = TYPE_LABELS[type] || type;
+    var html = '<div class="wl-group">';
+    html += '<h2 class="wl-group-title">' + escHtml(label) + ' <span class="wl-group-count">(' + items.length + ')</span></h2>';
+    html += '<div class="wl-table-wrap"><table class="asset-table wl-table">';
+    html += '<thead><tr>';
+    html += '<th class="at-th at-th--star" style="width:28px;padding:0 2px;"></th>';
+    html += '<th class="at-th at-th--name">Symbol</th>';
+    html += '<th class="at-th at-th--num">Price</th>';
+    html += '<th class="at-th at-th--num">Change</th>';
+    html += '<th class="at-th at-th--num">Volume</th>';
+    html += '</tr></thead><tbody>';
+
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var data = priceMap[item.symbol];
+      var price = data ? data.price : null;
+      var variation = data ? data.variation : null;
+      var volume = data ? data.volume : null;
+      var desc = data ? (data.description || item.name) : item.name;
+      var cc = changeClass(variation);
+
+      html += '<tr class="at-row" data-clickable data-symbol="' + escHtml(item.symbol) + '">';
+      html += '<td class="at-td at-td--star" data-wl-remove="' + escHtml(item.symbol) + '" data-wl-type="' + escHtml(type) + '" data-wl-name="' + escHtml(item.name) + '"></td>';
+      html += '<td class="at-td at-td--name">';
+      html += '<span class="at-sym">' + escHtml(item.symbol) + '</span>';
+      if (desc && desc !== item.symbol) html += '<span class="at-desc">' + escHtml(desc) + '</span>';
+      html += '</td>';
+      html += '<td class="at-td at-td--num">' + fmt(price) + '</td>';
+      html += '<td class="at-td at-td--num"><span class="at-change-badge ' + cc + '">' + changeText(variation) + '</span></td>';
+      html += '<td class="at-td at-td--num">' + fmtVol(volume) + '</td>';
+      html += '</tr>';
+    }
+
+    html += '</tbody></table></div></div>';
+    return html;
+  }
+
+  function injectStarButtons() {
+    document.querySelectorAll('[data-wl-remove]').forEach(function(td) {
+      var sym = td.getAttribute('data-wl-remove');
+      var type = td.getAttribute('data-wl-type') || 'stock';
+      var name = td.getAttribute('data-wl-name') || sym;
+      if (td.children.length === 0) {
+        td.appendChild(window.PlataWatchlist.createStar(sym, type, name));
+      }
+    });
+  }
+
+  function loadWatchlist() {
+    var watchlist = window.PlataWatchlist.get();
+    if (watchlist.length === 0) {
+      if (loadingEl) loadingEl.style.display = 'none';
+      if (emptyEl) emptyEl.style.display = '';
+      if (groupsEl) groupsEl.innerHTML = '';
+      if (disclaimerEl) disclaimerEl.style.display = 'none';
+      return;
+    }
+
+    if (emptyEl) emptyEl.style.display = 'none';
+    if (loadingEl) loadingEl.style.display = '';
+
+    var groups = groupByType(watchlist);
+    var typeKeys = Object.keys(groups);
+    var priceMap = {};
+    var fetched = 0;
+    var totalFetches = 0;
+
+    // Determine unique API endpoints to fetch
+    var apisToFetch = {};
+    for (var i = 0; i < typeKeys.length; i++) {
+      var api = API_MAP[typeKeys[i]];
+      if (api && !apisToFetch[api]) {
+        apisToFetch[api] = [];
+        totalFetches++;
+      }
+      if (api) {
+        apisToFetch[api] = apisToFetch[api].concat(groups[typeKeys[i]]);
+      }
+    }
+
+    // For stocks, also try leading-equity
+    if (totalFetches === 0) {
+      // No APIs to fetch, just show names
+      renderGroups(groups, priceMap);
+      return;
+    }
+
+    var apiKeys = Object.keys(apisToFetch);
+    for (var j = 0; j < apiKeys.length; j++) {
+      (function(apiUrl, items) {
+        var symbolSet = {};
+        for (var k = 0; k < items.length; k++) {
+          symbolSet[items[k].symbol] = true;
+        }
+        fetch(apiUrl)
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            var arr = Array.isArray(data) ? data : [];
+            for (var m = 0; m < arr.length; m++) {
+              if (symbolSet[arr[m].symbol]) {
+                priceMap[arr[m].symbol] = arr[m];
+              }
+            }
+          })
+          .catch(function() {})
+          .finally(function() {
+            fetched++;
+            if (fetched >= totalFetches) {
+              renderGroups(groups, priceMap);
+            }
+          });
+      })(apiKeys[j], apisToFetch[apiKeys[j]]);
+    }
+  }
+
+  function renderGroups(groups, priceMap) {
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (!groupsEl) return;
+
+    var typeOrder = ['stock', 'cedear', 'government_bond', 'corporate_bond', 'letra'];
+    var html = '';
+    for (var i = 0; i < typeOrder.length; i++) {
+      if (groups[typeOrder[i]] && groups[typeOrder[i]].length > 0) {
+        html += buildGroupHtml(typeOrder[i], groups[typeOrder[i]], priceMap);
+      }
+    }
+    // Any remaining types not in typeOrder
+    var keys = Object.keys(groups);
+    for (var j = 0; j < keys.length; j++) {
+      if (typeOrder.indexOf(keys[j]) === -1 && groups[keys[j]].length > 0) {
+        html += buildGroupHtml(keys[j], groups[keys[j]], priceMap);
+      }
+    }
+
+    groupsEl.innerHTML = html;
+    injectStarButtons();
+    if (disclaimerEl) disclaimerEl.style.display = '';
+
+    if (updatedEl) {
+      var now = new Date();
+      updatedEl.textContent = 'Updated ' + now.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
+    }
+  }
+
+  // Click row to navigate to stock page
+  document.addEventListener('click', function(e) {
+    var row = e.target.closest('[data-clickable][data-symbol]');
+    if (row && !e.target.closest('.wl-star')) {
+      var sym = row.getAttribute('data-symbol');
+      window.location.href = stockUrl + '?s=' + encodeURIComponent(sym);
+    }
+  });
+
+  // Reload when watchlist changes (item removed)
+  document.addEventListener('watchlist-changed', function() {
+    loadWatchlist();
+  });
+
+  loadWatchlist();
+
+  // Auto-refresh prices every 30 seconds
+  setInterval(loadWatchlist, 30000);
+})();
+</script>
+
+<style>
+  .wl-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
+
+  .wl-loading {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 3rem 1rem; color: var(--color-text-meta); font-size: 0.85rem;
+  }
+  .wl-loading-spinner {
+    width: 20px; height: 20px; border: 2px solid var(--color-border);
+    border-top-color: var(--color-gold); border-radius: 50%;
+    animation: wl-spin 0.7s linear infinite;
+  }
+  @keyframes wl-spin { to { transform: rotate(360deg); } }
+
+  .wl-empty {
+    text-align: center; padding: 3rem 1rem;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .wl-empty-title {
+    font-size: 1.1rem; font-weight: 700; color: var(--color-text);
+    margin: 0 0 6px;
+  }
+  .wl-empty-text {
+    font-size: 0.85rem; color: var(--color-text-meta); margin: 0 0 16px;
+    line-height: 1.5;
+  }
+  .wl-empty-links {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  }
+  .wl-empty-links a {
+    font-size: 0.8rem; font-weight: 600; color: var(--color-gold);
+    text-decoration: none; padding: 6px 14px; border: 1px solid var(--color-border);
+    border-radius: 6px; transition: border-color 0.15s, background 0.15s;
+  }
+  .wl-empty-links a:hover {
+    border-color: var(--color-gold); background: var(--color-bg-secondary);
+  }
+
+  .wl-group { margin-bottom: var(--spacing-lg, 24px); }
+  .wl-group-title {
+    font-size: 0.9rem; font-weight: 700; color: var(--color-text);
+    margin: 0 0 var(--spacing-sm, 8px); padding-bottom: 6px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .wl-group-count { font-weight: 400; color: var(--color-text-meta); font-size: 0.8rem; }
+
+  .wl-table-wrap { overflow-x: auto; margin-bottom: var(--spacing-md, 16px); }
+  .wl-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+
+  .at-th {
+    text-align: left; padding: 10px 12px; font-weight: 700; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta);
+    border-bottom: 2px solid var(--color-border); white-space: nowrap;
+  }
+  .at-th--num { text-align: right; }
+  .at-td { padding: 10px 12px; border-bottom: 1px solid var(--color-border); vertical-align: middle; }
+  .at-td--num { text-align: right; font-variant-numeric: tabular-nums; }
+  .at-td--name { font-weight: 600; }
+  .at-td--star { width: 28px; padding: 0 2px; }
+
+  .at-sym { font-weight: 700; }
+  .at-desc {
+    display: block; font-size: 0.72rem; color: var(--color-text-meta);
+    font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
+  .at-row { transition: background 0.1s; cursor: pointer; }
+  .at-row:hover { background: var(--color-bg-secondary); }
+
+  .at-change-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-weight: 700; font-size: 0.78rem; font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .rc-up { color: var(--color-green, #22c55e); background: rgba(34,197,94,0.1); }
+  .rc-down { color: var(--color-red, #ef4444); background: rgba(239,68,68,0.1); }
+  .rc-unch { color: var(--color-text-meta); background: var(--color-bg-secondary); }
+</style>
