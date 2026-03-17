@@ -8,9 +8,11 @@
 
 import {
   BLUELYTICS_URL, BYMA_INDEX_URL, BYMA_EQUITY_URL,
-  fetchBYMA, parseMervalFromBYMA, parseBYMAStock, fetchExchangeRatesData,
+  BYMA_CEDEARS_URL, BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
+  fetchBYMA, parseMervalFromBYMA, parseBYMAAsset, fetchExchangeRatesData,
   setMerval, setRates, setStocks,
-  type ExchangeRates, type StockQuote,
+  setCedears, setGovernmentBonds, setCorporateBonds, setLetras,
+  type AssetType, type ExchangeRates, type StockQuote,
 } from "@plata-today/shared";
 
 let running = false;
@@ -24,6 +26,10 @@ export async function fetchRealtimeMarketData(): Promise<void> {
       fetchMervalRT(),
       fetchRatesRT(),
       fetchStocksRT(),
+      fetchAssetRT(BYMA_CEDEARS_URL, "cedear", setCedears),
+      fetchAssetRT(BYMA_PUBLIC_BONDS_URL, "government_bond", setGovernmentBonds),
+      fetchAssetRT(BYMA_CORPORATE_BONDS_URL, "corporate_bond", setCorporateBonds),
+      fetchAssetRT(BYMA_LETRAS_URL, "letra", setLetras),
     ]);
   } finally {
     running = false;
@@ -61,10 +67,25 @@ async function fetchRatesRT(): Promise<void> {
 async function fetchStocksRT(): Promise<void> {
   try {
     const data = await fetchBYMA(BYMA_EQUITY_URL);
-    const stocks: StockQuote[] = data.map(parseBYMAStock);
+    const stocks: StockQuote[] = data.map((s: any) => parseBYMAAsset(s, "stock"));
     stocks.sort((a, b) => (b.volume ?? 0) - (a.volume ?? 0));
     setStocks(stocks);
   } catch (err) {
     console.error("[realtime] Stocks error:", err);
+  }
+}
+
+async function fetchAssetRT(
+  url: string,
+  assetType: AssetType,
+  setter: (data: StockQuote[]) => void,
+): Promise<void> {
+  try {
+    const data = await fetchBYMA(url);
+    const items: StockQuote[] = data.map((s: any) => parseBYMAAsset(s, assetType));
+    items.sort((a, b) => (b.volume ?? 0) - (a.volume ?? 0));
+    setter(items);
+  } catch (err) {
+    console.error(`[realtime] ${assetType} error:`, err);
   }
 }

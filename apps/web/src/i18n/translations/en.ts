@@ -1058,6 +1058,39 @@ export const en = {
 
   // Common — missing
   "common.jsRequired": "JavaScript is required to view this page.",
+
+  // CEDEARs
+  "cedears.title": "CEDEARs",
+  "cedears.breadcrumb": "CEDEARs",
+  "cedears.subtitle": "Argentine Depositary Receipts — foreign stocks traded on BYMA in pesos",
+  "cedears.seoTitle": "CEDEARs — Foreign Stocks on BYMA (Argentine Market)",
+  "cedears.seoDescription": "Live CEDEARs prices on BYMA. Trade Apple, Tesla, Google and 200+ foreign stocks in Argentine pesos. Real-time quotes, volume, and daily changes.",
+  "cedears.loadError": "Failed to load CEDEARs data",
+
+  // Government Bonds
+  "bonds.title": "Government Bonds",
+  "bonds.breadcrumb": "Bonds",
+  "bonds.subtitle": "Argentine sovereign bonds (Títulos Públicos) — traded on BYMA",
+  "bonds.seoTitle": "Argentine Government Bonds — Sovereign Debt Prices on BYMA",
+  "bonds.seoDescription": "Live Argentine government bond prices on BYMA. Track sovereign debt instruments, daily price changes, and trading volume in real time.",
+  "bonds.loadError": "Failed to load bond data",
+  "bonds.instruments": "Instruments",
+
+  // Corporate Bonds (Obligaciones Negociables)
+  "corporateBonds.title": "Corporate Bonds",
+  "corporateBonds.breadcrumb": "Corp. Bonds",
+  "corporateBonds.subtitle": "Obligaciones Negociables — Argentine corporate debt on BYMA",
+  "corporateBonds.seoTitle": "Argentine Corporate Bonds (ON) — Obligaciones Negociables on BYMA",
+  "corporateBonds.seoDescription": "Live prices for Argentine corporate bonds (Obligaciones Negociables) on BYMA. Track corporate debt instruments, yields, and daily trading volume.",
+  "corporateBonds.loadError": "Failed to load corporate bond data",
+
+  // Letras (Short-term Government Bills)
+  "letras.title": "Letras",
+  "letras.breadcrumb": "Letras",
+  "letras.subtitle": "Short-term Argentine government bills — LECAPs, LEDEs, and more",
+  "letras.seoTitle": "Argentine Letras — Short-Term Government Bills on BYMA",
+  "letras.seoDescription": "Live prices for Argentine letras (LECAPs, LEDEs, short-term government bills) on BYMA. Track yields, prices, and trading volume in real time.",
+  "letras.loadError": "Failed to load letras data",
 } as const;
 
 export type Translations = typeof en;
