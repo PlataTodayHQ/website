@@ -125,11 +125,14 @@ const { lang } = Astro.params;
           <h2 class="mkt-sec-title">{t(lang!, "markets.fxTitle")}</h2>
           <svg class="mkt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <a href={`/${lang}/markets/currencies`} class="mkt-sec-link">{t(lang!, "finDash.viewAll" as any)} &rarr;</a>
+        <div class="mkt-sec-actions">
+          <span class="mkt-sec-hint" title={t(lang!, "markets.fxDesc")}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <a href={`/${lang}/markets/currencies`} class="mkt-sec-link">{t(lang!, "finDash.viewAll" as any)} &rarr;</a>
+        </div>
       </div>
       <div class="mkt-sec-body">
       <div class="mkt-fx-grid" role="region" aria-label={t(lang!, "markets.fxTitle")}>
-        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="oficial">
+        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="oficial" title={t(lang!, "markets.fxTooltipOficial" as any)}>
           <div class="mkt-fx-top">
             <span class="mkt-fx-name">USD {t(lang!, "markets.official")}</span>
             <span class="mkt-fx-badge mkt-fx-badge--oficial">{t(lang!, "currencies.bcra")}</span>
@@ -144,7 +147,7 @@ const { lang } = Astro.params;
             <span>{t(lang!, "currencies.sell")} <b data-fx-sell="oficial">—</b></span>
           </div>
         </a>
-        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--blue mkt-fx-card--loading" data-mkt-fx="blue">
+        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--blue mkt-fx-card--loading" data-mkt-fx="blue" title={t(lang!, "markets.fxTooltipBlue" as any)}>
           <div class="mkt-fx-top">
             <span class="mkt-fx-name">USD {t(lang!, "markets.blue")}</span>
             <span class="mkt-fx-badge mkt-fx-badge--blue">{t(lang!, "currencies.informal")}</span>
@@ -163,7 +166,7 @@ const { lang } = Astro.params;
             <span class="mkt-fx-spread-val" data-fx-gap="blue">—</span>
           </div>
         </a>
-        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="mep">
+        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="mep" title={t(lang!, "markets.fxTooltipMep" as any)}>
           <div class="mkt-fx-top">
             <span class="mkt-fx-name">MEP</span>
             <span class="mkt-fx-badge mkt-fx-badge--mep">{t(lang!, "currencies.stockMarket")}</span>
@@ -181,7 +184,7 @@ const { lang } = Astro.params;
             <span class="mkt-fx-spread-val" data-fx-gap="mep">—</span>
           </div>
         </a>
-        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="ccl">
+        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="ccl" title={t(lang!, "markets.fxTooltipCcl" as any)}>
           <div class="mkt-fx-top">
             <span class="mkt-fx-name">CCL</span>
             <span class="mkt-fx-badge mkt-fx-badge--ccl">{t(lang!, "currencies.settlement")}</span>
@@ -210,7 +213,10 @@ const { lang } = Astro.params;
           <h2 class="mkt-sec-title">{t(lang!, "markets.mervalTitle")}</h2>
           <svg class="mkt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-        <a href={`/${lang}/markets/merval`} class="mkt-sec-link">{t(lang!, "finDash.viewAll" as any)} &rarr;</a>
+        <div class="mkt-sec-actions">
+          <span class="mkt-sec-hint" title={t(lang!, "markets.mervalDesc")}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <a href={`/${lang}/markets/merval`} class="mkt-sec-link">{t(lang!, "finDash.viewAll" as any)} &rarr;</a>
+        </div>
       </div>
       <div class="mkt-sec-body">
       <div class="mkt-merval-row">
@@ -284,6 +290,46 @@ const { lang } = Astro.params;
     <section class="mkt-section" data-mkt-sectors style="display:none;" role="region" aria-label={t(lang!, "markets.sectorHeatmap" as any)}>
       <h2 class="mkt-sec-title">{t(lang!, "markets.sectorHeatmap" as any)}</h2>
       <div class="mkt-heatmap" data-mkt-heatmap></div>
+    </section>
+
+    <!-- ═══ FIXED INCOME QUICK ACCESS ═══ -->
+    <section class="mkt-section mkt-section--visible">
+      <div class="mkt-sec-head">
+        <h2 class="mkt-sec-title">{t(lang!, "markets.fixedIncomeSection" as any)}</h2>
+        <span class="mkt-sec-hint" title={t(lang!, "markets.fixedIncomeDesc" as any)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+      </div>
+      <div class="mkt-fi-grid">
+        <a href={`/${lang}/markets/bonds`} class="mkt-fi-card">
+          <div class="mkt-fi-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M12 4v16"/></svg>
+          </div>
+          <div class="mkt-fi-body">
+            <span class="mkt-fi-name">{t(lang!, "bonds.title")}</span>
+            <span class="mkt-fi-desc">{t(lang!, "bonds.subtitle" as any)}</span>
+          </div>
+          <svg class="mkt-fi-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href={`/${lang}/markets/corporate-bonds`} class="mkt-fi-card">
+          <div class="mkt-fi-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+          </div>
+          <div class="mkt-fi-body">
+            <span class="mkt-fi-name">{t(lang!, "corporateBonds.title")}</span>
+            <span class="mkt-fi-desc">{t(lang!, "corporateBonds.subtitle" as any)}</span>
+          </div>
+          <svg class="mkt-fi-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href={`/${lang}/markets/letras`} class="mkt-fi-card">
+          <div class="mkt-fi-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="mkt-fi-body">
+            <span class="mkt-fi-name">{t(lang!, "letras.title")}</span>
+            <span class="mkt-fi-desc">{t(lang!, "letras.subtitle" as any)}</span>
+          </div>
+          <svg class="mkt-fi-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
     </section>
 
     <!-- ═══ MARKET PULSE ═══ -->
@@ -1497,6 +1543,14 @@ const { lang } = Astro.params;
   /* Section */
   .mkt-section { margin-bottom: var(--spacing-xl); }
   .mkt-sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-md); }
+  .mkt-sec-actions { display: flex; align-items: center; gap: 10px; }
+  .mkt-sec-hint {
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--color-text-meta); cursor: help; opacity: 0.6;
+    transition: opacity 0.15s, color 0.15s;
+    position: relative;
+  }
+  .mkt-sec-hint:hover { opacity: 1; color: var(--color-gold); }
   .mkt-sec-title { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text); }
   .mkt-sec-link { font-size: 0.75rem; font-weight: 700; color: var(--color-text-meta); text-decoration: none; transition: color 0.15s; }
   .mkt-sec-link:hover { color: var(--color-gold); text-decoration: none; }
@@ -1704,6 +1758,32 @@ const { lang } = Astro.params;
   }
 
   @media (max-width: 520px) { .mkt-indices-grid :global(.mkt-idx-region-cards) { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ═══ FIXED INCOME QUICK ACCESS ═══ */
+  .mkt-fi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .mkt-fi-card {
+    display: flex; align-items: center; gap: 12px; padding: 14px 16px;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .mkt-fi-card:hover {
+    border-color: var(--color-gold); text-decoration: none; color: inherit;
+    transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .mkt-fi-card:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  :global([data-theme="dark"]) .mkt-fi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  .mkt-fi-icon { flex-shrink: 0; color: var(--color-gold); }
+  .mkt-fi-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .mkt-fi-name { font-size: 0.82rem; font-weight: 800; color: var(--color-text); }
+  .mkt-fi-desc { font-size: 0.68rem; color: var(--color-text-meta); line-height: 1.3; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .mkt-fi-arrow { flex-shrink: 0; color: var(--color-text-meta); opacity: 0; transition: opacity 0.15s, transform 0.15s; }
+  .mkt-fi-card:hover .mkt-fi-arrow { opacity: 1; transform: translateX(2px); }
+  @media (max-width: 900px) { .mkt-fi-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .mkt-fi-card { padding: 10px 12px; gap: 10px; } }
+  @media (prefers-reduced-motion: reduce) { .mkt-fi-card { transition: none; } .mkt-fi-arrow { transition: none; } }
 
   /* ═══ SECTOR HEATMAP ═══ */
   .mkt-heatmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }

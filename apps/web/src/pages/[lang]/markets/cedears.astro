@@ -49,6 +49,28 @@ const { lang } = Astro.params;
       <p class="mkts-updated" data-mkts-updated aria-live="polite" role="status">{t(lang!, "common.loading")}</p>
     </header>
 
+    <!-- Educational Info Panel -->
+    <details class="fi-info-panel" data-fi-info>
+      <summary class="fi-info-toggle">
+        <svg class="fi-info-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>{t(lang!, "cedears.infoTitle" as any)}</span>
+        <svg class="fi-info-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="fi-info-content">
+        <p class="fi-info-text">{t(lang!, "cedears.infoText" as any)}</p>
+        <div class="fi-info-grid">
+          <div class="fi-info-card">
+            <div class="fi-info-card-label">{t(lang!, "cedears.infoRatio" as any)}</div>
+            <div class="fi-info-card-val">{t(lang!, "cedears.infoRatioTip" as any)}</div>
+          </div>
+          <div class="fi-info-card">
+            <div class="fi-info-card-label">{t(lang!, "cedears.infoUnderlying" as any)}</div>
+            <div class="fi-info-card-val">{t(lang!, "cedears.infoUnderlyingTip" as any)}</div>
+          </div>
+        </div>
+      </div>
+    </details>
+
     <!-- Summary Stats -->
     <div class="asset-stats" data-asset-stats style="display:none;">
       <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.stocks")}</span> <span class="asset-stat-val" data-stat-count>0</span></div>
@@ -121,7 +143,7 @@ const { lang } = Astro.params;
   </div>
 </Base>
 
-<script is:inline src="/js/asset-listing.js?v=1"></script>
+<script is:inline src="/js/asset-listing.js?v=2"></script>
 
 <style>
   /* Asset listing shared styles */
@@ -211,4 +233,24 @@ const { lang } = Astro.params;
 
   :global([data-theme="dark"]) .at-change-badge.rc-up { background: #16a34a22; }
   :global([data-theme="dark"]) .at-change-badge.rc-down { background: #dc262622; }
+
+  /* Educational Info Panel */
+  .fi-info-panel { margin-bottom: var(--spacing-md); border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-bg-secondary); overflow: hidden; }
+  .fi-info-toggle { display: flex; align-items: center; gap: 8px; padding: 12px 16px; cursor: pointer; font-size: 0.82rem; font-weight: 700; color: var(--color-text); list-style: none; transition: background 0.15s; }
+  .fi-info-toggle::-webkit-details-marker { display: none; }
+  .fi-info-toggle::marker { display: none; content: ''; }
+  .fi-info-toggle:hover { background: rgba(246,180,14,0.04); }
+  .fi-info-icon { color: var(--color-gold); flex-shrink: 0; }
+  .fi-info-chevron { margin-inline-start: auto; color: var(--color-text-meta); transition: transform 0.25s ease; flex-shrink: 0; }
+  details[open] > .fi-info-toggle .fi-info-chevron { transform: rotate(180deg); }
+  .fi-info-content { padding: 0 16px 16px; animation: fi-fade-in 0.25s ease-out; }
+  @keyframes fi-fade-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  .fi-info-text { font-size: 0.82rem; line-height: 1.6; color: var(--color-text); margin-bottom: 12px; max-width: 72ch; }
+  .fi-info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .fi-info-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+  .fi-info-card--wide { grid-column: 1 / -1; }
+  .fi-info-card-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-gold); }
+  .fi-info-card-val { font-size: 0.78rem; line-height: 1.5; color: var(--color-text); }
+  @media (max-width: 520px) { .fi-info-grid { grid-template-columns: 1fr; } .fi-info-card--wide { grid-column: auto; } }
+  @media (prefers-reduced-motion: reduce) { .fi-info-chevron { transition: none; } .fi-info-content { animation: none; } }
 </style>
