@@ -972,6 +972,39 @@ export const es = {
   "currencies.rateHistory": "Rate History",
   "currencies.officialChg": "Official Δ",
   "currencies.blueChg": "Blue Δ",
+
+  // CEDEARs
+  "cedears.title": "CEDEARs",
+  "cedears.breadcrumb": "CEDEARs",
+  "cedears.subtitle": "Certificados de Depósito Argentinos — acciones extranjeras en pesos",
+  "cedears.seoTitle": "CEDEARs — Acciones Extranjeras en BYMA",
+  "cedears.seoDescription": "Cotizaciones de CEDEARs en tiempo real en BYMA. Operá Apple, Tesla, Google y más de 200 acciones extranjeras en pesos argentinos.",
+  "cedears.loadError": "Error al cargar datos de CEDEARs",
+
+  // Bonos Soberanos
+  "bonds.title": "Bonos Soberanos",
+  "bonds.breadcrumb": "Bonos",
+  "bonds.subtitle": "Títulos Públicos argentinos — operados en BYMA",
+  "bonds.seoTitle": "Bonos Soberanos Argentinos — Títulos Públicos en BYMA",
+  "bonds.seoDescription": "Cotizaciones de bonos soberanos argentinos en BYMA. Seguí precios, variaciones diarias y volumen de negociación en tiempo real.",
+  "bonds.loadError": "Error al cargar datos de bonos",
+  "bonds.instruments": "Instrumentos",
+
+  // Obligaciones Negociables
+  "corporateBonds.title": "Obligaciones Negociables",
+  "corporateBonds.breadcrumb": "ONs",
+  "corporateBonds.subtitle": "Deuda corporativa argentina operada en BYMA",
+  "corporateBonds.seoTitle": "Obligaciones Negociables (ON) — Deuda Corporativa en BYMA",
+  "corporateBonds.seoDescription": "Cotizaciones de Obligaciones Negociables en BYMA. Seguí instrumentos de deuda corporativa, rendimientos y volumen de negociación.",
+  "corporateBonds.loadError": "Error al cargar datos de ONs",
+
+  // Letras
+  "letras.title": "Letras",
+  "letras.breadcrumb": "Letras",
+  "letras.subtitle": "Letras del Tesoro argentino — LECAPs, LEDEs y más",
+  "letras.seoTitle": "Letras del Tesoro Argentino — LECAPs y LEDEs en BYMA",
+  "letras.seoDescription": "Cotizaciones de letras del Tesoro argentino (LECAPs, LEDEs) en BYMA. Seguí precios, rendimientos y volumen de negociación.",
+  "letras.loadError": "Error al cargar datos de letras",
 } as const;
 
 export type Translations = typeof es;

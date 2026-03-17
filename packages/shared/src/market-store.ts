@@ -13,6 +13,8 @@
 // Types
 // ---------------------------------------------------------------------------
 
+export type AssetType = 'stock' | 'cedear' | 'government_bond' | 'corporate_bond' | 'letra';
+
 export interface MervalSnapshot {
   price: number;
   high: number | null;
@@ -40,6 +42,7 @@ export interface StockQuote {
   volume: number;
   high: number | null;
   low: number | null;
+  assetType?: AssetType;
 }
 
 interface StoreEntry<T> {
@@ -55,10 +58,18 @@ const store: {
   merval: StoreEntry<MervalSnapshot> | null;
   rates: StoreEntry<ExchangeRates> | null;
   stocks: StoreEntry<StockQuote[]> | null;
+  cedears: StoreEntry<StockQuote[]> | null;
+  governmentBonds: StoreEntry<StockQuote[]> | null;
+  corporateBonds: StoreEntry<StockQuote[]> | null;
+  letras: StoreEntry<StockQuote[]> | null;
 } = {
   merval: null,
   rates: null,
   stocks: null,
+  cedears: null,
+  governmentBonds: null,
+  corporateBonds: null,
+  letras: null,
 };
 
 // ---------------------------------------------------------------------------
@@ -75,6 +86,22 @@ export function setRates(data: ExchangeRates): void {
 
 export function setStocks(data: StockQuote[]): void {
   store.stocks = { data, updatedAt: Date.now() };
+}
+
+export function setCedears(data: StockQuote[]): void {
+  store.cedears = { data, updatedAt: Date.now() };
+}
+
+export function setGovernmentBonds(data: StockQuote[]): void {
+  store.governmentBonds = { data, updatedAt: Date.now() };
+}
+
+export function setCorporateBonds(data: StockQuote[]): void {
+  store.corporateBonds = { data, updatedAt: Date.now() };
+}
+
+export function setLetras(data: StockQuote[]): void {
+  store.letras = { data, updatedAt: Date.now() };
 }
 
 // ---------------------------------------------------------------------------
@@ -102,8 +129,24 @@ export function getStocks(maxAge?: number): StockQuote[] | null {
   return getFresh(store.stocks, maxAge);
 }
 
+export function getCedears(maxAge?: number): StockQuote[] | null {
+  return getFresh(store.cedears, maxAge);
+}
+
+export function getGovernmentBonds(maxAge?: number): StockQuote[] | null {
+  return getFresh(store.governmentBonds, maxAge);
+}
+
+export function getCorporateBonds(maxAge?: number): StockQuote[] | null {
+  return getFresh(store.corporateBonds, maxAge);
+}
+
+export function getLetras(maxAge?: number): StockQuote[] | null {
+  return getFresh(store.letras, maxAge);
+}
+
 /** Returns age of data in ms, or null if no data. */
-export function getDataAge(key: "merval" | "rates" | "stocks"): number | null {
+export function getDataAge(key: "merval" | "rates" | "stocks" | "cedears" | "governmentBonds" | "corporateBonds" | "letras"): number | null {
   const entry = store[key];
   if (!entry) return null;
   return Date.now() - entry.updatedAt;

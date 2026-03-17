@@ -9,7 +9,7 @@
 import { YAHOO_UA } from "./constants.js";
 import { fetchT } from "./utils.js";
 import { numVal, strVal } from "./yahoo.js";
-import type { MervalSnapshot, StockQuote } from "./market-store.js";
+import type { AssetType, MervalSnapshot, StockQuote } from "./market-store.js";
 
 // ---------------------------------------------------------------------------
 // Symbol transformation
@@ -61,6 +61,11 @@ export function parseBYMAStock(s: any): StockQuote {
     high: s.highPrice ?? s.maximo ?? null,
     low: s.lowPrice ?? s.minimo ?? null,
   };
+}
+
+/** Parse a BYMA asset with a specific asset type tag. */
+export function parseBYMAAsset(s: any, assetType: AssetType): StockQuote {
+  return { ...parseBYMAStock(s), assetType };
 }
 
 /** Fetch and parse BYMA POST endpoint (index-price or leading-equity). */

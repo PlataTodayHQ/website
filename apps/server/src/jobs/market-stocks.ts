@@ -8,16 +8,25 @@ import {
   BYMA_EQUITY_URL,
   fetchBYMA, parseBYMAStock, toYahooSymbol,
   getYahooCrumb, numVal, strVal, sleep, fetchT, YAHOO_UA,
+  type AssetType,
 } from "@plata-today/shared";
 import { aggregateStockCandles } from "./market-storage.js";
 
 export async function fetchStocks(db: Database.Database): Promise<void> {
+  return fetchAssetPrices(db, BYMA_EQUITY_URL, "stock");
+}
+
+export async function fetchAssetPrices(
+  db: Database.Database,
+  url: string,
+  assetType: AssetType,
+): Promise<void> {
   try {
-    const data = await fetchBYMA(BYMA_EQUITY_URL);
+    const data = await fetchBYMA(url);
 
     const insert = db.prepare(
-      `INSERT INTO stock_prices (symbol, price, variation, previous_close, volume, high, low, opening_price)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO stock_prices (symbol, price, variation, previous_close, volume, high, low, opening_price, asset_type)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     );
 
     const tx = db.transaction(() => {
@@ -27,14 +36,15 @@ export async function fetchStocks(db: Database.Database): Promise<void> {
           stock.symbol, stock.price, stock.variation,
           stock.previousClose, stock.volume,
           stock.high, stock.low, stock.openingPrice,
+          assetType,
         );
       }
     });
     tx();
 
-    console.log("[market] Stock prices saved", { count: data.length });
+    console.log(`[market] ${assetType} prices saved`, { count: data.length });
   } catch (err) {
-    console.error("[market] Stocks error:", err);
+    console.error(`[market] ${assetType} error:`, err);
   }
 }
 

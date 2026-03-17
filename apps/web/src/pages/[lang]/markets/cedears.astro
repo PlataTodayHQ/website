@@ -1,0 +1,214 @@
+---
+import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "cedears.seoTitle")}
+  description={t(lang!, "cedears.seoDescription")}
+  lang={lang}
+  ogType="website"
+  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/cedears`]))}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
+    { name: t(lang!, "cedears.breadcrumb"), url: `/${lang}/markets/cedears` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "cedears.title"),
+    "description": t(lang!, "cedears.seoDescription"),
+    "url": `https://plata.today/${lang}/markets/cedears`,
+    "inLanguage": lang,
+    "isPartOf": { "@type": "WebSite", "name": "Plata", "url": "https://plata.today" }
+  }}
+>
+  <div class="asset-page" data-asset-page data-lang={lang} data-api="/api/cedears" data-asset-type="cedear"
+    data-i18n-updated={t(lang!, "stock.updated")}
+    data-i18n-retry={t(lang!, "common.retry" as any)}
+    data-i18n-error={t(lang!, "cedears.loadError" as any)}
+    data-i18n-no-results={t(lang!, "screener.noResults")}
+    data-stock-url={`/${lang}/markets/stock`}
+  >
+    <MarketNav lang={lang!} active="cedears" />
+
+    <header class="mkts-header">
+      <div>
+        <h1 class="mkts-title">{t(lang!, "cedears.title")}</h1>
+        <p class="mkts-subtitle">{t(lang!, "cedears.subtitle" as any)}</p>
+      </div>
+      <p class="mkts-updated" data-mkts-updated aria-live="polite" role="status">{t(lang!, "common.loading")}</p>
+    </header>
+
+    <!-- Summary Stats -->
+    <div class="asset-stats" data-asset-stats style="display:none;">
+      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.stocks")}</span> <span class="asset-stat-val" data-stat-count>0</span></div>
+      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.gainers" as any)}</span> <span class="asset-stat-val rc-up" data-stat-gainers>0</span></div>
+      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.losers" as any)}</span> <span class="asset-stat-val rc-down" data-stat-losers>0</span></div>
+      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.totalVolume" as any)}</span> <span class="asset-stat-val" data-stat-volume>—</span></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="asset-toolbar">
+      <div class="asset-search-wrap">
+        <svg class="asset-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="asset-search" data-asset-search placeholder={t(lang!, "screener.search")} aria-label={t(lang!, "screener.search")} autocomplete="off" />
+      </div>
+      <span class="asset-count" data-asset-count></span>
+    </div>
+
+    <!-- Table -->
+    <div class="asset-table-wrap" role="region" aria-label={t(lang!, "cedears.title")}>
+      <table class="asset-table" data-asset-table>
+        <thead>
+          <tr>
+            <th class="at-th at-th--name" data-sort="symbol">{t(lang!, "screener.col.symbol")} <span class="at-arrow" data-arrow="symbol"></span></th>
+            <th class="at-th at-th--num" data-sort="price">{t(lang!, "screener.col.price")} <span class="at-arrow" data-arrow="price"></span></th>
+            <th class="at-th at-th--num" data-sort="change">{t(lang!, "screener.col.change")} <span class="at-arrow" data-arrow="change"></span></th>
+            <th class="at-th at-th--num at-th--active" data-sort="volume">{t(lang!, "screener.col.volume")} <span class="at-arrow" data-arrow="volume">▼</span></th>
+            <th class="at-th at-th--num at-th--hide-mobile" data-sort="high">{t(lang!, "stock.high" as any)}</th>
+            <th class="at-th at-th--num at-th--hide-mobile" data-sort="low">{t(lang!, "stock.low" as any)}</th>
+          </tr>
+        </thead>
+        <tbody data-asset-tbody>
+          {[...Array(10)].map(() => (
+            <tr class="at-skeleton-row">
+              <td class="at-td at-td--name"><span class="skeleton-shimmer" style="width:80px;height:14px;display:inline-block;"></span></td>
+              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:70px;height:14px;display:inline-block;"></span></td>
+              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:64px;height:22px;display:inline-block;border-radius:4px;"></span></td>
+              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:50px;height:14px;display:inline-block;"></span></td>
+              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
+              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cards (mobile) -->
+    <div class="asset-cards" data-asset-cards>
+      {[...Array(6)].map(() => (
+        <div class="at-skeleton-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
+              <span class="skeleton-shimmer" style="width:56px;height:12px;"></span>
+              <span class="skeleton-shimmer" style="width:90px;height:10px;"></span>
+            </div>
+            <span class="skeleton-shimmer" style="width:60px;height:16px;border-radius:4px;"></span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="skeleton-shimmer" style="width:80px;height:14px;"></span>
+            <span class="skeleton-shimmer" style="width:50px;height:10px;"></span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- No results -->
+    <div class="asset-empty" data-asset-empty style="display:none;"></div>
+
+    <p class="info-disclaimer">{t(lang!, "stock.disclaimer")}</p>
+    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+  </div>
+</Base>
+
+<script is:inline src="/js/asset-listing.js?v=1"></script>
+
+<style>
+  /* Asset listing shared styles */
+  .asset-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
+
+  .asset-stats {
+    display: flex; gap: var(--spacing-md); flex-wrap: wrap;
+    margin-bottom: var(--spacing-md); padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-bg-secondary); border-radius: 8px;
+  }
+  .asset-stat { display: flex; flex-direction: column; gap: 2px; }
+  .asset-stat-label { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .asset-stat-val { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .asset-toolbar {
+    display: flex; align-items: center; gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm); flex-wrap: wrap;
+  }
+  .asset-search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 360px; }
+  .asset-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--color-text-meta); pointer-events: none; }
+  .asset-search {
+    width: 100%; padding: 8px 12px 8px 34px; font-size: 0.82rem;
+    border: 1px solid var(--color-border); border-radius: 6px;
+    background: var(--color-bg); color: var(--color-text);
+    transition: border-color 0.15s;
+  }
+  .asset-search:focus { border-color: var(--color-gold); outline: none; }
+  .asset-count { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
+
+  .asset-table-wrap { overflow-x: auto; margin-bottom: var(--spacing-md); }
+  .asset-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .at-th {
+    text-align: left; padding: 10px 12px; font-weight: 700; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta);
+    border-bottom: 2px solid var(--color-border); white-space: nowrap; cursor: pointer;
+    user-select: none; transition: color 0.15s;
+  }
+  .at-th:hover { color: var(--color-text); }
+  .at-th--active { color: var(--color-gold); }
+  .at-th--num { text-align: right; }
+  .at-th--hide-mobile {}
+  .at-arrow { font-size: 0.65rem; opacity: 0.5; }
+  .at-th--active .at-arrow { opacity: 1; color: var(--color-gold); }
+
+  .at-td { padding: 10px 12px; border-bottom: 1px solid var(--color-border); vertical-align: middle; }
+  .at-td--num { text-align: right; font-variant-numeric: tabular-nums; }
+  .at-td--name { font-weight: 600; }
+  .at-td--hide-mobile {}
+
+  .at-sym { font-weight: 700; }
+  .at-desc { font-size: 0.72rem; color: var(--color-text-meta); display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .at-change-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .at-change-badge.rc-up { background: var(--color-up-bg, #dcfce7); color: var(--color-up, #16a34a); }
+  .at-change-badge.rc-down { background: var(--color-down-bg, #fee2e2); color: var(--color-down, #dc2626); }
+  .at-change-badge.rc-unch { background: var(--color-bg-secondary); color: var(--color-text-meta); }
+
+  .at-row { transition: background 0.1s; }
+  .at-row:hover { background: var(--color-bg-secondary); }
+  .at-row[data-clickable] { cursor: pointer; }
+
+  /* Mobile cards */
+  .asset-cards { display: none; }
+  @media (max-width: 640px) {
+    .asset-table-wrap { display: none; }
+    .asset-cards { display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--spacing-md); }
+    .at-th--hide-mobile, .at-td--hide-mobile { display: none; }
+  }
+
+  .at-card {
+    background: var(--color-bg-secondary); border-radius: 8px; padding: 12px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .at-card-top { display: flex; align-items: center; justify-content: space-between; }
+  .at-card-sym { font-weight: 700; font-size: 0.88rem; }
+  .at-card-desc { font-size: 0.72rem; color: var(--color-text-meta); }
+  .at-card-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .at-card-price { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .at-card-vol { font-size: 0.72rem; color: var(--color-text-meta); }
+
+  .asset-empty { text-align: center; padding: 3rem; color: var(--color-text-meta); }
+
+  .at-skeleton-row td, .at-skeleton-card { opacity: 0.6; }
+
+  :global([data-theme="dark"]) .at-change-badge.rc-up { background: #16a34a22; }
+  :global([data-theme="dark"]) .at-change-badge.rc-down { background: #dc262622; }
+</style>

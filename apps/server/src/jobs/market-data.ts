@@ -9,10 +9,13 @@
  */
 
 import type Database from "better-sqlite3";
+import {
+  BYMA_CEDEARS_URL, BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
+} from "@plata-today/shared";
 import { recordJobStart, recordJobEnd } from "./job-tracking.js";
 import { fetchExchangeRates, fetchExchangeRateHistory } from "./market-exchanges.js";
 import { fetchMerval, fetchMervalCandles } from "./market-merval.js";
-import { fetchStocks, fetchStockCandles, fetchStockProfiles } from "./market-stocks.js";
+import { fetchStocks, fetchAssetPrices, fetchStockCandles, fetchStockProfiles } from "./market-stocks.js";
 import { fetchFinancialStatements } from "./market-financials.js";
 import { pruneOldData } from "./market-storage.js";
 
@@ -28,12 +31,16 @@ export async function fetchMarketData(db: Database.Database): Promise<void> {
   const runId = recordJobStart(db, "market-data");
 
   try {
-    // Core data: exchange rates, merval, stock prices
+    // Core data: exchange rates, merval, stock prices, and all asset types
     await Promise.allSettled([
       fetchExchangeRates(db),
       fetchExchangeRateHistory(db),
       fetchMerval(db),
       fetchStocks(db),
+      fetchAssetPrices(db, BYMA_CEDEARS_URL, "cedear"),
+      fetchAssetPrices(db, BYMA_PUBLIC_BONDS_URL, "government_bond"),
+      fetchAssetPrices(db, BYMA_CORPORATE_BONDS_URL, "corporate_bond"),
+      fetchAssetPrices(db, BYMA_LETRAS_URL, "letra"),
     ]);
 
     // Heavier data: candles + profiles (rate-limited, run less aggressively)
