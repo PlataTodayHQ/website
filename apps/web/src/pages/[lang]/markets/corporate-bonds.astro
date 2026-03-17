@@ -1,0 +1,119 @@
+---
+import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
+import { LANGUAGES } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export function getStaticPaths() {
+  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+---
+
+<Base
+  title={t(lang!, "corporateBonds.seoTitle")}
+  description={t(lang!, "corporateBonds.seoDescription")}
+  lang={lang}
+  ogType="website"
+  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/corporate-bonds`]))}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
+    { name: t(lang!, "corporateBonds.breadcrumb"), url: `/${lang}/markets/corporate-bonds` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "corporateBonds.title"),
+    "description": t(lang!, "corporateBonds.seoDescription"),
+    "url": `https://plata.today/${lang}/markets/corporate-bonds`,
+    "inLanguage": lang,
+    "isPartOf": { "@type": "WebSite", "name": "Plata", "url": "https://plata.today" }
+  }}
+>
+  <div class="asset-page" data-asset-page data-lang={lang} data-api="/api/corporate-bonds" data-asset-type="corporate_bond"
+    data-i18n-updated={t(lang!, "stock.updated")}
+    data-i18n-retry={t(lang!, "common.retry" as any)}
+    data-i18n-error={t(lang!, "corporateBonds.loadError" as any)}
+    data-i18n-no-results={t(lang!, "screener.noResults")}
+    data-stock-url={`/${lang}/markets/stock`}
+  >
+    <MarketNav lang={lang!} active="corporate-bonds" />
+
+    <header class="mkts-header">
+      <div>
+        <h1 class="mkts-title">{t(lang!, "corporateBonds.title")}</h1>
+        <p class="mkts-subtitle">{t(lang!, "corporateBonds.subtitle" as any)}</p>
+      </div>
+      <p class="mkts-updated" data-mkts-updated aria-live="polite" role="status">{t(lang!, "common.loading")}</p>
+    </header>
+
+    <div class="asset-stats" data-asset-stats style="display:none;">
+      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "bonds.instruments" as any)}</span> <span class="asset-stat-val" data-stat-count>0</span></div>
+      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.gainers" as any)}</span> <span class="asset-stat-val rc-up" data-stat-gainers>0</span></div>
+      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.losers" as any)}</span> <span class="asset-stat-val rc-down" data-stat-losers>0</span></div>
+      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.totalVolume" as any)}</span> <span class="asset-stat-val" data-stat-volume>—</span></div>
+    </div>
+
+    <div class="asset-toolbar">
+      <div class="asset-search-wrap">
+        <svg class="asset-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="asset-search" data-asset-search placeholder={t(lang!, "screener.search")} aria-label={t(lang!, "screener.search")} autocomplete="off" />
+      </div>
+      <span class="asset-count" data-asset-count></span>
+    </div>
+
+    <div class="asset-table-wrap" role="region" aria-label={t(lang!, "corporateBonds.title")}>
+      <table class="asset-table" data-asset-table>
+        <thead>
+          <tr>
+            <th class="at-th at-th--name" data-sort="symbol">{t(lang!, "screener.col.symbol")} <span class="at-arrow" data-arrow="symbol"></span></th>
+            <th class="at-th at-th--num" data-sort="price">{t(lang!, "screener.col.price")} <span class="at-arrow" data-arrow="price"></span></th>
+            <th class="at-th at-th--num" data-sort="change">{t(lang!, "screener.col.change")} <span class="at-arrow" data-arrow="change"></span></th>
+            <th class="at-th at-th--num at-th--active" data-sort="volume">{t(lang!, "screener.col.volume")} <span class="at-arrow" data-arrow="volume">▼</span></th>
+            <th class="at-th at-th--num at-th--hide-mobile" data-sort="high">{t(lang!, "stock.high" as any)}</th>
+            <th class="at-th at-th--num at-th--hide-mobile" data-sort="low">{t(lang!, "stock.low" as any)}</th>
+          </tr>
+        </thead>
+        <tbody data-asset-tbody>
+          {[...Array(10)].map(() => (
+            <tr class="at-skeleton-row">
+              <td class="at-td at-td--name"><span class="skeleton-shimmer" style="width:80px;height:14px;display:inline-block;"></span></td>
+              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:70px;height:14px;display:inline-block;"></span></td>
+              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:64px;height:22px;display:inline-block;border-radius:4px;"></span></td>
+              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:50px;height:14px;display:inline-block;"></span></td>
+              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
+              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="asset-cards" data-asset-cards>
+      {[...Array(6)].map(() => (
+        <div class="at-skeleton-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
+              <span class="skeleton-shimmer" style="width:56px;height:12px;"></span>
+              <span class="skeleton-shimmer" style="width:90px;height:10px;"></span>
+            </div>
+            <span class="skeleton-shimmer" style="width:60px;height:16px;border-radius:4px;"></span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="skeleton-shimmer" style="width:80px;height:14px;"></span>
+            <span class="skeleton-shimmer" style="width:50px;height:10px;"></span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="asset-empty" data-asset-empty style="display:none;"></div>
+
+    <p class="info-disclaimer">{t(lang!, "stock.disclaimer")}</p>
+    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+  </div>
+</Base>
+
+<script is:inline src="/js/asset-listing.js?v=1"></script>

@@ -13,11 +13,14 @@
  */
 
 import type Database from "better-sqlite3";
-import { isMarketOpen, alertOnFailure, resetFailureCount } from "@plata-today/shared";
+import {
+  isMarketOpen, alertOnFailure, resetFailureCount,
+  BYMA_CEDEARS_URL, BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
+} from "@plata-today/shared";
 import { recordJobStart, recordJobEnd } from "./job-tracking.js";
 import { fetchExchangeRates, fetchExchangeRateHistory } from "./market-exchanges.js";
 import { fetchMerval, fetchMervalCandles } from "./market-merval.js";
-import { fetchStocks, fetchStockCandles, fetchStockProfiles } from "./market-stocks.js";
+import { fetchStocks, fetchAssetPrices, fetchStockCandles, fetchStockProfiles } from "./market-stocks.js";
 import { fetchFinancialStatements } from "./market-financials.js";
 import { pruneOldData } from "./market-storage.js";
 
@@ -34,14 +37,20 @@ export async function fetchMarketData(db: Database.Database): Promise<void> {
   const marketOpen = isMarketOpen();
 
   try {
-    // Core data: exchange rates always run, stocks only during market hours
+    // Core data: exchange rates always run, stocks/assets only during market hours
     const coreJobs: Promise<void>[] = [
       fetchExchangeRates(db),
       fetchExchangeRateHistory(db),
       fetchMerval(db),
     ];
     if (marketOpen) {
-      coreJobs.push(fetchStocks(db));
+      coreJobs.push(
+        fetchStocks(db),
+        fetchAssetPrices(db, BYMA_CEDEARS_URL, "cedear"),
+        fetchAssetPrices(db, BYMA_PUBLIC_BONDS_URL, "government_bond"),
+        fetchAssetPrices(db, BYMA_CORPORATE_BONDS_URL, "corporate_bond"),
+        fetchAssetPrices(db, BYMA_LETRAS_URL, "letra"),
+      );
     }
     await Promise.allSettled(coreJobs);
 
