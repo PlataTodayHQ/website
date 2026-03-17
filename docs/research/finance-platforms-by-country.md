@@ -54,6 +54,20 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 - API: Yes (for clients)
 - Pricing: Requires brokerage account
 
+### Developer/Programmatic Access
+
+**Primary (Centro de APIs)**
+- URL: https://apihub.primary.com.ar
+- Data: Historical and real-time market data, order routing
+- API: Yes — REST/WebSocket and FIX protocol. Open-source connectors in Python, .NET, R, Java. Includes "reMarkets" simulation environment.
+- Pricing: Paid (institutional/broker level)
+
+**API Broker (Adcap)**
+- URL: https://apibroker.com.ar
+- Data: All BYMA-listed assets — stocks, bonds, letras, CEDEARs
+- API: Yes — documented REST APIs with technical support
+- Pricing: Paid (broker integration)
+
 ### Specialized
 
 **Bluelytics** (Dollar exchange rates)
@@ -87,11 +101,17 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 ### Stock Exchange / Official
 
-**Bolsa de Santiago (Santiago Stock Exchange)**
-- URL: https://www.bolsadesantiago.com
-- Data: Stocks, bonds, investment funds, stock options, futures, gold/silver coins, USD
-- API: Yes — **Brain Data API** (https://api-braindata.bolsadesantiago.com/nuestras-apis)
+**Bolsa de Santiago / Nuam Exchange**
+- URL: https://www.bolsadesantiago.com / https://www.nuamx.com/en
+- Data: Stocks, bonds, investment funds, stock options, futures, gold/silver coins, USD. Now part of Nuam Exchange (merged with Lima and Colombia exchanges).
+- API: Yes — **Brain Data API** (https://api-braindata.bolsadesantiago.com/nuestras-apis). Institutional feeds also via ICE and LSEG.
 - Pricing: Paid (requires API key request)
+
+**RiskAmerica** ("Chile's Bloomberg")
+- URL: https://www.riskamerica.com
+- Data: Fixed income (30,000+ instruments daily — government bonds, corporate bonds, deposits), equities, mutual funds, interest rate curves, indices. Official price provider for Superintendencia de Pensiones.
+- API: Yes — REST APIs and Excel add-in. 20+ years of history.
+- Pricing: Paid (subscription). Now owned by DCV.
 
 ### Central Bank / Regulators
 
@@ -165,6 +185,18 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 **Oceans14** — oceans14.com.br — stock screeners, fundamentals, dividends. Free, no API.
 
+**HG Brasil (HG Finance)**
+- URL: https://hgbrasil.com/finance
+- Data: B3 stock prices, BDRs, FIIs, dividends, indices, dollar/currency exchange rates. Libraries in PHP, Ruby, JavaScript.
+- API: Yes — REST API
+- Pricing: Free tier + paid plans. Operating since 2009.
+
+**Cedro Technologies**
+- URL: https://www.cedrotech.com
+- Data: Bovespa stocks/options, BM&F futures/options, agricultural commodities, historical series, currencies
+- API: Yes — REST APIs for trading and data
+- Pricing: Paid
+
 ### Central Bank
 
 **Banco Central do Brasil — SGS/OLINDA API**
@@ -214,9 +246,25 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 **Jitta**
 - URL: https://www.jitta.com
-- Data: Stock analysis with proprietary "Jitta Score" and "Jitta Line" metrics for Thai and global stocks
+- Data: Stock analysis with proprietary "Jitta Score" and "Jitta Line" metrics for 36,000+ stocks across 40 exchanges
 - API: No public API
-- Pricing: Free basic / paid premium
+- Pricing: Free basic / Jitta Wealth (robo-advisor) is paid
+
+**Finnomena**
+- URL: https://www.finnomena.com
+- Data: Investment products, fund data, market analysis, portfolio tools
+- API: No public API
+- Pricing: Free content; paid wealth management services
+
+**SETSMART**
+- URL: https://setsmart.com
+- Data: Company financial data, historical trading statistics, corporate actions, shareholder data
+- API: Bulk data downloads; API-like access for institutional clients
+- Pricing: Paid (subscription)
+
+### Developer Libraries
+
+**ThaiStock** (Python) — https://github.com/UncleEngineer/ThaiStock — Thai stock prices via scraping from settrade.com. Free/open source.
 
 ---
 
@@ -240,11 +288,11 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 ### Broker APIs
 
-**Tinkoff Invest API (T-Invest)**
+**T-Investments (formerly Tinkoff Invest / T-Invest)**
 - GitHub: https://github.com/Tim55667757/TKSBrokerAPI
 - Data: Stocks, bonds, ETFs, currencies, futures on MOEX. Real-time quotes, portfolio, orders.
-- API: Yes — REST and gRPC. Python SDK available.
-- Pricing: **Free with Tinkoff brokerage account**
+- API: Yes — REST + gRPC + WebSocket. Python SDK available. Very popular with retail algo-traders.
+- Pricing: **Free with T-Bank brokerage account**
 
 **Finam**
 - URL: https://www.finam.ru
@@ -269,8 +317,10 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 ### Developer Libraries
 
 - **apimoex** (Python) — wraps MOEX ISS API
+- **aiomoex** (Python) — async client for MOEX ISS API
 - **moex-api** (JavaScript) — https://github.com/timmson/moex-api
 - **rusquant** (R) — aggregates Finam, MOEX, Tinkoff sources
+- **Postman collection** — https://www.postman.com/tauc-2005/my-public/documentation/jqg5xt5/iss-moex-api
 
 > ⚠️ Due to international sanctions since 2022, access to MOEX services and Russian broker APIs may be restricted from many countries.
 
@@ -284,8 +334,8 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 - URL: https://www.krx.co.kr
 - Data portal: http://data.krx.co.kr
 - Data: KOSPI, KOSDAQ, KONEX stocks, bonds, derivatives, ETFs, indices
-- API: No official REST API. Data via web portal downloads (CSV/Excel).
-- Pricing: Free (web portal)
+- API: Yes — **KRX Open API** (https://openapi.krx.co.kr/) for developer access
+- Pricing: Free (basic data)
 
 ### Regulator / Government APIs
 
@@ -311,8 +361,8 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 **Naver Finance** ⭐ (= Korean Yahoo Finance)
 - URL: https://finance.naver.com
-- Data: Real-time quotes, charts, company profiles, financial statements, news for KOSPI/KOSDAQ
-- API: No official public API (extensively scraped by pykrx and FinanceDataReader)
+- Data: Real-time quotes, charts, company profiles, financial statements, news, consensus estimates, foreign ownership data for KOSPI/KOSDAQ
+- API: Semi-official JSON endpoint at `api.finance.naver.com/siseJson.naver` — returns OHLCV + adjusted prices + foreign ownership ratio. Supported by pandas-datareader NaverDailyReader.
 - Pricing: Free (web portal). **South Korea's most popular finance portal.**
 
 **Daum/Kakao Finance**
@@ -320,6 +370,8 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 - Data: Stock quotes, charts, news, company data
 - API: No official public API
 - Pricing: Free (web portal)
+
+**KakaoStock** — integrated into KakaoTalk and Kakao services. Free.
 
 ### Developer Libraries (all free, open source)
 
@@ -338,6 +390,20 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 - URL: https://github.com/FinanceData/OpenDartReader
 - Wrapper for Open DART API — financial statements, filings
 - Requires free DART API key
+
+### Brokerage APIs
+
+**Korea Investment & Securities Open API (한국투자증권)**
+- URL: https://apiportal.koreainvestment.com/intro
+- Data: Real-time market data, historical prices, order management
+- API: Yes — REST + WebSocket. GitHub samples with Python, LLM/Claude integration support.
+- Pricing: Free with KIS brokerage account
+
+**Kiwoom Securities Open API+ (키움증권)**
+- URL: https://openapi.kiwoom.com
+- Data: Real-time quotes, historical data, order execution. Most widely used retail trading API in Korea.
+- API: Yes — COM-based API (Windows) + newer REST API. Python wrapper: KOAPY (https://koapy.readthedocs.io/)
+- Pricing: Free with Kiwoom account (COM API is Windows-only)
 
 ### Commercial
 
@@ -406,6 +472,15 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 - URL: https://kabu.plus
 - Data: CSV downloads of historical stock data for Japanese equities
 - Pricing: Free tier + paid plans
+
+### Brokerage APIs
+
+**au Kabucom Securities (kabu Station API)**
+- Data: Real-time market data, trading
+- API: Yes — REST API
+- Pricing: Free with brokerage account
+
+**SBI Securities / Rakuten Securities** — limited API access, free with brokerage account
 
 ### Developer Resources
 
