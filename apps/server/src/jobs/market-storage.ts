@@ -145,14 +145,22 @@ export function aggregateMervalCandles(db: Database.Database): void {
 /** Prune old market data to prevent unbounded table growth. */
 export function pruneOldData(db: Database.Database): void {
   try {
-    db.prepare("DELETE FROM exchange_rates WHERE fetched_at < datetime('now', '-30 days')").run();
-    db.prepare("DELETE FROM merval_snapshots WHERE fetched_at < datetime('now', '-30 days')").run();
-    db.prepare("DELETE FROM stock_prices WHERE fetched_at < datetime('now', '-30 days')").run();
+    db.prepare("DELETE FROM exchange_rates WHERE fetched_at < datetime('now', '-7 days')").run();
+    db.prepare("DELETE FROM merval_snapshots WHERE fetched_at < datetime('now', '-7 days')").run();
+    db.prepare("DELETE FROM stock_prices WHERE fetched_at < datetime('now', '-7 days')").run();
+    db.prepare("DELETE FROM exchange_rate_history WHERE date < date('now', '-180 days')").run();
     db.prepare("DELETE FROM stock_fundamentals WHERE fetched_at < datetime('now', '-90 days')").run();
-    // Financial statements: keep all historical data, only prune very old fetched_at
-    db.prepare("DELETE FROM stock_income_statements WHERE fetched_at < datetime('now', '-365 days')").run();
-    db.prepare("DELETE FROM stock_balance_sheets WHERE fetched_at < datetime('now', '-365 days')").run();
-    db.prepare("DELETE FROM stock_cashflow_statements WHERE fetched_at < datetime('now', '-365 days')").run();
+    db.prepare("DELETE FROM financial_statements WHERE fetched_at < datetime('now', '-365 days')").run();
+
+    // Log DB size for monitoring
+    const sizeRow = db.prepare("SELECT page_count * page_size AS size FROM pragma_page_count(), pragma_page_size()").get() as { size: number } | undefined;
+    if (sizeRow) {
+      const sizeMB = (sizeRow.size / 1024 / 1024).toFixed(1);
+      console.log(`[market-data] DB size: ${sizeMB} MB`);
+      if (sizeRow.size > 500 * 1024 * 1024) {
+        console.warn("[market-data] WARNING: DB size exceeds 500 MB!");
+      }
+    }
   } catch (err) {
     console.error("[market-data] Prune error:", err);
   }
