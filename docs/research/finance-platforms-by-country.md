@@ -304,10 +304,10 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 **Finam**
 - URL: https://www.finam.ru
-- Data: Historical OHLCV data for MOEX-listed securities, tick data
-- API: Semi-official — export endpoint (export.finam.ru) for historical data downloads
-- GitHub: https://github.com/ffeast/finam-export (Python client)
-- Pricing: Free for historical data exports
+- Data: Historical OHLCV data for MOEX-listed securities, tick data, charts, research
+- API: **Finam Trade API** (gRPC-based) — market data streaming, order book, historical data, order execution. Docs: `finamweb.github.io/trade-api-docs`. Also older TransaqConnector. CSV export at export.finam.ru.
+- GitHub: https://github.com/ffeast/finam-export (Python client for CSV export)
+- Pricing: Trade API requires brokerage account; historical CSV export is free
 
 ### Community / News
 
@@ -318,9 +318,12 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 ### Central Bank
 
 **CBR (Central Bank of Russia)**
-- Data: Official exchange rates, key rate, monetary statistics
-- API: XML web service for exchange rates
-- Pricing: Free
+- Data: Official exchange rates (daily), key interest rate, monetary statistics, banking sector data, inflation
+- API: Multiple formats:
+  - XML feed: `https://www.cbr.ru/scripts/XML_daily.asp` (add `?date_req=DD/MM/YYYY`)
+  - SOAP service: `https://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx` (methods: `GetCursOnDate`, etc.)
+  - Unofficial JSON mirror: `https://www.cbr-xml-daily.ru/daily_json.js` (popular among devs)
+- Pricing: **Free, no authentication**
 
 ### Developer Libraries
 
@@ -428,17 +431,18 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 - Data: All TSE-listed stocks, indices (TOPIX, Nikkei 225, JPX-Nikkei 400), derivatives, bonds
 - Pricing: Market data feeds are paid (institutional)
 
-**J-Quants API** ⭐ (by JPX)
+**J-Quants API** ⭐ (by JPX / JPXI)
 - URL: https://jpx-jquants.com/en
 - Docs: https://www.jpx.co.jp/english/markets/other-data-services/j-quants-api/
-- Data: Historical stock prices (OHLCV), financial statements, trading volumes, listed company info
-- API: Yes — REST API. Python client library available.
+- Data: Historical stock prices (OHLCV), financial statements, margin trading data. Since Jan 2026: minute bar and tick data as add-on.
+- API: Yes — REST API **V2** (launched Dec 2025, API key auth). JSON + CSV output. Official Python client `jquants-api-client`. Also launched **official MCP server** for AI-assisted development.
 - Pricing:
   - **Free**: 5 req/min, 2 years of data with 12-week delay
-  - Light: ¥1,650/month
-  - Standard: ¥3,300/month
-  - Premium: ¥16,500/month
-- Restriction: Personal use only. No redistribution or app building.
+  - Light: ¥1,650/month (~$11)
+  - Standard: ¥3,300/month (~$22)
+  - Premium: ¥16,500/month (~$110)
+  - Minute/tick add-on: ¥5,500/month
+- Restriction: Personal use only. Corporate/redistribution requires **J-Quants Pro** (separate product at https://pro.jpx-jquants.com).
 
 **JPX Data Catalog** — https://www.jpx.co.jp/english/markets/data-catalog/ — index of all JPX data products
 
@@ -452,8 +456,16 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 **EDINET (FSA Disclosure System)**
 - URL: https://disclosure.edinet-fsa.go.jp
-- Data: Securities reports, annual reports, quarterly reports (like SEC EDGAR)
+- Data: Securities reports, annual reports, quarterly reports (Japan's SEC EDGAR equivalent)
 - API: Yes — EDINET API for downloading XBRL filings
+- Pricing: **Free**
+
+### Central Bank
+
+**Bank of Japan (BOJ)**
+- URL: https://www.stat-search.boj.or.jp/index_en.html
+- Data: 200,000+ time-series — interest rates, money supply (M1/M2/M3), price indices (CGPI, SPPI), TANKAN survey, flow of funds, balance of payments, government debt
+- API: Yes — **BOJ Time-Series Data Search API** (launched Feb 2026). JSON + CSV. Free, no authentication. R package: `BOJ` (https://github.com/stefanangrick/BOJ).
 - Pricing: **Free**
 
 ### Local Financial Data Portals
@@ -483,12 +495,16 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 ### Brokerage APIs
 
-**au Kabucom Securities (kabu Station API)**
+**au Kabucom Securities (kabu Station API)** ⭐
 - Data: Real-time market data, trading
-- API: Yes — REST API
+- API: Yes — the only **free REST API** among Japanese brokers for individual investors
 - Pricing: Free with brokerage account
 
-**SBI Securities / Rakuten Securities** — limited API access, free with brokerage account
+**SBI Securities**
+- API: Localhost-based API via HyperSBI2 (Python connects to local HTTP server). Free with SBI account. Also has paid API for real-time order book data.
+
+**Rakuten Securities**
+- API: Paid API requiring application. Stock prices + order book. Rakuten Wallet (crypto) has separate WebSocket API.
 
 ### Developer Resources
 
