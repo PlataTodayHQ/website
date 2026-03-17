@@ -15,6 +15,7 @@ const { lang } = Astro.params;
   description={t(lang!, "markets.seoDescription")}
   lang={lang}
   ogType="website"
+  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets`]))}
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
@@ -33,18 +34,46 @@ const { lang } = Astro.params;
     }
   }}
 >
-  <div class="mkt" data-markets-hub data-lang={lang}>
+  <div class="mkt" data-markets-hub data-lang={lang}
+    data-i18n-fear={t(lang!, "markets.fear")}
+    data-i18n-greed={t(lang!, "markets.greed")}
+    data-i18n-neutral={t(lang!, "markets.neutral")}
+    data-i18n-updated={t(lang!, "stock.updated")}
+    data-i18n-nstocks={t(lang!, "markets.nStocks" as any)}
+    data-i18n-onestock={t(lang!, "markets.oneStock" as any)}
+    data-i18n-error={t(lang!, "markets.failedToLoad" as any)}
+    data-i18n-commodities={JSON.stringify({
+      'GC=F': t(lang!, "markets.gold" as any),
+      'SI=F': t(lang!, "markets.silver" as any),
+      'CL=F': t(lang!, "markets.crudeOil" as any),
+      'NG=F': t(lang!, "markets.naturalGas" as any),
+      'HG=F': t(lang!, "markets.copper" as any),
+    })}
+    data-i18n-sectors={JSON.stringify({
+      Energy: t(lang!, "markets.sectorEnergy" as any),
+      Finance: t(lang!, "markets.sectorFinance" as any),
+      Telecom: t(lang!, "markets.sectorTelecom" as any),
+      Materials: t(lang!, "markets.sectorMaterials" as any),
+      Agriculture: t(lang!, "markets.sectorAgriculture" as any),
+      Industry: t(lang!, "markets.sectorIndustry" as any),
+      Holding: t(lang!, "markets.sectorHolding" as any),
+      Media: t(lang!, "markets.sectorMedia" as any),
+      Consumer: t(lang!, "markets.sectorConsumer" as any),
+      'Real Estate': t(lang!, "markets.sectorRealEstate" as any),
+      Other: t(lang!, "markets.sectorOther" as any),
+    })}
+  >
     <!-- Header -->
     <header class="mkt-header">
       <div>
         <h1 class="mkt-h1">{t(lang!, "markets.title")}</h1>
         <p class="mkt-sub">{t(lang!, "markets.subtitle")}</p>
       </div>
-      <span class="mkt-updated" data-mkt-updated></span>
+      <span class="mkt-updated" data-mkt-updated aria-live="polite" role="status"></span>
     </header>
 
     <!-- Market Status -->
-    <div class="mkt-status-bar" data-mkt-status></div>
+    <div class="mkt-status-bar" data-mkt-status role="status" aria-label={t(lang!, "markets.title")}></div>
 
     <!-- ═══ FX RATES ROW ═══ -->
     <section class="mkt-section">
@@ -52,8 +81,8 @@ const { lang } = Astro.params;
         <h2 class="mkt-sec-title">{t(lang!, "markets.fxTitle")}</h2>
         <a href={`/${lang}/markets/currencies`} class="mkt-sec-link">{t(lang!, "finDash.viewAll" as any)} &rarr;</a>
       </div>
-      <div class="mkt-fx-grid">
-        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card" data-mkt-fx="oficial">
+      <div class="mkt-fx-grid" role="region" aria-label={t(lang!, "markets.fxTitle")}>
+        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="oficial">
           <div class="mkt-fx-top">
             <span class="mkt-fx-name">USD {t(lang!, "markets.official")}</span>
             <span class="mkt-fx-badge mkt-fx-badge--oficial">{t(lang!, "currencies.bcra")}</span>
@@ -67,7 +96,7 @@ const { lang } = Astro.params;
             <span>{t(lang!, "currencies.sell")} <b data-fx-sell="oficial">—</b></span>
           </div>
         </a>
-        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--blue" data-mkt-fx="blue">
+        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--blue mkt-fx-card--loading" data-mkt-fx="blue">
           <div class="mkt-fx-top">
             <span class="mkt-fx-name">USD {t(lang!, "markets.blue")}</span>
             <span class="mkt-fx-badge mkt-fx-badge--blue">{t(lang!, "currencies.informal")}</span>
@@ -85,7 +114,7 @@ const { lang } = Astro.params;
             <span class="mkt-fx-spread-val" data-fx-gap="blue">—</span>
           </div>
         </a>
-        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card" data-mkt-fx="mep">
+        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="mep">
           <div class="mkt-fx-top">
             <span class="mkt-fx-name">MEP</span>
             <span class="mkt-fx-badge mkt-fx-badge--mep">{t(lang!, "currencies.stockMarket")}</span>
@@ -102,7 +131,7 @@ const { lang } = Astro.params;
             <span class="mkt-fx-spread-val" data-fx-gap="mep">—</span>
           </div>
         </a>
-        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card" data-mkt-fx="ccl">
+        <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="ccl">
           <div class="mkt-fx-top">
             <span class="mkt-fx-name">CCL</span>
             <span class="mkt-fx-badge mkt-fx-badge--ccl">{t(lang!, "currencies.settlement")}</span>
@@ -130,7 +159,7 @@ const { lang } = Astro.params;
       </div>
       <div class="mkt-merval-row">
         <!-- Merval summary -->
-        <a href={`/${lang}/markets/merval`} class="mkt-idx-card">
+        <a href={`/${lang}/markets/merval`} class="mkt-idx-card mkt-idx-card--loading">
           <div class="mkt-idx-top">
             <span class="mkt-idx-label">MERVAL</span>
             <span class="mkt-idx-badge">BYMA</span>
@@ -158,7 +187,7 @@ const { lang } = Astro.params;
             </div>
           </div>
           <div class="mkt-idx-chart">
-            <canvas data-idx-chart height="120"></canvas>
+            <canvas data-idx-chart height="120" role="img" aria-label={t(lang!, "merval.chartTitle")}></canvas>
           </div>
         </a>
 
@@ -195,7 +224,7 @@ const { lang } = Astro.params;
     </section>
 
     <!-- ═══ SECTOR HEATMAP ═══ -->
-    <section class="mkt-section" data-mkt-sectors style="display:none;">
+    <section class="mkt-section" data-mkt-sectors style="display:none;" role="region" aria-label={t(lang!, "markets.sectorHeatmap" as any)}>
       <h2 class="mkt-sec-title">{t(lang!, "markets.sectorHeatmap" as any)}</h2>
       <div class="mkt-heatmap" data-mkt-heatmap></div>
     </section>
@@ -244,7 +273,19 @@ const { lang } = Astro.params;
     <section class="mkt-section">
       <h2 class="mkt-sec-title">{t(lang!, "markets.commoditiesTitle")}</h2>
       <div class="mkt-asset-grid" data-commodities-grid>
-        <div class="mkt-asset-placeholder">Loading...</div>
+        {[...Array(5)].map(() => (
+          <div class="mkt-asset-skel">
+            <span class="mkt-shimmer" style="width:32px;height:32px;border-radius:8px;flex-shrink:0;"></span>
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+              <span class="mkt-shimmer" style="width:60%;height:12px;"></span>
+              <span class="mkt-shimmer" style="width:40%;height:10px;"></span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span class="mkt-shimmer" style="width:60px;height:14px;"></span>
+              <span class="mkt-shimmer" style="width:48px;height:12px;"></span>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
 
@@ -255,23 +296,45 @@ const { lang } = Astro.params;
         <a href={`/${lang}/markets/crypto`} class="mkt-sec-link">{t(lang!, "markets.cryptoViewAll")} &rarr;</a>
       </div>
       <div class="mkt-asset-grid mkt-asset-grid--crypto" data-crypto-grid>
-        <div class="mkt-asset-placeholder">Loading...</div>
+        {[...Array(6)].map(() => (
+          <div class="mkt-asset-skel">
+            <span class="mkt-shimmer" style="width:32px;height:32px;border-radius:50%;flex-shrink:0;"></span>
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+              <span class="mkt-shimmer" style="width:50%;height:12px;"></span>
+              <span class="mkt-shimmer" style="width:30%;height:10px;"></span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <span class="mkt-shimmer" style="width:56px;height:14px;"></span>
+              <span class="mkt-shimmer" style="width:44px;height:12px;"></span>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
 
     <p class="mkt-disclaimer">{t(lang!, "markets.disclaimer")}</p>
+    <noscript><p class="mkt-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+
+    <button class="scroll-top-btn" data-scroll-top aria-label="↑" title="↑">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
   </div>
 </Base>
 
-<script is:inline src="/js/charts.js"></script>
+<script is:inline src="/js/charts.js?v=5"></script>
 <script is:inline>
 (function() {
   var C = window.PlataCharts || {};
   var fmt = C.fmt || function(n) { return Math.round(n).toLocaleString(lang); };
-  var fmtM = C.fmtM || function(v) { return v >= 1e6 ? (v/1e6).toFixed(2)+'M' : Math.round(v).toLocaleString(lang); };
-  var fmtVol = C.fmtVol || function(v) { return v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : v >= 1e3 ? (v/1e3).toFixed(0)+'K' : v; };
+  var fmtM = C.fmtM || function(v) { return v >= 1e6 ? (v/1e6).toLocaleString(lang, {maximumFractionDigits:2})+'M' : Math.round(v).toLocaleString(lang); };
+  var fmtVol = C.fmtVol || function(v) { return v >= 1e9 ? (v/1e9).toLocaleString(lang, {maximumFractionDigits:1})+'B' : v >= 1e6 ? (v/1e6).toLocaleString(lang, {maximumFractionDigits:1})+'M' : v >= 1e3 ? (v/1e3).toLocaleString(lang, {maximumFractionDigits:0})+'K' : Math.round(v).toLocaleString(lang); };
 
   var hub = document.querySelector('[data-markets-hub]');
+  var sectorNames = {};
+  try { sectorNames = JSON.parse(hub.getAttribute('data-i18n-sectors') || '{}'); } catch(e) {}
+  var nStocksLabel = hub.getAttribute('data-i18n-nstocks') || '{n} stocks';
+  var oneStockLabel = hub.getAttribute('data-i18n-onestock') || '1 stock';
+  var i18nError = hub.getAttribute('data-i18n-error') || '' + i18nError + '';
   var lang = hub ? hub.getAttribute('data-lang') || 'en' : 'en';
 
   function setEl(sel, text) {
@@ -283,7 +346,7 @@ const { lang } = Astro.params;
     if (val >= 10000) return Math.round(val).toLocaleString(lang);
     if (val >= 1000) return val.toLocaleString(lang, { maximumFractionDigits: 0 });
     if (val >= 1) return val.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    return val.toFixed(4);
+    return val.toLocaleString(lang, { minimumFractionDigits: 4, maximumFractionDigits: 4 });
   }
 
   function calcSpread(rateSell, officialSell) {
@@ -345,7 +408,7 @@ const { lang } = Astro.params;
       if (gap != null) {
         var gapEl = document.querySelector('[data-fx-gap="' + key + '"]');
         if (gapEl) {
-          gapEl.textContent = (gap >= 0 ? '+' : '') + gap.toFixed(1) + '%';
+          gapEl.textContent = (gap >= 0 ? '+' : '') + gap.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
           gapEl.className = 'mkt-fx-spread-val ' + (gap >= 0 ? 'rc-up' : 'rc-down');
         }
       }
@@ -356,22 +419,27 @@ const { lang } = Astro.params;
       var chEl = document.querySelector('[data-fx-chg="' + key + '"]');
       if (chEl && evo[key].prev) {
         var pct = ((data.value_sell - evo[key].prev) / evo[key].prev * 100);
-        chEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+        chEl.textContent = (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
         chEl.className = 'mkt-fx-chg ' + (pct >= 0 ? 'rc-up' : 'rc-down');
       }
     }
 
-    // Card accent
+    // Card accent + remove loading
     var card = document.querySelector('[data-mkt-fx="' + key + '"]');
-    if (card && evo && evo[key] && evo[key].prev) {
-      var p = data.value_sell - evo[key].prev;
-      card.classList.add(p >= 0 ? 'mkt-fx-card--positive' : 'mkt-fx-card--negative');
+    if (card) {
+      card.classList.remove('mkt-fx-card--loading');
+      if (evo && evo[key] && evo[key].prev) {
+        var p = data.value_sell - evo[key].prev;
+        card.classList.add(p >= 0 ? 'mkt-fx-card--positive' : 'mkt-fx-card--negative');
+      }
     }
   }
 
   // ─── MERVAL ───
   function fillMerval(data) {
     if (!data || !data.price) return;
+    var idxCard = document.querySelector('.mkt-idx-card--loading');
+    if (idxCard) idxCard.classList.remove('mkt-idx-card--loading');
     setEl('[data-idx-price]', fmtM(data.price));
     if (data.high) setEl('[data-idx-high]', fmtM(data.high));
     if (data.low) setEl('[data-idx-low]', fmtM(data.low));
@@ -384,7 +452,7 @@ const { lang } = Astro.params;
     }
     var chEl = document.querySelector('[data-idx-chg]');
     if (chEl && pct != null) {
-      chEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+      chEl.textContent = (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
       chEl.className = 'mkt-idx-chg ' + (pct >= 0 ? 'rc-up' : 'rc-down');
     }
   }
@@ -425,11 +493,12 @@ const { lang } = Astro.params;
         var pct = (s.change || 0) * 100;
         var cls = pct >= 0 ? 'rc-up' : 'rc-down';
         var arrow = pct >= 0 ? '▲' : '▼';
-        html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(sym) + '" class="mkt-mover-row">';
+        var pctFmt = Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2});
+        html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(sym) + '" class="mkt-mover-row" aria-label="' + sym + ' ' + (pct >= 0 ? '+' : '\u2212') + pctFmt + '%">';
         html += '<span class="mkt-mover-sym">' + sym + '</span>';
         html += '<span class="mkt-mover-name">' + (STOCK_NAMES[sym] || s.name || sym) + '</span>';
         html += '<span class="mkt-mover-price">ARS ' + fmt(s.price || 0) + '</span>';
-        html += '<span class="mkt-mover-chg ' + cls + '">' + arrow + ' ' + Math.abs(pct).toFixed(2) + '%</span>';
+        html += '<span class="mkt-mover-chg ' + cls + '">' + arrow + ' ' + Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
         html += '</a>';
       }
       container.innerHTML = html;
@@ -441,7 +510,9 @@ const { lang } = Astro.params;
 
   // ─── COMMODITIES ───
   var COMMODITY_ICONS = { 'GC=F': '🥇', 'SI=F': '🥈', 'CL=F': '🛢️', 'NG=F': '🔥', 'HG=F': '🔶' };
-  var COMMODITY_NAMES = { 'GC=F': 'Gold', 'SI=F': 'Silver', 'CL=F': 'Crude Oil', 'NG=F': 'Natural Gas', 'HG=F': 'Copper' };
+  var commodityI18n = {};
+  try { commodityI18n = JSON.parse(hub.getAttribute('data-i18n-commodities') || '{}'); } catch(e) {}
+  var COMMODITY_NAMES = { 'GC=F': commodityI18n['GC=F'] || 'Gold', 'SI=F': commodityI18n['SI=F'] || 'Silver', 'CL=F': commodityI18n['CL=F'] || 'Crude Oil', 'NG=F': commodityI18n['NG=F'] || 'Natural Gas', 'HG=F': commodityI18n['HG=F'] || 'Copper' };
 
   function fillCommodities(data) {
     var grid = document.querySelector('[data-commodities-grid]');
@@ -463,11 +534,12 @@ const { lang } = Astro.params;
       html += '<div class="mkt-asset-spark" data-cmd-spark="' + c.symbol + '"></div>';
       html += '<div class="mkt-asset-right">';
       html += '<span class="mkt-asset-price">$' + formatUSD(c.price) + '</span>';
-      html += '<span class="mkt-asset-chg ' + cls + '">' + arrow + ' ' + Math.abs(chg).toFixed(2) + '%</span>';
+      html += '<span class="mkt-asset-chg ' + cls + '">' + arrow + ' ' + Math.abs(chg).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       html += '</div>';
       html += '</a>';
     }
     grid.innerHTML = html;
+    grid.closest('.mkt-section').classList.add('mkt-section-loaded');
 
     // Load sparklines for each commodity
     data.forEach(function(c) {
@@ -512,11 +584,12 @@ const { lang } = Astro.params;
       if (sparkHtml) html += '<div class="mkt-asset-spark">' + sparkHtml + '</div>';
       html += '<div class="mkt-asset-right">';
       html += '<span class="mkt-asset-price">$' + formatUSD(c.price) + '</span>';
-      html += '<span class="mkt-asset-chg ' + cls + '">' + arrow + ' ' + Math.abs(chg).toFixed(2) + '%</span>';
+      html += '<span class="mkt-asset-chg ' + cls + '">' + arrow + ' ' + Math.abs(chg).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       html += '</div>';
       html += '</a>';
     }
     grid.innerHTML = html;
+    grid.closest('.mkt-section').classList.add('mkt-section-loaded');
   }
 
   // ─── MARKET BREADTH ───
@@ -590,10 +663,12 @@ const { lang } = Astro.params;
         : 'rgba(220,38,38,' + Math.min(0.08 + Math.abs(chg) * 0.04, 0.35) + ')';
       var sColor = SECTOR_COLORS[sec.name] || '#9ca3af';
       var arrow = chg >= 0 ? '▲' : '▼';
-      html += '<div class="mkt-hm-cell" style="background:' + bgColor + ';border-color:' + sColor + '">';
-      html += '<div class="mkt-hm-top"><span class="mkt-hm-dot" style="background:' + sColor + '"></span><span class="mkt-hm-name">' + sec.name + '</span></div>';
-      html += '<span class="mkt-hm-chg ' + cls + '">' + arrow + ' ' + Math.abs(chg).toFixed(2) + '%</span>';
-      html += '<span class="mkt-hm-count">' + sec.count + ' stocks</span>';
+      var chgFmt = Math.abs(chg).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2});
+      html += '<div class="mkt-hm-cell" style="background:' + bgColor + ';border-color:' + sColor + '" aria-label="' + (sectorNames[sec.name] || sec.name) + ' ' + (chg >= 0 ? '+' : '\u2212') + chgFmt + '%">';
+      var displayName = sectorNames[sec.name] || sec.name;
+      html += '<div class="mkt-hm-top"><span class="mkt-hm-dot" style="background:' + sColor + '"></span><span class="mkt-hm-name">' + displayName + '</span></div>';
+      html += '<span class="mkt-hm-chg ' + cls + '">' + arrow + ' ' + Math.abs(chg).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
+      html += '<span class="mkt-hm-count">' + (sec.count === 1 ? oneStockLabel : nStocksLabel.replace('{n}', sec.count)) + '</span>';
       html += '</div>';
     }
     grid.innerHTML = html;
@@ -617,15 +692,15 @@ const { lang } = Astro.params;
 
     setEl('[data-pulse-up]', up.toString());
     setEl('[data-pulse-down]', down.toString());
-    setEl('[data-pulse-vol]', fmtVol(totalVol));
+    setEl('[data-pulse-vol]', totalVol > 0 ? fmtVol(totalVol) : '—');
     var avgEl = document.querySelector('[data-pulse-avgchg]');
     if (avgEl) {
-      avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toFixed(2) + '%';
+      avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
       avgEl.className = 'mkt-pulse-sv ' + (avgChg >= 0 ? 'rc-up' : 'rc-down');
     }
 
     // Gauge
-    var label = score >= 60 ? 'Greed' : score <= 40 ? 'Fear' : 'Neutral';
+    var label = score >= 60 ? (hub.getAttribute('data-i18n-greed') || 'Greed') : score <= 40 ? (hub.getAttribute('data-i18n-fear') || 'Fear') : (hub.getAttribute('data-i18n-neutral') || 'Neutral');
     var color = score >= 60 ? '#16a34a' : score <= 40 ? '#dc2626' : '#facc15';
     setEl('[data-pulse-score]', score + '/100');
     setEl('[data-pulse-label]', label);
@@ -651,8 +726,8 @@ const { lang } = Astro.params;
         var arrow = pct >= 0 ? '▲' : '▼';
         html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(sym) + '" class="mkt-pvol-row">';
         html += '<span class="mkt-pvol-sym">' + sym + '</span>';
-        html += '<span class="mkt-pvol-vol">' + fmtVol(s.volume || 0) + '</span>';
-        html += '<span class="mkt-pvol-chg ' + cls + '">' + arrow + ' ' + Math.abs(pct).toFixed(2) + '%</span>';
+        html += '<span class="mkt-pvol-vol">' + (s.volume ? fmtVol(s.volume) : '—') + '</span>';
+        html += '<span class="mkt-pvol-chg ' + cls + '">' + arrow + ' ' + Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
         html += '</a>';
       }
       volList.innerHTML = html;
@@ -754,12 +829,16 @@ const { lang } = Astro.params;
     var commodities = res[6];
     var crypto = res[7];
 
-    setEl('[data-mkt-updated]', new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    var hubUpdEl = document.querySelector('[data-mkt-updated]');
+    if (hubUpdEl) hubUpdEl.innerHTML = '<span class="live-dot"></span>' + (hub.getAttribute('data-i18n-updated') || 'Updated') + ' ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
 
     // FX rates
     if (latest && latest.oficial) {
       fillFxCard('oficial', latest.oficial, evo);
       fillFxCard('blue', latest.blue, evo);
+    } else {
+      var fxGrid = document.querySelector('.mkt-fx-grid');
+      if (fxGrid) fxGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
     }
     if (apiRates) {
       if (apiRates.mep) fillFxCard('mep', apiRates.mep, evo);
@@ -767,6 +846,10 @@ const { lang } = Astro.params;
     }
 
     // Merval
+    if (!merval || !merval.price) {
+      var idxCard = document.querySelector('.mkt-idx-card');
+      if (idxCard) idxCard.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+    }
     fillMerval(merval);
 
     // Chart
@@ -784,16 +867,28 @@ const { lang } = Astro.params;
     }
 
     // Commodities
-    if (commodities && Array.isArray(commodities)) {
+    if (commodities && Array.isArray(commodities) && commodities.length > 0) {
       fillCommodities(commodities);
+    } else {
+      var cmdGrid = document.querySelector('[data-commodities-grid]');
+      if (cmdGrid) cmdGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
     }
 
     // Crypto
-    if (crypto && Array.isArray(crypto)) {
+    if (crypto && Array.isArray(crypto) && crypto.length > 0) {
       fillCrypto(crypto);
+    } else {
+      var cGrid = document.querySelector('[data-crypto-grid]');
+      if (cGrid) cGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
     }
   }).catch(function() {
     setEl('[data-mkt-updated]', '—');
+    var fxGrid = document.querySelector('.mkt-fx-grid');
+    if (fxGrid) fxGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+    var cmdGrid = document.querySelector('[data-commodities-grid]');
+    if (cmdGrid) cmdGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+    var cGrid = document.querySelector('[data-crypto-grid]');
+    if (cGrid) cGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
   });
 
   // ─── GLOBAL INDICES (separate load) ───
@@ -859,12 +954,77 @@ const { lang } = Astro.params;
       html += '<span class="mkt-idx-mini-price">' + formatUSD(r.price) + '</span>';
       html += miniSpark(r.closes, r.change >= 0);
       html += '</div>';
-      html += '<span class="mkt-idx-mini-chg ' + cls + '">' + arrow + ' ' + Math.abs(r.change).toFixed(2) + '%</span>';
+      html += '<span class="mkt-idx-mini-chg ' + cls + '">' + arrow + ' ' + Math.abs(r.change).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       html += '</a>';
     }
     grid.innerHTML = html;
     section.style.display = '';
   });
+  // Arrow key navigation for heatmap cells
+  document.addEventListener('keydown', function(e) {
+    if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) return;
+    var active = document.activeElement;
+    if (!active || !active.classList.contains('mkt-hm-cell')) return;
+    var cells = Array.from(document.querySelectorAll('.mkt-hm-cell'));
+    var idx = cells.indexOf(active);
+    if (idx < 0) return;
+    var container = active.parentElement;
+    var cols = Math.max(1, Math.round(container.offsetWidth / active.offsetWidth));
+    var next = -1;
+    if (e.key === 'ArrowRight') next = idx + 1;
+    else if (e.key === 'ArrowLeft') next = idx - 1;
+    else if (e.key === 'ArrowDown') next = idx + cols;
+    else if (e.key === 'ArrowUp') next = idx - cols;
+    if (next >= 0 && next < cells.length) {
+      e.preventDefault();
+      cells[next].focus();
+    }
+  });
+
+  // Scroll to top button
+  var scrollBtn = document.querySelector('[data-scroll-top]');
+  if (scrollBtn) {
+    var scrollVisible = false;
+    window.addEventListener('scroll', function() {
+      var show = window.scrollY > 600;
+      if (show !== scrollVisible) {
+        scrollVisible = show;
+        scrollBtn.classList.toggle('scroll-top-btn--visible', show);
+      }
+    }, { passive: true });
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // ─── Auto-refresh countdown ───
+  var HUB_REFRESH = 5 * 60;
+  var hubRefreshRemaining = HUB_REFRESH;
+  var hubCountdownEl = null;
+
+  function initHubCountdown() {
+    var updEl = document.querySelector('[data-mkt-updated]');
+    if (!updEl) return;
+    hubCountdownEl = document.createElement('span');
+    hubCountdownEl.className = 'refresh-countdown';
+    updEl.appendChild(hubCountdownEl);
+  }
+
+  function hubTick() {
+    hubRefreshRemaining--;
+    if (hubCountdownEl) {
+      var m = Math.floor(hubRefreshRemaining / 60);
+      var s = hubRefreshRemaining % 60;
+      hubCountdownEl.textContent = '(' + m + ':' + (s < 10 ? '0' : '') + s + ')';
+    }
+    if (hubRefreshRemaining <= 0) {
+      hubRefreshRemaining = HUB_REFRESH;
+      window.location.reload();
+    }
+  }
+
+  initHubCountdown();
+  setInterval(hubTick, 1000);
 })();
 </script>
 
@@ -872,7 +1032,7 @@ const { lang } = Astro.params;
   .mkt { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
 
   /* Header */
-  .mkt-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-md); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
+  .mkt-header { display: flex; justify-content: space-between; align-items: end; margin-bottom: var(--spacing-md); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
 
   /* Market Status Bar */
   .mkt-status-bar { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: var(--spacing-xl); }
@@ -905,9 +1065,10 @@ const { lang } = Astro.params;
   .mkt-sec-title { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text); }
   .mkt-sec-link { font-size: 0.75rem; font-weight: 700; color: var(--color-text-meta); text-decoration: none; transition: color 0.15s; }
   .mkt-sec-link:hover { color: var(--color-gold); text-decoration: none; }
+  .mkt-sec-link:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   /* ═══ FX GRID ═══ */
-  .mkt-fx-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; }
+  .mkt-fx-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 
   .mkt-fx-card {
     background: var(--color-bg);
@@ -915,15 +1076,16 @@ const { lang } = Astro.params;
     display: flex; flex-direction: column; gap: 6px;
     text-decoration: none; color: inherit;
     position: relative;
-    transition: background 0.15s;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
   }
   .mkt-fx-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    content: ''; position: absolute; top: 0; inset-inline-start: 0; inset-inline-end: 0; height: 3px;
     background: var(--color-border); transition: background 0.2s;
   }
   .mkt-fx-card--positive::before { background: #16a34a; }
   .mkt-fx-card--negative::before { background: #dc2626; }
-  .mkt-fx-card:hover { background: var(--color-bg-secondary); text-decoration: none; color: inherit; }
+  .mkt-fx-card:hover { background: var(--color-bg-secondary); text-decoration: none; color: inherit; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .mkt-fx-card:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   .mkt-fx-top { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
   .mkt-fx-name { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-text-meta); }
@@ -939,7 +1101,7 @@ const { lang } = Astro.params;
   .mkt-fx-chg { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 
   .mkt-fx-bs { display: flex; gap: 12px; font-size: 0.68rem; color: var(--color-text-meta); }
-  .mkt-fx-bs b { font-weight: 700; color: var(--color-text); margin-left: 3px; font-variant-numeric: tabular-nums; }
+  .mkt-fx-bs b { font-weight: 700; color: var(--color-text); margin-inline-start: 3px; font-variant-numeric: tabular-nums; }
 
   .mkt-fx-spread { display: flex; align-items: center; gap: 4px; }
   .mkt-fx-spread-label { font-size: 0.6rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; }
@@ -949,11 +1111,12 @@ const { lang } = Astro.params;
   .mkt-merval-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); }
 
   .mkt-idx-card {
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px;
-    padding: 16px; display: flex; flex-direction: column; gap: 10px;
-    text-decoration: none; color: inherit; transition: border-color 0.15s;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px;
+    padding: 18px; display: flex; flex-direction: column; gap: 10px;
+    text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
   }
-  .mkt-idx-card:hover { border-color: var(--color-text-meta); text-decoration: none; color: inherit; }
+  .mkt-idx-card:hover { border-color: var(--color-text-meta); text-decoration: none; color: inherit; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .mkt-idx-card:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   .mkt-idx-top { display: flex; align-items: center; gap: 8px; }
   .mkt-idx-label { font-size: 1rem; font-weight: 800; color: var(--color-text); }
@@ -973,12 +1136,12 @@ const { lang } = Astro.params;
 
   /* Top Movers */
   .mkt-movers {
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px;
     display: flex; flex-direction: column; overflow: hidden;
   }
   .mkt-movers-cols { display: grid; grid-template-columns: 1fr 1fr; flex: 1; }
   .mkt-movers-col { display: flex; flex-direction: column; }
-  .mkt-movers-col:first-child { border-right: 1px solid var(--color-border); }
+  .mkt-movers-col:first-child { border-inline-end: 1px solid var(--color-border); }
 
   .mkt-movers-h3 {
     font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
@@ -997,12 +1160,13 @@ const { lang } = Astro.params;
   }
   .mkt-movers-list :global(.mkt-mover-row:last-child) { border-bottom: none; }
   .mkt-movers-list :global(.mkt-mover-row:hover) { background: rgba(246,180,14,0.06); text-decoration: none; color: inherit; }
+  .mkt-movers-list :global(.mkt-mover-row:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: -2px; }
 
   .mkt-movers-list :global(.mkt-mover-sym) { font-weight: 800; font-size: 0.78rem; min-width: 42px; }
   .mkt-movers-list :global(.mkt-mover-name) { font-size: 0.68rem; color: var(--color-text-meta); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .mkt-movers-list :global(.mkt-mover-price) { text-align: right; font-weight: 600; font-size: 0.75rem; }
+  .mkt-movers-list :global(.mkt-mover-price) { text-align: end; font-weight: 600; font-size: 0.75rem; }
   .mkt-movers-list :global(.mkt-mover-chg) {
-    text-align: right; font-weight: 700; font-size: 0.72rem;
+    text-align: end; font-weight: 700; font-size: 0.72rem;
     padding: 2px 6px; border-radius: 3px; min-width: 62px;
   }
   .mkt-movers-list :global(.mkt-mover-chg.rc-up) { background: rgba(22,163,74,0.1); color: #16a34a; }
@@ -1017,11 +1181,12 @@ const { lang } = Astro.params;
     text-decoration: none; transition: color 0.15s, background 0.15s;
   }
   .mkt-movers-footer:hover { color: var(--color-gold); background: rgba(246,180,14,0.04); text-decoration: none; }
+  .mkt-movers-footer:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   /* ═══ GLOBAL INDICES ═══ */
   .mkt-indices-grid {
     display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px;
-    background: var(--color-border); border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden;
+    background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden;
   }
   .mkt-indices-grid :global(.mkt-idx-mini) {
     background: var(--color-bg); padding: 12px 14px;
@@ -1029,6 +1194,7 @@ const { lang } = Astro.params;
     text-decoration: none; color: inherit; transition: background 0.15s;
   }
   .mkt-indices-grid :global(.mkt-idx-mini:hover) { background: var(--color-bg-secondary); text-decoration: none; color: inherit; }
+  .mkt-indices-grid :global(.mkt-idx-mini:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   .mkt-indices-grid :global(.mkt-idx-mini-top) { display: flex; align-items: center; justify-content: center; gap: 4px; }
   .mkt-indices-grid :global(.mkt-idx-mini-flag) { font-size: 0.9rem; }
   .mkt-indices-grid :global(.mkt-idx-mini-name) { font-size: 0.68rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; }
@@ -1044,9 +1210,10 @@ const { lang } = Astro.params;
   .mkt-heatmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
   .mkt-heatmap :global(.mkt-hm-cell) {
     display: flex; flex-direction: column; gap: 4px; padding: 12px 14px;
-    border-radius: 8px; border-left: 3px solid; transition: transform 0.15s;
+    border-radius: 10px; border-inline-start: 3px solid; transition: transform 0.15s, box-shadow 0.15s;
   }
-  .mkt-heatmap :global(.mkt-hm-cell:hover) { transform: translateY(-1px); }
+  .mkt-heatmap :global(.mkt-hm-cell:hover) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .mkt-heatmap :global(.mkt-hm-cell:focus-visible) { outline: 2px solid #fff; outline-offset: -2px; z-index: 2; }
   .mkt-heatmap :global(.mkt-hm-top) { display: flex; align-items: center; gap: 6px; }
   .mkt-heatmap :global(.mkt-hm-dot) { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .mkt-heatmap :global(.mkt-hm-name) { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-text); }
@@ -1057,7 +1224,7 @@ const { lang } = Astro.params;
   .mkt-pulse-grid {
     display: grid; grid-template-columns: 140px 1fr 200px; gap: var(--spacing-md);
     background: var(--color-bg-secondary); border: 1px solid var(--color-border);
-    border-radius: 10px; padding: 16px; align-items: start;
+    border-radius: 12px; padding: 16px; align-items: start;
   }
   .mkt-pulse-gauge {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -1101,9 +1268,10 @@ const { lang } = Astro.params;
     transition: background 0.1s;
   }
   .mkt-pulse-vol-list :global(.mkt-pvol-row:hover) { background: rgba(246,180,14,0.06); text-decoration: none; color: inherit; }
+  .mkt-pulse-vol-list :global(.mkt-pvol-row:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: -2px; }
   .mkt-pulse-vol-list :global(.mkt-pvol-sym) { font-weight: 800; min-width: 48px; }
-  .mkt-pulse-vol-list :global(.mkt-pvol-vol) { color: var(--color-text-meta); font-size: 0.72rem; text-align: right; }
-  .mkt-pulse-vol-list :global(.mkt-pvol-chg) { font-weight: 700; font-size: 0.72rem; min-width: 58px; text-align: right; }
+  .mkt-pulse-vol-list :global(.mkt-pvol-vol) { color: var(--color-text-meta); font-size: 0.72rem; text-align: end; }
+  .mkt-pulse-vol-list :global(.mkt-pvol-chg) { font-weight: 700; font-size: 0.72rem; min-width: 58px; text-align: end; }
 
   @media (max-width: 900px) {
     .mkt-pulse-grid { grid-template-columns: 1fr 1fr; }
@@ -1125,15 +1293,16 @@ const { lang } = Astro.params;
   .mkt-breadth-seg--down { background: #dc2626; }
 
   /* ═══ ASSET CARDS (Commodities + Crypto) ═══ */
-  .mkt-asset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; }
+  .mkt-asset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
   .mkt-asset-grid--crypto { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 
   .mkt-asset-grid :global(.mkt-asset-card) {
     display: flex; align-items: center; gap: 10px; padding: 12px 14px;
     background: var(--color-bg); text-decoration: none; color: inherit;
-    transition: background 0.15s;
+    transition: transform 0.15s, background 0.15s;
   }
-  .mkt-asset-grid :global(.mkt-asset-card:hover) { background: var(--color-bg-secondary); text-decoration: none; color: inherit; }
+  .mkt-asset-grid :global(.mkt-asset-card:hover) { background: var(--color-bg-secondary); text-decoration: none; color: inherit; transform: translateX(2px); }
+  .mkt-asset-grid :global(.mkt-asset-card:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   .mkt-asset-grid :global(.mkt-asset-icon) { font-size: 1.5rem; flex-shrink: 0; width: 32px; text-align: center; }
   .mkt-asset-grid :global(.mkt-asset-icon--crypto) { font-size: 1.2rem; background: rgba(117,170,219,0.1); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: #75AADB; font-weight: 700; }
@@ -1142,11 +1311,21 @@ const { lang } = Astro.params;
   .mkt-asset-grid :global(.mkt-asset-name) { font-size: 0.82rem; font-weight: 800; color: var(--color-text); }
   .mkt-asset-grid :global(.mkt-asset-sym) { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; }
 
-  .mkt-asset-grid :global(.mkt-asset-right) { text-align: right; flex-shrink: 0; display: flex; flex-direction: column; gap: 2px; }
+  .mkt-asset-grid :global(.mkt-asset-right) { text-align: end; flex-shrink: 0; display: flex; flex-direction: column; gap: 2px; }
   .mkt-asset-grid :global(.mkt-asset-price) { font-size: 0.88rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
   .mkt-asset-grid :global(.mkt-asset-chg) { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 
   .mkt-asset-placeholder { padding: 20px; text-align: center; font-size: 0.82rem; color: var(--color-text-meta); background: var(--color-bg); }
+  .mkt-asset-skel { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--color-bg); }
+  .mkt-shimmer { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: mkt-shimmer 1.5s ease-in-out infinite; border-radius: 4px; display: inline-block; }
+
+  /* Shimmer loading */
+  @keyframes mkt-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  .mkt-shimmer { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: mkt-shimmer 1.5s ease-in-out infinite; border-radius: 4px; }
+  .mkt-fx-card--loading .mkt-fx-price,
+  .mkt-fx-card--loading .mkt-fx-bs b { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: mkt-shimmer 1.5s ease-in-out infinite; border-radius: 4px; color: transparent !important; min-width: 60px; display: inline-block; }
+  .mkt-idx-card--loading .mkt-idx-price,
+  .mkt-idx-card--loading .mkt-idx-sv { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: mkt-shimmer 1.5s ease-in-out infinite; border-radius: 4px; color: transparent !important; min-width: 60px; display: inline-block; }
 
   /* Colors */
   .rc-up { color: #16a34a; }
@@ -1167,9 +1346,40 @@ const { lang } = Astro.params;
   :global([data-theme="dark"]) .mkt-movers-list :global(.mkt-mover-chg.rc-down) { color: #f87171; background: rgba(248,113,113,0.12); }
   :global([data-theme="dark"]) .mkt-idx-badge { color: #60a5fa; }
   :global([data-theme="dark"]) .mkt-asset-grid :global(.mkt-asset-icon--crypto) { color: #93c5fd; }
+  :global([data-theme="dark"]) .mkt-fx-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+  :global([data-theme="dark"]) .mkt-idx-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+  /* Section fade-in */
+  @keyframes mkt-section-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .mkt-section-loaded { animation: mkt-section-fade 0.35s ease-out both; }
+
+  /* Retry button */
+  .mkt-retry-btn {
+    display: inline-block; margin-inline-start: 8px; padding: 2px 10px; font-size: 0.72rem;
+    border: 1px solid var(--color-border); border-radius: 4px;
+    background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .mkt-retry-btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
 
   /* Disclaimer */
   .mkt-disclaimer { font-size: 0.7rem; color: var(--color-text-meta); text-align: center; font-style: italic; margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); }
+
+  /* Scroll to top */
+  .scroll-top-btn {
+    position: fixed; bottom: 24px; inset-inline-end: 24px; z-index: 90;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    color: var(--color-text-meta); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.15s, color 0.15s;
+    transform: translateY(8px);
+  }
+  .scroll-top-btn--visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .scroll-top-btn:hover { color: var(--color-gold); border-color: var(--color-gold); }
+  .scroll-top-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   /* Responsive */
   @media (max-width: 900px) {
@@ -1179,13 +1389,48 @@ const { lang } = Astro.params;
     .mkt-asset-grid--crypto { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 520px) {
-    .mkt-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .mkt-header { flex-direction: column; align-items: start; gap: 4px; }
     .mkt-h1 { font-size: 1.3rem; }
     .mkt-fx-grid { grid-template-columns: 1fr 1fr; }
+    .mkt-fx-card { padding: 12px 10px; }
+    .mkt-fx-name { font-size: 0.65rem; }
+    .mkt-fx-badge { font-size: 0.48rem; padding: 1px 4px; }
     .mkt-fx-price { font-size: 1.1rem; }
     .mkt-idx-price { font-size: 1.5rem; }
     .mkt-movers-cols { grid-template-columns: 1fr; }
-    .mkt-movers-col:first-child { border-right: none; border-bottom: 1px solid var(--color-border); }
+    .mkt-movers-col:first-child { border-inline-end: none; border-bottom: 1px solid var(--color-border); }
     .mkt-asset-grid, .mkt-asset-grid--crypto { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mkt-status-bar :global(.mkt-status-dot--open) { animation: none; }
+    .mkt-breadth-seg, .mkt-sec-link, .mkt-cat-link, .mkt-jump-link { transition: none; }
+    .mkt-rate-row, .mkt-rate-btn, .mkt-hot-link, .mkt-trending-card { transition: none; }
+    .mkt-trending-stat, .mkt-breadth-up, .mkt-breadth-down { transition: none; }
+    :global(.mkt-hm-cell), :global(.mkt-asset-card), :global(.mkt-mover-row) { transition: none; }
+    .mkt-fx-card { transition: none; }
+    .mkt-fx-card--loading .mkt-fx-price, .mkt-fx-card--loading .mkt-fx-bs b,
+    .mkt-idx-card--loading .mkt-idx-price, .mkt-idx-card--loading .mkt-idx-sv { animation: none; }
+    .scroll-top-btn { transition: none; }
+    .mkt-shimmer { animation: none; }
+    .mkt-section-loaded { animation: none; }
+    .mkt-retry-btn { transition: none; }
+  }
+
+  @media print {
+    .mkt-status-bar, .scroll-top-btn { display: none !important; }
+    .mkt-fx-grid, .mkt-merval-row, .mkt-asset-grid, .mkt-asset-grid--crypto { gap: 8px; }
+    .mkt-fx-card, .mkt-merval-card, :global(.mkt-asset-card) { break-inside: avoid; }
+    .mkt-movers-col { break-inside: avoid; }
+    .mkt-breadth-seg { transition: none; }
+  }
+
+  @media (prefers-contrast: more) {
+    .mkt-fx-grid, .mkt-indices-grid, .mkt-asset-grid { border-width: 2px; }
+    .mkt-idx-card, .mkt-movers, .mkt-pulse-grid { border-width: 2px; }
+    .mkt-pulse-stat { border-width: 2px; }
+    .mkt-status-bar :global(.mkt-status-item) { border-width: 2px; }
+    .mkt-fx-badge, .mkt-idx-badge { border: 1px solid currentColor; }
+    .mkt-movers-list :global(.mkt-mover-chg) { border: 1px solid currentColor; }
   }
 </style>

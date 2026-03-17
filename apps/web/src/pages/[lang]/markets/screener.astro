@@ -15,6 +15,7 @@ const { lang } = Astro.params;
   description={t(lang!, "screener.seoDescription")}
   lang={lang}
   ogType="website"
+  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/screener`]))}
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
@@ -34,20 +35,32 @@ const { lang } = Astro.params;
     }
   }}
 >
-  <div class="screener-page" data-screener-page data-lang={lang}>
+  <div class="screener-page" data-screener-page data-lang={lang} data-i18n-error={t(lang!, "screener.loadError" as any)} data-i18n-updated={t(lang!, "stock.updated")} data-i18n-stocks={t(lang!, "screener.stocks")} data-i18n-cap={t(lang!, "stock.marketCap")} data-i18n-vol={t(lang!, "stock.volume")} data-i18n-secmap={JSON.stringify({
+    "Technology": t(lang!, "stock.secTechnology" as any),
+    "Healthcare": t(lang!, "stock.secHealthcare" as any),
+    "Financial Services": t(lang!, "stock.secFinancialServices" as any),
+    "Consumer Cyclical": t(lang!, "stock.secConsumerCyclical" as any),
+    "Consumer Defensive": t(lang!, "stock.secConsumerDefensive" as any),
+    "Industrials": t(lang!, "stock.secIndustrials" as any),
+    "Energy": t(lang!, "stock.secEnergy" as any),
+    "Basic Materials": t(lang!, "stock.secBasicMaterials" as any),
+    "Communication Services": t(lang!, "stock.secCommunicationServices" as any),
+    "Real Estate": t(lang!, "stock.secRealEstate" as any),
+    "Utilities": t(lang!, "stock.secUtilities" as any),
+  })}>
     <header class="mkts-header">
       <div>
         <h1 class="mkts-title">{t(lang!, "screener.title")}</h1>
-        <p class="mkts-subtitle">Buenos Aires Stock Exchange — Panel Líder & General</p>
+        <p class="mkts-subtitle">{t(lang!, "screener.subtitle" as any)}</p>
       </div>
-      <p class="mkts-updated" data-mkts-updated>{t(lang!, "common.loading")}</p>
+      <p class="mkts-updated" data-mkts-updated aria-live="polite" role="status">{t(lang!, "common.loading")}</p>
     </header>
 
     <!-- Panel Tabs -->
     <div class="scr-tabs" data-scr-tabs>
-      <button class="scr-tab scr-tab--active" data-panel="all">All</button>
-      <button class="scr-tab" data-panel="lider">Panel Líder</button>
-      <button class="scr-tab" data-panel="general">Panel General</button>
+      <button class="scr-tab scr-tab--active" data-panel="all">{t(lang!, "screener.all" as any)}</button>
+      <button class="scr-tab" data-panel="lider">{t(lang!, "screener.panelLider" as any)}</button>
+      <button class="scr-tab" data-panel="general">{t(lang!, "screener.panelGeneral" as any)}</button>
     </div>
 
     <!-- Market Breadth -->
@@ -61,6 +74,19 @@ const { lang } = Astro.params;
         <div class="scr-breadth-seg scr-breadth-seg--unch" data-scr-breadth-unch></div>
         <div class="scr-breadth-seg scr-breadth-seg--down" data-scr-breadth-down></div>
       </div>
+    </div>
+
+    <!-- Skeleton: Market Breadth -->
+    <div class="scr-breadth scr-skeleton-breadth" data-scr-skeleton-breadth>
+      <div class="scr-breadth-header">
+        <span class="skeleton-shimmer" style="width:120px;height:12px;display:inline-block;"></span>
+        <div style="display:flex;gap:12px;">
+          <span class="skeleton-shimmer" style="width:40px;height:14px;display:inline-block;"></span>
+          <span class="skeleton-shimmer" style="width:40px;height:14px;display:inline-block;"></span>
+          <span class="skeleton-shimmer" style="width:40px;height:14px;display:inline-block;"></span>
+        </div>
+      </div>
+      <div class="skeleton-shimmer" style="height:10px;border-radius:5px;"></div>
     </div>
 
     <!-- Summary Stats -->
@@ -83,21 +109,42 @@ const { lang } = Astro.params;
       </div>
     </div>
 
+    <!-- Skeleton: Summary Stats -->
+    <div class="scr-stats scr-skeleton-stats" data-scr-skeleton-stats>
+      <div class="scr-stat-item">
+        <span class="skeleton-shimmer" style="width:60px;height:10px;display:inline-block;margin-bottom:4px;"></span>
+        <span class="skeleton-shimmer" style="width:48px;height:20px;display:inline-block;"></span>
+      </div>
+      <div class="scr-stat-item">
+        <span class="skeleton-shimmer" style="width:50px;height:10px;display:inline-block;margin-bottom:4px;"></span>
+        <span class="skeleton-shimmer" style="width:48px;height:20px;display:inline-block;"></span>
+      </div>
+      <div class="scr-stat-item">
+        <span class="skeleton-shimmer" style="width:80px;height:10px;display:inline-block;margin-bottom:4px;"></span>
+        <span class="skeleton-shimmer" style="width:64px;height:20px;display:inline-block;"></span>
+      </div>
+      <div class="scr-stat-item">
+        <span class="skeleton-shimmer" style="width:70px;height:10px;display:inline-block;margin-bottom:4px;"></span>
+        <span class="skeleton-shimmer" style="width:56px;height:20px;display:inline-block;"></span>
+      </div>
+    </div>
+
     <!-- Toolbar -->
     <div class="scr-toolbar">
       <div class="scr-search-wrap">
-        <svg class="scr-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="text" class="scr-search" data-scr-search placeholder={t(lang!, "screener.search")} autocomplete="off" />
+        <svg class="scr-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="scr-search" data-scr-search placeholder={t(lang!, "screener.search")} aria-label={t(lang!, "screener.search")} autocomplete="off" />
+        <kbd class="search-kbd" aria-hidden="true">⌘K</kbd>
       </div>
-      <select class="scr-sector-filter" data-scr-sector-filter>
+      <select class="scr-sector-filter" data-scr-sector-filter aria-label={t(lang!, "screener.allSectors")}>
         <option value="">{t(lang!, "screener.allSectors")}</option>
       </select>
       <div class="scr-view-toggle">
-        <button class="scr-view-btn scr-view-btn--active" data-view="table" title={t(lang!, "screener.viewTable" as any)}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <button class="scr-view-btn scr-view-btn--active" data-view="table" title={t(lang!, "screener.viewTable" as any)} aria-pressed="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
         </button>
-        <button class="scr-view-btn" data-view="heatmap" title={t(lang!, "screener.viewHeatmap" as any)}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+        <button class="scr-view-btn" data-view="heatmap" title={t(lang!, "screener.viewHeatmap" as any)} aria-pressed="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
         </button>
       </div>
       <div class="scr-meta">
@@ -109,8 +156,8 @@ const { lang } = Astro.params;
     <div class="scr-chips" data-scr-chips style="display:none;"></div>
 
     <!-- Table (desktop) -->
-    <div class="scr-table-wrap">
-      <table class="scr-table" data-scr-table>
+    <div class="scr-table-wrap" role="region" aria-label={t(lang!, "screener.title")}>
+      <table class="scr-table" data-scr-table role="table">
         <thead>
           <tr>
             <th class="scr-th scr-th--name" data-sort-col="symbol">{t(lang!, "screener.col.symbol")} <span class="scr-arrow" data-arrow="symbol"></span></th>
@@ -126,44 +173,119 @@ const { lang } = Astro.params;
           </tr>
         </thead>
         <tbody data-scr-tbody>
-          <tr><td colspan="10" class="scr-loading"><div class="loading-spinner"></div> Loading…</td></tr>
+          {[...Array(10)].map(() => (
+            <tr class="scr-skeleton-row">
+              <td class="scr-td scr-td--name">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <span class="skeleton-shimmer" style="width:32px;height:32px;border-radius:8px;flex-shrink:0;"></span>
+                  <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
+                    <span class="skeleton-shimmer" style="width:60px;height:12px;"></span>
+                    <span class="skeleton-shimmer" style="width:100px;height:10px;"></span>
+                  </div>
+                </div>
+              </td>
+              <td class="scr-td scr-td--num"><span class="skeleton-shimmer" style="width:70px;height:14px;display:inline-block;margin-inline-start:auto;"></span></td>
+              <td class="scr-td scr-td--num"><span class="skeleton-shimmer" style="width:64px;height:22px;display:inline-block;border-radius:4px;"></span></td>
+              <td class="scr-td scr-td--num"><span class="skeleton-shimmer" style="width:50px;height:14px;display:inline-block;"></span></td>
+              <td class="scr-td scr-td--num"><span class="skeleton-shimmer" style="width:56px;height:14px;display:inline-block;"></span></td>
+              <td class="scr-td scr-td--num"><span class="skeleton-shimmer" style="width:36px;height:14px;display:inline-block;"></span></td>
+              <td class="scr-td scr-td--num scr-td--hide-mobile"><span class="skeleton-shimmer" style="width:36px;height:14px;display:inline-block;"></span></td>
+              <td class="scr-td scr-td--num scr-td--hide-mobile"><span class="skeleton-shimmer" style="width:40px;height:14px;display:inline-block;"></span></td>
+              <td class="scr-td scr-td--range scr-td--hide-mobile"><span class="skeleton-shimmer" style="width:130px;height:10px;display:inline-block;"></span></td>
+              <td class="scr-td scr-td--text scr-td--hide-tablet"><span class="skeleton-shimmer" style="width:80px;height:12px;display:inline-block;"></span></td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
 
     <!-- Cards (mobile) -->
     <div class="scr-cards" data-scr-cards>
-      <div class="scr-loading"><div class="loading-spinner"></div> Loading…</div>
+      {[...Array(6)].map(() => (
+        <div class="scr-skeleton-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span class="skeleton-shimmer" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></span>
+            <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
+              <span class="skeleton-shimmer" style="width:56px;height:12px;"></span>
+              <span class="skeleton-shimmer" style="width:90px;height:10px;"></span>
+            </div>
+            <span class="skeleton-shimmer" style="width:60px;height:16px;border-radius:4px;"></span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span class="skeleton-shimmer" style="width:80px;height:14px;"></span>
+            <div style="display:flex;gap:8px;">
+              <span class="skeleton-shimmer" style="width:50px;height:10px;"></span>
+              <span class="skeleton-shimmer" style="width:50px;height:10px;"></span>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
 
     <!-- Heatmap -->
-    <div class="scr-heatmap" data-scr-heatmap style="display:none;"></div>
+    <div class="scr-heatmap" data-scr-heatmap style="display:none;" role="region" aria-label={t(lang!, "screener.viewHeatmap" as any)}></div>
+
+    <!-- Skeleton: Heatmap -->
+    <div class="scr-heatmap-skeleton" data-scr-skeleton-heatmap style="display:none;">
+      <span class="skeleton-shimmer" style="flex:8 1 0;min-height:80px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:6 1 0;min-height:80px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:5 1 0;min-height:80px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:4 1 0;min-height:70px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:4 1 0;min-height:70px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:3 1 0;min-height:70px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:3 1 0;min-height:70px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:3 1 0;min-height:60px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:2 1 0;min-height:60px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:2 1 0;min-height:60px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:2 1 0;min-height:60px;border-radius:6px;"></span>
+      <span class="skeleton-shimmer" style="flex:2 1 0;min-height:60px;border-radius:6px;"></span>
+    </div>
 
     <!-- No results -->
     <div class="scr-empty" data-scr-empty style="display:none">{t(lang!, "screener.noResults")}</div>
 
+    <button class="scroll-top-btn" data-scroll-top aria-label="↑" title="↑">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
     <p class="info-disclaimer">{t(lang!, "stock.disclaimer")}</p>
+    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
   </div>
 </Base>
 
-<script is:inline src="/js/charts.js"></script>
+<script is:inline src="/js/charts.js?v=5"></script>
 <script is:inline>
 (function() {
   var C = window.PlataCharts || {};
-  var fmt = C.fmt || function(n) { return Math.round(n).toLocaleString(lang); };
-  var fmtM = C.fmtM || function(v) { return v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : Math.round(v).toLocaleString(lang); };
-  var fmtVol = C.fmtVol || function(v) { return v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : v >= 1e3 ? (v/1e3).toFixed(1)+'K' : v; };
-
   var page = document.querySelector('[data-screener-page]');
   var lang = page.getAttribute('data-lang') || 'en';
+  var fmt = C.fmt || function(n) { return Math.round(n).toLocaleString(lang); };
+  var fmtM = C.fmtM || function(v) { return v >= 1e9 ? (v/1e9).toLocaleString(lang, {maximumFractionDigits:1})+'B' : v >= 1e6 ? (v/1e6).toLocaleString(lang, {maximumFractionDigits:1})+'M' : Math.round(v).toLocaleString(lang); };
+  var fmtVol = C.fmtVol || function(v) { return v >= 1e9 ? (v/1e9).toLocaleString(lang, {maximumFractionDigits:1})+'B' : v >= 1e6 ? (v/1e6).toLocaleString(lang, {maximumFractionDigits:1})+'M' : v >= 1e3 ? (v/1e3).toLocaleString(lang, {maximumFractionDigits:1})+'K' : Math.round(v).toLocaleString(lang); };
+
+  // Platform-aware kbd labels
+  if (!/Mac|iPhone|iPad/.test(navigator.platform || '')) {
+    document.querySelectorAll('.search-kbd').forEach(function(el) { el.textContent = 'Ctrl K'; });
+  }
+  if ('ontouchstart' in window) {
+    document.querySelectorAll('.search-kbd').forEach(function(el) { el.style.display = 'none'; });
+  }
 
   var allStocks = [];
   var liderSymbols = {};
   var currentPanel = 'all';
-  var currentSector = '';
+  var urlParams = new URLSearchParams(window.location.search);
+  var urlSector = urlParams.get('sector') || '';
+  var urlSearch = urlParams.get('q') || '';
+  var currentSector = urlSector;
   var currentSort = { key: 'marketCap', dir: 'desc' };
-  var searchTerm = '';
+  var searchTerm = urlSearch;
   var currentView = 'table';
+  var secMap = {};
+  try { secMap = JSON.parse(page.getAttribute('data-i18n-secmap') || '{}'); } catch(e) {}
+  function tSec(s) { return secMap[s] || s; }
+  var i18nCap = page.getAttribute('data-i18n-cap') || 'Cap';
+  var i18nVol = page.getAttribute('data-i18n-vol') || 'Vol';
 
   // ─── Stock logos ───
   var STOCK_LOGOS = {
@@ -214,7 +336,7 @@ const { lang } = Astro.params;
     var initials = sym.substring(0, 2);
     if (url) {
       return '<div class="scr-logo" style="background:' + color + '22" data-stk-logo="' + sym + '" data-color="' + color + '">' +
-        '<img src="' + url + '?size=64&format=png" alt="" loading="lazy">' +
+        '<img src="' + url + '?size=64&format=png" alt="' + sym + ' logo" loading="lazy" width="32" height="32">' +
         '</div>';
     }
     return '<div class="scr-logo scr-logo--fallback" style="background:' + color + '22;color:' + color + '">' + initials + '</div>';
@@ -243,7 +365,7 @@ const { lang } = Astro.params;
     var pct = val * 100;
     var cls = pct >= 0 ? 'rc-up' : 'rc-down';
     var arrow = pct >= 0 ? '▲' : '▼';
-    return '<span class="scr-pct ' + cls + '">' + arrow + ' ' + Math.abs(pct).toFixed(2) + '%</span>';
+    return '<span class="scr-pct ' + cls + '">' + arrow + ' ' + Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
   }
 
   function numHtml(val, formatter) {
@@ -264,7 +386,7 @@ const { lang } = Astro.params;
       '<span class="scr-range-lo">' + fmt(lo) + '</span>' +
       '<div class="scr-range-bar">' +
         '<div class="scr-range-fill" style="width:' + pct + '%"></div>' +
-        '<div class="scr-range-dot" style="left:' + pct + '%"></div>' +
+        '<div class="scr-range-dot" style="inset-inline-start:' + pct + '%"></div>' +
       '</div>' +
       '<span class="scr-range-hi">' + fmt(hi) + '</span>' +
     '</div>';
@@ -340,7 +462,8 @@ const { lang } = Astro.params;
     var filtered = getFiltered();
 
     // Count
-    setEl('[data-scr-count]', filtered.length + ' ' + (filtered.length === 1 ? 'stock' : 'stocks'));
+    var stocksWord = page.getAttribute('data-i18n-stocks') || 'stocks';
+    setEl('[data-scr-count]', filtered.length + ' ' + stocksWord);
 
     updateBreadthAndStats(filtered);
 
@@ -364,7 +487,8 @@ const { lang } = Astro.params;
       var s = filtered[i];
       var borderColor = s.change != null ? (s.change >= 0 ? '#16a34a' : '#dc2626') : 'var(--color-border)';
 
-      html += '<tr class="scr-row" data-symbol="' + s.symbol + '">';
+      var rowDelay = Math.min(i * 15, 400);
+      html += '<tr class="scr-row" data-symbol="' + s.symbol + '" style="animation-delay:' + rowDelay + 'ms">';
       // Symbol + Name
       html += '<td class="scr-td scr-td--name">';
       html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="scr-name-link">';
@@ -382,26 +506,34 @@ const { lang } = Astro.params;
       // Market Cap
       html += '<td class="scr-td scr-td--num">' + (s.marketCap ? '$' + fmtVol(s.marketCap) : '<span class="scr-dim">—</span>') + '</td>';
       // P/E
-      html += '<td class="scr-td scr-td--num">' + (s.pe != null ? s.pe.toFixed(1) : '<span class="scr-dim">—</span>') + '</td>';
+      html += '<td class="scr-td scr-td--num">' + (s.pe != null ? s.pe.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) : '<span class="scr-dim">—</span>') + '</td>';
       // Forward P/E
-      html += '<td class="scr-td scr-td--num scr-td--hide-mobile">' + (s.forwardPe != null ? s.forwardPe.toFixed(1) : '<span class="scr-dim">—</span>') + '</td>';
+      html += '<td class="scr-td scr-td--num scr-td--hide-mobile">' + (s.forwardPe != null ? s.forwardPe.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) : '<span class="scr-dim">—</span>') + '</td>';
       // EPS
-      html += '<td class="scr-td scr-td--num scr-td--hide-mobile">' + (s.eps != null ? s.eps.toFixed(2) : '<span class="scr-dim">—</span>') + '</td>';
+      html += '<td class="scr-td scr-td--num scr-td--hide-mobile">' + (s.eps != null ? s.eps.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) : '<span class="scr-dim">—</span>') + '</td>';
       // 52W Range
       html += '<td class="scr-td scr-td--range scr-td--hide-mobile">' + range52Html(s) + '</td>';
       // Sector
-      html += '<td class="scr-td scr-td--text scr-td--hide-tablet">' + (s.sector || '<span class="scr-dim">—</span>') + '</td>';
+      html += '<td class="scr-td scr-td--text scr-td--hide-tablet">' + (s.sector ? tSec(s.sector) : '<span class="scr-dim">—</span>') + '</td>';
       html += '</tr>';
     }
     tbody.innerHTML = html;
 
-    // Make entire row clickable
+    // Make entire row clickable and keyboard accessible
     tbody.querySelectorAll('.scr-row').forEach(function(row) {
       row.style.cursor = 'pointer';
+      row.setAttribute('tabindex', '0');
+      row.setAttribute('role', 'link');
       row.addEventListener('click', function(e) {
         if (e.target.closest('a')) return; // let actual links work
         var sym = row.getAttribute('data-symbol');
         if (sym) window.location.href = '/' + lang + '/markets/stock?s=' + encodeURIComponent(sym);
+      });
+      row.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          var sym = row.getAttribute('data-symbol');
+          if (sym) window.location.href = '/' + lang + '/markets/stock?s=' + encodeURIComponent(sym);
+        }
       });
     });
 
@@ -414,25 +546,26 @@ const { lang } = Astro.params;
       var arrow = pct != null ? (pct >= 0 ? '▲' : '▼') : '';
       var border = pct != null ? (pct >= 0 ? '#16a34a' : '#dc2626') : 'var(--color-border)';
 
-      cardsHtml += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(st.symbol) + '" class="stk-card" style="--stk-accent:' + border + '">';
+      var cardDelay = Math.min(j * 25, 500);
+      cardsHtml += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(st.symbol) + '" class="stk-card" style="--stk-accent:' + border + ';animation-delay:' + cardDelay + 'ms" aria-label="' + st.symbol + (st.name ? ' — ' + st.name : '') + '">';
       cardsHtml += '<div class="stk-row1">';
       cardsHtml += logoCell(st.symbol).replace('scr-logo', 'stk-logo');
       cardsHtml += '<div class="stk-id">';
       cardsHtml += '<span class="stk-symbol">' + st.symbol + '</span>';
       cardsHtml += '<span class="stk-name">' + (st.name || '') + '</span>';
       cardsHtml += '</div>';
-      cardsHtml += '<div class="stk-change ' + pctClass + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toFixed(2) + '%' : '—') + '</div>';
+      cardsHtml += '<div class="stk-change ' + pctClass + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%' : '—') + '</div>';
       cardsHtml += '</div>';
       cardsHtml += '<div class="stk-row2">';
       cardsHtml += '<span class="stk-price">' + (st.price != null ? 'ARS ' + fmt(st.price) : '—') + '</span>';
       cardsHtml += '<span class="stk-meta">';
-      if (st.pe != null) cardsHtml += '<span class="stk-pe">P/E ' + st.pe.toFixed(1) + '</span>';
-      if (st.marketCap) cardsHtml += '<span class="stk-mcap">Cap $' + fmtVol(st.marketCap) + '</span>';
-      if (st.volume) cardsHtml += '<span class="stk-vol">Vol ' + fmtVol(st.volume) + '</span>';
+      if (st.pe != null) cardsHtml += '<span class="stk-pe">P/E ' + st.pe.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '</span>';
+      if (st.marketCap) cardsHtml += '<span class="stk-mcap">' + i18nCap + ' $' + fmtVol(st.marketCap) + '</span>';
+      if (st.volume) cardsHtml += '<span class="stk-vol">' + i18nVol + ' ' + fmtVol(st.volume) + '</span>';
       cardsHtml += '</span>';
       cardsHtml += '</div>';
       if (st.sector) {
-        cardsHtml += '<div class="stk-row3"><span class="stk-sector">' + st.sector + '</span></div>';
+        cardsHtml += '<div class="stk-row3"><span class="stk-sector">' + tSec(st.sector) + '</span></div>';
       }
       cardsHtml += '</a>';
     }
@@ -452,20 +585,30 @@ const { lang } = Astro.params;
   }
 
   document.querySelectorAll('[data-sort-col]').forEach(function(th) {
-    th.addEventListener('click', function() {
+    th.setAttribute('tabindex', '0');
+    th.setAttribute('role', 'columnheader');
+    th.setAttribute('aria-sort', 'none');
+    function doSort() {
       var col = th.getAttribute('data-sort-col');
       if (currentSort.key === col) {
         currentSort.dir = currentSort.dir === 'desc' ? 'asc' : 'desc';
       } else {
         currentSort = { key: col, dir: col === 'symbol' || col === 'sector' ? 'asc' : 'desc' };
       }
+      document.querySelectorAll('[data-sort-col]').forEach(function(h) { h.setAttribute('aria-sort', 'none'); });
+      th.setAttribute('aria-sort', currentSort.dir === 'asc' ? 'ascending' : 'descending');
       updateArrows();
       renderTable();
+    }
+    th.addEventListener('click', doSort);
+    th.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); doSort(); }
     });
   });
 
   // ─── Search ───
   var searchInput = document.querySelector('[data-scr-search]');
+  if (urlSearch) searchInput.value = urlSearch;
   var searchTimer;
   searchInput.addEventListener('input', function() {
     clearTimeout(searchTimer);
@@ -557,7 +700,7 @@ const { lang } = Astro.params;
     // Keep existing first option ("All Sectors")
     var html = sectorSelect.options[0].outerHTML;
     sorted.forEach(function(sec) {
-      html += '<option value="' + sec + '">' + sec + '</option>';
+      html += '<option value="' + sec + '">' + tSec(sec) + '</option>';
     });
     sectorSelect.innerHTML = html;
     if (currentSector) sectorSelect.value = currentSector;
@@ -565,10 +708,12 @@ const { lang } = Astro.params;
     // Sector chips
     var chipsEl = document.querySelector('[data-scr-chips]');
     if (chipsEl && sorted.length >= 2) {
-      var chtml = '<button class="scr-chip scr-chip--active" data-chip="">All</button>';
+      var allLabel = sectorSelect.options[0].textContent || 'All';
+      var allActive = !currentSector ? ' scr-chip--active' : '';
+      var chtml = '<button class="scr-chip' + allActive + '" data-chip="">' + allLabel + '</button>';
       sorted.forEach(function(sec) {
         var active = currentSector === sec ? ' scr-chip--active' : '';
-        chtml += '<button class="scr-chip' + active + '" data-chip="' + sec + '">' + sec + ' <span class="scr-chip-count">' + sectorCounts[sec] + '</span></button>';
+        chtml += '<button class="scr-chip' + active + '" data-chip="' + sec + '">' + tSec(sec) + ' <span class="scr-chip-count">' + sectorCounts[sec] + '</span></button>';
       });
       chipsEl.innerHTML = chtml;
       chipsEl.style.display = '';
@@ -625,7 +770,7 @@ const { lang } = Astro.params;
     var avgChg = chgCount > 0 ? (chgSum / chgCount) : 0;
     var avgEl = document.querySelector('[data-scr-avgchg]');
     if (avgEl) {
-      avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toFixed(2) + '%';
+      avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
       avgEl.className = 'scr-stat-val ' + (avgChg >= 0 ? 'rc-up' : 'rc-down');
     }
     document.querySelector('[data-scr-stats]').style.display = '';
@@ -653,9 +798,9 @@ const { lang } = Astro.params;
       else { bg = 'rgba(128,128,128,0.12)'; color = 'var(--color-text-meta)'; }
       var weight = (s.marketCap || 1e6) / totalMcap;
       var flex = Math.max(weight * 100, 2).toFixed(2);
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex:' + flex + ' 1 0;background:' + bg + '">';
+      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex:' + flex + ' 1 0;background:' + bg + '" aria-label="' + s.symbol + ' ' + (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%">';
       html += '<span class="hm-sym">' + s.symbol + '</span>';
-      html += '<span class="hm-pct" style="color:' + color + '">' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%</span>';
+      html += '<span class="hm-pct" style="color:' + color + '">' + (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       if (s.price != null) html += '<span class="hm-price">' + fmt(s.price) + '</span>';
       html += '</a>';
     }
@@ -666,19 +811,23 @@ const { lang } = Astro.params;
   document.querySelectorAll('[data-view]').forEach(function(btn) {
     btn.addEventListener('click', function() {
       currentView = btn.getAttribute('data-view');
-      document.querySelectorAll('[data-view]').forEach(function(b) { b.classList.remove('scr-view-btn--active'); });
+      document.querySelectorAll('[data-view]').forEach(function(b) { b.classList.remove('scr-view-btn--active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('scr-view-btn--active');
+      btn.setAttribute('aria-pressed', 'true');
       var tableWrap = document.querySelector('.scr-table-wrap');
       var heatmap = document.querySelector('[data-scr-heatmap]');
       var cards = document.querySelector('[data-scr-cards]');
+      var hmSkel = document.querySelector('[data-scr-skeleton-heatmap]');
       if (currentView === 'heatmap') {
         if (tableWrap) tableWrap.style.display = 'none';
         if (cards) cards.style.display = 'none';
         if (heatmap) heatmap.style.display = '';
+        if (allStocks.length === 0 && hmSkel) hmSkel.style.display = '';
         renderHeatmap(getFiltered());
       } else {
         if (tableWrap) tableWrap.style.display = '';
         if (heatmap) heatmap.style.display = 'none';
+        if (hmSkel) hmSkel.style.display = 'none';
         // cards visibility handled by CSS media query
         if (cards) cards.style.display = '';
       }
@@ -686,17 +835,31 @@ const { lang } = Astro.params;
   });
 
   // ─── Load data: try /api/screener, fallback to BYMA direct (both panels) ───
+  function hideSkeletons() {
+    var skels = page.querySelectorAll('[data-scr-skeleton-breadth],[data-scr-skeleton-stats],[data-scr-skeleton-heatmap]');
+    for (var i = 0; i < skels.length; i++) skels[i].style.display = 'none';
+    var skelRows = page.querySelectorAll('.scr-skeleton-row');
+    for (var i = 0; i < skelRows.length; i++) skelRows[i].remove();
+    var skelCards = page.querySelectorAll('.scr-skeleton-card');
+    for (var i = 0; i < skelCards.length; i++) skelCards[i].remove();
+  }
+
   function onData(stocks) {
+    hideSkeletons();
     allStocks = stocks;
     populateSectors();
-    setEl('[data-mkts-updated]', 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    var updEl = document.querySelector('[data-mkts-updated]');
+    if (updEl) updEl.innerHTML = '<span class="live-dot"></span>' + (page.getAttribute('data-i18n-updated') || 'Updated') + ' ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
     renderTable();
   }
 
   function onError() {
-    setEl('[data-mkts-updated]', 'Unable to load data');
-    document.querySelector('[data-scr-tbody]').innerHTML = '<tr><td colspan="9" class="scr-loading">Unable to load stock data</td></tr>';
-    document.querySelector('[data-scr-cards]').innerHTML = '<div class="scr-loading">Unable to load stock data</div>';
+    hideSkeletons();
+    var errMsg = page.getAttribute('data-i18n-error') || 'Unable to load stock data';
+    var retryBtn = '<button class="scr-retry-btn" aria-label="Retry" onclick="window.location.reload()">&#x21bb; Retry</button>';
+    setEl('[data-mkts-updated]', '—');
+    document.querySelector('[data-scr-tbody]').innerHTML = '<tr><td colspan="10" class="scr-loading">' + errMsg + '<br>' + retryBtn + '</td></tr>';
+    document.querySelector('[data-scr-cards]').innerHTML = '<div class="scr-loading">' + errMsg + '<br>' + retryBtn + '</div>';
   }
 
   function postBYMA(url) {
@@ -794,6 +957,60 @@ const { lang } = Astro.params;
       }
     }
   });
+
+  // Ctrl/Cmd+K to focus search
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      var si = document.querySelector('[data-scr-search]');
+      if (si) { si.focus(); si.select(); }
+    }
+  });
+
+  // Scroll to top button
+  var scrollBtn = document.querySelector('[data-scroll-top]');
+  if (scrollBtn) {
+    var scrollVisible = false;
+    window.addEventListener('scroll', function() {
+      var show = window.scrollY > 600;
+      if (show !== scrollVisible) {
+        scrollVisible = show;
+        scrollBtn.classList.toggle('scroll-top-btn--visible', show);
+      }
+    }, { passive: true });
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Auto-refresh with countdown (5 min)
+  var REFRESH_INTERVAL = 5 * 60;
+  var refreshRemaining = REFRESH_INTERVAL;
+  function fmtCountdown(s) {
+    var m = Math.floor(s / 60);
+    var sec = s % 60;
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+  function tickCountdown() {
+    refreshRemaining--;
+    if (refreshRemaining <= 0) {
+      refreshRemaining = REFRESH_INTERVAL;
+      window.location.reload();
+      return;
+    }
+    var cdEl = document.querySelector('.refresh-countdown');
+    if (cdEl) cdEl.textContent = '(' + fmtCountdown(refreshRemaining) + ')';
+  }
+  // Add countdown span next to updated text
+  var updatedEl = document.querySelector('[data-mkts-updated]');
+  if (updatedEl && !updatedEl.querySelector('.refresh-countdown')) {
+    var cdSpan = document.createElement('span');
+    cdSpan.className = 'refresh-countdown';
+    cdSpan.textContent = '(' + fmtCountdown(refreshRemaining) + ')';
+    updatedEl.appendChild(document.createTextNode(' '));
+    updatedEl.appendChild(cdSpan);
+  }
+  setInterval(tickCountdown, 1000);
 })();
 </script>
 
@@ -810,6 +1027,7 @@ const { lang } = Astro.params;
     transition: color 0.15s, border-color 0.15s;
   }
   .scr-tab:hover { color: var(--color-text); }
+  .scr-tab:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   .scr-tab--active { color: var(--color-gold); border-bottom-color: var(--color-gold); }
 
   /* Toolbar */
@@ -822,25 +1040,30 @@ const { lang } = Astro.params;
     position: relative; flex: 1; min-width: 200px; max-width: 400px;
   }
   .scr-search-icon {
-    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    position: absolute; inset-inline-start: 12px; top: 50%; transform: translateY(-50%);
     color: var(--color-text-meta); pointer-events: none;
   }
   .scr-search {
-    width: 100%; padding: 8px 12px 8px 36px;
-    border: 1px solid var(--color-border); border-radius: 8px;
+    width: 100%; padding: 10px 12px; padding-inline-start: 38px;
+    border: 1px solid var(--color-border); border-radius: 10px;
     background: var(--color-bg-secondary); color: var(--color-text);
     font-size: 0.85rem; outline: none;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
-  .scr-search:focus { border-color: var(--color-gold); }
+  .scr-search { padding-inline-end: 42px; }
+  .scr-search:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(246,180,14,0.1); }
+  .scr-search:focus + .search-kbd { display: none; }
+  .scr-search:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .search-kbd { position: absolute; inset-inline-end: 10px; top: 50%; transform: translateY(-50%); font-size: 0.6rem; font-family: inherit; font-weight: 600; padding: 2px 5px; border-radius: 3px; background: var(--color-bg); border: 1px solid var(--color-border); color: var(--color-text-meta); pointer-events: none; line-height: 1; }
   .scr-search::placeholder { color: var(--color-text-meta); }
   .scr-sector-filter {
-    padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 8px;
+    padding: 10px 12px; border: 1px solid var(--color-border); border-radius: 10px;
     background: var(--color-bg-secondary); color: var(--color-text);
     font-size: 0.85rem; outline: none; cursor: pointer;
-    transition: border-color 0.15s; min-width: 140px;
+    transition: border-color 0.15s, box-shadow 0.15s; min-width: 140px;
   }
-  .scr-sector-filter:focus { border-color: var(--color-gold); }
+  .scr-sector-filter:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(246,180,14,0.1); }
+  .scr-sector-filter:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   :global([data-theme="dark"]) .scr-sector-filter { background: var(--color-bg-secondary); color: var(--color-text); border-color: var(--color-border); }
 
   /* Sector Chips */
@@ -854,10 +1077,11 @@ const { lang } = Astro.params;
     white-space: nowrap;
   }
   :global(.scr-chip:hover) { border-color: var(--color-gold); color: var(--color-text); }
+  :global(.scr-chip:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   :global(.scr-chip--active) { background: var(--color-gold); color: #000; border-color: var(--color-gold); font-weight: 700; }
-  :global(.scr-chip-count) { font-size: 0.62rem; opacity: 0.7; margin-left: 2px; }
+  :global(.scr-chip-count) { font-size: 0.62rem; opacity: 0.7; margin-inline-start: 2px; }
 
-  .scr-meta { margin-left: auto; }
+  .scr-meta { margin-inline-start: auto; }
   .scr-count {
     font-size: 0.75rem; color: var(--color-text-meta);
     font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
@@ -866,9 +1090,14 @@ const { lang } = Astro.params;
   /* Table */
   .scr-table-wrap {
     overflow-x: auto; margin-bottom: var(--spacing-xl);
-    border: 1px solid var(--color-border); border-radius: 10px;
+    border: 1px solid var(--color-border); border-radius: 12px;
     background: var(--color-bg-secondary);
+    scrollbar-width: thin; scrollbar-color: var(--color-border) transparent;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
+  .scr-table-wrap::-webkit-scrollbar { height: 6px; }
+  .scr-table-wrap::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+  .scr-table-wrap::-webkit-scrollbar-track { background: transparent; }
   .scr-table {
     width: 100%; border-collapse: collapse;
     font-variant-numeric: tabular-nums;
@@ -878,7 +1107,7 @@ const { lang } = Astro.params;
   .scr-th {
     position: sticky; top: 0; z-index: 2;
     padding: 10px 14px;
-    text-align: left;
+    text-align: start;
     font-size: 0.7rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.05em;
     color: var(--color-text-meta);
@@ -889,22 +1118,27 @@ const { lang } = Astro.params;
     transition: color 0.15s;
   }
   .scr-th:hover { color: var(--color-text); }
+  .scr-th:focus-visible { outline: 2px solid var(--color-gold); outline-offset: -2px; }
   .scr-th--active { color: var(--color-gold); }
-  .scr-th--num { text-align: right; }
-  .scr-th--text { text-align: left; }
+  .scr-th--num { text-align: end; }
+  .scr-th--text { text-align: start; }
   .scr-th--range { text-align: center; min-width: 160px; cursor: default; }
 
   .scr-arrow {
-    font-size: 0.65rem; margin-left: 2px;
+    font-size: 0.65rem; margin-inline-start: 2px;
     display: inline-block; min-width: 8px;
   }
+
+  @keyframes scr-row-fade { from { opacity: 0; } to { opacity: 1; } }
 
   /* Rows — :global() for JS-injected rows */
   :global(.scr-row) {
     transition: background 0.1s;
+    animation: scr-row-fade 0.2s ease-out both;
   }
   :global(.scr-row:nth-child(even)) { background: rgba(128,128,128,0.04); }
   :global(.scr-row:hover) { background: rgba(246,180,14,0.06); }
+  :global(.scr-row:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: -2px; }
 
   :global(.scr-td) {
     padding: 8px 14px;
@@ -914,9 +1148,9 @@ const { lang } = Astro.params;
     white-space: nowrap;
     vertical-align: middle;
   }
-  :global(.scr-td--num) { text-align: right; font-weight: 600; }
+  :global(.scr-td--num) { text-align: end; font-weight: 600; }
   :global(.scr-td--text) { font-size: 0.75rem; color: var(--color-text-secondary); max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
-  :global(.scr-td--name) { padding-left: 12px; min-width: 200px; }
+  :global(.scr-td--name) { padding-inline-start: 12px; min-width: 200px; }
 
   /* Name cell — :global() needed because HTML is injected via JS innerHTML */
   .scr-th--name { min-width: 200px; width: 22%; }
@@ -964,11 +1198,46 @@ const { lang } = Astro.params;
     border-radius: 50%; border: 1.5px solid var(--color-bg);
   }
 
+  /* Skeleton Shimmer */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .skeleton-shimmer {
+    background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 4px;
+  }
+
+  .scr-skeleton-card {
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    border-radius: 12px; padding: 12px;
+    border-inline-start: 3px solid var(--color-border);
+  }
+
+  .scr-skeleton-row :global(.scr-td) {
+    border-bottom: 1px solid rgba(128,128,128,0.1);
+  }
+
+  .scr-heatmap-skeleton {
+    display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: var(--spacing-xl);
+    min-height: 200px;
+  }
+
   /* Loading */
   .scr-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl); font-size: 0.85rem; }
-  .loading-spinner { margin-right: 8px; vertical-align: middle; }
+  .loading-spinner {
+    display: inline-block; width: 18px; height: 18px; margin-inline-end: 8px; vertical-align: middle;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-gold);
+    border-radius: 50%;
+    animation: scr-spin 0.8s linear infinite;
+  }
+  @keyframes scr-spin { to { transform: rotate(360deg); } }
 
-  .scr-empty { text-align: center; color: var(--color-text-meta); padding: var(--spacing-2xl); font-size: 0.9rem; font-style: italic; }
+  .scr-empty { text-align: center; color: var(--color-text-meta); padding: var(--spacing-2xl); font-size: 0.9rem; }
+  .scr-empty::before { content: '🔍'; display: block; font-size: 2rem; margin-bottom: var(--spacing-sm); opacity: 0.5; }
 
   .info-disclaimer { margin-top: var(--spacing-xl); }
 
@@ -977,9 +1246,10 @@ const { lang } = Astro.params;
 
   /* Market Breadth */
   .scr-breadth {
-    margin-bottom: 1rem; padding: 12px 16px;
-    background: var(--color-bg-secondary); border-radius: 10px;
+    margin-bottom: 1rem; padding: 14px 18px;
+    background: var(--color-bg-secondary); border-radius: 12px;
     border: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .scr-breadth-header {
     display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
@@ -1007,9 +1277,14 @@ const { lang } = Astro.params;
     margin-bottom: 1rem;
   }
   .scr-stat-item {
-    display: flex; flex-direction: column; gap: 2px; padding: 10px 14px;
-    background: var(--color-bg-secondary); border-radius: 8px;
+    display: flex; flex-direction: column; gap: 2px; padding: 12px 16px;
+    background: var(--color-bg-secondary); border-radius: 12px;
     border: 1px solid var(--color-border);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .scr-stat-item:hover {
+    border-color: rgba(246,180,14,0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
   .scr-stat-label {
     font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
@@ -1023,15 +1298,16 @@ const { lang } = Astro.params;
   :global(.scr-stat-val.rc-down) { color: #dc2626; }
 
   /* View Toggle */
-  .scr-view-toggle { display: flex; gap: 2px; }
+  .scr-view-toggle { display: flex; gap: 2px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px; padding: 3px; }
   .scr-view-btn {
-    padding: 6px 10px; border: 1px solid var(--color-border); background: none;
-    color: var(--color-text-meta); cursor: pointer; border-radius: 6px;
+    padding: 6px 10px; border: none; background: transparent;
+    color: var(--color-text-meta); cursor: pointer; border-radius: 7px;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.15s;
   }
-  .scr-view-btn:hover { color: var(--color-text); border-color: var(--color-text-meta); }
-  .scr-view-btn--active { color: var(--color-gold); border-color: var(--color-gold); background: rgba(246,180,14,0.08); }
+  .scr-view-btn:hover { color: var(--color-text); background: rgba(128,128,128,0.08); }
+  .scr-view-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .scr-view-btn--active { color: #000; background: var(--color-gold); box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
 
   /* Heatmap */
   :global(.scr-heatmap) {
@@ -1040,23 +1316,27 @@ const { lang } = Astro.params;
   }
   :global(.hm-cell) {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 10px 6px; border-radius: 6px; min-height: 70px; min-width: 60px;
-    text-decoration: none; color: inherit; transition: transform 0.1s, box-shadow 0.15s;
+    padding: 10px 6px; border-radius: 8px; min-height: 70px; min-width: 60px;
+    text-decoration: none; color: inherit; transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
     cursor: pointer; overflow: hidden;
   }
   :global(.hm-cell:hover) {
-    transform: scale(1.04); box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    z-index: 2; text-decoration: none; color: inherit;
+    transform: scale(1.06); box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    z-index: 2; text-decoration: none; color: inherit; filter: brightness(1.1);
   }
+  :global(.hm-cell:focus-visible) { outline: 2px solid #fff; outline-offset: -2px; z-index: 2; transform: scale(1.04); }
   :global(.hm-sym) { font-size: 0.75rem; font-weight: 800; color: var(--color-text); line-height: 1.2; }
   :global(.hm-pct) { font-size: 0.8rem; font-weight: 700; line-height: 1.3; }
   :global(.hm-price) { font-size: 0.6rem; color: var(--color-text-meta); margin-top: 2px; }
 
   /* Dark mode fixes */
   :global([data-theme="dark"]) .scr-search { background: var(--color-bg-secondary); color: var(--color-text); border-color: var(--color-border); }
-  :global([data-theme="dark"]) .scr-table-wrap { background: var(--color-bg-secondary); }
+  :global([data-theme="dark"]) .scr-table-wrap { background: var(--color-bg-secondary); box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
   :global([data-theme="dark"]) .scr-th { background: var(--color-bg-secondary); }
   :global([data-theme="dark"]) .scr-range-dot { border-color: var(--color-bg-secondary); }
+  :global([data-theme="dark"]) .scr-breadth { box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  :global([data-theme="dark"]) .scr-stat-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  :global([data-theme="dark"] .stk-card:hover) { box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 2px 8px rgba(246,180,14,0.06); }
 
   /* Responsive: hide columns progressively */
   @media (max-width: 1100px) {
@@ -1068,7 +1348,34 @@ const { lang } = Astro.params;
 
   @media (max-width: 768px) {
     .scr-stats { grid-template-columns: repeat(2, 1fr); }
+    .scr-skeleton-stats { grid-template-columns: repeat(2, 1fr); }
   }
+
+  @keyframes stk-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Mobile card styles */
+  :global(.stk-card) {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    border-radius: 12px; padding: 14px; border-inline-start: 3px solid var(--stk-accent, var(--color-border));
+    transition: transform 0.1s, box-shadow 0.15s;
+    animation: stk-fade-in 0.25s ease-out both;
+  }
+  :global(.stk-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  :global(.stk-card:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  :global(.stk-row1) { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  :global(.stk-logo) { width: 32px; height: 32px; flex-shrink: 0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #fff; overflow: hidden; }
+  :global(.stk-logo img) { width: 100%; height: 100%; object-fit: contain; }
+  :global(.stk-id) { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  :global(.stk-symbol) { font-size: 0.85rem; font-weight: 800; color: var(--color-text); }
+  :global(.stk-name) { font-size: 0.7rem; color: var(--color-text-meta); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  :global(.stk-change) { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  :global(.stk-row2) { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  :global(.stk-price) { font-size: 0.82rem; font-weight: 600; color: var(--color-text); font-variant-numeric: tabular-nums; }
+  :global(.stk-meta) { display: flex; gap: 10px; font-size: 0.68rem; color: var(--color-text-meta); }
+  :global(.stk-pe), :global(.stk-mcap), :global(.stk-vol) { white-space: nowrap; }
+  :global(.stk-row3) { margin-top: 4px; }
+  :global(.stk-sector) { font-size: 0.65rem; color: var(--color-text-meta); background: var(--color-bg); padding: 2px 8px; border-radius: 3px; }
 
   /* Mobile: switch to cards */
   @media (max-width: 640px) {
@@ -1077,6 +1384,82 @@ const { lang } = Astro.params;
     .scr-search-wrap { max-width: none; }
     .scr-view-toggle { display: none; }
     :global(.scr-heatmap) { display: none !important; }
+    .scr-heatmap-skeleton { display: none !important; }
+    .scr-stats { grid-template-columns: 1fr; gap: 8px; }
+    .scr-skeleton-stats { grid-template-columns: 1fr; }
+    .scr-tabs { gap: 2px; flex-wrap: wrap; }
+    .scr-tab { font-size: 0.72rem; padding: 6px 10px; }
+    .mkts-header { flex-direction: column; align-items: start; gap: 8px; }
+    .mkts-title { font-size: 1.3rem; }
+    .scr-toolbar { gap: 8px; }
+    .scr-search { font-size: 0.82rem; padding: 8px 12px 8px 34px; }
+    .scr-sector-filter { font-size: 0.78rem; padding: 8px 10px; }
+    :global(.scr-chips) { gap: 4px; }
+    :global(.scr-chip) { font-size: 0.65rem; padding: 3px 8px; }
+    /* Card grid for wider phones (landscape) */
+    @media (min-width: 400px) {
+      .scr-cards { grid-template-columns: repeat(2, 1fr); }
+    }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton-shimmer { animation: none; }
+    .loading-spinner { animation: none; }
+    .scr-breadth-seg, .scr-tab, .scr-search, .scr-sector-filter { transition: none; }
+    :global(.stk-card), :global(.scr-detail-card), :global(.scr-detail-link) { transition: none; animation: none; }
+    .scr-expand-btn, .scr-sort-btn, .scr-sort-icon, :global(.scr-row) { transition: none; animation: none; }
+    .scr-filter-input, .scr-sort-select, .scr-view-btn, .scr-th { transition: none; }
+    :global(.scr-chip), :global(.hm-cell) { transition: none; }
+    .scroll-top-btn { transition: none; }
+    .scr-breadth, .scr-stats, .scr-toolbar, .scr-table-wrap, .scr-cards { animation: none; }
+  }
+
+  @media print {
+    .scr-toolbar, .scr-tabs, .scr-chips, .scr-view-toggle { display: none !important; }
+    :global(.scr-heatmap) { display: none !important; }
+    :global(.scr-cards) { display: none !important; }
+    .scr-table-wrap { display: block !important; overflow: visible; }
+    .scr-table { font-size: 0.7rem; }
+    .scr-row { break-inside: avoid; }
+    .scroll-top-btn { display: none !important; }
+  }
+
+  @media (prefers-contrast: more) {
+    .scr-table-wrap, .scr-breadth, .scr-stat-item { border-width: 2px; }
+    :global(.stk-card) { border-width: 2px; }
+    :global(.scr-chip) { border-width: 2px; }
+    :global(.scr-pct) { border: 1px solid currentColor; }
+    .scr-search, .scr-sector-filter { border-width: 2px; }
+    .scr-tab--active { border-bottom-width: 3px; }
+    .scr-view-btn { border-width: 2px; }
+  }
+
+  .scroll-top-btn {
+    position: fixed; bottom: 24px; inset-inline-end: 24px; z-index: 90;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    color: var(--color-text-meta); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.15s, color 0.15s;
+    transform: translateY(8px);
+  }
+  .scroll-top-btn--visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .scroll-top-btn:hover { color: var(--color-gold); border-color: var(--color-gold); }
+  .scroll-top-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+  @keyframes scr-section-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .scr-breadth, .scr-stats, .scr-toolbar, .scr-table-wrap, .scr-cards {
+    animation: scr-section-fade 0.3s ease-out;
+  }
+
+  .scr-retry-btn {
+    display: inline-block; margin-top: 8px; padding: 4px 12px; font-size: 0.72rem;
+    border: 1px solid var(--color-border); border-radius: 4px;
+    background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .scr-retry-btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
 </style>
 

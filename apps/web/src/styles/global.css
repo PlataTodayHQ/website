@@ -18,6 +18,8 @@
   --color-accent-secondary: var(--color-gold);
   --color-link: #1a1a1a;
   --color-link-hover: #4a8abf;
+  --color-positive: #16a34a;
+  --color-negative: #dc2626;
 
   --max-width: 1200px;
   --content-width: 720px;
@@ -170,7 +172,42 @@ button:focus:not(:focus-visible) {
 .mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
 .mkts-title { font-size: 2rem; font-weight: 700; line-height: 1.1; }
 .mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
-.mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
+.mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+
+/* Live dot indicator */
+@keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: #16a34a; display: inline-block; flex-shrink: 0; animation: live-pulse 2s ease-in-out infinite; }
+[data-theme="dark"] .live-dot { background: #4ade80; }
+@media (prefers-reduced-motion: reduce) { .live-dot { animation: none; } }
+
+/* ========================== */
+/* SHARED: Auto-refresh timer */
+/* ========================== */
+.refresh-countdown { font-size: 0.65rem; color: var(--color-text-meta); opacity: 0.6; margin-inline-start: 4px; font-variant-numeric: tabular-nums; }
+
+/* ========================== */
+/* SHARED: Tab navigation     */
+/* ========================== */
+.mkts-tabs { display: flex; gap: 2px; border-bottom: 2px solid var(--color-border); margin-bottom: var(--spacing-xl); overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.mkts-tabs::-webkit-scrollbar { display: none; }
+.mkts-tab { padding: 10px 16px; font-size: 0.78rem; font-weight: 700; color: var(--color-text-meta); border: none; background: none; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color 0.15s, border-color 0.15s; }
+.mkts-tab:hover { color: var(--color-text); }
+.mkts-tab--active { color: var(--color-gold); border-bottom-color: var(--color-gold); }
+.mkts-tab:focus-visible { outline: 2px solid var(--color-gold); outline-offset: -2px; }
+
+/* ========================== */
+/* SHARED: Tooltip utility    */
+/* ========================== */
+[data-tip] { position: relative; }
+[data-tip]::after {
+  content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%) scale(0.95);
+  background: var(--color-bg-secondary); color: var(--color-text); border: 1px solid var(--color-border); border-radius: 6px;
+  padding: 4px 8px; font-size: 0.65rem; font-weight: 600; white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity 0.15s, transform 0.15s; z-index: 50;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+[data-tip]:hover::after { opacity: 1; transform: translateX(-50%) scale(1); }
+@media (max-width: 640px) { [data-tip]::after { display: none; } }
 
 @media (max-width: 640px) {
   .mkts-header { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -188,7 +225,8 @@ button:focus:not(:focus-visible) {
 /* ====================== */
 .info-section { margin-bottom: var(--spacing-2xl); }
 .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
-.info-card, .explainer-card { padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
+.info-card, .explainer-card { padding: var(--spacing-lg); background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; transition: border-color 0.15s; }
+.info-card:hover, .explainer-card:hover { border-color: rgba(246,180,14,0.25); }
 .info-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
 .info-card p, .explainer-card p { font-size: 0.85rem; line-height: 1.6; color: var(--color-text-secondary); }
 .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
@@ -225,10 +263,11 @@ button:focus:not(:focus-visible) {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-left: 3px solid var(--stk-accent, var(--color-border));
-  border-radius: 10px;
+  border-radius: 12px;
   text-decoration: none; color: inherit;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
   position: relative; overflow: hidden;
+  container-type: inline-size;
 }
 .stk-vol-bg {
   position: absolute; left: 0; top: 0; bottom: 0; border-radius: 10px 0 0 10px;
@@ -241,10 +280,14 @@ button:focus:not(:focus-visible) {
 }
 .stk-card:hover {
   border-color: var(--color-gold); border-left-color: var(--color-gold);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(246,180,14,0.12);
-  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08), 0 2px 10px rgba(246,180,14,0.15);
+  transform: translateY(-3px);
+}
+[data-theme="dark"] .stk-card:hover {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 2px 10px rgba(246,180,14,0.08);
 }
 .stk-card:hover::after { opacity: 0.5; right: 12px; }
+.stk-card:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
 .stk-row1 { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
 .stk-logo {
@@ -264,6 +307,8 @@ button:focus:not(:focus-visible) {
 }
 .stk-change.rc-up { background: rgba(22,163,74,0.12); color: #16a34a; }
 .stk-change.rc-down { background: rgba(220,38,38,0.12); color: #dc2626; }
+[data-theme="dark"] .stk-change.rc-up { color: #4ade80; background: rgba(74,222,128,0.12); }
+[data-theme="dark"] .stk-change.rc-down { color: #f87171; background: rgba(248,113,113,0.12); }
 .stk-row2 {
   display: flex; justify-content: space-between; align-items: baseline;
   padding-top: 8px; border-top: 1px solid rgba(128,128,128,0.15);
@@ -307,6 +352,8 @@ button:focus:not(:focus-visible) {
   --color-link: #e8e6e3;
   --color-link-hover: #75AADB;
   --color-accent: #75AADB;
+  --color-positive: #4ade80;
+  --color-negative: #f87171;
 
   --cat-politics: #ef4444;
   --cat-economy: #38bdf8;

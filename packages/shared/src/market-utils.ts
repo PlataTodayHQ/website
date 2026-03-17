@@ -88,9 +88,10 @@ export async function fetchYahooChart(
   symbol: string,
   interval = "1d",
   range = "1mo",
+  includeEvents = false,
 ): Promise<any | null> {
   const encoded = encodeURIComponent(symbol);
-  const params = `interval=${interval}&range=${range}`;
+  const params = `interval=${interval}&range=${range}${includeEvents ? '&events=div' : ''}`;
 
   let res = await fetchT(
     `https://query2.finance.yahoo.com/v8/finance/chart/${encoded}?${params}`,

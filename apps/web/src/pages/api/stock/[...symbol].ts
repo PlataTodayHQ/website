@@ -86,7 +86,8 @@ export const GET: APIRoute = async ({ params, url }) => {
 
     // Fallback to Yahoo for symbols not in DB (international, commodities)
     const symbol = toYahooSymbol(rawSymbol);
-    const result = await fetchYahooChart(symbol, interval, range);
+    const includeEvents = url.searchParams.get("events") === "div";
+    const result = await fetchYahooChart(symbol, interval, range, includeEvents);
     if (!result) throw new Error("No chart data");
 
     const meta = result.meta ?? {};
@@ -94,6 +95,13 @@ export const GET: APIRoute = async ({ params, url }) => {
     const quote = result.indicators?.quote?.[0] ?? {};
     const price = meta.regularMarketPrice ?? null;
     const prev = meta.chartPreviousClose ?? null;
+
+    // Extract dividend events if requested
+    const dividends = includeEvents && result.events?.dividends
+      ? Object.values(result.events.dividends as Record<string, { date: number; amount: number }>)
+          .map((d) => ({ date: d.date, amount: d.amount }))
+          .sort((a, b) => b.date - a.date)
+      : undefined;
 
     return jsonResponse({
       symbol: rawSymbol,
@@ -109,6 +117,7 @@ export const GET: APIRoute = async ({ params, url }) => {
       highs: quote.high ?? [],
       lows: quote.low ?? [],
       opens: quote.open ?? [],
+      ...(dividends && dividends.length > 0 ? { dividends } : {}),
       source: "Yahoo",
     }, 300);
   } catch (err: any) {

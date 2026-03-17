@@ -15,6 +15,7 @@ const { lang } = Astro.params;
   description={t(lang!, "merval.seoDescription")}
   lang={lang}
   ogType="website"
+  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/merval`]))}
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
@@ -27,6 +28,15 @@ const { lang } = Astro.params;
     "description": t(lang!, "merval.subtitle"),
     "url": `https://plata.today/${lang}/markets/merval`,
     "inLanguage": lang,
+    "about": {
+      "@type": "FinancialProduct",
+      "name": "MERVAL Index",
+      "provider": {
+        "@type": "Exchange",
+        "name": "BYMA — Bolsas y Mercados Argentinos",
+        "url": "https://www.byma.com.ar"
+      }
+    },
     "isPartOf": {
       "@type": "WebSite",
       "name": "Plata",
@@ -34,13 +44,39 @@ const { lang } = Astro.params;
     }
   }}
 >
-  <div class="merval-page" data-merval-page data-lang={lang}>
+  <div class="merval-page" data-merval-page data-lang={lang}
+    data-i18n-updated={t(lang!, "merval.updated" as any)}
+    data-i18n-unable={t(lang!, "merval.unableToLoad" as any)}
+    data-i18n-no-stock={t(lang!, "merval.noStockData" as any)}
+    data-i18n-unable-stocks={t(lang!, "merval.unableToLoadStocks" as any)}
+    data-i18n-chart-unavail={t(lang!, "merval.chartUnavailableShort" as any)}
+    data-i18n-n-sectors={t(lang!, "merval.nSectors" as any)}
+    data-i18n-vol={t(lang!, "merval.vol" as any)}
+    data-i18n-cap={t(lang!, "merval.cap" as any)}
+    data-i18n-sec-energy={t(lang!, "markets.sectorEnergy" as any)}
+    data-i18n-sec-finance={t(lang!, "markets.sectorFinance" as any)}
+    data-i18n-sec-telecom={t(lang!, "markets.sectorTelecom" as any)}
+    data-i18n-sec-materials={t(lang!, "markets.sectorMaterials" as any)}
+    data-i18n-sec-agriculture={t(lang!, "markets.sectorAgriculture" as any)}
+    data-i18n-sec-industry={t(lang!, "markets.sectorIndustry" as any)}
+    data-i18n-sec-holding={t(lang!, "markets.sectorHolding" as any)}
+    data-i18n-sec-media={t(lang!, "markets.sectorMedia" as any)}
+    data-i18n-sec-consumer={t(lang!, "markets.sectorConsumer" as any)}
+    data-i18n-sec-realestate={t(lang!, "markets.sectorRealEstate" as any)}
+    data-i18n-sec-other={t(lang!, "markets.sectorOther" as any)}
+    data-i18n-market-open={t(lang!, "merval.marketOpen" as any)}
+    data-i18n-market-closed={t(lang!, "merval.marketClosed" as any)}
+    data-i18n-search-placeholder={t(lang!, "merval.searchStocks" as any)}
+    data-i18n-no-match={t(lang!, "merval.noMatch" as any)}
+    data-i18n-showing={t(lang!, "merval.showing" as any)}
+    data-i18n-of={t(lang!, "merval.of" as any)}
+  >
     <header class="mkts-header">
       <div>
         <h1 class="mkts-title">{t(lang!, "merval.title")}</h1>
         <p class="mkts-subtitle">{t(lang!, "merval.subtitle")}</p>
       </div>
-      <p class="mkts-updated" data-mkts-updated>{t(lang!, "merval.loading")}</p>
+      <p class="mkts-updated" data-mkts-updated role="status" aria-live="polite">{t(lang!, "merval.loading")}</p>
     </header>
 
     <!-- Index Summary Card -->
@@ -49,28 +85,29 @@ const { lang } = Astro.params;
         <div class="idx-info">
           <span class="idx-label">MERVAL</span>
           <span class="rc-badge rc-badge--merval">BYMA</span>
+          <span class="mkt-badge" data-mkt-badge></span>
         </div>
         <div class="idx-price-row">
-          <span class="idx-price" data-idx-price>—</span>
-          <span class="idx-change" data-idx-change></span>
+          <span class="idx-price" data-idx-price aria-live="polite"><span class="skeleton-shimmer" style="display:inline-block;width:140px;height:2.2rem;vertical-align:middle"></span></span>
+          <span class="idx-change" data-idx-change aria-live="polite"><span class="skeleton-shimmer" style="display:inline-block;width:70px;height:1rem;vertical-align:middle"></span></span>
         </div>
       </div>
       <div class="idx-stats">
         <div class="idx-stat">
           <span class="idx-sk">{t(lang!, "merval.high")}</span>
-          <span class="idx-sv" data-idx-high>—</span>
+          <span class="idx-sv" data-idx-high><span class="skeleton-shimmer" style="display:inline-block;width:80px;height:1rem"></span></span>
         </div>
         <div class="idx-stat">
           <span class="idx-sk">{t(lang!, "merval.low")}</span>
-          <span class="idx-sv" data-idx-low>—</span>
+          <span class="idx-sv" data-idx-low><span class="skeleton-shimmer" style="display:inline-block;width:80px;height:1rem"></span></span>
         </div>
         <div class="idx-stat">
           <span class="idx-sk">{t(lang!, "merval.prevClose")}</span>
-          <span class="idx-sv" data-idx-prev>—</span>
+          <span class="idx-sv" data-idx-prev><span class="skeleton-shimmer" style="display:inline-block;width:80px;height:1rem"></span></span>
         </div>
         <div class="idx-stat">
           <span class="idx-sk">{t(lang!, "merval.volume")}</span>
-          <span class="idx-sv" data-idx-vol>—</span>
+          <span class="idx-sv" data-idx-vol><span class="skeleton-shimmer" style="display:inline-block;width:80px;height:1rem"></span></span>
         </div>
       </div>
     </div>
@@ -96,24 +133,27 @@ const { lang } = Astro.params;
     </div>
 
     <!-- Merval Chart -->
-    <section class="chart-section">
+    <section class="chart-section" aria-label={t(lang!, "merval.chartTitle")}>
       <div class="chart-header">
         <h2 class="section-title">{t(lang!, "merval.chartTitle")}</h2>
-        <div class="range-buttons" data-merval-range>
-          <button data-mrange="5d" data-minterval="15m">5D</button>
-          <button data-mrange="1mo" data-minterval="1d" class="active">1M</button>
-          <button data-mrange="3mo" data-minterval="1d">3M</button>
-          <button data-mrange="6mo" data-minterval="1d">6M</button>
-          <button data-mrange="1y" data-minterval="1d">1Y</button>
+        <div class="range-buttons" data-merval-range role="group" aria-label={t(lang!, "merval.chartTitle")}>
+          <button data-mrange="5d" data-minterval="15m" aria-label="5 days" aria-pressed="false">5D</button>
+          <button data-mrange="1mo" data-minterval="1d" class="active" aria-label="1 month" aria-pressed="true">1M</button>
+          <button data-mrange="3mo" data-minterval="1d" aria-label="3 months" aria-pressed="false">3M</button>
+          <button data-mrange="6mo" data-minterval="1d" aria-label="6 months" aria-pressed="false">6M</button>
+          <button data-mrange="1y" data-minterval="1d" aria-label="1 year" aria-pressed="false">1Y</button>
         </div>
       </div>
       <div class="chart-wrap">
-        <canvas data-merval-chart height="280"></canvas>
+        <div class="chart-skeleton" data-chart-skeleton>
+          <div class="skeleton-shimmer" style="width:100%;height:280px"></div>
+        </div>
+        <canvas data-merval-chart height="280" role="img" aria-label={t(lang!, "merval.chartTitle")} style="display:none"></canvas>
       </div>
     </section>
 
     <!-- Market Breadth -->
-    <section class="breadth-section" data-breadth>
+    <section class="breadth-section" data-breadth aria-label={t(lang!, "markets.advances") + " / " + t(lang!, "markets.declines")}>
       <div class="breadth-bar">
         <div class="breadth-side breadth-up">
           <span class="breadth-count" data-breadth-up>0</span>
@@ -130,23 +170,66 @@ const { lang } = Astro.params;
     </section>
 
     <!-- Top Movers -->
-    <section class="movers-section" data-movers style="display:none;">
+    <section class="movers-section" data-movers>
       <div class="movers-grid">
         <div class="movers-col">
           <h2 class="movers-title movers-title--up">{t(lang!, "merval.topGainers")}</h2>
-          <div class="movers-list" data-movers-up></div>
+          <div class="movers-list" data-movers-up>
+            <div class="movers-skeleton" data-movers-skeleton>
+              {[1,2,3,4,5].map(() => (
+                <div class="skeleton-mover-row">
+                  <div class="skeleton-shimmer" style="width:32px;height:32px;border-radius:50%;flex-shrink:0"></div>
+                  <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+                    <div class="skeleton-shimmer" style="width:60px;height:12px"></div>
+                    <div class="skeleton-shimmer" style="width:100px;height:10px"></div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:end;gap:4px">
+                    <div class="skeleton-shimmer" style="width:70px;height:12px"></div>
+                    <div class="skeleton-shimmer" style="width:50px;height:12px"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         <div class="movers-col">
           <h2 class="movers-title movers-title--down">{t(lang!, "merval.topLosers")}</h2>
-          <div class="movers-list" data-movers-down></div>
+          <div class="movers-list" data-movers-down>
+            <div class="movers-skeleton" data-movers-skeleton>
+              {[1,2,3,4,5].map(() => (
+                <div class="skeleton-mover-row">
+                  <div class="skeleton-shimmer" style="width:32px;height:32px;border-radius:50%;flex-shrink:0"></div>
+                  <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+                    <div class="skeleton-shimmer" style="width:60px;height:12px"></div>
+                    <div class="skeleton-shimmer" style="width:100px;height:10px"></div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:end;gap:4px">
+                    <div class="skeleton-shimmer" style="width:70px;height:12px"></div>
+                    <div class="skeleton-shimmer" style="width:50px;height:12px"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Market Heatmap -->
-    <section class="heatmap-section" data-heatmap-section style="display:none;">
+    <section class="heatmap-section" data-heatmap-section>
       <h2 class="section-title">{t(lang!, "merval.heatmap")}</h2>
-      <div class="heatmap" data-heatmap></div>
+      <div class="heatmap" data-heatmap>
+        <div class="heatmap-skeleton" data-heatmap-skeleton style="display:flex;flex-wrap:wrap;gap:3px;width:100%">
+          <div class="skeleton-shimmer" style="flex:3;min-width:80px;height:70px"></div>
+          <div class="skeleton-shimmer" style="flex:2.5;min-width:70px;height:70px"></div>
+          <div class="skeleton-shimmer" style="flex:2;min-width:65px;height:70px"></div>
+          <div class="skeleton-shimmer" style="flex:1.8;min-width:60px;height:70px"></div>
+          <div class="skeleton-shimmer" style="flex:1.5;min-width:60px;height:70px"></div>
+          <div class="skeleton-shimmer" style="flex:1.2;min-width:60px;height:70px"></div>
+          <div class="skeleton-shimmer" style="flex:1;min-width:60px;height:70px"></div>
+          <div class="skeleton-shimmer" style="flex:1;min-width:60px;height:70px"></div>
+        </div>
+      </div>
     </section>
 
     <!-- Sector Breakdown -->
@@ -154,7 +237,7 @@ const { lang } = Astro.params;
       <h2 class="section-title">{t(lang!, "merval.sectorBreakdown")}</h2>
       <div class="sector-grid">
         <div class="sector-chart-wrap">
-          <canvas data-sector-chart width="220" height="220"></canvas>
+          <canvas data-sector-chart width="220" height="220" role="img" aria-label={t(lang!, "merval.sectorBreakdown")}></canvas>
         </div>
         <div class="sector-legend" data-sector-legend></div>
       </div>
@@ -187,19 +270,43 @@ const { lang } = Astro.params;
     <!-- Constituent Stocks -->
     <section class="stocks-section">
       <div class="stocks-header">
-        <h2 class="section-title">{t(lang!, "merval.stocksTitle")}</h2>
-        <div class="sort-controls">
-          <span class="sort-label">{t(lang!, "merval.sort")}</span>
-          <button class="sort-btn sort-btn--active" data-sort-btn="mcap">{t(lang!, "merval.sortCap")}</button>
-          <button class="sort-btn" data-sort-btn="variation">{t(lang!, "merval.sortChange")}</button>
-          <button class="sort-btn" data-sort-btn="volume">{t(lang!, "merval.sortVolume")}</button>
-          <button class="sort-btn" data-sort-btn="symbol">{t(lang!, "merval.sortAZ")}</button>
+        <div class="stocks-header-top">
+          <h2 class="section-title">{t(lang!, "merval.stocksTitle")}</h2>
+          <span class="stocks-count" data-stocks-count aria-live="polite"></span>
+        </div>
+        <div class="stocks-controls">
+          <div class="stocks-search-wrap">
+            <svg class="stocks-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" class="stocks-search" data-stocks-search placeholder={t(lang!, "merval.searchStocks" as any)} aria-label={t(lang!, "merval.searchStocks" as any)} autocomplete="off" />
+            <kbd class="search-kbd" aria-hidden="true">⌘K</kbd>
+          </div>
+          <div class="sort-controls">
+            <span class="sort-label">{t(lang!, "merval.sort")}</span>
+            <button class="sort-btn sort-btn--active" data-sort-btn="mcap" aria-pressed="true">{t(lang!, "merval.sortCap")}</button>
+            <button class="sort-btn" data-sort-btn="variation" aria-pressed="false">{t(lang!, "merval.sortChange")}</button>
+            <button class="sort-btn" data-sort-btn="volume" aria-pressed="false">{t(lang!, "merval.sortVolume")}</button>
+            <button class="sort-btn" data-sort-btn="symbol" aria-pressed="false">{t(lang!, "merval.sortAZ")}</button>
+          </div>
         </div>
       </div>
       <div class="stocks-grid" data-stocks-grid>
-        <div class="stocks-loading">
-          <div class="loading-spinner"></div>
-          {t(lang!, "merval.loading")}
+        <div class="stocks-skeleton" data-stocks-skeleton>
+          {[1,2,3,4,5,6,7,8].map(() => (
+            <div class="skeleton-stock-card">
+              <div class="skeleton-stock-row1">
+                <div class="skeleton-shimmer" style="width:36px;height:36px;border-radius:50%;flex-shrink:0"></div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+                  <div class="skeleton-shimmer" style="width:55px;height:13px"></div>
+                  <div class="skeleton-shimmer" style="width:110px;height:10px"></div>
+                </div>
+                <div class="skeleton-shimmer" style="width:65px;height:16px"></div>
+              </div>
+              <div class="skeleton-stock-row2">
+                <div class="skeleton-shimmer" style="width:90px;height:12px"></div>
+                <div class="skeleton-shimmer" style="width:120px;height:10px"></div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -216,15 +323,78 @@ const { lang } = Astro.params;
       </div>
     </section>
 
+    <button class="scroll-top-btn" data-scroll-top aria-label="↑" title="↑">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
     <p class="info-disclaimer">{t(lang!, "merval.disclaimer")}</p>
+    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
   </div>
 </Base>
 
-<script is:inline src="/js/charts.js"></script>
+<script is:inline src="/js/charts.js?v=5"></script>
 <script is:inline>
 (function() {
   var C = window.PlataCharts;
-  var lang = document.querySelector('[data-merval-page]').getAttribute('data-lang') || 'en';
+  var page = document.querySelector('[data-merval-page]');
+  var lang = page.getAttribute('data-lang') || 'en';
+
+  // Platform-aware kbd labels
+  if (!/Mac|iPhone|iPad/.test(navigator.platform || '')) {
+    document.querySelectorAll('.search-kbd').forEach(function(el) { el.textContent = 'Ctrl K'; });
+  }
+  // Hide on touch devices
+  if ('ontouchstart' in window) {
+    document.querySelectorAll('.search-kbd').forEach(function(el) { el.style.display = 'none'; });
+  }
+
+  // i18n helpers
+  function i18nAttr(key, fallback) { return page.getAttribute('data-i18n-' + key) || fallback; }
+  var I = {
+    updated: i18nAttr('updated', 'Updated'),
+    unable: i18nAttr('unable', 'Unable to load data'),
+    noStock: i18nAttr('no-stock', 'No stock data available'),
+    unableStocks: i18nAttr('unable-stocks', 'Unable to load stocks'),
+    chartUnavail: i18nAttr('chart-unavail', 'Chart data temporarily unavailable'),
+    nSectors: i18nAttr('n-sectors', '{n} sectors'),
+    vol: i18nAttr('vol', 'Vol'),
+    cap: i18nAttr('cap', 'Cap'),
+    searchPlaceholder: i18nAttr('search-placeholder', 'Search stocks…'),
+    noMatch: i18nAttr('no-match', 'No stocks match your search'),
+    showing: i18nAttr('showing', 'Showing'),
+    of: i18nAttr('of', 'of'),
+  };
+  // ─── Market Status Badge (BYMA: Mon-Fri, 11:00-17:00 UTC-3) ───
+  (function() {
+    var badge = document.querySelector('[data-mkt-badge]');
+    if (!badge) return;
+    var now = new Date();
+    var utcH = now.getUTCHours(), utcM = now.getUTCMinutes();
+    var localMin = (utcH * 60 + utcM) + (-3 * 60); // Argentina UTC-3
+    if (localMin < 0) localMin += 1440;
+    if (localMin >= 1440) localMin -= 1440;
+    var day = now.getUTCDay();
+    var isOpen = day > 0 && day < 6 && localMin >= 11 * 60 && localMin < 17 * 60;
+    var openLabel = i18nAttr('market-open', 'Market Open');
+    var closedLabel = i18nAttr('market-closed', 'Market Closed');
+    badge.className = 'mkt-badge ' + (isOpen ? 'mkt-badge--open' : 'mkt-badge--closed');
+    badge.innerHTML = '<span class="mkt-badge-dot"></span>' + (isOpen ? openLabel : closedLabel);
+  })();
+
+  var SECTOR_I18N = {
+    'Energy': i18nAttr('sec-energy', 'Energy'),
+    'Finance': i18nAttr('sec-finance', 'Finance'),
+    'Telecom': i18nAttr('sec-telecom', 'Telecom'),
+    'Materials': i18nAttr('sec-materials', 'Materials'),
+    'Agriculture': i18nAttr('sec-agriculture', 'Agriculture'),
+    'Industry': i18nAttr('sec-industry', 'Industry'),
+    'Holding': i18nAttr('sec-holding', 'Holding'),
+    'Media': i18nAttr('sec-media', 'Media'),
+    'Consumer': i18nAttr('sec-consumer', 'Consumer'),
+    'Real Estate': i18nAttr('sec-realestate', 'Real Estate'),
+    'Other': i18nAttr('sec-other', 'Other'),
+  };
+  function secName(key) { return SECTOR_I18N[key] || key; }
 
   function setEl(sel, text) {
     var el = document.querySelector(sel);
@@ -367,6 +537,7 @@ const { lang } = Astro.params;
     return {
       timestamps: result.timestamp,
       closes: q ? q.close : [],
+      volumes: q ? (q.volume || []) : [],
       symbol: '^MERV'
     };
   }
@@ -398,16 +569,18 @@ const { lang } = Astro.params;
   // Range buttons for chart
   document.querySelectorAll('[data-mrange]').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.querySelectorAll('[data-mrange]').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('[data-mrange]').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       var range = btn.getAttribute('data-mrange');
       var interval = btn.getAttribute('data-minterval');
       loadChartData(range, interval).then(function(d) {
         if (d && d.timestamps && d.closes) {
+          chartData = d;
           var pts = C.yahooToPoints(d.timestamps, d.closes);
           C.drawChart(document.querySelector('[data-merval-chart]'), [
             { points: pts, lineColor: '#60a5fa', fillColor: 'rgba(96,165,250,0.12)' }
-          ], { yFormat: C.fmtM });
+          ], { yFormat: C.fmtM, volumes: d.volumes || [] });
         }
       });
     });
@@ -423,7 +596,10 @@ const { lang } = Astro.params;
     var chart = res[1];
     var stocks = res[2];
 
-    setEl('[data-mkts-updated]', 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    var updEl = document.querySelector('[data-mkts-updated]');
+    if (updEl) {
+      updEl.innerHTML = '<span class="live-dot"></span>' + I.updated + ' ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
+    }
 
     // Index summary
     if (merval && merval.price) {
@@ -445,15 +621,21 @@ const { lang } = Astro.params;
     }
 
     // Chart
+    var chartSkel = document.querySelector('[data-chart-skeleton]');
+    var chartCanvas = document.querySelector('[data-merval-chart]');
     if (chart && chart.timestamps && chart.closes) {
       chartData = chart;
       var points = C.yahooToPoints(chart.timestamps, chart.closes);
-      C.drawChart(document.querySelector('[data-merval-chart]'), [
+      if (chartSkel) chartSkel.style.display = 'none';
+      if (chartCanvas) chartCanvas.style.display = '';
+      C.drawChart(chartCanvas, [
         { points: points, lineColor: '#60a5fa', fillColor: 'rgba(96,165,250,0.12)' }
-      ], { yFormat: C.fmtM });
+      ], { yFormat: C.fmtM, volumes: chart.volumes || [] });
     } else {
+      if (chartSkel) chartSkel.style.display = 'none';
+      if (chartCanvas) chartCanvas.style.display = 'none';
       var chartWrap = document.querySelector('.chart-wrap');
-      if (chartWrap) chartWrap.innerHTML = '<div class="chart-unavailable">Chart data temporarily unavailable</div>';
+      if (chartWrap) chartWrap.insertAdjacentHTML('beforeend', '<div class="chart-unavailable">' + I.chartUnavail + '</div>');
     }
 
     // Stocks cards + breadth
@@ -483,7 +665,7 @@ const { lang } = Astro.params;
       var avgChg = chgCount > 0 ? chgSum / chgCount : 0;
       var avgEl = document.querySelector('[data-mkt-avgchg]');
       if (avgEl) {
-        avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toFixed(2) + '%';
+        avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
         avgEl.classList.add(avgChg >= 0 ? 'rc-up' : 'rc-down');
       }
       var sumEl = document.querySelector('[data-mkt-summary]');
@@ -498,11 +680,41 @@ const { lang } = Astro.params;
       renderVolLeaders(stocks);
       renderStocks();
     } else {
+      // Remove skeletons and show error state
+      var stkSkel = document.querySelector('[data-stocks-skeleton]');
+      if (stkSkel) stkSkel.remove();
+      var mvSkels = document.querySelectorAll('[data-movers-skeleton]');
+      mvSkels.forEach(function(el) { el.remove(); });
+      var hmSkel2 = document.querySelector('[data-heatmap-skeleton]');
+      if (hmSkel2) hmSkel2.remove();
+      var hmSec = document.querySelector('[data-heatmap-section]');
+      if (hmSec) hmSec.style.display = 'none';
+      var mvSec = document.querySelector('[data-movers]');
+      if (mvSec) mvSec.style.display = 'none';
       var grid = document.querySelector('[data-stocks-grid]');
-      if (grid) grid.innerHTML = '<div class="stocks-loading">' + (stocks && stocks.error ? 'Unable to load stocks' : 'No stock data available') + '</div>';
+      if (grid) grid.innerHTML = '<div class="stocks-loading">' + (stocks && stocks.error ? I.unableStocks : I.noStock) + ' <button class="mv-retry-btn" aria-label="Retry" onclick="window.location.reload()" style="margin-top:8px;padding:4px 12px;font-size:0.72rem;border:1px solid var(--color-border);border-radius:4px;background:var(--color-bg-secondary);color:var(--color-text-meta);cursor:pointer;">↻</button></div>';
     }
   }).catch(function() {
-    setEl('[data-mkts-updated]', 'Unable to load data');
+    var updEl = document.querySelector('[data-mkts-updated]');
+    if (updEl) {
+      updEl.innerHTML = I.unable + ' <button class="mv-retry-btn" data-mv-retry style="margin-inline-start:8px;padding:4px 12px;font-size:0.72rem;border:1px solid var(--color-border);border-radius:4px;background:var(--color-bg-secondary);color:var(--color-text-meta);cursor:pointer;">↻ Retry</button>';
+      var retryBtn = updEl.querySelector('[data-mv-retry]');
+      if (retryBtn) {
+        retryBtn.addEventListener('click', function() {
+          updEl.textContent = I.updated.split(' ')[0] + '…';
+          window.location.reload();
+        });
+      }
+    }
+    // Remove all skeletons on error
+    var skels = document.querySelectorAll('[data-chart-skeleton],[data-heatmap-skeleton],[data-movers-skeleton],[data-stocks-skeleton]');
+    skels.forEach(function(el) { el.remove(); });
+    var chartCanvas2 = document.querySelector('[data-merval-chart]');
+    if (chartCanvas2) chartCanvas2.style.display = '';
+    var hmSec2 = document.querySelector('[data-heatmap-section]');
+    if (hmSec2) hmSec2.style.display = 'none';
+    var mvSec2 = document.querySelector('[data-movers]');
+    if (mvSec2) mvSec2.style.display = 'none';
   });
 
   // ─── Logo / Avatar helpers ───
@@ -555,7 +767,7 @@ const { lang } = Astro.params;
     var initials = sym.substring(0, 2);
     if (url) {
       return '<div class="stk-logo" style="background:' + color + '22" data-stk-logo="' + sym + '" data-color="' + color + '">' +
-        '<img src="' + url + '?size=64&format=png" alt="" loading="lazy">' +
+        '<img src="' + url + '?size=64&format=png" alt="' + sym + ' logo" loading="lazy" width="32" height="32">' +
         '</div>';
     }
     return '<div class="stk-logo stk-logo--fallback" style="background:' + color + '22;color:' + color + '">' + initials + '</div>';
@@ -590,7 +802,7 @@ const { lang } = Astro.params;
         '<div class="mover-info"><span class="mover-sym">' + s.symbol + '</span><span class="mover-name">' + name + '</span></div>' +
         '<div class="mover-right">' +
         '<span class="mover-price">ARS ' + (s.price ? C.fmt(s.price) : '—') + '</span>' +
-        '<span class="mover-pct ' + cls + '">' + arrow + ' ' + Math.abs(pct).toFixed(2) + '%</span>' +
+        '<span class="mover-pct ' + cls + '">' + arrow + ' ' + Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>' +
         '</div></a>';
     }
 
@@ -598,12 +810,14 @@ const { lang } = Astro.params;
     gainers.forEach(function(s) { upHtml += moverRow(s); });
     losers.forEach(function(s) { dnHtml += moverRow(s); });
 
+    var mvSkels = document.querySelectorAll('[data-movers-skeleton]');
+    mvSkels.forEach(function(el) { el.remove(); });
     var upEl = document.querySelector('[data-movers-up]');
     var dnEl = document.querySelector('[data-movers-down]');
     if (upEl) upEl.innerHTML = upHtml;
     if (dnEl) dnEl.innerHTML = dnHtml;
     var moversEl = document.querySelector('[data-movers]');
-    if (moversEl && (gainers.length > 0 || losers.length > 0)) moversEl.style.display = '';
+    if (moversEl && gainers.length === 0 && losers.length === 0) moversEl.style.display = 'none';
   }
 
   // ─── Render heatmap ───
@@ -615,7 +829,7 @@ const { lang } = Astro.params;
     var items = stocks.filter(function(s) { return s.mcap > 0 && s.variation != null; })
       .sort(function(a, b) { return b.mcap - a.mcap; })
       .slice(0, 20);
-    if (items.length === 0) return;
+    if (items.length === 0) { section.style.display = 'none'; return; }
 
     var totalMcap = 0;
     for (var i = 0; i < items.length; i++) totalMcap += items[i].mcap;
@@ -631,21 +845,22 @@ const { lang } = Astro.params;
     for (var j = 0; j < items.length; j++) {
       var s = items[j];
       var pct = s.variation || 0;
-      var pctText = (pct >= 0 ? '+' : '') + (pct * 100).toFixed(2) + '%';
+      var pctText = (pct >= 0 ? '+' : '') + (pct * 100).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
       var weight = (s.mcap / totalMcap * 100).toFixed(2);
       var bg = heatColor(pct);
       var tipName = STOCK_NAMES[s.symbol] || s.name || s.symbol;
       var tipPrice = 'ARS ' + C.fmt(s.price || 0);
       var tipVol = s.volume ? C.fmtVol(s.volume) : '—';
       var tipMcap = C.fmtVol(s.mcap * 1e6);
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex-basis:' + weight + '%;background:' + bg + '">';
+      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex-basis:' + weight + '%;background:' + bg + '" aria-label="' + (STOCK_NAMES[s.symbol] || s.symbol) + ' ' + pctText + '">';
       html += '<span class="hm-sym">' + s.symbol + '</span>';
       html += '<span class="hm-pct">' + pctText + '</span>';
-      html += '<div class="hm-tip"><strong>' + tipName + '</strong><span>' + tipPrice + ' ' + pctText + '</span><span>Vol: ' + tipVol + '</span><span>Cap: ' + tipMcap + '</span></div>';
+      html += '<div class="hm-tip"><strong>' + tipName + '</strong><span>' + tipPrice + ' ' + pctText + '</span><span>' + I.vol + ': ' + tipVol + '</span><span>' + I.cap + ': ' + tipMcap + '</span></div>';
       html += '</a>';
     }
+    var hmSkel = document.querySelector('[data-heatmap-skeleton]');
+    if (hmSkel) hmSkel.remove();
     container.innerHTML = html;
-    section.style.display = '';
   }
 
   // ─── Sector mapping ───
@@ -722,7 +937,7 @@ const { lang } = Astro.params;
     ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(sectors.length + ' sectors', cx, cy);
+    ctx.fillText(I.nSectors.replace('{n}', sectors.length), cx, cy);
 
     // Legend
     var legEl = document.querySelector('[data-sector-legend]');
@@ -730,16 +945,16 @@ const { lang } = Astro.params;
     var html = '';
     for (var k = 0; k < sectors.length; k++) {
       var s = sectors[k];
-      var pctVal = (s.mcap / totalMcap * 100).toFixed(1);
+      var pctVal = (s.mcap / totalMcap * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1});
       var chg = s.avgChange * 100;
       var chgCls = chg >= 0 ? 'rc-up' : 'rc-down';
       var chgArrow = chg >= 0 ? '▲' : '▼';
       html += '<div class="sec-leg-item">';
       html += '<span class="sec-dot" style="background:' + (SECTOR_COLORS[s.name] || '#9ca3af') + '"></span>';
-      html += '<span class="sec-name">' + s.name + '</span>';
+      html += '<span class="sec-name">' + secName(s.name) + '</span>';
       html += '<span class="sec-pct">' + pctVal + '%</span>';
-      html += '<span class="sec-count">' + s.count + ' stocks</span>';
-      html += '<span class="sec-chg ' + chgCls + '">' + chgArrow + ' ' + Math.abs(chg).toFixed(2) + '%</span>';
+      html += '<span class="sec-count">' + s.count + '</span>';
+      html += '<span class="sec-chg ' + chgCls + '">' + chgArrow + ' ' + Math.abs(chg).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       html += '</div>';
     }
     legEl.innerHTML = html;
@@ -759,12 +974,14 @@ const { lang } = Astro.params;
     var top5 = sorted.slice(0, 5);
     var top5Mcap = 0;
     for (var j = 0; j < top5.length; j++) top5Mcap += top5[j].mcap;
-    var top5Pct = (top5Mcap / totalMcap * 100).toFixed(1);
-    var restPct = (100 - parseFloat(top5Pct)).toFixed(1);
+    var top5PctRaw = (top5Mcap / totalMcap * 100);
+    var top5Pct = top5PctRaw.toFixed(1);
+    var restPct = (100 - top5PctRaw).toFixed(1);
+    var top5PctDisplay = top5PctRaw.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1});
 
     var html = '<div class="mcc-summary">';
-    html += '<div class="mcc-stat"><span class="mcc-stat-val">' + top5Pct + '%</span><span class="mcc-stat-label">Top 5 concentration</span></div>';
-    html += '<div class="mcc-stat"><span class="mcc-stat-val">' + sorted.length + '</span><span class="mcc-stat-label">Total stocks</span></div>';
+    html += '<div class="mcc-stat"><span class="mcc-stat-val">' + top5PctDisplay + '%</span><span class="mcc-stat-label">Top 5</span></div>';
+    html += '<div class="mcc-stat"><span class="mcc-stat-val">' + sorted.length + '</span><span class="mcc-stat-label">' + I.vol + '</span></div>';
     html += '</div>';
 
     // Stacked bar
@@ -773,7 +990,7 @@ const { lang } = Astro.params;
       var pct = (top5[k].mcap / totalMcap * 100);
       var sec = STOCK_SECTORS[top5[k].symbol] || 'Other';
       var col = SECTOR_COLORS[sec] || '#9ca3af';
-      html += '<div class="mcc-seg" style="width:' + pct.toFixed(1) + '%;background:' + col + '" title="' + top5[k].symbol + ' ' + pct.toFixed(1) + '%"></div>';
+      html += '<div class="mcc-seg" style="width:' + pct.toFixed(1) + '%;background:' + col + '" title="' + top5[k].symbol + ' ' + pct.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%"></div>';
     }
     html += '<div class="mcc-seg mcc-seg--rest" style="width:' + restPct + '%"></div>';
     html += '</div>';
@@ -782,7 +999,7 @@ const { lang } = Astro.params;
     html += '<div class="mcc-list">';
     for (var m = 0; m < top5.length; m++) {
       var s = top5[m];
-      var w = (s.mcap / totalMcap * 100).toFixed(1);
+      var w = (s.mcap / totalMcap * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1});
       var sec2 = STOCK_SECTORS[s.symbol] || 'Other';
       var col2 = SECTOR_COLORS[sec2] || '#9ca3af';
       var chg = s.variation != null ? (s.variation * 100) : 0;
@@ -793,13 +1010,13 @@ const { lang } = Astro.params;
       html += '<a class="mcc-sym" href="/' + (document.querySelector('[data-merval-page]')?.getAttribute('data-lang') || 'en') + '/markets/stock?s=' + s.symbol + '">' + s.symbol + '</a>';
       html += '<span class="mcc-w">' + w + '%</span>';
       html += '<span class="mcc-cap">$' + C.fmtVol(s.mcap * 1e6) + '</span>';
-      html += '<span class="' + chgCls + '">' + (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%</span>';
+      html += '<span class="' + chgCls + '">' + (chg >= 0 ? '+' : '') + chg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       html += '</div>';
     }
     html += '<div class="mcc-row mcc-row--rest">';
     html += '<span class="mcc-rank"></span><span class="mcc-dot" style="background:#4b5563"></span>';
-    html += '<span class="mcc-sym">Others (' + (sorted.length - 5) + ')</span>';
-    html += '<span class="mcc-w">' + restPct + '%</span>';
+    html += '<span class="mcc-sym">' + (sorted.length - 5) + '+</span>';
+    html += '<span class="mcc-w">' + (100 - top5PctRaw).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%</span>';
     html += '<span class="mcc-cap"></span><span></span>';
     html += '</div>';
     html += '</div>';
@@ -841,7 +1058,7 @@ const { lang } = Astro.params;
       var barW = (Math.abs(s.avgChange) / maxAbs * 50).toFixed(1);
       var color = isPos ? '#16a34a' : '#dc2626';
       html += '<div class="sp-row">';
-      html += '<span class="sp-name">' + s.name + ' <span class="sp-cnt">(' + s.count + ')</span></span>';
+      html += '<span class="sp-name">' + secName(s.name) + ' <span class="sp-cnt">(' + s.count + ')</span></span>';
       html += '<div class="sp-bar-area">';
       if (isPos) {
         html += '<div class="sp-bar-left"></div><div class="sp-bar-center"></div>';
@@ -851,7 +1068,7 @@ const { lang } = Astro.params;
         html += '<div class="sp-bar-center"></div><div class="sp-bar-right"></div>';
       }
       html += '</div>';
-      html += '<span class="sp-val ' + (isPos ? 'rc-up' : 'rc-down') + '">' + (isPos ? '+' : '') + s.avgChange.toFixed(2) + '%</span>';
+      html += '<span class="sp-val ' + (isPos ? 'rc-up' : 'rc-down') + '">' + (isPos ? '+' : '') + s.avgChange.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       html += '</div>';
     }
     chart.innerHTML = html;
@@ -882,7 +1099,7 @@ const { lang } = Astro.params;
       html += '<a href="' + link + '" class="vl-row">';
       html += '<span class="vl-sym">' + s.symbol + '</span>';
       html += '<div class="vl-bar-wrap"><div class="vl-bar" style="width:' + barW + '%;background:' + color + '"></div></div>';
-      html += '<span class="vl-pct" style="color:' + color + '">' + (isUp ? '+' : '') + pct.toFixed(2) + '%</span>';
+      html += '<span class="vl-pct" style="color:' + color + '">' + (isUp ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       html += '</a>';
     }
     grid.innerHTML = html;
@@ -913,13 +1130,60 @@ const { lang } = Astro.params;
     document.querySelector('[data-vol-dist]').style.display = '';
   }
 
+  // ─── Search state ───
+  var searchQuery = '';
+  var searchInput = document.querySelector('[data-stocks-search]');
+  var searchTimer;
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(function() {
+        searchQuery = searchInput.value.trim();
+        renderStocks();
+      }, 150);
+    });
+    searchInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { searchInput.value = ''; searchQuery = ''; renderStocks(); }
+    });
+  }
+
   // ─── Render stock cards ───
   function renderStocks() {
     var grid = document.querySelector('[data-stocks-grid]');
     if (!grid || stocksData.length === 0) return;
+    var stkSkel = document.querySelector('[data-stocks-skeleton]');
+    if (stkSkel) stkSkel.remove();
+
+    // Filter by search
+    var data = stocksData;
+    if (searchQuery) {
+      var q = searchQuery.toLowerCase();
+      data = data.filter(function(s) {
+        var sym = (s.symbol || '').toLowerCase();
+        var desc = (s.description || '').toLowerCase();
+        var name = (STOCK_NAMES[s.symbol] || '').toLowerCase();
+        return sym.indexOf(q) !== -1 || desc.indexOf(q) !== -1 || name.indexOf(q) !== -1;
+      });
+    }
+
+    // Update count
+    var countEl = document.querySelector('[data-stocks-count]');
+    if (countEl) {
+      if (searchQuery && data.length !== stocksData.length) {
+        countEl.textContent = I.showing + ' ' + data.length + ' ' + I.of + ' ' + stocksData.length;
+      } else {
+        countEl.textContent = data.length + ' stocks';
+      }
+    }
+
+    // No results
+    if (data.length === 0) {
+      grid.innerHTML = '<div class="stocks-empty">' + I.noMatch + '</div>';
+      return;
+    }
 
     // Sort
-    var sorted = stocksData.slice().sort(function(a, b) {
+    var sorted = data.slice().sort(function(a, b) {
       var key = currentSort.key;
       var av = a[key], bv = b[key];
       if (typeof av === 'string') { av = av.toLowerCase(); bv = (bv || '').toLowerCase(); }
@@ -945,7 +1209,8 @@ const { lang } = Astro.params;
       var volPct = s.volume && maxVol > 0 ? (s.volume / maxVol * 100).toFixed(1) : 0;
       var volColor = pct != null ? (pct >= 0 ? 'rgba(22,163,74,0.15)' : 'rgba(220,38,38,0.15)') : 'rgba(128,128,128,0.1)';
 
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="stk-card" style="--stk-accent:' + borderColor + '">';
+      var delay = Math.min(i * 30, 600);
+      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="stk-card" style="--stk-accent:' + borderColor + ';animation-delay:' + delay + 'ms">';
       html += '<div class="stk-vol-bg" style="width:' + volPct + '%;background:' + volColor + '"></div>';
       html += '<div class="stk-row1">';
       html += logoHtml(s.symbol);
@@ -953,7 +1218,7 @@ const { lang } = Astro.params;
       html += '<span class="stk-symbol">' + (s.symbol || '—') + '</span>';
       html += '<span class="stk-name">' + (s.description || s.symbol || '') + '</span>';
       html += '</div>';
-      html += '<div class="stk-change ' + pctClass + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toFixed(2) + '%' : '—') + '</div>';
+      html += '<div class="stk-change ' + pctClass + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%' : '—') + '</div>';
       html += '</div>';
       html += '<div class="stk-row2">';
       html += '<span class="stk-price">ARS ' + (s.price ? C.fmt(s.price) : '—') + '</span>';
@@ -965,7 +1230,7 @@ const { lang } = Astro.params;
       var sec = STOCK_SECTORS[s.symbol];
       if (sec && sec !== 'Other') {
         var secCol = SECTOR_COLORS[sec] || '#9ca3af';
-        html += '<div class="stk-row3"><span class="stk-sector" style="color:' + secCol + ';border-color:' + secCol + '">' + sec + '</span></div>';
+        html += '<div class="stk-row3"><span class="stk-sector" style="color:' + secCol + ';border-color:' + secCol + '">' + secName(sec) + '</span></div>';
       }
       html += '</a>';
     }
@@ -981,47 +1246,237 @@ const { lang } = Astro.params;
       } else {
         currentSort = { key: key, dir: key === 'symbol' ? 'asc' : 'desc' };
       }
-      document.querySelectorAll('[data-sort-btn]').forEach(function(b) { b.classList.remove('sort-btn--active'); });
+      document.querySelectorAll('[data-sort-btn]').forEach(function(b) { b.classList.remove('sort-btn--active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('sort-btn--active');
+      btn.setAttribute('aria-pressed', 'true');
       renderStocks();
     });
   });
 
   // ─── Resize handler ───
   var rTimer;
-  window.addEventListener('resize', function() {
+  function redrawChart() {
     clearTimeout(rTimer);
     rTimer = setTimeout(function() {
       if (!chartData) return;
       var points = C.yahooToPoints(chartData.timestamps, chartData.closes);
       C.drawChart(document.querySelector('[data-merval-chart]'), [
         { points: points, lineColor: '#60a5fa', fillColor: 'rgba(96,165,250,0.12)' }
-      ], { yFormat: C.fmtM });
+      ], { yFormat: C.fmtM, volumes: chartData.volumes || [] });
     }, 200);
+  }
+  var chartWrapEl = document.querySelector('.chart-wrap');
+  if (chartWrapEl && typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(redrawChart).observe(chartWrapEl);
+  } else {
+    window.addEventListener('resize', redrawChart);
+  }
+  // Arrow key navigation for heatmap cells
+  document.addEventListener('keydown', function(e) {
+    if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) return;
+    var active = document.activeElement;
+    if (!active || !active.classList.contains('mv-hm-cell')) return;
+    var cells = Array.from(document.querySelectorAll('.mv-hm-cell'));
+    var idx = cells.indexOf(active);
+    if (idx < 0) return;
+    var container = active.parentElement;
+    var cols = Math.max(1, Math.round(container.offsetWidth / active.offsetWidth));
+    var next = -1;
+    if (e.key === 'ArrowRight') next = idx + 1;
+    else if (e.key === 'ArrowLeft') next = idx - 1;
+    else if (e.key === 'ArrowDown') next = idx + cols;
+    else if (e.key === 'ArrowUp') next = idx - cols;
+    if (next >= 0 && next < cells.length) {
+      e.preventDefault();
+      cells[next].focus();
+    }
   });
+
+  // Arrow key navigation for stock card grid
+  document.addEventListener('keydown', function(e) {
+    if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)) return;
+    var active = document.activeElement;
+    if (!active || !active.classList.contains('stk-card')) return;
+    var grid = active.parentElement;
+    if (!grid || !grid.classList.contains('stocks-grid')) return;
+    var cards = Array.from(grid.querySelectorAll('.stk-card'));
+    var idx = cards.indexOf(active);
+    if (idx < 0) return;
+    var cols = Math.max(1, Math.round(grid.offsetWidth / active.offsetWidth));
+    var next = -1;
+    if (e.key === 'ArrowRight') next = idx + 1;
+    else if (e.key === 'ArrowLeft') next = idx - 1;
+    else if (e.key === 'ArrowDown') next = idx + cols;
+    else if (e.key === 'ArrowUp') next = idx - cols;
+    if (next >= 0 && next < cards.length) {
+      e.preventDefault();
+      cards[next].focus();
+    }
+  });
+
+  // Ctrl/Cmd+K to focus search
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      var si = document.querySelector('[data-stocks-search]');
+      if (si) { si.focus(); si.select(); }
+    }
+  });
+
+  // Scroll to top button
+  var scrollBtn = document.querySelector('[data-scroll-top]');
+  if (scrollBtn) {
+    var scrollVisible = false;
+    window.addEventListener('scroll', function() {
+      var show = window.scrollY > 600;
+      if (show !== scrollVisible) {
+        scrollVisible = show;
+        scrollBtn.classList.toggle('scroll-top-btn--visible', show);
+      }
+    }, { passive: true });
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // ─── Auto-refresh every 5 minutes with countdown ───
+  var REFRESH_INTERVAL = 5 * 60; // seconds
+  var refreshRemaining = REFRESH_INTERVAL;
+  var countdownEl = null;
+
+  function initCountdown() {
+    var updEl = document.querySelector('[data-mkts-updated]');
+    if (!updEl) return;
+    countdownEl = document.createElement('span');
+    countdownEl.className = 'refresh-countdown';
+    updEl.appendChild(countdownEl);
+  }
+
+  function tickCountdown() {
+    refreshRemaining--;
+    if (countdownEl) {
+      var m = Math.floor(refreshRemaining / 60);
+      var s = refreshRemaining % 60;
+      countdownEl.textContent = '(' + m + ':' + (s < 10 ? '0' : '') + s + ')';
+    }
+    if (refreshRemaining <= 0) {
+      refreshData();
+    }
+  }
+
+  function refreshData() {
+    refreshRemaining = REFRESH_INTERVAL;
+    Promise.all([loadIndexData(), loadStocksData()]).then(function(res) {
+      var merval = res[0];
+      var stocks = res[1];
+      var updEl = document.querySelector('[data-mkts-updated]');
+      if (updEl) {
+        updEl.innerHTML = '<span class="live-dot"></span>' + I.updated + ' ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
+        initCountdown();
+      }
+      if (merval && merval.price) {
+        setEl('[data-idx-price]', C.fmtM(merval.price));
+        if (merval.high) setEl('[data-idx-high]', C.fmtM(merval.high));
+        if (merval.low) setEl('[data-idx-low]', C.fmtM(merval.low));
+        if (merval.volume) setEl('[data-idx-vol]', C.fmtVol(merval.volume));
+        var mPct = merval.variation != null ? merval.variation * 100 : null;
+        if (mPct == null && merval.previousClose > 0) mPct = ((merval.price - merval.previousClose) / merval.previousClose) * 100;
+        var chEl = document.querySelector('[data-idx-change]');
+        if (chEl && mPct != null) {
+          chEl.textContent = C.pctText(mPct);
+          chEl.className = 'idx-change ' + (mPct >= 0 ? 'rc-up' : 'rc-down');
+        }
+      }
+      if (stocks && Array.isArray(stocks) && stocks.length > 0) {
+        stocksData = stocks;
+        renderMovers(stocks);
+        renderStocks();
+      }
+    }).catch(function() {});
+  }
+
+  initCountdown();
+  setInterval(tickCountdown, 1000);
 })();
 </script>
 
 <style>
+  /* Skeleton Shimmer */
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  .skeleton-shimmer, :global(.skeleton-shimmer) {
+    background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 4px;
+  }
+  .skeleton-mover-row, :global(.skeleton-mover-row) {
+    display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+    border-bottom: 1px solid rgba(128,128,128,0.08);
+  }
+  .skeleton-mover-row:last-child, :global(.skeleton-mover-row:last-child) { border-bottom: none; }
+  .skeleton-stock-card, :global(.skeleton-stock-card) {
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .skeleton-stock-row1, :global(.skeleton-stock-row1) { display: flex; align-items: center; gap: 10px; }
+  .skeleton-stock-row2, :global(.skeleton-stock-row2) { display: flex; justify-content: space-between; align-items: center; }
+  .stocks-skeleton, :global(.stocks-skeleton) {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--spacing-md);
+  }
+  .chart-skeleton { border-radius: 4px; overflow: hidden; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton-shimmer, :global(.skeleton-shimmer) { animation: none; }
+  }
+
   /* Index Summary Card */
-  .index-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+  .index-card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+    overflow: hidden;
+  }
+  .index-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-accent), var(--color-gold));
+    border-radius: 12px 12px 0 0;
+  }
   .idx-top { margin-bottom: var(--spacing-lg); }
   .idx-info { display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); }
-  .idx-label { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; color: var(--color-text); }
+  .idx-label { font-size: 1.2rem; font-weight: 800; color: var(--color-text); letter-spacing: 0.02em; }
   .idx-price-row { display: flex; align-items: baseline; gap: 12px; }
-  .idx-price { font-size: 2.2rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; }
-  .idx-change { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .idx-stats { display: flex; gap: var(--spacing-xl); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); flex-wrap: wrap; }
+  .idx-price { font-size: 2.4rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; line-height: 1.1; }
+  .idx-change { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; padding: 4px 10px; border-radius: 6px; }
+  .idx-change.rc-up { background: rgba(22,163,74,0.1); }
+  .idx-change.rc-down { background: rgba(220,38,38,0.1); }
+  .idx-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); }
   .idx-stat { display: flex; flex-direction: column; gap: 2px; }
-  .idx-sk { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
-  .idx-sv { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .idx-sk { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .idx-sv { font-size: 1.05rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
 
   .rc-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; }
   .rc-badge--merval { background: rgba(96,165,250,0.15); color: #3b82f6; }
 
+  .mkt-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 3px; }
+  .mkt-badge--open { background: rgba(22,163,74,0.12); color: #16a34a; }
+  .mkt-badge--closed { background: rgba(128,128,128,0.1); color: var(--color-text-meta); }
+  .mkt-badge-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .mkt-badge--open .mkt-badge-dot { background: #16a34a; animation: live-pulse 2s ease-in-out infinite; }
+  .mkt-badge--closed .mkt-badge-dot { background: var(--color-text-meta); }
+  :global([data-theme="dark"]) .mkt-badge--open { color: #4ade80; }
+  :global([data-theme="dark"]) .mkt-badge--open .mkt-badge-dot { background: #4ade80; }
+  @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
   /* Market Summary */
   .mkt-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); margin-bottom: var(--spacing-xl); }
-  .mkt-sum-item { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .mkt-sum-item { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .mkt-sum-item:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
   .mkt-sum-label { font-size: 0.68rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
   .mkt-sum-val { font-size: 1.15rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
   @media (max-width: 768px) { .mkt-summary { grid-template-columns: repeat(2, 1fr); } }
@@ -1030,17 +1485,20 @@ const { lang } = Astro.params;
   /* Top Movers */
   .movers-section { margin-bottom: var(--spacing-2xl); }
   .movers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); }
-  .movers-col { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
-  .movers-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 12px 16px; border-bottom: 1px solid var(--color-border); }
+  .movers-col { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+  .movers-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 12px 16px; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 6px; }
   .movers-title--up { color: #16a34a; }
+  .movers-title--up::before { content: '▲'; font-size: 0.55rem; }
   .movers-title--down { color: #dc2626; }
+  .movers-title--down::before { content: '▼'; font-size: 0.55rem; }
   :global(.mover-item) { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid rgba(128,128,128,0.08); text-decoration: none; color: inherit; transition: background 0.1s; }
   :global(.mover-item:last-child) { border-bottom: none; }
   :global(.mover-item:hover) { background: rgba(246,180,14,0.06); }
+  :global(.mover-item:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: -2px; }
   :global(.mover-info) { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
   :global(.mover-sym) { font-weight: 800; font-size: 0.85rem; color: var(--color-text); }
   :global(.mover-name) { font-size: 0.68rem; color: var(--color-text-meta); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  :global(.mover-right) { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  :global(.mover-right) { display: flex; flex-direction: column; align-items: end; gap: 2px; }
   :global(.mover-price) { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); white-space: nowrap; }
   :global(.mover-pct) { font-size: 0.75rem; font-weight: 700; padding: 1px 6px; border-radius: 3px; white-space: nowrap; }
   :global(.mover-pct.rc-up) { color: #16a34a; background: rgba(22,163,74,0.1); }
@@ -1048,23 +1506,30 @@ const { lang } = Astro.params;
 
   /* Chart */
   .chart-section { margin-bottom: var(--spacing-2xl); }
-  .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-md); }
-  .chart-wrap canvas { width: 100%; display: block; }
+  .chart-wrap {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
+    position: relative;
+  }
+  .chart-wrap canvas { width: 100%; display: block; cursor: crosshair; }
   .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm); }
   .chart-header .section-title { margin-bottom: 0; }
-  .range-buttons { display: flex; gap: 4px; }
+  .range-buttons { display: flex; gap: 3px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px; padding: 3px; }
   .range-buttons button {
-    padding: 5px 12px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em;
-    border: 1px solid var(--color-border); border-radius: 6px;
+    padding: 6px 14px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;
+    border: none; border-radius: 6px;
     background: transparent; color: var(--color-text-meta); cursor: pointer; transition: all 0.15s;
   }
-  .range-buttons button:hover { color: var(--color-text); border-color: var(--color-text-meta); }
-  .range-buttons button.active { background: var(--color-gold); color: #000; border-color: var(--color-gold); }
+  .range-buttons button:hover { color: var(--color-text); background: rgba(128,128,128,0.08); }
+  .range-buttons button:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .range-buttons button.active { background: var(--color-gold); color: #000; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
   .chart-unavailable { text-align: center; color: var(--color-text-meta); padding: var(--spacing-2xl) var(--spacing-md); font-size: 0.85rem; font-style: italic; }
 
   /* Market Breadth */
   .breadth-section { margin-bottom: var(--spacing-xl); }
-  .breadth-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; }
+  .breadth-bar { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .breadth-side { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 50px; }
   .breadth-count { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
   .breadth-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
@@ -1080,48 +1545,54 @@ const { lang } = Astro.params;
   /* Heatmap */
   .heatmap-section { margin-bottom: var(--spacing-2xl); }
   .heatmap {
-    display: flex; flex-wrap: wrap; gap: 3px;
-    border-radius: 8px; overflow: visible; min-height: 80px;
+    display: flex; flex-wrap: wrap; gap: 2px;
+    border-radius: 12px; overflow: hidden; min-height: 80px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    padding: 2px;
   }
   .heatmap :global(.hm-cell) {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    min-width: 60px; min-height: 60px; flex-grow: 1;
-    border-radius: 6px; text-decoration: none; color: #fff;
-    transition: transform 0.15s, box-shadow 0.15s;
-    padding: 6px 4px; text-align: center; position: relative;
+    min-width: 60px; min-height: 64px; flex-grow: 1;
+    border-radius: 4px; text-decoration: none; color: #fff;
+    transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+    padding: 8px 4px; text-align: center; position: relative;
   }
-  .heatmap :global(.hm-cell:hover) { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 2; text-decoration: none; color: #fff; }
+  .heatmap :global(.hm-cell:hover) { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0,0,0,0.35); z-index: 2; text-decoration: none; color: #fff; filter: brightness(1.15); }
+  .heatmap :global(.hm-cell:focus-visible) { outline: 2px solid #fff; outline-offset: -2px; z-index: 2; }
   .heatmap :global(.hm-sym) { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.02em; line-height: 1.2; }
   .heatmap :global(.hm-pct) { font-size: 0.65rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; opacity: 0.9; }
   .heatmap :global(.hm-tip) {
     display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
     background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 6px;
     padding: 8px 10px; min-width: 140px; z-index: 10; pointer-events: none;
-    flex-direction: column; gap: 3px; text-align: left; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    flex-direction: column; gap: 3px; text-align: start; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
   }
   .heatmap :global(.hm-tip strong) { font-size: 0.72rem; color: var(--color-text); white-space: nowrap; }
   .heatmap :global(.hm-tip span) { font-size: 0.65rem; color: var(--color-text-meta); font-weight: 600; white-space: nowrap; }
-  .heatmap :global(.hm-cell:hover .hm-tip) { display: flex; }
+  .heatmap :global(.hm-cell:hover .hm-tip), .heatmap :global(.hm-cell:focus-within .hm-tip), .heatmap :global(.hm-cell:focus .hm-tip) { display: flex; }
 
   /* Sector Breakdown */
   .sector-section { margin-bottom: var(--spacing-2xl); }
   .sector-grid {
     display: flex; align-items: center; gap: var(--spacing-xl);
     background: var(--color-bg-secondary); border: 1px solid var(--color-border);
-    border-radius: 8px; padding: var(--spacing-xl);
+    border-radius: 12px; padding: var(--spacing-xl);
   }
   .sector-chart-wrap { flex-shrink: 0; }
   .sector-legend { flex: 1; display: flex; flex-direction: column; gap: 6px; }
   .sector-legend :global(.sec-leg-item) {
-    display: flex; align-items: center; gap: 10px; padding: 6px 0;
+    display: flex; align-items: center; gap: 10px; padding: 6px 4px;
     border-bottom: 1px solid rgba(128,128,128,0.08); font-size: 0.85rem;
+    border-radius: 4px; transition: background 0.15s;
   }
+  .sector-legend :global(.sec-leg-item:hover) { background: rgba(128,128,128,0.06); }
   .sector-legend :global(.sec-leg-item:last-child) { border-bottom: none; }
   .sector-legend :global(.sec-dot) { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .sector-legend :global(.sec-name) { font-weight: 700; min-width: 90px; color: var(--color-text); }
   .sector-legend :global(.sec-pct) { font-weight: 800; font-variant-numeric: tabular-nums; min-width: 50px; color: var(--color-text); }
   .sector-legend :global(.sec-count) { font-size: 0.75rem; color: var(--color-text-meta); min-width: 60px; }
-  .sector-legend :global(.sec-chg) { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-left: auto; }
+  .sector-legend :global(.sec-chg) { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-inline-start: auto; }
   .sector-legend :global(.sec-chg.rc-up) { color: #16a34a; }
   .sector-legend :global(.sec-chg.rc-down) { color: #dc2626; }
 
@@ -1146,18 +1617,19 @@ const { lang } = Astro.params;
   :global(.mcc-dot) { width: 10px; height: 10px; border-radius: 50%; }
   :global(.mcc-sym) { font-weight: 800; color: var(--color-accent); text-decoration: none; }
   :global(.mcc-sym:hover) { text-decoration: underline; }
-  :global(.mcc-w) { font-weight: 700; color: var(--color-text); font-variant-numeric: tabular-nums; text-align: right; }
-  :global(.mcc-cap) { font-weight: 600; color: var(--color-text-meta); font-variant-numeric: tabular-nums; text-align: right; }
+  :global(.mcc-w) { font-weight: 700; color: var(--color-text); font-variant-numeric: tabular-nums; text-align: end; }
+  :global(.mcc-cap) { font-weight: 600; color: var(--color-text-meta); font-variant-numeric: tabular-nums; text-align: end; }
 
   /* Volatility Leaders */
   .vol-leaders-section { margin-bottom: var(--spacing-2xl); }
   :global(.vl-row) { display: grid; grid-template-columns: 70px 1fr 70px; align-items: center; gap: 10px; padding: 7px 0; text-decoration: none; }
   :global(.vl-row + .vl-row) { border-top: 1px solid rgba(128,128,128,0.06); }
   :global(.vl-row:hover) { background: rgba(246,180,14,0.06); }
+  :global(.vl-row:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: -2px; }
   :global(.vl-sym) { font-size: 0.82rem; font-weight: 800; color: var(--color-accent); }
   :global(.vl-bar-wrap) { height: 18px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
   :global(.vl-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-  :global(.vl-pct) { font-size: 0.82rem; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+  :global(.vl-pct) { font-size: 0.82rem; font-weight: 800; text-align: end; font-variant-numeric: tabular-nums; }
 
   /* Volume Distribution */
   /* Sector Performance */
@@ -1170,12 +1642,12 @@ const { lang } = Astro.params;
   :global(.sp-name) { font-size: 0.78rem; font-weight: 700; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   :global(.sp-cnt) { font-size: 0.65rem; color: var(--color-text-meta); font-weight: 600; }
   :global(.sp-bar-area) { display: grid; grid-template-columns: 1fr 2px 1fr; align-items: center; height: 20px; }
-  :global(.sp-bar-left) { display: flex; justify-content: flex-end; height: 100%; }
+  :global(.sp-bar-left) { display: flex; justify-content: end; height: 100%; }
   :global(.sp-bar-center) { background: var(--color-border); height: 100%; }
-  :global(.sp-bar-right) { display: flex; justify-content: flex-start; height: 100%; }
+  :global(.sp-bar-right) { display: flex; justify-content: start; height: 100%; }
   :global(.sp-bar-fill) { height: 100%; border-radius: 3px; transition: width 0.5s ease; min-width: 2px; }
-  :global(.sp-bar-fill--neg) { margin-left: auto; }
-  :global(.sp-val) { font-size: 0.82rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+  :global(.sp-bar-fill--neg) { margin-inline-start: auto; }
+  :global(.sp-val) { font-size: 0.82rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: end; }
 
   .vol-dist-section { margin-bottom: var(--spacing-2xl); }
   :global(.vd-row) {
@@ -1188,26 +1660,56 @@ const { lang } = Astro.params;
     text-decoration: none; transition: color 0.15s;
   }
   :global(.vd-sym:hover) { color: var(--color-gold); text-decoration: none; }
+  :global(.vd-sym:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   :global(.vd-bar-track) { height: 18px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
   :global(.vd-bar-fill) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
   :global(.vd-vol) {
     font-size: 0.78rem; font-weight: 700; color: var(--color-text-meta);
-    text-align: right; font-variant-numeric: tabular-nums;
+    text-align: end; font-variant-numeric: tabular-nums;
   }
 
   /* Stocks Section */
   .stocks-section { margin-bottom: var(--spacing-2xl); }
-  .stocks-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg); flex-wrap: wrap; gap: var(--spacing-sm); }
+  .stocks-header { display: flex; flex-direction: column; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); }
+  .stocks-header-top { display: flex; justify-content: space-between; align-items: center; }
   .stocks-header .section-title { margin-bottom: 0; }
+  .stocks-count { font-size: 0.75rem; font-weight: 600; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+  .stocks-controls { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-sm); flex-wrap: wrap; }
+  .stocks-search-wrap { position: relative; }
+  .stocks-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--color-text-meta); pointer-events: none; }
+  .stocks-search {
+    padding: 7px 42px 7px 32px; font-size: 0.8rem; border: 1px solid var(--color-border);
+    border-radius: 6px; background: var(--color-bg-secondary); color: var(--color-text);
+    width: 200px; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .stocks-search:focus { outline: none; border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(246,180,14,0.15); }
+  .stocks-search:focus + .search-kbd { display: none; }
+  .search-kbd { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 0.6rem; font-family: inherit; font-weight: 600; padding: 2px 5px; border-radius: 3px; background: var(--color-bg); border: 1px solid var(--color-border); color: var(--color-text-meta); pointer-events: none; line-height: 1; }
+  .stocks-search::placeholder { color: var(--color-text-meta); opacity: 0.7; }
+  :global(.stocks-empty) {
+    text-align: center; color: var(--color-text-meta); padding: var(--spacing-2xl);
+    font-size: 0.9rem; grid-column: 1 / -1;
+  }
+  :global(.stocks-empty::before) { content: '🔍'; display: block; font-size: 2rem; margin-bottom: var(--spacing-sm); opacity: 0.5; }
 
   .sort-controls { display: flex; align-items: center; gap: 6px; }
   .sort-label { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
-  .sort-btn { font-size: 0.75rem; padding: 4px 10px; border: 1px solid var(--color-border); border-radius: 4px; background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer; transition: all 0.15s; font-weight: 600; }
+  .sort-btn { font-size: 0.75rem; padding: 6px 12px; border: 1px solid var(--color-border); border-radius: 4px; background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer; transition: all 0.15s; font-weight: 600; }
   .sort-btn:hover { border-color: var(--color-gold); color: var(--color-text); }
+  .sort-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   .sort-btn--active { border-color: var(--color-gold); background: rgba(246,180,14,0.1); color: var(--color-gold); }
 
-  .stocks-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl); }
-  .loading-spinner { margin-bottom: 8px; }
+  .stocks-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl); font-size: 0.85rem; }
+  @keyframes fade-in-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  :global(.stk-card) { animation: fade-in-up 0.25s ease-out both; }
+
+  @keyframes mv-section-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .mkt-summary, .movers-section, .sector-section, .mcap-conc-section, .sector-perf-section, .vol-dist-section, .vol-leaders-section {
+    animation: mv-section-fade 0.3s ease-out;
+  }
+
+  .mv-retry-btn { transition: border-color 0.15s, color 0.15s; }
+  .mv-retry-btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
 
   :global([data-theme="dark"]) .rc-badge--merval { color: #60a5fa; }
 
@@ -1215,7 +1717,60 @@ const { lang } = Astro.params;
     .idx-price { font-size: 1.6rem; }
     .idx-stats { gap: var(--spacing-md); }
     .movers-grid { grid-template-columns: 1fr; }
-    .stocks-header { flex-direction: column; align-items: flex-start; }
+    .stocks-controls { flex-direction: column; align-items: stretch; }
+    .stocks-search { width: 100%; }
+    :global(.mcc-row) { grid-template-columns: 20px 10px 60px 45px 1fr 55px; gap: 4px; font-size: 0.7rem; }
+    :global(.mcc-summary) { gap: var(--spacing-md); flex-wrap: wrap; }
+    :global(.mcc-stat-val) { font-size: 1.2rem; }
+    :global(.vl-row) { grid-template-columns: 55px 1fr 55px; gap: 6px; }
+    :global(.vl-sym) { font-size: 0.75rem; }
+    :global(.vl-pct) { font-size: 0.72rem; }
+    .mkt-sum-label { font-size: 0.6rem; }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.hm-seg), :global(.sp-bar-fill), :global(.mcc-seg) { transition: none; }
+    :global(.mover-item), .range-buttons button, .sort-btn, .mkt-sum-item, .stocks-search { transition: none; }
+    .mkt-badge--open .mkt-badge-dot { animation: none; }
+    :global(.breadth-fill), :global(.mcc-card), :global(.vl-bar), :global(.vd-sym), :global(.vd-bar-fill) { transition: none; }
+    :global(.stk-card) { animation: none; }
+    .mkt-summary, .movers-section, .sector-section, .mcap-conc-section, .sector-perf-section, .vol-dist-section, .vol-leaders-section { animation: none; }
+    .scroll-top-btn { transition: none; }
+  }
+
+  @media print {
+    .chart-section, .heatmap-section, .range-buttons, .sort-controls, .stocks-search-wrap { display: none !important; }
+    :global(.mover-card), .detail-section, .mkt-sum-item, .movers-col { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+    .scroll-top-btn { display: none !important; }
+    :global(.stk-card) { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+    :global(.sp-bar-fill), :global(.vd-bar-fill), :global(.mcc-seg), :global(.breadth-fill) { transition: none; }
+    .stocks-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px; }
+  }
+
+  @media (prefers-contrast: more) {
+    .index-card, .chart-wrap, .breadth-bar { border-width: 2px; }
+    .mkt-sum-item, .movers-col { border-width: 2px; }
+    .sector-grid { border-width: 2px; }
+    .rc-badge { border: 1px solid currentColor; }
+    :global(.mover-pct) { border: 1px solid currentColor; }
+    .sort-btn { border-width: 2px; }
+    .stocks-search { border-width: 2px; }
+    .range-buttons button { border-width: 2px; }
+  }
+
+  .scroll-top-btn {
+    position: fixed; bottom: 24px; inset-inline-end: 24px; z-index: 90;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    color: var(--color-text-meta); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.15s, color 0.15s;
+    transform: translateY(8px);
+  }
+  .scroll-top-btn--visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .scroll-top-btn:hover { color: var(--color-gold); border-color: var(--color-gold); }
+  .scroll-top-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 </style>
 

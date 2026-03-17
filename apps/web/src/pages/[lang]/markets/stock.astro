@@ -57,6 +57,7 @@ const stockI18n = {
   estimateLabel: t(lang, "stock.estimateLabel"),
   beat: t(lang, "stock.beat"),
   miss: t(lang, "stock.miss"),
+  avgSurprise: t(lang, "stock.avgSurprise" as any),
   volume: t(lang, "stock.volume"),
   dayRange: t(lang, "stock.dayRange"),
   nearLow: t(lang, "stock.nearLow"),
@@ -77,6 +78,9 @@ const stockI18n = {
   below: t(lang, "stock.below" as any),
   goldenCross: t(lang, "stock.goldenCross" as any),
   deathCross: t(lang, "stock.deathCross" as any),
+  ma50Title: t(lang, "stock.ma50Title" as any),
+  ma200Title: t(lang, "stock.ma200Title" as any),
+  ma50vs200: t(lang, "stock.ma50vs200" as any),
   divYieldLabel: t(lang, "stock.divYield"),
   grahamTitle: t(lang, "stock.grahamTitle" as any),
   grahamVerdict: t(lang, "stock.grahamVerdict" as any),
@@ -95,6 +99,181 @@ const stockI18n = {
   undervalued: t(lang, "stock.undervalued" as any),
   fairlyValued: t(lang, "stock.fairlyValued" as any),
   overvalued: t(lang, "stock.overvalued" as any),
+  annualDiv: t(lang, "stock.annualDiv" as any),
+  payoutRatio: t(lang, "stock.payoutRatio" as any),
+  dividendHistory: t(lang, "stock.dividendHistory" as any),
+  exDate: t(lang, "stock.exDate" as any),
+  amount: t(lang, "stock.amount" as any),
+  noDividends: t(lang, "stock.noDividends" as any),
+  sustainable: t(lang, "stock.sustainable" as any),
+  investment: t(lang, "stock.investment" as any),
+  perYear: t(lang, "stock.perYear" as any),
+  shares: t(lang, "stock.shares" as any),
+  share: t(lang, "stock.share" as any),
+  clickToCopy: t(lang, "stock.clickToCopy" as any),
+  recentlyViewed: t(lang, "stock.recentlyViewed" as any),
+  similarStocks: t(lang, "stock.similarStocks" as any),
+  peerComparison: t(lang, "stock.peerComparison" as any),
+  keyInsights: t(lang, "stock.keyInsights" as any),
+  insightBullish: t(lang, "stock.insightBullish" as any),
+  insightBearish: t(lang, "stock.insightBearish" as any),
+  insightLowPE: t(lang, "stock.insightLowPE" as any),
+  insightHighPE: t(lang, "stock.insightHighPE" as any),
+  insightStrongMargins: t(lang, "stock.insightStrongMargins" as any),
+  insightUnprofitable: t(lang, "stock.insightUnprofitable" as any),
+  insightRevenueGrowth: t(lang, "stock.insightRevenueGrowth" as any),
+  insightHighDivYield: t(lang, "stock.insightHighDivYield" as any),
+  insightLowBeta: t(lang, "stock.insightLowBeta" as any),
+  insightHighBeta: t(lang, "stock.insightHighBeta" as any),
+  insightInsiderOwn: t(lang, "stock.insightInsiderOwn" as any),
+  insightHighDebt: t(lang, "stock.insightHighDebt" as any),
+  grahamNoteSize: t(lang, "stock.grahamNoteSize" as any),
+  grahamNoteFinances: t(lang, "stock.grahamNoteFinances" as any),
+  grahamNoteEps: t(lang, "stock.grahamNoteEps" as any),
+  grahamNoteDividend: t(lang, "stock.grahamNoteDividend" as any),
+  grahamNoteGrowth: t(lang, "stock.grahamNoteGrowth" as any),
+  grahamNotePE: t(lang, "stock.grahamNotePE" as any),
+  grahamNotePB: t(lang, "stock.grahamNotePB" as any),
+  healthStrong: t(lang, "stock.healthStrong" as any),
+  healthFair: t(lang, "stock.healthFair" as any),
+  healthWeak: t(lang, "stock.healthWeak" as any),
+  healthBased: t(lang, "stock.healthBased" as any),
+  valValue: t(lang, "stock.valValue" as any),
+  valFair: t(lang, "stock.valFair" as any),
+  valRich: t(lang, "stock.valRich" as any),
+  valExpensive: t(lang, "stock.valExpensive" as any),
+  failedLoad: t(lang, "stock.failedLoad" as any),
+  funnelRevenue: t(lang, "stock.funnelRevenue" as any),
+  funnelGrossProfit: t(lang, "stock.funnelGrossProfit" as any),
+  funnelNetIncome: t(lang, "stock.funnelNetIncome" as any),
+  cfQuality: t(lang, "stock.cfQuality" as any),
+  cfStrong: t(lang, "stock.cfStrong" as any),
+  cfHealthy: t(lang, "stock.cfHealthy" as any),
+  cfWeak: t(lang, "stock.cfWeak" as any),
+  cfNegative: t(lang, "stock.cfNegative" as any),
+  cfExceeds: t(lang, "stock.cfExceeds" as any),
+  cfMatches: t(lang, "stock.cfMatches" as any),
+  cfNotBacked: t(lang, "stock.cfNotBacked" as any),
+  cfNegativeFlow: t(lang, "stock.cfNegativeFlow" as any),
+  cfOpCashFlow: t(lang, "stock.cfOpCashFlow" as any),
+  cfNetIncome: t(lang, "stock.cfNetIncome" as any),
+  cfRatio: t(lang, "stock.cfRatio" as any),
+  navHealth: t(lang, "stock.navHealth" as any),
+  navValuation: t(lang, "stock.navValuation" as any),
+  navMaSignal: t(lang, "stock.navMaSignal" as any),
+  navFinancials: t(lang, "stock.navFinancials" as any),
+  navBalance: t(lang, "stock.navBalance" as any),
+  navAnalyst: t(lang, "stock.navAnalyst" as any),
+  navEarnings: t(lang, "stock.navEarnings" as any),
+  navGraham: t(lang, "stock.navGraham" as any),
+  navAbout: t(lang, "stock.navAbout" as any),
+  navPeers: t(lang, "stock.navPeers" as any),
+  cryptoTag: t(lang, "stock.cryptoTag" as any),
+  cryptoRank: t(lang, "stock.cryptoRank" as any),
+  crypto24hVol: t(lang, "stock.crypto24hVol" as any),
+  cryptoCirculating: t(lang, "stock.cryptoCirculating" as any),
+  cryptoMaxSupply: t(lang, "stock.cryptoMaxSupply" as any),
+  cryptoTotalSupply: t(lang, "stock.cryptoTotalSupply" as any),
+  cryptoFDV: t(lang, "stock.cryptoFDV" as any),
+  cryptoAth: t(lang, "stock.cryptoAth" as any),
+  cryptoFromAth: t(lang, "stock.cryptoFromAth" as any),
+  cryptoAtl: t(lang, "stock.cryptoAtl" as any),
+  crypto24hChange: t(lang, "stock.crypto24hChange" as any),
+  crypto7dChange: t(lang, "stock.crypto7dChange" as any),
+  crypto30dChange: t(lang, "stock.crypto30dChange" as any),
+  keyStats: t(lang, "stock.keyStats"),
+  ownInsiders: t(lang, "stock.ownInsiders" as any),
+  ownInstitutions: t(lang, "stock.ownInstitutions" as any),
+  ownPublic: t(lang, "stock.ownPublic" as any),
+  tipMarketCap: t(lang, "stock.tipMarketCap" as any),
+  tipEV: t(lang, "stock.tipEV" as any),
+  tipTrailingPE: t(lang, "stock.tipTrailingPE" as any),
+  tipForwardPE: t(lang, "stock.tipForwardPE" as any),
+  tipPEG: t(lang, "stock.tipPEG" as any),
+  tipPB: t(lang, "stock.tipPB" as any),
+  tipPS: t(lang, "stock.tipPS" as any),
+  tipEVR: t(lang, "stock.tipEVR" as any),
+  tipEVE: t(lang, "stock.tipEVE" as any),
+  tipEPS: t(lang, "stock.tipEPS" as any),
+  tipForwardEPS: t(lang, "stock.tipForwardEPS" as any),
+  tipBeta: t(lang, "stock.tipBeta" as any),
+  tip50dAvg: t(lang, "stock.tip50dAvg" as any),
+  tip200dAvg: t(lang, "stock.tip200dAvg" as any),
+  tipBookValue: t(lang, "stock.tipBookValue" as any),
+  marketCap: t(lang, "stock.marketCap"),
+  marketsLabel: t(lang, "markets.breadcrumb"),
+  // Yahoo Finance sector translations
+  secMap: {
+    "Technology": t(lang, "stock.secTechnology" as any),
+    "Healthcare": t(lang, "stock.secHealthcare" as any),
+    "Financial Services": t(lang, "stock.secFinancialServices" as any),
+    "Consumer Cyclical": t(lang, "stock.secConsumerCyclical" as any),
+    "Consumer Defensive": t(lang, "stock.secConsumerDefensive" as any),
+    "Industrials": t(lang, "stock.secIndustrials" as any),
+    "Energy": t(lang, "stock.secEnergy" as any),
+    "Basic Materials": t(lang, "stock.secBasicMaterials" as any),
+    "Communication Services": t(lang, "stock.secCommunicationServices" as any),
+    "Real Estate": t(lang, "stock.secRealEstate" as any),
+    "Utilities": t(lang, "stock.secUtilities" as any),
+  },
+  // Yahoo Finance industry translations
+  indMap: {
+    "Banks—Diversified": t(lang, "stock.indBanksDiversified" as any),
+    "Banks - Diversified": t(lang, "stock.indBanksDiversified" as any),
+    "Banks—Regional": t(lang, "stock.indBanksRegional" as any),
+    "Banks - Regional": t(lang, "stock.indBanksRegional" as any),
+    "Capital Markets": t(lang, "stock.indCapitalMarkets" as any),
+    "Insurance—Diversified": t(lang, "stock.indInsuranceDiversified" as any),
+    "Insurance - Diversified": t(lang, "stock.indInsuranceDiversified" as any),
+    "Oil & Gas Integrated": t(lang, "stock.indOilGasIntegrated" as any),
+    "Oil & Gas E&P": t(lang, "stock.indOilGasEP" as any),
+    "Oil & Gas Refining & Marketing": t(lang, "stock.indOilGasRefining" as any),
+    "Oil & Gas Equipment & Services": t(lang, "stock.indOilGasEquipment" as any),
+    "Steel": t(lang, "stock.indSteel" as any),
+    "Aluminum": t(lang, "stock.indAluminum" as any),
+    "Specialty Chemicals": t(lang, "stock.indSpecialtyChemicals" as any),
+    "Agricultural Inputs": t(lang, "stock.indAgriculturalInputs" as any),
+    "Farm Products": t(lang, "stock.indFarmProducts" as any),
+    "Packaged Foods": t(lang, "stock.indPackagedFoods" as any),
+    "Beverages—Non-Alcoholic": t(lang, "stock.indBeveragesNonAlcoholic" as any),
+    "Beverages - Non-Alcoholic": t(lang, "stock.indBeveragesNonAlcoholic" as any),
+    "Beverages—Brewers": t(lang, "stock.indBeveragesBrewers" as any),
+    "Beverages - Brewers": t(lang, "stock.indBeveragesBrewers" as any),
+    "Tobacco": t(lang, "stock.indTobacco" as any),
+    "Household & Personal Products": t(lang, "stock.indHouseholdProducts" as any),
+    "Utilities—Regulated Electric": t(lang, "stock.indUtilitiesRegElectric" as any),
+    "Utilities - Regulated Electric": t(lang, "stock.indUtilitiesRegElectric" as any),
+    "Utilities—Diversified": t(lang, "stock.indUtilitiesDiversified" as any),
+    "Utilities - Diversified": t(lang, "stock.indUtilitiesDiversified" as any),
+    "Utilities—Regulated Gas": t(lang, "stock.indUtilitiesRegGas" as any),
+    "Utilities - Regulated Gas": t(lang, "stock.indUtilitiesRegGas" as any),
+    "Telecom Services": t(lang, "stock.indTelecomServices" as any),
+    "Internet Content & Information": t(lang, "stock.indInternetContentInfo" as any),
+    "Residential Construction": t(lang, "stock.indResidentialConstruction" as any),
+    "Building Materials": t(lang, "stock.indBuildingMaterials" as any),
+    "Engineering & Construction": t(lang, "stock.indEngineeringConstruction" as any),
+    "Real Estate Services": t(lang, "stock.indRealEstateServices" as any),
+    "REIT—Diversified": t(lang, "stock.indREITDiversified" as any),
+    "REIT - Diversified": t(lang, "stock.indREITDiversified" as any),
+    "Auto Manufacturers": t(lang, "stock.indAutoManufacturers" as any),
+    "Auto Parts": t(lang, "stock.indAutoParts" as any),
+    "Airlines": t(lang, "stock.indAirlines" as any),
+    "Railroads": t(lang, "stock.indRailroads" as any),
+    "Marine Shipping": t(lang, "stock.indMarineShipping" as any),
+    "Conglomerates": t(lang, "stock.indConglomerates" as any),
+    "Industrial Distribution": t(lang, "stock.indIndustrialDistribution" as any),
+    "Drug Manufacturers—General": t(lang, "stock.indPharmaceuticals" as any),
+    "Drug Manufacturers - General": t(lang, "stock.indPharmaceuticals" as any),
+    "Biotechnology": t(lang, "stock.indBiotechnology" as any),
+    "Medical Devices": t(lang, "stock.indMedicalDevices" as any),
+    "Software—Infrastructure": t(lang, "stock.indSoftwareInfra" as any),
+    "Software - Infrastructure": t(lang, "stock.indSoftwareInfra" as any),
+    "Software—Application": t(lang, "stock.indSoftwareApp" as any),
+    "Software - Application": t(lang, "stock.indSoftwareApp" as any),
+    "Semiconductors": t(lang, "stock.indSemiconductors" as any),
+    "Paper & Forestry Products": t(lang, "stock.indPaperForestry" as any),
+    "Textile Manufacturing": t(lang, "stock.indTextileManufacturing" as any),
+  },
 };
 ---
 
@@ -103,10 +282,13 @@ const stockI18n = {
   description={t(lang, "stock.pageDesc")}
   lang={lang}
   ogType="website"
+  canonicalUrl={symbol ? `https://plata.today/${lang}/markets/stock?s=${symbol}` : undefined}
+  alternateUrls={symbol ? Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/stock?s=${symbol}`])) : undefined}
+  noindex={!symbol}
   breadcrumbs={[
     { name: t(lang, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang, "stock.pageTitle"), url: `/${lang}/markets` },
-    { name: "Merval", url: `/${lang}/markets/merval` },
+    { name: t(lang, "markets.breadcrumb"), url: `/${lang}/markets` },
+    { name: t(lang, "merval.breadcrumb"), url: `/${lang}/markets/merval` },
     { name: symbol || t(lang, "stock.pageTitle"), url: `/${lang}/markets/stock${symbol ? `?s=${symbol}` : ""}` },
   ]}
   jsonLd={symbol ? {
@@ -116,6 +298,15 @@ const stockI18n = {
     "description": t(lang, "stock.pageDesc"),
     "url": `https://plata.today/${lang}/markets/stock?s=${symbol}`,
     "inLanguage": lang,
+    "about": {
+      "@type": "FinancialProduct",
+      "name": symbol,
+      "url": `https://plata.today/${lang}/markets/stock?s=${symbol}`,
+      "provider": {
+        "@type": "Exchange",
+        "name": "BYMA — Bolsas y Mercados Argentinos"
+      }
+    },
     "isPartOf": {
       "@type": "WebSite",
       "name": "Plata",
@@ -138,16 +329,19 @@ const stockI18n = {
           <div class="stock-title-row">
             <h1 class="mkts-title" data-stock-symbol>{symbol || "\u2014"}</h1>
             <span class="rc-badge rc-badge--merval">BYMA</span>
+            <button class="share-btn" data-share-btn aria-label={t(lang, "stock.share" as any)} title={t(lang, "stock.share" as any)} style="display:none;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l4-4m0 0H7m3 0v3M13 8v5a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h5"/></svg>
+            </button>
           </div>
           <p class="mkts-subtitle" data-stock-name>{t(lang!, "common.loading")}</p>
           <div class="stock-badges" data-stock-badges style="display:none;"></div>
         </div>
-        <p class="mkts-updated" data-mkts-updated>{t(lang!, "common.loading")}</p>
+        <p class="mkts-updated" data-mkts-updated role="status" aria-live="polite">{t(lang!, "common.loading")}</p>
       </header>
 
       <!-- Price Card -->
-      <div class="price-card">
-        <div class="pc-main">
+      <div class="price-card price-card--loading" data-price-card role="region" aria-label={t(lang, "stock.priceChart")}>
+        <div class="pc-main" aria-live="polite">
           <span class="pc-price" data-stock-price>&mdash;</span>
           <span class="pc-change" data-stock-change></span>
           <span class="pc-currency" data-stock-currency>ARS</span>
@@ -191,13 +385,13 @@ const stockI18n = {
       </div>
 
       <!-- Section Navigation -->
-      <nav class="section-nav" data-section-nav style="display:none;"></nav>
+      <nav class="section-nav" data-section-nav style="display:none;" aria-label={t(lang, "stock.sectionNav" as any)}></nav>
 
       <!-- Company Overview Hero -->
       <section class="company-hero" data-company-hero style="display:none;">
         <div class="ch-identity">
           <div class="ch-logo" data-ch-logo>
-            <img class="ch-logo-img" data-ch-logo-img alt="" />
+            <img class="ch-logo-img" data-ch-logo-img alt="" loading="lazy" width="64" height="64" />
             <div class="ch-logo-fallback" data-ch-logo-fb></div>
           </div>
           <div class="ch-info">
@@ -262,19 +456,19 @@ const stockI18n = {
       <section class="chart-section">
         <div class="chart-header">
           <h2 class="section-title">{t(lang, "stock.priceChart")}</h2>
-          <div class="range-buttons" data-range-buttons>
-            <button data-range="1d" data-interval="5m">1D</button>
-            <button data-range="5d" data-interval="15m">5D</button>
-            <button data-range="1mo" data-interval="1d" class="active">1M</button>
-            <button data-range="3mo" data-interval="1d">3M</button>
-            <button data-range="1y" data-interval="1wk">1Y</button>
+          <div class="range-buttons" data-range-buttons role="group" aria-label={t(lang, "stock.chartTimeRange" as any)}>
+            <button data-range="1d" data-interval="5m" aria-label={t(lang, "stock.range1d" as any)}>1D</button>
+            <button data-range="5d" data-interval="15m" aria-label={t(lang, "stock.range5d" as any)}>5D</button>
+            <button data-range="1mo" data-interval="1d" class="active" aria-label={t(lang, "stock.range1m" as any)} aria-pressed="true">1M</button>
+            <button data-range="3mo" data-interval="1d" aria-label={t(lang, "stock.range3m" as any)}>3M</button>
+            <button data-range="1y" data-interval="1wk" aria-label={t(lang, "stock.range1y" as any)}>1Y</button>
           </div>
         </div>
         <div class="chart-wrap">
-          <canvas data-stock-chart height="280"></canvas>
+          <canvas data-stock-chart height="280" role="img" aria-label={t(lang!, "stock.pageTitle")}></canvas>
         </div>
         <div class="vol-chart-wrap">
-          <canvas data-vol-chart height="60"></canvas>
+          <canvas data-vol-chart height="60" role="img" aria-label={t(lang!, "stock.volume")}></canvas>
         </div>
       </section>
 
@@ -376,30 +570,30 @@ const stockI18n = {
           <div class="stats-col">
             <table class="stats-table">
               <tbody>
-                <tr><td class="st-k">{t(lang, "stock.marketCap")} <span class="st-info" data-tip="Total market value of all outstanding shares">i</span></td><td class="st-v" data-st-mcap>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.enterpriseValue")} <span class="st-info" data-tip="Market cap + debt - cash. Represents total company value">i</span></td><td class="st-v" data-st-ev>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.trailingPE")} <span class="st-info" data-tip="Price divided by last 12 months earnings. Lower may indicate value">i</span></td><td class="st-v" data-st-tpe>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.forwardPE")} <span class="st-info" data-tip="Price divided by estimated future earnings">i</span></td><td class="st-v" data-st-fpe>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.pegRatio")} <span class="st-info" data-tip="P/E divided by earnings growth rate. Below 1.0 may indicate value">i</span></td><td class="st-v" data-st-peg>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.priceBook")} <span class="st-info" data-tip="Price divided by book value per share. Below 1.0 means trading below net assets">i</span></td><td class="st-v" data-st-pb>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.priceSales")} <span class="st-info" data-tip="Price divided by revenue per share. Useful for companies without earnings">i</span></td><td class="st-v" data-st-ps>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.evRevenue")} <span class="st-info" data-tip="Enterprise value divided by revenue. Compares total value to sales">i</span></td><td class="st-v" data-st-evr>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.evEbitda")} <span class="st-info" data-tip="Enterprise value divided by EBITDA. Common for comparing companies across industries">i</span></td><td class="st-v" data-st-eve>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.marketCap")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipMarketCap}>i</span></td><td class="st-v" data-st-mcap>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.enterpriseValue")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipEV}>i</span></td><td class="st-v" data-st-ev>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.trailingPE")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipTrailingPE}>i</span></td><td class="st-v" data-st-tpe>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.forwardPE")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipForwardPE}>i</span></td><td class="st-v" data-st-fpe>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.pegRatio")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipPEG}>i</span></td><td class="st-v" data-st-peg>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.priceBook")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipPB}>i</span></td><td class="st-v" data-st-pb>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.priceSales")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipPS}>i</span></td><td class="st-v" data-st-ps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.evRevenue")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipEVR}>i</span></td><td class="st-v" data-st-evr>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.evEbitda")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipEVE}>i</span></td><td class="st-v" data-st-eve>&mdash;</td></tr>
               </tbody>
             </table>
           </div>
           <div class="stats-col">
             <table class="stats-table">
               <tbody>
-                <tr><td class="st-k">{t(lang, "stock.epsTTM")} <span class="st-info" data-tip="Earnings per share over the trailing 12 months">i</span></td><td class="st-v" data-st-eps>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.forwardEPS")} <span class="st-info" data-tip="Estimated earnings per share for the next 12 months">i</span></td><td class="st-v" data-st-feps>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.beta")} <span class="st-info" data-tip="Volatility vs the market. Above 1.0 = more volatile, below 1.0 = less volatile">i</span></td><td class="st-v" data-st-beta>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.epsTTM")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipEPS}>i</span></td><td class="st-v" data-st-eps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.forwardEPS")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipForwardEPS}>i</span></td><td class="st-v" data-st-feps>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.beta")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipBeta}>i</span></td><td class="st-v" data-st-beta>&mdash;</td></tr>
                 <tr><td class="st-k">{t(lang, "stock.52wRange")}</td><td class="st-v" data-st-52w>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.50dAvg")} <span class="st-info" data-tip="Average closing price over the last 50 trading days">i</span></td><td class="st-v" data-st-50d>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.200dAvg")} <span class="st-info" data-tip="Average closing price over the last 200 trading days. Key support/resistance level">i</span></td><td class="st-v" data-st-200d>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.50dAvg")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tip50dAvg}>i</span></td><td class="st-v" data-st-50d>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.200dAvg")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tip200dAvg}>i</span></td><td class="st-v" data-st-200d>&mdash;</td></tr>
                 <tr><td class="st-k">{t(lang, "stock.avgVolume")}</td><td class="st-v" data-st-avgvol>&mdash;</td></tr>
                 <tr><td class="st-k">{t(lang, "stock.sharesOut")}</td><td class="st-v" data-st-shares>&mdash;</td></tr>
-                <tr><td class="st-k">{t(lang, "stock.bookValue")} <span class="st-info" data-tip="Net asset value per share. Used to calculate Price/Book ratio">i</span></td><td class="st-v" data-st-bv>&mdash;</td></tr>
+                <tr><td class="st-k">{t(lang, "stock.bookValue")} <span class="st-info" tabindex="0" role="button" aria-label="Info" data-tip={stockI18n.tipBookValue}>i</span></td><td class="st-v" data-st-bv>&mdash;</td></tr>
               </tbody>
             </table>
           </div>
@@ -566,6 +760,12 @@ const stockI18n = {
         </div>
       </section>
 
+      <!-- Dividend History -->
+      <section class="detail-section" data-divhist-section style="display:none;">
+        <h2 class="section-title" data-divhist-title></h2>
+        <div class="divhist-table-wrap" data-divhist-table></div>
+      </section>
+
       <!-- Graham-Style Fundamental Analysis -->
       <section class="detail-section" data-graham-section style="display:none;">
         <h2 class="section-title">{t(lang, "stock.grahamTitle" as any)}</h2>
@@ -578,7 +778,7 @@ const stockI18n = {
         <div class="about-card">
           <div class="about-text-wrap">
             <p class="about-desc" data-about-desc></p>
-            <button class="about-toggle" data-about-toggle>{t(lang, "stock.readMore")}</button>
+            <button class="about-toggle" data-about-toggle aria-expanded="false">{t(lang, "stock.readMore")}</button>
           </div>
           <div class="about-details" data-about-details>
             <div class="ad-item" data-ad-sector style="display:none;">
@@ -610,6 +810,11 @@ const stockI18n = {
               <span class="ad-v" data-ad-founded-v></span>
             </div>
           </div>
+          <!-- Key Products & Services -->
+          <div class="kp-section" data-kp-section style="display:none;">
+            <h3 class="kp-title" data-kp-title>{t(lang, "stock.keyProducts")}</h3>
+            <div class="kp-grid" data-kp-grid></div>
+          </div>
         </div>
       </section>
 
@@ -623,10 +828,20 @@ const stockI18n = {
     </div>
 
     <p class="info-disclaimer">{t(lang, "stock.disclaimer")}</p>
+    <noscript>
+      <p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">
+        {t(lang, "common.jsRequired" as any)}
+      </p>
+    </noscript>
+
+    <!-- Scroll to top -->
+    <button class="scroll-top-btn" data-scroll-top aria-label={t(lang, "stock.backToMerval")} title="↑">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
   </div>
 </Base>
 
-<script is:inline src="/js/charts.js"></script>
+<script is:inline src="/js/charts.js?v=5"></script>
 <script is:inline>
 (function() {
   var C = window.PlataCharts;
@@ -671,7 +886,20 @@ const stockI18n = {
   var symbol = (params.get('s') || '').trim().toUpperCase().replace(/\.BA$/, '');
 
   if (!symbol) {
-    document.querySelector('[data-stock-empty]').style.display = 'block';
+    var emptyEl = document.querySelector('[data-stock-empty]');
+    emptyEl.style.display = 'block';
+    // Show recently viewed stocks
+    try {
+      var recentList = JSON.parse(localStorage.getItem('plata_recent_stocks') || '[]');
+      if (recentList.length > 0) {
+        var recentHtml = '<div class="recent-stocks"><h3 class="recent-title">' + (i18n.recentlyViewed || 'Recently viewed') + '</h3><div class="recent-chips">';
+        for (var ri = 0; ri < recentList.length; ri++) {
+          recentHtml += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(recentList[ri]) + '" class="recent-chip">' + recentList[ri] + '</a>';
+        }
+        recentHtml += '</div></div>';
+        emptyEl.insertAdjacentHTML('beforeend', recentHtml);
+      }
+    } catch(e) {}
     return;
   }
 
@@ -684,10 +912,27 @@ const stockI18n = {
 
   setEl('[data-stock-symbol]', displaySymbol);
 
+  // Share button
+  var shareBtn = document.querySelector('[data-share-btn]');
+  if (shareBtn) {
+    shareBtn.style.display = '';
+    shareBtn.addEventListener('click', function() {
+      var url = window.location.href;
+      if (navigator.share) {
+        navigator.share({ title: displaySymbol + ' — Plata', url: url }).catch(function() {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(function() {
+          shareBtn.classList.add('share-btn--copied');
+          setTimeout(function() { shareBtn.classList.remove('share-btn--copied'); }, 1500);
+        });
+      }
+    });
+  }
+
   // Update badge
   var badgeEl = document.querySelector('.rc-badge--merval');
   if (badgeEl) {
-    if (isCrypto) { badgeEl.textContent = 'CRYPTO'; badgeEl.className = 'rc-badge rc-badge--crypto'; }
+    if (isCrypto) { badgeEl.textContent = i18n.cryptoTag || 'CRYPTO'; badgeEl.className = 'rc-badge rc-badge--crypto'; }
     else if (isCommodity) { badgeEl.textContent = 'CME'; badgeEl.className = 'rc-badge rc-badge--commodity'; }
   }
 
@@ -695,7 +940,7 @@ const stockI18n = {
   var backLink = document.querySelector('.back-link');
   if (backLink && (isCrypto || isCommodity)) {
     backLink.href = '/' + lang + '/markets';
-    backLink.innerHTML = '&larr; Markets';
+    backLink.innerHTML = '&larr; ' + (i18n.marketsLabel || 'Markets');
   }
 
   // Update breadcrumb
@@ -704,6 +949,17 @@ const stockI18n = {
   if (lastCrumb) lastCrumb.textContent = symbol;
 
   document.title = displaySymbol + ' — ' + (i18n.pageTitle || 'Argentine Markets') + ' | Plata';
+
+  // ── Save to recently viewed (localStorage) ──
+  try {
+    var RECENT_KEY = 'plata_recent_stocks';
+    var MAX_RECENT = 10;
+    var recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+    recent = recent.filter(function(s) { return s !== symbol; });
+    recent.unshift(symbol);
+    if (recent.length > MAX_RECENT) recent = recent.slice(0, MAX_RECENT);
+    localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+  } catch(e) {}
 
   var currentChart = null;
 
@@ -759,23 +1015,43 @@ const stockI18n = {
 
     fetch(url).then(function(r) { return r.json(); }).then(function(data) {
       if (data.error) {
-        setEl('[data-stock-name]', 'Error: ' + data.error);
+        var errEl = document.querySelector('[data-stock-name]');
+        if (errEl) errEl.innerHTML = data.error + ' <button class="stk-retry-btn" aria-label="Retry" onclick="window.location.reload()">↻</button>';
         return;
       }
 
-      setEl('[data-mkts-updated]', (i18n.updated || 'Updated') + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+      var stkUpdEl = document.querySelector('[data-mkts-updated]');
+      if (stkUpdEl) stkUpdEl.innerHTML = '<span class="live-dot"></span>' + (i18n.updated || 'Updated') + ' ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
       setEl('[data-stock-name]', data.name || symbol);
       if (data.currency) setEl('[data-stock-currency]', data.currency);
 
       if (data.price) {
         storedPrice = data.price;
         setEl('[data-stock-price]', C.fmt(data.price));
+        var pc = document.querySelector('[data-price-card]');
+        if (pc) pc.classList.remove('price-card--loading');
         var pct = data.variation != null ? data.variation * 100 : null;
         var chEl = document.querySelector('[data-stock-change]');
         if (chEl && pct != null) {
           chEl.textContent = C.pctText(pct);
           chEl.className = 'pc-change ' + (pct >= 0 ? 'rc-up' : 'rc-down');
         }
+      }
+
+      // Click-to-copy price
+      var priceEl = document.querySelector('[data-stock-price]');
+      if (priceEl && !priceEl._copyBound) {
+        priceEl._copyBound = true;
+        priceEl.style.cursor = 'pointer';
+        priceEl.title = i18n.clickToCopy || 'Click to copy price';
+        priceEl.addEventListener('click', function() {
+          if (navigator.clipboard && storedPrice) {
+            navigator.clipboard.writeText(storedPrice.toString()).then(function() {
+              priceEl.classList.add('pc-price--copied');
+              setTimeout(function() { priceEl.classList.remove('pc-price--copied'); }, 1200);
+            });
+          }
+        });
       }
 
       if (data.previousClose) setEl('[data-stock-prev]', C.fmt(data.previousClose));
@@ -805,7 +1081,7 @@ const stockI18n = {
             var fillEl = document.querySelector('[data-pc-range-fill]');
             var dotEl = document.querySelector('[data-pc-range-dot]');
             if (fillEl) fillEl.style.width = dayPct + '%';
-            if (dotEl) dotEl.style.left = dayPct + '%';
+            if (dotEl) dotEl.style.insetInlineStart = dayPct + '%';
           }
         }
       }
@@ -815,11 +1091,16 @@ const stockI18n = {
         var points = C.yahooToPoints(data.timestamps, data.closes);
         C.drawChart(document.querySelector('[data-stock-chart]'), [
           { points: points, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)' }
-        ]);
+        ], { volumes: data.volumes || [] });
         drawVolumeBars(data.timestamps, data.volumes, data.closes);
       }
     }).catch(function() {
-      setEl('[data-stock-name]', 'Failed to load data');
+      var nameEl = document.querySelector('[data-stock-name]');
+      if (nameEl) {
+        nameEl.innerHTML = (i18n.failedLoad || 'Failed to load data') + ' <button class="stk-retry-btn" aria-label="Retry" onclick="window.location.reload()">↻</button>';
+      }
+      var pc = document.querySelector('[data-price-card]');
+      if (pc) pc.classList.remove('price-card--loading');
     });
   }
 
@@ -839,15 +1120,31 @@ const stockI18n = {
         var co = d.company || {};
         var curPrice = fin.currentPrice || storedPrice;
 
+        // Sector & industry translation helpers
+        var secMap = i18n.secMap || {};
+        var indMap = i18n.indMap || {};
+        function tSec(s) { return secMap[s] || s; }
+        function tInd(s) { return indMap[s] || s; }
+
         // ── Company Overview Hero ──
         var hasCo = co.sector || co.industry || co.description || co.website;
         if (hasCo) {
           showEl('[data-company-hero]');
 
-          // Company name
+          // Company name + enhanced page title
           if (co.name) {
             setEl('[data-ch-name]', co.name);
             setEl('[data-stock-name]', co.name);
+            document.title = displaySymbol + ' (' + co.name + ') — ' + (i18n.pageTitle || 'Argentine Markets') + ' | Plata';
+            // Update meta description with company info for SEO
+            var metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+              var seoDesc = co.name + ' (' + displaySymbol + ')';
+              if (co.sector) seoDesc += ' — ' + tSec(co.sector);
+              if (co.industry) seoDesc += ', ' + tInd(co.industry);
+              seoDesc += '. ' + (i18n.pageTitle || 'Argentine Markets') + ' | Plata';
+              metaDesc.setAttribute('content', seoDesc);
+            }
           }
 
           // Logo from Clearbit
@@ -884,13 +1181,13 @@ const stockI18n = {
             if (li) li.style.display = 'none';
           }
 
-          // Sector & industry tags (tappable)
+          // Sector & industry tags (all tappable — link to screener)
           var tagsEl = document.querySelector('[data-ch-tags]');
           if (tagsEl) {
             var tagHtml = '';
-            if (co.sector) tagHtml += '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.sector) + '" class="ch-tag ch-tag--sector">' + co.sector + '</a>';
-            if (co.industry) tagHtml += '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.industry) + '" class="ch-tag ch-tag--industry">' + co.industry + '</a>';
-            if (co.country) tagHtml += '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.country) + '" class="ch-tag ch-tag--location">' + co.country + '</a>';
+            if (co.sector) tagHtml += '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.sector) + '" class="ch-tag ch-tag--sector">' + tSec(co.sector) + '</a>';
+            if (co.industry) tagHtml += '<a href="/' + lang + '/markets/screener?q=' + encodeURIComponent(co.industry) + '" class="ch-tag ch-tag--industry">' + tInd(co.industry) + '</a>';
+            if (co.country) tagHtml += '<a href="/' + lang + '/markets/screener?q=' + encodeURIComponent(co.country) + '" class="ch-tag ch-tag--location">' + co.country + '</a>';
             tagsEl.innerHTML = tagHtml;
           }
 
@@ -902,7 +1199,7 @@ const stockI18n = {
           }
           if (co.fullTimeEmployees) {
             showPill('[data-ch-emp-pill]');
-            setEl('[data-ch-emp-v]', co.fullTimeEmployees.toLocaleString());
+            setEl('[data-ch-emp-v]', co.fullTimeEmployees.toLocaleString(lang));
           }
           if (co.city || co.country) {
             showPill('[data-ch-loc-pill]');
@@ -939,7 +1236,7 @@ const stockI18n = {
           var fill52 = document.querySelector('[data-range52-fill]');
           if (fill52) fill52.style.width = pct52 + '%';
           var marker52 = document.querySelector('[data-range52-marker]');
-          if (marker52) marker52.style.left = pct52 + '%';
+          if (marker52) marker52.style.insetInlineStart = pct52 + '%';
 
           // Zone badge
           var badge52 = document.querySelector('[data-range52-badge]');
@@ -955,8 +1252,8 @@ const stockI18n = {
 
           // From low / from high stats
           if (range > 0) {
-            var fromLowPct = low52 > 0 ? ((curPrice - low52) / low52 * 100).toFixed(1) : '—';
-            var fromHighPct = high52 > 0 ? ((curPrice - high52) / high52 * 100).toFixed(1) : '—';
+            var fromLowPct = low52 > 0 ? ((curPrice - low52) / low52 * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) : '—';
+            var fromHighPct = high52 > 0 ? ((curPrice - high52) / high52 * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) : '—';
             var flEl = document.querySelector('[data-range52-from-low]');
             var fhEl = document.querySelector('[data-range52-from-high]');
             if (flEl) flEl.innerHTML = '<span class="range52-stat-val range52-stat--up">+' + fromLowPct + '%</span> ' + (i18n.fromLow || 'from 52w Low');
@@ -973,7 +1270,7 @@ const stockI18n = {
           if (fin.profitMargins != null) {
             showEl('[data-hc-profit]');
             var pm = fin.profitMargins * 100;
-            setEl('[data-hc-profit-value]', pm.toFixed(1) + '%');
+            setEl('[data-hc-profit-value]', pm.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%');
             var pmBar = document.querySelector('[data-hc-profit-bar]');
             if (pmBar) pmBar.style.width = Math.max(0, Math.min(100, (pm / 50) * 100)) + '%';
             var pmBadge = document.querySelector('[data-hc-profit-badge]');
@@ -991,7 +1288,7 @@ const stockI18n = {
             var rg = fin.revenueGrowth * 100;
             var rgEl = document.querySelector('[data-hc-revgr-value]');
             if (rgEl) {
-              rgEl.textContent = (rg >= 0 ? '▲ +' : '▼ ') + rg.toFixed(1) + '%';
+              rgEl.textContent = (rg >= 0 ? '▲ +' : '▼ ') + rg.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
               rgEl.classList.add(rg >= 0 ? 'hc-growth--up' : 'hc-growth--down');
             }
           }
@@ -1002,7 +1299,7 @@ const stockI18n = {
             var eg = fin.earningsGrowth * 100;
             var egEl = document.querySelector('[data-hc-earngr-value]');
             if (egEl) {
-              egEl.textContent = (eg >= 0 ? '▲ +' : '▼ ') + eg.toFixed(1) + '%';
+              egEl.textContent = (eg >= 0 ? '▲ +' : '▼ ') + eg.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
               egEl.classList.add(eg >= 0 ? 'hc-growth--up' : 'hc-growth--down');
             }
           }
@@ -1011,7 +1308,7 @@ const stockI18n = {
           if (fin.debtToEquity != null) {
             showEl('[data-hc-debt]');
             var de = fin.debtToEquity;
-            setEl('[data-hc-debt-value]', de.toFixed(1));
+            setEl('[data-hc-debt-value]', de.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}));
             var deBar = document.querySelector('[data-hc-debt-bar]');
             if (deBar) deBar.style.width = Math.max(0, Math.min(100, (de / 200) * 100)) + '%';
             var deBadge = document.querySelector('[data-hc-debt-badge]');
@@ -1036,7 +1333,7 @@ const stockI18n = {
           if (fin.currentRatio != null) {
             showEl('[data-hc-liq]');
             var cr = fin.currentRatio;
-            setEl('[data-hc-liq-value]', cr.toFixed(2));
+            setEl('[data-hc-liq-value]', cr.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}));
             var crBar = document.querySelector('[data-hc-liq-bar]');
             if (crBar) crBar.style.width = Math.max(0, Math.min(100, (cr / 3) * 100)) + '%';
             var crBadge = document.querySelector('[data-hc-liq-badge]');
@@ -1061,7 +1358,7 @@ const stockI18n = {
           if (scoreCount >= 2) {
             var score = Math.round(scoreSum / scoreCount);
             var sColor = score >= 70 ? '#16a34a' : score >= 45 ? '#f59e0b' : '#dc2626';
-            var sLabel = score >= 70 ? 'Strong' : score >= 45 ? 'Fair' : 'Weak';
+            var sLabel = score >= 70 ? (i18n.healthStrong || 'Strong') : score >= 45 ? (i18n.healthFair || 'Fair') : (i18n.healthWeak || 'Weak');
             var hsEl = document.querySelector('[data-health-score]');
             if (hsEl) {
               var hs = '<div class="hs-wrap">';
@@ -1069,7 +1366,7 @@ const stockI18n = {
               hs += '<div class="hs-info">';
               hs += '<span class="hs-score" style="color:' + sColor + '">' + score + '/100</span>';
               hs += '<span class="hs-label" style="color:' + sColor + '">' + sLabel + '</span>';
-              hs += '<span class="hs-sub">Based on ' + scoreCount + ' factors</span>';
+              hs += '<span class="hs-sub">' + (i18n.healthBased || 'Based on {val} factors').replace('{val}', scoreCount) + '</span>';
               hs += '</div></div>';
               hsEl.innerHTML = hs;
               hsEl.style.display = '';
@@ -1134,10 +1431,10 @@ const stockI18n = {
             for (var vi = 0; vi < valMetrics.length; vi++) {
               var vm = valMetrics[vi];
               var assess, color;
-              if (vm.val <= vm.low) { assess = 'Value'; color = '#16a34a'; }
-              else if (vm.val <= vm.mid) { assess = 'Fair'; color = '#eab308'; }
-              else if (vm.val <= vm.high) { assess = 'Rich'; color = '#f97316'; }
-              else { assess = 'Expensive'; color = '#dc2626'; }
+              if (vm.val <= vm.low) { assess = i18n.valValue || 'Value'; color = '#16a34a'; }
+              else if (vm.val <= vm.mid) { assess = i18n.valFair || 'Fair'; color = '#eab308'; }
+              else if (vm.val <= vm.high) { assess = i18n.valRich || 'Rich'; color = '#f97316'; }
+              else { assess = i18n.valExpensive || 'Expensive'; color = '#dc2626'; }
               var gaugePos = Math.min(vm.val / (vm.high * 1.2) * 100, 100).toFixed(1);
               vhtml += '<div class="vc-card">';
               vhtml += '<div class="vc-head"><span class="vc-label">' + vm.label + '</span><span class="vc-assess" style="color:' + color + '">' + assess + '</span></div>';
@@ -1172,18 +1469,18 @@ const stockI18n = {
             html += '</div>';
             html += '<div class="ma-cards">';
             // Price vs 50d
-            var pct50 = ((price - ma50) / ma50 * 100).toFixed(2);
+            var pct50 = ((price - ma50) / ma50 * 100).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2});
             var cls50 = aboveMa50 ? 'ma-card--up' : 'ma-card--down';
             html += '<div class="ma-card ' + cls50 + '">';
-            html += '<span class="ma-card-title">50-Day MA</span>';
+            html += '<span class="ma-card-title">' + (i18n.ma50Title || '50-Day MA') + '</span>';
             html += '<span class="ma-card-val">' + C.fmt(ma50) + '</span>';
             html += '<span class="ma-card-sig">' + (aboveMa50 ? aboveLabel : belowLabel) + ' (' + (pct50 > 0 ? '+' : '') + pct50 + '%)</span>';
             html += '</div>';
             // Price vs 200d
-            var pct200 = ((price - ma200) / ma200 * 100).toFixed(2);
+            var pct200 = ((price - ma200) / ma200 * 100).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2});
             var cls200 = aboveMa200 ? 'ma-card--up' : 'ma-card--down';
             html += '<div class="ma-card ' + cls200 + '">';
-            html += '<span class="ma-card-title">200-Day MA</span>';
+            html += '<span class="ma-card-title">' + (i18n.ma200Title || '200-Day MA') + '</span>';
             html += '<span class="ma-card-val">' + C.fmt(ma200) + '</span>';
             html += '<span class="ma-card-sig">' + (aboveMa200 ? aboveLabel : belowLabel) + ' (' + (pct200 > 0 ? '+' : '') + pct200 + '%)</span>';
             html += '</div>';
@@ -1191,7 +1488,7 @@ const stockI18n = {
             var crossLabel = goldenCross ? (i18n.goldenCross || 'Golden Cross') : (i18n.deathCross || 'Death Cross');
             var crossCls = goldenCross ? 'ma-card--up' : 'ma-card--down';
             html += '<div class="ma-card ' + crossCls + '">';
-            html += '<span class="ma-card-title">50d vs 200d</span>';
+            html += '<span class="ma-card-title">' + (i18n.ma50vs200 || '50d vs 200d') + '</span>';
             html += '<span class="ma-card-val">' + crossLabel + '</span>';
             html += '<span class="ma-card-sig">' + (goldenCross ? '50d > 200d' : '50d < 200d') + '</span>';
             html += '</div>';
@@ -1207,7 +1504,7 @@ const stockI18n = {
           showEl('[data-dividends-section]');
           setEl('[data-st-divrate]', det.dividendRate != null ? fmtNum(det.dividendRate) : '—');
           setEl('[data-st-divyield]', fmtPct(det.dividendYield));
-          setEl('[data-st-exdiv]', det.exDividendDate || '—');
+          setEl('[data-st-exdiv]', det.exDividendDate ? new Date(det.exDividendDate + 'T00:00:00').toLocaleDateString(lang, { year: 'numeric', month: 'short', day: 'numeric' }) : '—');
           setEl('[data-st-payout]', fmtPct(det.payoutRatio));
           setEl('[data-st-roa]', fmtPct(fin.returnOnAssets));
           setEl('[data-st-roe]', fmtPct(fin.returnOnEquity));
@@ -1216,7 +1513,7 @@ const stockI18n = {
 
           // Dividend Yield Gauge
           if (det.dividendYield != null && det.dividendYield > 0) {
-            var dyPct = (det.dividendYield * 100).toFixed(2);
+            var dyPct = (det.dividendYield * 100).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2});
             var dyMax = 15; // gauge max at 15%
             var dyFill = Math.min(det.dividendYield * 100 / dyMax * 100, 100);
             var dyColor = det.dividendYield * 100 >= 5 ? '#16a34a' : det.dividendYield * 100 >= 2 ? '#eab308' : '#94a3b8';
@@ -1238,17 +1535,22 @@ const stockI18n = {
               var annualDiv = det.dividendRate;
               var yieldPct = det.dividendYield ? (det.dividendYield * 100) : (annualDiv / curPrice * 100);
               var payoutVal = det.payoutRatio ? (det.payoutRatio * 100) : null;
-              var sharesFor1k = Math.floor(1000 / curPrice);
-              var incomeFor1k = sharesFor1k * annualDiv;
+              // Dynamic investment amount — pick a round number that buys at least 10 shares
+              var investAmt = 1000;
+              if (curPrice > 100) investAmt = Math.ceil(curPrice * 10 / 1000) * 1000;
+              if (curPrice > 10000) investAmt = Math.ceil(curPrice * 10 / 100000) * 100000;
+              var sharesForInv = Math.floor(investAmt / curPrice);
+              var incomeForInv = sharesForInv * annualDiv;
 
               var dih = '<div class="dii-grid">';
-              dih += '<div class="dii-card"><span class="dii-label">Annual Dividend</span><span class="dii-val">' + fmtNum(annualDiv) + '</span><span class="dii-sub">per share</span></div>';
-              dih += '<div class="dii-card"><span class="dii-label">Yield</span><span class="dii-val" style="color:' + (yieldPct >= 4 ? '#16a34a' : yieldPct >= 2 ? '#eab308' : 'var(--color-text)') + '">' + yieldPct.toFixed(2) + '%</span></div>';
+              dih += '<div class="dii-card"><span class="dii-label">' + (i18n.annualDiv || 'Annual Dividend') + '</span><span class="dii-val">' + fmtNum(annualDiv) + '</span><span class="dii-sub">' + (i18n.perShare || 'per share') + '</span></div>';
+              dih += '<div class="dii-card"><span class="dii-label">' + (i18n.divYieldLabel || 'Dividend Yield') + '</span><span class="dii-val" style="color:' + (yieldPct >= 4 ? '#16a34a' : yieldPct >= 2 ? '#eab308' : 'var(--color-text)') + '">' + yieldPct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span></div>';
               if (payoutVal != null) {
                 var payColor = payoutVal <= 60 ? '#16a34a' : payoutVal <= 80 ? '#eab308' : '#dc2626';
-                dih += '<div class="dii-card"><span class="dii-label">Payout Ratio</span><span class="dii-val" style="color:' + payColor + '">' + payoutVal.toFixed(0) + '%</span><span class="dii-sub">' + (payoutVal <= 60 ? 'Sustainable' : payoutVal <= 80 ? 'High' : 'Caution') + '</span></div>';
+                var payLabel = payoutVal <= 60 ? (i18n.sustainable || i18n.healthy || 'Sustainable') : payoutVal <= 80 ? (i18n.caution || 'High') : (i18n.concern || 'Caution');
+                dih += '<div class="dii-card"><span class="dii-label">' + (i18n.payoutRatio || 'Payout Ratio') + '</span><span class="dii-val" style="color:' + payColor + '">' + payoutVal.toLocaleString(lang, {minimumFractionDigits:0,maximumFractionDigits:0}) + '%</span><span class="dii-sub">' + payLabel + '</span></div>';
               }
-              dih += '<div class="dii-card dii-card--highlight"><span class="dii-label">$1,000 Investment</span><span class="dii-val">' + fmtNum(incomeFor1k) + '/yr</span><span class="dii-sub">' + sharesFor1k + ' shares × ' + fmtNum(annualDiv) + '</span></div>';
+              dih += '<div class="dii-card dii-card--highlight"><span class="dii-label">' + C.fmt(investAmt) + ' ' + (i18n.investment || 'Investment') + '</span><span class="dii-val">' + fmtNum(incomeForInv) + '/' + (i18n.perYear || 'yr') + '</span><span class="dii-sub">' + sharesForInv + ' ' + (i18n.shares || 'shares') + ' × ' + fmtNum(annualDiv) + '</span></div>';
               dih += '</div>';
               incEl.innerHTML = dih;
               incEl.style.display = '';
@@ -1278,10 +1580,10 @@ const stockI18n = {
 
         // ── Revenue Funnel ──
         var funnelSteps = [
-          { label: 'Revenue', val: fin.totalRevenue, color: '#3b82f6' },
-          { label: 'Gross Profit', val: fin.grossProfits, color: '#8b5cf6' },
+          { label: i18n.funnelRevenue || 'Revenue', val: fin.totalRevenue, color: '#3b82f6' },
+          { label: i18n.funnelGrossProfit || 'Gross Profit', val: fin.grossProfits, color: '#8b5cf6' },
           { label: 'EBITDA', val: fin.ebitda, color: '#f59e0b' },
-          { label: 'Net Income', val: fin.netIncomeToCommon, color: '#16a34a' },
+          { label: i18n.funnelNetIncome || 'Net Income', val: fin.netIncomeToCommon, color: '#16a34a' },
         ].filter(function(s) { return s.val != null && s.val !== 0; });
         if (funnelSteps.length >= 2 && fin.totalRevenue > 0) {
           showEl('[data-rev-funnel]');
@@ -1312,22 +1614,22 @@ const stockI18n = {
           var cfEl = document.querySelector('[data-cf-quality]');
           if (cfEl) {
             var cfLabel, cfColor, cfDesc;
-            if (cfRatio >= 1.2) { cfLabel = 'Strong'; cfColor = '#16a34a'; cfDesc = 'Cash flow exceeds reported earnings'; }
-            else if (cfRatio >= 0.8) { cfLabel = 'Healthy'; cfColor = '#f59e0b'; cfDesc = 'Cash flow roughly matches earnings'; }
-            else if (cfRatio >= 0) { cfLabel = 'Weak'; cfColor = '#dc2626'; cfDesc = 'Earnings not fully backed by cash'; }
-            else { cfLabel = 'Negative'; cfColor = '#dc2626'; cfDesc = 'Negative operating cash flow'; }
+            if (cfRatio >= 1.2) { cfLabel = i18n.cfStrong || 'Strong'; cfColor = '#16a34a'; cfDesc = i18n.cfExceeds || 'Cash flow exceeds reported earnings'; }
+            else if (cfRatio >= 0.8) { cfLabel = i18n.cfHealthy || 'Healthy'; cfColor = '#f59e0b'; cfDesc = i18n.cfMatches || 'Cash flow roughly matches earnings'; }
+            else if (cfRatio >= 0) { cfLabel = i18n.cfWeak || 'Weak'; cfColor = '#dc2626'; cfDesc = i18n.cfNotBacked || 'Earnings not fully backed by cash'; }
+            else { cfLabel = i18n.cfNegative || 'Negative'; cfColor = '#dc2626'; cfDesc = i18n.cfNegativeFlow || 'Negative operating cash flow'; }
 
             var cfHtml = '<div class="cfq-row">';
-            cfHtml += '<div class="cfq-metric"><span class="cfq-label">Cash Flow Quality</span><span class="cfq-assess" style="color:' + cfColor + '">' + cfLabel + '</span></div>';
+            cfHtml += '<div class="cfq-metric"><span class="cfq-label">' + (i18n.cfQuality || 'Cash Flow Quality') + '</span><span class="cfq-assess" style="color:' + cfColor + '">' + cfLabel + '</span></div>';
             cfHtml += '<div class="cfq-details">';
             cfHtml += '<div class="cfq-bars">';
             var maxCf = Math.max(Math.abs(fin.operatingCashflow), Math.abs(fin.netIncomeToCommon));
             var opcfW = (Math.abs(fin.operatingCashflow) / maxCf * 100).toFixed(1);
             var niW = (Math.abs(fin.netIncomeToCommon) / maxCf * 100).toFixed(1);
-            cfHtml += '<div class="cfq-bar-row"><span class="cfq-bar-label">Op. Cash Flow</span><div class="cfq-bar-wrap"><div class="cfq-bar" style="width:' + opcfW + '%;background:#3b82f6"></div></div><span class="cfq-bar-val">' + fmtBig(fin.operatingCashflow) + '</span></div>';
-            cfHtml += '<div class="cfq-bar-row"><span class="cfq-bar-label">Net Income</span><div class="cfq-bar-wrap"><div class="cfq-bar" style="width:' + niW + '%;background:#16a34a"></div></div><span class="cfq-bar-val">' + fmtBig(fin.netIncomeToCommon) + '</span></div>';
+            cfHtml += '<div class="cfq-bar-row"><span class="cfq-bar-label">' + (i18n.cfOpCashFlow || 'Op. Cash Flow') + '</span><div class="cfq-bar-wrap"><div class="cfq-bar" style="width:' + opcfW + '%;background:#3b82f6"></div></div><span class="cfq-bar-val">' + fmtBig(fin.operatingCashflow) + '</span></div>';
+            cfHtml += '<div class="cfq-bar-row"><span class="cfq-bar-label">' + (i18n.cfNetIncome || 'Net Income') + '</span><div class="cfq-bar-wrap"><div class="cfq-bar" style="width:' + niW + '%;background:#16a34a"></div></div><span class="cfq-bar-val">' + fmtBig(fin.netIncomeToCommon) + '</span></div>';
             cfHtml += '</div>';
-            cfHtml += '<span class="cfq-ratio">OCF/NI Ratio: ' + cfRatio.toFixed(2) + 'x</span>';
+            cfHtml += '<span class="cfq-ratio">' + (i18n.cfRatio || 'OCF/NI Ratio') + ': ' + cfRatio.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + 'x</span>';
             cfHtml += '<span class="cfq-desc">' + cfDesc + '</span>';
             cfHtml += '</div></div>';
             cfEl.innerHTML = cfHtml;
@@ -1361,7 +1663,7 @@ const stockI18n = {
                 mhtml += '<div class="mg-bar" style="width:' + barW + '%;background:' + m.color + '"></div>';
               }
               mhtml += '</div>';
-              mhtml += '<span class="mg-val" style="color:' + (isNeg ? '#dc2626' : m.color) + '">' + (pctVal >= 0 ? '+' : '') + pctVal.toFixed(1) + '%</span>';
+              mhtml += '<span class="mg-val" style="color:' + (isNeg ? '#dc2626' : m.color) + '">' + (pctVal >= 0 ? '+' : '') + pctVal.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%</span>';
               mhtml += '</div>';
             }
             mc.innerHTML = mhtml;
@@ -1387,14 +1689,15 @@ const stockI18n = {
             var ownEl = document.querySelector('[data-own-bar]');
             if (ownEl) {
               var ohtml = '<div class="own-bar">';
-              if (insP > 0) ohtml += '<div class="own-seg own-seg--ins" style="width:' + insP.toFixed(1) + '%">' + (insP >= 5 ? insP.toFixed(1) + '%' : '') + '</div>';
-              if (instP > 0) ohtml += '<div class="own-seg own-seg--inst" style="width:' + instP.toFixed(1) + '%">' + (instP >= 5 ? instP.toFixed(1) + '%' : '') + '</div>';
-              if (pubP > 0) ohtml += '<div class="own-seg own-seg--pub" style="width:' + pubP.toFixed(1) + '%">' + (pubP >= 5 ? pubP.toFixed(1) + '%' : '') + '</div>';
+              var fmtP = function(v) { return v.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}); };
+              if (insP > 0) ohtml += '<div class="own-seg own-seg--ins" style="width:' + insP.toFixed(1) + '%">' + (insP >= 5 ? fmtP(insP) + '%' : '') + '</div>';
+              if (instP > 0) ohtml += '<div class="own-seg own-seg--inst" style="width:' + instP.toFixed(1) + '%">' + (instP >= 5 ? fmtP(instP) + '%' : '') + '</div>';
+              if (pubP > 0) ohtml += '<div class="own-seg own-seg--pub" style="width:' + pubP.toFixed(1) + '%">' + (pubP >= 5 ? fmtP(pubP) + '%' : '') + '</div>';
               ohtml += '</div>';
               ohtml += '<div class="own-legend">';
-              ohtml += '<span class="own-leg"><span class="own-dot own-dot--ins"></span>Insiders ' + insP.toFixed(1) + '%</span>';
-              ohtml += '<span class="own-leg"><span class="own-dot own-dot--inst"></span>Institutions ' + instP.toFixed(1) + '%</span>';
-              ohtml += '<span class="own-leg"><span class="own-dot own-dot--pub"></span>Public ' + pubP.toFixed(1) + '%</span>';
+              ohtml += '<span class="own-leg"><span class="own-dot own-dot--ins"></span>' + (i18n.ownInsiders || 'Insiders') + ' ' + fmtP(insP) + '%</span>';
+              ohtml += '<span class="own-leg"><span class="own-dot own-dot--inst"></span>' + (i18n.ownInstitutions || 'Institutions') + ' ' + fmtP(instP) + '%</span>';
+              ohtml += '<span class="own-leg"><span class="own-dot own-dot--pub"></span>' + (i18n.ownPublic || 'Public') + ' ' + fmtP(pubP) + '%</span>';
               ohtml += '</div>';
               ownEl.innerHTML = ohtml;
               ownEl.style.display = '';
@@ -1425,7 +1728,7 @@ const stockI18n = {
           if (fin.recommendationMean) {
             var cmPos = ((fin.recommendationMean - 1) / 4) * 100;
             var cmMarker = document.querySelector('[data-consensus-marker]');
-            if (cmMarker) cmMarker.style.left = cmPos + '%';
+            if (cmMarker) cmMarker.style.insetInlineStart = cmPos + '%';
           }
 
           // Rating distribution breakdown
@@ -1474,14 +1777,14 @@ const stockI18n = {
               if (fin.targetMeanPrice != null) {
                 var meanPct = ((fin.targetMeanPrice - fin.targetLowPrice) / tRange) * 100;
                 var meanM = document.querySelector('[data-target-mean-marker]');
-                if (meanM) meanM.style.left = Math.max(0, Math.min(100, meanPct)) + '%';
+                if (meanM) meanM.style.insetInlineStart = Math.max(0, Math.min(100, meanPct)) + '%';
                 setEl('[data-target-mean-label]', C.fmt(fin.targetMeanPrice));
               }
               // Current price marker
               if (curPrice) {
                 var curPct = ((curPrice - fin.targetLowPrice) / tRange) * 100;
                 var curM = document.querySelector('[data-target-current-marker]');
-                if (curM) curM.style.left = Math.max(0, Math.min(100, curPct)) + '%';
+                if (curM) curM.style.insetInlineStart = Math.max(0, Math.min(100, curPct)) + '%';
                 setEl('[data-target-current-label]', C.fmt(curPrice));
               }
             }
@@ -1527,14 +1830,14 @@ const stockI18n = {
 
               html += '<div class="eq-group">';
               html += '<div class="eq-bars">';
-              if (q.actual != null) html += '<div class="eq-bar eq-bar--actual" style="height:' + actH + 'px" title="' + (i18n.actual || 'Actual') + ': ' + q.actual.toFixed(2) + '"></div>';
-              if (q.estimate != null) html += '<div class="eq-bar eq-bar--estimate" style="height:' + estH + 'px" title="' + (i18n.estimateLabel || 'Estimate') + ': ' + q.estimate.toFixed(2) + '"></div>';
+              if (q.actual != null) html += '<div class="eq-bar eq-bar--actual" style="height:' + actH + 'px" title="' + (i18n.actual || 'Actual') + ': ' + q.actual.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '"></div>';
+              if (q.estimate != null) html += '<div class="eq-bar eq-bar--estimate" style="height:' + estH + 'px" title="' + (i18n.estimateLabel || 'Estimate') + ': ' + q.estimate.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '"></div>';
               html += '</div>';
               if (isBeat) html += '<span class="eq-indicator eq-indicator--beat">' + (i18n.beat || 'Beat') + '</span>';
               else if (isMiss) html += '<span class="eq-indicator eq-indicator--miss">' + (i18n.miss || 'Miss') + '</span>';
               html += '<span class="eq-label">' + qLabel + '</span>';
               html += '<div class="eq-values">';
-              if (q.actual != null) html += '<span class="eq-val">' + q.actual.toFixed(2) + '</span>';
+              if (q.actual != null) html += '<span class="eq-val">' + q.actual.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '</span>';
               html += '</div>';
               html += '</div>';
             });
@@ -1555,9 +1858,9 @@ const stockI18n = {
             var sumEl = document.querySelector('[data-earnings-summary]');
             if (sumEl) {
               var shtml = '<div class="es-stats">';
-              shtml += '<div class="es-stat"><span class="es-val es-val--beat">' + beats + '/' + total + '</span><span class="es-label">Beats</span></div>';
-              shtml += '<div class="es-stat"><span class="es-val es-val--miss">' + misses + '/' + total + '</span><span class="es-label">Misses</span></div>';
-              shtml += '<div class="es-stat"><span class="es-val" style="color:' + (avgSurprise >= 0 ? '#16a34a' : '#dc2626') + '">' + (avgSurprise >= 0 ? '+' : '') + avgSurprise.toFixed(1) + '%</span><span class="es-label">Avg Surprise</span></div>';
+              shtml += '<div class="es-stat"><span class="es-val es-val--beat">' + beats + '/' + total + '</span><span class="es-label">' + (i18n.beat || 'Beat') + '</span></div>';
+              shtml += '<div class="es-stat"><span class="es-val es-val--miss">' + misses + '/' + total + '</span><span class="es-label">' + (i18n.miss || 'Miss') + '</span></div>';
+              shtml += '<div class="es-stat"><span class="es-val" style="color:' + (avgSurprise >= 0 ? '#16a34a' : '#dc2626') + '">' + (avgSurprise >= 0 ? '+' : '') + avgSurprise.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%</span><span class="es-label">' + (i18n.avgSurprise || 'Avg Surprise') + '</span></div>';
               shtml += '</div>';
               sumEl.innerHTML = shtml;
               sumEl.style.display = '';
@@ -1577,7 +1880,7 @@ const stockI18n = {
             totalCount++;
             var sizePass = s.marketCap >= 2e9;
             if (sizePass) passCount++;
-            criteria.push({ label: gn.grahamAdequateSize || 'Adequate Size', pass: sizePass, val: fmtBig(s.marketCap), note: '> $2B' });
+            criteria.push({ label: gn.grahamAdequateSize || 'Adequate Size', pass: sizePass, val: fmtBig(s.marketCap), note: gn.grahamNoteSize || '> $2B' });
           }
 
           // 2. Strong Finances (current ratio > 2)
@@ -1585,7 +1888,7 @@ const stockI18n = {
             totalCount++;
             var crPass = fin.currentRatio >= 2;
             if (crPass) passCount++;
-            criteria.push({ label: gn.grahamStrongFinances || 'Strong Finances', pass: crPass, val: fmtNum(fin.currentRatio), note: 'Current Ratio ≥ 2.0' });
+            criteria.push({ label: gn.grahamStrongFinances || 'Strong Finances', pass: crPass, val: fmtNum(fin.currentRatio), note: gn.grahamNoteFinances || 'Current Ratio ≥ 2.0' });
           }
 
           // 3. Earnings Stability (positive earnings — EPS > 0)
@@ -1593,7 +1896,7 @@ const stockI18n = {
             totalCount++;
             var epsPass = s.eps > 0;
             if (epsPass) passCount++;
-            criteria.push({ label: gn.grahamEarningsStability || 'Earnings Stability', pass: epsPass, val: fmtNum(s.eps), note: 'EPS > 0' });
+            criteria.push({ label: gn.grahamEarningsStability || 'Earnings Stability', pass: epsPass, val: fmtNum(s.eps), note: gn.grahamNoteEps || 'EPS > 0' });
           }
 
           // 4. Dividend Record
@@ -1601,7 +1904,7 @@ const stockI18n = {
             totalCount++;
             var divPass = det.dividendYield > 0;
             if (divPass) passCount++;
-            criteria.push({ label: gn.grahamDividendRecord || 'Dividend Record', pass: divPass, val: fmtPct(det.dividendYield), note: 'Pays dividends' });
+            criteria.push({ label: gn.grahamDividendRecord || 'Dividend Record', pass: divPass, val: fmtPct(det.dividendYield), note: gn.grahamNoteDividend || 'Pays dividends' });
           }
 
           // 5. Moderate Growth (earnings growth > 0)
@@ -1609,7 +1912,7 @@ const stockI18n = {
             totalCount++;
             var growPass = fin.earningsGrowth > 0;
             if (growPass) passCount++;
-            criteria.push({ label: gn.grahamModerateGrowth || 'Earnings Growth', pass: growPass, val: fmtPct(fin.earningsGrowth), note: '> 0%' });
+            criteria.push({ label: gn.grahamModerateGrowth || 'Earnings Growth', pass: growPass, val: fmtPct(fin.earningsGrowth), note: gn.grahamNoteGrowth || '> 0%' });
           }
 
           // 6. Moderate P/E Ratio (< 15)
@@ -1617,7 +1920,7 @@ const stockI18n = {
             totalCount++;
             var pePass = s.trailingPE <= 15;
             if (pePass) passCount++;
-            criteria.push({ label: gn.grahamModeratePE || 'Moderate P/E', pass: pePass, val: fmtNum(s.trailingPE), note: '≤ 15' });
+            criteria.push({ label: gn.grahamModeratePE || 'Moderate P/E', pass: pePass, val: fmtNum(s.trailingPE), note: gn.grahamNotePE || '≤ 15' });
           }
 
           // 7. Moderate P/B Ratio (< 1.5)
@@ -1625,7 +1928,7 @@ const stockI18n = {
             totalCount++;
             var pbPass = s.priceToBook <= 1.5;
             if (pbPass) passCount++;
-            criteria.push({ label: gn.grahamModeratePB || 'Moderate P/B', pass: pbPass, val: fmtNum(s.priceToBook), note: '≤ 1.5' });
+            criteria.push({ label: gn.grahamModeratePB || 'Moderate P/B', pass: pbPass, val: fmtNum(s.priceToBook), note: gn.grahamNotePB || '≤ 1.5' });
           }
 
           // Graham Number = sqrt(22.5 * EPS * Book Value)
@@ -1663,7 +1966,7 @@ const stockI18n = {
                 gh += '<span class="grm-num-label">' + (i18n.currentPrice || 'Current Price') + '</span>';
                 gh += '<span class="grm-num-val">' + C.fmt(Math.round(curPrice)) + '</span>';
                 gh += '</div>';
-                gh += '<div class="grm-margin" style="color:' + mColor + '">' + mLabel + ': ' + (margin >= 0 ? '+' : '') + margin.toFixed(1) + '%</div>';
+                gh += '<div class="grm-margin" style="color:' + mColor + '">' + mLabel + ': ' + (margin >= 0 ? '+' : '') + margin.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%</div>';
                 gh += '</div>';
               }
 
@@ -1689,39 +1992,40 @@ const stockI18n = {
         })();
 
         // ── Key Insights ──
+        function insightTpl(key, val) { return (i18n[key] || key).replace('{val}', val); }
         var insights = [];
         if (det.fiftyDayAverage && det.twoHundredDayAverage && fin.currentPrice) {
           if (fin.currentPrice > det.fiftyDayAverage && fin.currentPrice > det.twoHundredDayAverage) {
-            insights.push('Trading above both 50-day and 200-day moving averages — bullish momentum');
+            insights.push(i18n.insightBullish || 'Trading above both 50-day and 200-day moving averages — bullish momentum');
           } else if (fin.currentPrice < det.fiftyDayAverage && fin.currentPrice < det.twoHundredDayAverage) {
-            insights.push('Trading below both 50-day and 200-day moving averages — bearish pressure');
+            insights.push(i18n.insightBearish || 'Trading below both 50-day and 200-day moving averages — bearish pressure');
           }
         }
         if (s.trailingPE != null && s.trailingPE > 0 && s.trailingPE < 10) {
-          insights.push('Low P/E ratio (' + fmtNum(s.trailingPE) + ') — potential value opportunity');
+          insights.push(insightTpl('insightLowPE', fmtNum(s.trailingPE)));
         } else if (s.trailingPE != null && s.trailingPE > 30) {
-          insights.push('High P/E ratio (' + fmtNum(s.trailingPE) + ') — premium valuation, growth expectations priced in');
+          insights.push(insightTpl('insightHighPE', fmtNum(s.trailingPE)));
         }
         if (fin.profitMargins != null && fin.profitMargins > 0.2) {
-          insights.push('Strong profit margins at ' + (fin.profitMargins * 100).toFixed(1) + '%');
+          insights.push(insightTpl('insightStrongMargins', (fin.profitMargins * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1})));
         } else if (fin.profitMargins != null && fin.profitMargins < 0) {
-          insights.push('Currently unprofitable with ' + (fin.profitMargins * 100).toFixed(1) + '% profit margin');
+          insights.push(insightTpl('insightUnprofitable', (fin.profitMargins * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1})));
         }
         if (fin.revenueGrowth != null && fin.revenueGrowth > 0.2) {
-          insights.push('Strong revenue growth at ' + (fin.revenueGrowth * 100).toFixed(1) + '% YoY');
+          insights.push(insightTpl('insightRevenueGrowth', (fin.revenueGrowth * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1})));
         }
         if (det.dividendYield != null && det.dividendYield > 0.04) {
-          insights.push('High dividend yield of ' + (det.dividendYield * 100).toFixed(2) + '%');
+          insights.push(insightTpl('insightHighDivYield', (det.dividendYield * 100).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2})));
         }
         if (s.beta != null) {
-          if (s.beta < 0.5) insights.push('Low beta (' + fmtNum(s.beta) + ') — less volatile than the market');
-          else if (s.beta > 1.5) insights.push('High beta (' + fmtNum(s.beta) + ') — significantly more volatile than the market');
+          if (s.beta < 0.5) insights.push(insightTpl('insightLowBeta', fmtNum(s.beta)));
+          else if (s.beta > 1.5) insights.push(insightTpl('insightHighBeta', fmtNum(s.beta)));
         }
         if (s.heldPercentInsiders != null && s.heldPercentInsiders > 0.3) {
-          insights.push('High insider ownership at ' + (s.heldPercentInsiders * 100).toFixed(1) + '% — management has skin in the game');
+          insights.push(insightTpl('insightInsiderOwn', (s.heldPercentInsiders * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1})));
         }
         if (fin.debtToEquity != null && fin.debtToEquity > 200) {
-          insights.push('High debt-to-equity ratio (' + fmtNum(fin.debtToEquity) + ') — elevated leverage');
+          insights.push(insightTpl('insightHighDebt', fmtNum(fin.debtToEquity)));
         }
         if (insights.length > 0) {
           var iEl = document.querySelector('[data-insights-list]');
@@ -1749,6 +2053,7 @@ const stockI18n = {
                   toggleEl.addEventListener('click', function() {
                     var clamped = descEl.classList.toggle('about-desc--clamped');
                     toggleEl.textContent = clamped ? (i18n.readMore || 'Read more') : (i18n.readLess || 'Read less');
+                    toggleEl.setAttribute('aria-expanded', clamped ? 'false' : 'true');
                   });
                 } else {
                   toggleEl.style.display = 'none';
@@ -1761,18 +2066,17 @@ const stockI18n = {
           var badgesEl = document.querySelector('[data-stock-badges]');
           if (badgesEl && (co.sector || co.industry)) {
             var bHtml = '';
-            var scrBase = '/' + lang + '/markets/screener?sector=';
-            if (co.sector) bHtml += '<a href="' + scrBase + encodeURIComponent(co.sector) + '" class="stk-badge stk-badge--sector">' + co.sector + '</a>';
-            if (co.industry) bHtml += '<a href="' + scrBase + encodeURIComponent(co.industry) + '" class="stk-badge stk-badge--industry">' + co.industry + '</a>';
-            if (co.country) bHtml += '<a href="' + scrBase + encodeURIComponent(co.country) + '" class="stk-badge stk-badge--location">' + co.country + '</a>';
+            if (co.sector) bHtml += '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.sector) + '" class="stk-badge stk-badge--sector">' + tSec(co.sector) + '</a>';
+            if (co.industry) bHtml += '<a href="/' + lang + '/markets/screener?q=' + encodeURIComponent(co.industry) + '" class="stk-badge stk-badge--industry">' + tInd(co.industry) + '</a>';
+            if (co.country) bHtml += '<a href="/' + lang + '/markets/screener?q=' + encodeURIComponent(co.country) + '" class="stk-badge stk-badge--location">' + co.country + '</a>';
             badgesEl.innerHTML = bHtml;
             badgesEl.style.display = '';
           }
 
-          // Details grid
-          if (co.sector) { showEl('[data-ad-sector]'); setEl('[data-ad-sector-v]', co.sector); }
-          if (co.industry) { showEl('[data-ad-industry]'); setEl('[data-ad-industry-v]', co.industry); }
-          if (co.fullTimeEmployees) { showEl('[data-ad-employees]'); setEl('[data-ad-employees-v]', co.fullTimeEmployees.toLocaleString()); }
+          // Details grid (sector/industry are tappable links to screener)
+          if (co.sector) { showEl('[data-ad-sector]'); var sv = document.querySelector('[data-ad-sector-v]'); if (sv) sv.innerHTML = '<a href="/' + lang + '/markets/screener?sector=' + encodeURIComponent(co.sector) + '" class="ad-link">' + tSec(co.sector) + '</a>'; }
+          if (co.industry) { showEl('[data-ad-industry]'); var iv = document.querySelector('[data-ad-industry-v]'); if (iv) iv.innerHTML = '<a href="/' + lang + '/markets/screener?q=' + encodeURIComponent(co.industry) + '" class="ad-link">' + tInd(co.industry) + '</a>'; }
+          if (co.fullTimeEmployees) { showEl('[data-ad-employees]'); setEl('[data-ad-employees-v]', co.fullTimeEmployees.toLocaleString(lang)); }
           if (co.city || co.country) { showEl('[data-ad-location]'); setEl('[data-ad-location-v]', [co.city, co.country].filter(Boolean).join(', ')); }
           if (co.website) {
             showEl('[data-ad-website]');
@@ -1780,6 +2084,73 @@ const stockI18n = {
             if (adw) { adw.href = co.website; adw.textContent = co.website.replace(/^https?:\/\//, '').replace(/\/$/, ''); }
           }
           if (co.phone) { showEl('[data-ad-phone]'); setEl('[data-ad-phone-v]', co.phone); }
+
+          // ── Key Products & Services ──
+          var PRODUCTS = {
+            'YPF': { icon: '⛽', items: ['Oil & Gas E&P', 'Vaca Muerta shale', 'Refining (La Plata, Luján de Cuyo)', 'YPF Gas stations', 'YPF Luz (renewables)', 'Petrochemicals'] },
+            'GGAL': { icon: '🏦', items: ['Banco Galicia', 'Naranja X (fintech)', 'Galicia Seguros', 'Fondos Fima (asset mgmt)', 'Galicia Administradora de Fondos'] },
+            'BMA': { icon: '🏦', items: ['Banco Macro (retail banking)', 'Corporate & SME banking', 'Macro Securities', 'Macro Fondos SGF'] },
+            'BBAR': { icon: '🏦', items: ['BBVA Argentina (retail banking)', 'BBVA Asset Management', 'BBVA Seguros', 'Consolidar AFJP', 'Digital banking (app)'] },
+            'SUPV': { icon: '🏦', items: ['Banco Supervielle', 'Cordial Compañía Financiera', 'Supervielle Seguros', 'Supervielle Asset Management', 'Mila (digital wallet)'] },
+            'PAM': { icon: '⚡', items: ['Power generation (thermal + hydro)', 'Edenor (electricity distribution)', 'TGS (gas transport)', 'Pampa Comercializadora', 'Wind & solar farms'] },
+            'CEPU': { icon: '⚡', items: ['Thermal power (Costanera, Piedra Buena)', 'Hydroelectric (Piedra del Águila)', 'Wind power (La Castellana, Achiras)', 'FORE.AR (energy trading)'] },
+            'EDN': { icon: '💡', items: ['Electricity distribution (Buenos Aires metro)', '3.2M customers', 'Smart metering infrastructure', 'Energy efficiency programs'] },
+            'TRAN': { icon: '🔌', items: ['High-voltage transmission (5,600 km)', '500 kV grid operation', 'Grid maintenance & expansion', 'CAMMESA system operator'] },
+            'TGSU2': { icon: '🔵', items: ['Natural gas transport (9,000+ km)', 'Gas processing (Cerri complex)', 'NGL production & midstream', 'Telcosur (fiber optic)'] },
+            'TGNO4': { icon: '🔵', items: ['Natural gas transport (north region)', '6,000+ km pipeline network', 'Gas compression services'] },
+            'TXAR': { icon: '🏗️', items: ['Flat steel products', 'Long steel products', 'Industrial solutions', 'Ternium brand (LatAm)'] },
+            'ALUA': { icon: '🏭', items: ['Primary aluminum smelting', 'Aluminum extrusion profiles', 'Flat rolled aluminum', 'Alumina refining'] },
+            'LOMA': { icon: '🏗️', items: ['Portland cement', 'Concrete & aggregates', 'Ferrocement railroad ties', 'L\'Amalí brand'] },
+            'CRES': { icon: '🌾', items: ['Farmland (700k+ hectares)', 'Cattle ranching', 'Crop production (soy, corn, wheat)', 'IRSA (real estate, 52% stake)'] },
+            'IRSA': { icon: '🏢', items: ['Shopping malls (Alto Palermo, Abasto, DOT)', 'Office buildings', 'Hotels (Libertador chain)', 'Residential development', 'IDB (Israel operations)'] },
+            'MIRG': { icon: '📱', items: ['Electronics manufacturing', 'Samsung local assembly', 'Automotive (Toyota Hilux components)', 'Agricultural equipment', 'Tierra del Fuego factory'] },
+            'BYMA': { icon: '📈', items: ['Stock exchange operations', 'Securities clearing & settlement', 'Market data & indices', 'Caja de Valores (depository)'] },
+            'VALO': { icon: '💼', items: ['Brokerage services', 'Asset management', 'Investment banking', 'Financial advisory'] },
+            'COME': { icon: '🏢', items: ['Diversified investments', 'Petrolera del Conosur', 'Agribusiness', 'Industrial holdings'] },
+            'HARG': { icon: '💼', items: ['Grupo Financiero Valores', 'Brokerage & trading', 'Mutual funds', 'Investment banking'] },
+            'YPFD': { icon: '⛽', items: ['Oil & Gas E&P', 'Vaca Muerta shale', 'Refining', 'YPF Gas stations', 'YPF Luz'] },
+          };
+          var products = PRODUCTS[symbol] || PRODUCTS[symbol.replace('.BA', '')];
+          if (products) {
+            var kpGrid = document.querySelector('[data-kp-grid]');
+            if (kpGrid) {
+              var kpHtml = '';
+              for (var pi = 0; pi < products.items.length; pi++) {
+                kpHtml += '<span class="kp-chip">' + products.items[pi] + '</span>';
+              }
+              kpGrid.innerHTML = kpHtml;
+              showEl('[data-kp-section]');
+            }
+          }
+        }
+
+        // ── Dividend History ──
+        if (det.dividendRate != null && det.dividendRate > 0) {
+          fetch('/api/stock/' + encodeURIComponent(symbol) + '?range=5y&events=div')
+            .then(function(r) { return r.json(); })
+            .then(function(chartData) {
+              if (!chartData.dividends || chartData.dividends.length === 0) return;
+              var divs = chartData.dividends;
+              var dhSection = document.querySelector('[data-divhist-section]');
+              var dhTitle = document.querySelector('[data-divhist-title]');
+              var dhTable = document.querySelector('[data-divhist-table]');
+              if (!dhSection || !dhTable || !dhTitle) return;
+              dhTitle.textContent = i18n.dividendHistory || 'Dividend History';
+              var cur = chartData.currency || 'ARS';
+              var html = '<table class="stats-table divhist-table">';
+              html += '<thead><tr><th>' + (i18n.exDate || 'Ex-Date') + '</th><th style="text-align:end">' + (i18n.amount || 'Amount') + '</th></tr></thead>';
+              html += '<tbody>';
+              for (var di = 0; di < Math.min(divs.length, 20); di++) {
+                var dv = divs[di];
+                var dvDate = new Date(dv.date * 1000);
+                var dvDateStr = dvDate.toLocaleDateString(lang, { year: 'numeric', month: 'short', day: 'numeric' });
+                html += '<tr><td>' + dvDateStr + '</td><td style="text-align:end;font-weight:700;font-variant-numeric:tabular-nums">' + cur + ' ' + dv.amount.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) + '</td></tr>';
+              }
+              html += '</tbody></table>';
+              dhTable.innerHTML = html;
+              dhSection.style.display = '';
+            })
+            .catch(function() {});
         }
 
         // ── Load Peer Stocks ──
@@ -1792,15 +2163,17 @@ const stockI18n = {
           var navEl = document.querySelector('[data-section-nav]');
           if (!navEl) return;
           var sections = [
-            { sel: '[data-health-section]', label: 'Health' },
-            { sel: '[data-val-snap]', label: 'Valuation' },
-            { sel: '[data-ma-signal]', label: 'MA Signal' },
-            { sel: '[data-financials-section]', label: 'Financials' },
-            { sel: '[data-balance-section]', label: 'Balance Sheet' },
-            { sel: '[data-analyst-section]', label: 'Analyst' },
-            { sel: '[data-earnings-section]', label: 'Earnings' },
-            { sel: '[data-about-section]', label: 'About' },
-            { sel: '[data-peers-section]', label: 'Peers' },
+            { sel: '[data-health-section]', label: i18n.navHealth || 'Health' },
+            { sel: '[data-val-snap]', label: i18n.navValuation || 'Valuation' },
+            { sel: '[data-ma-signal]', label: i18n.navMaSignal || 'MA Signal' },
+            { sel: '[data-financials-section]', label: i18n.navFinancials || 'Financials' },
+            { sel: '[data-balance-section]', label: i18n.navBalance || 'Balance Sheet' },
+            { sel: '[data-analyst-section]', label: i18n.navAnalyst || 'Analyst' },
+            { sel: '[data-earnings-section]', label: i18n.navEarnings || 'Earnings' },
+            { sel: '[data-divhist-section]', label: i18n.dividendHistory || 'Div History' },
+            { sel: '[data-graham-section]', label: i18n.navGraham || 'Graham' },
+            { sel: '[data-about-section]', label: i18n.navAbout || 'About' },
+            { sel: '[data-peers-section]', label: i18n.navPeers || 'Peers' },
           ];
           var navHtml = '';
           for (var ni = 0; ni < sections.length; ni++) {
@@ -1812,13 +2185,41 @@ const stockI18n = {
           if (navHtml) {
             navEl.innerHTML = navHtml;
             navEl.style.display = '';
-            navEl.querySelectorAll('.sn-link').forEach(function(link) {
+            var allLinks = navEl.querySelectorAll('.sn-link');
+            allLinks.forEach(function(link) {
               link.addEventListener('click', function(e) {
                 e.preventDefault();
                 var target = document.querySelector(link.getAttribute('data-sn-target'));
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
               });
             });
+            // Scroll-based active highlighting
+            if (typeof IntersectionObserver !== 'undefined') {
+              var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                  if (entry.isIntersecting) {
+                    allLinks.forEach(function(l) { l.classList.remove('sn-link--active'); });
+                    for (var ai = 0; ai < allLinks.length; ai++) {
+                      if (entry.target.matches(allLinks[ai].getAttribute('data-sn-target'))) {
+                        allLinks[ai].classList.add('sn-link--active');
+                        // Scroll nav container to keep active link visible
+                        var linkEl = allLinks[ai];
+                        var navBox = navEl.getBoundingClientRect();
+                        var linkBox = linkEl.getBoundingClientRect();
+                        if (linkBox.left < navBox.left || linkBox.right > navBox.right) {
+                          navEl.scrollLeft += linkBox.left - navBox.left - navBox.width / 2 + linkBox.width / 2;
+                        }
+                        break;
+                      }
+                    }
+                  }
+                });
+              }, { rootMargin: '-20% 0px -60% 0px' });
+              allLinks.forEach(function(link) {
+                var t = document.querySelector(link.getAttribute('data-sn-target'));
+                if (t) observer.observe(t);
+              });
+            }
           }
         }, 500);
       })
@@ -1893,16 +2294,16 @@ const stockI18n = {
       var cls = pct != null ? (pct >= 0 ? 'rc-up' : 'rc-down') : '';
       var arrow = pct != null ? (pct >= 0 ? '▲' : '▼') : '';
       var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(p.symbol);
-      html += '<a href="' + link + '" class="peer-card">';
+      html += '<a href="' + link + '" class="peer-card" aria-label="' + (p.name || p.symbol) + '">';
       html += '<div class="peer-top">';
       html += '<span class="peer-symbol">' + p.symbol + '</span>';
-      html += '<span class="peer-pct ' + cls + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toFixed(2) + '%' : '—') + '</span>';
+      html += '<span class="peer-pct ' + cls + '">' + arrow + ' ' + (pct != null ? Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%' : '—') + '</span>';
       html += '</div>';
       html += '<span class="peer-name">' + (p.name || p.symbol) + '</span>';
-      html += '<span class="peer-price">ARS ' + (p.price ? C.fmt(p.price) : '—') + '</span>';
+      html += '<span class="peer-price">' + (p.currency || 'ARS') + ' ' + (p.price ? C.fmt(p.price) : '—') + '</span>';
       html += '<div class="peer-meta">';
-      if (p.marketCap) html += '<span class="peer-cap">Cap $' + fmtBig(p.marketCap) + '</span>';
-      if (p.pe != null) html += '<span class="peer-pe">P/E ' + p.pe.toFixed(1) + '</span>';
+      if (p.marketCap) html += '<span class="peer-cap">' + (i18n.marketCap || 'Cap') + ' $' + fmtBig(p.marketCap) + '</span>';
+      if (p.pe != null) html += '<span class="peer-pe">P/E ' + p.pe.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '</span>';
       html += '</div>';
       html += '</a>';
     }
@@ -1926,6 +2327,14 @@ const stockI18n = {
         var nameEl = document.querySelector('[data-ch-name]');
         if (nameEl) nameEl.textContent = d.name || displaySymbol;
 
+        // Update page title and meta for crypto
+        if (d.name) {
+          document.title = displaySymbol + ' (' + d.name + ') — ' + (i18n.pageTitle || 'Argentine Markets') + ' | Plata';
+          var metaDesc = document.querySelector('meta[name="description"]');
+          if (metaDesc) metaDesc.setAttribute('content', d.name + ' (' + displaySymbol + ') — ' + (i18n.cryptoTag || 'Cryptocurrency') + ' | Plata');
+          setEl('[data-stock-name]', d.name);
+        }
+
         // Logo
         if (d.image && d.image.small) {
           var li = document.querySelector('[data-ch-logo-img]');
@@ -1937,7 +2346,7 @@ const stockI18n = {
         // Tags
         var tagsEl = document.querySelector('[data-ch-tags]');
         if (tagsEl) {
-          var tagHtml = '<span class="ch-tag ch-tag--sector">Cryptocurrency</span>';
+          var tagHtml = '<span class="ch-tag ch-tag--sector">' + (i18n.cryptoTag || 'Cryptocurrency') + '</span>';
           if (d.categories && d.categories[0]) tagHtml += '<span class="ch-tag ch-tag--industry">' + d.categories[0] + '</span>';
           tagsEl.innerHTML = tagHtml;
         }
@@ -1961,14 +2370,14 @@ const stockI18n = {
           var qfEl = document.querySelector('[data-qf-strip]');
           if (qfEl) {
             var qfHtml = '';
-            if (md.market_cap_rank) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">Rank</span><span class="qf-val">#' + md.market_cap_rank + '</span></div>';
-            if (md.total_volume && md.total_volume.usd) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">24h Volume</span><span class="qf-val">$' + fmtBig(md.total_volume.usd) + '</span></div>';
-            if (md.circulating_supply) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">Circulating</span><span class="qf-val">' + fmtBig(md.circulating_supply) + '</span></div>';
-            if (md.max_supply) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">Max Supply</span><span class="qf-val">' + fmtBig(md.max_supply) + '</span></div>';
-            if (md.ath && md.ath.usd) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">ATH</span><span class="qf-val">$' + C.fmt(md.ath.usd) + '</span></div>';
+            if (md.market_cap_rank) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">' + (i18n.cryptoRank || 'Rank') + '</span><span class="qf-val">#' + md.market_cap_rank + '</span></div>';
+            if (md.total_volume && md.total_volume.usd) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">' + (i18n.crypto24hVol || '24h Volume') + '</span><span class="qf-val">$' + fmtBig(md.total_volume.usd) + '</span></div>';
+            if (md.circulating_supply) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">' + (i18n.cryptoCirculating || 'Circulating') + '</span><span class="qf-val">' + fmtBig(md.circulating_supply) + '</span></div>';
+            if (md.max_supply) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">' + (i18n.cryptoMaxSupply || 'Max Supply') + '</span><span class="qf-val">' + fmtBig(md.max_supply) + '</span></div>';
+            if (md.ath && md.ath.usd) qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">' + (i18n.cryptoAth || 'ATH') + '</span><span class="qf-val">$' + C.fmt(md.ath.usd) + '</span></div>';
             if (md.ath_change_percentage && md.ath_change_percentage.usd) {
               var athPct = md.ath_change_percentage.usd;
-              qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">From ATH</span><span class="qf-val" style="color:' + (athPct >= 0 ? '#16a34a' : '#dc2626') + '">' + athPct.toFixed(1) + '%</span></div>';
+              qfHtml += '<div class="qf-item" style="display:flex"><span class="qf-label">' + (i18n.cryptoFromAth || 'From ATH') + '</span><span class="qf-val" style="color:' + (athPct >= 0 ? '#16a34a' : '#dc2626') + '">' + athPct.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%</span></div>';
             }
             qfEl.innerHTML = qfHtml;
             qfEl.style.display = '';
@@ -1986,7 +2395,7 @@ const stockI18n = {
               var fillE = document.querySelector('[data-pc-range-fill]');
               var dotE = document.querySelector('[data-pc-range-dot]');
               if (fillE) fillE.style.width = dayP + '%';
-              if (dotE) dotE.style.left = dayP + '%';
+              if (dotE) dotE.style.insetInlineStart = dayP + '%';
             }
           }
 
@@ -2000,35 +2409,137 @@ const stockI18n = {
               webLink.textContent = d.links.homepage[0].replace(/^https?:\/\//, '').replace(/\/$/, '');
             }
           }
+
+          // Crypto Market Data table (Key Statistics equivalent)
+          if (md) {
+            showEl('[data-profile-section]');
+            var cp = md.current_price ? md.current_price.usd : null;
+            var tbl = document.querySelectorAll('[data-profile-section] .stats-table');
+            // Use first stats column for crypto-specific stats
+            var statsCol1 = tbl[0];
+            if (statsCol1) {
+              var shtml = '';
+              if (md.market_cap && md.market_cap.usd) shtml += '<tr><td class="st-k">' + (i18n.marketCap || 'Market Cap') + '</td><td class="st-v">$' + fmtBig(md.market_cap.usd) + '</td></tr>';
+              if (md.total_volume && md.total_volume.usd) shtml += '<tr><td class="st-k">' + (i18n.crypto24hVol || '24h Volume') + '</td><td class="st-v">$' + fmtBig(md.total_volume.usd) + '</td></tr>';
+              if (md.circulating_supply) shtml += '<tr><td class="st-k">' + (i18n.cryptoCirculating || 'Circulating Supply') + '</td><td class="st-v">' + fmtBig(md.circulating_supply) + '</td></tr>';
+              if (md.total_supply) shtml += '<tr><td class="st-k">' + (i18n.cryptoTotalSupply || 'Total Supply') + '</td><td class="st-v">' + fmtBig(md.total_supply) + '</td></tr>';
+              if (md.max_supply) shtml += '<tr><td class="st-k">' + (i18n.cryptoMaxSupply || 'Max Supply') + '</td><td class="st-v">' + fmtBig(md.max_supply) + '</td></tr>';
+              if (md.fully_diluted_valuation && md.fully_diluted_valuation.usd) shtml += '<tr><td class="st-k">' + (i18n.cryptoFDV || 'Fully Diluted Val.') + '</td><td class="st-v">$' + fmtBig(md.fully_diluted_valuation.usd) + '</td></tr>';
+              if (shtml) { statsCol1.querySelector('tbody').innerHTML = shtml; }
+            }
+            // Use second column for price stats
+            var statsCol2 = tbl[1];
+            if (statsCol2) {
+              var shtml2 = '';
+              if (md.ath && md.ath.usd) shtml2 += '<tr><td class="st-k">' + (i18n.cryptoAth || 'All-Time High') + '</td><td class="st-v">$' + C.fmt(md.ath.usd) + '</td></tr>';
+              if (md.ath_change_percentage && md.ath_change_percentage.usd != null) shtml2 += '<tr><td class="st-k">' + (i18n.cryptoFromAth || 'From ATH') + '</td><td class="st-v" style="color:' + (md.ath_change_percentage.usd >= 0 ? '#16a34a' : '#dc2626') + '">' + md.ath_change_percentage.usd.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%</td></tr>';
+              if (md.atl && md.atl.usd) shtml2 += '<tr><td class="st-k">' + (i18n.cryptoAtl || 'All-Time Low') + '</td><td class="st-v">$' + C.fmt(md.atl.usd) + '</td></tr>';
+              if (md.price_change_percentage_24h != null) shtml2 += '<tr><td class="st-k">' + (i18n.crypto24hChange || '24h Change') + '</td><td class="st-v" style="color:' + (md.price_change_percentage_24h >= 0 ? '#16a34a' : '#dc2626') + '">' + (md.price_change_percentage_24h >= 0 ? '+' : '') + md.price_change_percentage_24h.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</td></tr>';
+              if (md.price_change_percentage_7d != null) shtml2 += '<tr><td class="st-k">' + (i18n.crypto7dChange || '7d Change') + '</td><td class="st-v" style="color:' + (md.price_change_percentage_7d >= 0 ? '#16a34a' : '#dc2626') + '">' + (md.price_change_percentage_7d >= 0 ? '+' : '') + md.price_change_percentage_7d.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</td></tr>';
+              if (md.price_change_percentage_30d != null) shtml2 += '<tr><td class="st-k">' + (i18n.crypto30dChange || '30d Change') + '</td><td class="st-v" style="color:' + (md.price_change_percentage_30d >= 0 ? '#16a34a' : '#dc2626') + '">' + (md.price_change_percentage_30d >= 0 ? '+' : '') + md.price_change_percentage_30d.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</td></tr>';
+              if (md.market_cap_rank) shtml2 += '<tr><td class="st-k">' + (i18n.cryptoRank || 'Market Cap Rank') + '</td><td class="st-v">#' + md.market_cap_rank + '</td></tr>';
+              if (shtml2) { statsCol2.querySelector('tbody').innerHTML = shtml2; }
+            }
+          }
         }
 
-        // Section nav for crypto
-        setTimeout(function() {
-          var navEl = document.querySelector('[data-section-nav]');
-          if (!navEl) return;
-          var sections = [
-            { sel: '[data-company-hero]', label: 'About' },
-            { sel: '[data-range52]', label: '52W Range' },
-          ];
-          var links = [];
-          for (var k = 0; k < sections.length; k++) {
-            var el = document.querySelector(sections[k].sel);
-            if (el && el.style.display !== 'none' && el.offsetParent !== null) {
-              links.push({ el: el, label: sections[k].label });
+        // Also fetch stock-profile for 52-week range
+        fetch('/api/stock-profile/' + encodeURIComponent(symbol))
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(p) {
+            if (!p) return;
+            var det = p.detail || {};
+            var curPrice = md && md.current_price ? md.current_price.usd : null;
+            // 52-week range
+            if (det.fiftyTwoWeekLow != null && det.fiftyTwoWeekHigh != null && curPrice) {
+              showEl('[data-range52]');
+              var low52 = det.fiftyTwoWeekLow;
+              var high52 = det.fiftyTwoWeekHigh;
+              var range = high52 - low52;
+              var pct52 = range > 0 ? Math.max(0, Math.min(100, ((curPrice - low52) / range) * 100)) : 50;
+              setEl('[data-range52-low]', '$' + C.fmt(low52));
+              setEl('[data-range52-high]', '$' + C.fmt(high52));
+              setEl('[data-range52-current]', '$' + C.fmt(curPrice));
+              var fill52 = document.querySelector('[data-range52-fill]');
+              if (fill52) fill52.style.width = pct52 + '%';
+              var marker52 = document.querySelector('[data-range52-marker]');
+              if (marker52) marker52.style.insetInlineStart = pct52 + '%';
+              var badge52 = document.querySelector('[data-range52-badge]');
+              if (badge52) {
+                var zoneLabel, zoneCls;
+                if (pct52 <= 20) { zoneLabel = i18n.nearLow || 'Near 52w Low'; zoneCls = 'range52-zone--low'; }
+                else if (pct52 <= 70) { zoneLabel = i18n.midRange || 'Mid Range'; zoneCls = 'range52-zone--mid'; }
+                else if (pct52 <= 92) { zoneLabel = i18n.nearHigh || 'Near 52w High'; zoneCls = 'range52-zone--high'; }
+                else { zoneLabel = i18n.nearAth || 'Near ATH'; zoneCls = 'range52-zone--ath'; }
+                badge52.textContent = zoneLabel;
+                badge52.className = 'range52-zone-badge ' + zoneCls;
+              }
+              if (range > 0) {
+                var fromLowPct = low52 > 0 ? ((curPrice - low52) / low52 * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) : '—';
+                var fromHighPct = high52 > 0 ? ((curPrice - high52) / high52 * 100).toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) : '—';
+                var flEl = document.querySelector('[data-range52-from-low]');
+                var fhEl = document.querySelector('[data-range52-from-high]');
+                if (flEl) flEl.innerHTML = '<span class="range52-stat-val range52-stat--up">+' + fromLowPct + '%</span> ' + (i18n.fromLow || 'from 52w Low');
+                if (fhEl) fhEl.innerHTML = '<span class="range52-stat-val range52-stat--down">' + fromHighPct + '%</span> ' + (i18n.fromHigh || 'from 52w High');
+              }
             }
-          }
-          if (links.length > 1) {
-            var navHtml = '';
-            for (var m = 0; m < links.length; m++) {
-              navHtml += '<a class="sn-link" data-sn-target="' + m + '">' + links[m].label + '</a>';
+            // 50/200 day averages for MA signal
+            if (det.fiftyDayAverage != null && det.twoHundredDayAverage != null && curPrice) {
+              showEl('[data-ma-signal]');
+              var ma50 = det.fiftyDayAverage;
+              var ma200 = det.twoHundredDayAverage;
+              var maGrid = document.querySelector('[data-ma-grid]');
+              if (maGrid) {
+                var above50 = curPrice > ma50;
+                var above200 = curPrice > ma200;
+                var golden = ma50 > ma200;
+                var overallBull = above50 && above200;
+                var overallBear = !above50 && !above200;
+                var overallLabel = overallBull ? (i18n.bullish || 'Bullish') : overallBear ? (i18n.bearish || 'Bearish') : (i18n.neutral || 'Neutral');
+                var overallColor = overallBull ? '#16a34a' : overallBear ? '#dc2626' : '#f59e0b';
+                var html = '<div class="ma-overall" style="border-color:' + overallColor + '"><span class="ma-overall-icon">' + (overallBull ? '▲' : overallBear ? '▼' : '◆') + '</span><span class="ma-overall-label" style="color:' + overallColor + '">' + (i18n.maSignal || 'MA Signal') + ': ' + overallLabel + '</span></div>';
+                html += '<div class="ma-cards">';
+                html += '<div class="ma-card ' + (above50 ? 'ma-card--up' : 'ma-card--down') + '"><span class="ma-card-title">' + (i18n.ma50Title || '50-Day MA') + '</span><span class="ma-card-val">$' + C.fmt(ma50) + '</span><span class="ma-card-sig" style="color:' + (above50 ? '#16a34a' : '#dc2626') + '">' + (above50 ? '▲ ' + (i18n.above || 'Above') : '▼ ' + (i18n.below || 'Below')) + '</span></div>';
+                html += '<div class="ma-card ' + (above200 ? 'ma-card--up' : 'ma-card--down') + '"><span class="ma-card-title">' + (i18n.ma200Title || '200-Day MA') + '</span><span class="ma-card-val">$' + C.fmt(ma200) + '</span><span class="ma-card-sig" style="color:' + (above200 ? '#16a34a' : '#dc2626') + '">' + (above200 ? '▲ ' + (i18n.above || 'Above') : '▼ ' + (i18n.below || 'Below')) + '</span></div>';
+                html += '<div class="ma-card ' + (golden ? 'ma-card--up' : 'ma-card--down') + '"><span class="ma-card-title">' + (golden ? (i18n.goldenCross || 'Golden Cross') : (i18n.deathCross || 'Death Cross')) + '</span><span class="ma-card-val">' + (i18n.ma50vs200 || '50d vs 200d') + '</span><span class="ma-card-sig" style="color:' + (golden ? '#16a34a' : '#dc2626') + '">' + (golden ? '▲ ' + (i18n.bullish || 'Bullish') : '▼ ' + (i18n.bearish || 'Bearish')) + '</span></div>';
+                html += '</div>';
+                maGrid.innerHTML = html;
+              }
             }
-            navEl.innerHTML = navHtml;
-            navEl.style.display = '';
-            navEl.querySelectorAll('[data-sn-target]').forEach(function(a, idx) {
-              a.addEventListener('click', function() { links[idx].el.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-            });
-          }
-        }, 600);
+            // Rebuild section nav
+            rebuildCryptoNav();
+          }).catch(function() { rebuildCryptoNav(); });
+
+        function rebuildCryptoNav() {
+          setTimeout(function() {
+            var navEl = document.querySelector('[data-section-nav]');
+            if (!navEl) return;
+            var sections = [
+              { sel: '[data-company-hero]', label: i18n.navAbout || 'About' },
+              { sel: '[data-range52]', label: i18n.priceRange52w || '52W Range' },
+              { sel: '[data-profile-section]', label: i18n.keyStats || 'Key Statistics' },
+              { sel: '[data-ma-signal]', label: i18n.navMaSignal || 'MA Signal' },
+            ];
+            var links = [];
+            for (var k = 0; k < sections.length; k++) {
+              var el = document.querySelector(sections[k].sel);
+              if (el && el.style.display !== 'none' && el.offsetParent !== null) {
+                links.push({ el: el, label: sections[k].label });
+              }
+            }
+            if (links.length > 1) {
+              var navHtml = '';
+              for (var m = 0; m < links.length; m++) {
+                navHtml += '<a class="sn-link" data-sn-target="' + m + '">' + links[m].label + '</a>';
+              }
+              navEl.innerHTML = navHtml;
+              navEl.style.display = '';
+              navEl.querySelectorAll('[data-sn-target]').forEach(function(a, idx) {
+                a.addEventListener('click', function() { links[idx].el.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+              });
+            }
+          }, 300);
+        }
       }).catch(function() {});
   }
 
@@ -2043,37 +2554,74 @@ const stockI18n = {
   // Range selector
   document.querySelectorAll('[data-range-buttons] button').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.querySelectorAll('[data-range-buttons] button').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('[data-range-buttons] button').forEach(function(b) { b.classList.remove('active'); b.removeAttribute('aria-pressed'); });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       loadStock(btn.getAttribute('data-range'), btn.getAttribute('data-interval'));
     });
   });
 
-  // Resize
+  // Resize — use ResizeObserver when available, fall back to window resize
+  function redrawCharts() {
+    if (!currentChart) return;
+    var points = C.yahooToPoints(currentChart.timestamps, currentChart.closes);
+    C.drawChart(document.querySelector('[data-stock-chart]'), [
+      { points: points, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)' }
+    ], { volumes: currentChart.volumes || [] });
+    drawVolumeBars(currentChart.timestamps, currentChart.volumes, currentChart.closes);
+  }
   var rTimer;
-  window.addEventListener('resize', function() {
-    clearTimeout(rTimer);
-    rTimer = setTimeout(function() {
-      if (!currentChart) return;
-      var points = C.yahooToPoints(currentChart.timestamps, currentChart.closes);
-      C.drawChart(document.querySelector('[data-stock-chart]'), [
-        { points: points, lineColor: '#75AADB', fillColor: 'rgba(117,170,219,0.12)' }
-      ]);
-      drawVolumeBars(currentChart.timestamps, currentChart.volumes, currentChart.closes);
-    }, 200);
-  });
+  if (typeof ResizeObserver !== 'undefined') {
+    var chartWrap = document.querySelector('.chart-wrap');
+    if (chartWrap) {
+      new ResizeObserver(function() {
+        clearTimeout(rTimer);
+        rTimer = setTimeout(redrawCharts, 150);
+      }).observe(chartWrap);
+    }
+  } else {
+    window.addEventListener('resize', function() {
+      clearTimeout(rTimer);
+      rTimer = setTimeout(redrawCharts, 200);
+    });
+  }
 
-  // Tooltip toggle for mobile
+  // Tooltip toggle for mobile + keyboard
   document.addEventListener('click', function(e) {
     var info = e.target.closest('.st-info');
     document.querySelectorAll('.st-info--active').forEach(function(el) { if (el !== info) el.classList.remove('st-info--active'); });
     if (info) info.classList.toggle('st-info--active');
   });
+  document.addEventListener('keydown', function(e) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('st-info')) {
+      e.preventDefault();
+      e.target.classList.toggle('st-info--active');
+    }
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.st-info--active').forEach(function(el) { el.classList.remove('st-info--active'); });
+    }
+  });
+
+  // ─── Scroll to top button ───
+  var scrollBtn = document.querySelector('[data-scroll-top]');
+  if (scrollBtn) {
+    var scrollVisible = false;
+    window.addEventListener('scroll', function() {
+      var show = window.scrollY > 600;
+      if (show !== scrollVisible) {
+        scrollVisible = show;
+        scrollBtn.classList.toggle('scroll-top-btn--visible', show);
+      }
+    }, { passive: true });
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 })();
 </script>
 
 <style>
-  .mkts-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
+  .mkts-header { display: flex; justify-content: space-between; align-items: end; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-border-section); }
   .mkts-title { font-size: 2rem; font-weight: 700; line-height: 1.1; }
   .mkts-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin-top: 4px; }
   .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
@@ -2084,25 +2632,74 @@ const stockI18n = {
   :global(.stk-badge--sector) { background: rgba(246,180,14,0.15); color: var(--color-gold); }
   :global(.stk-badge--industry) { background: rgba(117,170,219,0.12); color: #75AADB; }
   :global(.stk-badge--location) { background: rgba(22,163,74,0.12); color: #16a34a; }
+  :global([data-theme="dark"] .stk-badge--sector) { background: rgba(246,180,14,0.18); color: #f6b40e; }
+  :global([data-theme="dark"] .stk-badge--industry) { background: rgba(117,170,219,0.2); color: #60a5fa; }
+  :global([data-theme="dark"] .stk-badge--location) { background: rgba(22,163,74,0.15); color: #4ade80; }
   :global(.stk-badge) { text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
   :global(.stk-badge:hover) { opacity: 0.8; text-decoration: none; }
   :global(.ch-tag--location) { background: rgba(22,163,74,0.1); color: #16a34a; }
   :global(.ch-tag) { text-decoration: none; cursor: pointer; transition: opacity 0.15s; }
   :global(.ch-tag:hover) { opacity: 0.8; text-decoration: none; }
+  :global(.ch-tag:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   /* Empty state */
-  .stock-empty { text-align: center; padding: var(--spacing-2xl) 0; }
-  .stock-empty-msg { font-size: 1rem; color: var(--color-text-meta); margin: var(--spacing-md) 0 var(--spacing-xl); }
+  .stock-empty { text-align: center; padding: var(--spacing-2xl) var(--spacing-lg); }
+  .stock-empty::before { content: '📊'; display: block; font-size: 3rem; margin-bottom: var(--spacing-md); opacity: 0.6; }
+  .stock-empty-msg { font-size: 1rem; color: var(--color-text-meta); margin: var(--spacing-md) 0 var(--spacing-xl); line-height: 1.6; max-width: 400px; margin-inline: auto; }
+
+  /* Recently Viewed Stocks */
+  :global(.recent-stocks) { margin-top: var(--spacing-xl); }
+  :global(.recent-title) { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); margin-bottom: var(--spacing-sm); }
+  :global(.recent-chips) { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  :global(.recent-chip) {
+    font-size: 0.82rem; font-weight: 700; padding: 6px 14px; border-radius: 6px;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    color: var(--color-text); text-decoration: none;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  :global(.recent-chip:hover) { border-color: var(--color-gold); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.06); text-decoration: none; color: var(--color-text); }
+  :global(.recent-chip:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   /* Price Card */
   /* Section Navigation */
-  :global(.section-nav) { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--spacing-lg); padding: 10px 0; border-bottom: 1px solid var(--color-border); }
-  :global(.sn-link) { font-size: 0.7rem; font-weight: 700; color: var(--color-text-meta); text-decoration: none; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--color-border); transition: all 0.15s ease; }
-  :global(.sn-link:hover) { color: var(--color-gold); border-color: var(--color-gold); background: rgba(246,180,14,0.08); }
+  :global(.section-nav) {
+    display: flex; gap: 4px; margin-bottom: var(--spacing-lg); padding: 8px 0;
+    border-bottom: 2px solid var(--color-border);
+    position: sticky; top: 0; z-index: 10;
+    background: var(--color-bg);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; -ms-overflow-style: none;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  :global(.section-nav::-webkit-scrollbar) { display: none; }
+  :global(.sn-link) {
+    font-size: 0.7rem; font-weight: 700; color: var(--color-text-meta);
+    text-decoration: none; padding: 7px 14px; border-radius: 6px;
+    border: none; background: transparent;
+    transition: all 0.15s ease; white-space: nowrap; flex-shrink: 0;
+    min-height: 32px; display: inline-flex; align-items: center;
+  }
+  :global(.sn-link:hover) { color: var(--color-text); background: rgba(128,128,128,0.08); }
+  :global(.sn-link:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  :global(.sn-link--active) { color: var(--color-gold); background: rgba(246,180,14,0.12); font-weight: 800; }
 
-  .price-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+  @keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  @keyframes fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .detail-section, .chart-section, .key-insights, .company-hero, .range52-section { animation: fade-in 0.3s ease-out; scroll-margin-top: 56px; }
+  .price-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); position: relative; overflow: hidden; }
+  .price-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--color-accent), var(--color-gold)); border-radius: 12px 12px 0 0; }
+  .pc-skeleton { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: shimmer 1.5s ease-in-out infinite; border-radius: 4px; }
+  .price-card--loading .pc-price { display: inline-block; width: 120px; height: 2.4rem; }
+  .price-card--loading .pc-price,
+  .price-card--loading .pc-sv { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: shimmer 1.5s ease-in-out infinite; border-radius: 4px; color: transparent; }
   .pc-main { display: flex; align-items: baseline; gap: 12px; margin-bottom: var(--spacing-lg); }
-  .pc-price { font-size: 2.4rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; }
+  .pc-price { font-size: 2.6rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); letter-spacing: -0.02em; transition: color 0.2s; position: relative; line-height: 1.1; }
+  .pc-price:hover { color: var(--color-gold); }
+  .pc-price--copied { color: var(--color-positive) !important; }
+  .pc-price--copied::after { content: '✓'; position: absolute; top: -4px; inset-inline-end: -20px; font-size: 0.75rem; color: var(--color-positive); font-weight: 700; animation: pc-copied-fade 1.2s ease-out forwards; }
+  @keyframes pc-copied-fade { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-8px); } }
   .pc-change { font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
   .pc-currency { font-size: 0.85rem; color: var(--color-text-meta); font-weight: 600; }
   /* Today's Range */
@@ -2111,7 +2708,7 @@ const stockI18n = {
   .pc-range-label { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
   .pc-range-bar { display: flex; align-items: center; gap: 10px; }
   .pc-range-lo, .pc-range-hi { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text-meta); white-space: nowrap; min-width: 50px; }
-  .pc-range-hi { text-align: right; }
+  .pc-range-hi { text-align: end; }
   .pc-range-track { flex: 1; height: 6px; background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); border-radius: 3px; position: relative; }
   .pc-range-fill { display: none; }
   .pc-range-dot { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--color-celeste); border: 2.5px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2); z-index: 1; }
@@ -2132,26 +2729,28 @@ const stockI18n = {
   .chart-section { margin-bottom: var(--spacing-2xl); }
   .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md); flex-wrap: wrap; gap: var(--spacing-sm); }
   .section-title { font-size: 1.3rem; font-weight: 700; }
-  .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px 8px 0 0; border-bottom: none; padding: var(--spacing-md); padding-bottom: 0; }
-  .chart-wrap canvas { width: 100%; display: block; }
-  .vol-chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 0 0 8px 8px; padding: 0 var(--spacing-md) var(--spacing-md); }
+  .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px 12px 0 0; border-bottom: none; padding: var(--spacing-md); padding-bottom: 0; }
+  .chart-wrap canvas { width: 100%; display: block; cursor: crosshair; }
+  .vol-chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 0 0 12px 12px; padding: 0 var(--spacing-md) var(--spacing-md); }
   .vol-chart-wrap canvas { width: 100%; display: block; }
 
   /* Range Buttons */
-  .range-buttons { display: flex; gap: 4px; }
+  .range-buttons { display: flex; gap: 3px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px; padding: 3px; }
   .range-buttons button {
     padding: 6px 14px;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-secondary);
+    letter-spacing: 0.03em;
+    border: none;
+    background: transparent;
     color: var(--color-text-meta);
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s;
   }
-  .range-buttons button:hover { border-color: var(--color-gold); color: var(--color-text); }
-  .range-buttons button.active { background: var(--color-celeste); color: #fff; border-color: var(--color-celeste); }
+  .range-buttons button:hover { color: var(--color-text); background: rgba(128,128,128,0.08); }
+  .range-buttons button:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .range-buttons button.active { background: var(--color-gold); color: #000; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
 
   /* ─── Detail Sections ─── */
   .detail-section { margin-bottom: var(--spacing-2xl); }
@@ -2159,19 +2758,37 @@ const stockI18n = {
 
   /* Stats Grid (2 columns) */
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); }
-  .stats-col { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
+  .stats-col { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
 
+  .divhist-table-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+  :global(.divhist-table) { width: 100%; border-collapse: collapse; }
+  :global(.divhist-table thead th) { padding: 8px 14px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); border-bottom: 1px solid var(--color-border); text-align: start; }
+  :global(.divhist-table tbody tr) { border-bottom: 1px solid var(--color-border); }
+  :global(.divhist-table tbody tr:last-child) { border-bottom: none; }
+  :global(.divhist-table tbody tr:nth-child(even)) { background: rgba(128,128,128,0.04); }
+  :global(.divhist-table tbody tr:hover) { background: rgba(128,128,128,0.08); }
+  :global(.divhist-table td) { padding: 10px 14px; font-size: 0.85rem; color: var(--color-text); }
   .stats-table { width: 100%; border-collapse: collapse; }
   .stats-table tr { border-bottom: 1px solid var(--color-border); }
   .stats-table tr:last-child { border-bottom: none; }
+  .stats-table tr:nth-child(even) { background: rgba(128,128,128,0.04); }
+  .stats-table tr:hover { background: rgba(128,128,128,0.08); }
   .stats-table td { padding: 10px 14px; font-size: 0.85rem; }
   .st-k { color: var(--color-text-meta); font-weight: 500; white-space: nowrap; }
-  .st-v { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); white-space: nowrap; }
+  .st-v { text-align: end; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); white-space: nowrap; }
+  /* Global versions for dynamically injected table rows (crypto stats) */
+  :global(.stats-table tr) { border-bottom: 1px solid var(--color-border); }
+  :global(.stats-table tr:last-child) { border-bottom: none; }
+  :global(.stats-table tr:nth-child(even)) { background: rgba(128,128,128,0.04); }
+  :global(.stats-table tr:hover) { background: rgba(128,128,128,0.08); }
+  :global(.stats-table td) { padding: 10px 14px; font-size: 0.85rem; }
+  :global(.st-k) { color: var(--color-text-meta); font-weight: 500; white-space: nowrap; }
+  :global(.st-v) { text-align: end; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); white-space: nowrap; }
   .st-info {
     display: inline-flex; align-items: center; justify-content: center;
     width: 14px; height: 14px; border-radius: 50%; font-size: 0.55rem; font-weight: 800;
     font-style: italic; background: rgba(117,170,219,0.15); color: var(--color-celeste);
-    cursor: help; position: relative; vertical-align: middle; margin-left: 4px;
+    cursor: help; position: relative; vertical-align: middle; margin-inline-start: 4px;
     user-select: none; line-height: 1;
   }
   .st-info::after {
@@ -2182,10 +2799,14 @@ const stockI18n = {
     pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 10;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3); line-height: 1.4;
   }
-  .st-info:hover::after, .st-info.st-info--active::after { opacity: 1; }
+  .st-info:hover::after, .st-info:focus::after, .st-info.st-info--active::after { opacity: 1; }
+  .st-info:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 1px; }
+  @media (max-width: 640px) {
+    .st-info::after { left: auto; right: 0; transform: none; width: 180px; font-size: 0.68rem; }
+  }
 
   /* ─── Analyst Card ─── */
-  .analyst-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); }
+  .analyst-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); }
   .analyst-main { display: flex; align-items: center; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
   .analyst-rec {
     font-size: 1.2rem;
@@ -2224,33 +2845,34 @@ const stockI18n = {
   /* ─── Company Overview Hero ─── */
   /* ─── Key Insights ─── */
   .key-insights {
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-left: 3px solid var(--color-gold);
-    border-radius: 8px; padding: 14px 18px; margin-bottom: var(--spacing-xl);
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-inline-start: 3px solid var(--color-gold);
+    border-radius: 12px; padding: 14px 18px; margin-bottom: var(--spacing-xl);
   }
   :global(.ki-list) { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
   :global(.ki-item) {
     font-size: 0.82rem; color: var(--color-text-secondary); line-height: 1.5;
-    padding-left: 16px; position: relative;
+    padding-inline-start: 16px; position: relative;
   }
-  :global(.ki-item::before) { content: '•'; position: absolute; left: 0; color: var(--color-gold); font-weight: 700; }
+  :global(.ki-item::before) { content: '•'; position: absolute; inset-inline-start: 0; color: var(--color-gold); font-weight: 700; }
 
   /* ─── Quick Facts Strip ─── */
   .qf-strip { display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-xl); flex-wrap: wrap; }
-  .qf-item { flex: 1; min-width: 100px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 14px; display: flex; flex-direction: column; gap: 3px; }
-  .qf-label { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
-  .qf-val { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
-  @media (max-width: 640px) { .qf-strip { gap: 8px; } .qf-item { min-width: 80px; padding: 8px 10px; } .qf-val { font-size: 0.95rem; } }
+  :global(.qf-item) { flex: 1; min-width: 100px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 10px 14px; display: flex; flex-direction: column; gap: 3px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  :global(.qf-item:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  :global(.qf-label) { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  :global(.qf-val) { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  @media (max-width: 640px) { .qf-strip { gap: 8px; } :global(.qf-item) { min-width: 80px; padding: 8px 10px; } :global(.qf-val) { font-size: 0.95rem; } }
 
-  .company-hero { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+  .company-hero { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
   .ch-identity { display: flex; align-items: center; gap: var(--spacing-lg); margin-bottom: var(--spacing-md); }
   .ch-logo { width: 64px; height: 64px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: var(--color-bg); border: 1px solid var(--color-border); }
   .ch-logo-img { width: 100%; height: 100%; object-fit: contain; display: none; }
   .ch-logo-fallback { width: 100%; height: 100%; display: none; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 800; color: #fff; }
   .ch-name { font-size: 1.3rem; font-weight: 700; color: var(--color-text); line-height: 1.2; }
   .ch-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-  .ch-tag { font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.03em; }
-  .ch-tag--sector { background: rgba(117,170,219,0.15); color: #3b82f6; }
-  .ch-tag--industry { background: rgba(246,180,14,0.12); color: #b8860b; }
+  :global(.ch-tag) { font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.03em; }
+  :global(.ch-tag--sector) { background: rgba(117,170,219,0.15); color: #3b82f6; }
+  :global(.ch-tag--industry) { background: rgba(246,180,14,0.12); color: #b8860b; }
   .ch-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--spacing-md); }
   .ch-pill { align-items: center; gap: 6px; font-size: 0.78rem; color: var(--color-text-secondary); background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 20px; padding: 5px 12px; }
   .ch-pill-icon { font-size: 0.85rem; }
@@ -2261,7 +2883,7 @@ const stockI18n = {
 
   /* ─── 52-Week Price Range ─── */
   .range52-section { margin-bottom: var(--spacing-2xl); }
-  .range52-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); }
+  .range52-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); }
   .range52-zone-badge {
     display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
     padding: 3px 8px; border-radius: 4px; margin-bottom: 12px;
@@ -2274,7 +2896,7 @@ const stockI18n = {
   .range52-label { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text-meta); white-space: nowrap; min-width: 60px; }
   .range52-track { flex: 1; height: 10px; background: var(--color-border); border-radius: 5px; position: relative; overflow: visible; }
   .range52-fill { height: 100%; background: linear-gradient(90deg, #dc2626, #eab308, #16a34a); border-radius: 5px; transition: width 0.4s ease; }
-  .range52-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; background: var(--color-gold); border: 3px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: left 0.4s ease; z-index: 1; }
+  .range52-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 18px; height: 18px; background: var(--color-gold); border: 3px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: inset-inline-start 0.4s ease; z-index: 1; }
   .range52-marker-label { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); font-size: 0.75rem; font-weight: 700; color: var(--color-text); white-space: nowrap; background: var(--color-bg-secondary); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--color-border); }
   .range52-stats {
     display: flex; justify-content: space-between; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--color-border);
@@ -2295,7 +2917,7 @@ const stockI18n = {
   :global(.cfq-bar-label) { font-size: 0.72rem; font-weight: 600; color: var(--color-text-meta); }
   :global(.cfq-bar-wrap) { height: 16px; background: var(--color-border); border-radius: 4px; overflow: hidden; }
   :global(.cfq-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-  :global(.cfq-bar-val) { font-size: 0.78rem; font-weight: 800; text-align: right; color: var(--color-text); font-variant-numeric: tabular-nums; }
+  :global(.cfq-bar-val) { font-size: 0.78rem; font-weight: 800; text-align: end; color: var(--color-text); font-variant-numeric: tabular-nums; }
   :global(.cfq-ratio) { font-size: 0.72rem; font-weight: 700; color: var(--color-text-secondary); }
   :global(.cfq-desc) { font-size: 0.68rem; color: var(--color-text-meta); font-style: italic; }
 
@@ -2307,7 +2929,7 @@ const stockI18n = {
   :global(.rf-bar-wrap) { height: 22px; background: var(--color-border); border-radius: 6px; overflow: hidden; }
   :global(.rf-bar) { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
   :global(.rf-bar--neg) { opacity: 0.7; }
-  :global(.rf-val) { font-size: 0.82rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+  :global(.rf-val) { font-size: 0.82rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: end; }
 
   /* ─── Margin Comparison Bars ─── */
   :global(.mg-row) {
@@ -2318,12 +2940,13 @@ const stockI18n = {
   :global(.mg-label) { font-size: 0.78rem; font-weight: 600; color: var(--color-text-meta); }
   :global(.mg-bar-wrap) { height: 18px; background: var(--color-border); border-radius: 4px; overflow: hidden; position: relative; }
   :global(.mg-bar) { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-  :global(.mg-bar--neg) { position: absolute; right: 0; height: 100%; border-radius: 4px; }
-  :global(.mg-val) { font-size: 0.85rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+  :global(.mg-bar--neg) { position: absolute; inset-inline-end: 0; height: 100%; border-radius: 4px; }
+  :global(.mg-val) { font-size: 0.85rem; font-weight: 800; font-variant-numeric: tabular-nums; text-align: end; }
 
   /* ─── Valuation Snapshot ─── */
   :global(.val-cards) { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--spacing-md); }
-  :global(.vc-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+  :global(.vc-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  :global(.vc-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
   :global(.vc-head) { display: flex; justify-content: space-between; align-items: center; }
   :global(.vc-label) { font-size: 0.72rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
   :global(.vc-assess) { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
@@ -2333,11 +2956,11 @@ const stockI18n = {
   :global(.vc-range) { display: flex; justify-content: space-between; font-size: 0.58rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
 
   /* ─── Moving Average Signal ─── */
-  :global(.ma-overall) { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 20px; border: 2px solid; border-radius: 10px; margin-bottom: var(--spacing-md); background: var(--color-bg-secondary); }
+  :global(.ma-overall) { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 20px; border: 2px solid; border-radius: 12px; margin-bottom: var(--spacing-md); background: var(--color-bg-secondary); }
   :global(.ma-overall-label) { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text); }
   :global(.ma-overall-icon) { font-size: 1.2rem; }
   :global(.ma-cards) { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
-  :global(.ma-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 4px; border-top: 3px solid transparent; }
+  :global(.ma-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px; border-top: 3px solid transparent; }
   :global(.ma-card--up) { border-top-color: #16a34a; }
   :global(.ma-card--down) { border-top-color: #dc2626; }
   :global(.ma-card-title) { font-size: 0.72rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
@@ -2350,7 +2973,7 @@ const stockI18n = {
   :global(.dyg-label) { font-size: 0.78rem; font-weight: 600; color: var(--color-text-meta); min-width: 100px; }
   :global(.dyg-track) { flex: 1; height: 12px; background: var(--color-border); border-radius: 6px; overflow: hidden; }
   :global(.dyg-fill) { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
-  :global(.dyg-val) { font-size: 1rem; font-weight: 800; font-variant-numeric: tabular-nums; min-width: 60px; text-align: right; }
+  :global(.dyg-val) { font-size: 1rem; font-weight: 800; font-variant-numeric: tabular-nums; min-width: 60px; text-align: end; }
 
   /* ─── Ownership Breakdown Bar ─── */
   .own-bar-wrap { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
@@ -2378,7 +3001,8 @@ const stockI18n = {
   :global(.hs-sub) { font-size: 0.65rem; color: var(--color-text-meta); }
 
   .health-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
-  .health-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-lg); display: block; }
+  .health-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); display: block; transition: border-color 0.15s ease; }
+  .health-card:hover { border-color: var(--color-border-section, var(--color-border)); }
   .hc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .hc-label { font-size: 0.73rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
   .hc-badge { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.03em; }
@@ -2406,36 +3030,36 @@ const stockI18n = {
   .cb-seg--hold { background: #eab308; }
   .cb-seg--sell { background: #f87171; }
   .cb-seg--ssell { background: #dc2626; border-radius: 0 5px 5px 0; }
-  .cb-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background: var(--color-text); border: 3px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.3); z-index: 1; transition: left 0.4s ease; }
+  .cb-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; background: var(--color-text); border: 3px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,0.3); z-index: 1; transition: inset-inline-start 0.4s ease; }
   .consensus-labels { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; }
 
   .target-section { margin-top: var(--spacing-lg); padding-top: var(--spacing-lg); border-top: 1px solid var(--color-border); }
-  .target-bar { margin-bottom: 6px; }
+  .target-bar { margin-top: 24px; margin-bottom: 24px; }
   .target-track { height: 10px; background: var(--color-border); border-radius: 5px; position: relative; overflow: visible; }
-  .target-mean-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--color-gold); border: 2px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 2; transition: left 0.4s ease; }
+  .target-mean-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--color-gold); border: 2px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 2; transition: inset-inline-start 0.4s ease; }
   .target-mean-label { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); font-size: 0.68rem; font-weight: 700; color: var(--color-gold); white-space: nowrap; }
-  .target-current-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--color-celeste); border: 2px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 1; transition: left 0.4s ease; }
+  .target-current-marker { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; background: var(--color-celeste); border: 2px solid var(--color-bg); border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); z-index: 1; transition: inset-inline-start 0.4s ease; }
   .target-current-label { position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); font-size: 0.68rem; font-weight: 700; color: var(--color-celeste); white-space: nowrap; }
   .target-range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 600; color: var(--color-text-meta); font-variant-numeric: tabular-nums; margin-top: var(--spacing-sm); }
 
   /* ─── Quarterly Earnings ─── */
-  .earnings-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--spacing-xl); }
+  .earnings-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); }
   .earnings-legend { display: flex; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
   .el-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--color-text-meta); }
   .el-dot { width: 10px; height: 10px; border-radius: 2px; }
   .el-dot--actual { background: #75AADB; }
   .el-dot--estimate { background: var(--color-border); }
-  .earnings-chart { display: flex; justify-content: space-around; align-items: flex-end; gap: var(--spacing-md); min-height: 160px; }
-  .eq-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
-  .eq-bars { display: flex; gap: 4px; align-items: flex-end; }
-  .eq-bar { width: 20px; border-radius: 3px 3px 0 0; min-height: 4px; transition: height 0.3s ease; }
-  .eq-bar--actual { background: #75AADB; }
-  .eq-bar--estimate { background: var(--color-border); }
-  .eq-indicator { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 1px 5px; border-radius: 3px; }
-  .eq-indicator--beat { background: rgba(22,163,74,0.12); color: #16a34a; }
-  .eq-indicator--miss { background: rgba(220,38,38,0.12); color: #dc2626; }
-  .eq-label { font-size: 0.68rem; color: var(--color-text-meta); font-weight: 600; }
-  .eq-values { font-size: 0.7rem; font-weight: 700; color: var(--color-text); font-variant-numeric: tabular-nums; }
+  .earnings-chart { display: flex; justify-content: space-around; align-items: end; gap: var(--spacing-md); min-height: 160px; }
+  :global(.eq-group) { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+  :global(.eq-bars) { display: flex; gap: 4px; align-items: end; }
+  :global(.eq-bar) { width: 20px; border-radius: 3px 3px 0 0; min-height: 4px; transition: height 0.3s ease; }
+  :global(.eq-bar--actual) { background: #75AADB; }
+  :global(.eq-bar--estimate) { background: var(--color-border); }
+  :global(.eq-indicator) { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 1px 5px; border-radius: 3px; }
+  :global(.eq-indicator--beat) { background: rgba(22,163,74,0.12); color: #16a34a; }
+  :global(.eq-indicator--miss) { background: rgba(220,38,38,0.12); color: #dc2626; }
+  :global(.eq-label) { font-size: 0.68rem; color: var(--color-text-meta); font-weight: 600; }
+  :global(.eq-values) { font-size: 0.7rem; font-weight: 700; color: var(--color-text); font-variant-numeric: tabular-nums; }
   :global(.earnings-summary) { margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); }
   :global(.es-stats) { display: flex; gap: var(--spacing-xl); justify-content: center; }
   :global(.es-stat) { display: flex; flex-direction: column; align-items: center; gap: 2px; }
@@ -2445,27 +3069,42 @@ const stockI18n = {
   :global(.es-label) { font-size: 0.68rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
 
   /* ─── About the Company (expanded) ─── */
-  .about-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
+  .about-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
   .about-text-wrap { padding: 20px; }
-  .about-desc { font-size: 0.88rem; line-height: 1.8; color: var(--color-text-secondary); }
+  .about-desc { font-size: 0.88rem; line-height: 1.8; color: var(--color-text-secondary); position: relative; }
   .about-desc--clamped { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .about-desc--clamped::after { content: ''; position: absolute; bottom: 0; inset-inline-start: 0; inset-inline-end: 0; height: 2em; background: linear-gradient(transparent, var(--color-bg-secondary)); pointer-events: none; }
   .about-toggle { display: none; background: none; border: none; color: var(--color-accent); font-size: 0.82rem; font-weight: 600; cursor: pointer; padding: 0; margin-top: 8px; }
   .about-toggle:hover { text-decoration: underline; }
+  .about-toggle:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   .about-details { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0; border-top: 1px solid var(--color-border); }
   .ad-item { padding: 12px 16px; border-bottom: 1px solid var(--color-border); display: flex; flex-direction: column; gap: 2px; }
   .ad-k { font-size: 0.7rem; color: var(--color-text-meta); text-transform: uppercase; font-weight: 600; letter-spacing: 0.04em; }
   .ad-v { font-size: 0.9rem; font-weight: 600; color: var(--color-text); }
-  .ad-link { font-size: 0.9rem; font-weight: 600; color: var(--color-accent); text-decoration: none; }
-  .ad-link:hover { text-decoration: underline; }
+  :global(.ad-link) { font-size: 0.9rem; font-weight: 600; color: var(--color-accent); text-decoration: none; }
+  :global(.ad-link:hover) { text-decoration: underline; }
+
+  /* ─── Key Products & Services ─── */
+  .kp-section { border-top: 1px solid var(--color-border); padding: 16px 20px; }
+  .kp-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); margin-bottom: 10px; }
+  :global(.kp-grid) { display: flex; flex-wrap: wrap; gap: 6px; }
+  :global(.kp-chip) {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(117,170,219,0.08); border: 1px solid rgba(117,170,219,0.2);
+    color: var(--color-text); font-size: 0.78rem; font-weight: 500;
+    padding: 5px 12px; border-radius: 20px; white-space: nowrap;
+  }
+  :global([data-theme="dark"] .kp-chip) { background: rgba(117,170,219,0.12); border-color: rgba(117,170,219,0.25); }
 
   /* ─── Peer Stocks Grid ─── */
   :global(.peers-grid) { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
   :global(.peer-card) {
     display: flex; flex-direction: column; gap: 4px;
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px;
-    padding: 14px 16px; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.1s;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px;
+    padding: 14px 16px; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
   }
-  :global(.peer-card:hover) { border-color: var(--color-gold); transform: translateY(-1px); }
+  :global(.peer-card:hover) { border-color: var(--color-gold); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  :global(.peer-card:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   :global(.peer-top) { display: flex; justify-content: space-between; align-items: center; }
   :global(.peer-symbol) { font-weight: 800; font-size: 0.9rem; color: var(--color-text); }
   :global(.peer-pct) { font-size: 0.75rem; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
@@ -2478,50 +3117,81 @@ const stockI18n = {
   :global(.peer-pe) { font-size: 0.68rem; color: var(--color-text-secondary); font-weight: 600; }
 
   /* Back link */
-  .back-link { display: inline-block; font-size: 0.9rem; font-weight: 600; color: var(--color-accent); text-decoration: none; margin-bottom: var(--spacing-2xl); }
-  .back-link:hover { text-decoration: underline; }
+  /* ─── Share Button ─── */
+  .share-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: none; border: 1px solid var(--color-border); border-radius: 6px;
+    color: var(--color-text-meta); cursor: pointer; padding: 6px 8px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .share-btn:hover { color: var(--color-accent); border-color: var(--color-accent); }
+  .share-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .share-btn--copied { color: #16a34a; border-color: #16a34a; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; color: var(--color-text-meta); text-decoration: none; margin-bottom: var(--spacing-2xl); padding: 6px 14px; border: 1px solid var(--color-border); border-radius: 6px; transition: border-color 0.15s, color 0.15s; }
+  .back-link:hover { border-color: var(--color-gold); color: var(--color-gold); text-decoration: none; }
+  .back-link:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   .info-disclaimer { font-size: 0.75rem; color: var(--color-text-meta); text-align: center; font-style: italic; }
+
+  /* Scroll to top */
+  .scroll-top-btn {
+    position: fixed; bottom: 24px; inset-inline-end: 24px; z-index: 90;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    color: var(--color-text-meta); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.15s, color 0.15s;
+    transform: translateY(8px);
+  }
+  .scroll-top-btn--visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .scroll-top-btn:hover { color: var(--color-gold); border-color: var(--color-gold); }
+  .scroll-top-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   /* ─── Dividend Income Card ─── */
   :global(.div-income-card) { margin-bottom: var(--spacing-md); }
   :global(.dii-grid) { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--spacing-sm); }
-  :global(.dii-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 12px; text-align: center; display: flex; flex-direction: column; gap: 2px; }
+  :global(.dii-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 12px; text-align: center; display: flex; flex-direction: column; gap: 2px; }
   :global(.dii-card--highlight) { border-color: var(--color-gold); background: rgba(246,180,14,0.04); }
   :global(.dii-label) { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
   :global(.dii-val) { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
   :global(.dii-sub) { font-size: 0.68rem; color: var(--color-text-meta); }
 
   /* ─── Graham Analysis ─── */
-  :global(.graham-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px; padding: var(--spacing-lg); }
+  :global(.graham-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); }
   :global(.grm-header) { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); }
   :global(.grm-score-wrap) { display: flex; align-items: center; gap: var(--spacing-md); flex: 1; }
   :global(.grm-gauge) { flex: 1; height: 8px; background: var(--color-border); border-radius: 4px; overflow: hidden; max-width: 200px; }
   :global(.grm-gauge-fill) { height: 100%; border-radius: 4px; transition: width 0.5s; }
   :global(.grm-score) { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
   :global(.grm-verdict) { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
-  :global(.grm-number) { background: rgba(128,128,128,0.06); border-radius: 8px; padding: 12px 16px; margin-bottom: var(--spacing-md); }
+  :global(.grm-number) { background: rgba(128,128,128,0.06); border-radius: 10px; padding: 12px 16px; margin-bottom: var(--spacing-md); }
   :global(.grm-num-row) { display: flex; justify-content: space-between; align-items: baseline; padding: 2px 0; }
   :global(.grm-num-label) { font-size: 0.78rem; color: var(--color-text-meta); font-weight: 600; }
   :global(.grm-num-val) { font-size: 1rem; font-weight: 800; font-variant-numeric: tabular-nums; }
   :global(.grm-margin) { font-size: 0.82rem; font-weight: 700; text-align: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--color-border); }
   :global(.grm-criteria) { display: flex; flex-direction: column; gap: 2px; }
-  :global(.grm-row) { display: grid; grid-template-columns: 24px 1fr auto auto; align-items: center; gap: 8px; padding: 8px 6px; border-radius: 6px; }
+  :global(.grm-row) { display: grid; grid-template-columns: 24px 1fr auto auto; align-items: center; gap: 8px; padding: 8px 6px; border-radius: 6px; transition: background 0.15s ease; }
   :global(.grm-row:nth-child(even)) { background: rgba(128,128,128,0.04); }
+  :global(.grm-pass) { border-inline-start: 3px solid #16a34a; }
+  :global(.grm-fail) { border-inline-start: 3px solid #dc2626; }
   :global(.grm-icon) { font-size: 0.9rem; font-weight: 800; text-align: center; }
   :global(.grm-pass .grm-icon) { color: #16a34a; }
   :global(.grm-fail .grm-icon) { color: #dc2626; }
   :global(.grm-label) { font-size: 0.82rem; font-weight: 600; color: var(--color-text); }
-  :global(.grm-val) { font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); text-align: right; }
-  :global(.grm-note) { font-size: 0.68rem; color: var(--color-text-meta); text-align: right; min-width: 70px; }
+  :global(.grm-val) { font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); text-align: end; }
+  :global(.grm-note) { font-size: 0.68rem; color: var(--color-text-meta); text-align: end; min-width: 70px; }
 
   /* ─── Dark Mode ─── */
   :global([data-theme="dark"]) .rc-badge--merval { color: #60a5fa; }
   :global([data-theme="dark"]) .rec-buy { background: rgba(22,163,74,0.18); }
   :global([data-theme="dark"]) .rec-sell { background: rgba(220,38,38,0.18); }
   :global([data-theme="dark"]) .rec-hold { background: rgba(234,179,8,0.18); }
-  :global([data-theme="dark"]) .ch-tag--sector { background: rgba(117,170,219,0.2); color: #60a5fa; }
-  :global([data-theme="dark"]) .ch-tag--industry { background: rgba(246,180,14,0.18); color: #f6b40e; }
+  :global([data-theme="dark"] .ch-tag--sector) { background: rgba(117,170,219,0.2); color: #60a5fa; }
+  :global([data-theme="dark"] .ch-tag--industry) { background: rgba(246,180,14,0.18); color: #f6b40e; }
+  :global([data-theme="dark"] .ch-tag--location) { background: rgba(22,163,74,0.15); color: #4ade80; }
   :global([data-theme="dark"]) .hc-badge--green { background: rgba(22,163,74,0.18); }
   :global([data-theme="dark"]) .hc-badge--yellow { background: rgba(234,179,8,0.18); }
   :global([data-theme="dark"]) .hc-badge--red { background: rgba(220,38,38,0.18); }
@@ -2535,26 +3205,123 @@ const stockI18n = {
     .health-grid { grid-template-columns: repeat(2, 1fr); }
     .about-details { grid-template-columns: 1fr 1fr; }
     :global(.peers-grid) { grid-template-columns: repeat(2, 1fr); }
+    :global(.ma-cards) { grid-template-columns: 1fr; }
+    :global(.mg-row) { grid-template-columns: 100px 1fr 55px; gap: 8px; }
+    :global(.cfq-bar-row) { grid-template-columns: 80px 1fr 60px; gap: 8px; }
+    :global(.rf-step) { grid-template-columns: 80px 1fr 60px; gap: 8px; }
+    :global(.val-cards) { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
   }
 
   @media (max-width: 640px) {
-    .mkts-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .mkts-header { flex-direction: column; align-items: start; gap: 8px; }
     .mkts-title { font-size: 1.5rem; }
     .pc-price { font-size: 1.8rem; }
     .pc-stats { gap: var(--spacing-md); }
     .range-buttons button { padding: 6px 10px; font-size: 0.7rem; }
     .section-title { font-size: 1.1rem; }
-    .stats-table td { padding: 8px 10px; font-size: 0.8rem; }
-    .analyst-main { flex-direction: column; align-items: flex-start; gap: var(--spacing-sm); }
+    .stats-table td, :global(.stats-table td) { padding: 8px 10px; font-size: 0.8rem; }
+    .analyst-main { flex-direction: column; align-items: start; gap: var(--spacing-sm); }
     .analyst-rec { font-size: 1rem; padding: 6px 14px; }
     .health-grid { grid-template-columns: 1fr; }
-    .ch-identity { flex-direction: column; align-items: flex-start; }
+    .ch-identity { flex-direction: column; align-items: start; }
     .ch-logo { width: 48px; height: 48px; }
     .ch-name { font-size: 1.1rem; }
-    .eq-bar { width: 14px; }
+    :global(.eq-bar) { width: 14px; }
     .about-details { grid-template-columns: 1fr; }
-    .range52-bar { flex-direction: column; gap: var(--spacing-sm); }
-    .range52-track { width: 100%; }
+    .range52-label { font-size: 0.7rem; min-width: 45px; }
+    .range52-marker-label { font-size: 0.65rem; padding: 1px 4px; }
+    .range52-marker { width: 14px; height: 14px; border-width: 2px; }
+    .range52-stats { flex-direction: column; gap: 4px; align-items: start; }
     .consensus-labels { font-size: 0.6rem; }
+    /* Grids collapse to stacked on small screens */
+    :global(.mg-row) { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+    :global(.mg-label) { font-size: 0.72rem; }
+    :global(.mg-val) { font-size: 0.78rem; text-align: start; }
+    :global(.cfq-bar-row) { grid-template-columns: 1fr; gap: 4px; }
+    :global(.cfq-bar-label) { font-size: 0.68rem; }
+    :global(.cfq-bar-val) { text-align: start; font-size: 0.72rem; }
+    :global(.rf-step) { grid-template-columns: 1fr; gap: 4px; padding: 10px 0; }
+    :global(.rf-label) { font-size: 0.7rem; }
+    :global(.rf-val) { text-align: start; font-size: 0.75rem; }
+    :global(.val-cards) { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    :global(.vc-card) { padding: 10px; }
+    :global(.vc-value) { font-size: 1.05rem; }
+    :global(.vc-label) { font-size: 0.65rem; }
+    :global(.ma-overall) { padding: 10px 14px; }
+    :global(.ma-overall-label) { font-size: 0.9rem; }
+    :global(.ma-card) { padding: 10px; }
+    :global(.ma-card-val) { font-size: 0.88rem; }
+    :global(.dyg-wrap) { flex-wrap: wrap; }
+    :global(.dyg-label) { min-width: auto; width: 100%; }
+    :global(.own-legend) { flex-direction: column; gap: 6px; }
+    /* Quick facts strip */
+    .qf-strip { gap: 6px; }
+    :global(.qf-item) { min-width: 70px; padding: 8px 10px; }
+    :global(.qf-val) { font-size: 0.88rem; }
+    :global(.qf-label) { font-size: 0.6rem; }
+    /* Peers */
+    :global(.peers-grid) { grid-template-columns: 1fr !important; }
+    :global(.peer-card) { padding: 10px; }
+    /* Earnings chart */
+    .earnings-chart { min-height: 180px; }
+    .earnings-legend { gap: 10px; }
+    /* Section nav scrollable hints */
+    :global(.section-nav) { padding-inline: 4px; gap: 4px; }
+    :global(.sn-link) { font-size: 0.68rem; padding: 5px 8px; white-space: nowrap; }
+  }
+
+  /* ─── Print ─── */
+  @media print {
+    .section-nav, .range-buttons, .chart-section, .vol-chart-wrap, .about-toggle, .back-link, .share-btn, .scroll-top-btn, :global(.stk-retry-btn) { display: none !important; }
+    .price-card, .company-hero, .detail-section, .range52-section, .key-insights, .qf-strip {
+      break-inside: avoid; box-shadow: none; border: 1px solid #ddd;
+    }
+    .mkts-header { padding: 0; }
+    :global(.peers-grid) { grid-template-columns: repeat(3, 1fr) !important; }
+    .stock-page { max-width: 100%; }
+    :global(.about-desc) { display: block !important; -webkit-line-clamp: unset !important; overflow: visible !important; }
+    :global(.about-desc--clamped)::after { display: none !important; }
+    :global(.ch-tag), :global(.stk-badge), :global(.ad-link) { color: #333 !important; text-decoration: underline !important; }
+    :global(.sn-link) { display: none !important; }
+    .info-disclaimer { font-size: 0.7rem; color: #666; border-top: 1px solid #ccc; padding-top: 8px; margin-top: 20px; }
+  }
+
+  /* ─── Accessibility: reduced motion ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .detail-section, .chart-section, .key-insights, .company-hero, .range52-section, .qf-strip { animation: none; }
+    .price-card--loading .pc-price, .price-card--loading .pc-sv { animation: none; }
+    :global(.sn-link), :global(.about-desc), :global(.ch-tag), .stk-badge, .back-link, :global(.recent-chip) { transition: none; }
+    .range-buttons button, .tooltip, :global(.peer-card), :global(.rel-card), .share-btn, :global(.qf-item), .pc-price { transition: none; }
+    .pc-price--copied::after { animation: none; }
+    :global(.rd-seg), :global(.range52-fill), :global(.range52-marker) { transition: none; }
+    :global(.cfq-bar), :global(.rf-bar), :global(.mg-bar), :global(.vc-gauge-fill) { transition: none; }
+    :global(.dyg-fill), :global(.own-seg), :global(.hs-gauge-fill) { transition: none; }
+    :global(.hc-bar-fill), :global(.cb-marker), :global(.target-mean-marker), :global(.target-current-marker) { transition: none; }
+    :global(.eq-bar), :global(.grm-gauge-fill) { transition: none; }
+    .scroll-top-btn { transition: none; }
+  }
+
+  /* ─── Accessibility: high contrast ─── */
+  @media (prefers-contrast: more) {
+    .price-card, .stats-col, .analyst-card, .about-card, .earnings-card { border-width: 2px; }
+    :global(.graham-card), :global(.health-card), :global(.vc-card), :global(.dii-card) { border-width: 2px; }
+    .st-info { border: 1px solid currentColor; }
+    :global(.hc-badge), :global(.eq-indicator), .rc-badge { border: 1px solid currentColor; }
+    :global(.rd-seg) { border: 1px solid rgba(255,255,255,0.3); }
+  }
+
+  /* ─── Retry button ─── */
+  :global(.stk-retry-btn) {
+    display: inline-block; margin-inline-start: 8px; padding: 4px 12px; font-size: 0.72rem;
+    border: 1px solid var(--color-border); border-radius: 4px;
+    background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  :global(.stk-retry-btn:hover) { border-color: var(--color-gold); color: var(--color-gold); }
+
+  /* ─── Section reveal fade ─── */
+  @keyframes stk-section-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .company-hero, .key-insights, .qf-strip, .range52-section, .detail-section {
+    animation: stk-section-fade 0.3s ease-out;
   }
 </style>

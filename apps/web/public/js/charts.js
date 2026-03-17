@@ -56,32 +56,37 @@
       });
     }
 
-    // Area fill
+    // Area fill (smooth)
     var grad = ctx.createLinearGradient(0, 0, 0, h);
     grad.addColorStop(0, fillColor);
     grad.addColorStop(1, 'rgba(0,0,0,0)');
 
     ctx.beginPath();
-    ctx.moveTo(pts[0].x, pts[0].y);
-    for (var j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
+    smoothPath(ctx, pts);
     ctx.lineTo(pts[pts.length - 1].x, h);
     ctx.lineTo(pts[0].x, h);
     ctx.closePath();
     ctx.fillStyle = grad;
     ctx.fill();
 
-    // Line
+    // Line (smooth)
     ctx.beginPath();
-    ctx.moveTo(pts[0].x, pts[0].y);
-    for (var k = 1; k < pts.length; k++) ctx.lineTo(pts[k].x, pts[k].y);
+    smoothPath(ctx, pts);
     ctx.strokeStyle = lineColor;
     ctx.lineWidth = 2;
     ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
     ctx.stroke();
 
-    // End dot
+    // End dot with glow
     ctx.beginPath();
-    ctx.arc(pts[pts.length - 1].x, pts[pts.length - 1].y, 3, 0, Math.PI * 2);
+    ctx.arc(pts[pts.length - 1].x, pts[pts.length - 1].y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = lineColor;
+    ctx.globalAlpha = 0.2;
+    ctx.fill();
+    ctx.globalAlpha = 1.0;
+    ctx.beginPath();
+    ctx.arc(pts[pts.length - 1].x, pts[pts.length - 1].y, 2.5, 0, Math.PI * 2);
     ctx.fillStyle = lineColor;
     ctx.fill();
   }
@@ -132,7 +137,7 @@
     range = max - min;
 
     var textColor = getThemeColor('--color-text-meta', '#6e6e6e');
-    var yFormat = opts.yFormat || function (v) { return Math.round(v).toLocaleString('es-AR'); };
+    var yFormat = opts.yFormat || function (v) { return Math.round(v).toLocaleString(document.documentElement.lang || 'es-AR'); };
 
     // Grid + Y-axis labels
     var steps = 5;
@@ -189,28 +194,87 @@
       }
       if (coords.length < 2) continue;
 
-      // Area
+      // Area (smooth Bézier)
       var grad = ctx.createLinearGradient(0, padT, 0, padT + cH);
       grad.addColorStop(0, ds.fillColor || 'rgba(0,0,0,0.05)');
       grad.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.beginPath();
-      ctx.moveTo(coords[0].x, coords[0].y);
-      for (var ci = 1; ci < coords.length; ci++) ctx.lineTo(coords[ci].x, coords[ci].y);
+      smoothPath(ctx, coords);
       ctx.lineTo(coords[coords.length - 1].x, padT + cH);
       ctx.lineTo(coords[0].x, padT + cH);
       ctx.closePath();
       ctx.fillStyle = grad;
       ctx.fill();
 
-      // Line
+      // Line (smooth Bézier)
       ctx.beginPath();
-      ctx.moveTo(coords[0].x, coords[0].y);
-      for (var li = 1; li < coords.length; li++) ctx.lineTo(coords[li].x, coords[li].y);
+      smoothPath(ctx, coords);
       ctx.strokeStyle = ds.lineColor || '#75AADB';
       ctx.lineWidth = 2.5;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
       ctx.stroke();
+    }
+
+    // ─── Volume bars (if provided) ───
+    if (opts.volumes && opts.volumes.length > 0) {
+      var vols = opts.volumes;
+      var closes = datasets[0] ? datasets[0].points : [];
+      var maxVol = 0;
+      for (var vi2 = 0; vi2 < vols.length; vi2++) {
+        if (vols[vi2] > maxVol) maxVol = vols[vi2];
+      }
+      if (maxVol > 0) {
+        var volH = cH * 0.18; // volume area is 18% of chart height
+        var volBaseY = padT + cH;
+        for (var vj = 0; vj < vols.length; vj++) {
+          if (!vols[vj]) continue;
+          var vx = padL + (vj / (maxLen - 1)) * cW;
+          var vBarH = (vols[vj] / maxVol) * volH;
+          var vBarW = Math.max(1, (cW / maxLen) * 0.6);
+          var isUp = true;
+          if (closes[vj] && closes[vj].v != null && vj > 0 && closes[vj - 1] && closes[vj - 1].v != null) {
+            isUp = closes[vj].v >= closes[vj - 1].v;
+          }
+          ctx.fillStyle = isUp ? 'rgba(22,163,74,0.25)' : 'rgba(220,38,38,0.25)';
+          ctx.fillRect(vx - vBarW / 2, volBaseY - vBarH, vBarW, vBarH);
+        }
+      }
+    }
+
+    // Current price line — dashed horizontal at last close
+    if (datasets.length === 1) {
+      var lastDs = datasets[0];
+      var lastPt = null;
+      for (var lpi = lastDs.points.length - 1; lpi >= 0; lpi--) {
+        if (lastDs.points[lpi].v != null) { lastPt = lastDs.points[lpi]; break; }
+      }
+      if (lastPt) {
+        var lastY = padT + cH - ((lastPt.v - min) / range) * cH;
+        ctx.beginPath();
+        ctx.moveTo(padL, lastY);
+        ctx.lineTo(w - padR, lastY);
+        ctx.strokeStyle = lastDs.lineColor || '#75AADB';
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = 0.35;
+        ctx.setLineDash([4, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.globalAlpha = 1.0;
+
+        // Price label on right edge
+        var lpStr = yFormat(lastPt.v);
+        ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, sans-serif';
+        var lpW = ctx.measureText(lpStr).width + 10;
+        ctx.fillStyle = lastDs.lineColor || '#75AADB';
+        ctx.beginPath();
+        roundRect(ctx, w - padR, lastY - 9, lpW, 18, 3);
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'left';
+        ctx.fillText(lpStr, w - padR + 5, lastY + 3.5);
+        ctx.textAlign = 'left';
+      }
     }
 
     // Legend (if multiple datasets with labels)
@@ -320,12 +384,37 @@
         ctx.fill();
       }
 
+      // Compute change from first point
+      var firstV = hoverData[0] && hoverData[0].length > 0 ? hoverData[0][0].v : null;
+      var changeStr = '';
+      var changeColor = '';
+      if (firstV != null && firstV !== 0 && nearest.v != null) {
+        var changePct = ((nearest.v - firstV) / firstV) * 100;
+        changeStr = (changePct >= 0 ? '+' : '') + changePct.toFixed(2) + '%';
+        changeColor = changePct >= 0 ? '#16a34a' : '#dc2626';
+      }
+
+      // Theme-aware tooltip colors
+      var isDark = false;
+      try {
+        var bg = getComputedStyle(document.documentElement).getPropertyValue('--color-bg').trim();
+        isDark = bg && (bg === '#1a1a1a' || bg.indexOf('26,26,26') !== -1);
+      } catch(e) {}
+      var tooltipBg = isDark ? '#2a2a2a' : '#fff';
+      var tooltipBorder = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+      var tooltipText = isDark ? '#e8e6e3' : '#1a1a1a';
+      var tooltipMeta = isDark ? '#8a8680' : '#888';
+      var tooltipShadow = isDark ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.15)';
+
       // Tooltip box
       ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
       var valStr = yFormat(nearest.v);
       var dateStr = nearest.date;
-      var tw = Math.max(ctx.measureText(valStr).width, ctx.measureText(dateStr).width) + 20;
-      var th = 44;
+      var valW = ctx.measureText(valStr).width;
+      var dateW = ctx.measureText(dateStr).width;
+      var changeW = changeStr ? ctx.measureText(changeStr).width + 8 : 0;
+      var tw = Math.max(valW + changeW, dateW) + 24;
+      var th = changeStr ? 48 : 44;
       var tx = snapX + 12;
       var ty = Math.max(padT, nearest.y - th / 2);
       // Keep tooltip inside canvas
@@ -333,15 +422,15 @@
       if (ty + th > padT + cH) ty = padT + cH - th;
 
       // Shadow
-      ctx.shadowColor = 'rgba(0,0,0,0.15)';
-      ctx.shadowBlur = 8;
+      ctx.shadowColor = tooltipShadow;
+      ctx.shadowBlur = 10;
       ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 2;
+      ctx.shadowOffsetY = 3;
 
       // Background
       ctx.beginPath();
-      roundRect(ctx, tx, ty, tw, th, 6);
-      ctx.fillStyle = '#fff';
+      roundRect(ctx, tx, ty, tw, th, 8);
+      ctx.fillStyle = tooltipBg;
       ctx.fill();
 
       // Reset shadow
@@ -352,21 +441,70 @@
 
       // Border
       ctx.beginPath();
-      roundRect(ctx, tx, ty, tw, th, 6);
-      ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+      roundRect(ctx, tx, ty, tw, th, 8);
+      ctx.strokeStyle = tooltipBorder;
       ctx.lineWidth = 1;
       ctx.stroke();
 
       // Value text
-      ctx.fillStyle = '#1a1a1a';
+      ctx.fillStyle = tooltipText;
       ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
       ctx.textAlign = 'left';
       ctx.fillText(valStr, tx + 10, ty + 18);
 
+      // Change % inline
+      if (changeStr) {
+        ctx.fillStyle = changeColor;
+        ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.fillText(changeStr, tx + 10 + valW + 6, ty + 18);
+      }
+
       // Date text
-      ctx.fillStyle = '#888';
+      ctx.fillStyle = tooltipMeta;
       ctx.font = '11px -apple-system, BlinkMacSystemFont, sans-serif';
-      ctx.fillText(dateStr, tx + 10, ty + 34);
+      ctx.fillText(dateStr, tx + 10, ty + 36);
+
+      // Horizontal price line at current hover point
+      ctx.beginPath();
+      ctx.moveTo(padL, nearest.y);
+      ctx.lineTo(snapX - 6, nearest.y);
+      ctx.strokeStyle = nearest.color;
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = 0.3;
+      ctx.setLineDash([2, 2]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1.0;
+
+      // Y-axis price label
+      var yLabelStr = yFormat(nearest.v);
+      ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, sans-serif';
+      var ylw = ctx.measureText(yLabelStr).width + 8;
+      ctx.fillStyle = nearest.color;
+      ctx.beginPath();
+      roundRect(ctx, padL - ylw - 4, nearest.y - 8, ylw + 4, 16, 3);
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.fillText(yLabelStr, padL - ylw / 2 - 2, nearest.y + 3.5);
+      ctx.textAlign = 'left';
+
+      // X-axis date label (like TradingView)
+      if (dateStr) {
+        ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, sans-serif';
+        var xdw = ctx.measureText(dateStr).width + 10;
+        var xdx = snapX - xdw / 2;
+        if (xdx < padL) xdx = padL;
+        if (xdx + xdw > w - padR) xdx = w - padR - xdw;
+        ctx.fillStyle = isDark ? '#333' : '#e8e6e3';
+        ctx.beginPath();
+        roundRect(ctx, xdx, padT + cH + 2, xdw, 16, 3);
+        ctx.fill();
+        ctx.fillStyle = isDark ? '#e8e6e3' : '#1a1a1a';
+        ctx.textAlign = 'center';
+        ctx.fillText(dateStr, xdx + xdw / 2, padT + cH + 13);
+        ctx.textAlign = 'left';
+      }
     }
 
     function onLeave() {
@@ -385,6 +523,27 @@
       canvasEl.removeEventListener('mouseleave', onLeave);
       canvasEl.removeEventListener('touchend', onLeave);
     };
+  }
+
+  // Smooth Bézier path through points (monotone cubic)
+  function smoothPath(ctx, coords) {
+    if (coords.length < 2) return;
+    ctx.moveTo(coords[0].x, coords[0].y);
+    if (coords.length === 2) {
+      ctx.lineTo(coords[1].x, coords[1].y);
+      return;
+    }
+    for (var i = 0; i < coords.length - 1; i++) {
+      var p0 = coords[Math.max(0, i - 1)];
+      var p1 = coords[i];
+      var p2 = coords[i + 1];
+      var p3 = coords[Math.min(coords.length - 1, i + 2)];
+      var cp1x = p1.x + (p2.x - p0.x) / 6;
+      var cp1y = p1.y + (p2.y - p0.y) / 6;
+      var cp2x = p2.x - (p3.x - p1.x) / 6;
+      var cp2y = p2.y - (p3.y - p1.y) / 6;
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+    }
   }
 
   // Rounded rectangle helper
@@ -443,15 +602,17 @@
   }
 
   function fmtM(v) {
-    if (v >= 1e6) return (v / 1e6).toFixed(2) + 'M';
-    if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
+    var locale = (document.documentElement.lang || 'es-AR');
+    if (v >= 1e6) return (v / 1e6).toLocaleString(locale, { maximumFractionDigits: 2 }) + 'M';
+    if (v >= 1e3) return (v / 1e3).toLocaleString(locale, { maximumFractionDigits: 0 }) + 'K';
     return fmt(v);
   }
 
   function fmtVol(v) {
-    if (v >= 1e9) return (v / 1e9).toFixed(1) + 'B';
-    if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
-    if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
+    var locale = (document.documentElement.lang || 'es-AR');
+    if (v >= 1e9) return (v / 1e9).toLocaleString(locale, { maximumFractionDigits: 1 }) + 'B';
+    if (v >= 1e6) return (v / 1e6).toLocaleString(locale, { maximumFractionDigits: 1 }) + 'M';
+    if (v >= 1e3) return (v / 1e3).toLocaleString(locale, { maximumFractionDigits: 0 }) + 'K';
     return fmt(v);
   }
 
