@@ -271,7 +271,7 @@
 
       render(data);
       saveCache(data);
-    }).catch(function() {});
+    }).catch(function(err) { console.warn('[PlataMarketTicker] fetch error:', err); });
   }
 
   // 1. Show cached immediately

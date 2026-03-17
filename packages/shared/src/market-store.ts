@@ -162,7 +162,6 @@ export interface EconomicIndicators {
   inflationAnnual: number | null;      // Latest annual CPI (%)
 }
 
-const economicStore: StoreEntry<EconomicIndicators> | null = null;
 let _economicStore: StoreEntry<EconomicIndicators> | null = null;
 
 export function setEconomicIndicators(data: EconomicIndicators): void {
