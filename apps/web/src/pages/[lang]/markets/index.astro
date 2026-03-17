@@ -485,6 +485,7 @@ const { lang } = Astro.params;
 </script>
 <script is:inline src="/js/charts.js?v=5"></script>
 <script is:inline src="/js/market-states.js?v=1"></script>
+<script is:inline src="/js/market-helpers.js?v=1"></script>
 <script is:inline>
 (function() {
   var C = window.PlataCharts || {};
@@ -794,7 +795,7 @@ const { lang } = Astro.params;
         var cls = pct >= 0 ? 'rc-up' : 'rc-down';
         var arrow = pct >= 0 ? '▲' : '▼';
         var pctFmt = Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2});
-        html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(sym) + '" class="mkt-mover-row" aria-label="' + sym + ' ' + (pct >= 0 ? '+' : '\u2212') + pctFmt + '%">';
+        html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(sym) + '" class="mkt-mover-row" aria-label="' + sym + ' ' + (pct >= 0 ? '+' : '\u2212') + pctFmt + '%">';
         html += '<span class="mkt-mover-sym">' + sym + '</span>';
         html += '<span class="mkt-mover-name">' + (STOCK_NAMES[sym] || s.name || sym) + '</span>';
         html += '<span class="mkt-mover-price">ARS ' + fmt(s.price || 0) + '</span>';
@@ -840,7 +841,7 @@ const { lang } = Astro.params;
       var prefix = '$';
       if (isARS) { price = price * _blueRate; prefix = 'ARS '; }
       var priceStr = isARS ? fmt(price) : formatUSD(price);
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(c.symbol) + '" class="mkt-asset-card">';
+      html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(c.symbol) + '" class="mkt-asset-card">';
       html += '<div class="mkt-asset-icon">' + icon + '</div>';
       html += '<div class="mkt-asset-body">';
       html += '<span class="mkt-asset-name">' + name + '</span>';
@@ -889,7 +890,7 @@ const { lang } = Astro.params;
       var iconHtml = c.image
         ? '<img src="' + c.image + '" alt="' + c.symbol + '" width="24" height="24" style="border-radius:50%" loading="lazy" onerror="this.outerHTML=\'<span>' + icon + '</span>\'">'
         : '<span>' + icon + '</span>';
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(yahooSym) + '" class="mkt-asset-card mkt-asset-card--crypto">';
+      html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(yahooSym) + '" class="mkt-asset-card mkt-asset-card--crypto">';
       html += '<div class="mkt-asset-icon mkt-asset-icon--crypto">' + iconHtml + '</div>';
       html += '<div class="mkt-asset-body">';
       html += '<span class="mkt-asset-name">' + c.symbol + '</span>';
@@ -1044,7 +1045,7 @@ const { lang } = Astro.params;
         var pct = (s.change || 0) * 100;
         var cls = pct >= 0 ? 'rc-up' : 'rc-down';
         var arrow = pct >= 0 ? '▲' : '▼';
-        html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(sym) + '" class="mkt-pvol-row">';
+        html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(sym) + '" class="mkt-pvol-row">';
         html += '<span class="mkt-pvol-sym">' + sym + '</span>';
         html += '<span class="mkt-pvol-vol">' + (s.volume ? fmtVol(s.volume) : '—') + '</span>';
         html += '<span class="mkt-pvol-chg ' + cls + '">' + arrow + ' ' + Math.abs(pct).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
@@ -1424,7 +1425,7 @@ const { lang } = Astro.params;
         var borderCls = isUp ? 'mkt-idx-mini--positive' : 'mkt-idx-mini--negative';
         var arrow = isUp ? '&#9650;' : '&#9660;';
         var open = isMarketOpen(r.exchange);
-        var idxLink = '/' + lang + '/markets/stock?s=' + encodeURIComponent(r.symbol);
+        var idxLink = '/' + lang + '/markets/stock/' + encodeURIComponent(r.symbol);
 
         html += '<a href="' + idxLink + '" class="mkt-idx-mini ' + borderCls + '">';
         html += '<div class="mkt-idx-mini-top">';

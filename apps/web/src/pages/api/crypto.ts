@@ -6,18 +6,11 @@ import {
 
 export const prerender = false;
 
-let cache: { data: any; ts: number } | null = null;
-const CACHE_TTL = 2 * 60 * 1000; // 2 minutes
-
 export const OPTIONS: APIRoute = () => optionsResponse();
 
 export const GET: APIRoute = async ({ url }) => {
   try {
     const limit = Math.min(parseInt(url.searchParams.get("limit") || "100", 10), 250);
-
-    if (cache && cache.data?.length >= limit && Date.now() - cache.ts < CACHE_TTL) {
-      return jsonResponse(cache.data.slice(0, limit), 120);
-    }
 
     // Try CoinGecko first (has market cap, volume, images, supply, 7d change)
     const cgUrl = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${limit}&page=1&sparkline=true&price_change_percentage=24h,7d`;
@@ -43,8 +36,7 @@ export const GET: APIRoute = async ({ url }) => {
         id: coin.id,
         sparkline: coin.sparkline_in_7d?.price ?? null,
       }));
-      cache = { data, ts: Date.now() };
-      return jsonResponse(data.slice(0, limit), 120);
+      return jsonResponse(data, 120, 300);
     }
 
     // Fallback to Binance (top 10 only, no market cap)
@@ -82,8 +74,7 @@ export const GET: APIRoute = async ({ url }) => {
       };
     }).filter(Boolean);
 
-    cache = { data, ts: Date.now() };
-    return jsonResponse(data, 120);
+    return jsonResponse(data, 120, 300);
   } catch (err: any) {
     return errorResponse(err.message ?? "Failed to fetch crypto data");
   }

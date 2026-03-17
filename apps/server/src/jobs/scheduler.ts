@@ -26,7 +26,7 @@ export function startJobs(db: Database.Database, distDir: string): void {
     console.log("[scheduler] LLM_API_KEY not set, pipeline disabled");
   }
 
-  // Realtime market data: immediately, then every 30 seconds
+  // Realtime market data: immediately, then every 60 seconds
   // Populates in-memory store for fast API responses
   fetchRealtimeMarketData().catch((err) =>
     console.error("[scheduler] Realtime market startup error:", err),
@@ -37,7 +37,7 @@ export function startJobs(db: Database.Database, distDir: string): void {
         fetchRealtimeMarketData().catch((err) =>
           console.error("[scheduler] Realtime market interval error:", err),
         ),
-      30 * 1000,
+      60 * 1000,
     ),
   );
 

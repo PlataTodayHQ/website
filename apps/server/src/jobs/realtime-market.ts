@@ -1,5 +1,5 @@
 /**
- * Realtime market data fetcher — runs every 30 seconds.
+ * Realtime market data fetcher — runs every 60 seconds.
  *
  * Fetches fast-moving data (merval index, exchange rates, stock prices)
  * and stores it in the in-memory MarketDataStore. API routes read from
@@ -11,6 +11,7 @@ import {
   BYMA_CEDEARS_URL, BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
   fetchBYMA, parseMervalFromBYMA, parseBYMAAsset, fetchExchangeRatesData,
   setMerval, setRates, setStocks,
+  alertOnFailure, resetFailureCount,
   setCedears, setGovernmentBonds, setCorporateBonds, setLetras,
   type AssetType, type ExchangeRates, type StockQuote,
 } from "@plata-today/shared";
@@ -31,6 +32,9 @@ export async function fetchRealtimeMarketData(): Promise<void> {
       fetchAssetRT(BYMA_CORPORATE_BONDS_URL, "corporate_bond", setCorporateBonds),
       fetchAssetRT(BYMA_LETRAS_URL, "letra", setLetras),
     ]);
+    resetFailureCount("realtime-market");
+  } catch (err) {
+    await alertOnFailure("realtime-market", err);
   } finally {
     running = false;
   }

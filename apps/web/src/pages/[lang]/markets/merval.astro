@@ -1,18 +1,26 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
-import { LANGUAGES } from "@plata-today/shared";
+import { LANGUAGES, getMerval } from "@plata-today/shared";
 import { t } from "@/i18n";
 
-export function getStaticPaths() {
-  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
-}
+export const prerender = false;
 
 const { lang } = Astro.params;
+if (!lang || !LANGUAGES[lang as keyof typeof LANGUAGES]) {
+  return Astro.redirect("/en/markets/merval");
+}
+
+// Fetch fresh Merval data for SEO
+const mervalData = getMerval(5 * 60 * 1000);
+const mervalPrice = mervalData?.price ? Math.round(mervalData.price).toLocaleString("es-AR") : null;
+const seoTitle = mervalPrice
+  ? `MERVAL: ${mervalPrice} — ${t(lang!, "merval.seoTitle")}`
+  : t(lang!, "merval.seoTitle");
 ---
 
 <Base
-  title={t(lang!, "merval.seoTitle")}
+  title={seoTitle}
   description={t(lang!, "merval.seoDescription")}
   lang={lang}
   ogType="website"
@@ -32,6 +40,13 @@ const { lang } = Astro.params;
     "about": {
       "@type": "FinancialProduct",
       "name": "MERVAL Index",
+      ...(mervalData?.price ? {
+        "offers": {
+          "@type": "Offer",
+          "price": mervalData.price,
+          "priceCurrency": "ARS"
+        }
+      } : {}),
       "provider": {
         "@type": "Exchange",
         "name": "BYMA — Bolsas y Mercados Argentinos",
@@ -436,6 +451,7 @@ const { lang } = Astro.params;
 </script>
 <script is:inline src="/js/charts.js?v=5"></script>
 <script is:inline src="/js/market-states.js?v=1"></script>
+<script is:inline src="/js/market-helpers.js?v=1"></script>
 <script is:inline>
 (function() {
   var C = window.PlataCharts;
@@ -917,7 +933,7 @@ const { lang } = Astro.params;
       var cls = pct >= 0 ? 'rc-up' : 'rc-down';
       var arrow = pct >= 0 ? '▲' : '▼';
       var name = STOCK_NAMES[s.symbol] || s.description || s.symbol;
-      return '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="mover-item">' +
+      return '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(s.symbol) + '" class="mover-item">' +
         logoHtml(s.symbol) +
         '<div class="mover-info"><span class="mover-sym">' + s.symbol + '</span><span class="mover-name">' + name + '</span></div>' +
         '<div class="mover-right">' +
@@ -972,7 +988,7 @@ const { lang } = Astro.params;
       var tipPrice = 'ARS ' + C.fmt(s.price || 0);
       var tipVol = s.volume ? C.fmtVol(s.volume) : '—';
       var tipMcap = C.fmtVol(s.mcap * 1e6);
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex-basis:' + weight + '%;background:' + bg + '" aria-label="' + (STOCK_NAMES[s.symbol] || s.symbol) + ' ' + pctText + '">';
+      html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex-basis:' + weight + '%;background:' + bg + '" aria-label="' + (STOCK_NAMES[s.symbol] || s.symbol) + ' ' + pctText + '">';
       html += '<span class="hm-sym">' + s.symbol + '</span>';
       html += '<span class="hm-pct">' + pctText + '</span>';
       html += '<div class="hm-tip"><strong>' + tipName + '</strong><span>' + tipPrice + ' ' + pctText + '</span><span>' + I.vol + ': ' + tipVol + '</span><span>' + I.cap + ': ' + tipMcap + '</span></div>';
@@ -1214,7 +1230,7 @@ const { lang } = Astro.params;
       html += '<div class="mcc-row">';
       html += '<span class="mcc-rank">' + (m + 1) + '</span>';
       html += '<span class="mcc-dot" style="background:' + col2 + '"></span>';
-      html += '<a class="mcc-sym" href="/' + (document.querySelector('[data-merval-page]')?.getAttribute('data-lang') || 'en') + '/markets/stock?s=' + s.symbol + '">' + s.symbol + '</a>';
+      html += '<a class="mcc-sym" href="/' + (document.querySelector('[data-merval-page]')?.getAttribute('data-lang') || 'en') + '/markets/stock/' + s.symbol + '">' + s.symbol + '</a>';
       html += '<span class="mcc-w">' + w + '%</span>';
       html += '<span class="mcc-cap">$' + C.fmtVol(s.mcap * 1e6) + '</span>';
       html += '<span class="' + chgCls + '">' + (chg >= 0 ? '+' : '') + chg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
@@ -1302,7 +1318,7 @@ const { lang } = Astro.params;
       var isUp = pct >= 0;
       var barW = (Math.abs(pct) / maxAbs * 100).toFixed(1);
       var color = isUp ? '#16a34a' : '#dc2626';
-      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol);
+      var link = '/' + lang + '/markets/stock/' + encodeURIComponent(s.symbol);
       html += '<a href="' + link + '" class="vl-row">';
       html += '<span class="vl-sym">' + s.symbol + '</span>';
       html += '<div class="vl-bar-wrap"><div class="vl-bar" style="width:' + barW + '%;background:' + color + '"></div></div>';
@@ -1328,7 +1344,7 @@ const { lang } = Astro.params;
       var chg = s.variation != null ? s.variation * 100 : 0;
       var barColor = chg >= 0 ? '#16a34a' : '#dc2626';
       html += '<div class="vd-row">';
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(sym) + '" class="vd-sym">' + sym + '</a>';
+      html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(sym) + '" class="vd-sym">' + sym + '</a>';
       html += '<div class="vd-bar-track"><div class="vd-bar-fill" style="width:' + pct + '%;background:' + barColor + '"></div></div>';
       html += '<span class="vd-vol">' + C.fmtVol(s.volume || 0) + '</span>';
       html += '</div>';
@@ -1457,7 +1473,7 @@ const { lang } = Astro.params;
       var volColor = pct != null ? (pct >= 0 ? 'rgba(22,163,74,0.15)' : 'rgba(220,38,38,0.15)') : 'rgba(128,128,128,0.1)';
 
       var delay = Math.min(i * 30, 600);
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="stk-card" style="--stk-accent:' + borderColor + ';animation-delay:' + delay + 'ms">';
+      html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(s.symbol) + '" class="stk-card" style="--stk-accent:' + borderColor + ';animation-delay:' + delay + 'ms">';
       html += '<div class="stk-vol-bg" style="width:' + volPct + '%;background:' + volColor + '"></div>';
       html += '<div class="stk-row1">';
       html += logoHtml(s.symbol);
@@ -1538,7 +1554,7 @@ const { lang } = Astro.params;
       var arrow = pct != null ? (pct >= 0 ? '▲' : '▼') : '';
       html += '<tr class="stbl-row" data-symbol="' + s.symbol + '">';
       html += '<td class="stbl-td stbl-td--name">';
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="stbl-link">';
+      html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(s.symbol) + '" class="stbl-link">';
       html += logoHtml(s.symbol);
       html += '<div class="stbl-name-text"><span class="stbl-sym">' + s.symbol + '</span>';
       html += '<span class="stbl-desc">' + (STOCK_NAMES[s.symbol] || s.description || '') + '</span></div></a></td>';
@@ -1554,7 +1570,7 @@ const { lang } = Astro.params;
       row.addEventListener('click', function(e) {
         if (e.target.closest('a')) return;
         var sym = row.getAttribute('data-symbol');
-        if (sym) window.location.href = '/' + lang + '/markets/stock?s=' + encodeURIComponent(sym);
+        if (sym) window.location.href = '/' + lang + '/markets/stock/' + encodeURIComponent(sym);
       });
     });
   }

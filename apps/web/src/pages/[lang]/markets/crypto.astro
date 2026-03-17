@@ -290,6 +290,7 @@ const { lang } = Astro.params;
 </Base>
 
 <script is:inline src="/js/market-states.js?v=1"></script>
+<script is:inline src="/js/market-helpers.js?v=1"></script>
 <script define:vars={{ lang, i18nUpdated: t(lang!, "stock.updated" as any), i18nCap: t(lang!, "merval.cap" as any), i18nCoins: t(lang!, "crypto.coins" as any), i18nNoCoins: t(lang!, "crypto.noCoins" as any), i18nOthers: t(lang!, "crypto.others" as any), i18nExtremeFear: t(lang!, "crypto.extremeFear" as any), i18nFear: t(lang!, "crypto.fear" as any), i18nNeutral: t(lang!, "crypto.neutral" as any), i18nGreed: t(lang!, "crypto.greed" as any), i18nExtremeGreed: t(lang!, "crypto.extremeGreed" as any), i18nError: t(lang!, "markets.failedToLoad" as any), i18nRetry: t(lang!, "common.retry" as any), i18nCheckConn: t(lang!, "common.checkConnection" as any), i18nTryDifferent: t(lang!, "common.tryDifferentSearch" as any) }}>
 (function() {
   'use strict';
@@ -478,7 +479,7 @@ const { lang } = Astro.params;
       var cls = chg >= 0 ? 'cr-up' : 'cr-down';
       var arrow = chg >= 0 ? '▲' : '▼';
       var yahooSym = c.symbol + '-USD';
-      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(yahooSym);
+      var link = '/' + lang + '/markets/stock/' + encodeURIComponent(yahooSym);
       var imgHtml = c.image
         ? '<img class="cr-coin-img" src="' + c.image + '" alt="' + c.symbol + '" width="24" height="24" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
           + '<span class="cr-coin-icon" style="display:none">' + c.symbol.charAt(0) + '</span>'
@@ -513,7 +514,7 @@ const { lang } = Astro.params;
       var cc = ch >= 0 ? 'cr-up' : 'cr-down';
       var ar = ch >= 0 ? '▲' : '▼';
       var ys = co.symbol + '-USD';
-      var lk = '/' + lang + '/markets/stock?s=' + encodeURIComponent(ys);
+      var lk = '/' + lang + '/markets/stock/' + encodeURIComponent(ys);
       var border = ch >= 0 ? 'var(--color-positive)' : 'var(--color-negative)';
       var imgCard = co.image
         ? '<img class="cr-coin-img" src="' + co.image + '" alt="' + co.symbol + '" width="32" height="32" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
@@ -639,7 +640,7 @@ const { lang } = Astro.params;
       var cls = isGainer ? 'cr-mv-card--up' : 'cr-mv-card--down';
       var arrow = ch >= 0 ? '▲' : '▼';
       var yahooSym = c.symbol + '-USD';
-      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(yahooSym);
+      var link = '/' + lang + '/markets/stock/' + encodeURIComponent(yahooSym);
       var imgH = c.image
         ? '<img class="cr-mv-img" src="' + c.image + '" alt="' + c.symbol + '" width="28" height="28" loading="lazy" onerror="this.style.display=\'none\'">'
         : '';
@@ -816,7 +817,7 @@ const { lang } = Astro.params;
       var borderColor = chg >= 0 ? 'rgba(22,163,74,0.4)' : 'rgba(220,38,38,0.4)';
       var flex = Math.max(pct, 2).toFixed(2);
       var imgH = c.image ? '<img src="' + c.image + '" alt="" role="presentation" width="16" height="16" style="border-radius:50%" loading="lazy" onerror="this.style.display=\'none\'">' : '';
-      var link = '/' + lang + '/markets/stock?s=' + encodeURIComponent(c.symbol + '-USD');
+      var link = '/' + lang + '/markets/stock/' + encodeURIComponent(c.symbol + '-USD');
       html += '<a href="' + link + '" class="cr-tm-cell" style="flex:' + flex + ';background:' + bgColor + ';border-color:' + borderColor + '">';
       html += '<div class="cr-tm-top">' + imgH + '<strong>' + c.symbol + '</strong></div>';
       html += '<span class="cr-tm-pct">' + (chg >= 0 ? '+' : '') + chg.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%</span>';

@@ -1,18 +1,27 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
-import { LANGUAGES } from "@plata-today/shared";
+import { LANGUAGES, getRates } from "@plata-today/shared";
 import { t } from "@/i18n";
 
-export function getStaticPaths() {
-  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
-}
+export const prerender = false;
 
 const { lang } = Astro.params;
+if (!lang || !(lang in LANGUAGES)) {
+  return Astro.redirect("/en/", 302);
+}
+
+// Fetch fresh rates for SEO meta tags
+const rates = getRates();
+const blueRate = rates?.blue?.value_sell;
+const oficialRate = rates?.oficial?.value_sell;
+const seoTitle = blueRate
+  ? `USD Blue: $${Math.round(blueRate)} — ${t(lang, "currencies.seoTitle")}`
+  : t(lang, "currencies.seoTitle");
 ---
 
 <Base
-  title={t(lang!, "currencies.seoTitle")}
+  title={seoTitle}
   description={t(lang!, "currencies.seoDescription")}
   lang={lang}
   ogType="website"
@@ -33,7 +42,28 @@ const { lang } = Astro.params;
       "@type": "WebSite",
       "name": "Plata",
       "url": "https://plata.today"
-    }
+    },
+    ...(blueRate ? {
+      "mainEntity": [{
+        "@type": "ExchangeRateSpecification",
+        "currency": "USD",
+        "name": "USD Blue Dollar",
+        "currentExchangeRate": {
+          "@type": "UnitPriceSpecification",
+          "price": blueRate,
+          "priceCurrency": "ARS"
+        }
+      }, ...(oficialRate ? [{
+        "@type": "ExchangeRateSpecification",
+        "currency": "USD",
+        "name": "USD Official",
+        "currentExchangeRate": {
+          "@type": "UnitPriceSpecification",
+          "price": oficialRate,
+          "priceCurrency": "ARS"
+        }
+      }] : [])]
+    } : {})
   }}
 >
   <div class="fx-page" data-currencies-page
@@ -373,6 +403,7 @@ const { lang } = Astro.params;
 </script>
 <script is:inline src="/js/charts.js?v=5"></script>
 <script is:inline src="/js/market-states.js?v=1"></script>
+<script is:inline src="/js/market-helpers.js?v=1"></script>
 <script is:inline>
 (function() {
   var LATEST = 'https://api.bluelytics.com.ar/v2/latest';

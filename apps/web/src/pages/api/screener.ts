@@ -1,9 +1,6 @@
 import type { APIRoute } from "astro";
 import { getDb } from "@/lib/db";
-import {
-  BYMA_EQUITY_URL, fetchBYMA, parseBYMAStock,
-  optionsResponse, jsonResponse, errorResponse,
-} from "@plata-today/shared";
+import { optionsResponse, jsonResponse, errorResponse } from "@plata-today/shared";
 
 export const prerender = false;
 
@@ -66,91 +63,21 @@ const SCREENER_SQL = `
   ORDER BY COALESCE(sf.market_cap, 0) DESC
 `;
 
-// Hardcoded fallback names for BYMA symbols
-const STOCK_NAMES: Record<string, string> = {
-  ALUA: "Aluar Aluminio", BBAR: "BBVA Argentina", BMA: "Banco Macro",
-  BYMA: "Bolsas y Mercados Arg.", CEPU: "Central Puerto",
-  COME: "Soc. Comercial del Plata", CRES: "Cresud", CELU: "Celulosa Argentina",
-  CVH: "Cablevision Holding", EDN: "Edenor", GGAL: "Grupo Fin. Galicia",
-  HARG: "Holcim Argentina", LOMA: "Loma Negra", MIRG: "Mirgor",
-  PAMP: "Pampa Energía", SUPV: "Grupo Supervielle", TECO2: "Telecom Argentina",
-  TGNO4: "Transp. Gas del Norte", TGSU2: "Transp. Gas del Sur",
-  TRAN: "Transener", TXAR: "Ternium Argentina", VALO: "Grupo Fin. Valores",
-  YPFD: "YPF", METR: "MetroGAS", IRSA: "IRSA Inversiones",
-  AGRO: "Agrometal", DGCU2: "Distrib. Gas Cuyana", RICH: "S.A. San Miguel",
-  SEMI: "Molinos Río de la Plata", MOLI: "Molinos Agro", LONG: "Longvie",
-  FERR: "Ferrum", BOLT: "Boldt", BHIP: "Banco Hipotecario",
-  BPAT: "Banco Patagonia", CAPX: "Capex", CGPA2: "Camuzzi Gas Pampeana",
-  GCLA: "Grupo Clarín", LEDE: "Ledesma", CTIO: "Consultatio",
-  HAVA: "Havanna",
-};
-
-const STOCK_MCAP: Record<string, number> = {
-  YPFD: 16000, GGAL: 8500, BMA: 5200, BBAR: 4500, PAMP: 4200,
-  TECO2: 3500, CEPU: 3200, TXAR: 3000, TGSU2: 2500, LOMA: 1800,
-  SUPV: 1600, TRAN: 1500, ALUA: 1500, EDN: 1200, CRES: 1100,
-  BYMA: 1000, VALO: 900, TGNO4: 850, IRSA: 800, COME: 500,
-  METR: 450, MIRG: 400, HARG: 350, BPAT: 320, CVH: 300,
-  BHIP: 250, CAPX: 200, CTIO: 180, LEDE: 170, BOLT: 150,
-  GCLA: 140, CGPA2: 130, GBAN: 120, CELU: 110, MOLI: 100,
-  SEMI: 90, RICH: 80, AGRO: 70, CADO: 60, DGCU2: 55,
-  HAVA: 50, LONG: 40, FERR: 35, MORI: 30, RIGO: 25,
-};
-
-function tryDb(): ScreenerRow[] | null {
-  const db = getDb();
-  if (!db) return null;
-  try {
-    const rows = db.prepare(SCREENER_SQL).all() as ScreenerRow[];
-    return rows.length > 0 ? rows : null;
-  } catch {
-    return null;
-  }
-}
-
 export const OPTIONS: APIRoute = () => optionsResponse();
 
 export const GET: APIRoute = async () => {
   try {
-    // Try DB first
-    const dbRows = tryDb();
-    if (dbRows) return jsonResponse(dbRows, 120);
+    const db = getDb();
+    if (!db) {
+      return errorResponse("Service starting up, please retry", 503);
+    }
 
-    // Fallback to BYMA
-    const raw = await fetchBYMA(BYMA_EQUITY_URL);
-    const seen = new Set<string>();
-    const stocks = raw
-      .map((s: any) => {
-        const stock = parseBYMAStock(s);
-        if (!stock.symbol || seen.has(stock.symbol)) return null;
-        seen.add(stock.symbol);
-        return {
-          symbol: stock.symbol,
-          name: STOCK_NAMES[stock.symbol] ?? stock.description ?? stock.symbol,
-          sector: null,
-          industry: null,
-          price: stock.price,
-          change: stock.variation != null ? stock.variation / 100 : null,
-          opening_price: stock.openingPrice,
-          previous_close: stock.previousClose,
-          high: stock.high,
-          low: stock.low,
-          volume: stock.volume,
-          market_cap: STOCK_MCAP[stock.symbol] ? STOCK_MCAP[stock.symbol] * 1e6 : null,
-          trailing_pe: null,
-          forward_pe: null,
-          eps: null,
-          dividend_yield: null,
-          beta: null,
-          fifty_two_week_high: null,
-          fifty_two_week_low: null,
-          recommendation_key: null,
-        };
-      })
-      .filter(Boolean)
-      .sort((a: any, b: any) => (b.market_cap ?? 0) - (a.market_cap ?? 0));
+    const rows = db.prepare(SCREENER_SQL).all() as ScreenerRow[];
+    if (rows.length === 0) {
+      return errorResponse("No stock data available yet", 503);
+    }
 
-    return jsonResponse(stocks, 120);
+    return jsonResponse(rows, 120);
   } catch (err: any) {
     return errorResponse(err.message ?? "Failed to fetch screener data");
   }

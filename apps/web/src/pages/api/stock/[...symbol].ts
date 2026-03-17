@@ -81,7 +81,7 @@ export const GET: APIRoute = async ({ params, url }) => {
         lows: dbCandles.map((c) => c.low),
         opens: dbCandles.map((c) => c.open),
         source: "BYMA",
-      }, 300);
+      }, 300, 600);
     }
 
     // Fallback to Yahoo for symbols not in DB (international, commodities)
@@ -119,7 +119,7 @@ export const GET: APIRoute = async ({ params, url }) => {
       opens: quote.open ?? [],
       ...(dividends && dividends.length > 0 ? { dividends } : {}),
       source: "Yahoo",
-    }, 300);
+    }, 300, 600);
   } catch (err: any) {
     return errorResponse(err.message ?? "Failed to fetch stock data");
   }

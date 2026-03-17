@@ -32,6 +32,17 @@ export {
   toYahooSymbol, parseMervalFromBYMA, parseBYMAStock, parseBYMAAsset, fetchBYMA,
   fetchYahooChart, fetchExchangeRatesData, extractProfileData,
   extractFinancialStatements, FINANCIAL_STATEMENT_MODULES,
+  isMarketOpen,
 } from "./market-utils.js";
 
+export {
+  sendTelegramAlert, alertOnFailure, resetFailureCount,
+} from "./alerting.js";
+
 export { log, setLogLevel } from "./logger.js";
+
+export {
+  fetchFMPQuote, fetchFMPProfile, fetchFMPFinancials,
+  fetchFMPIncomeStatement, fetchFMPBalanceSheet, fetchFMPCashflow,
+} from "./fmp-client.js";
+export type { FMPQuote, FMPProfile, FMPFinancialStatement } from "./fmp-client.js";
