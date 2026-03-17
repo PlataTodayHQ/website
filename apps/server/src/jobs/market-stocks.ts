@@ -8,6 +8,7 @@ import {
   BYMA_EQUITY_URL,
   fetchBYMA, parseBYMAStock, toYahooSymbol,
   getYahooCrumb, numVal, strVal, sleep, fetchT, YAHOO_UA,
+  fetchFMPProfile, fetchFMPQuote,
 } from "@plata-today/shared";
 import { aggregateStockCandles } from "./market-storage.js";
 
@@ -62,44 +63,57 @@ export async function fetchStockProfiles(db: Database.Database, marketOpen = tru
 
   if (symbols.length === 0) return;
 
-  let crumb: string;
-  let cookie: string;
+  let crumb: string | null = null;
+  let cookie: string | null = null;
+  let yahooAvailable = true;
   try {
     const auth = await getYahooCrumb();
     crumb = auth.crumb;
     cookie = auth.cookie;
   } catch (err) {
-    console.error("[market] Yahoo crumb error:", err);
-    return;
+    console.warn("[market] Yahoo crumb error, will try FMP fallback:", err);
+    yahooAvailable = false;
   }
 
   let saved = 0;
   for (const { symbol } of symbols) {
     try {
       const yahooSymbol = toYahooSymbol(symbol);
+      let profileSaved = false;
 
-      const modules = "assetProfile,summaryDetail,defaultKeyStatistics,financialData,earnings,price,recommendationTrend";
-      const yahooUrl = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(yahooSymbol)}?modules=${modules}&crumb=${encodeURIComponent(crumb)}`;
+      // Try Yahoo first
+      if (yahooAvailable && crumb && cookie) {
+        const modules = "assetProfile,summaryDetail,defaultKeyStatistics,financialData,earnings,price,recommendationTrend";
+        const yahooUrl = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(yahooSymbol)}?modules=${modules}&crumb=${encodeURIComponent(crumb)}`;
 
-      const res = await fetchT(yahooUrl, {
-        headers: { "User-Agent": YAHOO_UA, Cookie: cookie },
-      });
+        const res = await fetchT(yahooUrl, {
+          headers: { "User-Agent": YAHOO_UA, Cookie: cookie },
+        });
 
-      if (!res.ok) {
-        if (res.status === 429) {
-          console.log("[market] Yahoo rate limit hit, pausing profile fetch");
-          break;
+        if (res.ok) {
+          const json: any = await res.json();
+          const result = json?.quoteSummary?.result?.[0];
+          if (result) {
+            saveProfile(db, symbol, yahooSymbol, result);
+            profileSaved = true;
+          }
+        } else if (res.status === 429) {
+          console.log("[market] Yahoo rate limit hit, switching to FMP fallback");
+          yahooAvailable = false;
         }
-        continue;
       }
 
-      const json: any = await res.json();
-      const result = json?.quoteSummary?.result?.[0];
-      if (!result) continue;
+      // FMP fallback
+      if (!profileSaved) {
+        const fmpProfile = await fetchFMPProfile(yahooSymbol);
+        const fmpQuote = await fetchFMPQuote(yahooSymbol);
+        if (fmpProfile || fmpQuote) {
+          saveProfileFromFMP(db, symbol, yahooSymbol, fmpProfile, fmpQuote);
+          profileSaved = true;
+        }
+      }
 
-      saveProfile(db, symbol, yahooSymbol, result);
-      saved++;
-
+      if (profileSaved) saved++;
       await sleep(1000);
     } catch {
       // skip individual errors
@@ -243,5 +257,66 @@ function saveProfile(
       }
     });
     tx();
+  }
+}
+
+function saveProfileFromFMP(
+  db: Database.Database,
+  symbol: string,
+  yahooSymbol: string,
+  profile: Awaited<ReturnType<typeof fetchFMPProfile>>,
+  quote: Awaited<ReturnType<typeof fetchFMPQuote>>,
+): void {
+  // Upsert company info from FMP profile
+  if (profile) {
+    db.prepare(
+      `INSERT INTO stock_companies (symbol, yahoo_symbol, name, sector, industry, description, website, full_time_employees, country, city, address, phone)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+       ON CONFLICT(symbol) DO UPDATE SET
+         yahoo_symbol=excluded.yahoo_symbol, name=excluded.name, sector=excluded.sector,
+         industry=excluded.industry, description=excluded.description, website=excluded.website,
+         full_time_employees=excluded.full_time_employees, country=excluded.country,
+         city=excluded.city, address=excluded.address, phone=excluded.phone,
+         updated_at=CURRENT_TIMESTAMP`,
+    ).run(
+      symbol,
+      yahooSymbol,
+      profile.companyName || symbol,
+      profile.sector || null,
+      profile.industry || null,
+      profile.description || null,
+      profile.website || null,
+      profile.fullTimeEmployees ? parseInt(profile.fullTimeEmployees, 10) || null : null,
+      profile.country || null,
+      profile.city || null,
+      profile.address || null,
+      profile.phone || null,
+    );
+  }
+
+  // Insert fundamentals from FMP quote (partial — no earnings/analyst data)
+  if (quote) {
+    db.prepare(
+      `INSERT INTO stock_fundamentals (
+        symbol, market_cap, trailing_pe, eps,
+        previous_close, open_price, day_low, day_high,
+        fifty_two_week_low, fifty_two_week_high,
+        volume, average_volume, current_price
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    ).run(
+      symbol,
+      quote.marketCap || null,
+      quote.pe || null,
+      quote.eps || null,
+      quote.previousClose || null,
+      quote.open || null,
+      quote.dayLow || null,
+      quote.dayHigh || null,
+      quote.yearLow || null,
+      quote.yearHigh || null,
+      quote.volume || null,
+      quote.avgVolume || null,
+      quote.price || null,
+    );
   }
 }

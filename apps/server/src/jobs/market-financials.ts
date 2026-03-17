@@ -8,6 +8,7 @@ import type Database from "better-sqlite3";
 import {
   getYahooCrumb, sleep, fetchT, YAHOO_UA,
   toYahooSymbol, extractFinancialStatements, FINANCIAL_STATEMENT_MODULES,
+  fetchFMPFinancials,
 } from "@plata-today/shared";
 
 /**
@@ -28,42 +29,55 @@ export async function fetchFinancialStatements(db: Database.Database, marketOpen
 
   if (symbols.length === 0) return;
 
-  let crumb: string;
-  let cookie: string;
+  let crumb: string | null = null;
+  let cookie: string | null = null;
+  let yahooAvailable = true;
   try {
     const auth = await getYahooCrumb();
     crumb = auth.crumb;
     cookie = auth.cookie;
   } catch (err) {
-    console.error("[market] Yahoo crumb error (financials):", err);
-    return;
+    console.warn("[market] Yahoo crumb error (financials), will try FMP:", err);
+    yahooAvailable = false;
   }
 
   let saved = 0;
   for (const { symbol } of symbols) {
     try {
       const yahooSymbol = toYahooSymbol(symbol);
-      const yahooUrl = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(yahooSymbol)}?modules=${FINANCIAL_STATEMENT_MODULES}&crumb=${encodeURIComponent(crumb)}`;
+      let statementSaved = false;
 
-      const res = await fetchT(yahooUrl, {
-        headers: { "User-Agent": YAHOO_UA, Cookie: cookie },
-      });
+      // Try Yahoo first
+      if (yahooAvailable && crumb && cookie) {
+        const yahooUrl = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(yahooSymbol)}?modules=${FINANCIAL_STATEMENT_MODULES}&crumb=${encodeURIComponent(crumb)}`;
 
-      if (!res.ok) {
-        if (res.status === 429) {
-          console.log("[market] Yahoo rate limit hit, pausing financials fetch");
-          break;
+        const res = await fetchT(yahooUrl, {
+          headers: { "User-Agent": YAHOO_UA, Cookie: cookie },
+        });
+
+        if (res.ok) {
+          const json: any = await res.json();
+          const result = json?.quoteSummary?.result?.[0];
+          if (result) {
+            saveFinancialStatements(db, symbol, result);
+            statementSaved = true;
+          }
+        } else if (res.status === 429) {
+          console.log("[market] Yahoo rate limit hit, switching to FMP for financials");
+          yahooAvailable = false;
         }
-        continue;
       }
 
-      const json: any = await res.json();
-      const result = json?.quoteSummary?.result?.[0];
-      if (!result) continue;
+      // FMP fallback
+      if (!statementSaved) {
+        const fmpData = await fetchFMPFinancials(yahooSymbol, "annual");
+        if (fmpData.income.length || fmpData.balance.length || fmpData.cashflow.length) {
+          saveFinancialStatementsFromFMP(db, symbol, fmpData);
+          statementSaved = true;
+        }
+      }
 
-      saveFinancialStatements(db, symbol, result);
-      saved++;
-
+      if (statementSaved) saved++;
       await sleep(1500);
     } catch {
       // skip individual errors
@@ -71,6 +85,38 @@ export async function fetchFinancialStatements(db: Database.Database, marketOpen
   }
 
   if (saved > 0) console.log("[market] Financial statements saved", { count: saved });
+}
+
+function saveFinancialStatementsFromFMP(
+  db: Database.Database,
+  symbol: string,
+  data: { income: any[]; balance: any[]; cashflow: any[] },
+): void {
+  const upsert = db.prepare(
+    `INSERT INTO financial_statements (symbol, statement_type, period_type, end_date, data_json)
+     VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT(symbol, statement_type, period_type, end_date) DO UPDATE SET
+       data_json = excluded.data_json, fetched_at = CURRENT_TIMESTAMP`,
+  );
+
+  const tx = db.transaction(() => {
+    for (const stmt of data.income) {
+      if (!stmt.date) continue;
+      const periodType = stmt.period === "Q1" || stmt.period === "Q2" || stmt.period === "Q3" || stmt.period === "Q4" ? "quarterly" : "annual";
+      upsert.run(symbol, "income", periodType, stmt.date, JSON.stringify(stmt));
+    }
+    for (const stmt of data.balance) {
+      if (!stmt.date) continue;
+      const periodType = stmt.period === "Q1" || stmt.period === "Q2" || stmt.period === "Q3" || stmt.period === "Q4" ? "quarterly" : "annual";
+      upsert.run(symbol, "balance", periodType, stmt.date, JSON.stringify(stmt));
+    }
+    for (const stmt of data.cashflow) {
+      if (!stmt.date) continue;
+      const periodType = stmt.period === "Q1" || stmt.period === "Q2" || stmt.period === "Q3" || stmt.period === "Q4" ? "quarterly" : "annual";
+      upsert.run(symbol, "cashflow", periodType, stmt.date, JSON.stringify(stmt));
+    }
+  });
+  tx();
 }
 
 function saveFinancialStatements(

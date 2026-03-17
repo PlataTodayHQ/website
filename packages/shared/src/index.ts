@@ -33,3 +33,9 @@ export {
 } from "./alerting.js";
 
 export { log, setLogLevel } from "./logger.js";
+
+export {
+  fetchFMPQuote, fetchFMPProfile, fetchFMPFinancials,
+  fetchFMPIncomeStatement, fetchFMPBalanceSheet, fetchFMPCashflow,
+} from "./fmp-client.js";
+export type { FMPQuote, FMPProfile, FMPFinancialStatement } from "./fmp-client.js";
