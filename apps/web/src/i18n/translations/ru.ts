@@ -14,11 +14,7 @@ export const ru = {
   // Categories
   "cat.politics": "Политика",
   "cat.economy": "Экономика",
-  "cat.sports": "Спорт",
-  "cat.society": "Общество",
-  "cat.culture": "Культура",
   "cat.world": "В мире",
-  "cat.science": "Наука и технологии",
 
   // Subcategories
   "sub.government": "Власть",
@@ -30,26 +26,10 @@ export const ru = {
   "sub.energy": "Энергетика",
   "sub.agriculture": "Сельское хозяйство",
   "sub.labor": "Труд и занятость",
-  "sub.football": "Футбол",
-  "sub.rugby": "Регби",
-  "sub.tennis": "Теннис",
-  "sub.motorsport": "Автоспорт",
-  "sub.education": "Образование",
-  "sub.health": "Здоровье",
-  "sub.immigration": "Миграция",
-  "sub.urban": "Город",
-  "sub.arts": "Искусство",
-  "sub.tourism": "Туризм",
-  "sub.food-wine": "Еда и вино",
-  "sub.film": "Кино",
   "sub.latin-america": "Латинская Америка",
   "sub.europe": "Европа",
   "sub.us-canada": "США и Канада",
   "sub.asia": "Азия",
-  "sub.innovation": "Инновации",
-  "sub.environment": "Экология",
-  "sub.digital": "Цифровые технологии",
-  "sub.space": "Космос",
 
   // Search
   "search.placeholder": "Поиск статей...",
@@ -102,7 +82,6 @@ export const ru = {
   "home.description": "Главные новости Аргентины сегодня на {lang}: политика, экономика, спорт, культура. Обновление 24/7, 35 языков.",
   "home.topStories": "Главные новости",
   "home.economyBusiness": "Экономика и бизнес",
-  "home.cultureSociety": "Культура и общество",
   "home.moreNews": "Ещё новости",
   "home.featuredStory": "Избранный материал",
 

@@ -14,11 +14,7 @@ export const sv = {
   // Categories
   "cat.politics": "Politik",
   "cat.economy": "Ekonomi",
-  "cat.sports": "Sport",
-  "cat.society": "Samhälle",
-  "cat.culture": "Kultur",
   "cat.world": "Världen",
-  "cat.science": "Vetenskap & Teknik",
 
   // Subcategories
   "sub.government": "Regering",
@@ -30,26 +26,10 @@ export const sv = {
   "sub.energy": "Energi",
   "sub.agriculture": "Jordbruk",
   "sub.labor": "Arbetsmarknad",
-  "sub.football": "Fotboll",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Utbildning",
-  "sub.health": "Hälsa",
-  "sub.immigration": "Invandring",
-  "sub.urban": "Stadsplanering",
-  "sub.arts": "Konst",
-  "sub.tourism": "Turism",
-  "sub.food-wine": "Mat & Vin",
-  "sub.film": "Film",
   "sub.latin-america": "Latinamerika",
   "sub.europe": "Europa",
   "sub.us-canada": "USA & Kanada",
   "sub.asia": "Asien",
-  "sub.innovation": "Innovation",
-  "sub.environment": "Miljö",
-  "sub.digital": "Digitalt",
-  "sub.space": "Rymden",
 
   // Search
   "search.placeholder": "Sök artiklar...",
@@ -102,7 +82,6 @@ export const sv = {
   "home.description": "Dagens viktigaste nyheter från Argentina på {lang}: politik, ekonomi, sport, kultur. Uppdateras dygnet runt, 35 språk.",
   "home.topStories": "Toppnyheter",
   "home.economyBusiness": "Ekonomi & Näringsliv",
-  "home.cultureSociety": "Kultur & Samhälle",
   "home.moreNews": "Fler nyheter",
   "home.featuredStory": "Utvald artikel",
 

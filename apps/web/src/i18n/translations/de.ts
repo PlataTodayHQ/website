@@ -14,11 +14,7 @@ export const de = {
   // Categories
   "cat.politics": "Politik",
   "cat.economy": "Wirtschaft",
-  "cat.sports": "Sport",
-  "cat.society": "Gesellschaft",
-  "cat.culture": "Kultur",
   "cat.world": "Welt",
-  "cat.science": "Wissenschaft & Technik",
 
   // Subcategories
   "sub.government": "Regierung",
@@ -30,26 +26,10 @@ export const de = {
   "sub.energy": "Energie",
   "sub.agriculture": "Landwirtschaft",
   "sub.labor": "Arbeit",
-  "sub.football": "Fußball",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Bildung",
-  "sub.health": "Gesundheit",
-  "sub.immigration": "Einwanderung",
-  "sub.urban": "Städtisches",
-  "sub.arts": "Kunst",
-  "sub.tourism": "Tourismus",
-  "sub.food-wine": "Essen & Wein",
-  "sub.film": "Film",
   "sub.latin-america": "Lateinamerika",
   "sub.europe": "Europa",
   "sub.us-canada": "USA & Kanada",
   "sub.asia": "Asien",
-  "sub.innovation": "Innovation",
-  "sub.environment": "Umwelt",
-  "sub.digital": "Digital",
-  "sub.space": "Raumfahrt",
 
   // Search
   "search.placeholder": "Artikel suchen...",
@@ -102,7 +82,6 @@ export const de = {
   "home.description": "Aktuelle Nachrichten aus Argentinien auf {lang}: Politik, Wirtschaft, Sport, Kultur. Rund um die Uhr, 35 Sprachen.",
   "home.topStories": "Top-Meldungen",
   "home.economyBusiness": "Wirtschaft & Unternehmen",
-  "home.cultureSociety": "Kultur & Gesellschaft",
   "home.moreNews": "Weitere Nachrichten",
   "home.featuredStory": "Beitrag im Fokus",
 

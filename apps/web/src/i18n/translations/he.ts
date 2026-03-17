@@ -14,11 +14,7 @@ export const he = {
   // Categories
   "cat.politics": "פוליטיקה",
   "cat.economy": "כלכלה",
-  "cat.sports": "ספורט",
-  "cat.society": "חברה",
-  "cat.culture": "תרבות",
   "cat.world": "עולם",
-  "cat.science": "מדע וטכנולוגיה",
 
   // Subcategories
   "sub.government": "ממשל",
@@ -30,26 +26,10 @@ export const he = {
   "sub.energy": "אנרגיה",
   "sub.agriculture": "חקלאות",
   "sub.labor": "תעסוקה",
-  "sub.football": "כדורגל",
-  "sub.rugby": "רוגבי",
-  "sub.tennis": "טניס",
-  "sub.motorsport": "מוטורספורט",
-  "sub.education": "חינוך",
-  "sub.health": "בריאות",
-  "sub.immigration": "הגירה",
-  "sub.urban": "עירוני",
-  "sub.arts": "אמנות",
-  "sub.tourism": "תיירות",
-  "sub.food-wine": "אוכל ויין",
-  "sub.film": "קולנוע",
   "sub.latin-america": "אמריקה הלטינית",
   "sub.europe": "אירופה",
   "sub.us-canada": "ארה״ב וקנדה",
   "sub.asia": "אסיה",
-  "sub.innovation": "חדשנות",
-  "sub.environment": "סביבה",
-  "sub.digital": "דיגיטל",
-  "sub.space": "חלל",
 
   // Search
   "search.placeholder": "חיפוש כתבות...",
@@ -102,7 +82,6 @@ export const he = {
   "home.description": "חדשות ארגנטינה של היום ב{lang}: פוליטיקה, כלכלה, ספורט, תרבות. מעודכן 24/7, 35 שפות.",
   "home.topStories": "כותרות ראשיות",
   "home.economyBusiness": "כלכלה ועסקים",
-  "home.cultureSociety": "תרבות וחברה",
   "home.moreNews": "עוד חדשות",
   "home.featuredStory": "כתבה מרכזית",
 

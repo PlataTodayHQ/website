@@ -14,11 +14,7 @@ export const el = {
   // Categories
   "cat.politics": "Πολιτική",
   "cat.economy": "Οικονομία",
-  "cat.sports": "Αθλητικά",
-  "cat.society": "Κοινωνία",
-  "cat.culture": "Πολιτισμός",
   "cat.world": "Κόσμος",
-  "cat.science": "Επιστήμη & Τεχνολογία",
 
   // Subcategories
   "sub.government": "Κυβέρνηση",
@@ -30,26 +26,10 @@ export const el = {
   "sub.energy": "Ενέργεια",
   "sub.agriculture": "Γεωργία",
   "sub.labor": "Εργασία",
-  "sub.football": "Ποδόσφαιρο",
-  "sub.rugby": "Ράγκμπι",
-  "sub.tennis": "Τένις",
-  "sub.motorsport": "Μηχανοκίνητος αθλητισμός",
-  "sub.education": "Εκπαίδευση",
-  "sub.health": "Υγεία",
-  "sub.immigration": "Μετανάστευση",
-  "sub.urban": "Αστικά θέματα",
-  "sub.arts": "Τέχνες",
-  "sub.tourism": "Τουρισμός",
-  "sub.food-wine": "Γαστρονομία & Κρασί",
-  "sub.film": "Κινηματογράφος",
   "sub.latin-america": "Λατινική Αμερική",
   "sub.europe": "Ευρώπη",
   "sub.us-canada": "ΗΠΑ & Καναδάς",
   "sub.asia": "Ασία",
-  "sub.innovation": "Καινοτομία",
-  "sub.environment": "Περιβάλλον",
-  "sub.digital": "Ψηφιακός κόσμος",
-  "sub.space": "Διάστημα",
 
   // Search
   "search.placeholder": "Αναζήτηση άρθρων...",
@@ -102,7 +82,6 @@ export const el = {
   "home.description": "Οι σημαντικότερες ειδήσεις της Αργεντινής σήμερα στα {lang}: πολιτική, οικονομία, αθλητικά, πολιτισμός. Ενημέρωση 24/7, 35 γλώσσες.",
   "home.topStories": "Κορυφαίες ειδήσεις",
   "home.economyBusiness": "Οικονομία & Επιχειρήσεις",
-  "home.cultureSociety": "Πολιτισμός & Κοινωνία",
   "home.moreNews": "Περισσότερες ειδήσεις",
   "home.featuredStory": "Προτεινόμενο άρθρο",
 

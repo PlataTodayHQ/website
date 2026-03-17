@@ -14,11 +14,7 @@ export const ko = {
   // Categories
   "cat.politics": "정치",
   "cat.economy": "경제",
-  "cat.sports": "스포츠",
-  "cat.society": "사회",
-  "cat.culture": "문화",
   "cat.world": "국제",
-  "cat.science": "과학·기술",
 
   // Subcategories
   "sub.government": "정부",
@@ -30,26 +26,10 @@ export const ko = {
   "sub.energy": "에너지",
   "sub.agriculture": "농업",
   "sub.labor": "노동",
-  "sub.football": "축구",
-  "sub.rugby": "럭비",
-  "sub.tennis": "테니스",
-  "sub.motorsport": "모터스포츠",
-  "sub.education": "교육",
-  "sub.health": "보건",
-  "sub.immigration": "이민",
-  "sub.urban": "도시",
-  "sub.arts": "예술",
-  "sub.tourism": "관광",
-  "sub.food-wine": "음식과 와인",
-  "sub.film": "영화",
   "sub.latin-america": "라틴아메리카",
   "sub.europe": "유럽",
   "sub.us-canada": "미국·캐나다",
   "sub.asia": "아시아",
-  "sub.innovation": "혁신",
-  "sub.environment": "환경",
-  "sub.digital": "디지털",
-  "sub.space": "우주",
 
   // Search
   "search.placeholder": "기사 검색...",
@@ -102,7 +82,6 @@ export const ko = {
   "home.description": "오늘의 아르헨티나 주요 뉴스({lang}): 정치, 경제, 스포츠, 문화. 24시간 업데이트, 35개 언어.",
   "home.topStories": "주요 뉴스",
   "home.economyBusiness": "경제·비즈니스",
-  "home.cultureSociety": "문화·사회",
   "home.moreNews": "더 많은 뉴스",
   "home.featuredStory": "주목할 기사",
 

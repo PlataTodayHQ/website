@@ -14,11 +14,7 @@ export const ca = {
   // Categories
   "cat.politics": "Política",
   "cat.economy": "Economia",
-  "cat.sports": "Esports",
-  "cat.society": "Societat",
-  "cat.culture": "Cultura",
   "cat.world": "Món",
-  "cat.science": "Ciència i Tecnologia",
 
   // Subcategories
   "sub.government": "Govern",
@@ -30,26 +26,10 @@ export const ca = {
   "sub.energy": "Energia",
   "sub.agriculture": "Agricultura",
   "sub.labor": "Treball",
-  "sub.football": "Futbol",
-  "sub.rugby": "Rugbi",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motor",
-  "sub.education": "Educació",
-  "sub.health": "Salut",
-  "sub.immigration": "Immigració",
-  "sub.urban": "Urbanisme",
-  "sub.arts": "Arts",
-  "sub.tourism": "Turisme",
-  "sub.food-wine": "Gastronomia i Vins",
-  "sub.film": "Cinema",
   "sub.latin-america": "Amèrica Llatina",
   "sub.europe": "Europa",
   "sub.us-canada": "EUA i Canadà",
   "sub.asia": "Àsia",
-  "sub.innovation": "Innovació",
-  "sub.environment": "Medi Ambient",
-  "sub.digital": "Digital",
-  "sub.space": "Espai",
 
   // Search
   "search.placeholder": "Cercar articles...",
@@ -102,7 +82,6 @@ export const ca = {
   "home.description": "Les principals notícies de l'Argentina avui en {lang}: política, economia, esports, cultura. Actualització 24/7, 35 idiomes.",
   "home.topStories": "Notícies principals",
   "home.economyBusiness": "Economia i Negocis",
-  "home.cultureSociety": "Cultura i Societat",
   "home.moreNews": "Més notícies",
   "home.featuredStory": "Notícia destacada",
 

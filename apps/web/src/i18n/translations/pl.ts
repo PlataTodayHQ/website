@@ -14,11 +14,7 @@ export const pl = {
   // Categories
   "cat.politics": "Polityka",
   "cat.economy": "Gospodarka",
-  "cat.sports": "Sport",
-  "cat.society": "Społeczeństwo",
-  "cat.culture": "Kultura",
   "cat.world": "Świat",
-  "cat.science": "Nauka i technologia",
 
   // Subcategories
   "sub.government": "Rząd",
@@ -30,26 +26,10 @@ export const pl = {
   "sub.energy": "Energetyka",
   "sub.agriculture": "Rolnictwo",
   "sub.labor": "Praca",
-  "sub.football": "Piłka nożna",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Sporty motorowe",
-  "sub.education": "Edukacja",
-  "sub.health": "Zdrowie",
-  "sub.immigration": "Imigracja",
-  "sub.urban": "Miasto",
-  "sub.arts": "Sztuka",
-  "sub.tourism": "Turystyka",
-  "sub.food-wine": "Kuchnia i wino",
-  "sub.film": "Film",
   "sub.latin-america": "Ameryka Łacińska",
   "sub.europe": "Europa",
   "sub.us-canada": "USA i Kanada",
   "sub.asia": "Azja",
-  "sub.innovation": "Innowacje",
-  "sub.environment": "Środowisko",
-  "sub.digital": "Cyfryzacja",
-  "sub.space": "Kosmos",
 
   // Search
   "search.placeholder": "Szukaj artykułów...",
@@ -102,7 +82,6 @@ export const pl = {
   "home.description": "Najważniejsze wiadomości z Argentyny dziś po {lang}: polityka, gospodarka, sport, kultura. Aktualizacja 24/7, 35 języków.",
   "home.topStories": "Najważniejsze wiadomości",
   "home.economyBusiness": "Gospodarka i biznes",
-  "home.cultureSociety": "Kultura i społeczeństwo",
   "home.moreNews": "Więcej wiadomości",
   "home.featuredStory": "Artykuł wyróżniony",
 

@@ -14,11 +14,7 @@ export const zh = {
   // Categories
   "cat.politics": "政治",
   "cat.economy": "经济",
-  "cat.sports": "体育",
-  "cat.society": "社会",
-  "cat.culture": "文化",
   "cat.world": "国际",
-  "cat.science": "科技",
 
   // Subcategories
   "sub.government": "政府",
@@ -30,26 +26,10 @@ export const zh = {
   "sub.energy": "能源",
   "sub.agriculture": "农业",
   "sub.labor": "劳动",
-  "sub.football": "足球",
-  "sub.rugby": "橄榄球",
-  "sub.tennis": "网球",
-  "sub.motorsport": "赛车",
-  "sub.education": "教育",
-  "sub.health": "健康",
-  "sub.immigration": "移民",
-  "sub.urban": "城市",
-  "sub.arts": "艺术",
-  "sub.tourism": "旅游",
-  "sub.food-wine": "美食与葡萄酒",
-  "sub.film": "电影",
   "sub.latin-america": "拉丁美洲",
   "sub.europe": "欧洲",
   "sub.us-canada": "美国与加拿大",
   "sub.asia": "亚洲",
-  "sub.innovation": "创新",
-  "sub.environment": "环境",
-  "sub.digital": "数字",
-  "sub.space": "太空",
 
   // Search
   "search.placeholder": "搜索文章……",
@@ -102,7 +82,6 @@ export const zh = {
   "home.description": "今日阿根廷头条新闻（{lang}）：政治、经济、体育、文化。全天候更新，35 种语言。",
   "home.topStories": "头条新闻",
   "home.economyBusiness": "经济与商业",
-  "home.cultureSociety": "文化与社会",
   "home.moreNews": "更多新闻",
   "home.featuredStory": "精选报道",
 

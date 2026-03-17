@@ -14,11 +14,7 @@ export const hi = {
   // Categories
   "cat.politics": "राजनीति",
   "cat.economy": "अर्थव्यवस्था",
-  "cat.sports": "खेल",
-  "cat.society": "समाज",
-  "cat.culture": "संस्कृति",
   "cat.world": "दुनिया",
-  "cat.science": "विज्ञान और तकनीक",
 
   // Subcategories
   "sub.government": "सरकार",
@@ -30,26 +26,10 @@ export const hi = {
   "sub.energy": "ऊर्जा",
   "sub.agriculture": "कृषि",
   "sub.labor": "श्रम",
-  "sub.football": "फुटबॉल",
-  "sub.rugby": "रग्बी",
-  "sub.tennis": "टेनिस",
-  "sub.motorsport": "मोटरस्पोर्ट",
-  "sub.education": "शिक्षा",
-  "sub.health": "स्वास्थ्य",
-  "sub.immigration": "आप्रवासन",
-  "sub.urban": "शहरी",
-  "sub.arts": "कला",
-  "sub.tourism": "पर्यटन",
-  "sub.food-wine": "भोजन और वाइन",
-  "sub.film": "सिनेमा",
   "sub.latin-america": "लातिन अमेरिका",
   "sub.europe": "यूरोप",
   "sub.us-canada": "अमेरिका और कनाडा",
   "sub.asia": "एशिया",
-  "sub.innovation": "नवाचार",
-  "sub.environment": "पर्यावरण",
-  "sub.digital": "डिजिटल",
-  "sub.space": "अंतरिक्ष",
 
   // Search
   "search.placeholder": "लेख खोजें...",
@@ -102,7 +82,6 @@ export const hi = {
   "home.description": "आज की प्रमुख अर्जेंटीना खबरें {lang} में: राजनीति, अर्थव्यवस्था, खेल, संस्कृति। 24/7 अपडेट, 35 भाषाएं।",
   "home.topStories": "प्रमुख खबरें",
   "home.economyBusiness": "अर्थव्यवस्था और व्यापार",
-  "home.cultureSociety": "संस्कृति और समाज",
   "home.moreNews": "और खबरें",
   "home.featuredStory": "विशेष खबर",
 

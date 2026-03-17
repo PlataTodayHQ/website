@@ -14,11 +14,7 @@ export const fa = {
   // Categories
   "cat.politics": "سیاست",
   "cat.economy": "اقتصاد",
-  "cat.sports": "ورزش",
-  "cat.society": "جامعه",
-  "cat.culture": "فرهنگ",
   "cat.world": "جهان",
-  "cat.science": "علم و فناوری",
 
   // Subcategories
   "sub.government": "دولت",
@@ -30,26 +26,10 @@ export const fa = {
   "sub.energy": "انرژی",
   "sub.agriculture": "کشاورزی",
   "sub.labor": "کار و اشتغال",
-  "sub.football": "فوتبال",
-  "sub.rugby": "راگبی",
-  "sub.tennis": "تنیس",
-  "sub.motorsport": "اتومبیل‌رانی",
-  "sub.education": "آموزش",
-  "sub.health": "بهداشت",
-  "sub.immigration": "مهاجرت",
-  "sub.urban": "شهری",
-  "sub.arts": "هنر",
-  "sub.tourism": "گردشگری",
-  "sub.food-wine": "غذا و شراب",
-  "sub.film": "سینما",
   "sub.latin-america": "آمریکای لاتین",
   "sub.europe": "اروپا",
   "sub.us-canada": "آمریکا و کانادا",
   "sub.asia": "آسیا",
-  "sub.innovation": "نوآوری",
-  "sub.environment": "محیط زیست",
-  "sub.digital": "دیجیتال",
-  "sub.space": "فضا",
 
   // Search
   "search.placeholder": "جستجوی مقالات...",
@@ -102,7 +82,6 @@ export const fa = {
   "home.description": "مهم‌ترین اخبار آرژانتین امروز به {lang}: سیاست، اقتصاد، ورزش، فرهنگ. به‌روزرسانی شبانه‌روزی، ۳۵ زبان.",
   "home.topStories": "مهم‌ترین اخبار",
   "home.economyBusiness": "اقتصاد و کسب‌وکار",
-  "home.cultureSociety": "فرهنگ و جامعه",
   "home.moreNews": "اخبار بیشتر",
   "home.featuredStory": "خبر ویژه",
 

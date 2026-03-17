@@ -14,11 +14,7 @@ export const tr = {
   // Categories
   "cat.politics": "Siyaset",
   "cat.economy": "Ekonomi",
-  "cat.sports": "Spor",
-  "cat.society": "Toplum",
-  "cat.culture": "Kültür",
   "cat.world": "Dünya",
-  "cat.science": "Bilim ve Teknoloji",
 
   // Subcategories
   "sub.government": "Hükümet",
@@ -30,26 +26,10 @@ export const tr = {
   "sub.energy": "Enerji",
   "sub.agriculture": "Tarım",
   "sub.labor": "Çalışma Hayatı",
-  "sub.football": "Futbol",
-  "sub.rugby": "Ragbi",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Motor Sporları",
-  "sub.education": "Eğitim",
-  "sub.health": "Sağlık",
-  "sub.immigration": "Göç",
-  "sub.urban": "Kentsel",
-  "sub.arts": "Sanat",
-  "sub.tourism": "Turizm",
-  "sub.food-wine": "Yemek ve Şarap",
-  "sub.film": "Sinema",
   "sub.latin-america": "Latin Amerika",
   "sub.europe": "Avrupa",
   "sub.us-canada": "ABD ve Kanada",
   "sub.asia": "Asya",
-  "sub.innovation": "İnovasyon",
-  "sub.environment": "Çevre",
-  "sub.digital": "Dijital",
-  "sub.space": "Uzay",
 
   // Search
   "search.placeholder": "Haberlerde ara...",
@@ -102,7 +82,6 @@ export const tr = {
   "home.description": "Bugünün {lang} Arjantin haberleri: siyaset, ekonomi, spor, kültür. 7/24 güncelleniyor, 35 dil.",
   "home.topStories": "Öne Çıkan Haberler",
   "home.economyBusiness": "Ekonomi ve İş Dünyası",
-  "home.cultureSociety": "Kültür ve Toplum",
   "home.moreNews": "Daha Fazla Haber",
   "home.featuredStory": "Manşet haber",
 

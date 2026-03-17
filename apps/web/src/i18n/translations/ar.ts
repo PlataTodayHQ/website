@@ -14,11 +14,7 @@ export const ar = {
   // Categories
   "cat.politics": "سياسة",
   "cat.economy": "اقتصاد",
-  "cat.sports": "رياضة",
-  "cat.society": "مجتمع",
-  "cat.culture": "ثقافة",
   "cat.world": "العالم",
-  "cat.science": "علوم وتكنولوجيا",
 
   // Subcategories
   "sub.government": "حكومة",
@@ -30,26 +26,10 @@ export const ar = {
   "sub.energy": "طاقة",
   "sub.agriculture": "زراعة",
   "sub.labor": "عمل",
-  "sub.football": "كرة قدم",
-  "sub.rugby": "رغبي",
-  "sub.tennis": "تنس",
-  "sub.motorsport": "رياضة المحركات",
-  "sub.education": "تعليم",
-  "sub.health": "صحة",
-  "sub.immigration": "هجرة",
-  "sub.urban": "شؤون حضرية",
-  "sub.arts": "فنون",
-  "sub.tourism": "سياحة",
-  "sub.food-wine": "مأكولات ونبيذ",
-  "sub.film": "سينما",
   "sub.latin-america": "أمريكا اللاتينية",
   "sub.europe": "أوروبا",
   "sub.us-canada": "الولايات المتحدة وكندا",
   "sub.asia": "آسيا",
-  "sub.innovation": "ابتكار",
-  "sub.environment": "بيئة",
-  "sub.digital": "رقمي",
-  "sub.space": "فضاء",
 
   // Search
   "search.placeholder": "ابحث في المقالات...",
@@ -102,7 +82,6 @@ export const ar = {
   "home.description": "أهم أخبار الأرجنتين اليوم بـ{lang}: سياسة، اقتصاد، رياضة، ثقافة. تحديث مستمر على مدار الساعة، 35 لغة.",
   "home.topStories": "أبرز الأخبار",
   "home.economyBusiness": "اقتصاد وأعمال",
-  "home.cultureSociety": "ثقافة ومجتمع",
   "home.moreNews": "المزيد من الأخبار",
   "home.featuredStory": "القصة المميزة",
 

@@ -14,11 +14,7 @@ export const cs = {
   // Categories
   "cat.politics": "Politika",
   "cat.economy": "Ekonomika",
-  "cat.sports": "Sport",
-  "cat.society": "Společnost",
-  "cat.culture": "Kultura",
   "cat.world": "Svět",
-  "cat.science": "Věda a technika",
 
   // Subcategories
   "sub.government": "Vláda",
@@ -30,26 +26,10 @@ export const cs = {
   "sub.energy": "Energetika",
   "sub.agriculture": "Zemědělství",
   "sub.labor": "Práce",
-  "sub.football": "Fotbal",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Vzdělávání",
-  "sub.health": "Zdravotnictví",
-  "sub.immigration": "Imigrace",
-  "sub.urban": "Urbanismus",
-  "sub.arts": "Umění",
-  "sub.tourism": "Cestovní ruch",
-  "sub.food-wine": "Gastronomie a víno",
-  "sub.film": "Film",
   "sub.latin-america": "Latinská Amerika",
   "sub.europe": "Evropa",
   "sub.us-canada": "USA a Kanada",
   "sub.asia": "Asie",
-  "sub.innovation": "Inovace",
-  "sub.environment": "Životní prostředí",
-  "sub.digital": "Digitální svět",
-  "sub.space": "Vesmír",
 
   // Search
   "search.placeholder": "Hledat články...",
@@ -102,7 +82,6 @@ export const cs = {
   "home.description": "Dnešní hlavní zprávy z Argentiny v {lang}: politika, ekonomika, sport, kultura. Aktualizováno 24/7, 35 jazyků.",
   "home.topStories": "Hlavní zprávy",
   "home.economyBusiness": "Ekonomika a podnikání",
-  "home.cultureSociety": "Kultura a společnost",
   "home.moreNews": "Další zprávy",
   "home.featuredStory": "Doporučený článek",
 

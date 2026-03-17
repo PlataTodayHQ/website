@@ -14,11 +14,7 @@ export const fr = {
   // Categories
   "cat.politics": "Politique",
   "cat.economy": "Économie",
-  "cat.sports": "Sports",
-  "cat.society": "Société",
-  "cat.culture": "Culture",
   "cat.world": "Monde",
-  "cat.science": "Sciences & Tech",
 
   // Subcategories
   "sub.government": "Gouvernement",
@@ -30,26 +26,10 @@ export const fr = {
   "sub.energy": "Énergie",
   "sub.agriculture": "Agriculture",
   "sub.labor": "Travail",
-  "sub.football": "Football",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Sport automobile",
-  "sub.education": "Éducation",
-  "sub.health": "Santé",
-  "sub.immigration": "Immigration",
-  "sub.urban": "Urbanisme",
-  "sub.arts": "Arts",
-  "sub.tourism": "Tourisme",
-  "sub.food-wine": "Gastronomie & Vins",
-  "sub.film": "Cinéma",
   "sub.latin-america": "Amérique latine",
   "sub.europe": "Europe",
   "sub.us-canada": "États-Unis & Canada",
   "sub.asia": "Asie",
-  "sub.innovation": "Innovation",
-  "sub.environment": "Environnement",
-  "sub.digital": "Numérique",
-  "sub.space": "Espace",
 
   // Search
   "search.placeholder": "Rechercher des articles...",
@@ -102,7 +82,6 @@ export const fr = {
   "home.description": "L'essentiel de l'actualité argentine aujourd'hui en {lang} : politique, économie, sport, culture. Mise à jour 24/7, 35 langues.",
   "home.topStories": "À la une",
   "home.economyBusiness": "Économie & Business",
-  "home.cultureSociety": "Culture & Société",
   "home.moreNews": "Plus d'actualités",
   "home.featuredStory": "Article à la une",
 

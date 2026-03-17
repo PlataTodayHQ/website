@@ -14,11 +14,7 @@ export const zhTw = {
   // Categories
   "cat.politics": "政治",
   "cat.economy": "經濟",
-  "cat.sports": "體育",
-  "cat.society": "社會",
-  "cat.culture": "文化",
   "cat.world": "國際",
-  "cat.science": "科學與科技",
 
   // Subcategories
   "sub.government": "政府",
@@ -30,26 +26,10 @@ export const zhTw = {
   "sub.energy": "能源",
   "sub.agriculture": "農業",
   "sub.labor": "勞工",
-  "sub.football": "足球",
-  "sub.rugby": "橄欖球",
-  "sub.tennis": "網球",
-  "sub.motorsport": "賽車運動",
-  "sub.education": "教育",
-  "sub.health": "健康",
-  "sub.immigration": "移民",
-  "sub.urban": "都市",
-  "sub.arts": "藝術",
-  "sub.tourism": "觀光",
-  "sub.food-wine": "美食與美酒",
-  "sub.film": "電影",
   "sub.latin-america": "拉丁美洲",
   "sub.europe": "歐洲",
   "sub.us-canada": "美國與加拿大",
   "sub.asia": "亞洲",
-  "sub.innovation": "創新",
-  "sub.environment": "環境",
-  "sub.digital": "數位",
-  "sub.space": "太空",
 
   // Search
   "search.placeholder": "搜尋文章...",
@@ -102,7 +82,6 @@ export const zhTw = {
   "home.description": "今日{lang}阿根廷頭條新聞：政治、經濟、體育、文化。全天候更新，35 種語言。",
   "home.topStories": "頭條新聞",
   "home.economyBusiness": "經濟與商業",
-  "home.cultureSociety": "文化與社會",
   "home.moreNews": "更多新聞",
   "home.featuredStory": "精選報導",
 

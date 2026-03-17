@@ -14,11 +14,7 @@ export const da = {
   // Categories
   "cat.politics": "Politik",
   "cat.economy": "Økonomi",
-  "cat.sports": "Sport",
-  "cat.society": "Samfund",
-  "cat.culture": "Kultur",
   "cat.world": "Verden",
-  "cat.science": "Videnskab & Teknologi",
 
   // Subcategories
   "sub.government": "Regering",
@@ -30,26 +26,10 @@ export const da = {
   "sub.energy": "Energi",
   "sub.agriculture": "Landbrug",
   "sub.labor": "Arbejdsmarked",
-  "sub.football": "Fodbold",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Uddannelse",
-  "sub.health": "Sundhed",
-  "sub.immigration": "Immigration",
-  "sub.urban": "Byliv",
-  "sub.arts": "Kunst",
-  "sub.tourism": "Turisme",
-  "sub.food-wine": "Mad & Vin",
-  "sub.film": "Film",
   "sub.latin-america": "Latinamerika",
   "sub.europe": "Europa",
   "sub.us-canada": "USA & Canada",
   "sub.asia": "Asien",
-  "sub.innovation": "Innovation",
-  "sub.environment": "Miljø",
-  "sub.digital": "Digitalt",
-  "sub.space": "Rumfart",
 
   // Search
   "search.placeholder": "Søg i artikler...",
@@ -102,7 +82,6 @@ export const da = {
   "home.description": "Dagens vigtigste nyheder fra Argentina på {lang}: politik, økonomi, sport, kultur. Opdateres døgnet rundt, 35 sprog.",
   "home.topStories": "Tophistorier",
   "home.economyBusiness": "Økonomi & Erhverv",
-  "home.cultureSociety": "Kultur & Samfund",
   "home.moreNews": "Flere nyheder",
   "home.featuredStory": "Udvalgt historie",
 

@@ -14,11 +14,7 @@ export const tl = {
   // Categories
   "cat.politics": "Pulitika",
   "cat.economy": "Ekonomiya",
-  "cat.sports": "Palakasan",
-  "cat.society": "Lipunan",
-  "cat.culture": "Kultura",
   "cat.world": "Mundo",
-  "cat.science": "Agham at Teknolohiya",
 
   // Subcategories
   "sub.government": "Pamahalaan",
@@ -30,26 +26,10 @@ export const tl = {
   "sub.energy": "Enerhiya",
   "sub.agriculture": "Agrikultura",
   "sub.labor": "Paggawa",
-  "sub.football": "Futbol",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Edukasyon",
-  "sub.health": "Kalusugan",
-  "sub.immigration": "Imigrasyon",
-  "sub.urban": "Lungsod",
-  "sub.arts": "Sining",
-  "sub.tourism": "Turismo",
-  "sub.food-wine": "Pagkain at Alak",
-  "sub.film": "Pelikula",
   "sub.latin-america": "Latin Amerika",
   "sub.europe": "Europa",
   "sub.us-canada": "US at Canada",
   "sub.asia": "Asya",
-  "sub.innovation": "Inobasyon",
-  "sub.environment": "Kapaligiran",
-  "sub.digital": "Digital",
-  "sub.space": "Kalawakan",
 
   // Search
   "search.placeholder": "Maghanap ng mga artikulo...",
@@ -102,7 +82,6 @@ export const tl = {
   "home.description": "Mga nangungunang balita ngayon mula sa Argentina sa {lang}: pulitika, ekonomiya, palakasan, kultura. Updated 24/7, 35 na wika.",
   "home.topStories": "Mga Pangunahing Balita",
   "home.economyBusiness": "Ekonomiya at Negosyo",
-  "home.cultureSociety": "Kultura at Lipunan",
   "home.moreNews": "Iba Pang Balita",
   "home.featuredStory": "Pangunahing balita",
 

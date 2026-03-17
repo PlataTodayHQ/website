@@ -14,11 +14,7 @@ export const fi = {
   // Categories
   "cat.politics": "Politiikka",
   "cat.economy": "Talous",
-  "cat.sports": "Urheilu",
-  "cat.society": "Yhteiskunta",
-  "cat.culture": "Kulttuuri",
   "cat.world": "Maailma",
-  "cat.science": "Tiede ja tekniikka",
 
   // Subcategories
   "sub.government": "Hallitus",
@@ -30,26 +26,10 @@ export const fi = {
   "sub.energy": "Energia",
   "sub.agriculture": "Maatalous",
   "sub.labor": "Työelämä",
-  "sub.football": "Jalkapallo",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Moottoriurheilu",
-  "sub.education": "Koulutus",
-  "sub.health": "Terveys",
-  "sub.immigration": "Maahanmuutto",
-  "sub.urban": "Kaupunkielämä",
-  "sub.arts": "Taide",
-  "sub.tourism": "Matkailu",
-  "sub.food-wine": "Ruoka ja viini",
-  "sub.film": "Elokuva",
   "sub.latin-america": "Latinalainen Amerikka",
   "sub.europe": "Eurooppa",
   "sub.us-canada": "Yhdysvallat ja Kanada",
   "sub.asia": "Aasia",
-  "sub.innovation": "Innovaatiot",
-  "sub.environment": "Ympäristö",
-  "sub.digital": "Digitaalinen",
-  "sub.space": "Avaruus",
 
   // Search
   "search.placeholder": "Hae artikkeleita...",
@@ -102,7 +82,6 @@ export const fi = {
   "home.description": "Argentiinan tärkeimmät uutiset tänään kielellä {lang}: politiikka, talous, urheilu, kulttuuri. Päivittyy 24/7, 35 kieltä.",
   "home.topStories": "Pääuutiset",
   "home.economyBusiness": "Talous ja liiketoiminta",
-  "home.cultureSociety": "Kulttuuri ja yhteiskunta",
   "home.moreNews": "Lisää uutisia",
   "home.featuredStory": "Pääjuttu",
 

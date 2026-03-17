@@ -14,11 +14,7 @@ export const ja = {
   // Categories
   "cat.politics": "政治",
   "cat.economy": "経済",
-  "cat.sports": "スポーツ",
-  "cat.society": "社会",
-  "cat.culture": "文化",
   "cat.world": "国際",
-  "cat.science": "科学・テクノロジー",
 
   // Subcategories
   "sub.government": "政府",
@@ -30,26 +26,10 @@ export const ja = {
   "sub.energy": "エネルギー",
   "sub.agriculture": "農業",
   "sub.labor": "労働",
-  "sub.football": "サッカー",
-  "sub.rugby": "ラグビー",
-  "sub.tennis": "テニス",
-  "sub.motorsport": "モータースポーツ",
-  "sub.education": "教育",
-  "sub.health": "医療・健康",
-  "sub.immigration": "移民",
-  "sub.urban": "都市",
-  "sub.arts": "芸術",
-  "sub.tourism": "観光",
-  "sub.food-wine": "グルメ・ワイン",
-  "sub.film": "映画",
   "sub.latin-america": "中南米",
   "sub.europe": "ヨーロッパ",
   "sub.us-canada": "米国・カナダ",
   "sub.asia": "アジア",
-  "sub.innovation": "イノベーション",
-  "sub.environment": "環境",
-  "sub.digital": "デジタル",
-  "sub.space": "宇宙",
 
   // Search
   "search.placeholder": "記事を検索...",
@@ -102,7 +82,6 @@ export const ja = {
   "home.description": "今日のアルゼンチン主要ニュース（{lang}）：政治、経済、スポーツ、文化。24時間更新、35言語対応。",
   "home.topStories": "トップニュース",
   "home.economyBusiness": "経済・ビジネス",
-  "home.cultureSociety": "文化・社会",
   "home.moreNews": "もっと読む",
   "home.featuredStory": "注目記事",
 

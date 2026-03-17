@@ -14,11 +14,7 @@ export const th = {
   // Categories
   "cat.politics": "การเมือง",
   "cat.economy": "เศรษฐกิจ",
-  "cat.sports": "กีฬา",
-  "cat.society": "สังคม",
-  "cat.culture": "วัฒนธรรม",
   "cat.world": "ต่างประเทศ",
-  "cat.science": "วิทยาศาสตร์และเทคโนโลยี",
 
   // Subcategories
   "sub.government": "รัฐบาล",
@@ -30,26 +26,10 @@ export const th = {
   "sub.energy": "พลังงาน",
   "sub.agriculture": "เกษตรกรรม",
   "sub.labor": "แรงงาน",
-  "sub.football": "ฟุตบอล",
-  "sub.rugby": "รักบี้",
-  "sub.tennis": "เทนนิส",
-  "sub.motorsport": "มอเตอร์สปอร์ต",
-  "sub.education": "การศึกษา",
-  "sub.health": "สาธารณสุข",
-  "sub.immigration": "การอพยพ",
-  "sub.urban": "เมือง",
-  "sub.arts": "ศิลปะ",
-  "sub.tourism": "การท่องเที่ยว",
-  "sub.food-wine": "อาหารและไวน์",
-  "sub.film": "ภาพยนตร์",
   "sub.latin-america": "ละตินอเมริกา",
   "sub.europe": "ยุโรป",
   "sub.us-canada": "สหรัฐฯ และแคนาดา",
   "sub.asia": "เอเชีย",
-  "sub.innovation": "นวัตกรรม",
-  "sub.environment": "สิ่งแวดล้อม",
-  "sub.digital": "ดิจิทัล",
-  "sub.space": "อวกาศ",
 
   // Search
   "search.placeholder": "ค้นหาบทความ...",
@@ -102,7 +82,6 @@ export const th = {
   "home.description": "ข่าวเด่นอาร์เจนตินาวันนี้ใน{lang}: การเมือง เศรษฐกิจ กีฬา วัฒนธรรม อัปเดตตลอด 24 ชั่วโมง 35 ภาษา",
   "home.topStories": "ข่าวเด่น",
   "home.economyBusiness": "เศรษฐกิจและธุรกิจ",
-  "home.cultureSociety": "วัฒนธรรมและสังคม",
   "home.moreNews": "ข่าวเพิ่มเติม",
   "home.featuredStory": "เรื่องเด่น",
 

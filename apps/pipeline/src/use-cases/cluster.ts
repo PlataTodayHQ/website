@@ -53,7 +53,7 @@ function clusterArticles(
           // linked via parent_event_id (developing story)
           const existingStage = eventRepo.getEventStageByClusterId(existing.cluster_id);
           if (existingStage === "published") {
-            const category = article.category ?? "society";
+            const category = article.category ?? "economy";
             assignedClusterId = eventRepo.createWithParent(category, 0, existing.cluster_id);
             newClusters++;
             log.info("Developing story — new event for published cluster", {
@@ -80,7 +80,7 @@ function clusterArticles(
 
       // 3. Create new event
       if (!assignedClusterId) {
-        const category = article.category ?? "society";
+        const category = article.category ?? "economy";
         assignedClusterId = eventRepo.create(category, 0);
         newClusters++;
       }

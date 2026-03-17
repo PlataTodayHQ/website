@@ -14,11 +14,7 @@ export const es = {
   // Categories
   "cat.politics": "Política",
   "cat.economy": "Economía",
-  "cat.sports": "Deportes",
-  "cat.society": "Sociedad",
-  "cat.culture": "Cultura",
   "cat.world": "Mundo",
-  "cat.science": "Ciencia y Tecnología",
 
   // Subcategories
   "sub.government": "Gobierno",
@@ -30,26 +26,10 @@ export const es = {
   "sub.energy": "Energía",
   "sub.agriculture": "Agro",
   "sub.labor": "Trabajo",
-  "sub.football": "Fútbol",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Automovilismo",
-  "sub.education": "Educación",
-  "sub.health": "Salud",
-  "sub.immigration": "Migración",
-  "sub.urban": "Urbanismo",
-  "sub.arts": "Arte",
-  "sub.tourism": "Turismo",
-  "sub.food-wine": "Gastronomía y Vinos",
-  "sub.film": "Cine",
   "sub.latin-america": "América Latina",
   "sub.europe": "Europa",
   "sub.us-canada": "EE.UU. y Canadá",
   "sub.asia": "Asia",
-  "sub.innovation": "Innovación",
-  "sub.environment": "Medio Ambiente",
-  "sub.digital": "Digital",
-  "sub.space": "Espacio",
 
   // Search
   "search.placeholder": "Buscar artículos...",
@@ -102,7 +82,6 @@ export const es = {
   "home.description": "Las noticias más importantes de Argentina hoy en {lang}: política, economía, deportes, cultura. Actualización 24/7, 35 idiomas.",
   "home.topStories": "Principales noticias",
   "home.economyBusiness": "Economía y Negocios",
-  "home.cultureSociety": "Cultura y Sociedad",
   "home.moreNews": "Más noticias",
   "home.featuredStory": "Nota destacada",
 

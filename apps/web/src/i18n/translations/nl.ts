@@ -14,11 +14,7 @@ export const nl = {
   // Categories
   "cat.politics": "Politiek",
   "cat.economy": "Economie",
-  "cat.sports": "Sport",
-  "cat.society": "Samenleving",
-  "cat.culture": "Cultuur",
   "cat.world": "Wereld",
-  "cat.science": "Wetenschap & Tech",
 
   // Subcategories
   "sub.government": "Overheid",
@@ -30,26 +26,10 @@ export const nl = {
   "sub.energy": "Energie",
   "sub.agriculture": "Landbouw",
   "sub.labor": "Arbeidsmarkt",
-  "sub.football": "Voetbal",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Autosport",
-  "sub.education": "Onderwijs",
-  "sub.health": "Gezondheid",
-  "sub.immigration": "Immigratie",
-  "sub.urban": "Stedelijk",
-  "sub.arts": "Kunst",
-  "sub.tourism": "Toerisme",
-  "sub.food-wine": "Eten & Wijn",
-  "sub.film": "Film",
   "sub.latin-america": "Latijns-Amerika",
   "sub.europe": "Europa",
   "sub.us-canada": "VS & Canada",
   "sub.asia": "Azië",
-  "sub.innovation": "Innovatie",
-  "sub.environment": "Milieu",
-  "sub.digital": "Digitaal",
-  "sub.space": "Ruimtevaart",
 
   // Search
   "search.placeholder": "Artikelen zoeken...",
@@ -102,7 +82,6 @@ export const nl = {
   "home.description": "Het belangrijkste nieuws uit Argentinië vandaag in het {lang}: politiek, economie, sport, cultuur. 24/7 bijgewerkt, 35 talen.",
   "home.topStories": "Topverhalen",
   "home.economyBusiness": "Economie & Bedrijfsleven",
-  "home.cultureSociety": "Cultuur & Samenleving",
   "home.moreNews": "Meer nieuws",
   "home.featuredStory": "Uitgelicht verhaal",
 

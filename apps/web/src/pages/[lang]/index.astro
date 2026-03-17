@@ -169,19 +169,6 @@ const econStories = econAll.map((a) => ({
   sourceLabel: a.sourceLabel,
 }));
 
-// Sports — Text List (Type B)
-const sportsAll = claimByCat("sports", 4);
-const sportsStories = sportsAll.map((a) => ({
-  title: a.title,
-  description: a.description,
-  href: a.href,
-  timeAgo: a.timeAgo,
-  category: a.subcategory,
-  categoryKey: a.category,
-  readingTime: a.readingTime,
-  sourceLabel: a.sourceLabel,
-}));
-
 // World — Text List (Type B)
 const worldNews = claimByCat("world", 4);
 const worldStories = worldNews.map((a) => ({
@@ -194,12 +181,6 @@ const worldStories = worldNews.map((a) => ({
   readingTime: a.readingTime,
   sourceLabel: a.sourceLabel,
 }));
-
-// Culture & Society — Grid (Type C)
-const cultureSociety = [...claimByCat("culture", 2), ...claimByCat("society", 2)];
-
-// Science & Tech — Grid (Type C)
-const scienceTech = claimByCat("science", 4);
 
 // More News — remaining articles
 const moreNews = claim(allArticles, 8).map(mapRow);
@@ -274,14 +255,6 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     stories={econStories}
   />
 
-  <!-- SPORTS — Text List (Type B) -->
-  <TextListSection
-    title={t(lang!, "cat.sports")}
-    href={`/${lang}/category/sports`}
-    accentColor="var(--cat-sports)"
-    stories={sportsStories}
-  />
-
   <!-- NEWSLETTER BANNER -->
   <NewsletterBanner lang={lang} />
 
@@ -292,50 +265,6 @@ const moreNews = claim(allArticles, 8).map(mapRow);
     accentColor="var(--cat-world)"
     stories={worldStories}
   />
-
-  <!-- CULTURE & SOCIETY — Grid (Type C) -->
-  {cultureSociety.length > 0 && <SectionHeader title={t(lang!, "home.cultureSociety")} href={`/${lang}/category/culture`} accentColor="var(--cat-culture)" />}
-  {cultureSociety.length > 0 && (
-    <section class="feed-grid" aria-label={t(lang!, "home.cultureSociety")}>
-      {cultureSociety.map((a) => (
-        <ArticleCard
-          lang={lang}
-          title={a.title}
-          description={a.description}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          categoryKey={a.category}
-          readingTime={a.readingTime}
-          isNew={a.isNew}
-          sourceLabel={a.sourceLabel}
-        />
-      ))}
-    </section>
-  )}
-
-  <!-- SCIENCE & TECH — Grid (Type C) -->
-  {scienceTech.length > 0 && <SectionHeader title={t(lang!, "cat.science")} href={`/${lang}/category/science`} accentColor="var(--cat-science)" />}
-  {scienceTech.length > 0 && (
-    <section class="feed-grid" aria-label={t(lang!, "cat.science")}>
-      {scienceTech.map((a) => (
-        <ArticleCard
-          lang={lang}
-          title={a.title}
-          description={a.description}
-          href={a.href}
-          imageUrl={a.imageUrl}
-          timeAgo={a.timeAgo}
-          category={a.subcategory}
-          categoryKey={a.category}
-          readingTime={a.readingTime}
-          isNew={a.isNew}
-          sourceLabel={a.sourceLabel}
-        />
-      ))}
-    </section>
-  )}
 
   <!-- MORE NEWS -->
   {moreNews.length > 0 && <SectionHeader title={t(lang!, "home.moreNews")} />}

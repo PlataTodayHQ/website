@@ -14,11 +14,7 @@ export const sw = {
   // Categories
   "cat.politics": "Siasa",
   "cat.economy": "Uchumi",
-  "cat.sports": "Michezo",
-  "cat.society": "Jamii",
-  "cat.culture": "Utamaduni",
   "cat.world": "Ulimwengu",
-  "cat.science": "Sayansi na Teknolojia",
 
   // Subcategories
   "sub.government": "Serikali",
@@ -30,26 +26,10 @@ export const sw = {
   "sub.energy": "Nishati",
   "sub.agriculture": "Kilimo",
   "sub.labor": "Ajira",
-  "sub.football": "Soka",
-  "sub.rugby": "Ragi",
-  "sub.tennis": "Tenisi",
-  "sub.motorsport": "Michezo ya Magari",
-  "sub.education": "Elimu",
-  "sub.health": "Afya",
-  "sub.immigration": "Uhamiaji",
-  "sub.urban": "Miji",
-  "sub.arts": "Sanaa",
-  "sub.tourism": "Utalii",
-  "sub.food-wine": "Chakula na Mvinyo",
-  "sub.film": "Filamu",
   "sub.latin-america": "Amerika ya Kusini",
   "sub.europe": "Ulaya",
   "sub.us-canada": "Marekani na Kanada",
   "sub.asia": "Asia",
-  "sub.innovation": "Ubunifu",
-  "sub.environment": "Mazingira",
-  "sub.digital": "Kidijitali",
-  "sub.space": "Anga",
 
   // Search
   "search.placeholder": "Tafuta makala...",
@@ -102,7 +82,6 @@ export const sw = {
   "home.description": "Habari kuu za Argentina leo kwa {lang}: siasa, uchumi, michezo, utamaduni. Zinasasishwa masaa 24/7, lugha 35.",
   "home.topStories": "Habari Kuu",
   "home.economyBusiness": "Uchumi na Biashara",
-  "home.cultureSociety": "Utamaduni na Jamii",
   "home.moreNews": "Habari Zaidi",
   "home.featuredStory": "Habari iliyoangaziwa",
 

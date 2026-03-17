@@ -14,11 +14,7 @@ export const id = {
   // Categories
   "cat.politics": "Politik",
   "cat.economy": "Ekonomi",
-  "cat.sports": "Olahraga",
-  "cat.society": "Masyarakat",
-  "cat.culture": "Budaya",
   "cat.world": "Dunia",
-  "cat.science": "Sains & Teknologi",
 
   // Subcategories
   "sub.government": "Pemerintahan",
@@ -30,26 +26,10 @@ export const id = {
   "sub.energy": "Energi",
   "sub.agriculture": "Pertanian",
   "sub.labor": "Ketenagakerjaan",
-  "sub.football": "Sepak Bola",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Balap Motor",
-  "sub.education": "Pendidikan",
-  "sub.health": "Kesehatan",
-  "sub.immigration": "Imigrasi",
-  "sub.urban": "Perkotaan",
-  "sub.arts": "Seni",
-  "sub.tourism": "Pariwisata",
-  "sub.food-wine": "Kuliner & Anggur",
-  "sub.film": "Film",
   "sub.latin-america": "Amerika Latin",
   "sub.europe": "Eropa",
   "sub.us-canada": "AS & Kanada",
   "sub.asia": "Asia",
-  "sub.innovation": "Inovasi",
-  "sub.environment": "Lingkungan",
-  "sub.digital": "Digital",
-  "sub.space": "Antariksa",
 
   // Search
   "search.placeholder": "Cari artikel...",
@@ -102,7 +82,6 @@ export const id = {
   "home.description": "Berita utama Argentina hari ini dalam {lang}: politik, ekonomi, olahraga, budaya. Diperbarui 24/7, 35 bahasa.",
   "home.topStories": "Berita Utama",
   "home.economyBusiness": "Ekonomi & Bisnis",
-  "home.cultureSociety": "Budaya & Masyarakat",
   "home.moreNews": "Berita Lainnya",
   "home.featuredStory": "Berita pilihan",
 

@@ -14,11 +14,7 @@ export const uk = {
   // Categories
   "cat.politics": "Політика",
   "cat.economy": "Економіка",
-  "cat.sports": "Спорт",
-  "cat.society": "Суспільство",
-  "cat.culture": "Культура",
   "cat.world": "Світ",
-  "cat.science": "Наука і технології",
 
   // Subcategories
   "sub.government": "Уряд",
@@ -30,26 +26,10 @@ export const uk = {
   "sub.energy": "Енергетика",
   "sub.agriculture": "Сільське господарство",
   "sub.labor": "Праця",
-  "sub.football": "Футбол",
-  "sub.rugby": "Регбі",
-  "sub.tennis": "Теніс",
-  "sub.motorsport": "Автоспорт",
-  "sub.education": "Освіта",
-  "sub.health": "Охорона здоров'я",
-  "sub.immigration": "Імміграція",
-  "sub.urban": "Міське життя",
-  "sub.arts": "Мистецтво",
-  "sub.tourism": "Туризм",
-  "sub.food-wine": "Гастрономія та вино",
-  "sub.film": "Кіно",
   "sub.latin-america": "Латинська Америка",
   "sub.europe": "Європа",
   "sub.us-canada": "США та Канада",
   "sub.asia": "Азія",
-  "sub.innovation": "Інновації",
-  "sub.environment": "Довкілля",
-  "sub.digital": "Цифрові технології",
-  "sub.space": "Космос",
 
   // Search
   "search.placeholder": "Шукати статті...",
@@ -102,7 +82,6 @@ export const uk = {
   "home.description": "Головні новини Аргентини сьогодні {lang}: політика, економіка, спорт, культура. Оновлення 24/7, 35 мов.",
   "home.topStories": "Головні новини",
   "home.economyBusiness": "Економіка та бізнес",
-  "home.cultureSociety": "Культура та суспільство",
   "home.moreNews": "Більше новин",
   "home.featuredStory": "Головний матеріал",
 

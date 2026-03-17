@@ -14,11 +14,7 @@ export const en = {
   // Categories
   "cat.politics": "Politics",
   "cat.economy": "Economy",
-  "cat.sports": "Sports",
-  "cat.society": "Society",
-  "cat.culture": "Culture",
   "cat.world": "World",
-  "cat.science": "Science & Tech",
 
   // Subcategories
   "sub.government": "Government",
@@ -30,26 +26,10 @@ export const en = {
   "sub.energy": "Energy",
   "sub.agriculture": "Agriculture",
   "sub.labor": "Labor",
-  "sub.football": "Football",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Education",
-  "sub.health": "Health",
-  "sub.immigration": "Immigration",
-  "sub.urban": "Urban",
-  "sub.arts": "Arts",
-  "sub.tourism": "Tourism",
-  "sub.food-wine": "Food & Wine",
-  "sub.film": "Film",
   "sub.latin-america": "Latin America",
   "sub.europe": "Europe",
   "sub.us-canada": "US & Canada",
   "sub.asia": "Asia",
-  "sub.innovation": "Innovation",
-  "sub.environment": "Environment",
-  "sub.digital": "Digital",
-  "sub.space": "Space",
 
   // Search
   "search.placeholder": "Search articles...",
@@ -102,7 +82,6 @@ export const en = {
   "home.description": "Today's top Argentina news in {lang}: politics, economy, sports, culture. Updated 24/7, 35 languages.",
   "home.topStories": "Top Stories",
   "home.economyBusiness": "Economy & Business",
-  "home.cultureSociety": "Culture & Society",
   "home.moreNews": "More News",
   "home.featuredStory": "Featured story",
 

@@ -14,11 +14,7 @@ export const bn = {
   // Categories
   "cat.politics": "রাজনীতি",
   "cat.economy": "অর্থনীতি",
-  "cat.sports": "খেলাধুলা",
-  "cat.society": "সমাজ",
-  "cat.culture": "সংস্কৃতি",
   "cat.world": "বিশ্ব",
-  "cat.science": "বিজ্ঞান ও প্রযুক্তি",
 
   // Subcategories
   "sub.government": "সরকার",
@@ -30,26 +26,10 @@ export const bn = {
   "sub.energy": "জ্বালানি",
   "sub.agriculture": "কৃষি",
   "sub.labor": "শ্রম",
-  "sub.football": "ফুটবল",
-  "sub.rugby": "রাগবি",
-  "sub.tennis": "টেনিস",
-  "sub.motorsport": "মোটরস্পোর্ট",
-  "sub.education": "শিক্ষা",
-  "sub.health": "স্বাস্থ্য",
-  "sub.immigration": "অভিবাসন",
-  "sub.urban": "নগর",
-  "sub.arts": "শিল্পকলা",
-  "sub.tourism": "পর্যটন",
-  "sub.food-wine": "খাদ্য ও পানীয়",
-  "sub.film": "চলচ্চিত্র",
   "sub.latin-america": "লাতিন আমেরিকা",
   "sub.europe": "ইউরোপ",
   "sub.us-canada": "যুক্তরাষ্ট্র ও কানাডা",
   "sub.asia": "এশিয়া",
-  "sub.innovation": "উদ্ভাবন",
-  "sub.environment": "পরিবেশ",
-  "sub.digital": "ডিজিটাল",
-  "sub.space": "মহাকাশ",
 
   // Search
   "search.placeholder": "নিবন্ধ অনুসন্ধান করুন...",
@@ -102,7 +82,6 @@ export const bn = {
   "home.description": "আজকের আর্জেন্টিনার শীর্ষ সংবাদ {lang} ভাষায়: রাজনীতি, অর্থনীতি, খেলাধুলা, সংস্কৃতি। ২৪/৭ আপডেট, ৩৫টি ভাষা।",
   "home.topStories": "শীর্ষ সংবাদ",
   "home.economyBusiness": "অর্থনীতি ও ব্যবসা",
-  "home.cultureSociety": "সংস্কৃতি ও সমাজ",
   "home.moreNews": "আরও সংবাদ",
   "home.featuredStory": "বিশেষ সংবাদ",
 

@@ -14,11 +14,7 @@ export const ro = {
   // Categories
   "cat.politics": "Politică",
   "cat.economy": "Economie",
-  "cat.sports": "Sport",
-  "cat.society": "Societate",
-  "cat.culture": "Cultură",
   "cat.world": "Internațional",
-  "cat.science": "Știință și tehnologie",
 
   // Subcategories
   "sub.government": "Guvern",
@@ -30,26 +26,10 @@ export const ro = {
   "sub.energy": "Energie",
   "sub.agriculture": "Agricultură",
   "sub.labor": "Muncă",
-  "sub.football": "Fotbal",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Educație",
-  "sub.health": "Sănătate",
-  "sub.immigration": "Imigrație",
-  "sub.urban": "Urban",
-  "sub.arts": "Arte",
-  "sub.tourism": "Turism",
-  "sub.food-wine": "Gastronomie și vinuri",
-  "sub.film": "Film",
   "sub.latin-america": "America Latină",
   "sub.europe": "Europa",
   "sub.us-canada": "SUA și Canada",
   "sub.asia": "Asia",
-  "sub.innovation": "Inovație",
-  "sub.environment": "Mediu",
-  "sub.digital": "Digital",
-  "sub.space": "Spațiu",
 
   // Search
   "search.placeholder": "Caută articole...",
@@ -102,7 +82,6 @@ export const ro = {
   "home.description": "Cele mai importante știri din Argentina în {lang}: politică, economie, sport, cultură. Actualizate non-stop, în 35 de limbi.",
   "home.topStories": "Știri principale",
   "home.economyBusiness": "Economie și afaceri",
-  "home.cultureSociety": "Cultură și societate",
   "home.moreNews": "Mai multe știri",
   "home.featuredStory": "Articolul zilei",
 

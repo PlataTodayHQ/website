@@ -14,11 +14,7 @@ export const vi = {
   // Categories
   "cat.politics": "Chính trị",
   "cat.economy": "Kinh tế",
-  "cat.sports": "Thể thao",
-  "cat.society": "Xã hội",
-  "cat.culture": "Văn hóa",
   "cat.world": "Thế giới",
-  "cat.science": "Khoa học & Công nghệ",
 
   // Subcategories
   "sub.government": "Chính phủ",
@@ -30,26 +26,10 @@ export const vi = {
   "sub.energy": "Năng lượng",
   "sub.agriculture": "Nông nghiệp",
   "sub.labor": "Lao động",
-  "sub.football": "Bóng đá",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Quần vợt",
-  "sub.motorsport": "Đua xe",
-  "sub.education": "Giáo dục",
-  "sub.health": "Y tế",
-  "sub.immigration": "Nhập cư",
-  "sub.urban": "Đô thị",
-  "sub.arts": "Nghệ thuật",
-  "sub.tourism": "Du lịch",
-  "sub.food-wine": "Ẩm thực & Rượu vang",
-  "sub.film": "Điện ảnh",
   "sub.latin-america": "Mỹ Latinh",
   "sub.europe": "Châu Âu",
   "sub.us-canada": "Hoa Kỳ & Canada",
   "sub.asia": "Châu Á",
-  "sub.innovation": "Đổi mới",
-  "sub.environment": "Môi trường",
-  "sub.digital": "Kỹ thuật số",
-  "sub.space": "Vũ trụ",
 
   // Search
   "search.placeholder": "Tìm bài viết...",
@@ -102,7 +82,6 @@ export const vi = {
   "home.description": "Tin tức Argentina hôm nay bằng {lang}: chính trị, kinh tế, thể thao, văn hóa. Cập nhật 24/7, 35 ngôn ngữ.",
   "home.topStories": "Tin nổi bật",
   "home.economyBusiness": "Kinh tế & Doanh nghiệp",
-  "home.cultureSociety": "Văn hóa & Xã hội",
   "home.moreNews": "Thêm tin tức",
   "home.featuredStory": "Bài viết nổi bật",
 

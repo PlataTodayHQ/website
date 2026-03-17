@@ -14,11 +14,7 @@ export const ur = {
   // Categories
   "cat.politics": "سیاست",
   "cat.economy": "معیشت",
-  "cat.sports": "کھیل",
-  "cat.society": "معاشرت",
-  "cat.culture": "ثقافت",
   "cat.world": "عالمی خبریں",
-  "cat.science": "سائنس و ٹیکنالوجی",
 
   // Subcategories
   "sub.government": "حکومت",
@@ -30,26 +26,10 @@ export const ur = {
   "sub.energy": "توانائی",
   "sub.agriculture": "زراعت",
   "sub.labor": "محنت و مزدوری",
-  "sub.football": "فٹبال",
-  "sub.rugby": "رگبی",
-  "sub.tennis": "ٹینس",
-  "sub.motorsport": "موٹر سپورٹ",
-  "sub.education": "تعلیم",
-  "sub.health": "صحت",
-  "sub.immigration": "نقل مکانی",
-  "sub.urban": "شہری معاملات",
-  "sub.arts": "فنون",
-  "sub.tourism": "سیاحت",
-  "sub.food-wine": "کھانے اور شراب",
-  "sub.film": "فلم",
   "sub.latin-america": "لاطینی امریکہ",
   "sub.europe": "یورپ",
   "sub.us-canada": "امریکہ و کینیڈا",
   "sub.asia": "ایشیا",
-  "sub.innovation": "جدت طرازی",
-  "sub.environment": "ماحولیات",
-  "sub.digital": "ڈیجیٹل",
-  "sub.space": "خلائی سائنس",
 
   // Search
   "search.placeholder": "مضامین تلاش کریں...",
@@ -102,7 +82,6 @@ export const ur = {
   "home.description": "آج کی اہم ارجنٹینا خبریں {lang} میں: سیاست، معیشت، کھیل، ثقافت۔ 24/7 اپ ڈیٹ، 35 زبانیں۔",
   "home.topStories": "اہم خبریں",
   "home.economyBusiness": "معیشت و کاروبار",
-  "home.cultureSociety": "ثقافت و معاشرت",
   "home.moreNews": "مزید خبریں",
   "home.featuredStory": "نمایاں خبر",
 
