@@ -321,7 +321,7 @@ const stockI18n = {
     }
   } : undefined}
 >
-  <div class="stock-page" data-stock-page data-lang={lang} data-i18n={JSON.stringify(stockI18n)}>
+  <div class="stock-page" data-stock-page data-lang={lang} data-symbol={symbol} data-i18n={JSON.stringify(stockI18n)}>
     <MarketNav lang={lang} />
 
     <!-- Error state (no symbol) -->
@@ -943,9 +943,12 @@ const stockI18n = {
     return n.toLocaleString(lang, { minimumFractionDigits: d, maximumFractionDigits: d });
   }
 
-  // Read symbol from URL
-  var params = new URLSearchParams(window.location.search);
-  var symbol = (params.get('s') || '').trim().toUpperCase().replace(/\.BA$/, '');
+  // Read symbol from data attribute (path-based routing) or query string (legacy)
+  var symbol = (page.getAttribute('data-symbol') || '').trim().toUpperCase().replace(/\.BA$/, '');
+  if (!symbol) {
+    var params = new URLSearchParams(window.location.search);
+    symbol = (params.get('s') || '').trim().toUpperCase().replace(/\.BA$/, '');
+  }
 
   if (!symbol) {
     var emptyEl = document.querySelector('[data-stock-empty]');
