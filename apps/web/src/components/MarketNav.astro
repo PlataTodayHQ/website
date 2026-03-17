@@ -8,41 +8,50 @@ interface Props {
 
 const { lang, active = "hub" } = Astro.props;
 
+const isFixedIncomeActive = ["bonds", "corporate-bonds", "letras"].includes(active);
+
 const items = [
-  { key: "hub", href: `/${lang}/markets`, icon: "chart-bar", label: t(lang, "markets.breadcrumb") },
-  { key: "currencies", href: `/${lang}/markets/currencies`, icon: "currency", label: t(lang, "currencies.breadcrumb") },
-  { key: "merval", href: `/${lang}/markets/merval`, icon: "trending", label: "Merval" },
-  { key: "cedears", href: `/${lang}/markets/cedears`, icon: "globe", label: "CEDEARs" },
-  { key: "bonds", href: `/${lang}/markets/bonds`, icon: "bond", label: t(lang, "bonds.breadcrumb") },
-  { key: "corporate-bonds", href: `/${lang}/markets/corporate-bonds`, icon: "building", label: t(lang, "corporateBonds.breadcrumb") },
-  { key: "letras", href: `/${lang}/markets/letras`, icon: "doc", label: t(lang, "letras.breadcrumb") },
-  { key: "crypto", href: `/${lang}/markets/crypto`, icon: "crypto", label: t(lang, "crypto.title") },
-  { key: "screener", href: `/${lang}/markets/screener`, icon: "filter", label: t(lang, "screener.title") },
+  { key: "hub", href: `/${lang}/markets`, icon: "chart-bar", label: t(lang, "markets.breadcrumb"), group: "main" },
+  { key: "currencies", href: `/${lang}/markets/currencies`, icon: "currency", label: t(lang, "currencies.breadcrumb"), group: "main" },
+  { key: "merval", href: `/${lang}/markets/merval`, icon: "trending", label: "Merval", group: "equities" },
+  { key: "cedears", href: `/${lang}/markets/cedears`, icon: "globe", label: "CEDEARs", group: "equities" },
+  { key: "screener", href: `/${lang}/markets/screener`, icon: "filter", label: t(lang, "screener.title"), group: "equities" },
+  { key: "bonds", href: `/${lang}/markets/bonds`, icon: "bond", label: t(lang, "bonds.breadcrumb"), group: "fixed-income" },
+  { key: "corporate-bonds", href: `/${lang}/markets/corporate-bonds`, icon: "building", label: t(lang, "corporateBonds.breadcrumb"), group: "fixed-income" },
+  { key: "letras", href: `/${lang}/markets/letras`, icon: "doc", label: t(lang, "letras.breadcrumb"), group: "fixed-income" },
+  { key: "crypto", href: `/${lang}/markets/crypto`, icon: "crypto", label: t(lang, "crypto.title"), group: "alt" },
 ];
 ---
 
 <nav class="mnav" aria-label="Markets navigation" data-market-nav>
   <div class="mnav-inner">
-    {items.map((item) => (
-      <a
-        href={item.href}
-        class:list={["mnav-item", { "mnav-item--active": active === item.key }]}
-        aria-current={active === item.key ? "page" : undefined}
-      >
-        <svg class="mnav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          {item.icon === "chart-bar" && <Fragment><path d="M3 3v18h18"/><path d="M7 16V8"/><path d="M11 16V4"/><path d="M15 16v-5"/><path d="M19 16v-8"/></Fragment>}
-          {item.icon === "currency" && <Fragment><circle cx="12" cy="12" r="8"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></Fragment>}
-          {item.icon === "trending" && <Fragment><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></Fragment>}
-          {item.icon === "crypto" && <Fragment><path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.215-6.893m-1.215 6.893-3.94-.694m5.155-6.2L8.29 4.26m5.908 1.042.348-1.97M7.48 20.364l3.126-17.727"/></Fragment>}
-          {item.icon === "globe" && <Fragment><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></Fragment>}
-          {item.icon === "bond" && <Fragment><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M12 4v16"/></Fragment>}
-          {item.icon === "building" && <Fragment><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></Fragment>}
-          {item.icon === "doc" && <Fragment><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></Fragment>}
-          {item.icon === "filter" && <Fragment><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></Fragment>}
-        </svg>
-        <span class="mnav-label">{item.label}</span>
-      </a>
-    ))}
+    {items.map((item, idx) => {
+      const prevGroup = idx > 0 ? items[idx - 1].group : null;
+      const showSep = prevGroup && prevGroup !== item.group;
+      return (
+        <>
+          {showSep && <span class="mnav-sep" aria-hidden="true"></span>}
+          <a
+            href={item.href}
+            class:list={["mnav-item", { "mnav-item--active": active === item.key }]}
+            aria-current={active === item.key ? "page" : undefined}
+          >
+            <svg class="mnav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {item.icon === "chart-bar" && <Fragment><path d="M3 3v18h18"/><path d="M7 16V8"/><path d="M11 16V4"/><path d="M15 16v-5"/><path d="M19 16v-8"/></Fragment>}
+              {item.icon === "currency" && <Fragment><circle cx="12" cy="12" r="8"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></Fragment>}
+              {item.icon === "trending" && <Fragment><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></Fragment>}
+              {item.icon === "crypto" && <Fragment><path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.215-6.893m-1.215 6.893-3.94-.694m5.155-6.2L8.29 4.26m5.908 1.042.348-1.97M7.48 20.364l3.126-17.727"/></Fragment>}
+              {item.icon === "globe" && <Fragment><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></Fragment>}
+              {item.icon === "bond" && <Fragment><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M12 4v16"/></Fragment>}
+              {item.icon === "building" && <Fragment><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></Fragment>}
+              {item.icon === "doc" && <Fragment><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></Fragment>}
+              {item.icon === "filter" && <Fragment><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></Fragment>}
+            </svg>
+            <span class="mnav-label">{item.label}</span>
+          </a>
+        </>
+      );
+    })}
   </div>
 </nav>
 
@@ -71,6 +80,15 @@ const items = [
     -ms-overflow-style: none;
   }
   .mnav-inner::-webkit-scrollbar { display: none; }
+
+  .mnav-sep {
+    width: 1px;
+    height: 20px;
+    background: var(--color-border);
+    flex-shrink: 0;
+    align-self: center;
+    margin: 0 4px;
+  }
 
   .mnav-item {
     display: flex;
