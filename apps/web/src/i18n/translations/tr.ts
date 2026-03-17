@@ -14,11 +14,7 @@ export const tr = {
   // Categories
   "cat.politics": "Siyaset",
   "cat.economy": "Ekonomi",
-  "cat.sports": "Spor",
-  "cat.society": "Toplum",
-  "cat.culture": "Kültür",
   "cat.world": "Dünya",
-  "cat.science": "Bilim ve Teknoloji",
 
   // Subcategories
   "sub.government": "Hükümet",
@@ -30,26 +26,10 @@ export const tr = {
   "sub.energy": "Enerji",
   "sub.agriculture": "Tarım",
   "sub.labor": "Çalışma Hayatı",
-  "sub.football": "Futbol",
-  "sub.rugby": "Ragbi",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Motor Sporları",
-  "sub.education": "Eğitim",
-  "sub.health": "Sağlık",
-  "sub.immigration": "Göç",
-  "sub.urban": "Kentsel",
-  "sub.arts": "Sanat",
-  "sub.tourism": "Turizm",
-  "sub.food-wine": "Yemek ve Şarap",
-  "sub.film": "Sinema",
   "sub.latin-america": "Latin Amerika",
   "sub.europe": "Avrupa",
   "sub.us-canada": "ABD ve Kanada",
   "sub.asia": "Asya",
-  "sub.innovation": "İnovasyon",
-  "sub.environment": "Çevre",
-  "sub.digital": "Dijital",
-  "sub.space": "Uzay",
 
   // Search
   "search.placeholder": "Haberlerde ara...",
@@ -72,8 +52,8 @@ export const tr = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Hoş Geldiniz",
-  "welcome.eyebrow": "35 dil · Tek bir misyon",
-  "welcome.headline": "Arjantin'in hikâyesi, dünyaya açık",
+  "welcome.eyebrow": "Arjantin piyasaları & siyaseti · 35 dil",
+  "welcome.headline": "Arjantin'in finansı & siyaseti, dünyaya açık",
   "welcome.sub": "Her gün haberleri 35 dilde özgün olarak yazıyoruz — böylece tüm dünya Arjantin'de neler olduğunu anlayabiliyor.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const tr = {
   "home.title": "{lang} Arjantin Haberleri",
   "home.heroFallbackTitle": "Plata Today'e Hoş Geldiniz",
   "home.heroFallbackDesc": "Arjantin haberleri, 35 dilde özgün olarak yazılıyor.",
-  "home.description": "Bugünün {lang} Arjantin haberleri: siyaset, ekonomi, spor, kültür. 7/24 güncelleniyor, 35 dil.",
+  "home.description": "Arjantin siyaseti, ekonomisi ve piyasaları {lang} dilinde. Finans haberleri, siyasi analiz, döviz kurları. 7/24 güncelleniyor.",
   "home.topStories": "Öne Çıkan Haberler",
   "home.economyBusiness": "Ekonomi ve İş Dünyası",
-  "home.cultureSociety": "Kültür ve Toplum",
   "home.moreNews": "Daha Fazla Haber",
   "home.featuredStory": "Manşet haber",
 
@@ -121,7 +100,7 @@ export const tr = {
   "article.byline": "Yazan",
 
   // Footer
-  "footer.tagline": "Arjantin haberleri, dünyaya açık",
+  "footer.tagline": "Arjantin piyasaları & siyaseti, dünyaya açık",
   "footer.about": "Hakkımızda",
   "footer.contact": "İletişim",
   "footer.terms": "Kullanım Koşulları",
@@ -515,7 +494,7 @@ export const tr = {
   "standards.updated": "Son güncelleme: 14 Mart 2026",
   "standards.lead": "Plata, Arjantin'i 35 dilde takip eden çok dilli bir haber platformudur. Bu sayfa, kaynak toplamadan yayına kadar haber odamızın nasıl çalıştığını açıklar.",
   "standards.sourcingTitle": "Kaynak Toplama",
-  "standards.sourcingText": "Üç katmandaki 13'ten fazla Arjantin haber kuruluşunu takip ediyoruz. 1. Katman: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista ve iProfesional gibi büyük ulusal yayın organları. 2. Katman: Perfil, Cadena 3 ve Olé gibi bağımsız ve uzmanlaşmış kaynaklar. 3. Katman: La Gaceta, Misiones Online ve El Día gibi bölgesel yayın organları. Haberler her 30 dakikada bir RSS beslemeleri aracılığıyla toplanır.",
+  "standards.sourcingText": "Üç katmandaki 13'ten fazla Arjantin haber kuruluşunu takip ediyoruz. 1. Katman: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista ve iProfesional gibi büyük ulusal yayın organları. 2. Katman: Perfil, Cadena 3 gibi bağımsız ve uzmanlaşmış kaynaklar. 3. Katman: La Gaceta, Misiones Online ve El Día gibi bölgesel yayın organları. Haberler her 30 dakikada bir RSS beslemeleri aracılığıyla toplanır.",
   "standards.verificationTitle": "Doğrulama",
   "standards.verificationText": "Her haber çok aşamalı bir inceleme sürecinden geçer. Aynı olayı konu alan kaynaklar bir araya getirilir. Her haber, orijinal kaynaklarıyla karşılaştırılarak doğrulanır. Hiçbir kaynakça desteklenmeyen iddialar işaretlenip çıkarılır. Doğrulamayı iki kez geçemeyen haberler yayınlanmaz.",
   "standards.languageTitle": "Dil kalitesi",

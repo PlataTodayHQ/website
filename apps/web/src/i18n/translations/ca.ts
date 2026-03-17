@@ -14,11 +14,7 @@ export const ca = {
   // Categories
   "cat.politics": "Política",
   "cat.economy": "Economia",
-  "cat.sports": "Esports",
-  "cat.society": "Societat",
-  "cat.culture": "Cultura",
   "cat.world": "Món",
-  "cat.science": "Ciència i Tecnologia",
 
   // Subcategories
   "sub.government": "Govern",
@@ -30,26 +26,10 @@ export const ca = {
   "sub.energy": "Energia",
   "sub.agriculture": "Agricultura",
   "sub.labor": "Treball",
-  "sub.football": "Futbol",
-  "sub.rugby": "Rugbi",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motor",
-  "sub.education": "Educació",
-  "sub.health": "Salut",
-  "sub.immigration": "Immigració",
-  "sub.urban": "Urbanisme",
-  "sub.arts": "Arts",
-  "sub.tourism": "Turisme",
-  "sub.food-wine": "Gastronomia i Vins",
-  "sub.film": "Cinema",
   "sub.latin-america": "Amèrica Llatina",
   "sub.europe": "Europa",
   "sub.us-canada": "EUA i Canadà",
   "sub.asia": "Àsia",
-  "sub.innovation": "Innovació",
-  "sub.environment": "Medi Ambient",
-  "sub.digital": "Digital",
-  "sub.space": "Espai",
 
   // Search
   "search.placeholder": "Cercar articles...",
@@ -72,8 +52,8 @@ export const ca = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Benvinguda",
-  "welcome.eyebrow": "35 idiomes · Una missió",
-  "welcome.headline": "L'actualitat argentina, oberta al món",
+  "welcome.eyebrow": "Mercats i política argentina · 35 idiomes",
+  "welcome.headline": "Finances i política argentina, obertes al món",
   "welcome.sub": "Cada dia escrivim les notícies de manera nativa en 35 idiomes — perquè tot el món pugui entendre què passa a l'Argentina.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const ca = {
   "home.title": "Notícies de l'Argentina en {lang}",
   "home.heroFallbackTitle": "Benvinguts a Plata Today",
   "home.heroFallbackDesc": "Les notícies de l'Argentina, escrites nativament en 35 idiomes.",
-  "home.description": "Les principals notícies de l'Argentina avui en {lang}: política, economia, esports, cultura. Actualització 24/7, 35 idiomes.",
+  "home.description": "Política, economia i mercats de l'Argentina en {lang}. Notícies financeres, anàlisi política, tipus de canvi. Actualització 24/7.",
   "home.topStories": "Notícies principals",
   "home.economyBusiness": "Economia i Negocis",
-  "home.cultureSociety": "Cultura i Societat",
   "home.moreNews": "Més notícies",
   "home.featuredStory": "Notícia destacada",
 
@@ -121,7 +100,7 @@ export const ca = {
   "article.byline": "Per",
 
   // Footer
-  "footer.tagline": "Les notícies de l'Argentina, obertes al món",
+  "footer.tagline": "Mercats i política argentina, oberts al món",
   "footer.about": "Sobre nosaltres",
   "footer.contact": "Contacte",
   "footer.terms": "Condicions d'ús",
@@ -509,7 +488,7 @@ export const ca = {
   "standards.updated": "Darrera actualització: 14 de març de 2026",
   "standards.lead": "Plata és una plataforma de notícies multilingüe que cobreix l'Argentina en 35 idiomes. Aquesta pàgina explica com funciona la nostra redacció — des de les fonts fins a la publicació.",
   "standards.sourcingTitle": "Fonts",
-  "standards.sourcingText": "Monitoritzem més de 13 mitjans de notícies argentins en tres nivells. El nivell 1 inclou els principals mitjans nacionals com Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista i iProfesional. El nivell 2 cobreix fonts independents i especialitzades com Perfil, Cadena 3 i Olé. El nivell 3 inclou mitjans regionals com La Gaceta, Misiones Online i El Día. Els articles es recullen mitjançant canals RSS cada 30 minuts.",
+  "standards.sourcingText": "Monitoritzem més de 13 mitjans de notícies argentins en tres nivells. El nivell 1 inclou els principals mitjans nacionals com Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista i iProfesional. El nivell 2 cobreix fonts independents i especialitzades com Perfil, Cadena 3. El nivell 3 inclou mitjans regionals com La Gaceta, Misiones Online i El Día. Els articles es recullen mitjançant canals RSS cada 30 minuts.",
   "standards.verificationTitle": "Verificació",
   "standards.verificationText": "Cada notícia passa per un procés de revisió en diverses etapes. Les fonts que cobreixen el mateix fet s'agrupen. Cada article es contrasta amb les fonts originals. Les afirmacions que cap font avala es marquen i s'eliminen. Les notícies que no superen la verificació dues vegades no es publiquen.",
   "standards.languageTitle": "Qualitat lingüística",

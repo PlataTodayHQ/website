@@ -14,11 +14,7 @@ export const ko = {
   // Categories
   "cat.politics": "정치",
   "cat.economy": "경제",
-  "cat.sports": "스포츠",
-  "cat.society": "사회",
-  "cat.culture": "문화",
   "cat.world": "국제",
-  "cat.science": "과학·기술",
 
   // Subcategories
   "sub.government": "정부",
@@ -30,26 +26,10 @@ export const ko = {
   "sub.energy": "에너지",
   "sub.agriculture": "농업",
   "sub.labor": "노동",
-  "sub.football": "축구",
-  "sub.rugby": "럭비",
-  "sub.tennis": "테니스",
-  "sub.motorsport": "모터스포츠",
-  "sub.education": "교육",
-  "sub.health": "보건",
-  "sub.immigration": "이민",
-  "sub.urban": "도시",
-  "sub.arts": "예술",
-  "sub.tourism": "관광",
-  "sub.food-wine": "음식과 와인",
-  "sub.film": "영화",
   "sub.latin-america": "라틴아메리카",
   "sub.europe": "유럽",
   "sub.us-canada": "미국·캐나다",
   "sub.asia": "아시아",
-  "sub.innovation": "혁신",
-  "sub.environment": "환경",
-  "sub.digital": "디지털",
-  "sub.space": "우주",
 
   // Search
   "search.placeholder": "기사 검색...",
@@ -72,8 +52,8 @@ export const ko = {
 
   // Welcome Hero
   "welcome.ariaLabel": "환영합니다",
-  "welcome.eyebrow": "35개 언어 · 하나의 사명",
-  "welcome.headline": "아르헨티나, 세계를 향해 열리다",
+  "welcome.eyebrow": "아르헨티나 시장과 정치 · 35개 언어",
+  "welcome.headline": "아르헨티나 금융과 정치, 세계를 향해 열리다",
   "welcome.sub": "매일 35개 언어로 뉴스를 네이티브로 작성하여, 전 세계가 아르헨티나의 오늘을 이해할 수 있도록 합니다.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const ko = {
   "home.title": "{lang}으로 읽는 아르헨티나 뉴스",
   "home.heroFallbackTitle": "Plata Today에 오신 것을 환영합니다",
   "home.heroFallbackDesc": "아르헨티나 뉴스를 35개 언어로 자연스럽게 전합니다.",
-  "home.description": "오늘의 아르헨티나 주요 뉴스({lang}): 정치, 경제, 스포츠, 문화. 24시간 업데이트, 35개 언어.",
+  "home.description": "아르헨티나 정치, 경제, 시장 동향({lang}). 금융 뉴스, 정책 분석, 환율 정보. 24시간 업데이트.",
   "home.topStories": "주요 뉴스",
   "home.economyBusiness": "경제·비즈니스",
-  "home.cultureSociety": "문화·사회",
   "home.moreNews": "더 많은 뉴스",
   "home.featuredStory": "주목할 기사",
 
@@ -121,7 +100,7 @@ export const ko = {
   "article.byline": "작성",
 
   // Footer
-  "footer.tagline": "아르헨티나 뉴스, 세계를 향해 열리다",
+  "footer.tagline": "아르헨티나 시장과 정치, 세계를 향해 열리다",
   "footer.about": "소개",
   "footer.contact": "문의",
   "footer.terms": "이용약관",
@@ -556,7 +535,7 @@ export const ko = {
   "standards.updated": "최종 업데이트: 2026년 3월 14일",
   "standards.lead": "Plata는 아르헨티나 뉴스를 35개 언어로 전하는 다국어 뉴스 플랫폼입니다. 이 페이지에서는 취재원 관리부터 기사 게재까지 편집부의 운영 방식을 소개합니다.",
   "standards.sourcingTitle": "취재원 관리",
-  "standards.sourcingText": "아르헨티나의 13개 이상 언론 매체를 3단계로 나누어 모니터링합니다. 1단계에는 Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional 등 주요 전국 매체가 포함됩니다. 2단계에는 Perfil, Cadena 3, Olé 등 독립·전문 매체가 해당됩니다. 3단계에는 La Gaceta, Misiones Online, El Día 등 지역 매체가 있습니다. 기사는 RSS 피드를 통해 30분마다 수집됩니다.",
+  "standards.sourcingText": "아르헨티나의 13개 이상 언론 매체를 3단계로 나누어 모니터링합니다. 1단계에는 Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional 등 주요 전국 매체가 포함됩니다. 2단계에는 Perfil, Cadena 3 등 독립·전문 매체가 해당됩니다. 3단계에는 La Gaceta, Misiones Online, El Día 등 지역 매체가 있습니다. 기사는 RSS 피드를 통해 30분마다 수집됩니다.",
   "standards.verificationTitle": "사실 확인",
   "standards.verificationText": "모든 기사는 다단계 검증을 거칩니다. 같은 사건을 다루는 취재원은 하나로 묶어 비교합니다. 각 기사는 원본 취재원과 대조하여 검증됩니다. 어떤 취재원으로도 뒷받침되지 않는 주장은 표시 후 삭제됩니다. 두 차례 검증에 실패한 기사는 게재하지 않습니다.",
   "standards.languageTitle": "언어 품질",
@@ -642,7 +621,7 @@ export const ko = {
   "newsroom.tier1Title": "1단계 — 주요 전국 매체",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "2단계 — 독립·전문 매체",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "3단계 — 지역 매체",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "모든 기사에는 원문 출처 링크가 포함되어 있어 언제든 직접 확인하실 수 있습니다.",

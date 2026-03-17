@@ -14,11 +14,7 @@ export const zhTw = {
   // Categories
   "cat.politics": "政治",
   "cat.economy": "經濟",
-  "cat.sports": "體育",
-  "cat.society": "社會",
-  "cat.culture": "文化",
   "cat.world": "國際",
-  "cat.science": "科學與科技",
 
   // Subcategories
   "sub.government": "政府",
@@ -30,26 +26,10 @@ export const zhTw = {
   "sub.energy": "能源",
   "sub.agriculture": "農業",
   "sub.labor": "勞工",
-  "sub.football": "足球",
-  "sub.rugby": "橄欖球",
-  "sub.tennis": "網球",
-  "sub.motorsport": "賽車運動",
-  "sub.education": "教育",
-  "sub.health": "健康",
-  "sub.immigration": "移民",
-  "sub.urban": "都市",
-  "sub.arts": "藝術",
-  "sub.tourism": "觀光",
-  "sub.food-wine": "美食與美酒",
-  "sub.film": "電影",
   "sub.latin-america": "拉丁美洲",
   "sub.europe": "歐洲",
   "sub.us-canada": "美國與加拿大",
   "sub.asia": "亞洲",
-  "sub.innovation": "創新",
-  "sub.environment": "環境",
-  "sub.digital": "數位",
-  "sub.space": "太空",
 
   // Search
   "search.placeholder": "搜尋文章...",
@@ -72,8 +52,8 @@ export const zhTw = {
 
   // Welcome Hero
   "welcome.ariaLabel": "歡迎",
-  "welcome.eyebrow": "35 種語言 · 一個使命",
-  "welcome.headline": "阿根廷的故事，向世界敞開",
+  "welcome.eyebrow": "阿根廷市場與政治 · 35 種語言",
+  "welcome.headline": "阿根廷金融與政治，面向世界",
   "welcome.sub": "我們每天以 35 種語言原生撰寫新聞，讓全世界都能了解阿根廷正在發生的事。",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const zhTw = {
   "home.title": "以{lang}報導的阿根廷新聞",
   "home.heroFallbackTitle": "歡迎來到 Plata Today",
   "home.heroFallbackDesc": "阿根廷新聞，以 35 種語言原生撰寫。",
-  "home.description": "今日{lang}阿根廷頭條新聞：政治、經濟、體育、文化。全天候更新，35 種語言。",
+  "home.description": "阿根廷政治、經濟與市場動態（{lang}）。金融資訊、政策分析、匯率行情。全天候更新。",
   "home.topStories": "頭條新聞",
   "home.economyBusiness": "經濟與商業",
-  "home.cultureSociety": "文化與社會",
   "home.moreNews": "更多新聞",
   "home.featuredStory": "精選報導",
 
@@ -121,7 +100,7 @@ export const zhTw = {
   "article.byline": "作者",
 
   // Footer
-  "footer.tagline": "阿根廷新聞，向世界敞開",
+  "footer.tagline": "阿根廷市場與政治，面向世界",
   "footer.about": "關於我們",
   "footer.contact": "聯絡我們",
   "footer.terms": "使用條款",
@@ -515,7 +494,7 @@ export const zhTw = {
   "standards.updated": "最後更新日期：2026 年 3 月 14 日",
   "standards.lead": "Plata 是一個以 35 種語言報導阿根廷新聞的多語言新聞平台。本頁說明我們新聞編輯室的運作方式——從來源採集到發布。",
   "standards.sourcingTitle": "來源採集",
-  "standards.sourcingText": "我們監測三個層級、共 13 個以上的阿根廷新聞媒體。第一層級包括 Infobae、Clarín、La Nación、Ámbito Financiero、El Cronista 及 iProfesional 等全國性主要媒體。第二層級涵蓋 Perfil、Cadena 3 及 Olé 等獨立及專業來源。第三層級包括 La Gaceta、Misiones Online 及 El Día 等地方媒體。文章每 30 分鐘透過 RSS 訂閱源蒐集一次。",
+  "standards.sourcingText": "我們監測三個層級、共 13 個以上的阿根廷新聞媒體。第一層級包括 Infobae、Clarín、La Nación、Ámbito Financiero、El Cronista 及 iProfesional 等全國性主要媒體。第二層級涵蓋 Perfil、Cadena 3 等獨立及專業來源。第三層級包括 La Gaceta、Misiones Online 及 El Día 等地方媒體。文章每 30 分鐘透過 RSS 訂閱源蒐集一次。",
   "standards.verificationTitle": "查證",
   "standards.verificationText": "每則報導都經過多階段審查流程。報導同一事件的來源會被歸為一組。每篇文章都會對照原始來源進行事實查核。未獲任何來源支持的說法會被標記並移除。兩次未通過查證的報導不會被發布。",
   "standards.languageTitle": "語言品質",

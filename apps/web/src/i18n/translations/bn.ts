@@ -14,11 +14,7 @@ export const bn = {
   // Categories
   "cat.politics": "রাজনীতি",
   "cat.economy": "অর্থনীতি",
-  "cat.sports": "খেলাধুলা",
-  "cat.society": "সমাজ",
-  "cat.culture": "সংস্কৃতি",
   "cat.world": "বিশ্ব",
-  "cat.science": "বিজ্ঞান ও প্রযুক্তি",
 
   // Subcategories
   "sub.government": "সরকার",
@@ -30,26 +26,10 @@ export const bn = {
   "sub.energy": "জ্বালানি",
   "sub.agriculture": "কৃষি",
   "sub.labor": "শ্রম",
-  "sub.football": "ফুটবল",
-  "sub.rugby": "রাগবি",
-  "sub.tennis": "টেনিস",
-  "sub.motorsport": "মোটরস্পোর্ট",
-  "sub.education": "শিক্ষা",
-  "sub.health": "স্বাস্থ্য",
-  "sub.immigration": "অভিবাসন",
-  "sub.urban": "নগর",
-  "sub.arts": "শিল্পকলা",
-  "sub.tourism": "পর্যটন",
-  "sub.food-wine": "খাদ্য ও পানীয়",
-  "sub.film": "চলচ্চিত্র",
   "sub.latin-america": "লাতিন আমেরিকা",
   "sub.europe": "ইউরোপ",
   "sub.us-canada": "যুক্তরাষ্ট্র ও কানাডা",
   "sub.asia": "এশিয়া",
-  "sub.innovation": "উদ্ভাবন",
-  "sub.environment": "পরিবেশ",
-  "sub.digital": "ডিজিটাল",
-  "sub.space": "মহাকাশ",
 
   // Search
   "search.placeholder": "নিবন্ধ অনুসন্ধান করুন...",
@@ -72,8 +52,8 @@ export const bn = {
 
   // Welcome Hero
   "welcome.ariaLabel": "স্বাগতম",
-  "welcome.eyebrow": "৩৫টি ভাষা · একটি লক্ষ্য",
-  "welcome.headline": "আর্জেন্টিনার গল্প, বিশ্বের দরজায়",
+  "welcome.eyebrow": "আর্জেন্টিনার বাজার ও রাজনীতি · ৩৫টি ভাষা",
+  "welcome.headline": "আর্জেন্টিনার অর্থনীতি ও রাজনীতি, বিশ্বের দরজায়",
   "welcome.sub": "প্রতিদিন আমরা ৩৫টি ভাষায় সংবাদ লিখি — যাতে সারা বিশ্ব আর্জেন্টিনায় কী ঘটছে তা জানতে পারে।",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const bn = {
   "home.title": "{lang} ভাষায় আর্জেন্টিনার সংবাদ",
   "home.heroFallbackTitle": "Plata Today-তে স্বাগতম",
   "home.heroFallbackDesc": "আর্জেন্টিনার সংবাদ, ৩৫টি ভাষায় মৌলিকভাবে রচিত।",
-  "home.description": "আজকের আর্জেন্টিনার শীর্ষ সংবাদ {lang} ভাষায়: রাজনীতি, অর্থনীতি, খেলাধুলা, সংস্কৃতি। ২৪/৭ আপডেট, ৩৫টি ভাষা।",
+  "home.description": "আর্জেন্টিনার রাজনীতি, অর্থনীতি ও বাজার {lang} ভাষায়। আর্থিক সংবাদ, নীতি বিশ্লেষণ, বিনিময় হার। ২৪/৭ আপডেট।",
   "home.topStories": "শীর্ষ সংবাদ",
   "home.economyBusiness": "অর্থনীতি ও ব্যবসা",
-  "home.cultureSociety": "সংস্কৃতি ও সমাজ",
   "home.moreNews": "আরও সংবাদ",
   "home.featuredStory": "বিশেষ সংবাদ",
 
@@ -121,7 +100,7 @@ export const bn = {
   "article.byline": "লেখক",
 
   // Footer
-  "footer.tagline": "আর্জেন্টিনার সংবাদ, বিশ্বের দরজায়",
+  "footer.tagline": "আর্জেন্টিনার বাজার ও রাজনীতি, বিশ্বের দরজায়",
   "footer.about": "আমাদের সম্পর্কে",
   "footer.contact": "যোগাযোগ",
   "footer.terms": "ব্যবহারের শর্তাবলী",
@@ -515,7 +494,7 @@ export const bn = {
   "standards.updated": "সর্বশেষ আপডেট: ১৪ মার্চ, ২০২৬",
   "standards.lead": "Plata একটি বহুভাষিক সংবাদ প্ল্যাটফর্ম যা ৩৫টি ভাষায় আর্জেন্টিনা কভার করে। এই পৃষ্ঠায় ব্যাখ্যা করা হয়েছে আমাদের সংবাদকক্ষ কীভাবে কাজ করে — সূত্র সংগ্রহ থেকে প্রকাশনা পর্যন্ত।",
   "standards.sourcingTitle": "সূত্র সংগ্রহ",
-  "standards.sourcingText": "আমরা তিনটি স্তরে ১৩টিরও বেশি আর্জেন্টিনীয় সংবাদমাধ্যম পর্যবেক্ষণ করি। প্রথম স্তরে রয়েছে Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista এবং iProfesional-এর মতো প্রধান জাতীয় সংবাদমাধ্যম। দ্বিতীয় স্তরে রয়েছে Perfil, Cadena 3 এবং Olé-র মতো স্বাধীন ও বিশেষায়িত সূত্র। তৃতীয় স্তরে রয়েছে La Gaceta, Misiones Online এবং El Día-র মতো আঞ্চলিক সংবাদমাধ্যম। প্রতি ৩০ মিনিটে RSS ফিডের মাধ্যমে নিবন্ধ সংগ্রহ করা হয়।",
+  "standards.sourcingText": "আমরা তিনটি স্তরে ১৩টিরও বেশি আর্জেন্টিনীয় সংবাদমাধ্যম পর্যবেক্ষণ করি। প্রথম স্তরে রয়েছে Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista এবং iProfesional-এর মতো প্রধান জাতীয় সংবাদমাধ্যম। দ্বিতীয় স্তরে রয়েছে Perfil, Cadena 3-র মতো স্বাধীন ও বিশেষায়িত সূত্র। তৃতীয় স্তরে রয়েছে La Gaceta, Misiones Online এবং El Día-র মতো আঞ্চলিক সংবাদমাধ্যম। প্রতি ৩০ মিনিটে RSS ফিডের মাধ্যমে নিবন্ধ সংগ্রহ করা হয়।",
   "standards.verificationTitle": "যাচাইকরণ",
   "standards.verificationText": "প্রতিটি সংবাদ বহু-স্তরীয় পর্যালোচনা প্রক্রিয়ার মধ্য দিয়ে যায়। একই ঘটনা কভারকারী সূত্রগুলো একত্রিত করা হয়। প্রতিটি নিবন্ধ মূল সূত্রের সঙ্গে যাচাই করা হয়। কোনো সূত্র দ্বারা সমর্থিত নয় এমন দাবি চিহ্নিত করে বাদ দেওয়া হয়। দুবার যাচাইয়ে ব্যর্থ সংবাদ প্রকাশিত হয় না।",
   "standards.languageTitle": "ভাষার মান",

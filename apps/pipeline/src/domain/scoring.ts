@@ -43,9 +43,9 @@ export function getPluralityCategory(rawArticles: ScoringArticle[]): string {
     if (!a.category) continue; // Skip articles without a category — don't bias toward any default
     counts.set(a.category, (counts.get(a.category) ?? 0) + 1);
   }
-  // If no article had a category, fall back to "society" as a neutral default
-  if (counts.size === 0) return "society";
-  let best = "society";
+  // If no article had a category, fall back to "economy" as the default
+  if (counts.size === 0) return "economy";
+  let best = "economy";
   let bestCount = 0;
   for (const [cat, count] of counts) {
     if (count > bestCount) { best = cat; bestCount = count; }

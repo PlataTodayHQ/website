@@ -14,11 +14,7 @@ export const ru = {
   // Categories
   "cat.politics": "Политика",
   "cat.economy": "Экономика",
-  "cat.sports": "Спорт",
-  "cat.society": "Общество",
-  "cat.culture": "Культура",
   "cat.world": "В мире",
-  "cat.science": "Наука и технологии",
 
   // Subcategories
   "sub.government": "Власть",
@@ -30,26 +26,10 @@ export const ru = {
   "sub.energy": "Энергетика",
   "sub.agriculture": "Сельское хозяйство",
   "sub.labor": "Труд и занятость",
-  "sub.football": "Футбол",
-  "sub.rugby": "Регби",
-  "sub.tennis": "Теннис",
-  "sub.motorsport": "Автоспорт",
-  "sub.education": "Образование",
-  "sub.health": "Здоровье",
-  "sub.immigration": "Миграция",
-  "sub.urban": "Город",
-  "sub.arts": "Искусство",
-  "sub.tourism": "Туризм",
-  "sub.food-wine": "Еда и вино",
-  "sub.film": "Кино",
   "sub.latin-america": "Латинская Америка",
   "sub.europe": "Европа",
   "sub.us-canada": "США и Канада",
   "sub.asia": "Азия",
-  "sub.innovation": "Инновации",
-  "sub.environment": "Экология",
-  "sub.digital": "Цифровые технологии",
-  "sub.space": "Космос",
 
   // Search
   "search.placeholder": "Поиск статей...",
@@ -72,8 +52,8 @@ export const ru = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Добро пожаловать",
-  "welcome.eyebrow": "35 языков · Одна миссия",
-  "welcome.headline": "Аргентина, открытая миру",
+  "welcome.eyebrow": "Аргентинские рынки и политика · 35 языков",
+  "welcome.headline": "Финансы и политика Аргентины, открытые миру",
   "welcome.sub": "Каждый день мы пишем новости на 35 языках — чтобы весь мир мог понять, что происходит в Аргентине.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const ru = {
   "home.title": "Новости Аргентины на {lang}",
   "home.heroFallbackTitle": "Добро пожаловать на Plata Today",
   "home.heroFallbackDesc": "Новости Аргентины на 35 языках — каждая статья написана заново для вашей аудитории.",
-  "home.description": "Главные новости Аргентины сегодня на {lang}: политика, экономика, спорт, культура. Обновление 24/7, 35 языков.",
+  "home.description": "Политика, экономика и рынки Аргентины на {lang}. Финансовые новости, политический анализ, курсы валют. Обновление 24/7.",
   "home.topStories": "Главные новости",
   "home.economyBusiness": "Экономика и бизнес",
-  "home.cultureSociety": "Культура и общество",
   "home.moreNews": "Ещё новости",
   "home.featuredStory": "Избранный материал",
 
@@ -121,7 +100,7 @@ export const ru = {
   "article.byline": "Автор",
 
   // Footer
-  "footer.tagline": "Новости Аргентины, открытые миру",
+  "footer.tagline": "Аргентинские рынки и политика, открытые миру",
   "footer.about": "О проекте",
   "footer.contact": "Контакты",
   "footer.terms": "Условия использования",
@@ -564,7 +543,7 @@ export const ru = {
   "standards.updated": "Последнее обновление: 14 марта 2026 г.",
   "standards.lead": "Plata — мультиязычная новостная платформа, освещающая события в Аргентине на 35 языках. На этой странице мы рассказываем, как устроена наша редакция — от сбора информации до публикации.",
   "standards.sourcingTitle": "Источники",
-  "standards.sourcingText": "Мы отслеживаем более 13 аргентинских изданий трёх уровней. Первый уровень — крупнейшие национальные СМИ: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista и iProfesional. Второй уровень — независимые и специализированные издания: Perfil, Cadena 3 и Olé. Третий уровень — региональные СМИ: La Gaceta, Misiones Online и El Día. Материалы собираются через RSS-ленты каждые 30 минут.",
+  "standards.sourcingText": "Мы отслеживаем более 13 аргентинских изданий трёх уровней. Первый уровень — крупнейшие национальные СМИ: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista и iProfesional. Второй уровень — независимые и специализированные издания: Perfil, Cadena 3. Третий уровень — региональные СМИ: La Gaceta, Misiones Online и El Día. Материалы собираются через RSS-ленты каждые 30 минут.",
   "standards.verificationTitle": "Проверка фактов",
   "standards.verificationText": "Каждая новость проходит многоэтапную проверку. Публикации разных источников об одном событии группируются вместе. Каждый материал сверяется с оригинальными источниками. Утверждения, не подкреплённые ни одним источником, отмечаются и удаляются. Материалы, дважды не прошедшие проверку, не публикуются.",
   "standards.languageTitle": "Качество языка",
@@ -650,7 +629,7 @@ export const ru = {
   "newsroom.tier1Title": "Уровень 1 — Национальные лидеры",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Уровень 2 — Независимые и специализированные",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Уровень 3 — Региональные",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Каждая статья содержит ссылки на оригинальные источники, чтобы вы всегда могли проверить информацию и узнать больше.",

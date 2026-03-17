@@ -14,11 +14,7 @@ export const en = {
   // Categories
   "cat.politics": "Politics",
   "cat.economy": "Economy",
-  "cat.sports": "Sports",
-  "cat.society": "Society",
-  "cat.culture": "Culture",
   "cat.world": "World",
-  "cat.science": "Science & Tech",
 
   // Subcategories
   "sub.government": "Government",
@@ -30,26 +26,10 @@ export const en = {
   "sub.energy": "Energy",
   "sub.agriculture": "Agriculture",
   "sub.labor": "Labor",
-  "sub.football": "Football",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Education",
-  "sub.health": "Health",
-  "sub.immigration": "Immigration",
-  "sub.urban": "Urban",
-  "sub.arts": "Arts",
-  "sub.tourism": "Tourism",
-  "sub.food-wine": "Food & Wine",
-  "sub.film": "Film",
   "sub.latin-america": "Latin America",
   "sub.europe": "Europe",
   "sub.us-canada": "US & Canada",
   "sub.asia": "Asia",
-  "sub.innovation": "Innovation",
-  "sub.environment": "Environment",
-  "sub.digital": "Digital",
-  "sub.space": "Space",
 
   // Search
   "search.placeholder": "Search articles...",
@@ -72,9 +52,9 @@ export const en = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Welcome",
-  "welcome.eyebrow": "35 languages · One mission",
-  "welcome.headline": "Argentina's story, open to the world",
-  "welcome.sub": "Every day, we write the news natively in 35 languages — so the whole world can understand what's happening in Argentina.",
+  "welcome.eyebrow": "Argentine markets & politics · 35 languages",
+  "welcome.headline": "Argentine finance & politics, open to the world",
+  "welcome.sub": "We cover Argentina's economy, markets, and politics in 35 languages — so investors, expats, and researchers worldwide can stay informed.",
 
   // Newsletter
   "newsletter.title": "Stay connected to Argentina",
@@ -96,13 +76,12 @@ export const en = {
 
   // Homepage
   "home.politics": "Politics",
-  "home.title": "Argentina News in {lang}",
+  "home.title": "Argentina Finance & Politics in {lang}",
   "home.heroFallbackTitle": "Welcome to Plata Today",
   "home.heroFallbackDesc": "Argentina's news, natively written in 35 languages.",
-  "home.description": "Today's top Argentina news in {lang}: politics, economy, sports, culture. Updated 24/7, 35 languages.",
+  "home.description": "Argentina politics, economy & markets in {lang}. Financial news, policy analysis, exchange rates. Updated 24/7.",
   "home.topStories": "Top Stories",
   "home.economyBusiness": "Economy & Business",
-  "home.cultureSociety": "Culture & Society",
   "home.moreNews": "More News",
   "home.featuredStory": "Featured story",
 
@@ -121,7 +100,7 @@ export const en = {
   "article.byline": "By",
 
   // Footer
-  "footer.tagline": "Argentina's news, open to the world",
+  "footer.tagline": "Argentine markets & politics, open to the world",
   "footer.about": "About",
   "footer.contact": "Contact",
   "footer.terms": "Terms of Use",
@@ -144,10 +123,10 @@ export const en = {
 
   // About page
   "about.title": "About Plata",
-  "about.description": "Plata brings Argentina's news to the world in 35 languages. Meet the founder and learn how our newsroom works.",
-  "about.tagline": "Argentina's news. Every language. Every source.",
+  "about.description": "Plata covers Argentine finance, economy & politics in 35 languages. Meet the founder and learn how our newsroom works.",
+  "about.tagline": "Argentine finance & politics. Every language. Every source.",
   "about.missionTitle": "Our mission",
-  "about.missionText": "We believe everyone deserves access to what's happening in Argentina, regardless of the language they speak. Plata monitors 13+ Argentine news sources, synthesizes what matters, and writes each story natively for your language — with context that international readers need.",
+  "about.missionText": "We believe investors, expats, and researchers worldwide deserve access to Argentina's financial and political news, regardless of the language they speak. Plata monitors 13+ Argentine sources, synthesizes what matters in economy, markets, and politics, and writes each story natively for your language.",
   "about.valueNoOpinion": "Source-transparent",
   "about.valueNoOpinionDesc": "Every story cites its sources. We cross-reference multiple outlets so you see where the facts come from.",
   "about.value18langs": "35 languages",
@@ -583,7 +562,7 @@ export const en = {
   "notFound.description": "Page not found. Browse the latest Argentina news on Plata Today.",
 
   // Common
-  "common.siteDescription": "Argentina's news, natively written in 35 languages. Fact-first, source-transparent.",
+  "common.siteDescription": "Argentine politics, economy & markets, natively written in 35 languages. Fact-first, source-transparent.",
   "common.breadcrumbHome": "Home",
   "common.loading": "Loading…",
   "common.loadingData": "Loading data…",
@@ -637,9 +616,9 @@ export const en = {
   "standards.pageTitle": "Editorial Standards — Plata",
   "standards.description": "How Plata's newsroom works: sourcing, verification, and publishing standards.",
   "standards.updated": "Last updated: March 14, 2026",
-  "standards.lead": "Plata is a multilingual news platform covering Argentina in 35 languages. This page explains how our newsroom works — from sourcing to publication.",
+  "standards.lead": "Plata is a multilingual financial and political news platform covering Argentina in 35 languages. This page explains how our newsroom works — from sourcing to publication.",
   "standards.sourcingTitle": "Sourcing",
-  "standards.sourcingText": "We monitor 13+ Argentine news outlets across three tiers. Tier 1 includes major national outlets such as Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, and iProfesional. Tier 2 covers independent and specialized sources like Perfil, Cadena 3, and Olé. Tier 3 includes regional outlets such as La Gaceta, Misiones Online, and El Día. Articles are collected via RSS feeds every 30 minutes.",
+  "standards.sourcingText": "We monitor 13+ Argentine news outlets across three tiers. Tier 1 includes major national outlets such as Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, and iProfesional. Tier 2 covers independent and specialized sources like Perfil and Cadena 3. Tier 3 includes regional outlets such as La Gaceta, Misiones Online, and El Día. Articles are collected via RSS feeds every 30 minutes.",
   "standards.verificationTitle": "Verification",
   "standards.verificationText": "Every story goes through a multi-stage review process. Sources covering the same event are grouped together. Each article is fact-checked against its original sources. Claims not supported by any source are flagged and removed. Stories that fail verification twice are not published.",
   "standards.languageTitle": "Language quality",
@@ -647,7 +626,7 @@ export const en = {
   "standards.attributionTitle": "Source attribution",
   "standards.attributionText": "Every article on Plata cites the outlets it was sourced from. Source names appear at the bottom of each article. We believe readers should always know where information comes from.",
   "standards.filteringTitle": "What we don't publish",
-  "standards.filteringText": "We filter out content that does not meet our standards: live blogs, play-by-play coverage, horoscopes, weather forecasts, recipes, advertising, sponsored content, celebrity gossip, and clickbait. Only stories with national or international significance are published.",
+  "standards.filteringText": "We publish only financial, economic, and political news. We filter out: sports, entertainment, lifestyle, culture, science, live blogs, play-by-play coverage, horoscopes, weather forecasts, recipes, advertising, sponsored content, celebrity gossip, and clickbait.",
   "standards.correctionsTitle": "Corrections",
   "standards.correctionsText": "If we publish inaccurate information, we correct the article and note the correction. See our Corrections Policy for details.",
   "standards.contactTitle": "Questions",
@@ -688,11 +667,11 @@ export const en = {
   // Mission page
   "mission.title": "Mission & Values",
   "mission.pageTitle": "Mission & Values — Plata",
-  "mission.description": "Why Plata exists: making Argentina's news accessible to the world in 35 languages.",
+  "mission.description": "Why Plata exists: making Argentine financial and political news accessible to the world in 35 languages.",
   "mission.heading": "Why Plata exists",
-  "mission.text1": "Argentina produces some of the most dynamic news in Latin America — political shifts, economic reforms, cultural milestones. But almost all of it is published in Spanish.",
-  "mission.text2": "For millions of people connected to Argentina — expats, investors, journalists, researchers, family members — staying informed means navigating a language barrier that shouldn't exist.",
-  "mission.text3": "Plata was built to solve this. We monitor 13+ Argentine news sources, synthesize what matters, and write each story natively in 35 languages — with the context international readers need to understand not just what happened, but why it matters.",
+  "mission.text1": "Argentina's economy and politics move fast — currency shifts, central bank decisions, fiscal reforms, trade policy. But almost all coverage is published in Spanish.",
+  "mission.text2": "For investors, expats, journalists, and researchers connected to Argentina, staying informed means navigating a language barrier that shouldn't exist.",
+  "mission.text3": "Plata was built to solve this. We monitor 13+ Argentine sources, focus on what moves markets and policy, and write each story natively in 35 languages — with the context international readers need.",
   "mission.valuesTitle": "Our values",
   "mission.valueTransparency": "Source-transparent",
   "mission.valueTransparencyDesc": "Every story cites its sources. We cross-reference multiple outlets so you see where the facts come from. No anonymous claims.",
@@ -708,7 +687,7 @@ export const en = {
   // Newsroom page
   "newsroom.title": "How Our Newsroom Works",
   "newsroom.pageTitle": "How Our Newsroom Works — Plata",
-  "newsroom.description": "From 13+ Argentine sources to 35 languages: how Plata builds every story.",
+  "newsroom.description": "From 13+ Argentine sources to 35 languages: how Plata covers finance & politics.",
   "newsroom.heading": "From sources to stories",
   "newsroom.intro": "Every article on Plata goes through a structured pipeline — from collection to publication. Here's how it works.",
   "newsroom.stepsTitle": "The four stages",
@@ -725,12 +704,12 @@ export const en = {
   "newsroom.tier1Title": "Tier 1 — National leaders",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Tier 2 — Independent & specialized",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Tier 3 — Regional",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Every article links back to its original sources so you can always verify and go deeper.",
   "newsroom.filterTitle": "What we don't publish",
-  "newsroom.filterText": "We filter out content that does not meet our standards: live blogs, play-by-play coverage, horoscopes, weather forecasts, recipes, advertising, sponsored content, celebrity gossip, and clickbait. Only stories with national or international significance are published.",
+  "newsroom.filterText": "We publish only financial, economic, and political news. We filter out: sports, entertainment, lifestyle, culture, science, live blogs, play-by-play coverage, horoscopes, weather forecasts, recipes, advertising, sponsored content, celebrity gossip, and clickbait.",
   "newsroom.standardsLink": "Read our full Editorial Standards",
 
   // Founder page

@@ -14,11 +14,7 @@ export const sv = {
   // Categories
   "cat.politics": "Politik",
   "cat.economy": "Ekonomi",
-  "cat.sports": "Sport",
-  "cat.society": "Samhälle",
-  "cat.culture": "Kultur",
   "cat.world": "Världen",
-  "cat.science": "Vetenskap & Teknik",
 
   // Subcategories
   "sub.government": "Regering",
@@ -30,26 +26,10 @@ export const sv = {
   "sub.energy": "Energi",
   "sub.agriculture": "Jordbruk",
   "sub.labor": "Arbetsmarknad",
-  "sub.football": "Fotboll",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Utbildning",
-  "sub.health": "Hälsa",
-  "sub.immigration": "Invandring",
-  "sub.urban": "Stadsplanering",
-  "sub.arts": "Konst",
-  "sub.tourism": "Turism",
-  "sub.food-wine": "Mat & Vin",
-  "sub.film": "Film",
   "sub.latin-america": "Latinamerika",
   "sub.europe": "Europa",
   "sub.us-canada": "USA & Kanada",
   "sub.asia": "Asien",
-  "sub.innovation": "Innovation",
-  "sub.environment": "Miljö",
-  "sub.digital": "Digitalt",
-  "sub.space": "Rymden",
 
   // Search
   "search.placeholder": "Sök artiklar...",
@@ -72,8 +52,8 @@ export const sv = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Välkommen",
-  "welcome.eyebrow": "35 språk · Ett uppdrag",
-  "welcome.headline": "Argentina, öppet för världen",
+  "welcome.eyebrow": "Argentinska marknader & politik · 35 språk",
+  "welcome.headline": "Argentinas finans & politik, öppet för världen",
   "welcome.sub": "Varje dag skriver vi nyheterna på modersmålsnivå på 35 språk — så att hela världen kan förstå vad som händer i Argentina.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const sv = {
   "home.title": "Nyheter från Argentina på {lang}",
   "home.heroFallbackTitle": "Välkommen till Plata Today",
   "home.heroFallbackDesc": "Argentinas nyheter, skrivna direkt på 35 språk.",
-  "home.description": "Dagens viktigaste nyheter från Argentina på {lang}: politik, ekonomi, sport, kultur. Uppdateras dygnet runt, 35 språk.",
+  "home.description": "Argentinas politik, ekonomi och marknader på {lang}. Finansnyheter, politisk analys, växelkurser. Uppdateras dygnet runt.",
   "home.topStories": "Toppnyheter",
   "home.economyBusiness": "Ekonomi & Näringsliv",
-  "home.cultureSociety": "Kultur & Samhälle",
   "home.moreNews": "Fler nyheter",
   "home.featuredStory": "Utvald artikel",
 
@@ -121,7 +100,7 @@ export const sv = {
   "article.byline": "Av",
 
   // Footer
-  "footer.tagline": "Argentinas nyheter, öppna för världen",
+  "footer.tagline": "Argentinska marknader & politik, öppna för världen",
   "footer.about": "Om oss",
   "footer.contact": "Kontakt",
   "footer.terms": "Användarvillkor",
@@ -556,7 +535,7 @@ export const sv = {
   "standards.updated": "Senast uppdaterad: 14 mars 2026",
   "standards.lead": "Plata är en flerspråkig nyhetsplattform som bevakar Argentina på 35 språk. Här förklarar vi hur vår redaktion arbetar — från källinhämtning till publicering.",
   "standards.sourcingTitle": "Källor",
-  "standards.sourcingText": "Vi bevakar över 13 argentinska nyhetsredaktioner i tre nivåer. Nivå 1 omfattar stora nationella medier som Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista och iProfesional. Nivå 2 täcker oberoende och specialiserade källor som Perfil, Cadena 3 och Olé. Nivå 3 inkluderar regionala medier som La Gaceta, Misiones Online och El Día. Artiklar hämtas via RSS-flöden var 30:e minut.",
+  "standards.sourcingText": "Vi bevakar över 13 argentinska nyhetsredaktioner i tre nivåer. Nivå 1 omfattar stora nationella medier som Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista och iProfesional. Nivå 2 täcker oberoende och specialiserade källor som Perfil, Cadena 3. Nivå 3 inkluderar regionala medier som La Gaceta, Misiones Online och El Día. Artiklar hämtas via RSS-flöden var 30:e minut.",
   "standards.verificationTitle": "Verifiering",
   "standards.verificationText": "Varje nyhet genomgår en flerstegsprocess för granskning. Källor som rapporterar om samma händelse grupperas ihop. Varje artikel faktagranskas mot sina ursprungskällor. Påståenden som inte stöds av någon källa flaggas och tas bort. Nyheter som inte klarar verifieringen två gånger publiceras inte.",
   "standards.languageTitle": "Språkkvalitet",
@@ -642,7 +621,7 @@ export const sv = {
   "newsroom.tier1Title": "Nivå 1 — Nationella ledare",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Nivå 2 — Oberoende & specialiserade",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Nivå 3 — Regionala",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Varje artikel länkar tillbaka till sina originalkällor så att du alltid kan verifiera och fördjupa dig.",

@@ -14,11 +14,7 @@ export const da = {
   // Categories
   "cat.politics": "Politik",
   "cat.economy": "Økonomi",
-  "cat.sports": "Sport",
-  "cat.society": "Samfund",
-  "cat.culture": "Kultur",
   "cat.world": "Verden",
-  "cat.science": "Videnskab & Teknologi",
 
   // Subcategories
   "sub.government": "Regering",
@@ -30,26 +26,10 @@ export const da = {
   "sub.energy": "Energi",
   "sub.agriculture": "Landbrug",
   "sub.labor": "Arbejdsmarked",
-  "sub.football": "Fodbold",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Uddannelse",
-  "sub.health": "Sundhed",
-  "sub.immigration": "Immigration",
-  "sub.urban": "Byliv",
-  "sub.arts": "Kunst",
-  "sub.tourism": "Turisme",
-  "sub.food-wine": "Mad & Vin",
-  "sub.film": "Film",
   "sub.latin-america": "Latinamerika",
   "sub.europe": "Europa",
   "sub.us-canada": "USA & Canada",
   "sub.asia": "Asien",
-  "sub.innovation": "Innovation",
-  "sub.environment": "Miljø",
-  "sub.digital": "Digitalt",
-  "sub.space": "Rumfart",
 
   // Search
   "search.placeholder": "Søg i artikler...",
@@ -72,8 +52,8 @@ export const da = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Velkommen",
-  "welcome.eyebrow": "35 sprog · Én mission",
-  "welcome.headline": "Argentina, åbent for verden",
+  "welcome.eyebrow": "Argentinske markeder & politik · 35 sprog",
+  "welcome.headline": "Argentinas finans & politik, åbent for verden",
   "welcome.sub": "Hver dag skriver vi nyhederne på modersmålsniveau på 35 sprog — så hele verden kan forstå, hvad der sker i Argentina.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const da = {
   "home.title": "Nyheder fra Argentina på {lang}",
   "home.heroFallbackTitle": "Velkommen til Plata Today",
   "home.heroFallbackDesc": "Nyheder fra Argentina, skrevet nativt på 35 sprog.",
-  "home.description": "Dagens vigtigste nyheder fra Argentina på {lang}: politik, økonomi, sport, kultur. Opdateres døgnet rundt, 35 sprog.",
+  "home.description": "Argentinas politik, økonomi og markeder på {lang}. Finansnyheder, politisk analyse, valutakurser. Opdateres døgnet rundt.",
   "home.topStories": "Tophistorier",
   "home.economyBusiness": "Økonomi & Erhverv",
-  "home.cultureSociety": "Kultur & Samfund",
   "home.moreNews": "Flere nyheder",
   "home.featuredStory": "Udvalgt historie",
 
@@ -121,7 +100,7 @@ export const da = {
   "article.byline": "Af",
 
   // Footer
-  "footer.tagline": "Nyheder fra Argentina, åbne for verden",
+  "footer.tagline": "Argentinske markeder & politik, åbne for verden",
   "footer.about": "Om os",
   "footer.contact": "Kontakt",
   "footer.terms": "Brugsbetingelser",
@@ -556,7 +535,7 @@ export const da = {
   "standards.updated": "Sidst opdateret: 14. marts 2026",
   "standards.lead": "Plata er en flersproget nyhedsplatform, der dækker Argentina på 35 sprog. Denne side forklarer, hvordan vores redaktion arbejder — fra kildeindsamling til publicering.",
   "standards.sourcingTitle": "Kilder",
-  "standards.sourcingText": "Vi overvåger over 13 argentinske nyhedsmedier i tre niveauer. Niveau 1 omfatter store nationale medier som Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista og iProfesional. Niveau 2 dækker uafhængige og specialiserede kilder som Perfil, Cadena 3 og Olé. Niveau 3 inkluderer regionale medier som La Gaceta, Misiones Online og El Día. Artikler indsamles via RSS-feeds hvert 30. minut.",
+  "standards.sourcingText": "Vi overvåger over 13 argentinske nyhedsmedier i tre niveauer. Niveau 1 omfatter store nationale medier som Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista og iProfesional. Niveau 2 dækker uafhængige og specialiserede kilder som Perfil, Cadena 3. Niveau 3 inkluderer regionale medier som La Gaceta, Misiones Online og El Día. Artikler indsamles via RSS-feeds hvert 30. minut.",
   "standards.verificationTitle": "Verificering",
   "standards.verificationText": "Hver nyhed gennemgår en flertrinsproces for gennemgang. Kilder, der dækker den samme begivenhed, grupperes sammen. Hver artikel faktatjekkes mod sine originale kilder. Påstande, der ikke understøttes af nogen kilde, markeres og fjernes. Nyheder, der ikke består verificeringen to gange, publiceres ikke.",
   "standards.languageTitle": "Sprogkvalitet",
@@ -642,7 +621,7 @@ export const da = {
   "newsroom.tier1Title": "Niveau 1 — Nationale ledere",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Niveau 2 — Uafhængige & specialiserede",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Niveau 3 — Regionale",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Hver artikel linker til de originale kilder, så du altid kan verificere og læse mere.",

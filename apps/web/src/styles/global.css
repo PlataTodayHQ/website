@@ -33,11 +33,7 @@
   /* Category accent colors */
   --cat-politics: #b91c1c;
   --cat-economy: #0369a1;
-  --cat-sports: #15803d;
-  --cat-society: #7c3aed;
-  --cat-culture: #c2410c;
   --cat-world: #0e7490;
-  --cat-science: #4338ca;
 }
 
 *,
@@ -136,11 +132,7 @@ button:focus:not(:focus-visible) {
 
     --cat-politics: #ef4444;
     --cat-economy: #38bdf8;
-    --cat-sports: #4ade80;
-    --cat-society: #a78bfa;
-    --cat-culture: #fb923c;
     --cat-world: #22d3ee;
-    --cat-science: #818cf8;
   }
 }
 
@@ -508,11 +500,7 @@ button:focus:not(:focus-visible) {
 
   --cat-politics: #ef4444;
   --cat-economy: #38bdf8;
-  --cat-sports: #4ade80;
-  --cat-society: #a78bfa;
-  --cat-culture: #fb923c;
   --cat-world: #22d3ee;
-  --cat-science: #818cf8;
 }
 
 /* Dark mode: market components refinements */

@@ -14,11 +14,7 @@ export const cs = {
   // Categories
   "cat.politics": "Politika",
   "cat.economy": "Ekonomika",
-  "cat.sports": "Sport",
-  "cat.society": "Společnost",
-  "cat.culture": "Kultura",
   "cat.world": "Svět",
-  "cat.science": "Věda a technika",
 
   // Subcategories
   "sub.government": "Vláda",
@@ -30,26 +26,10 @@ export const cs = {
   "sub.energy": "Energetika",
   "sub.agriculture": "Zemědělství",
   "sub.labor": "Práce",
-  "sub.football": "Fotbal",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Vzdělávání",
-  "sub.health": "Zdravotnictví",
-  "sub.immigration": "Imigrace",
-  "sub.urban": "Urbanismus",
-  "sub.arts": "Umění",
-  "sub.tourism": "Cestovní ruch",
-  "sub.food-wine": "Gastronomie a víno",
-  "sub.film": "Film",
   "sub.latin-america": "Latinská Amerika",
   "sub.europe": "Evropa",
   "sub.us-canada": "USA a Kanada",
   "sub.asia": "Asie",
-  "sub.innovation": "Inovace",
-  "sub.environment": "Životní prostředí",
-  "sub.digital": "Digitální svět",
-  "sub.space": "Vesmír",
 
   // Search
   "search.placeholder": "Hledat články...",
@@ -72,8 +52,8 @@ export const cs = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Vítejte",
-  "welcome.eyebrow": "35 jazyků · Jedno poslání",
-  "welcome.headline": "Příběh Argentiny, otevřený světu",
+  "welcome.eyebrow": "Argentinské trhy a politika · 35 jazyků",
+  "welcome.headline": "Finance a politika Argentiny, otevřené světu",
   "welcome.sub": "Každý den píšeme zprávy v 35 jazycích — aby celý svět mohl sledovat, co se v Argentině děje.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const cs = {
   "home.title": "Zprávy z Argentiny v {lang}",
   "home.heroFallbackTitle": "Vítejte na Plata Today",
   "home.heroFallbackDesc": "Zprávy z Argentiny, psané v 35 jazycích.",
-  "home.description": "Dnešní hlavní zprávy z Argentiny v {lang}: politika, ekonomika, sport, kultura. Aktualizováno 24/7, 35 jazyků.",
+  "home.description": "Politika, ekonomika a trhy Argentiny v {lang}. Finanční zprávy, politická analýza, směnné kurzy. Aktualizováno 24/7.",
   "home.topStories": "Hlavní zprávy",
   "home.economyBusiness": "Ekonomika a podnikání",
-  "home.cultureSociety": "Kultura a společnost",
   "home.moreNews": "Další zprávy",
   "home.featuredStory": "Doporučený článek",
 
@@ -121,7 +100,7 @@ export const cs = {
   "article.byline": "Autor",
 
   // Footer
-  "footer.tagline": "Zprávy z Argentiny, otevřené světu",
+  "footer.tagline": "Argentinské trhy a politika, otevřené světu",
   "footer.about": "O nás",
   "footer.contact": "Kontakt",
   "footer.terms": "Podmínky užití",
@@ -515,7 +494,7 @@ export const cs = {
   "standards.updated": "Poslední aktualizace: 14. března 2026",
   "standards.lead": "Plata je vícejazyčná zpravodajská platforma pokrývající Argentinu ve 35 jazycích. Tato stránka vysvětluje, jak naše redakce funguje — od získávání zdrojů po publikaci.",
   "standards.sourcingTitle": "Získávání zdrojů",
-  "standards.sourcingText": "Sledujeme 13+ argentinských zpravodajských redakcí ve třech úrovních. Úroveň 1 zahrnuje hlavní celostátní média jako Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista a iProfesional. Úroveň 2 pokrývá nezávislé a specializované zdroje jako Perfil, Cadena 3 a Olé. Úroveň 3 zahrnuje regionální média jako La Gaceta, Misiones Online a El Día. Články shromažďujeme prostřednictvím RSS kanálů každých 30 minut.",
+  "standards.sourcingText": "Sledujeme 13+ argentinských zpravodajských redakcí ve třech úrovních. Úroveň 1 zahrnuje hlavní celostátní média jako Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista a iProfesional. Úroveň 2 pokrývá nezávislé a specializované zdroje jako Perfil, Cadena 3. Úroveň 3 zahrnuje regionální média jako La Gaceta, Misiones Online a El Día. Články shromažďujeme prostřednictvím RSS kanálů každých 30 minut.",
   "standards.verificationTitle": "Ověřování",
   "standards.verificationText": "Každý článek prochází vícestupňovým kontrolním procesem. Zdroje pokrývající stejnou událost jsou seskupeny. Každý článek je ověřen proti původním zdrojům. Tvrzení, která nejsou podložena žádným zdrojem, jsou označena a odstraněna. Články, které neprojdou ověřením dvakrát, nejsou publikovány.",
   "standards.languageTitle": "Jazyková kvalita",

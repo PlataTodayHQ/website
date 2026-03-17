@@ -54,13 +54,6 @@ ${getCategoryGuidance(category)}`;
 
 function getCategoryGuidance(category: string): string {
   switch (category) {
-    case "sports":
-      return `
-## Sports-specific guidelines
-- Include scores, match results, and key statistics
-- Name goalscorers, key plays, and match timeline
-- Provide tournament/league context (standings, what this result means)
-- Note attendance and venue when available`;
     case "economy":
       return `
 ## Economy-specific guidelines
@@ -75,30 +68,12 @@ function getCategoryGuidance(category: string): string {
 - Note coalition dynamics and opposition reactions
 - Include historical precedent when relevant
 - Explain the significance for governance and policy direction`;
-    case "society":
-      return `
-## Society-specific guidelines
-- Humanize the story — note affected populations and scale of impact
-- Include geographic context within Argentina
-- Note relevant social programs or institutional responses`;
     case "world":
       return `
 ## World news guidelines
 - Emphasize the Argentine angle or connection
 - Explain bilateral relationships and historical context
 - Note diplomatic implications for Argentina`;
-    case "science":
-      return `
-## Science & Tech guidelines
-- Explain the innovation or discovery in accessible terms
-- Note Argentine institutions or researchers involved
-- Include practical implications and timeline`;
-    case "culture":
-      return `
-## Culture guidelines
-- Note the cultural significance within Argentine traditions
-- Include relevant artistic/historical context
-- Mention international recognition or reach`;
     default:
       return "";
   }

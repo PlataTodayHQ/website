@@ -14,11 +14,7 @@ export const sw = {
   // Categories
   "cat.politics": "Siasa",
   "cat.economy": "Uchumi",
-  "cat.sports": "Michezo",
-  "cat.society": "Jamii",
-  "cat.culture": "Utamaduni",
   "cat.world": "Ulimwengu",
-  "cat.science": "Sayansi na Teknolojia",
 
   // Subcategories
   "sub.government": "Serikali",
@@ -30,26 +26,10 @@ export const sw = {
   "sub.energy": "Nishati",
   "sub.agriculture": "Kilimo",
   "sub.labor": "Ajira",
-  "sub.football": "Soka",
-  "sub.rugby": "Ragi",
-  "sub.tennis": "Tenisi",
-  "sub.motorsport": "Michezo ya Magari",
-  "sub.education": "Elimu",
-  "sub.health": "Afya",
-  "sub.immigration": "Uhamiaji",
-  "sub.urban": "Miji",
-  "sub.arts": "Sanaa",
-  "sub.tourism": "Utalii",
-  "sub.food-wine": "Chakula na Mvinyo",
-  "sub.film": "Filamu",
   "sub.latin-america": "Amerika ya Kusini",
   "sub.europe": "Ulaya",
   "sub.us-canada": "Marekani na Kanada",
   "sub.asia": "Asia",
-  "sub.innovation": "Ubunifu",
-  "sub.environment": "Mazingira",
-  "sub.digital": "Kidijitali",
-  "sub.space": "Anga",
 
   // Search
   "search.placeholder": "Tafuta makala...",
@@ -72,8 +52,8 @@ export const sw = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Karibu",
-  "welcome.eyebrow": "Lugha 35 · Dhamira moja",
-  "welcome.headline": "Habari za Argentina, wazi kwa ulimwengu",
+  "welcome.eyebrow": "Masoko na siasa za Argentina · Lugha 35",
+  "welcome.headline": "Fedha na siasa za Argentina, wazi kwa ulimwengu",
   "welcome.sub": "Kila siku, tunaandika habari asilia katika lugha 35 — ili ulimwengu wote uweze kuelewa yanayotokea Argentina.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const sw = {
   "home.title": "Habari za Argentina kwa {lang}",
   "home.heroFallbackTitle": "Karibu Plata Today",
   "home.heroFallbackDesc": "Habari za Argentina, zimeandikwa asilia katika lugha 35.",
-  "home.description": "Habari kuu za Argentina leo kwa {lang}: siasa, uchumi, michezo, utamaduni. Zinasasishwa masaa 24/7, lugha 35.",
+  "home.description": "Siasa, uchumi na masoko ya Argentina kwa {lang}. Habari za kifedha, uchambuzi wa kisiasa, viwango vya ubadilishaji. Inasasishwa 24/7.",
   "home.topStories": "Habari Kuu",
   "home.economyBusiness": "Uchumi na Biashara",
-  "home.cultureSociety": "Utamaduni na Jamii",
   "home.moreNews": "Habari Zaidi",
   "home.featuredStory": "Habari iliyoangaziwa",
 
@@ -121,7 +100,7 @@ export const sw = {
   "article.byline": "Na",
 
   // Footer
-  "footer.tagline": "Habari za Argentina, wazi kwa ulimwengu",
+  "footer.tagline": "Masoko na siasa za Argentina, wazi kwa ulimwengu",
   "footer.about": "Kuhusu",
   "footer.contact": "Wasiliana",
   "footer.terms": "Masharti ya Matumizi",
@@ -515,7 +494,7 @@ export const sw = {
   "standards.updated": "Ilisasishwa mwisho: Machi 14, 2026",
   "standards.lead": "Plata ni jukwaa la habari la lugha nyingi linalofunika Argentina katika lugha 35. Ukurasa huu unaeleza jinsi chumba chetu cha habari kinavyofanya kazi — kutoka vyanzo hadi uchapishaji.",
   "standards.sourcingTitle": "Vyanzo",
-  "standards.sourcingText": "Tunafuatilia vyombo 13+ vya habari vya Argentina katika ngazi tatu. Ngazi ya 1 inajumuisha vyombo vikubwa vya kitaifa kama Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, na iProfesional. Ngazi ya 2 inafunika vyanzo huru na maalum kama Perfil, Cadena 3, na Olé. Ngazi ya 3 inajumuisha vyombo vya mikoa kama La Gaceta, Misiones Online, na El Día. Makala yanakusanywa kupitia RSS kila dakika 30.",
+  "standards.sourcingText": "Tunafuatilia vyombo 13+ vya habari vya Argentina katika ngazi tatu. Ngazi ya 1 inajumuisha vyombo vikubwa vya kitaifa kama Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, na iProfesional. Ngazi ya 2 inafunika vyanzo huru na maalum kama Perfil, Cadena 3,. Ngazi ya 3 inajumuisha vyombo vya mikoa kama La Gaceta, Misiones Online, na El Día. Makala yanakusanywa kupitia RSS kila dakika 30.",
   "standards.verificationTitle": "Uhakiki",
   "standards.verificationText": "Kila habari inapitia mchakato wa mapitio ya hatua nyingi. Vyanzo vinavyofunika tukio moja vinaunganishwa pamoja. Kila makala inahakikiwa dhidi ya vyanzo vyake vya awali. Madai yasiyoungwa mkono na chanzo chochote yanabainishwa na kuondolewa. Habari zinazoshindwa uhakiki mara mbili hazichapishwi.",
   "standards.languageTitle": "Ubora wa lugha",

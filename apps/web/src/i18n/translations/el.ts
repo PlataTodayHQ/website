@@ -14,11 +14,7 @@ export const el = {
   // Categories
   "cat.politics": "Πολιτική",
   "cat.economy": "Οικονομία",
-  "cat.sports": "Αθλητικά",
-  "cat.society": "Κοινωνία",
-  "cat.culture": "Πολιτισμός",
   "cat.world": "Κόσμος",
-  "cat.science": "Επιστήμη & Τεχνολογία",
 
   // Subcategories
   "sub.government": "Κυβέρνηση",
@@ -30,26 +26,10 @@ export const el = {
   "sub.energy": "Ενέργεια",
   "sub.agriculture": "Γεωργία",
   "sub.labor": "Εργασία",
-  "sub.football": "Ποδόσφαιρο",
-  "sub.rugby": "Ράγκμπι",
-  "sub.tennis": "Τένις",
-  "sub.motorsport": "Μηχανοκίνητος αθλητισμός",
-  "sub.education": "Εκπαίδευση",
-  "sub.health": "Υγεία",
-  "sub.immigration": "Μετανάστευση",
-  "sub.urban": "Αστικά θέματα",
-  "sub.arts": "Τέχνες",
-  "sub.tourism": "Τουρισμός",
-  "sub.food-wine": "Γαστρονομία & Κρασί",
-  "sub.film": "Κινηματογράφος",
   "sub.latin-america": "Λατινική Αμερική",
   "sub.europe": "Ευρώπη",
   "sub.us-canada": "ΗΠΑ & Καναδάς",
   "sub.asia": "Ασία",
-  "sub.innovation": "Καινοτομία",
-  "sub.environment": "Περιβάλλον",
-  "sub.digital": "Ψηφιακός κόσμος",
-  "sub.space": "Διάστημα",
 
   // Search
   "search.placeholder": "Αναζήτηση άρθρων...",
@@ -72,8 +52,8 @@ export const el = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Καλωσορίσατε",
-  "welcome.eyebrow": "35 γλώσσες · Μία αποστολή",
-  "welcome.headline": "Η ιστορία της Αργεντινής, ανοιχτή στον κόσμο",
+  "welcome.eyebrow": "Αργεντινές αγορές & πολιτική · 35 γλώσσες",
+  "welcome.headline": "Οικονομικά & πολιτική της Αργεντινής, ανοιχτά στον κόσμο",
   "welcome.sub": "Κάθε μέρα, γράφουμε τις ειδήσεις εγγενώς σε 35 γλώσσες — ώστε ολόκληρος ο κόσμος να μπορεί να κατανοήσει τι συμβαίνει στην Αργεντινή.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const el = {
   "home.title": "Ειδήσεις Αργεντινής στα {lang}",
   "home.heroFallbackTitle": "Καλωσορίσατε στο Plata Today",
   "home.heroFallbackDesc": "Οι ειδήσεις της Αργεντινής, γραμμένες εγγενώς σε 35 γλώσσες.",
-  "home.description": "Οι σημαντικότερες ειδήσεις της Αργεντινής σήμερα στα {lang}: πολιτική, οικονομία, αθλητικά, πολιτισμός. Ενημέρωση 24/7, 35 γλώσσες.",
+  "home.description": "Πολιτική, οικονομία και αγορές της Αργεντινής στα {lang}. Χρηματοοικονομικά νέα, πολιτική ανάλυση, συναλλαγματικές ισοτιμίες. Ενημέρωση 24/7.",
   "home.topStories": "Κορυφαίες ειδήσεις",
   "home.economyBusiness": "Οικονομία & Επιχειρήσεις",
-  "home.cultureSociety": "Πολιτισμός & Κοινωνία",
   "home.moreNews": "Περισσότερες ειδήσεις",
   "home.featuredStory": "Προτεινόμενο άρθρο",
 
@@ -121,7 +100,7 @@ export const el = {
   "article.byline": "Από",
 
   // Footer
-  "footer.tagline": "Οι ειδήσεις της Αργεντινής, ανοιχτές στον κόσμο",
+  "footer.tagline": "Αργεντινές αγορές & πολιτική, ανοιχτές στον κόσμο",
   "footer.about": "Σχετικά",
   "footer.contact": "Επικοινωνία",
   "footer.terms": "Όροι χρήσης",
@@ -515,7 +494,7 @@ export const el = {
   "standards.updated": "Τελευταία ενημέρωση: 14 Μαρτίου 2026",
   "standards.lead": "Το Plata είναι μια πολύγλωσση ειδησεογραφική πλατφόρμα που καλύπτει την Αργεντινή σε 35 γλώσσες. Αυτή η σελίδα εξηγεί πώς λειτουργεί η σύνταξή μας — από τις πηγές μέχρι τη δημοσίευση.",
   "standards.sourcingTitle": "Πηγές",
-  "standards.sourcingText": "Παρακολουθούμε 13+ αργεντίνικα ειδησεογραφικά μέσα σε τρία επίπεδα. Το Επίπεδο 1 περιλαμβάνει μεγάλα εθνικά μέσα όπως Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista και iProfesional. Το Επίπεδο 2 καλύπτει ανεξάρτητες και εξειδικευμένες πηγές όπως Perfil, Cadena 3 και Olé. Το Επίπεδο 3 περιλαμβάνει περιφερειακά μέσα όπως La Gaceta, Misiones Online και El Día. Τα άρθρα συλλέγονται μέσω RSS feeds κάθε 30 λεπτά.",
+  "standards.sourcingText": "Παρακολουθούμε 13+ αργεντίνικα ειδησεογραφικά μέσα σε τρία επίπεδα. Το Επίπεδο 1 περιλαμβάνει μεγάλα εθνικά μέσα όπως Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista και iProfesional. Το Επίπεδο 2 καλύπτει ανεξάρτητες και εξειδικευμένες πηγές όπως Perfil, Cadena 3. Το Επίπεδο 3 περιλαμβάνει περιφερειακά μέσα όπως La Gaceta, Misiones Online και El Día. Τα άρθρα συλλέγονται μέσω RSS feeds κάθε 30 λεπτά.",
   "standards.verificationTitle": "Επαλήθευση",
   "standards.verificationText": "Κάθε ιστορία περνά από πολυεπίπεδη διαδικασία ελέγχου. Πηγές που καλύπτουν το ίδιο γεγονός ομαδοποιούνται. Κάθε άρθρο ελέγχεται ως προς τις αρχικές πηγές του. Ισχυρισμοί που δεν υποστηρίζονται από καμία πηγή επισημαίνονται και αφαιρούνται. Ιστορίες που αποτυγχάνουν δύο φορές στην επαλήθευση δεν δημοσιεύονται.",
   "standards.languageTitle": "Γλωσσική ποιότητα",

@@ -14,11 +14,7 @@ export const id = {
   // Categories
   "cat.politics": "Politik",
   "cat.economy": "Ekonomi",
-  "cat.sports": "Olahraga",
-  "cat.society": "Masyarakat",
-  "cat.culture": "Budaya",
   "cat.world": "Dunia",
-  "cat.science": "Sains & Teknologi",
 
   // Subcategories
   "sub.government": "Pemerintahan",
@@ -30,26 +26,10 @@ export const id = {
   "sub.energy": "Energi",
   "sub.agriculture": "Pertanian",
   "sub.labor": "Ketenagakerjaan",
-  "sub.football": "Sepak Bola",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tenis",
-  "sub.motorsport": "Balap Motor",
-  "sub.education": "Pendidikan",
-  "sub.health": "Kesehatan",
-  "sub.immigration": "Imigrasi",
-  "sub.urban": "Perkotaan",
-  "sub.arts": "Seni",
-  "sub.tourism": "Pariwisata",
-  "sub.food-wine": "Kuliner & Anggur",
-  "sub.film": "Film",
   "sub.latin-america": "Amerika Latin",
   "sub.europe": "Eropa",
   "sub.us-canada": "AS & Kanada",
   "sub.asia": "Asia",
-  "sub.innovation": "Inovasi",
-  "sub.environment": "Lingkungan",
-  "sub.digital": "Digital",
-  "sub.space": "Antariksa",
 
   // Search
   "search.placeholder": "Cari artikel...",
@@ -72,8 +52,8 @@ export const id = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Selamat datang",
-  "welcome.eyebrow": "35 bahasa · Satu misi",
-  "welcome.headline": "Kabar Argentina, terbuka untuk dunia",
+  "welcome.eyebrow": "Pasar & politik Argentina · 35 bahasa",
+  "welcome.headline": "Keuangan & politik Argentina, terbuka untuk dunia",
   "welcome.sub": "Setiap hari, kami menulis berita secara native dalam 35 bahasa — agar seluruh dunia bisa memahami apa yang terjadi di Argentina.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const id = {
   "home.title": "Berita Argentina dalam {lang}",
   "home.heroFallbackTitle": "Selamat Datang di Plata Today",
   "home.heroFallbackDesc": "Berita Argentina, ditulis secara native dalam 35 bahasa.",
-  "home.description": "Berita utama Argentina hari ini dalam {lang}: politik, ekonomi, olahraga, budaya. Diperbarui 24/7, 35 bahasa.",
+  "home.description": "Politik, ekonomi, dan pasar Argentina dalam {lang}. Berita keuangan, analisis politik, nilai tukar. Diperbarui 24/7.",
   "home.topStories": "Berita Utama",
   "home.economyBusiness": "Ekonomi & Bisnis",
-  "home.cultureSociety": "Budaya & Masyarakat",
   "home.moreNews": "Berita Lainnya",
   "home.featuredStory": "Berita pilihan",
 
@@ -121,7 +100,7 @@ export const id = {
   "article.byline": "Oleh",
 
   // Footer
-  "footer.tagline": "Berita Argentina, terbuka untuk dunia",
+  "footer.tagline": "Pasar & politik Argentina, terbuka untuk dunia",
   "footer.about": "Tentang",
   "footer.contact": "Kontak",
   "footer.terms": "Ketentuan Penggunaan",
@@ -515,7 +494,7 @@ export const id = {
   "standards.updated": "Terakhir diperbarui: 14 Maret 2026",
   "standards.lead": "Plata adalah platform berita multibahasa yang meliput Argentina dalam 35 bahasa. Halaman ini menjelaskan cara kerja redaksi kami — dari pengumpulan sumber hingga publikasi.",
   "standards.sourcingTitle": "Pengumpulan sumber",
-  "standards.sourcingText": "Kami memantau 13+ media berita Argentina di tiga tingkatan. Tingkat 1 mencakup media nasional besar seperti Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, dan iProfesional. Tingkat 2 mencakup sumber independen dan khusus seperti Perfil, Cadena 3, dan Olé. Tingkat 3 mencakup media regional seperti La Gaceta, Misiones Online, dan El Día. Artikel dikumpulkan melalui RSS feed setiap 30 menit.",
+  "standards.sourcingText": "Kami memantau 13+ media berita Argentina di tiga tingkatan. Tingkat 1 mencakup media nasional besar seperti Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, dan iProfesional. Tingkat 2 mencakup sumber independen dan khusus seperti Perfil, Cadena 3,. Tingkat 3 mencakup media regional seperti La Gaceta, Misiones Online, dan El Día. Artikel dikumpulkan melalui RSS feed setiap 30 menit.",
   "standards.verificationTitle": "Verifikasi",
   "standards.verificationText": "Setiap berita melalui proses peninjauan bertahap. Sumber yang meliput peristiwa yang sama dikelompokkan bersama. Setiap artikel diperiksa faktanya terhadap sumber aslinya. Klaim yang tidak didukung oleh sumber mana pun ditandai dan dihapus. Berita yang gagal verifikasi dua kali tidak diterbitkan.",
   "standards.languageTitle": "Kualitas bahasa",

@@ -25,24 +25,8 @@ const PATTERNS: CategoryPattern[] = [
     keywords: /\b(presidente|Milei|Cristina|Macri|gobernador|intendente|diputado|senador|Congreso|legislatura|decreto|DNU|veto|elecciones?|ballotage|balotaje|candidato|campaña|campa[ñn]a electoral|oficialismo|oposición|oposicion|peronismo|kirchnerismo|PRO|UCR|libertario|gabinete|ministerio|ministro|canciller|embajador|AFIP|ARCA|reforma laboral|reforma previsional|ley bases|justicia federal|Corte Suprema|procurad|juicio político|juicio politico|indagatoria|imputad|procesad|causa judicial)\b/i,
   },
   {
-    category: "sports",
-    keywords: /\b(Boca|River|Racing|San Lorenzo|Independiente|Selección|seleccion argentina|AFA|Copa América|Copa America|Libertadores|Sudamericana|Liga Profesional|Superliga|gol|campeonato|torneo|clásico|clasico|Messi|Maradona|Pumas|rugby|UAR|ATP|WTA|tenis|Fórmula 1|formula 1|TC |Turismo Carretera|automovilismo|Colapinto|Copa Davis|Mundial)\b/i,
-  },
-  {
-    category: "society",
-    keywords: /\b(educación|educacion|universidad|UBA|docentes|paro docente|PAMI|salud pública|salud publica|hospital|dengue|vacuna|epidemia|pandemia|seguridad|inseguridad|robo|crimen|homicidio|femicidio|violencia de género|violencia de genero|protesta|marcha|manifestación|manifestacion|tránsito|transito|subte|colectivo|transporte|vivienda|inmigración|inmigracion)\b/i,
-  },
-  {
     category: "world",
     keywords: /\b(Mercosur|bilateral|relaciones exteriores|cancillería|cancilleria|embajada|Naciones Unidas|ONU|G20|Unión Europea|Union Europea|Brasil|Chile|Uruguay|Paraguay|Bolivia|BRICS|tratado|acuerdo comercial|diplomátic|diplomatic)\b/i,
-  },
-  {
-    category: "science",
-    keywords: /\b(CONICET|científic|cientific|investigador|satélite|satelite|CONAE|inteligencia artificial|startup|tecnología|tecnologia|innovación|innovacion|medio ambiente|cambio climático|cambio climatico|contaminación|contaminacion|energía renovable|energia renovable|solar|eólica|eolica)\b/i,
-  },
-  {
-    category: "culture",
-    keywords: /\b(cine argentino|teatro|Colón|colon|museo|festival|tango|folklore|Mendoza.*vino|vino.*Mendoza|Malbec|gastronomía|gastronomia|turismo|temporada|premio.*liter|liter.*premio|Oscar|Emmy|Netflix.*argentin|argentin.*Netflix)\b/i,
   },
 ];
 
@@ -59,15 +43,11 @@ export function inferCategoryFromText(title: string, url: string): Category | nu
     }
   }
 
-  // URL path patterns (e.g., /economia/, /politica/, /deportes/)
+  // URL path patterns (e.g., /economia/, /politica/)
   const urlLower = url.toLowerCase();
   if (/\/(econom|finanz|mercado)/.test(urlLower)) return "economy";
   if (/\/(politic|gobierno|congreso)/.test(urlLower)) return "politics";
-  if (/\/(deport|futbol|football)/.test(urlLower)) return "sports";
-  if (/\/(sociedad|salud|educac|seguridad)/.test(urlLower)) return "society";
   if (/\/(mundo|internacion|global)/.test(urlLower)) return "world";
-  if (/\/(tecnolog|ciencia|innovac)/.test(urlLower)) return "science";
-  if (/\/(cultur|espectacul|turism|cine)/.test(urlLower)) return "culture";
 
   return null;
 }

@@ -14,11 +14,7 @@ export const it = {
   // Categories
   "cat.politics": "Politica",
   "cat.economy": "Economia",
-  "cat.sports": "Sport",
-  "cat.society": "Società",
-  "cat.culture": "Cultura",
   "cat.world": "Mondo",
-  "cat.science": "Scienza e tecnologia",
 
   // Subcategories
   "sub.government": "Governo",
@@ -30,26 +26,10 @@ export const it = {
   "sub.energy": "Energia",
   "sub.agriculture": "Agricoltura",
   "sub.labor": "Lavoro",
-  "sub.football": "Calcio",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Motorsport",
-  "sub.education": "Istruzione",
-  "sub.health": "Salute",
-  "sub.immigration": "Immigrazione",
-  "sub.urban": "Urbanistica",
-  "sub.arts": "Arti",
-  "sub.tourism": "Turismo",
-  "sub.food-wine": "Gastronomia e vino",
-  "sub.film": "Cinema",
   "sub.latin-america": "America Latina",
   "sub.europe": "Europa",
   "sub.us-canada": "USA e Canada",
   "sub.asia": "Asia",
-  "sub.innovation": "Innovazione",
-  "sub.environment": "Ambiente",
-  "sub.digital": "Digitale",
-  "sub.space": "Spazio",
 
   // Search
   "search.placeholder": "Cerca articoli...",
@@ -72,8 +52,8 @@ export const it = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Benvenuto",
-  "welcome.eyebrow": "35 lingue · Una missione",
-  "welcome.headline": "L'Argentina, aperta al mondo",
+  "welcome.eyebrow": "Mercati e politica argentina · 35 lingue",
+  "welcome.headline": "Finanza e politica argentina, aperte al mondo",
   "welcome.sub": "Ogni giorno scriviamo le notizie nativamente in 35 lingue — perché il mondo intero possa capire cosa accade in Argentina.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const it = {
   "home.title": "Notizie dall'Argentina in {lang}",
   "home.heroFallbackTitle": "Benvenuto su Plata Today",
   "home.heroFallbackDesc": "Le notizie dall'Argentina, scritte nativamente in 35 lingue.",
-  "home.description": "Le notizie più importanti dall'Argentina oggi in {lang}: politica, economia, sport, cultura. Aggiornamento 24/7, 35 lingue.",
+  "home.description": "Politica, economia e mercati dell'Argentina in {lang}. Notizie finanziarie, analisi politica, tassi di cambio. Aggiornamento 24/7.",
   "home.topStories": "In primo piano",
   "home.economyBusiness": "Economia e affari",
-  "home.cultureSociety": "Cultura e società",
   "home.moreNews": "Altre notizie",
   "home.featuredStory": "Articolo in evidenza",
 
@@ -121,7 +100,7 @@ export const it = {
   "article.byline": "Di",
 
   // Footer
-  "footer.tagline": "Le notizie dall'Argentina, aperte al mondo",
+  "footer.tagline": "Mercati e politica argentina, aperti al mondo",
   "footer.about": "Chi siamo",
   "footer.contact": "Contatti",
   "footer.terms": "Condizioni d'uso",
@@ -564,7 +543,7 @@ export const it = {
   "standards.updated": "Ultimo aggiornamento: 14 marzo 2026",
   "standards.lead": "Plata è una piattaforma di informazione multilingue che copre l'Argentina in 35 lingue. Questa pagina spiega come funziona la nostra redazione — dalla raccolta delle fonti alla pubblicazione.",
   "standards.sourcingTitle": "Fonti",
-  "standards.sourcingText": "Monitoriamo oltre 13 testate giornalistiche argentine su tre livelli. Il livello 1 comprende i principali media nazionali: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista e iProfesional. Il livello 2 copre fonti indipendenti e specializzate come Perfil, Cadena 3 e Olé. Il livello 3 include testate regionali come La Gaceta, Misiones Online ed El Día. Gli articoli vengono raccolti tramite feed RSS ogni 30 minuti.",
+  "standards.sourcingText": "Monitoriamo oltre 13 testate giornalistiche argentine su tre livelli. Il livello 1 comprende i principali media nazionali: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista e iProfesional. Il livello 2 copre fonti indipendenti e specializzate come Perfil, Cadena 3. Il livello 3 include testate regionali come La Gaceta, Misiones Online ed El Día. Gli articoli vengono raccolti tramite feed RSS ogni 30 minuti.",
   "standards.verificationTitle": "Verifica dei fatti",
   "standards.verificationText": "Ogni notizia passa attraverso un processo di revisione a più fasi. Le pubblicazioni di fonti diverse sullo stesso evento vengono raggruppate. Ogni articolo viene verificato rispetto alle fonti originali. Le affermazioni non supportate da alcuna fonte vengono segnalate e rimosse. Le notizie che non superano la verifica due volte non vengono pubblicate.",
   "standards.languageTitle": "Qualità linguistica",
@@ -650,7 +629,7 @@ export const it = {
   "newsroom.tier1Title": "Livello 1 — Leader nazionali",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Livello 2 — Indipendenti e specializzate",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Livello 3 — Regionali",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Ogni articolo rimanda alle fonti originali, così puoi sempre verificare e approfondire.",

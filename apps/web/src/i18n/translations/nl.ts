@@ -14,11 +14,7 @@ export const nl = {
   // Categories
   "cat.politics": "Politiek",
   "cat.economy": "Economie",
-  "cat.sports": "Sport",
-  "cat.society": "Samenleving",
-  "cat.culture": "Cultuur",
   "cat.world": "Wereld",
-  "cat.science": "Wetenschap & Tech",
 
   // Subcategories
   "sub.government": "Overheid",
@@ -30,26 +26,10 @@ export const nl = {
   "sub.energy": "Energie",
   "sub.agriculture": "Landbouw",
   "sub.labor": "Arbeidsmarkt",
-  "sub.football": "Voetbal",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tennis",
-  "sub.motorsport": "Autosport",
-  "sub.education": "Onderwijs",
-  "sub.health": "Gezondheid",
-  "sub.immigration": "Immigratie",
-  "sub.urban": "Stedelijk",
-  "sub.arts": "Kunst",
-  "sub.tourism": "Toerisme",
-  "sub.food-wine": "Eten & Wijn",
-  "sub.film": "Film",
   "sub.latin-america": "Latijns-Amerika",
   "sub.europe": "Europa",
   "sub.us-canada": "VS & Canada",
   "sub.asia": "Azië",
-  "sub.innovation": "Innovatie",
-  "sub.environment": "Milieu",
-  "sub.digital": "Digitaal",
-  "sub.space": "Ruimtevaart",
 
   // Search
   "search.placeholder": "Artikelen zoeken...",
@@ -72,8 +52,8 @@ export const nl = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Welkom",
-  "welcome.eyebrow": "35 talen · Eén missie",
-  "welcome.headline": "Argentinië, open voor de wereld",
+  "welcome.eyebrow": "Argentijnse markten & politiek · 35 talen",
+  "welcome.headline": "Argentijnse financiën & politiek, open voor de wereld",
   "welcome.sub": "Elke dag schrijven we het nieuws op moedertaalniveau in 35 talen — zodat de hele wereld kan begrijpen wat er in Argentinië gebeurt.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const nl = {
   "home.title": "Nieuws uit Argentinië in het {lang}",
   "home.heroFallbackTitle": "Welkom bij Plata Today",
   "home.heroFallbackDesc": "Argentijns nieuws, oorspronkelijk geschreven in 35 talen.",
-  "home.description": "Het belangrijkste nieuws uit Argentinië vandaag in het {lang}: politiek, economie, sport, cultuur. 24/7 bijgewerkt, 35 talen.",
+  "home.description": "Politiek, economie en markten van Argentinië in het {lang}. Financieel nieuws, politieke analyse, wisselkoersen. 24/7 bijgewerkt.",
   "home.topStories": "Topverhalen",
   "home.economyBusiness": "Economie & Bedrijfsleven",
-  "home.cultureSociety": "Cultuur & Samenleving",
   "home.moreNews": "Meer nieuws",
   "home.featuredStory": "Uitgelicht verhaal",
 
@@ -121,7 +100,7 @@ export const nl = {
   "article.byline": "Door",
 
   // Footer
-  "footer.tagline": "Argentijns nieuws, open voor de wereld",
+  "footer.tagline": "Argentijnse markten & politiek, open voor de wereld",
   "footer.about": "Over ons",
   "footer.contact": "Contact",
   "footer.terms": "Gebruiksvoorwaarden",
@@ -556,7 +535,7 @@ export const nl = {
   "standards.updated": "Laatst bijgewerkt: 14 maart 2026",
   "standards.lead": "Plata is een meertalig nieuwsplatform dat verslag doet over Argentinië in 35 talen. Op deze pagina leggen we uit hoe onze redactie werkt — van bronnen tot publicatie.",
   "standards.sourcingTitle": "Bronnen",
-  "standards.sourcingText": "We volgen meer dan 13 Argentijnse nieuwsmedia in drie categorieën. Categorie 1 omvat grote landelijke media zoals Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista en iProfesional. Categorie 2 betreft onafhankelijke en gespecialiseerde bronnen zoals Perfil, Cadena 3 en Olé. Categorie 3 omvat regionale media zoals La Gaceta, Misiones Online en El Día. Artikelen worden elke 30 minuten verzameld via RSS-feeds.",
+  "standards.sourcingText": "We volgen meer dan 13 Argentijnse nieuwsmedia in drie categorieën. Categorie 1 omvat grote landelijke media zoals Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista en iProfesional. Categorie 2 betreft onafhankelijke en gespecialiseerde bronnen zoals Perfil, Cadena 3. Categorie 3 omvat regionale media zoals La Gaceta, Misiones Online en El Día. Artikelen worden elke 30 minuten verzameld via RSS-feeds.",
   "standards.verificationTitle": "Verificatie",
   "standards.verificationText": "Elk bericht doorloopt een meervoudig controleproces. Bronnen die hetzelfde onderwerp behandelen worden gegroepeerd. Elk artikel wordt getoetst aan de oorspronkelijke bronnen. Beweringen die door geen enkele bron worden ondersteund, worden gemarkeerd en verwijderd. Berichten die tweemaal de verificatie niet doorstaan, worden niet gepubliceerd.",
   "standards.languageTitle": "Taalkwaliteit",
@@ -642,7 +621,7 @@ export const nl = {
   "newsroom.tier1Title": "Categorie 1 — Nationale leiders",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Categorie 2 — Onafhankelijk & gespecialiseerd",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Categorie 3 — Regionaal",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Elk artikel verwijst naar de oorspronkelijke bronnen zodat je altijd kunt verifiëren en verder kunt lezen.",

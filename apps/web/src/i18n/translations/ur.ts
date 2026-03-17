@@ -14,11 +14,7 @@ export const ur = {
   // Categories
   "cat.politics": "سیاست",
   "cat.economy": "معیشت",
-  "cat.sports": "کھیل",
-  "cat.society": "معاشرت",
-  "cat.culture": "ثقافت",
   "cat.world": "عالمی خبریں",
-  "cat.science": "سائنس و ٹیکنالوجی",
 
   // Subcategories
   "sub.government": "حکومت",
@@ -30,26 +26,10 @@ export const ur = {
   "sub.energy": "توانائی",
   "sub.agriculture": "زراعت",
   "sub.labor": "محنت و مزدوری",
-  "sub.football": "فٹبال",
-  "sub.rugby": "رگبی",
-  "sub.tennis": "ٹینس",
-  "sub.motorsport": "موٹر سپورٹ",
-  "sub.education": "تعلیم",
-  "sub.health": "صحت",
-  "sub.immigration": "نقل مکانی",
-  "sub.urban": "شہری معاملات",
-  "sub.arts": "فنون",
-  "sub.tourism": "سیاحت",
-  "sub.food-wine": "کھانے اور شراب",
-  "sub.film": "فلم",
   "sub.latin-america": "لاطینی امریکہ",
   "sub.europe": "یورپ",
   "sub.us-canada": "امریکہ و کینیڈا",
   "sub.asia": "ایشیا",
-  "sub.innovation": "جدت طرازی",
-  "sub.environment": "ماحولیات",
-  "sub.digital": "ڈیجیٹل",
-  "sub.space": "خلائی سائنس",
 
   // Search
   "search.placeholder": "مضامین تلاش کریں...",
@@ -72,8 +52,8 @@ export const ur = {
 
   // Welcome Hero
   "welcome.ariaLabel": "خوش آمدید",
-  "welcome.eyebrow": "35 زبانیں · ایک مشن",
-  "welcome.headline": "ارجنٹینا کی کہانی، پوری دنیا کے لیے",
+  "welcome.eyebrow": "ارجنٹینا کے بازار اور سیاست · 35 زبانیں",
+  "welcome.headline": "ارجنٹینا کی مالیات اور سیاست، پوری دنیا کے لیے",
   "welcome.sub": "ہم ہر روز 35 زبانوں میں خبریں اصل انداز میں لکھتے ہیں — تاکہ پوری دنیا سمجھ سکے کہ ارجنٹینا میں کیا ہو رہا ہے۔",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const ur = {
   "home.title": "ارجنٹینا کی خبریں {lang} میں",
   "home.heroFallbackTitle": "Plata Today میں خوش آمدید",
   "home.heroFallbackDesc": "ارجنٹینا کی خبریں، 35 زبانوں میں اصل انداز میں تحریر شدہ۔",
-  "home.description": "آج کی اہم ارجنٹینا خبریں {lang} میں: سیاست، معیشت، کھیل، ثقافت۔ 24/7 اپ ڈیٹ، 35 زبانیں۔",
+  "home.description": "ارجنٹینا کی سیاست، معیشت اور بازار {lang} میں۔ مالیاتی خبریں، سیاسی تجزیہ، شرح مبادلہ۔ 24/7 اپ ڈیٹ۔",
   "home.topStories": "اہم خبریں",
   "home.economyBusiness": "معیشت و کاروبار",
-  "home.cultureSociety": "ثقافت و معاشرت",
   "home.moreNews": "مزید خبریں",
   "home.featuredStory": "نمایاں خبر",
 
@@ -121,7 +100,7 @@ export const ur = {
   "article.byline": "از",
 
   // Footer
-  "footer.tagline": "ارجنٹینا کی خبریں، پوری دنیا کے لیے",
+  "footer.tagline": "ارجنٹینا کے بازار اور سیاست، پوری دنیا کے لیے",
   "footer.about": "ہمارے بارے میں",
   "footer.contact": "رابطہ",
   "footer.terms": "شرائط استعمال",
@@ -515,7 +494,7 @@ export const ur = {
   "standards.updated": "آخری تازہ کاری: 14 مارچ 2026",
   "standards.lead": "Plata ایک کثیر اللسانی خبری پلیٹ فارم ہے جو ارجنٹینا کی خبریں 35 زبانوں میں فراہم کرتا ہے۔ یہ صفحہ بتاتا ہے کہ ہمارا نیوز روم کیسے کام کرتا ہے — ذرائع کی تلاش سے لے کر اشاعت تک۔",
   "standards.sourcingTitle": "ذرائع کی تلاش",
-  "standards.sourcingText": "ہم ارجنٹینا کے 13 سے زائد خبری اداروں کی تین درجوں میں نگرانی کرتے ہیں۔ پہلے درجے میں بڑے قومی ادارے شامل ہیں جیسے Infobae، Clarín، La Nación، Ámbito Financiero، El Cronista اور iProfesional۔ دوسرے درجے میں آزاد اور مخصوص ذرائع شامل ہیں جیسے Perfil، Cadena 3 اور Olé۔ تیسرے درجے میں علاقائی ادارے شامل ہیں جیسے La Gaceta، Misiones Online اور El Día۔ مضامین ہر 30 منٹ میں RSS فیڈز کے ذریعے جمع کیے جاتے ہیں۔",
+  "standards.sourcingText": "ہم ارجنٹینا کے 13 سے زائد خبری اداروں کی تین درجوں میں نگرانی کرتے ہیں۔ پہلے درجے میں بڑے قومی ادارے شامل ہیں جیسے Infobae، Clarín، La Nación، Ámbito Financiero، El Cronista اور iProfesional۔ دوسرے درجے میں آزاد اور مخصوص ذرائع شامل ہیں جیسے Perfil، Cadena 3۔ تیسرے درجے میں علاقائی ادارے شامل ہیں جیسے La Gaceta، Misiones Online اور El Día۔ مضامین ہر 30 منٹ میں RSS فیڈز کے ذریعے جمع کیے جاتے ہیں۔",
   "standards.verificationTitle": "تصدیق",
   "standards.verificationText": "ہر خبر ایک کثیر مرحلہ جائزے کے عمل سے گزرتی ہے۔ ایک ہی واقعے کی خبر دینے والے ذرائع کو ایک ساتھ گروپ کیا جاتا ہے۔ ہر مضمون کی اپنے اصل ذرائع سے تصدیق کی جاتی ہے۔ کسی بھی ذریعے سے تائید نہ ہونے والے دعووں کو نشان زد کر کے ہٹا دیا جاتا ہے۔ جو خبریں دو بار تصدیق میں ناکام ہوں وہ شائع نہیں کی جاتیں۔",
   "standards.languageTitle": "زبان کا معیار",

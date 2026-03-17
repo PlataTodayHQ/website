@@ -14,11 +14,7 @@ export const pt = {
   // Categories
   "cat.politics": "Política",
   "cat.economy": "Economia",
-  "cat.sports": "Esportes",
-  "cat.society": "Sociedade",
-  "cat.culture": "Cultura",
   "cat.world": "Mundo",
-  "cat.science": "Ciência & Tecnologia",
 
   // Subcategories
   "sub.government": "Governo",
@@ -30,26 +26,10 @@ export const pt = {
   "sub.energy": "Energia",
   "sub.agriculture": "Agronegócio",
   "sub.labor": "Trabalho",
-  "sub.football": "Futebol",
-  "sub.rugby": "Rugby",
-  "sub.tennis": "Tênis",
-  "sub.motorsport": "Automobilismo",
-  "sub.education": "Educação",
-  "sub.health": "Saúde",
-  "sub.immigration": "Imigração",
-  "sub.urban": "Urbanismo",
-  "sub.arts": "Artes",
-  "sub.tourism": "Turismo",
-  "sub.food-wine": "Gastronomia & Vinhos",
-  "sub.film": "Cinema",
   "sub.latin-america": "América Latina",
   "sub.europe": "Europa",
   "sub.us-canada": "EUA & Canadá",
   "sub.asia": "Ásia",
-  "sub.innovation": "Inovação",
-  "sub.environment": "Meio Ambiente",
-  "sub.digital": "Digital",
-  "sub.space": "Espaço",
 
   // Search
   "search.placeholder": "Buscar artigos...",
@@ -72,8 +52,8 @@ export const pt = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Bem-vindo",
-  "welcome.eyebrow": "35 idiomas · Uma missão",
-  "welcome.headline": "A história da Argentina, aberta ao mundo",
+  "welcome.eyebrow": "Mercados e política argentina · 35 idiomas",
+  "welcome.headline": "Finanças e política argentina, abertas ao mundo",
   "welcome.sub": "Todos os dias, escrevemos as notícias nativamente em 35 idiomas — para que o mundo inteiro possa entender o que acontece na Argentina.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const pt = {
   "home.title": "Notícias da Argentina em {lang}",
   "home.heroFallbackTitle": "Bem-vindo ao Plata Today",
   "home.heroFallbackDesc": "Notícias da Argentina, escritas nativamente em 35 idiomas.",
-  "home.description": "Principais notícias da Argentina hoje em {lang}: política, economia, esportes, cultura. Atualização 24/7, 35 idiomas.",
+  "home.description": "Política, economia e mercados da Argentina em {lang}. Notícias financeiras, análise política, câmbio. Atualização 24/7.",
   "home.topStories": "Principais Notícias",
   "home.economyBusiness": "Economia & Negócios",
-  "home.cultureSociety": "Cultura & Sociedade",
   "home.moreNews": "Mais Notícias",
   "home.featuredStory": "Destaque",
 
@@ -568,7 +547,7 @@ export const pt = {
   "standards.updated": "Última atualização: 14 de março de 2026",
   "standards.lead": "O Plata é uma plataforma multilíngue de notícias sobre a Argentina em 35 idiomas. Esta página explica como nossa redação funciona — da apuração à publicação.",
   "standards.sourcingTitle": "Apuração",
-  "standards.sourcingText": "Monitoramos mais de 13 veículos de imprensa argentinos em três níveis. O nível 1 inclui os principais veículos nacionais, como Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista e iProfesional. O nível 2 abrange fontes independentes e especializadas, como Perfil, Cadena 3 e Olé. O nível 3 inclui veículos regionais como La Gaceta, Misiones Online e El Día. As matérias são coletadas via RSS a cada 30 minutos.",
+  "standards.sourcingText": "Monitoramos mais de 13 veículos de imprensa argentinos em três níveis. O nível 1 inclui os principais veículos nacionais, como Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista e iProfesional. O nível 2 abrange fontes independentes e especializadas, como Perfil, Cadena 3. O nível 3 inclui veículos regionais como La Gaceta, Misiones Online e El Día. As matérias são coletadas via RSS a cada 30 minutos.",
   "standards.verificationTitle": "Verificação",
   "standards.verificationText": "Toda matéria passa por um processo de revisão em múltiplas etapas. Fontes que cobrem o mesmo evento são agrupadas. Cada artigo é verificado contra suas fontes originais. Alegações sem respaldo em nenhuma fonte são sinalizadas e removidas. Matérias que falham na verificação duas vezes não são publicadas.",
   "standards.languageTitle": "Qualidade linguística",
@@ -654,7 +633,7 @@ export const pt = {
   "newsroom.tier1Title": "Nível 1 — Líderes nacionais",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Nível 2 — Independentes e especializados",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Nível 3 — Regionais",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Cada artigo inclui links para suas fontes originais para que você possa verificar e se aprofundar.",

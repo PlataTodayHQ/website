@@ -15,7 +15,6 @@ export const SOURCES: SourceConfig[] = [
       { rssUrl: "https://www.infobae.com/arc/outboundfeeds/rss/" },
       { rssUrl: "https://www.infobae.com/arc/outboundfeeds/rss/category/economia/", category: "economy" },
       { rssUrl: "https://www.infobae.com/arc/outboundfeeds/rss/category/politica/", category: "politics" },
-      { rssUrl: "https://www.infobae.com/arc/outboundfeeds/rss/category/tecnologia/", category: "science" },
     ],
     tier: 1,
   },
@@ -27,7 +26,6 @@ export const SOURCES: SourceConfig[] = [
       { rssUrl: "https://www.clarin.com/rss/politica/", category: "politics" },
       { rssUrl: "https://www.clarin.com/rss/economia/", category: "economy" },
       { rssUrl: "https://www.clarin.com/rss/mundo/", category: "world" },
-      { rssUrl: "https://www.clarin.com/rss/espectaculos/", category: "culture" },
     ],
     tier: 1,
   },
@@ -95,19 +93,6 @@ export const SOURCES: SourceConfig[] = [
     url: "https://cadena3.com",
     feeds: [
       { rssUrl: "https://cadena3.com/rss/secciones/politica.xml", category: "politics" },
-    ],
-    tier: 2,
-  },
-
-  // === TIER 2 — Sports ===
-
-  {
-    name: "Olé",
-    url: "https://www.ole.com.ar",
-    feeds: [
-      { rssUrl: "https://www.ole.com.ar/rss/", category: "sports" },
-      { rssUrl: "https://www.ole.com.ar/rss/futbol-primera/", category: "sports" },
-      { rssUrl: "https://www.ole.com.ar/rss/seleccion/", category: "sports" },
     ],
     tier: 2,
   },

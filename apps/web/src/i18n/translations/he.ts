@@ -14,11 +14,7 @@ export const he = {
   // Categories
   "cat.politics": "פוליטיקה",
   "cat.economy": "כלכלה",
-  "cat.sports": "ספורט",
-  "cat.society": "חברה",
-  "cat.culture": "תרבות",
   "cat.world": "עולם",
-  "cat.science": "מדע וטכנולוגיה",
 
   // Subcategories
   "sub.government": "ממשל",
@@ -30,26 +26,10 @@ export const he = {
   "sub.energy": "אנרגיה",
   "sub.agriculture": "חקלאות",
   "sub.labor": "תעסוקה",
-  "sub.football": "כדורגל",
-  "sub.rugby": "רוגבי",
-  "sub.tennis": "טניס",
-  "sub.motorsport": "מוטורספורט",
-  "sub.education": "חינוך",
-  "sub.health": "בריאות",
-  "sub.immigration": "הגירה",
-  "sub.urban": "עירוני",
-  "sub.arts": "אמנות",
-  "sub.tourism": "תיירות",
-  "sub.food-wine": "אוכל ויין",
-  "sub.film": "קולנוע",
   "sub.latin-america": "אמריקה הלטינית",
   "sub.europe": "אירופה",
   "sub.us-canada": "ארה״ב וקנדה",
   "sub.asia": "אסיה",
-  "sub.innovation": "חדשנות",
-  "sub.environment": "סביבה",
-  "sub.digital": "דיגיטל",
-  "sub.space": "חלל",
 
   // Search
   "search.placeholder": "חיפוש כתבות...",
@@ -72,8 +52,8 @@ export const he = {
 
   // Welcome Hero
   "welcome.ariaLabel": "ברוכים הבאים",
-  "welcome.eyebrow": "35 שפות · משימה אחת",
-  "welcome.headline": "הסיפור של ארגנטינה, פתוח לעולם",
+  "welcome.eyebrow": "שווקים ופוליטיקה בארגנטינה · 35 שפות",
+  "welcome.headline": "כלכלה ופוליטיקה בארגנטינה, פתוחות לעולם",
   "welcome.sub": "בכל יום אנחנו כותבים את החדשות ב-35 שפות — כדי שכל העולם יוכל להבין מה קורה בארגנטינה.",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const he = {
   "home.title": "חדשות ארגנטינה ב{lang}",
   "home.heroFallbackTitle": "ברוכים הבאים ל-Plata Today",
   "home.heroFallbackDesc": "חדשות ארגנטינה, כתובות ב-35 שפות.",
-  "home.description": "חדשות ארגנטינה של היום ב{lang}: פוליטיקה, כלכלה, ספורט, תרבות. מעודכן 24/7, 35 שפות.",
+  "home.description": "פוליטיקה, כלכלה ושווקים בארגנטינה ב{lang}. חדשות פיננסיות, ניתוח מדיני, שערי חליפין. מעודכן 24/7.",
   "home.topStories": "כותרות ראשיות",
   "home.economyBusiness": "כלכלה ועסקים",
-  "home.cultureSociety": "תרבות וחברה",
   "home.moreNews": "עוד חדשות",
   "home.featuredStory": "כתבה מרכזית",
 
@@ -121,7 +100,7 @@ export const he = {
   "article.byline": "מאת",
 
   // Footer
-  "footer.tagline": "חדשות ארגנטינה, פתוחות לעולם",
+  "footer.tagline": "שווקים ופוליטיקה בארגנטינה, פתוחים לעולם",
   "footer.about": "אודות",
   "footer.contact": "יצירת קשר",
   "footer.terms": "תנאי שימוש",
@@ -515,7 +494,7 @@ export const he = {
   "standards.updated": "עדכון אחרון: 14 במרץ 2026",
   "standards.lead": "Plata היא פלטפורמה חדשותית רב-לשונית המסקרת את ארגנטינה ב-35 שפות. עמוד זה מסביר כיצד המערכת החדשותית שלנו עובדת — מאיסוף המקורות ועד הפרסום.",
   "standards.sourcingTitle": "מקורות",
-  "standards.sourcingText": "אנחנו עוקבים אחרי 13+ כלי תקשורת ארגנטינאיים בשלוש רמות. רמה 1 כוללת כלי תקשורת ארציים מובילים כמו Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista ו-iProfesional. רמה 2 כוללת מקורות עצמאיים ומתמחים כמו Perfil, Cadena 3 ו-Olé. רמה 3 כוללת כלי תקשורת אזוריים כמו La Gaceta, Misiones Online ו-El Día. כתבות נאספות באמצעות RSS כל 30 דקות.",
+  "standards.sourcingText": "אנחנו עוקבים אחרי 13+ כלי תקשורת ארגנטינאיים בשלוש רמות. רמה 1 כוללת כלי תקשורת ארציים מובילים כמו Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista ו-iProfesional. רמה 2 כוללת מקורות עצמאיים ומתמחים כמו Perfil, Cadena 3. רמה 3 כוללת כלי תקשורת אזוריים כמו La Gaceta, Misiones Online ו-El Día. כתבות נאספות באמצעות RSS כל 30 דקות.",
   "standards.verificationTitle": "אימות",
   "standards.verificationText": "כל כתבה עוברת תהליך בדיקה רב-שלבי. מקורות המסקרים את אותו אירוע מקובצים יחד. כל כתבה נבדקת מול מקורותיה המקוריים. טענות שאינן נתמכות על ידי אף מקור מסומנות ומוסרות. כתבות שנכשלות באימות פעמיים אינן מתפרסמות.",
   "standards.languageTitle": "איכות לשונית",

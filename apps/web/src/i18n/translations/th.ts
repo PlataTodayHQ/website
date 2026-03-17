@@ -14,11 +14,7 @@ export const th = {
   // Categories
   "cat.politics": "การเมือง",
   "cat.economy": "เศรษฐกิจ",
-  "cat.sports": "กีฬา",
-  "cat.society": "สังคม",
-  "cat.culture": "วัฒนธรรม",
   "cat.world": "ต่างประเทศ",
-  "cat.science": "วิทยาศาสตร์และเทคโนโลยี",
 
   // Subcategories
   "sub.government": "รัฐบาล",
@@ -30,26 +26,10 @@ export const th = {
   "sub.energy": "พลังงาน",
   "sub.agriculture": "เกษตรกรรม",
   "sub.labor": "แรงงาน",
-  "sub.football": "ฟุตบอล",
-  "sub.rugby": "รักบี้",
-  "sub.tennis": "เทนนิส",
-  "sub.motorsport": "มอเตอร์สปอร์ต",
-  "sub.education": "การศึกษา",
-  "sub.health": "สาธารณสุข",
-  "sub.immigration": "การอพยพ",
-  "sub.urban": "เมือง",
-  "sub.arts": "ศิลปะ",
-  "sub.tourism": "การท่องเที่ยว",
-  "sub.food-wine": "อาหารและไวน์",
-  "sub.film": "ภาพยนตร์",
   "sub.latin-america": "ละตินอเมริกา",
   "sub.europe": "ยุโรป",
   "sub.us-canada": "สหรัฐฯ และแคนาดา",
   "sub.asia": "เอเชีย",
-  "sub.innovation": "นวัตกรรม",
-  "sub.environment": "สิ่งแวดล้อม",
-  "sub.digital": "ดิจิทัล",
-  "sub.space": "อวกาศ",
 
   // Search
   "search.placeholder": "ค้นหาบทความ...",
@@ -72,8 +52,8 @@ export const th = {
 
   // Welcome Hero
   "welcome.ariaLabel": "ยินดีต้อนรับ",
-  "welcome.eyebrow": "35 ภาษา · หนึ่งภารกิจ",
-  "welcome.headline": "เรื่องราวของอาร์เจนตินา เปิดกว้างสู่โลก",
+  "welcome.eyebrow": "ตลาดและการเมืองอาร์เจนตินา · 35 ภาษา",
+  "welcome.headline": "การเงินและการเมืองอาร์เจนตินา เปิดกว้างสู่โลก",
   "welcome.sub": "ทุกวัน เราเขียนข่าวเป็นภาษาต้นฉบับใน 35 ภาษา เพื่อให้ทั่วโลกเข้าใจสิ่งที่เกิดขึ้นในอาร์เจนตินา",
 
   // Newsletter
@@ -99,10 +79,9 @@ export const th = {
   "home.title": "ข่าวอาร์เจนตินาใน{lang}",
   "home.heroFallbackTitle": "ยินดีต้อนรับสู่ Plata Today",
   "home.heroFallbackDesc": "ข่าวอาร์เจนตินา เขียนเป็นภาษาต้นฉบับใน 35 ภาษา",
-  "home.description": "ข่าวเด่นอาร์เจนตินาวันนี้ใน{lang}: การเมือง เศรษฐกิจ กีฬา วัฒนธรรม อัปเดตตลอด 24 ชั่วโมง 35 ภาษา",
+  "home.description": "การเมือง เศรษฐกิจ และตลาดอาร์เจนตินาใน{lang} ข่าวการเงิน วิเคราะห์นโยบาย อัตราแลกเปลี่ยน อัปเดตตลอด 24 ชั่วโมง",
   "home.topStories": "ข่าวเด่น",
   "home.economyBusiness": "เศรษฐกิจและธุรกิจ",
-  "home.cultureSociety": "วัฒนธรรมและสังคม",
   "home.moreNews": "ข่าวเพิ่มเติม",
   "home.featuredStory": "เรื่องเด่น",
 
@@ -121,7 +100,7 @@ export const th = {
   "article.byline": "โดย",
 
   // Footer
-  "footer.tagline": "ข่าวอาร์เจนตินา เปิดกว้างสู่โลก",
+  "footer.tagline": "ตลาดและการเมืองอาร์เจนตินา เปิดกว้างสู่โลก",
   "footer.about": "เกี่ยวกับเรา",
   "footer.contact": "ติดต่อ",
   "footer.terms": "ข้อกำหนดการใช้งาน",
@@ -515,7 +494,7 @@ export const th = {
   "standards.updated": "อัปเดตล่าสุด: 14 มีนาคม 2026",
   "standards.lead": "Plata เป็นแพลตฟอร์มข่าวหลายภาษาที่รายงานข่าวอาร์เจนตินาใน 35 ภาษา หน้านี้อธิบายวิธีการทำงานของกองบรรณาธิการ ตั้งแต่การจัดหาแหล่งข่าวไปจนถึงการเผยแพร่",
   "standards.sourcingTitle": "การจัดหาแหล่งข่าว",
-  "standards.sourcingText": "เราติดตามสำนักข่าวอาร์เจนตินากว่า 13 แห่งจากสามระดับ ระดับ 1 ประกอบด้วยสำนักข่าวระดับชาติรายใหญ่ เช่น Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista และ iProfesional ระดับ 2 ครอบคลุมแหล่งข่าวอิสระและเฉพาะทาง เช่น Perfil, Cadena 3 และ Olé ระดับ 3 รวมถึงสำนักข่าวภูมิภาค เช่น La Gaceta, Misiones Online และ El Día บทความถูกรวบรวมผ่านฟีด RSS ทุก 30 นาที",
+  "standards.sourcingText": "เราติดตามสำนักข่าวอาร์เจนตินากว่า 13 แห่งจากสามระดับ ระดับ 1 ประกอบด้วยสำนักข่าวระดับชาติรายใหญ่ เช่น Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista และ iProfesional ระดับ 2 ครอบคลุมแหล่งข่าวอิสระและเฉพาะทาง เช่น Perfil, Cadena 3 ระดับ 3 รวมถึงสำนักข่าวภูมิภาค เช่น La Gaceta, Misiones Online และ El Día บทความถูกรวบรวมผ่านฟีด RSS ทุก 30 นาที",
   "standards.verificationTitle": "การตรวจสอบ",
   "standards.verificationText": "ทุกเรื่องผ่านกระบวนการตรวจสอบหลายขั้นตอน แหล่งข่าวที่รายงานเหตุการณ์เดียวกันจะถูกจัดกลุ่มเข้าด้วยกัน แต่ละบทความถูกตรวจสอบข้อเท็จจริงกับแหล่งข่าวต้นฉบับ ข้อกล่าวอ้างที่ไม่มีแหล่งข่าวสนับสนุนจะถูกตั้งข้อสังเกตและตัดออก เรื่องที่ตรวจสอบไม่ผ่านสองครั้งจะไม่ได้รับการเผยแพร่",
   "standards.languageTitle": "คุณภาพด้านภาษา",
