@@ -370,3 +370,28 @@ export function extractFinancialStatements(result: any) {
     },
   };
 }
+
+// ---------------------------------------------------------------------------
+// Market hours helper
+// ---------------------------------------------------------------------------
+
+/**
+ * Check if BYMA (Buenos Aires stock exchange) is currently open.
+ * Trading hours: Mon-Fri 11:00-17:00 ART (UTC-3).
+ */
+export function isMarketOpen(): boolean {
+  const now = new Date();
+  // Convert to ART (UTC-3)
+  const artOffset = -3 * 60;
+  const utcMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+  const artMinutes = utcMinutes + artOffset;
+  const artHour = Math.floor(((artMinutes % 1440) + 1440) % 1440 / 60);
+
+  // Day of week in ART
+  const artTime = new Date(now.getTime() + artOffset * 60 * 1000);
+  const day = artTime.getUTCDay();
+
+  // Mon=1 through Fri=5
+  if (day === 0 || day === 6) return false;
+  return artHour >= 11 && artHour < 17;
+}

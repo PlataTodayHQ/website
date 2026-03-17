@@ -14,7 +14,8 @@ import {
  * Fetch financial statements for symbols missing fresh data.
  * Processes up to 5 symbols per run to respect Yahoo rate limits.
  */
-export async function fetchFinancialStatements(db: Database.Database): Promise<void> {
+export async function fetchFinancialStatements(db: Database.Database, marketOpen = true): Promise<void> {
+  const batchSize = marketOpen ? 5 : 10;
   const symbols = db.prepare(
     `SELECT DISTINCT sc.symbol FROM stock_companies sc
      WHERE sc.symbol NOT IN (
@@ -22,8 +23,8 @@ export async function fetchFinancialStatements(db: Database.Database): Promise<v
        WHERE statement_type = 'income' AND fetched_at > datetime('now', '-24 hours')
      )
      ORDER BY sc.symbol
-     LIMIT 5`,
-  ).all() as Array<{ symbol: string }>;
+     LIMIT ?`,
+  ).all(batchSize) as Array<{ symbol: string }>;
 
   if (symbols.length === 0) return;
 

@@ -47,17 +47,18 @@ export async function fetchStockCandles(db: Database.Database): Promise<void> {
   }
 }
 
-export async function fetchStockProfiles(db: Database.Database): Promise<void> {
+export async function fetchStockProfiles(db: Database.Database, marketOpen = true): Promise<void> {
+  const batchSize = marketOpen ? 10 : 20;
   const symbols = db.prepare(
     `SELECT DISTINCT sp.symbol FROM stock_prices sp
-     WHERE sp.fetched_at > datetime('now', '-1 hour')
+     WHERE sp.fetched_at > datetime('now', '-24 hours')
        AND sp.symbol NOT IN (
          SELECT symbol FROM stock_fundamentals
          WHERE fetched_at > datetime('now', '-1 hour')
        )
      ORDER BY sp.symbol
-     LIMIT 10`,
-  ).all() as Array<{ symbol: string }>;
+     LIMIT ?`,
+  ).all(batchSize) as Array<{ symbol: string }>;
 
   if (symbols.length === 0) return;
 

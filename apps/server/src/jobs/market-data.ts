@@ -5,10 +5,15 @@
  * - Exchange rates (current + history)
  * - Merval index (snapshot + candles)
  * - Stock prices, candles, and profiles
+ * - Financial statements
  * - Data pruning
+ *
+ * Market-hours-aware: during off-hours (17:00-11:00 ART + weekends),
+ * skips stock snapshots and batches profiles/financials more aggressively.
  */
 
 import type Database from "better-sqlite3";
+import { isMarketOpen, alertOnFailure, resetFailureCount } from "@plata-today/shared";
 import { recordJobStart, recordJobEnd } from "./job-tracking.js";
 import { fetchExchangeRates, fetchExchangeRateHistory } from "./market-exchanges.js";
 import { fetchMerval, fetchMervalCandles } from "./market-merval.js";
@@ -26,30 +31,49 @@ export async function fetchMarketData(db: Database.Database): Promise<void> {
   running = true;
 
   const runId = recordJobStart(db, "market-data");
+  const marketOpen = isMarketOpen();
 
   try {
-    // Core data: exchange rates, merval, stock prices
-    await Promise.allSettled([
+    // Core data: exchange rates always run, stocks only during market hours
+    const coreJobs: Promise<void>[] = [
       fetchExchangeRates(db),
       fetchExchangeRateHistory(db),
       fetchMerval(db),
-      fetchStocks(db),
-    ]);
+    ];
+    if (marketOpen) {
+      coreJobs.push(fetchStocks(db));
+    }
+    await Promise.allSettled(coreJobs);
 
-    // Heavier data: candles + profiles (rate-limited, run less aggressively)
-    await fetchMervalCandles(db);
-    await fetchStockCandles(db);
-    await fetchStockProfiles(db);
-    await fetchFinancialStatements(db);
+    // Candles: aggregate during market hours, run final aggregation after close
+    if (marketOpen) {
+      await runWithAlert("merval-candles", () => fetchMervalCandles(db));
+      await runWithAlert("stock-candles", () => fetchStockCandles(db));
+    }
 
-    // Prune old market data to prevent unbounded table growth
+    // Profiles & financials: more aggressive off-hours (handled by batch size in those functions)
+    await runWithAlert("stock-profiles", () => fetchStockProfiles(db, marketOpen));
+    await runWithAlert("financials", () => fetchFinancialStatements(db, marketOpen));
+
+    // Prune old market data
     pruneOldData(db);
 
     recordJobEnd(db, runId, "success");
+    resetFailureCount("market-data");
   } catch (err) {
     recordJobEnd(db, runId, "error", String(err));
+    await alertOnFailure("market-data", err);
     throw err;
   } finally {
     running = false;
+  }
+}
+
+async function runWithAlert(name: string, fn: () => Promise<void>): Promise<void> {
+  try {
+    await fn();
+    resetFailureCount(name);
+  } catch (err) {
+    await alertOnFailure(name, err);
   }
 }

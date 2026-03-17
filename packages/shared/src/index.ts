@@ -25,6 +25,11 @@ export {
   toYahooSymbol, parseMervalFromBYMA, parseBYMAStock, fetchBYMA,
   fetchYahooChart, fetchExchangeRatesData, extractProfileData,
   extractFinancialStatements, FINANCIAL_STATEMENT_MODULES,
+  isMarketOpen,
 } from "./market-utils.js";
+
+export {
+  sendTelegramAlert, alertOnFailure, resetFailureCount,
+} from "./alerting.js";
 
 export { log, setLogLevel } from "./logger.js";
