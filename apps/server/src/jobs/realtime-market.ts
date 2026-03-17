@@ -8,7 +8,8 @@
 
 import {
   BLUELYTICS_URL, BYMA_INDEX_URL, BYMA_EQUITY_URL,
-  BYMA_CEDEARS_URL, BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
+  BYMA_CEDEARS_URL, BYMA_CEDEARS_FALLBACK_URL,
+  BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
   fetchBYMA, parseMervalFromBYMA, parseBYMAAsset, fetchExchangeRatesData,
   setMerval, setRates, setStocks,
   alertOnFailure, resetFailureCount,
@@ -27,7 +28,7 @@ export async function fetchRealtimeMarketData(): Promise<void> {
       fetchMervalRT(),
       fetchRatesRT(),
       fetchStocksRT(),
-      fetchAssetRT(BYMA_CEDEARS_URL, "cedear", setCedears),
+      fetchAssetWithFallbackRT(BYMA_CEDEARS_URL, BYMA_CEDEARS_FALLBACK_URL, "cedear", setCedears),
       fetchAssetRT(BYMA_PUBLIC_BONDS_URL, "government_bond", setGovernmentBonds),
       fetchAssetRT(BYMA_CORPORATE_BONDS_URL, "corporate_bond", setCorporateBonds),
       fetchAssetRT(BYMA_LETRAS_URL, "letra", setLetras),
@@ -86,6 +87,27 @@ async function fetchAssetRT(
 ): Promise<void> {
   try {
     const data = await fetchBYMA(url);
+    const items: StockQuote[] = data.map((s: any) => parseBYMAAsset(s, assetType));
+    items.sort((a, b) => (b.volume ?? 0) - (a.volume ?? 0));
+    setter(items);
+  } catch (err) {
+    console.error(`[realtime] ${assetType} error:`, err);
+  }
+}
+
+async function fetchAssetWithFallbackRT(
+  url: string,
+  fallbackUrl: string,
+  assetType: AssetType,
+  setter: (data: StockQuote[]) => void,
+): Promise<void> {
+  try {
+    let data: any[];
+    try {
+      data = await fetchBYMA(url);
+    } catch {
+      data = await fetchBYMA(fallbackUrl);
+    }
     const items: StockQuote[] = data.map((s: any) => parseBYMAAsset(s, assetType));
     items.sort((a, b) => (b.volume ?? 0) - (a.volume ?? 0));
     setter(items);

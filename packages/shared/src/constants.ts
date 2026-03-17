@@ -5,6 +5,7 @@ export const BYMA_INDEX_URL = `${BYMA_BASE_URL}/index-price`;
 export const BYMA_EQUITY_URL = `${BYMA_BASE_URL}/leading-equity`;
 export const BYMA_GENERAL_EQUITY_URL = `${BYMA_BASE_URL}/general-equity`;
 export const BYMA_CEDEARS_URL = `${BYMA_BASE_URL}/cedears`;
+export const BYMA_CEDEARS_FALLBACK_URL = `${BYMA_BASE_URL}/nyse-nasdaq-cedears`;
 export const BYMA_PUBLIC_BONDS_URL = `${BYMA_BASE_URL}/public-bonds`;
 export const BYMA_CORPORATE_BONDS_URL = `${BYMA_BASE_URL}/negociable-obligations`;
 export const BYMA_LETRAS_URL = `${BYMA_BASE_URL}/lebacs`;
