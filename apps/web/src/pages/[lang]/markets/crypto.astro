@@ -1088,9 +1088,9 @@ const { lang } = Astro.params;
   .cr-ov-card {
     background: var(--color-bg); padding: 14px 16px;
     display: flex; flex-direction: column; gap: 4px;
-    transition: background-color 0.15s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .cr-ov-card:hover { background: var(--color-bg-secondary); }
+  .cr-ov-card:hover { background: var(--color-bg-secondary); box-shadow: inset 0 0 0 1px var(--color-gold); }
   .cr-ov-card--wide { grid-column: 1 / -1; }
   .cr-ov-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
   .cr-ov-val { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
@@ -1150,7 +1150,7 @@ const { lang } = Astro.params;
     background: var(--color-bg-secondary); border: 1px solid var(--color-border);
     transition: transform 0.1s, border-color 0.15s, box-shadow 0.15s;
   }
-  :global(.cr-mv-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  :global(.cr-mv-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--color-gold); }
   :global(.cr-mv-card:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   :global(.cr-mv-card--up) { border-inline-start: 3px solid var(--color-positive); }
   :global(.cr-mv-card--down) { border-inline-start: 3px solid var(--color-negative); }
@@ -1382,11 +1382,12 @@ const { lang } = Astro.params;
   :global(.cr-card) {
     display: block; padding: 14px 16px; margin-bottom: 8px;
     background: var(--color-bg-secondary); border-radius: 12px;
-    border-inline-start: 3px solid var(--color-border); text-decoration: none; color: inherit;
-    transition: transform 0.1s, box-shadow 0.15s;
+    border: 1px solid var(--color-border); border-inline-start: 3px solid var(--color-border);
+    text-decoration: none; color: inherit;
+    transition: transform 0.1s, box-shadow 0.15s, border-color 0.15s;
     animation: cr-card-fade 0.25s ease-out both;
   }
-  :global(.cr-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  :global(.cr-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-color: var(--color-gold); }
   :global(.cr-card:active) { transform: scale(0.98); }
   :global(.cr-card:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
   :global(.cr-card-header) {
