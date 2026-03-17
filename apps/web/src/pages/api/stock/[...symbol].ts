@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import {
   toYahooSymbol, fetchYahooChart,
+  fetchDailyHistory,
   optionsResponse, jsonResponse, errorResponse,
 } from "@plata-today/shared";
 import { getDb } from "@/lib/db";
@@ -82,6 +83,42 @@ export const GET: APIRoute = async ({ params, url }) => {
         opens: dbCandles.map((c) => c.open),
         source: "BYMA",
       }, 300);
+    }
+
+    // Try BYMA historical data (PyOBD source) for daily Argentine stocks
+    const isArgentineStock = !rawSymbol.startsWith("^") && !rawSymbol.includes(".") && !rawSymbol.includes("=");
+    if (isArgentineStock && interval === "1d") {
+      try {
+        const days = RANGE_DAYS[range] ?? 30;
+        const toDate = new Date().toISOString().slice(0, 10);
+        const fromDate = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+        const bymaCandles = await fetchDailyHistory(rawSymbol, fromDate, toDate);
+
+        if (bymaCandles.length > 0) {
+          const lastCandle = bymaCandles[bymaCandles.length - 1];
+          const firstCandle = bymaCandles[0];
+          const price = lastCandle.close;
+          const prev = firstCandle.open;
+
+          return jsonResponse({
+            symbol: rawSymbol,
+            name: rawSymbol,
+            currency: "ARS",
+            price,
+            previousClose: prev,
+            variation: prev && prev > 0 ? (price - prev) / prev : null,
+            timestamps: bymaCandles.map((c) => c.timestamp),
+            closes: bymaCandles.map((c) => c.close),
+            volumes: bymaCandles.map((c) => c.volume),
+            highs: bymaCandles.map((c) => c.high),
+            lows: bymaCandles.map((c) => c.low),
+            opens: bymaCandles.map((c) => c.open),
+            source: "BYMA-historical",
+          }, 300);
+        }
+      } catch {
+        // Fall through to Yahoo
+      }
     }
 
     // Fallback to Yahoo for symbols not in DB (international, commodities)

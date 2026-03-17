@@ -14,6 +14,7 @@ import { fetchExchangeRates, fetchExchangeRateHistory } from "./market-exchanges
 import { fetchMerval, fetchMervalCandles } from "./market-merval.js";
 import { fetchStocks, fetchStockCandles, fetchStockProfiles } from "./market-stocks.js";
 import { fetchFinancialStatements } from "./market-financials.js";
+import { fetchBYMAHistoricalCandles } from "./market-byma-history.js";
 import { pruneOldData } from "./market-storage.js";
 
 let running = false;
@@ -41,6 +42,7 @@ export async function fetchMarketData(db: Database.Database): Promise<void> {
     await fetchStockCandles(db);
     await fetchStockProfiles(db);
     await fetchFinancialStatements(db);
+    await fetchBYMAHistoricalCandles(db);
 
     // Prune old market data to prevent unbounded table growth
     pruneOldData(db);

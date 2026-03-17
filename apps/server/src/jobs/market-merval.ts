@@ -3,12 +3,18 @@
  */
 
 import type Database from "better-sqlite3";
-import { BYMA_INDEX_URL, fetchBYMA, parseMervalFromBYMA } from "@plata-today/shared";
+import { BYMA_INDEX_URL, fetchBYMA, fetchBYMASession, parseMervalFromBYMA } from "@plata-today/shared";
 import { aggregateMervalCandles } from "./market-storage.js";
 
 export async function fetchMerval(db: Database.Database): Promise<void> {
   try {
-    const data = await fetchBYMA(BYMA_INDEX_URL);
+    let data: any[];
+    try {
+      data = await fetchBYMA(BYMA_INDEX_URL);
+    } catch {
+      // Fallback: session-based fetch (PyOBD pattern)
+      data = await fetchBYMASession(BYMA_INDEX_URL);
+    }
     const m = parseMervalFromBYMA(data);
 
     db.prepare(

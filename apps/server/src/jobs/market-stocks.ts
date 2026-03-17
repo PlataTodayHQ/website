@@ -7,13 +7,25 @@ import type Database from "better-sqlite3";
 import {
   BYMA_EQUITY_URL,
   fetchBYMA, parseBYMAStock, toYahooSymbol,
+  fetchBYMASession,
   getYahooCrumb, numVal, strVal, sleep, fetchT, YAHOO_UA,
 } from "@plata-today/shared";
 import { aggregateStockCandles } from "./market-storage.js";
 
 export async function fetchStocks(db: Database.Database): Promise<void> {
   try {
-    const data = await fetchBYMA(BYMA_EQUITY_URL);
+    let data: any[];
+    try {
+      data = await fetchBYMA(BYMA_EQUITY_URL);
+    } catch {
+      // Fallback: session-based fetch (PyOBD pattern)
+      data = await fetchBYMASession(BYMA_EQUITY_URL, {
+        excludeZeroPxAndQty: false,
+        T2: true,
+        T1: false,
+        T0: false,
+      });
+    }
 
     const insert = db.prepare(
       `INSERT INTO stock_prices (symbol, price, variation, previous_close, volume, high, low, opening_price)
