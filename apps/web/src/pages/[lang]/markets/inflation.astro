@@ -44,7 +44,15 @@ const seoTitle = monthlyRate != null
     }
   }}
 >
-  <div class="inf-page" data-inflation-page data-lang={lang}>
+  <div class="inf-page" data-inflation-page data-lang={lang}
+    data-i18n-updated={t(lang!, "inflation.updated" as any)}
+    data-i18n-calc-note-losing={t(lang!, "inflation.calcNoteLosing" as any)}
+    data-i18n-calc-note-gaining={t(lang!, "inflation.calcNoteGaining" as any)}
+    data-i18n-no-data={t(lang!, "inflation.noData" as any)}
+    data-i18n-chart-error={t(lang!, "inflation.chartError" as any)}
+    data-i18n-legend-declining={t(lang!, "inflation.legendDeclining" as any)}
+    data-i18n-legend-increasing={t(lang!, "inflation.legendIncreasing" as any)}
+  >
     <MarketNav lang={lang!} active={"inflation" as any} />
 
     <!-- Header -->
@@ -153,6 +161,9 @@ const seoTitle = monthlyRate != null
   var lang = pg.getAttribute('data-lang') || 'en';
   var annualInflation = null;
 
+  // i18n helper
+  function i18n(key, fallback) { return pg.getAttribute('data-i18n-' + key) || fallback || ''; }
+
   // localStorage dismiss for educational panel
   var eduKey = 'plata_inflation_info_seen';
   var edu = pg.querySelector('[data-inf-edu]');
@@ -198,9 +209,9 @@ const seoTitle = monthlyRate != null
 
     if (note) {
       if (real < 0) {
-        note.textContent = 'With annual inflation at ' + fmtPct(annualInflation) + ', a ' + fmtPct(nominal) + ' nominal return means you are losing purchasing power.';
+        note.textContent = i18n('calc-note-losing', 'With annual inflation at {inflation}, a {nominal} nominal return means you are losing purchasing power.').replace('{inflation}', fmtPct(annualInflation)).replace('{nominal}', fmtPct(nominal));
       } else {
-        note.textContent = 'With annual inflation at ' + fmtPct(annualInflation) + ', your real gain is ' + fmtPct(real) + '.';
+        note.textContent = i18n('calc-note-gaining', 'With annual inflation at {inflation}, your real gain is {real}.').replace('{inflation}', fmtPct(annualInflation)).replace('{real}', fmtPct(real));
       }
     }
   }
@@ -236,7 +247,7 @@ const seoTitle = monthlyRate != null
       // Update timestamp
       var updEl = pg.querySelector('[data-inf-updated]');
       if (updEl) {
-        updEl.innerHTML = '<span class="live-dot"></span>Updated ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
+        updEl.innerHTML = '<span class="live-dot"></span>' + i18n('updated', 'Updated') + ' ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
       }
     })
     .catch(function() {
@@ -251,7 +262,7 @@ const seoTitle = monthlyRate != null
     .then(function(history) {
       var chartEl = pg.querySelector('[data-inf-chart]');
       if (!chartEl || !Array.isArray(history) || history.length === 0) {
-        if (chartEl) chartEl.innerHTML = '<p class="inf-chart-empty">No historical data available</p>';
+        if (chartEl) chartEl.innerHTML = '<p class="inf-chart-empty">' + i18n('no-data', 'No historical data available') + '</p>';
         return;
       }
 
@@ -282,7 +293,7 @@ const seoTitle = monthlyRate != null
       }
 
       if (data.length === 0) {
-        chartEl.innerHTML = '<p class="inf-chart-empty">No historical data available</p>';
+        chartEl.innerHTML = '<p class="inf-chart-empty">' + i18n('no-data', 'No historical data available') + '</p>';
         return;
       }
 
@@ -327,7 +338,10 @@ const seoTitle = monthlyRate != null
       }
 
       // Bars
-      var shortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var shortMonths = [];
+      for (var m = 0; m < 12; m++) {
+        shortMonths.push(new Date(2000, m, 1).toLocaleString(lang, { month: 'short' }));
+      }
       for (var b = 0; b < data.length; b++) {
         var val = data[b].value;
         var barH = Math.max(2, (Math.abs(val) / maxVal) * chartH);
@@ -362,16 +376,16 @@ const seoTitle = monthlyRate != null
 
       // Legend
       svg += '<rect x="' + padLeft + '" y="' + (svgH - 12) + '" width="10" height="10" rx="2" fill="#16a34a" opacity="0.85"/>';
-      svg += '<text x="' + (padLeft + 14) + '" y="' + (svgH - 3) + '" fill="' + textColor + '" font-size="10" font-weight="600">Declining</text>';
+      svg += '<text x="' + (padLeft + 14) + '" y="' + (svgH - 3) + '" fill="' + textColor + '" font-size="10" font-weight="600">' + i18n('legend-declining', 'Declining') + '</text>';
       svg += '<rect x="' + (padLeft + 80) + '" y="' + (svgH - 12) + '" width="10" height="10" rx="2" fill="#dc2626" opacity="0.85"/>';
-      svg += '<text x="' + (padLeft + 94) + '" y="' + (svgH - 3) + '" fill="' + textColor + '" font-size="10" font-weight="600">Increasing</text>';
+      svg += '<text x="' + (padLeft + 94) + '" y="' + (svgH - 3) + '" fill="' + textColor + '" font-size="10" font-weight="600">' + i18n('legend-increasing', 'Increasing') + '</text>';
 
       svg += '</svg>';
       chartEl.innerHTML = svg;
     })
     .catch(function() {
       var chartEl = pg.querySelector('[data-inf-chart]');
-      if (chartEl) chartEl.innerHTML = '<p class="inf-chart-empty">Failed to load chart data</p>';
+      if (chartEl) chartEl.innerHTML = '<p class="inf-chart-empty">' + i18n('chart-error', 'Failed to load chart data') + '</p>';
     });
 
   // Scroll to top button

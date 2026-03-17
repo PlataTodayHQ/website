@@ -28,7 +28,7 @@ const seoTitle = tna
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: "Plazo Fijo", url: `/${lang}/markets/plazo-fijo` },
+    { name: t(lang!, "plazoFijo.breadcrumb" as any), url: `/${lang}/markets/plazo-fijo` },
   ]}
   jsonLd={{
     "@context": "https://schema.org",
@@ -70,7 +70,7 @@ const seoTitle = tna
         <span class="pf-subtitle">{t(lang!, "plazoFijo.subtitle" as any)}</span>
       </div>
       <div class="pf-header-rate" data-pf-hero-rate>
-        <span class="pf-hero-label">TNA</span>
+        <span class="pf-hero-label">{t(lang!, "plazoFijo.tnaLabel" as any)}</span>
         <span class="pf-hero-value" data-pf-hero-tna>&mdash;</span>
       </div>
     </header>
@@ -97,7 +97,7 @@ const seoTitle = tna
           </div>
         </div>
         <div class="pf-calc-field">
-          <label class="pf-calc-label" for="pf-rate">{t(lang!, "plazoFijo.rate" as any)} (TNA %)</label>
+          <label class="pf-calc-label" for="pf-rate">{t(lang!, "plazoFijo.rate" as any)} ({t(lang!, "plazoFijo.rateTnaPercent" as any)})</label>
           <input type="number" id="pf-rate" class="pf-calc-input pf-calc-input--rate" data-pf-rate value="" min="0" max="999" step="0.1" inputmode="decimal" />
         </div>
       </div>
@@ -116,7 +116,7 @@ const seoTitle = tna
           <span class="pf-result-value" data-pf-monthly>&mdash;</span>
         </div>
         <div class="pf-result-card">
-          <span class="pf-result-label">{t(lang!, "plazoFijo.annualRate" as any)} (TEA)</span>
+          <span class="pf-result-label">{t(lang!, "plazoFijo.annualRate" as any)} ({t(lang!, "plazoFijo.teaSuffix" as any)})</span>
           <span class="pf-result-value" data-pf-tea>&mdash;</span>
         </div>
       </div>
@@ -124,27 +124,27 @@ const seoTitle = tna
 
     <!-- Rate Comparison Cards -->
     <section class="pf-rates">
-      <h2 class="pf-section-title">Current Rates</h2>
+      <h2 class="pf-section-title">{t(lang!, "plazoFijo.currentRates" as any)}</h2>
       <div class="pf-rates-grid">
         <div class="pf-rate-card" data-pf-card="tna30">
-          <span class="pf-rate-name">Plazo Fijo TNA (30d)</span>
+          <span class="pf-rate-name">{t(lang!, "plazoFijo.tna30" as any)}</span>
           <span class="pf-rate-value" data-pf-val="tna30">&mdash;</span>
-          <span class="pf-rate-unit">%</span>
+          <span class="pf-rate-unit">{t(lang!, "plazoFijo.percentUnit" as any)}</span>
         </div>
         <div class="pf-rate-card" data-pf-card="badlar">
-          <span class="pf-rate-name">BADLAR</span>
+          <span class="pf-rate-name">{t(lang!, "plazoFijo.badlar" as any)}</span>
           <span class="pf-rate-value" data-pf-val="badlar">&mdash;</span>
-          <span class="pf-rate-unit">%</span>
+          <span class="pf-rate-unit">{t(lang!, "plazoFijo.percentUnit" as any)}</span>
         </div>
         <div class="pf-rate-card" data-pf-card="cer">
-          <span class="pf-rate-name">CER</span>
+          <span class="pf-rate-name">{t(lang!, "plazoFijo.cer" as any)}</span>
           <span class="pf-rate-value" data-pf-val="cer">&mdash;</span>
-          <span class="pf-rate-unit">index</span>
+          <span class="pf-rate-unit">{t(lang!, "plazoFijo.cerUnit" as any)}</span>
         </div>
         <div class="pf-rate-card" data-pf-card="uva">
-          <span class="pf-rate-name">UVA</span>
+          <span class="pf-rate-name">{t(lang!, "plazoFijo.uva" as any)}</span>
           <span class="pf-rate-value" data-pf-val="uva">&mdash;</span>
-          <span class="pf-rate-unit">ARS</span>
+          <span class="pf-rate-unit">{t(lang!, "plazoFijo.uvaUnit" as any)}</span>
         </div>
       </div>
     </section>
@@ -152,32 +152,32 @@ const seoTitle = tna
     <!-- Educational Panel -->
     <section class="pf-info">
       <details class="pf-details" data-pf-details open>
-        <summary class="pf-details-summary">About Plazo Fijo &amp; Argentine Rates</summary>
+        <summary class="pf-details-summary">{t(lang!, "plazoFijo.infoTitle" as any)}</summary>
         <div class="pf-details-body">
           <div class="pf-info-grid">
             <div class="pf-info-item">
-              <h3>What is a Plazo Fijo?</h3>
-              <p>A <strong>plazo fijo</strong> (fixed-term deposit) is the most common savings instrument in Argentina. You deposit a sum of Argentine pesos at a bank for a fixed period (minimum 30 days) and receive interest at maturity. Early withdrawal forfeits all interest.</p>
+              <h3>{t(lang!, "plazoFijo.whatIs" as any)}</h3>
+              <p>{t(lang!, "plazoFijo.whatIsDesc" as any)}</p>
             </div>
             <div class="pf-info-item">
-              <h3>TNA vs TEA</h3>
-              <p><strong>TNA</strong> (Tasa Nominal Anual) is the nominal annual rate quoted by banks. <strong>TEA</strong> (Tasa Efectiva Anual) is the effective annual rate accounting for compounding &mdash; what you actually earn if you reinvest every 30 days for a year. TEA is always higher than TNA.</p>
+              <h3>{t(lang!, "plazoFijo.tnaTea" as any)}</h3>
+              <p>{t(lang!, "plazoFijo.tnaTeaDesc" as any)}</p>
             </div>
             <div class="pf-info-item">
-              <h3>What is BADLAR?</h3>
-              <p><strong>BADLAR</strong> is the benchmark rate paid by private banks on deposits over ARS 1 million for 30&ndash;35 day terms. It is published daily by the BCRA and serves as a reference rate for many financial products in Argentina.</p>
+              <h3>{t(lang!, "plazoFijo.whatIsBadlar" as any)}</h3>
+              <p>{t(lang!, "plazoFijo.whatIsBadlarDesc" as any)}</p>
             </div>
             <div class="pf-info-item">
-              <h3>UVA-Adjusted Plazo Fijo</h3>
-              <p>A <strong>UVA plazo fijo</strong> adjusts your principal by the UVA index (tied to CPI inflation), plus a small fixed rate. Minimum term is 90 days. It protects against inflation but locks your money for longer.</p>
+              <h3>{t(lang!, "plazoFijo.whatIsUva" as any)}</h3>
+              <p>{t(lang!, "plazoFijo.whatIsUvaDesc" as any)}</p>
             </div>
             <div class="pf-info-item">
-              <h3>Risks</h3>
-              <p><strong>Inflation erosion:</strong> If inflation exceeds the TNA, your real return is negative. <strong>Early withdrawal:</strong> Breaking a plazo fijo before maturity means you lose all accrued interest. <strong>Currency risk:</strong> The deposit is in ARS; peso depreciation affects purchasing power.</p>
+              <h3>{t(lang!, "plazoFijo.risks" as any)}</h3>
+              <p>{t(lang!, "plazoFijo.risksDesc" as any)}</p>
             </div>
             <div class="pf-info-item">
-              <h3>Who uses Plazo Fijo?</h3>
-              <p>Any individual or business with ARS savings. It is the default short-term savings vehicle in Argentina, especially since access to foreign currency is often restricted (the <em>cepo</em> or capital controls).</p>
+              <h3>{t(lang!, "plazoFijo.whoUses" as any)}</h3>
+              <p>{t(lang!, "plazoFijo.whoUsesDesc" as any)}</p>
             </div>
           </div>
         </div>

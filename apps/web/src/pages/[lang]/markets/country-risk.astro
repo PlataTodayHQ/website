@@ -15,11 +15,11 @@ const indicators = getEconomicIndicators();
 const currentValue = indicators?.countryRisk ?? null;
 
 const seoTitle = currentValue
-  ? `Country Risk: ${Math.round(currentValue)} bps — EMBI+ Argentina`
-  : "Country Risk (EMBI+) — Argentina";
+  ? t(lang!, "countryRisk.seoTitleWithValue").replace("{value}", String(Math.round(currentValue)))
+  : t(lang!, "countryRisk.seoTitle");
 const seoDescription = currentValue
-  ? `Argentina's country risk (EMBI+ spread) is currently ${Math.round(currentValue)} basis points. Track daily changes, historical trends, and what it means for investors.`
-  : "Track Argentina's country risk (EMBI+ spread) in real time. Historical chart, statistics, and context for international investors.";
+  ? t(lang!, "countryRisk.seoDescriptionWithValue").replace("{value}", String(Math.round(currentValue)))
+  : t(lang!, "countryRisk.seoDescription");
 ---
 
 <Base
@@ -31,12 +31,12 @@ const seoDescription = currentValue
   breadcrumbs={[
     { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
     { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: "Country Risk", url: `/${lang}/markets/country-risk` },
+    { name: t(lang!, "countryRisk.breadcrumb"), url: `/${lang}/markets/country-risk` },
   ]}
   jsonLd={{
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Country Risk (EMBI+) — Argentina",
+    "name": t(lang!, "countryRisk.jsonLdName"),
     "description": seoDescription,
     "url": `https://plata.today/${lang}/markets/country-risk`,
     "inLanguage": lang,
@@ -47,14 +47,14 @@ const seoDescription = currentValue
     }
   }}
 >
-  <div class="cr-page" data-cr-page data-lang={lang}>
+  <div class="cr-page" data-cr-page data-lang={lang} data-i18n-updated={t(lang!, "countryRisk.updated")} data-i18n-bps={t(lang!, "countryRisk.bps")}>
     <MarketNav lang={lang!} active={"country-risk" as any} />
 
     <!-- Header -->
     <header class="cr-header">
       <div class="cr-header-left">
-        <h1 class="cr-title">Country Risk <span class="cr-title-sub">EMBI+ Argentina</span></h1>
-        <span class="cr-updated" data-cr-updated role="status" aria-live="polite">Loading...</span>
+        <h1 class="cr-title">{t(lang!, "countryRisk.title")} <span class="cr-title-sub">{t(lang!, "countryRisk.titleSub")}</span></h1>
+        <span class="cr-updated" data-cr-updated role="status" aria-live="polite">{t(lang!, "countryRisk.loading")}</span>
       </div>
     </header>
 
@@ -62,47 +62,47 @@ const seoDescription = currentValue
     <div class="cr-hero">
       <div class="cr-hero-main">
         <span class="cr-hero-value" data-cr-value>{ currentValue ? Math.round(currentValue).toLocaleString() : "—" }</span>
-        <span class="cr-hero-unit">bps</span>
+        <span class="cr-hero-unit">{t(lang!, "countryRisk.bps")}</span>
         <span class="cr-hero-change" data-cr-change></span>
       </div>
       <div class="cr-hero-meta">
-        <span class="cr-hero-label">EMBI+ Spread</span>
-        <span class="cr-hero-source">Source: Ambito Financiero</span>
+        <span class="cr-hero-label">{t(lang!, "countryRisk.embiSpread")}</span>
+        <span class="cr-hero-source">{t(lang!, "countryRisk.sourceLabel")}</span>
       </div>
     </div>
 
     <!-- Chart -->
     <section class="cr-chart-section">
       <div class="cr-chart-head">
-        <h2 class="cr-chart-title">Historical Trend</h2>
+        <h2 class="cr-chart-title">{t(lang!, "countryRisk.historicalTrend")}</h2>
         <div class="cr-chart-tabs" data-cr-tabs>
-          <button class="cr-tab" data-cr-tab="90">90D</button>
-          <button class="cr-tab cr-tab--active" data-cr-tab="365">1Y</button>
+          <button class="cr-tab" data-cr-tab="90">{t(lang!, "countryRisk.tab90d")}</button>
+          <button class="cr-tab cr-tab--active" data-cr-tab="365">{t(lang!, "countryRisk.tab1y")}</button>
         </div>
       </div>
       <div class="cr-chart-wrap" data-cr-chart-wrap>
-        <svg data-cr-chart class="cr-chart-svg" role="img" aria-label="Country risk historical chart"></svg>
+        <svg data-cr-chart class="cr-chart-svg" role="img" aria-label={t(lang!, "countryRisk.chartAriaLabel")}></svg>
       </div>
     </section>
 
     <!-- Stats Grid -->
     <section class="cr-stats-section">
-      <h2 class="cr-section-title">Key Statistics</h2>
+      <h2 class="cr-section-title">{t(lang!, "countryRisk.keyStatistics")}</h2>
       <div class="cr-stats-grid">
         <div class="cr-stat-card">
-          <span class="cr-stat-label">Current</span>
+          <span class="cr-stat-label">{t(lang!, "countryRisk.current")}</span>
           <span class="cr-stat-value" data-cr-stat="current">—</span>
         </div>
         <div class="cr-stat-card">
-          <span class="cr-stat-label">30-Day Avg</span>
+          <span class="cr-stat-label">{t(lang!, "countryRisk.avg30d")}</span>
           <span class="cr-stat-value" data-cr-stat="avg30">—</span>
         </div>
         <div class="cr-stat-card">
-          <span class="cr-stat-label">52-Week High</span>
+          <span class="cr-stat-label">{t(lang!, "countryRisk.high52w")}</span>
           <span class="cr-stat-value cr-stat-value--danger" data-cr-stat="high52">—</span>
         </div>
         <div class="cr-stat-card">
-          <span class="cr-stat-label">52-Week Low</span>
+          <span class="cr-stat-label">{t(lang!, "countryRisk.low52w")}</span>
           <span class="cr-stat-value cr-stat-value--success" data-cr-stat="low52">—</span>
         </div>
       </div>
@@ -111,50 +111,41 @@ const seoDescription = currentValue
     <!-- Educational Panel -->
     <section class="cr-edu-section" data-cr-edu>
       <div class="cr-edu-head">
-        <h2 class="cr-section-title">What is Country Risk?</h2>
-        <button class="cr-edu-dismiss" data-cr-edu-dismiss aria-label="Dismiss">&times;</button>
+        <h2 class="cr-section-title">{t(lang!, "countryRisk.whatIsCountryRisk")}</h2>
+        <button class="cr-edu-dismiss" data-cr-edu-dismiss aria-label={t(lang!, "countryRisk.dismissLabel")}>&times;</button>
       </div>
       <div class="cr-edu-body">
         <div class="cr-edu-card">
-          <h3 class="cr-edu-subtitle">EMBI+ Spread</h3>
+          <h3 class="cr-edu-subtitle">{t(lang!, "countryRisk.eduEmbiSpread")}</h3>
           <p class="cr-edu-text">
-            Country risk measures the additional yield (in basis points) that investors demand to hold
-            Argentine government bonds over US Treasury bonds. It is tracked by J.P. Morgan's Emerging
-            Markets Bond Index Plus (EMBI+). One basis point = 0.01%.
+            {t(lang!, "countryRisk.eduEmbiSpreadDesc")}
           </p>
         </div>
         <div class="cr-edu-card">
-          <h3 class="cr-edu-subtitle">What the Number Means</h3>
+          <h3 class="cr-edu-subtitle">{t(lang!, "countryRisk.eduWhatNumberMeans")}</h3>
           <p class="cr-edu-text">
-            A country risk of 700 bps means Argentine bonds yield 7 percentage points more than
-            US Treasuries. Higher values indicate greater perceived risk of default. For comparison:
-            investment-grade countries typically range from 50-200 bps.
+            {t(lang!, "countryRisk.eduWhatNumberMeansDesc")}
           </p>
         </div>
         <div class="cr-edu-card">
-          <h3 class="cr-edu-subtitle">Why It Matters</h3>
+          <h3 class="cr-edu-subtitle">{t(lang!, "countryRisk.eduWhyItMatters")}</h3>
           <p class="cr-edu-text">
-            Country risk directly affects borrowing costs for the government and the private sector.
-            A rising spread makes it more expensive for Argentina to access international capital markets,
-            impacts foreign direct investment, and can signal broader economic concerns.
+            {t(lang!, "countryRisk.eduWhyItMattersDesc")}
           </p>
         </div>
         <div class="cr-edu-card">
-          <h3 class="cr-edu-subtitle">Historical Context</h3>
+          <h3 class="cr-edu-subtitle">{t(lang!, "countryRisk.eduHistoricalContext")}</h3>
           <p class="cr-edu-text">
-            During the 2001 crisis, Argentina's country risk exceeded 5,000 bps before the sovereign
-            default. In calmer periods, it has traded between 300-800 bps. The indicator is closely
-            watched by investors, economists, and policymakers as a barometer of market confidence
-            in Argentina's economic trajectory.
+            {t(lang!, "countryRisk.eduHistoricalContextDesc")}
           </p>
         </div>
       </div>
     </section>
 
-    <p class="cr-disclaimer">Data from Ambito Financiero. For informational purposes only — not financial advice.</p>
+    <p class="cr-disclaimer">{t(lang!, "countryRisk.disclaimer")}</p>
     <noscript><p class="cr-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
 
-    <button class="scroll-top-btn" data-scroll-top aria-label="Scroll to top" title="Scroll to top">
+    <button class="scroll-top-btn" data-scroll-top aria-label={t(lang!, "countryRisk.scrollToTop")} title={t(lang!, "countryRisk.scrollToTop")}>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
     </button>
   </div>
@@ -165,6 +156,8 @@ const seoDescription = currentValue
   var pg = document.querySelector('[data-cr-page]');
   if (!pg) return;
   var lang = pg.getAttribute('data-lang') || 'en';
+  var i18nUpdated = pg.getAttribute('data-i18n-updated') || 'Updated';
+  var i18nBps = pg.getAttribute('data-i18n-bps') || 'bps';
   var activeDays = 365;
   var historyData = null;
 
@@ -196,10 +189,10 @@ const seoDescription = currentValue
           var valEl = document.querySelector('[data-cr-value]');
           if (valEl) valEl.textContent = fmt(d.value);
           var statEl = document.querySelector('[data-cr-stat="current"]');
-          if (statEl) statEl.textContent = fmt(d.value) + ' bps';
+          if (statEl) statEl.textContent = fmt(d.value) + ' ' + i18nBps;
         }
         var updEl = document.querySelector('[data-cr-updated]');
-        if (updEl) updEl.innerHTML = '<span class="live-dot"></span>Updated ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
+        if (updEl) updEl.innerHTML = '<span class="live-dot"></span>' + i18nUpdated + ' ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
       })
       .catch(function() {});
   }
@@ -302,7 +295,7 @@ const seoDescription = currentValue
         ttDot.setAttribute('cx', px);
         ttDot.setAttribute('cy', py);
 
-        var label = d.date + ': ' + Math.round(d.value) + ' bps';
+        var label = d.date + ': ' + Math.round(d.value) + ' ' + i18nBps;
         ttText.textContent = label;
         var textW = label.length * 7 + 16;
         var textX = Math.min(px + 8, W - padRight - textW);
@@ -357,16 +350,16 @@ const seoDescription = currentValue
 
         // Update stat cards
         var statCurrent = document.querySelector('[data-cr-stat="current"]');
-        if (statCurrent) statCurrent.textContent = fmt(current) + ' bps';
+        if (statCurrent) statCurrent.textContent = fmt(current) + ' ' + i18nBps;
 
         var statAvg = document.querySelector('[data-cr-stat="avg30"]');
-        if (statAvg) statAvg.textContent = fmt(avg30) + ' bps';
+        if (statAvg) statAvg.textContent = fmt(avg30) + ' ' + i18nBps;
 
         var statHigh = document.querySelector('[data-cr-stat="high52"]');
-        if (statHigh) statHigh.textContent = fmt(high52) + ' bps';
+        if (statHigh) statHigh.textContent = fmt(high52) + ' ' + i18nBps;
 
         var statLow = document.querySelector('[data-cr-stat="low52"]');
-        if (statLow) statLow.textContent = fmt(low52) + ' bps';
+        if (statLow) statLow.textContent = fmt(low52) + ' ' + i18nBps;
 
         // Update hero value from historical data too
         var valEl = document.querySelector('[data-cr-value]');

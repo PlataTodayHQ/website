@@ -63,57 +63,57 @@ const seoTitle = policyRate != null
     <!-- Key Indicators Grid -->
     <section class="bcra-grid" aria-label={t(lang!, "bcra.title" as any)}>
       <div class="bcra-card bcra-card--loading" data-bcra-card="rate">
-        <span class="bcra-card-label">Policy Rate</span>
+        <span class="bcra-card-label">{t(lang!, "bcra.policyRate" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="rate">—</span>
-          <span class="bcra-card-unit">%</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
         </div>
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="reserves">
-        <span class="bcra-card-label">International Reserves</span>
+        <span class="bcra-card-label">{t(lang!, "bcra.reserves" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="reserves">—</span>
-          <span class="bcra-card-unit">B USD</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitBillionUsd" as any)}</span>
         </div>
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="monetaryBase">
-        <span class="bcra-card-label">Monetary Base</span>
+        <span class="bcra-card-label">{t(lang!, "bcra.monetaryBase" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="monetaryBase">—</span>
-          <span class="bcra-card-unit">T ARS</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitTrillionArs" as any)}</span>
         </div>
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="badlar">
-        <span class="bcra-card-label">BADLAR Rate</span>
+        <span class="bcra-card-label">{t(lang!, "bcra.badlarRate" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="badlar">—</span>
-          <span class="bcra-card-unit">%</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
         </div>
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="cer">
-        <span class="bcra-card-label">CER Index</span>
+        <span class="bcra-card-label">{t(lang!, "bcra.cerIndex" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="cer">—</span>
         </div>
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="uva">
-        <span class="bcra-card-label">UVA Value</span>
+        <span class="bcra-card-label">{t(lang!, "bcra.uvaValue" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="uva">—</span>
-          <span class="bcra-card-unit">ARS</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitArs" as any)}</span>
         </div>
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="plazoFijoTNA">
-        <span class="bcra-card-label">Plazo Fijo TNA</span>
+        <span class="bcra-card-label">{t(lang!, "bcra.plazoFijoTNA" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="plazoFijoTNA">—</span>
-          <span class="bcra-card-unit">%</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
         </div>
       </div>
     </section>
@@ -121,10 +121,10 @@ const seoTitle = policyRate != null
     <!-- Policy Rate Chart -->
     <section class="bcra-chart-section" data-bcra-chart-section style="display:none;">
       <div class="bcra-chart-head">
-        <h2 class="bcra-chart-title">Policy Rate — 12 Month History</h2>
+        <h2 class="bcra-chart-title">{t(lang!, "bcra.chartTitle" as any)}</h2>
       </div>
       <div class="bcra-chart-wrap">
-        <svg data-bcra-chart class="bcra-chart-svg" role="img" aria-label="Policy Rate History" preserveAspectRatio="none"></svg>
+        <svg data-bcra-chart class="bcra-chart-svg" role="img" aria-label={t(lang!, "bcra.chartAriaLabel" as any)} preserveAspectRatio="none"></svg>
       </div>
     </section>
 
@@ -132,48 +132,48 @@ const seoTitle = policyRate != null
     <details class="bcra-info" data-bcra-info open>
       <summary class="bcra-info-summary">
         <span class="bcra-info-icon">i</span>
-        Understanding BCRA Indicators
+        {t(lang!, "bcra.infoTitle" as any)}
       </summary>
       <div class="bcra-info-content">
         <div class="bcra-info-grid">
           <div class="bcra-info-item">
-            <h3 class="bcra-info-term">What is BCRA?</h3>
-            <p class="bcra-info-desc">Argentina's central bank (Banco Central de la Rep&uacute;blica Argentina), responsible for monetary policy, currency regulation, and financial system stability.</p>
+            <h3 class="bcra-info-term">{t(lang!, "bcra.whatIsBcra" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.whatIsBcraDesc" as any)}</p>
           </div>
           <div class="bcra-info-item">
-            <h3 class="bcra-info-term">Policy Rate</h3>
-            <p class="bcra-info-desc">The reference interest rate BCRA sets. Higher rates attract peso savings but slow the economy. Historically very high in Argentina (50&ndash;100%+ during crisis periods).</p>
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutRate" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutRateDesc" as any)}</p>
           </div>
           <div class="bcra-info-item">
-            <h3 class="bcra-info-term">International Reserves</h3>
-            <p class="bcra-info-desc">Foreign currency held by BCRA. Critical for defending the peso and paying foreign debt. Closely watched by investors as an indicator of the government's ability to maintain currency policy.</p>
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutReserves" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutReservesDesc" as any)}</p>
           </div>
           <div class="bcra-info-item">
-            <h3 class="bcra-info-term">Monetary Base</h3>
-            <p class="bcra-info-desc">Total money in circulation plus bank reserves at BCRA. Rapid growth signals inflation risk. One of the most closely watched indicators in Argentina's high-inflation environment.</p>
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutMonetaryBase" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutMonetaryBaseDesc" as any)}</p>
           </div>
           <div class="bcra-info-item">
-            <h3 class="bcra-info-term">BADLAR</h3>
-            <p class="bcra-info-desc">Rate paid by banks on large deposits (over 1M ARS). Benchmark for corporate deposits and a key indicator of interbank liquidity conditions.</p>
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutBadlar" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutBadlarDesc" as any)}</p>
           </div>
           <div class="bcra-info-item">
-            <h3 class="bcra-info-term">CER</h3>
-            <p class="bcra-info-desc">Coeficiente de Estabilizaci&oacute;n de Referencia, an inflation-adjustment index. Used for inflation-linked bonds (TX series) and UVA-denominated loans.</p>
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutCer" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutCerDesc" as any)}</p>
           </div>
           <div class="bcra-info-item">
-            <h3 class="bcra-info-term">UVA</h3>
-            <p class="bcra-info-desc">Unidad de Valor Adquisitivo, a daily-updated unit tied to CPI. Used for inflation-adjusted mortgages and savings products. Its value represents the purchasing power of a fixed unit.</p>
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutUva" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutUvaDesc" as any)}</p>
           </div>
           <div class="bcra-info-item">
-            <h3 class="bcra-info-term">Plazo Fijo TNA</h3>
-            <p class="bcra-info-desc">The nominal annual rate for 30-day fixed-term deposits (plazo fijo). The most common savings instrument for Argentine individuals.</p>
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutPlazoFijo" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutPlazoFijoDesc" as any)}</p>
           </div>
         </div>
       </div>
     </details>
 
     <!-- Data Source -->
-    <p class="bcra-disclaimer">Data from BCRA (Banco Central de la Rep&uacute;blica Argentina) public API</p>
+    <p class="bcra-disclaimer">{t(lang!, "bcra.source" as any)}</p>
     <noscript><p class="bcra-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
   </div>
 </Base>
@@ -339,7 +339,7 @@ const seoTitle = policyRate != null
       var dateStr = d.date;
       // Format as MMM 'YY
       var parts = dateStr.split('-');
-      var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(parts[1], 10) - 1] || parts[1];
+      var mo = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, 1).toLocaleDateString(lang, { month: 'short' });
       var yr = parts[0] ? "'" + parts[0].slice(2) : '';
       xLabels += '<text x="' + xPos(idx).toFixed(1) + '" y="' + (H - 6) + '" class="bcra-chart-label" text-anchor="middle">' + mo + ' ' + yr + '</text>';
     }
