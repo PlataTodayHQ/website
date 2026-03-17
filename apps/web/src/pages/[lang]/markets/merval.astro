@@ -1803,13 +1803,14 @@ const seoTitle = mervalPrice
 
   /* Index Summary Card */
   .index-card {
-    background: var(--color-bg-secondary);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .index-card::before {
     content: '';
@@ -1847,7 +1848,7 @@ const seoTitle = mervalPrice
 
   /* Market Summary */
   .mkt-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); margin-bottom: var(--spacing-xl); }
-  .mkt-sum-item { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .mkt-sum-item { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .mkt-sum-item:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
   .mkt-sum-label { font-size: 0.68rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
   .mkt-sum-val { font-size: 1.15rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
@@ -1857,7 +1858,7 @@ const seoTitle = mervalPrice
   /* Top Movers */
   .movers-section { margin-bottom: var(--spacing-2xl); }
   .movers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); }
-  .movers-col { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+  .movers-col { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .movers-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 12px 16px; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 6px; }
   .movers-title--up { color: #16a34a; }
   .movers-title--up::before { content: '▲'; font-size: 0.55rem; }
@@ -1879,11 +1880,12 @@ const seoTitle = mervalPrice
   /* Chart */
   .chart-section { margin-bottom: var(--spacing-2xl); }
   .chart-wrap {
-    background: var(--color-bg-secondary);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
     position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .chart-wrap canvas { width: 100%; display: block; cursor: crosshair; }
   .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm); }
@@ -1901,7 +1903,7 @@ const seoTitle = mervalPrice
 
   /* Market Breadth */
   .breadth-section { margin-bottom: var(--spacing-xl); }
-  .breadth-bar { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .breadth-bar { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .breadth-side { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 50px; }
   .breadth-count { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
   .breadth-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
@@ -1919,9 +1921,10 @@ const seoTitle = mervalPrice
   .heatmap {
     display: flex; flex-wrap: wrap; gap: 2px;
     border-radius: 12px; overflow: hidden; min-height: 80px;
-    background: var(--color-bg-secondary);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     padding: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .heatmap :global(.hm-cell) {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -1949,8 +1952,9 @@ const seoTitle = mervalPrice
   .sector-section { margin-bottom: var(--spacing-2xl); }
   .sector-grid {
     display: flex; align-items: center; gap: var(--spacing-xl);
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    background: var(--color-bg); border: 1px solid var(--color-border);
     border-radius: 12px; padding: var(--spacing-xl);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .sector-chart-wrap { flex-shrink: 0; }
   .sector-legend { flex: 1; display: flex; flex-direction: column; gap: 6px; }
@@ -2083,8 +2087,9 @@ const seoTitle = mervalPrice
 
   /* Table view */
   .stocks-table-wrap {
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    background: var(--color-bg); border: 1px solid var(--color-border);
     border-radius: 12px; overflow: hidden; margin-bottom: var(--spacing-xl);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .stocks-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
   .stbl-th {

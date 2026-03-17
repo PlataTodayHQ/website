@@ -871,6 +871,9 @@ export const en = {
   "markets.fixedIncomeSection": "Fixed Income",
   "markets.fixedIncomeDesc": "Government bonds, corporate debt, and short-term treasury bills traded on BYMA",
   "markets.equitiesSection": "Equities",
+  "markets.navEconomy": "Economy",
+  "markets.navEquities": "Equities",
+  "markets.navFixedIncome": "Fixed Income",
 
   // Merval page — missing keys
 

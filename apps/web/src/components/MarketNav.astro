@@ -10,61 +10,205 @@ const { lang, active = "hub" } = Astro.props;
 
 const isFixedIncomeActive = ["bonds", "corporate-bonds", "letras"].includes(active);
 const isEconomyActive = ["country-risk", "monetary-policy", "inflation", "plazo-fijo"].includes(active);
+const isEquitiesActive = ["merval", "cedears", "screener"].includes(active);
 
-const items = [
-  { key: "hub", href: `/${lang}/markets`, icon: "chart-bar", label: t(lang, "markets.breadcrumb"), group: "main" },
-  { key: "currencies", href: `/${lang}/markets/currencies`, icon: "currency", label: t(lang, "currencies.breadcrumb"), group: "main" },
-  { key: "country-risk", href: `/${lang}/markets/country-risk`, icon: "shield", label: t(lang, "countryRisk.breadcrumb" as any), group: "economy" },
-  { key: "monetary-policy", href: `/${lang}/markets/monetary-policy`, icon: "bank", label: t(lang, "bcra.breadcrumb" as any), group: "economy" },
-  { key: "inflation", href: `/${lang}/markets/inflation`, icon: "flame", label: t(lang, "inflation.breadcrumb" as any), group: "economy" },
-  { key: "plazo-fijo", href: `/${lang}/markets/plazo-fijo`, icon: "lock", label: t(lang, "plazoFijo.breadcrumb" as any), group: "economy" },
-  { key: "merval", href: `/${lang}/markets/merval`, icon: "trending", label: "Merval", group: "equities" },
-  { key: "cedears", href: `/${lang}/markets/cedears`, icon: "globe", label: "CEDEARs", group: "equities" },
-  { key: "screener", href: `/${lang}/markets/screener`, icon: "filter", label: t(lang, "screener.title"), group: "equities" },
-  { key: "bonds", href: `/${lang}/markets/bonds`, icon: "bond", label: t(lang, "bonds.breadcrumb"), group: "fixed-income" },
-  { key: "corporate-bonds", href: `/${lang}/markets/corporate-bonds`, icon: "building", label: t(lang, "corporateBonds.breadcrumb"), group: "fixed-income" },
-  { key: "letras", href: `/${lang}/markets/letras`, icon: "doc", label: t(lang, "letras.breadcrumb"), group: "fixed-income" },
-  { key: "crypto", href: `/${lang}/markets/crypto`, icon: "crypto", label: t(lang, "crypto.title"), group: "alt" },
-  { key: "watchlist", href: `/${lang}/markets/watchlist`, icon: "star", label: t(lang, "watchlist.breadcrumb" as any), group: "alt" },
+/* ── Top-level items (always visible) ── */
+const topItems = [
+  { key: "hub", href: `/${lang}/markets`, icon: "chart-bar", label: t(lang, "markets.breadcrumb") },
+  { key: "currencies", href: `/${lang}/markets/currencies`, icon: "currency", label: t(lang, "currencies.breadcrumb") },
 ];
+
+/* ── Dropdown groups ── */
+const groups = [
+  {
+    id: "economy",
+    label: t(lang, "markets.navEconomy" as any),
+    isActive: isEconomyActive,
+    icon: "bank",
+    items: [
+      { key: "country-risk", href: `/${lang}/markets/country-risk`, icon: "shield", label: t(lang, "countryRisk.breadcrumb" as any) },
+      { key: "monetary-policy", href: `/${lang}/markets/monetary-policy`, icon: "bank", label: t(lang, "bcra.breadcrumb" as any) },
+      { key: "inflation", href: `/${lang}/markets/inflation`, icon: "flame", label: t(lang, "inflation.breadcrumb" as any) },
+      { key: "plazo-fijo", href: `/${lang}/markets/plazo-fijo`, icon: "lock", label: t(lang, "plazoFijo.breadcrumb" as any) },
+    ],
+  },
+  {
+    id: "equities",
+    label: t(lang, "markets.navEquities" as any),
+    isActive: isEquitiesActive,
+    icon: "trending",
+    items: [
+      { key: "merval", href: `/${lang}/markets/merval`, icon: "trending", label: "Merval" },
+      { key: "cedears", href: `/${lang}/markets/cedears`, icon: "globe", label: "CEDEARs" },
+      { key: "screener", href: `/${lang}/markets/screener`, icon: "filter", label: t(lang, "screener.title") },
+    ],
+  },
+  {
+    id: "fixed-income",
+    label: t(lang, "markets.navFixedIncome" as any),
+    isActive: isFixedIncomeActive,
+    icon: "bond",
+    items: [
+      { key: "bonds", href: `/${lang}/markets/bonds`, icon: "bond", label: t(lang, "bonds.breadcrumb") },
+      { key: "corporate-bonds", href: `/${lang}/markets/corporate-bonds`, icon: "building", label: t(lang, "corporateBonds.breadcrumb") },
+      { key: "letras", href: `/${lang}/markets/letras`, icon: "doc", label: t(lang, "letras.breadcrumb") },
+    ],
+  },
+];
+
+const tailItems = [
+  { key: "crypto", href: `/${lang}/markets/crypto`, icon: "crypto", label: t(lang, "crypto.title") },
+  { key: "watchlist", href: `/${lang}/markets/watchlist`, icon: "star", label: t(lang, "watchlist.breadcrumb" as any) },
+];
+
+/* Helper to get active sub-label for dropdown groups */
+function getActiveSubLabel(group: typeof groups[0]): string | null {
+  const found = group.items.find(i => i.key === active);
+  return found ? found.label : null;
+}
+
+/* SVG icon fragments — reused across items */
+const icons: Record<string, string> = {
+  "chart-bar": '<path d="M3 3v18h18"/><path d="M7 16V8"/><path d="M11 16V4"/><path d="M15 16v-5"/><path d="M19 16v-8"/>',
+  "currency": '<circle cx="12" cy="12" r="8"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+  "trending": '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  "crypto": '<path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.215-6.893m-1.215 6.893-3.94-.694m5.155-6.2L8.29 4.26m5.908 1.042.348-1.97M7.48 20.364l3.126-17.727"/>',
+  "globe": '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+  "bond": '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M12 4v16"/>',
+  "building": '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>',
+  "doc": '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+  "filter": '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
+  "shield": '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  "bank": '<path d="M3 21h18"/><path d="M3 10h18"/><path d="M12 3l9 7H3z"/><path d="M5 10v11"/><path d="M19 10v11"/><path d="M9 10v11"/><path d="M15 10v11"/>',
+  "flame": '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  "lock": '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  "star": '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  "chevron": '<path d="M6 9l6 6 6-6"/>',
+};
 ---
 
 <nav class="mnav" aria-label="Markets navigation" data-market-nav>
   <div class="mnav-inner">
-    {items.map((item, idx) => {
-      const prevGroup = idx > 0 ? items[idx - 1].group : null;
-      const showSep = prevGroup && prevGroup !== item.group;
+    {/* ── Top-level items ── */}
+    {topItems.map(item => (
+      <a
+        href={item.href}
+        class:list={["mnav-item", { "mnav-item--active": active === item.key }]}
+        aria-current={active === item.key ? "page" : undefined}
+      >
+        <svg class="mnav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <Fragment set:html={icons[item.icon]} />
+        </svg>
+        <span class="mnav-label">{item.label}</span>
+      </a>
+    ))}
+
+    <span class="mnav-sep" aria-hidden="true"></span>
+
+    {/* ── Dropdown groups ── */}
+    {groups.map(group => {
+      const subLabel = getActiveSubLabel(group);
       return (
-        <>
-          {showSep && <span class="mnav-sep" aria-hidden="true"></span>}
-          <a
-            href={item.href}
-            class:list={["mnav-item", { "mnav-item--active": active === item.key }]}
-            aria-current={active === item.key ? "page" : undefined}
+        <div class:list={["mnav-group", { "mnav-group--active": group.isActive }]} data-mnav-group>
+          <button
+            class:list={["mnav-item mnav-item--dropdown", { "mnav-item--active": group.isActive }]}
+            aria-expanded="false"
+            aria-haspopup="true"
+            data-mnav-trigger
           >
             <svg class="mnav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              {item.icon === "chart-bar" && <Fragment><path d="M3 3v18h18"/><path d="M7 16V8"/><path d="M11 16V4"/><path d="M15 16v-5"/><path d="M19 16v-8"/></Fragment>}
-              {item.icon === "currency" && <Fragment><circle cx="12" cy="12" r="8"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></Fragment>}
-              {item.icon === "trending" && <Fragment><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></Fragment>}
-              {item.icon === "crypto" && <Fragment><path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.215-6.893m-1.215 6.893-3.94-.694m5.155-6.2L8.29 4.26m5.908 1.042.348-1.97M7.48 20.364l3.126-17.727"/></Fragment>}
-              {item.icon === "globe" && <Fragment><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></Fragment>}
-              {item.icon === "bond" && <Fragment><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M12 4v16"/></Fragment>}
-              {item.icon === "building" && <Fragment><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></Fragment>}
-              {item.icon === "doc" && <Fragment><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></Fragment>}
-              {item.icon === "filter" && <Fragment><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></Fragment>}
-              {item.icon === "shield" && <Fragment><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></Fragment>}
-              {item.icon === "bank" && <Fragment><path d="M3 21h18"/><path d="M3 10h18"/><path d="M12 3l9 7H3z"/><path d="M5 10v11"/><path d="M19 10v11"/><path d="M9 10v11"/><path d="M15 10v11"/></Fragment>}
-              {item.icon === "flame" && <Fragment><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></Fragment>}
-              {item.icon === "lock" && <Fragment><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></Fragment>}
-              {item.icon === "star" && <Fragment><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></Fragment>}
+              <Fragment set:html={icons[group.icon]} />
             </svg>
-            <span class="mnav-label">{item.label}</span>
-          </a>
-        </>
+            <span class="mnav-label">
+              {group.isActive && subLabel ? subLabel : group.label}
+            </span>
+            <svg class="mnav-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <Fragment set:html={icons.chevron} />
+            </svg>
+          </button>
+          <div class="mnav-dropdown" data-mnav-dropdown role="menu">
+            {group.items.map(item => (
+              <a
+                href={item.href}
+                class:list={["mnav-dropdown-item", { "mnav-dropdown-item--active": active === item.key }]}
+                role="menuitem"
+                aria-current={active === item.key ? "page" : undefined}
+              >
+                <svg class="mnav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <Fragment set:html={icons[item.icon]} />
+                </svg>
+                <span>{item.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
       );
     })}
+
+    <span class="mnav-sep" aria-hidden="true"></span>
+
+    {/* ── Tail items ── */}
+    {tailItems.map(item => (
+      <a
+        href={item.href}
+        class:list={["mnav-item", { "mnav-item--active": active === item.key }]}
+        aria-current={active === item.key ? "page" : undefined}
+      >
+        <svg class="mnav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <Fragment set:html={icons[item.icon]} />
+        </svg>
+        <span class="mnav-label">{item.label}</span>
+      </a>
+    ))}
   </div>
 </nav>
+
+<script is:inline>
+(function() {
+  const nav = document.querySelector('[data-market-nav]');
+  if (!nav) return;
+
+  const groups = nav.querySelectorAll('[data-mnav-group]');
+
+  function closeAll(except) {
+    groups.forEach(g => {
+      if (g === except) return;
+      const trigger = g.querySelector('[data-mnav-trigger]');
+      const dropdown = g.querySelector('[data-mnav-dropdown]');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      if (dropdown) dropdown.classList.remove('mnav-dropdown--open');
+    });
+  }
+
+  groups.forEach(group => {
+    const trigger = group.querySelector('[data-mnav-trigger]');
+    const dropdown = group.querySelector('[data-mnav-dropdown]');
+    if (!trigger || !dropdown) return;
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      closeAll(isOpen ? null : group);
+      trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      dropdown.classList.toggle('mnav-dropdown--open', !isOpen);
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', () => closeAll(null));
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAll(null);
+  });
+
+  // Scroll active item into view
+  const activeItem = nav.querySelector('.mnav-item--active, .mnav-group--active');
+  if (activeItem) {
+    activeItem.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'instant' });
+  }
+})();
+</script>
 
 <style>
   .mnav {
@@ -85,6 +229,7 @@ const items = [
     margin: 0 auto;
     padding: 0 var(--spacing-md);
     display: flex;
+    align-items: stretch;
     gap: 2px;
     overflow-x: auto;
     scrollbar-width: none;
@@ -101,6 +246,7 @@ const items = [
     margin: 0 4px;
   }
 
+  /* ── Base item ── */
   .mnav-item {
     display: flex;
     align-items: center;
@@ -111,9 +257,13 @@ const items = [
     color: var(--color-text-meta);
     text-decoration: none;
     white-space: nowrap;
+    border: none;
     border-bottom: 2px solid transparent;
+    background: none;
+    cursor: pointer;
     transition: color 0.15s, border-color 0.15s, background 0.15s;
     position: relative;
+    font-family: inherit;
   }
 
   .mnav-item:hover {
@@ -143,6 +293,77 @@ const items = [
     opacity: 1;
   }
 
+  /* ── Dropdown trigger ── */
+  .mnav-item--dropdown {
+    gap: 4px;
+  }
+
+  .mnav-chevron {
+    flex-shrink: 0;
+    opacity: 0.5;
+    transition: transform 0.2s;
+  }
+  .mnav-item--dropdown[aria-expanded="true"] .mnav-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ── Dropdown group ── */
+  .mnav-group {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .mnav-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    padding: 6px;
+    z-index: 90;
+  }
+  .mnav-dropdown--open {
+    display: block;
+  }
+
+  .mnav-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.12s, color 0.12s;
+  }
+  .mnav-dropdown-item:hover {
+    background: var(--color-bg-secondary);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .mnav-dropdown-item--active {
+    color: var(--color-gold);
+    background: var(--color-gold-glow);
+  }
+  .mnav-dropdown-item--active:hover {
+    color: var(--color-gold);
+  }
+
+  .mnav-dropdown-item .mnav-icon {
+    opacity: 0.6;
+  }
+  .mnav-dropdown-item--active .mnav-icon {
+    opacity: 1;
+  }
+
+  /* ── Mobile ── */
   @media (max-width: 520px) {
     .mnav-item {
       padding: 8px 10px;
@@ -153,14 +374,22 @@ const items = [
       width: 14px;
       height: 14px;
     }
+    .mnav-dropdown {
+      min-width: 180px;
+      left: -10px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mnav-item { transition: none; }
+    .mnav-item,
+    .mnav-chevron { transition: none; }
   }
 
   :global([data-theme="dark"]) .mnav {
     background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+  }
+  :global([data-theme="dark"]) .mnav-dropdown {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   }
 
   @media print {

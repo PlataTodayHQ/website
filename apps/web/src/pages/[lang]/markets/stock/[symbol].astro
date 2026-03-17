@@ -2799,7 +2799,7 @@ const stockI18n = {
   @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
   @keyframes fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
   .detail-section, .chart-section, .key-insights, .company-hero, .range52-section { animation: fade-in 0.3s ease-out; scroll-margin-top: 56px; }
-  .price-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); position: relative; overflow: hidden; }
+  .price-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); position: relative; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .price-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--color-accent), var(--color-gold)); border-radius: 12px 12px 0 0; }
   .pc-skeleton { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: shimmer 1.5s ease-in-out infinite; border-radius: 4px; }
   .price-card--loading .pc-price { display: inline-block; width: 120px; height: 2.4rem; }
@@ -2840,9 +2840,9 @@ const stockI18n = {
   .chart-section { margin-bottom: var(--spacing-2xl); }
   .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md); flex-wrap: wrap; gap: var(--spacing-sm); }
   .section-title { font-size: 1.3rem; font-weight: 700; }
-  .chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px 12px 0 0; border-bottom: none; padding: var(--spacing-md); padding-bottom: 0; }
+  .chart-wrap { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px 12px 0 0; border-bottom: none; padding: var(--spacing-md); padding-bottom: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .chart-wrap canvas { width: 100%; display: block; cursor: crosshair; }
-  .vol-chart-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 0 0 12px 12px; padding: 0 var(--spacing-md) var(--spacing-md); }
+  .vol-chart-wrap { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 0 0 12px 12px; padding: 0 var(--spacing-md) var(--spacing-md); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .vol-chart-wrap canvas { width: 100%; display: block; }
 
   /* Range Buttons */
@@ -2869,9 +2869,9 @@ const stockI18n = {
 
   /* Stats Grid (2 columns) */
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); }
-  .stats-col { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+  .stats-col { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 
-  .divhist-table-wrap { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+  .divhist-table-wrap { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   :global(.divhist-table) { width: 100%; border-collapse: collapse; }
   :global(.divhist-table thead th) { padding: 8px 14px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); border-bottom: 1px solid var(--color-border); text-align: start; }
   :global(.divhist-table tbody tr) { border-bottom: 1px solid var(--color-border); }
@@ -2917,7 +2917,7 @@ const stockI18n = {
   }
 
   /* ─── Analyst Card ─── */
-  .analyst-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); }
+  .analyst-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .analyst-main { display: flex; align-items: center; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border); }
   .analyst-rec {
     font-size: 1.2rem;
@@ -2956,8 +2956,8 @@ const stockI18n = {
   /* ─── Company Overview Hero ─── */
   /* ─── Key Insights ─── */
   .key-insights {
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-inline-start: 3px solid var(--color-gold);
-    border-radius: 12px; padding: 14px 18px; margin-bottom: var(--spacing-xl);
+    background: var(--color-bg); border: 1px solid var(--color-border); border-inline-start: 3px solid var(--color-gold);
+    border-radius: 12px; padding: 14px 18px; margin-bottom: var(--spacing-xl); box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   :global(.ki-list) { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
   :global(.ki-item) {
@@ -2968,13 +2968,13 @@ const stockI18n = {
 
   /* ─── Quick Facts Strip ─── */
   .qf-strip { display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-xl); flex-wrap: wrap; }
-  :global(.qf-item) { flex: 1; min-width: 100px; background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 10px 14px; display: flex; flex-direction: column; gap: 3px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  :global(.qf-item) { flex: 1; min-width: 100px; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: 10px 14px; display: flex; flex-direction: column; gap: 3px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
   :global(.qf-item:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
   :global(.qf-label) { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
   :global(.qf-val) { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
   @media (max-width: 640px) { .qf-strip { gap: 8px; } :global(.qf-item) { min-width: 80px; padding: 8px 10px; } :global(.qf-val) { font-size: 0.95rem; } }
 
-  .company-hero { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+  .company-hero { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .ch-identity { display: flex; align-items: center; gap: var(--spacing-lg); margin-bottom: var(--spacing-md); }
   .ch-logo { width: 64px; height: 64px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: var(--color-bg); border: 1px solid var(--color-border); }
   .ch-logo-img { width: 100%; height: 100%; object-fit: contain; display: none; }
@@ -2994,7 +2994,7 @@ const stockI18n = {
 
   /* ─── 52-Week Price Range ─── */
   .range52-section { margin-bottom: var(--spacing-2xl); }
-  .range52-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); }
+  .range52-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .range52-zone-badge {
     display: inline-block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em;
     padding: 3px 8px; border-radius: 4px; margin-bottom: 12px;
@@ -3056,7 +3056,7 @@ const stockI18n = {
 
   /* ─── Valuation Snapshot ─── */
   :global(.val-cards) { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--spacing-md); }
-  :global(.vc-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  :global(.vc-card) { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
   :global(.vc-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
   :global(.vc-head) { display: flex; justify-content: space-between; align-items: center; }
   :global(.vc-label) { font-size: 0.72rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
@@ -3067,11 +3067,11 @@ const stockI18n = {
   :global(.vc-range) { display: flex; justify-content: space-between; font-size: 0.58rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
 
   /* ─── Moving Average Signal ─── */
-  :global(.ma-overall) { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 20px; border: 2px solid; border-radius: 12px; margin-bottom: var(--spacing-md); background: var(--color-bg-secondary); }
+  :global(.ma-overall) { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 20px; border: 2px solid; border-radius: 12px; margin-bottom: var(--spacing-md); background: var(--color-bg); }
   :global(.ma-overall-label) { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text); }
   :global(.ma-overall-icon) { font-size: 1.2rem; }
   :global(.ma-cards) { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
-  :global(.ma-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px; border-top: 3px solid transparent; }
+  :global(.ma-card) { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px; border-top: 3px solid transparent; }
   :global(.ma-card--up) { border-top-color: #16a34a; }
   :global(.ma-card--down) { border-top-color: #dc2626; }
   :global(.ma-card-title) { font-size: 0.72rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
@@ -3112,7 +3112,7 @@ const stockI18n = {
   :global(.hs-sub) { font-size: 0.65rem; color: var(--color-text-meta); }
 
   .health-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
-  .health-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); display: block; transition: border-color 0.15s ease; }
+  .health-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); display: block; transition: border-color 0.15s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .health-card:hover { border-color: var(--color-border-section, var(--color-border)); }
   .hc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .hc-label { font-size: 0.73rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
@@ -3154,7 +3154,7 @@ const stockI18n = {
   .target-range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 600; color: var(--color-text-meta); font-variant-numeric: tabular-nums; margin-top: var(--spacing-sm); }
 
   /* ─── Quarterly Earnings ─── */
-  .earnings-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); }
+  .earnings-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-xl); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .earnings-legend { display: flex; gap: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
   .el-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--color-text-meta); }
   .el-dot { width: 10px; height: 10px; border-radius: 2px; }
@@ -3180,11 +3180,11 @@ const stockI18n = {
   :global(.es-label) { font-size: 0.68rem; font-weight: 600; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.04em; }
 
   /* ─── About the Company (expanded) ─── */
-  .about-card { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; }
+  .about-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   .about-text-wrap { padding: 20px; }
   .about-desc { font-size: 0.88rem; line-height: 1.8; color: var(--color-text-secondary); position: relative; }
   .about-desc--clamped { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .about-desc--clamped::after { content: ''; position: absolute; bottom: 0; inset-inline-start: 0; inset-inline-end: 0; height: 2em; background: linear-gradient(transparent, var(--color-bg-secondary)); pointer-events: none; }
+  .about-desc--clamped::after { content: ''; position: absolute; bottom: 0; inset-inline-start: 0; inset-inline-end: 0; height: 2em; background: linear-gradient(transparent, var(--color-bg)); pointer-events: none; }
   .about-toggle { display: none; background: none; border: none; color: var(--color-accent); font-size: 0.82rem; font-weight: 600; cursor: pointer; padding: 0; margin-top: 8px; }
   .about-toggle:hover { text-decoration: underline; }
   .about-toggle:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
@@ -3211,7 +3211,7 @@ const stockI18n = {
   :global(.peers-grid) { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
   :global(.peer-card) {
     display: flex; flex-direction: column; gap: 4px;
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px;
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px;
     padding: 14px 16px; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
   }
   :global(.peer-card:hover) { border-color: var(--color-gold); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
@@ -3264,14 +3264,14 @@ const stockI18n = {
   /* ─── Dividend Income Card ─── */
   :global(.div-income-card) { margin-bottom: var(--spacing-md); }
   :global(.dii-grid) { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--spacing-sm); }
-  :global(.dii-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: 12px; text-align: center; display: flex; flex-direction: column; gap: 2px; }
+  :global(.dii-card) { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: 12px; text-align: center; display: flex; flex-direction: column; gap: 2px; }
   :global(.dii-card--highlight) { border-color: var(--color-gold); background: rgba(246,180,14,0.04); }
   :global(.dii-label) { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
   :global(.dii-val) { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
   :global(.dii-sub) { font-size: 0.68rem; color: var(--color-text-meta); }
 
   /* ─── Graham Analysis ─── */
-  :global(.graham-card) { background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); }
+  :global(.graham-card) { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; padding: var(--spacing-lg); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
   :global(.grm-header) { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); }
   :global(.grm-score-wrap) { display: flex; align-items: center; gap: var(--spacing-md); flex: 1; }
   :global(.grm-gauge) { flex: 1; height: 8px; background: var(--color-border); border-radius: 4px; overflow: hidden; max-width: 200px; }

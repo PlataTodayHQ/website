@@ -1275,7 +1275,7 @@ const { lang } = Astro.params;
   .scr-table-wrap {
     overflow-x: auto; margin-bottom: var(--spacing-xl);
     border: 1px solid var(--color-border); border-radius: 12px;
-    background: var(--color-bg-secondary);
+    background: var(--color-bg);
     scrollbar-width: thin; scrollbar-color: var(--color-border) transparent;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
@@ -1295,7 +1295,7 @@ const { lang } = Astro.params;
     font-size: 0.7rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.05em;
     color: var(--color-text-meta);
-    background: var(--color-bg-secondary);
+    background: var(--color-bg);
     border-bottom: 2px solid var(--color-border);
     cursor: pointer; user-select: none;
     white-space: nowrap;
@@ -1406,9 +1406,10 @@ const { lang } = Astro.params;
   }
 
   .scr-skeleton-card {
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    background: var(--color-bg); border: 1px solid var(--color-border);
     border-radius: 12px; padding: 12px;
     border-inline-start: 3px solid var(--color-border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
   .scr-skeleton-row :global(.scr-td) {
@@ -1442,7 +1443,7 @@ const { lang } = Astro.params;
   /* Market Breadth */
   .scr-breadth {
     margin-bottom: 1rem; padding: 14px 18px;
-    background: var(--color-bg-secondary); border-radius: 12px;
+    background: var(--color-bg); border-radius: 12px;
     border: 1px solid var(--color-border);
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
@@ -1473,8 +1474,9 @@ const { lang } = Astro.params;
   }
   .scr-stat-item {
     display: flex; flex-direction: column; gap: 2px; padding: 12px 16px;
-    background: var(--color-bg-secondary); border-radius: 12px;
+    background: var(--color-bg); border-radius: 12px;
     border: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: border-color 0.15s, box-shadow 0.15s;
   }
   .scr-stat-item:hover {
@@ -1568,8 +1570,9 @@ const { lang } = Astro.params;
   /* Mobile card styles */
   :global(.stk-card) {
     display: block; text-decoration: none; color: inherit;
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    background: var(--color-bg); border: 1px solid var(--color-border);
     border-radius: 12px; padding: 14px; border-inline-start: 3px solid var(--stk-accent, var(--color-border));
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: transform 0.1s, box-shadow 0.15s;
     animation: stk-fade-in 0.25s ease-out both;
   }

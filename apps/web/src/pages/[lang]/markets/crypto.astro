@@ -1148,7 +1148,8 @@ const { lang } = Astro.params;
   :global(.cr-mv-card) {
     display: flex; align-items: center; justify-content: space-between;
     padding: 12px 16px; border-radius: 12px; text-decoration: none; color: inherit;
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    background: var(--color-bg); border: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: transform 0.1s, border-color 0.15s, box-shadow 0.15s;
   }
   :global(.cr-mv-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
@@ -1172,7 +1173,7 @@ const { lang } = Astro.params;
   /* 7-Day Performance */
   .cr-perf7d {
     margin-bottom: 1.5rem; padding: 18px;
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px;
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .cr-perf7d-title {
@@ -1275,7 +1276,7 @@ const { lang } = Astro.params;
   .cr-table-wrap {
     overflow-x: auto;
     border: 1px solid var(--color-border); border-radius: 12px;
-    background: var(--color-bg-secondary);
+    background: var(--color-bg);
     scrollbar-width: thin; scrollbar-color: var(--color-border) transparent;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
@@ -1382,8 +1383,9 @@ const { lang } = Astro.params;
   @keyframes cr-card-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
   :global(.cr-card) {
     display: block; padding: 14px 16px; margin-bottom: 8px;
-    background: var(--color-bg-secondary); border-radius: 12px;
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px;
     border-inline-start: 3px solid var(--color-border); text-decoration: none; color: inherit;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: transform 0.1s, box-shadow 0.15s;
     animation: cr-card-fade 0.25s ease-out both;
   }
