@@ -113,18 +113,24 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 - API: Yes — REST APIs and Excel add-in. 20+ years of history.
 - Pricing: Paid (subscription). Now owned by DCV.
 
+**Bolsa Electrónica de Chile (BEC / BolChile)**
+- URL: https://www.bolchile.cl
+- Data: Equity trading data, real-time dollar pricing (via Datatec platform — handles 95% of dollar spot transactions in Chile), FX, fixed income, derivatives.
+- API: No public API. Data via subscription-based premium plans.
+- Pricing: Paid. Recently migrated to Nasdaq Marketplace Services Platform (cloud SaaS).
+
 ### Central Bank / Regulators
 
 **Banco Central de Chile — API BDE**
 - URL: https://si3.bcentral.cl/estadisticas/principal1/web_services/index.htm
-- Data: Exchange rates, interest rates, monetary aggregates, economic indicators (historical + current)
-- API: Yes — REST API, JSON/XML. Code examples in Python, R, C#.
-- Pricing: **Free**
+- Data: Exchange rates, interest rates, monetary aggregates, GDP, trade balance, CPI, employment, financial sector data. Methods: `GetSeries` + `SearchSeries`.
+- API: Yes — REST API. Official Python library `bcchapi` (returns Pandas DataFrames). Unofficial `bcch-sdk` on GitHub. Supports Python, R, Power BI, Stata, SAS.
+- Pricing: **Free** (credential registration required)
 
 **CMF (Comisión para el Mercado Financiero) — API CMF**
-- URL: https://api.cmfchile.cl
-- Data: Financial indicators, banking reports, fund data
-- API: Yes — REST API, JSON/XML
+- URL: https://api.cmfchile.cl | Docs: https://api.sbif.cl/documentacion/index.html
+- Data: Financial indicators (UF, IPC/CPI, UTM, dollar exchange rates), banking reports, regulated entity data. JSON/XML.
+- API: Yes — RESTful API v3.0. Free API key via registration.
 - Pricing: **Free**
 
 ### Local Platforms
@@ -237,10 +243,10 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 ### Central Bank
 
 **Bank of Thailand (BOT) APIs**
-- URL: https://apiportal.bot.or.th
-- Data: Exchange rates, interest rates, debt securities auction data (21 APIs)
-- API: Yes — REST API
-- Pricing: **Free**
+- URL: https://portal.api.bot.or.th
+- Data: 500+ data series — exchange rates, interest rates, debt securities auction results, monetary statistics, financial institutions data, payment statistics, economic indicators. Also bank holidays, commercial bank branches.
+- API: Yes — REST API. Auth via `X-IBM-Client-Id` header. 7 API categories. R package: `BOTapi` (https://github.com/QuantFILab/BOTapi).
+- Pricing: **Free** (registration + API key required)
 
 ### Local Platforms
 
@@ -265,6 +271,8 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 ### Developer Libraries
 
 **ThaiStock** (Python) — https://github.com/UncleEngineer/ThaiStock — Thai stock prices via scraping from settrade.com. Free/open source.
+
+**StockRadars** — Thai stock analysis mobile app. SET stock screening with customizable "radars", anomaly detection. 30k+ downloads. Won Asia Pacific ICT Alliance Awards. Free app, no API.
 
 ---
 
