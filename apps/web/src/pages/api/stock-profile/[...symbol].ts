@@ -144,7 +144,7 @@ export const GET: APIRoute = async ({ params }) => {
     // Try DB first (populated by background job)
     const dbProfile = getDbProfile(rawSymbol);
     if (dbProfile) {
-      return jsonResponse(dbProfile, 900);
+      return jsonResponse(dbProfile, 900, 1800);
     }
 
     // Fallback to Yahoo for symbols not in DB
@@ -173,7 +173,7 @@ export const GET: APIRoute = async ({ params }) => {
     if (!result) throw new Error("No profile data");
 
     const data = { ...extractProfileData(rawSymbol, symbol, result), source: "Yahoo" };
-    return jsonResponse(data, 900);
+    return jsonResponse(data, 900, 1800);
   } catch (err: any) {
     return errorResponse(err.message ?? "Failed to fetch profile data");
   }

@@ -10,13 +10,11 @@ export const OPTIONS: APIRoute = () => optionsResponse();
 
 export const GET: APIRoute = async () => {
   try {
-    // Serve from in-memory store (populated every 30s by background job)
     const cached = getRates();
-    if (cached) return jsonResponse(cached, 15);
+    if (cached) return jsonResponse(cached, 30, 60);
 
-    // Fallback: direct fetch if store is empty (cold start)
     const data = await fetchExchangeRatesData(BLUELYTICS_URL);
-    return jsonResponse(data, 60);
+    return jsonResponse(data, 30, 60);
   } catch (err: any) {
     return errorResponse(err.message ?? "Failed to fetch exchange rates");
   }

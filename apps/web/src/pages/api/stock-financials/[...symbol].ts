@@ -65,7 +65,7 @@ export const GET: APIRoute = async ({ params }) => {
     // Try DB first
     const dbData = getDbFinancials(rawSymbol);
     if (dbData) {
-      return jsonResponse(dbData, 3600);
+      return jsonResponse(dbData, 3600, 7200);
     }
 
     // Fallback to Yahoo
@@ -88,7 +88,7 @@ export const GET: APIRoute = async ({ params }) => {
       ...extractFinancialStatements(result),
       source: "Yahoo",
     };
-    return jsonResponse(data, 3600);
+    return jsonResponse(data, 3600, 7200);
   } catch (err: any) {
     return errorResponse(err.message ?? "Failed to fetch financial data");
   }

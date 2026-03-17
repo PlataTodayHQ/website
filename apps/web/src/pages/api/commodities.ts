@@ -12,17 +12,10 @@ const SYMBOLS: Record<string, string> = {
   "CL=F": "Oil WTI",
 };
 
-let cache: { data: any; ts: number } | null = null;
-const CACHE_TTL = 5 * 60 * 1000;
-
 export const OPTIONS: APIRoute = () => optionsResponse();
 
 export const GET: APIRoute = async () => {
   try {
-    if (cache && Date.now() - cache.ts < CACHE_TTL) {
-      return jsonResponse(cache.data, 300);
-    }
-
     const results = await Promise.all(
       Object.keys(SYMBOLS).map(async (symbol) => {
         const result = await fetchYahooChart(symbol, "1d", "1d");
@@ -41,10 +34,7 @@ export const GET: APIRoute = async () => {
       }),
     );
 
-    const data = results.filter(Boolean);
-    cache = { data, ts: Date.now() };
-
-    return jsonResponse(data, 300);
+    return jsonResponse(results.filter(Boolean), 300, 600);
   } catch (err: any) {
     return errorResponse(err.message ?? "Failed to fetch commodities");
   }
