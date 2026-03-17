@@ -86,14 +86,28 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 - Community-driven API with various Argentine financial indicators
 - Pricing: Free
 
-**BCRA (Central Bank) data**
-- Various APIs for official exchange rates, monetary policy rates, reserves, CER, UVA indices
-- Pricing: Free
+**BCRA (Central Bank) API** ⭐
+- URL: https://www.bcra.gob.ar/en/central-bank-api-catalog/
+- Data: Four APIs: (1) Principales Variables — monetary base, reserves, deposits, loans, interest rates, (2) Estadísticas Cambiarias — official exchange rates for all currencies, (3) Central de Deudores — credit situation, (4) Cheques Denunciados — reported checks.
+- API: Yes — free, public, **no authentication required**. Part of BCRA Open Finance strategy.
+- Pricing: **Free**
+
+**CriptoYa**
+- URL: https://criptoya.com | Docs: https://docs.criptoya.com
+- Data: Crypto prices across Argentine exchanges (Buenbit, Lemon, Belo, Ripio), dólar blue, MEP, CCL, oficial, crypto dollar, riesgo país. Updates every 30 seconds.
+- API: Yes — documented REST API
+- Pricing: **Free**
+
+**ArgentinaDatos**
+- URL: https://argentinadatos.com
+- Data: Dollar exchange rates (all types), interest rates, inflation (IPC), riesgo país, financial indices
+- API: Yes — REST API, JSON
+- Pricing: **Free**
 
 ### News Portals with Financial Data
 
-**Ámbito Financiero** — ambito.com — dollar rates, financial news
-**Infobae Economía** — financial section of major news portal
+**Ámbito Financiero** — ambito.com — the de facto reference for dólar blue quotes in Argentina. No API but widely scraped (DolarAPI, Bluelytics, etc. source from Ámbito).
+**Infobae Economía** — financial section of major news portal. News only, not structured data.
 
 ---
 
