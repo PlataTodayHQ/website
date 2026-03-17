@@ -171,34 +171,19 @@
   // Formatting helpers
   // ---------------------------------------------------------------------------
 
+  var H = window.PlataHelpers || {};
+
   function fmt(n) {
-    if (n == null || isNaN(n)) return '\u2014';
-    return n.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return H.formatCurrency ? H.formatCurrency(n, lang, null, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (n == null ? '—' : n.toFixed(2));
   }
 
   function fmtVol(v) {
-    if (v == null || isNaN(v)) return '\u2014';
-    if (v >= 1e9) return (v / 1e9).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'B';
-    if (v >= 1e6) return (v / 1e6).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'M';
-    if (v >= 1e3) return (v / 1e3).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'K';
-    return Math.round(v).toLocaleString(lang);
+    return H.formatVolume ? H.formatVolume(v, lang) : (v == null ? '—' : String(v));
   }
 
-  function changeClass(v) {
-    if (v == null || v === 0) return 'rc-unch';
-    return v > 0 ? 'rc-up' : 'rc-down';
-  }
-
-  function changeText(v) {
-    if (v == null) return '\u2014';
-    var sign = v > 0 ? '+' : '';
-    return sign + v.toFixed(2) + '%';
-  }
-
-  function escHtml(s) {
-    if (!s) return '';
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
+  var changeClass = H.changeClass || function(v) { return v == null || v === 0 ? 'rc-unch' : v > 0 ? 'rc-up' : 'rc-down'; };
+  var changeText = H.changeText || function(v) { return v == null ? '—' : (v > 0 ? '+' : '') + v.toFixed(2) + '%'; };
+  var escHtml = H.escHtml || function(s) { return s ? s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') : ''; };
 
   function sortItems(items) {
     var key = currentSort.key;

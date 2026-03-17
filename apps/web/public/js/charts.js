@@ -594,29 +594,32 @@
     return pts;
   }
 
-  // ─── Formatting helpers ───
+  // ─── Formatting helpers (delegates to PlataHelpers when available) ───
+
+  var H = root.PlataHelpers || {};
 
   function fmt(n) {
-    var locale = (document.documentElement.lang || 'es-AR');
-    return Math.round(n).toLocaleString(locale);
+    if (H.formatNumber) return H.formatNumber(n, null, { maximumFractionDigits: 0 });
+    return Math.round(n).toLocaleString(document.documentElement.lang || 'en');
   }
 
   function fmtM(v) {
-    var locale = (document.documentElement.lang || 'es-AR');
-    if (v >= 1e6) return (v / 1e6).toLocaleString(locale, { maximumFractionDigits: 2 }) + 'M';
-    if (v >= 1e3) return (v / 1e3).toLocaleString(locale, { maximumFractionDigits: 0 }) + 'K';
+    if (H.formatVolume) return H.formatVolume(v);
+    if (v >= 1e6) return (v / 1e6).toFixed(2) + 'M';
+    if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
     return fmt(v);
   }
 
   function fmtVol(v) {
-    var locale = (document.documentElement.lang || 'es-AR');
-    if (v >= 1e9) return (v / 1e9).toLocaleString(locale, { maximumFractionDigits: 1 }) + 'B';
-    if (v >= 1e6) return (v / 1e6).toLocaleString(locale, { maximumFractionDigits: 1 }) + 'M';
-    if (v >= 1e3) return (v / 1e3).toLocaleString(locale, { maximumFractionDigits: 0 }) + 'K';
+    if (H.formatVolume) return H.formatVolume(v);
+    if (v >= 1e9) return (v / 1e9).toFixed(1) + 'B';
+    if (v >= 1e6) return (v / 1e6).toFixed(1) + 'M';
+    if (v >= 1e3) return (v / 1e3).toFixed(0) + 'K';
     return fmt(v);
   }
 
   function pctText(pct) {
+    if (H.changeText) return H.changeText(pct);
     if (pct == null) return '';
     var sign = pct >= 0 ? '+' : '';
     return sign + pct.toFixed(2) + '%';
