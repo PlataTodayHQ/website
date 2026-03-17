@@ -1,0 +1,152 @@
+/**
+ * Skeleton loading animation — shared across all market pages.
+ * Add class "skeleton-loading" to a container to show shimmer effect on children.
+ */
+
+.skeleton-bar {
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 37%,
+    rgba(255, 255, 255, 0.04) 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+  border-radius: 4px;
+  min-height: 1em;
+}
+
+.skeleton-bar--sm { width: 60px; height: 14px; }
+.skeleton-bar--md { width: 100px; height: 18px; }
+.skeleton-bar--lg { width: 140px; height: 24px; }
+.skeleton-bar--xl { width: 200px; height: 32px; }
+
+.skeleton-circle {
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 37%,
+    rgba(255, 255, 255, 0.04) 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.skeleton-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* Mobile card layout for stock tables */
+.mobile-stock-card {
+  display: none;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.mobile-stock-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(117, 170, 219, 0.2);
+}
+
+.mobile-stock-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.mobile-stock-card__symbol {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.mobile-stock-card__change {
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.mobile-stock-card__change--up {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.mobile-stock-card__change--down {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.mobile-stock-card__name {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-stock-card__footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.mobile-stock-card__price {
+  font-weight: 600;
+  color: #fff;
+}
+
+.mobile-stock-cards-grid {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* Show cards on mobile, hide table */
+@media (max-width: 640px) {
+  .mobile-stock-cards-grid {
+    display: grid;
+  }
+
+  .mobile-stock-card {
+    display: block;
+  }
+
+  .desktop-stock-table {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .mobile-stock-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-bar,
+  .skeleton-circle {
+    animation: none;
+  }
+}
