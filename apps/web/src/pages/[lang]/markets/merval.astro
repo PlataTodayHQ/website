@@ -1,18 +1,26 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
-import { LANGUAGES } from "@plata-today/shared";
+import { LANGUAGES, getMerval } from "@plata-today/shared";
 import { t } from "@/i18n";
 
-export function getStaticPaths() {
-  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
-}
+export const prerender = false;
 
 const { lang } = Astro.params;
+if (!lang || !LANGUAGES[lang as keyof typeof LANGUAGES]) {
+  return Astro.redirect("/en/markets/merval");
+}
+
+// Fetch fresh Merval data for SEO
+const mervalData = getMerval(5 * 60 * 1000);
+const mervalPrice = mervalData?.price ? Math.round(mervalData.price).toLocaleString("es-AR") : null;
+const seoTitle = mervalPrice
+  ? `MERVAL: ${mervalPrice} — ${t(lang!, "merval.seoTitle")}`
+  : t(lang!, "merval.seoTitle");
 ---
 
 <Base
-  title={t(lang!, "merval.seoTitle")}
+  title={seoTitle}
   description={t(lang!, "merval.seoDescription")}
   lang={lang}
   ogType="website"
@@ -32,6 +40,13 @@ const { lang } = Astro.params;
     "about": {
       "@type": "FinancialProduct",
       "name": "MERVAL Index",
+      ...(mervalData?.price ? {
+        "offers": {
+          "@type": "Offer",
+          "price": mervalData.price,
+          "priceCurrency": "ARS"
+        }
+      } : {}),
       "provider": {
         "@type": "Exchange",
         "name": "BYMA — Bolsas y Mercados Argentinos",

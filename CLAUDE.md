@@ -1,13 +1,13 @@
 # plata.today
 
-Multilingual news platform covering Argentina in 18 languages. Monitors 13+ Argentine sources, synthesizes what matters, and writes each story natively for each language — not translated, but rewritten from scratch with context for international readers.
+Multilingual news platform covering Argentina in 35 languages. Monitors 13+ Argentine sources, synthesizes what matters, and writes each story natively for each language — not translated, but rewritten from scratch with context for international readers.
 
 ## Brand Identity
 
 ### Positioning
 - **What we are:** Multilingual news platform — the BBC World Service for Argentina
 - **Tagline:** Fact-first, source-transparent
-- **Mission:** Make Argentine news accessible to the world in 18 languages, natively written, with context for international readers
+- **Mission:** Make Argentine news accessible to the world in 35 languages, natively written, with context for international readers
 - **Name origin:** Río de la Plata
 - **Colors:** Teal + gold — Argentine flag reference
 - **Logo:** Text-only "Plata" (like BBC, Reuters)
@@ -47,7 +47,7 @@ Multilingual news platform covering Argentina in 18 languages. Monitors 13+ Arge
 - [ ] Add Editorial Standards page
 - [ ] Add Corrections Policy page
 - [ ] Update footer disclaimer: "Articles are synthesized from multiple Argentine sources. Always verify important decisions with original reporting."
-- [ ] Update home tagline: "Argentina's news, natively written in 18 languages"
+- [ ] Update home tagline: "Argentina's news, natively written in 35 languages"
 
 ## Architecture
 
@@ -79,13 +79,14 @@ Single Node.js process on Hetzner VPS:
 
 ## Key Decisions
 
-- 18 languages (en, pt, de, it, fr, ru, zh, pl, uk, ja, ko, es, sv, da, nl, no, fi, hi)
+- 35 languages (en, ar, bn, ca, zh, zh-tw, cs, da, nl, fa, fi, fr, de, el, he, hi, id, it, ja, ko, ms, no, pl, pt, ro, ru, es, sw, sv, tl, th, tr, uk, ur, vi)
 - URL scheme: `/{lang}/news/{slug}` with hreflang tags
 - Deduplication via Levenshtein similarity (threshold 0.7)
 - RSS-first scraping, fallback to sitemap/HTML
 - JSON response format from OpenAI for structured article output
 - Pages with `export const prerender = false` are server-rendered (homepage, articles, categories, API routes)
-- Static pages (about, markets, privacy, terms) are prerendered at build time
+- Static pages (about, privacy, terms) are prerendered at build time
+- Market pages (currencies, merval) are SSR for fresh data in SEO meta tags
 
 ## Commands
 
