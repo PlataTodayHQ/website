@@ -52,8 +52,8 @@ export const vi = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Chào mừng",
-  "welcome.eyebrow": "35 ngôn ngữ · Một sứ mệnh",
-  "welcome.headline": "Câu chuyện Argentina, mở ra với thế giới",
+  "welcome.eyebrow": "Thị trường & chính trị Argentina · 35 ngôn ngữ",
+  "welcome.headline": "Tài chính & chính trị Argentina, mở ra với thế giới",
   "welcome.sub": "Mỗi ngày, chúng tôi viết tin tức bằng 35 ngôn ngữ — để cả thế giới có thể hiểu những gì đang diễn ra tại Argentina.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const vi = {
   "home.title": "Tin tức Argentina bằng {lang}",
   "home.heroFallbackTitle": "Chào mừng đến Plata Today",
   "home.heroFallbackDesc": "Tin tức Argentina, viết bằng 35 ngôn ngữ.",
-  "home.description": "Tin tức Argentina hôm nay bằng {lang}: chính trị, kinh tế, thể thao, văn hóa. Cập nhật 24/7, 35 ngôn ngữ.",
+  "home.description": "Chính trị, kinh tế và thị trường Argentina bằng {lang}. Tin tài chính, phân tích chính sách, tỷ giá hối đoái. Cập nhật 24/7.",
   "home.topStories": "Tin nổi bật",
   "home.economyBusiness": "Kinh tế & Doanh nghiệp",
   "home.moreNews": "Thêm tin tức",
@@ -100,7 +100,7 @@ export const vi = {
   "article.byline": "Bởi",
 
   // Footer
-  "footer.tagline": "Tin tức Argentina, mở ra với thế giới",
+  "footer.tagline": "Thị trường & chính trị Argentina, mở ra với thế giới",
   "footer.about": "Giới thiệu",
   "footer.contact": "Liên hệ",
   "footer.terms": "Điều khoản sử dụng",
@@ -494,7 +494,7 @@ export const vi = {
   "standards.updated": "Cập nhật lần cuối: 14 tháng 3, 2026",
   "standards.lead": "Plata là nền tảng tin tức đa ngôn ngữ đưa tin về Argentina bằng 35 ngôn ngữ. Trang này giải thích cách tòa soạn của chúng tôi hoạt động — từ nguồn tin đến xuất bản.",
   "standards.sourcingTitle": "Nguồn tin",
-  "standards.sourcingText": "Chúng tôi theo dõi hơn 13 tờ báo Argentina thuộc ba cấp. Cấp 1 bao gồm các tờ báo quốc gia lớn như Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista và iProfesional. Cấp 2 gồm các nguồn độc lập và chuyên biệt như Perfil, Cadena 3 và Olé. Cấp 3 gồm các tờ báo địa phương như La Gaceta, Misiones Online và El Día. Bài viết được thu thập qua nguồn cấp RSS mỗi 30 phút.",
+  "standards.sourcingText": "Chúng tôi theo dõi hơn 13 tờ báo Argentina thuộc ba cấp. Cấp 1 bao gồm các tờ báo quốc gia lớn như Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista và iProfesional. Cấp 2 gồm các nguồn độc lập và chuyên biệt như Perfil, Cadena 3. Cấp 3 gồm các tờ báo địa phương như La Gaceta, Misiones Online và El Día. Bài viết được thu thập qua nguồn cấp RSS mỗi 30 phút.",
   "standards.verificationTitle": "Xác minh",
   "standards.verificationText": "Mỗi tin tức đều trải qua quy trình kiểm duyệt nhiều bước. Các nguồn đưa tin về cùng một sự kiện được gom nhóm. Mỗi bài viết được kiểm chứng với nguồn gốc. Những tuyên bố không có nguồn hỗ trợ sẽ bị đánh dấu và loại bỏ. Tin không qua được xác minh hai lần sẽ không được xuất bản.",
   "standards.languageTitle": "Chất lượng ngôn ngữ",

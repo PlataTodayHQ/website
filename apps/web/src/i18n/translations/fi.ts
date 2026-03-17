@@ -52,8 +52,8 @@ export const fi = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Tervetuloa",
-  "welcome.eyebrow": "35 kieltä · Yksi tehtävä",
-  "welcome.headline": "Argentiina, avoin maailmalle",
+  "welcome.eyebrow": "Argentiinan markkinat & politiikka · 35 kieltä",
+  "welcome.headline": "Argentiinan talous & politiikka, avoin maailmalle",
   "welcome.sub": "Kirjoitamme uutiset joka päivä äidinkielentasoisesti 35 kielellä — jotta koko maailma voi ymmärtää, mitä Argentiinassa tapahtuu.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const fi = {
   "home.title": "Argentiinan uutiset kielellä {lang}",
   "home.heroFallbackTitle": "Tervetuloa Plata Todayhin",
   "home.heroFallbackDesc": "Argentiinan uutiset kirjoitettuna suoraan 35 kielellä.",
-  "home.description": "Argentiinan tärkeimmät uutiset tänään kielellä {lang}: politiikka, talous, urheilu, kulttuuri. Päivittyy 24/7, 35 kieltä.",
+  "home.description": "Argentiinan politiikka, talous ja markkinat kielellä {lang}. Talousuutiset, poliittinen analyysi, valuuttakurssit. Päivittyy 24/7.",
   "home.topStories": "Pääuutiset",
   "home.economyBusiness": "Talous ja liiketoiminta",
   "home.moreNews": "Lisää uutisia",
@@ -100,7 +100,7 @@ export const fi = {
   "article.byline": "Kirjoittaja",
 
   // Footer
-  "footer.tagline": "Argentiinan uutiset, avoimena maailmalle",
+  "footer.tagline": "Argentiinan markkinat & politiikka, avoimena maailmalle",
   "footer.about": "Tietoa",
   "footer.contact": "Yhteystiedot",
   "footer.terms": "Käyttöehdot",
@@ -535,7 +535,7 @@ export const fi = {
   "standards.updated": "Päivitetty viimeksi: 14. maaliskuuta 2026",
   "standards.lead": "Plata on monikielinen uutisalusta, joka kattaa Argentiinan 35 kielellä. Tällä sivulla kerromme, miten toimituksemme toimii — lähteistä julkaisuun.",
   "standards.sourcingTitle": "Lähteiden käyttö",
-  "standards.sourcingText": "Seuraamme yli 13:a argentiinalaista uutismediaa kolmella tasolla. Taso 1 kattaa suuret valtakunnalliset mediat, kuten Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista ja iProfesional. Taso 2 sisältää riippumattomat ja erikoistuneet lähteet, kuten Perfil, Cadena 3 ja Olé. Taso 3 kattaa alueelliset mediat, kuten La Gaceta, Misiones Online ja El Día. Artikkelit kerätään RSS-syötteiden kautta 30 minuutin välein.",
+  "standards.sourcingText": "Seuraamme yli 13:a argentiinalaista uutismediaa kolmella tasolla. Taso 1 kattaa suuret valtakunnalliset mediat, kuten Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista ja iProfesional. Taso 2 sisältää riippumattomat ja erikoistuneet lähteet, kuten Perfil, Cadena 3. Taso 3 kattaa alueelliset mediat, kuten La Gaceta, Misiones Online ja El Día. Artikkelit kerätään RSS-syötteiden kautta 30 minuutin välein.",
   "standards.verificationTitle": "Tarkistus",
   "standards.verificationText": "Jokainen juttu käy läpi monivaiheisen tarkistusprosessin. Samaa tapahtumaa käsittelevät lähteet ryhmitellään yhteen. Jokainen artikkeli tarkistetaan alkuperäislähteitä vasten. Väitteet, joita mikään lähde ei tue, merkitään ja poistetaan. Jutut, jotka eivät läpäise tarkistusta kahdesti, jätetään julkaisematta.",
   "standards.languageTitle": "Kielenlaatu",
@@ -621,7 +621,7 @@ export const fi = {
   "newsroom.tier1Title": "Taso 1 — Valtakunnalliset johtajat",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Taso 2 — Riippumattomat ja erikoistuneet",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Taso 3 — Alueelliset",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Jokainen artikkeli linkittää alkuperäisiin lähteisiin, jotta voit aina tarkistaa ja syventyä aiheeseen.",

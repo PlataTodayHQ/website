@@ -52,8 +52,8 @@ export const uk = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Ласкаво просимо",
-  "welcome.eyebrow": "35 мов · Одна місія",
-  "welcome.headline": "Аргентина, відкрита світу",
+  "welcome.eyebrow": "Аргентинські ринки та політика · 35 мов",
+  "welcome.headline": "Фінанси та політика Аргентини, відкриті світу",
   "welcome.sub": "Щодня ми пишемо новини рідною мовою кожної з 35 аудиторій — щоб увесь світ міг зрозуміти, що відбувається в Аргентині.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const uk = {
   "home.title": "Новини Аргентини — {lang}",
   "home.heroFallbackTitle": "Ласкаво просимо до Plata Today",
   "home.heroFallbackDesc": "Новини Аргентини 35 мовами — кожна стаття написана заново для вашої аудиторії.",
-  "home.description": "Головні новини Аргентини сьогодні {lang}: політика, економіка, спорт, культура. Оновлення 24/7, 35 мов.",
+  "home.description": "Політика, економіка та ринки Аргентини мовою {lang}. Фінансові новини, політичний аналіз, курси валют. Оновлення 24/7.",
   "home.topStories": "Головні новини",
   "home.economyBusiness": "Економіка та бізнес",
   "home.moreNews": "Більше новин",
@@ -100,7 +100,7 @@ export const uk = {
   "article.byline": "Автор",
 
   // Footer
-  "footer.tagline": "Новини Аргентини, відкриті світу",
+  "footer.tagline": "Аргентинські ринки та політика, відкриті світу",
   "footer.about": "Про нас",
   "footer.contact": "Контакти",
   "footer.terms": "Умови використання",
@@ -535,7 +535,7 @@ export const uk = {
   "standards.updated": "Останнє оновлення: 14 березня 2026",
   "standards.lead": "Plata — це багатомовна новинна платформа, що висвітлює події в Аргентині 35 мовами. На цій сторінці ми пояснюємо, як працює наша редакція — від збору джерел до публікації.",
   "standards.sourcingTitle": "Джерела",
-  "standards.sourcingText": "Ми відстежуємо понад 13 аргентинських ЗМІ трьох рівнів. До першого рівня належать провідні загальнонаціональні видання: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista та iProfesional. Другий рівень охоплює незалежні та спеціалізовані джерела, зокрема Perfil, Cadena 3 та Olé. Третій рівень — регіональні видання: La Gaceta, Misiones Online та El Día. Матеріали збираються через RSS-канали кожні 30 хвилин.",
+  "standards.sourcingText": "Ми відстежуємо понад 13 аргентинських ЗМІ трьох рівнів. До першого рівня належать провідні загальнонаціональні видання: Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista та iProfesional. Другий рівень охоплює незалежні та спеціалізовані джерела, зокрема Perfil, Cadena 3. Третій рівень — регіональні видання: La Gaceta, Misiones Online та El Día. Матеріали збираються через RSS-канали кожні 30 хвилин.",
   "standards.verificationTitle": "Перевірка",
   "standards.verificationText": "Кожен матеріал проходить багатоетапну перевірку. Джерела, що висвітлюють одну й ту саму подію, групуються разом. Кожну статтю звіряють з оригінальними джерелами. Твердження, не підтверджені жодним джерелом, позначаються та видаляються. Матеріали, що двічі не пройшли перевірку, не публікуються.",
   "standards.languageTitle": "Мовна якість",
@@ -621,7 +621,7 @@ export const uk = {
   "newsroom.tier1Title": "Рівень 1 — Провідні загальнонаціональні",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Рівень 2 — Незалежні та спеціалізовані",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Рівень 3 — Регіональні",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Кожна стаття містить посилання на першоджерела, щоб ви завжди могли перевірити інформацію та дізнатися більше.",

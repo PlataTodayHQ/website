@@ -52,8 +52,8 @@ export const hi = {
 
   // Welcome Hero
   "welcome.ariaLabel": "स्वागत",
-  "welcome.eyebrow": "35 भाषाएँ · एक लक्ष्य",
-  "welcome.headline": "अर्जेंटीना, दुनिया के लिए खुला",
+  "welcome.eyebrow": "अर्जेंटीना के बाज़ार और राजनीति · 35 भाषाएँ",
+  "welcome.headline": "अर्जेंटीना की वित्त और राजनीति, दुनिया के लिए खुली",
   "welcome.sub": "हम हर दिन 35 भाषाओं में मूल रूप से समाचार लिखते हैं — ताकि पूरी दुनिया समझ सके कि अर्जेंटीना में क्या हो रहा है।",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const hi = {
   "home.title": "अर्जेंटीना समाचार {lang} में",
   "home.heroFallbackTitle": "Plata Today में आपका स्वागत है",
   "home.heroFallbackDesc": "अर्जेंटीना की खबरें, 35 भाषाओं में मूल रूप से लिखी गईं।",
-  "home.description": "आज की प्रमुख अर्जेंटीना खबरें {lang} में: राजनीति, अर्थव्यवस्था, खेल, संस्कृति। 24/7 अपडेट, 35 भाषाएं।",
+  "home.description": "अर्जेंटीना की राजनीति, अर्थव्यवस्था और बाज़ार {lang} में। वित्तीय समाचार, नीति विश्लेषण, विनिमय दरें। 24/7 अपडेट।",
   "home.topStories": "प्रमुख खबरें",
   "home.economyBusiness": "अर्थव्यवस्था और व्यापार",
   "home.moreNews": "और खबरें",
@@ -100,7 +100,7 @@ export const hi = {
   "article.byline": "लेखक",
 
   // Footer
-  "footer.tagline": "अर्जेंटीना की खबरें, दुनिया के लिए खुली",
+  "footer.tagline": "अर्जेंटीना के बाज़ार और राजनीति, दुनिया के लिए खुले",
   "footer.about": "हमारे बारे में",
   "footer.contact": "संपर्क",
   "footer.terms": "उपयोग की शर्तें",
@@ -535,7 +535,7 @@ export const hi = {
   "standards.updated": "अंतिम अपडेट: 14 मार्च 2026",
   "standards.lead": "Plata एक बहुभाषी समाचार मंच है जो 35 भाषाओं में अर्जेंटीना की ख़बरें प्रकाशित करता है। इस पृष्ठ पर हम बताते हैं कि हमारा संपादकीय कार्य कैसे होता है — स्रोतों से लेकर प्रकाशन तक।",
   "standards.sourcingTitle": "स्रोत",
-  "standards.sourcingText": "हम तीन श्रेणियों में 13 से अधिक अर्जेंटीनी समाचार माध्यमों पर नज़र रखते हैं। श्रेणी 1 में प्रमुख राष्ट्रीय मीडिया शामिल हैं जैसे Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista और iProfesional। श्रेणी 2 में स्वतंत्र और विशेषज्ञ स्रोत आते हैं जैसे Perfil, Cadena 3 और Olé। श्रेणी 3 में क्षेत्रीय मीडिया शामिल हैं जैसे La Gaceta, Misiones Online और El Día। लेख हर 30 मिनट में RSS फ़ीड के ज़रिए एकत्र किए जाते हैं।",
+  "standards.sourcingText": "हम तीन श्रेणियों में 13 से अधिक अर्जेंटीनी समाचार माध्यमों पर नज़र रखते हैं। श्रेणी 1 में प्रमुख राष्ट्रीय मीडिया शामिल हैं जैसे Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista और iProfesional। श्रेणी 2 में स्वतंत्र और विशेषज्ञ स्रोत आते हैं जैसे Perfil, Cadena 3। श्रेणी 3 में क्षेत्रीय मीडिया शामिल हैं जैसे La Gaceta, Misiones Online और El Día। लेख हर 30 मिनट में RSS फ़ीड के ज़रिए एकत्र किए जाते हैं।",
   "standards.verificationTitle": "सत्यापन",
   "standards.verificationText": "हर ख़बर बहु-स्तरीय समीक्षा प्रक्रिया से गुज़रती है। एक ही घटना को कवर करने वाले स्रोतों को एक साथ समूहित किया जाता है। हर लेख की मूल स्रोतों से तथ्य-जाँच की जाती है। जिन दावों का कोई स्रोत समर्थन नहीं करता, उन्हें चिह्नित करके हटा दिया जाता है। दो बार सत्यापन में विफल होने वाली ख़बरें प्रकाशित नहीं की जातीं।",
   "standards.languageTitle": "भाषा गुणवत्ता",
@@ -621,7 +621,7 @@ export const hi = {
   "newsroom.tier1Title": "श्रेणी 1 — प्रमुख राष्ट्रीय मीडिया",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "श्रेणी 2 — स्वतंत्र और विशेषज्ञ",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "श्रेणी 3 — क्षेत्रीय",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "हर लेख में मूल स्रोतों के लिंक दिए जाते हैं ताकि आप हमेशा सत्यापित कर सकें और गहराई से पढ़ सकें।",

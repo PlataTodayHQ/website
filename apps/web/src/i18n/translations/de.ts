@@ -52,8 +52,8 @@ export const de = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Willkommen",
-  "welcome.eyebrow": "35 Sprachen · Eine Mission",
-  "welcome.headline": "Argentinien, offen für die Welt",
+  "welcome.eyebrow": "Argentinische Märkte & Politik · 35 Sprachen",
+  "welcome.headline": "Argentiniens Finanzen & Politik, offen für die Welt",
   "welcome.sub": "Jeden Tag schreiben wir die Nachrichten nativ in 35 Sprachen — damit die ganze Welt verstehen kann, was in Argentinien geschieht.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const de = {
   "home.title": "Nachrichten aus Argentinien auf {lang}",
   "home.heroFallbackTitle": "Willkommen bei Plata Today",
   "home.heroFallbackDesc": "Argentiniens Nachrichten, eigenständig verfasst in 35 Sprachen.",
-  "home.description": "Aktuelle Nachrichten aus Argentinien auf {lang}: Politik, Wirtschaft, Sport, Kultur. Rund um die Uhr, 35 Sprachen.",
+  "home.description": "Politik, Wirtschaft und Märkte Argentiniens auf {lang}. Finanznachrichten, politische Analysen, Wechselkurse. Rund um die Uhr aktualisiert.",
   "home.topStories": "Top-Meldungen",
   "home.economyBusiness": "Wirtschaft & Unternehmen",
   "home.moreNews": "Weitere Nachrichten",
@@ -100,7 +100,7 @@ export const de = {
   "article.byline": "Von",
 
   // Footer
-  "footer.tagline": "Argentiniens Nachrichten, offen für die Welt",
+  "footer.tagline": "Argentinische Märkte & Politik, offen für die Welt",
   "footer.about": "Über uns",
   "footer.contact": "Kontakt",
   "footer.terms": "Nutzungsbedingungen",
@@ -547,7 +547,7 @@ export const de = {
   "standards.updated": "Zuletzt aktualisiert: 14. März 2026",
   "standards.lead": "Plata ist eine mehrsprachige Nachrichtenplattform, die über Argentinien in 35 Sprachen berichtet. Auf dieser Seite erfahren Sie, wie unsere Redaktion arbeitet — von der Quellenrecherche bis zur Veröffentlichung.",
   "standards.sourcingTitle": "Quellenarbeit",
-  "standards.sourcingText": "Wir beobachten über 13 argentinische Nachrichtenmedien in drei Stufen. Stufe 1 umfasst große überregionale Medien wie Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista und iProfesional. Stufe 2 deckt unabhängige und spezialisierte Quellen wie Perfil, Cadena 3 und Olé ab. Stufe 3 beinhaltet regionale Medien wie La Gaceta, Misiones Online und El Día. Artikel werden alle 30 Minuten über RSS-Feeds erfasst.",
+  "standards.sourcingText": "Wir beobachten über 13 argentinische Nachrichtenmedien in drei Stufen. Stufe 1 umfasst große überregionale Medien wie Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista und iProfesional. Stufe 2 deckt unabhängige und spezialisierte Quellen wie Perfil, Cadena 3 ab. Stufe 3 beinhaltet regionale Medien wie La Gaceta, Misiones Online und El Día. Artikel werden alle 30 Minuten über RSS-Feeds erfasst.",
   "standards.verificationTitle": "Faktenprüfung",
   "standards.verificationText": "Jede Meldung durchläuft einen mehrstufigen Prüfprozess. Berichte verschiedener Quellen zum selben Ereignis werden zusammengeführt. Jeder Artikel wird anhand der Originalquellen überprüft. Behauptungen ohne Quellenbeleg werden markiert und entfernt. Meldungen, die zweimal nicht verifiziert werden können, werden nicht veröffentlicht.",
   "standards.languageTitle": "Sprachqualität",
@@ -633,7 +633,7 @@ export const de = {
   "newsroom.tier1Title": "Stufe 1 — Überregionale Leitmedien",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Stufe 2 — Unabhängige und spezialisierte Medien",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Stufe 3 — Regionale Medien",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Jeder Artikel verlinkt auf seine Originalquellen, damit Sie stets überprüfen und vertiefen können.",

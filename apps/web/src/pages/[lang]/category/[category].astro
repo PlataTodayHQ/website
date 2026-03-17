@@ -2,7 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import ArticleCard from "@/components/ArticleCard.astro";
 import SectionHeader from "@/components/SectionHeader.astro";
-import { LANGUAGES, CATEGORIES, SUBCATEGORIES } from "@plata-today/shared";
+import { LANGUAGES, CATEGORIES, CATEGORY_LIST, SUBCATEGORIES } from "@plata-today/shared";
 import type { Category } from "@plata-today/shared";
 import { t } from "@/i18n";
 import {
@@ -18,6 +18,10 @@ const { lang, category } = Astro.params;
 
 if (!lang || !(lang in LANGUAGES)) {
   return Astro.redirect("/en/", 302);
+}
+
+if (!category || !CATEGORY_LIST.includes(category as Category)) {
+  return Astro.redirect(`/${lang}/`, 302);
 }
 
 const catKey = category as Category;

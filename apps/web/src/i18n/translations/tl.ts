@@ -52,8 +52,8 @@ export const tl = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Maligayang pagdating",
-  "welcome.eyebrow": "35 na wika · Isang misyon",
-  "welcome.headline": "Ang kuwento ng Argentina, bukas sa buong mundo",
+  "welcome.eyebrow": "Mga merkado at politika ng Argentina · 35 na wika",
+  "welcome.headline": "Pananalapi at politika ng Argentina, bukas sa buong mundo",
   "welcome.sub": "Araw-araw, isinusulat namin ang balita nang katutubong wika sa 35 na wika — para maintindihan ng buong mundo ang nangyayari sa Argentina.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const tl = {
   "home.title": "Balitang Argentina sa {lang}",
   "home.heroFallbackTitle": "Maligayang pagdating sa Plata Today",
   "home.heroFallbackDesc": "Balita ng Argentina, isinulat nang katutubong wika sa 35 na wika.",
-  "home.description": "Mga nangungunang balita ngayon mula sa Argentina sa {lang}: pulitika, ekonomiya, palakasan, kultura. Updated 24/7, 35 na wika.",
+  "home.description": "Pulitika, ekonomiya, at mga merkado ng Argentina sa {lang}. Balitang pinansyal, pagsusuri sa patakaran, palitan ng pera. Updated 24/7.",
   "home.topStories": "Mga Pangunahing Balita",
   "home.economyBusiness": "Ekonomiya at Negosyo",
   "home.moreNews": "Iba Pang Balita",
@@ -100,7 +100,7 @@ export const tl = {
   "article.byline": "Ni",
 
   // Footer
-  "footer.tagline": "Balita ng Argentina, bukas sa buong mundo",
+  "footer.tagline": "Mga merkado at politika ng Argentina, bukas sa buong mundo",
   "footer.about": "Tungkol sa Amin",
   "footer.contact": "Makipag-ugnayan",
   "footer.terms": "Mga Tuntunin ng Paggamit",
@@ -494,7 +494,7 @@ export const tl = {
   "standards.updated": "Huling na-update: Marso 14, 2026",
   "standards.lead": "Ang Plata ay isang multilinggwal na platform ng balita na sumasaklaw sa Argentina sa 35 na wika. Ipinaliliwanag ng pahinang ito kung paano gumagana ang aming newsroom — mula sa pagkuha ng pinagmulan hanggang sa publikasyon.",
   "standards.sourcingTitle": "Pagkuha ng pinagmulan",
-  "standards.sourcingText": "Minomonitor namin ang mahigit 13 outlet ng balita sa Argentina sa tatlong antas. Kasama sa Tier 1 ang mga pangunahing pambansang outlet tulad ng Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, at iProfesional. Sinasaklaw ng Tier 2 ang mga independyente at espesyalisadong pinagmulan tulad ng Perfil, Cadena 3, at Olé. Kasama sa Tier 3 ang mga rehiyonal na outlet tulad ng La Gaceta, Misiones Online, at El Día. Ang mga artikulo ay kinokolekta sa pamamagitan ng RSS feeds tuwing 30 minuto.",
+  "standards.sourcingText": "Minomonitor namin ang mahigit 13 outlet ng balita sa Argentina sa tatlong antas. Kasama sa Tier 1 ang mga pangunahing pambansang outlet tulad ng Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, at iProfesional. Sinasaklaw ng Tier 2 ang mga independyente at espesyalisadong pinagmulan tulad ng Perfil, Cadena 3,. Kasama sa Tier 3 ang mga rehiyonal na outlet tulad ng La Gaceta, Misiones Online, at El Día. Ang mga artikulo ay kinokolekta sa pamamagitan ng RSS feeds tuwing 30 minuto.",
   "standards.verificationTitle": "Beripikasyon",
   "standards.verificationText": "Bawat balita ay dumadaan sa isang multi-stage na proseso ng pagsusuri. Ang mga pinagmulang sumasaklaw sa parehong pangyayari ay pinagsasama-sama. Bawat artikulo ay sine-check sa katotohanan laban sa mga orihinal na pinagmulan. Ang mga pahayag na hindi sinusuportahan ng anumang pinagmulan ay itinatala at inaalis. Ang mga balitang hindi pumasa sa beripikasyon nang dalawang beses ay hindi nai-publish.",
   "standards.languageTitle": "Kalidad ng wika",

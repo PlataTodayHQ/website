@@ -52,8 +52,8 @@ export const ro = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Bun venit",
-  "welcome.eyebrow": "35 de limbi · O singură misiune",
-  "welcome.headline": "Povestea Argentinei, deschisă lumii",
+  "welcome.eyebrow": "Piețele și politica Argentinei · 35 de limbi",
+  "welcome.headline": "Finanțele și politica Argentinei, deschise lumii",
   "welcome.sub": "În fiecare zi, scriem știrile nativ în 35 de limbi — pentru ca întreaga lume să poată înțelege ce se întâmplă în Argentina.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const ro = {
   "home.title": "Știri din Argentina în {lang}",
   "home.heroFallbackTitle": "Bine ai venit pe Plata Today",
   "home.heroFallbackDesc": "Știrile Argentinei, scrise nativ în 35 de limbi.",
-  "home.description": "Cele mai importante știri din Argentina în {lang}: politică, economie, sport, cultură. Actualizate non-stop, în 35 de limbi.",
+  "home.description": "Politică, economie și piețe din Argentina în {lang}. Știri financiare, analiză politică, cursuri valutare. Actualizare 24/7.",
   "home.topStories": "Știri principale",
   "home.economyBusiness": "Economie și afaceri",
   "home.moreNews": "Mai multe știri",
@@ -100,7 +100,7 @@ export const ro = {
   "article.byline": "De",
 
   // Footer
-  "footer.tagline": "Știrile Argentinei, deschise lumii",
+  "footer.tagline": "Piețele și politica Argentinei, deschise lumii",
   "footer.about": "Despre noi",
   "footer.contact": "Contact",
   "footer.terms": "Termeni de utilizare",
@@ -494,7 +494,7 @@ export const ro = {
   "standards.updated": "Ultima actualizare: 14 martie 2026",
   "standards.lead": "Plata este o platformă multilingvă de știri care acoperă Argentina în 35 de limbi. Această pagină explică cum funcționează redacția noastră — de la documentare la publicare.",
   "standards.sourcingTitle": "Documentare",
-  "standards.sourcingText": "Monitorizăm peste 13 publicații de știri din Argentina, pe trei niveluri. Nivelul 1 include mari publicații naționale precum Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista și iProfesional. Nivelul 2 acoperă surse independente și specializate precum Perfil, Cadena 3 și Olé. Nivelul 3 include publicații regionale precum La Gaceta, Misiones Online și El Día. Articolele sunt colectate prin fluxuri RSS la fiecare 30 de minute.",
+  "standards.sourcingText": "Monitorizăm peste 13 publicații de știri din Argentina, pe trei niveluri. Nivelul 1 include mari publicații naționale precum Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista și iProfesional. Nivelul 2 acoperă surse independente și specializate precum Perfil, Cadena 3. Nivelul 3 include publicații regionale precum La Gaceta, Misiones Online și El Día. Articolele sunt colectate prin fluxuri RSS la fiecare 30 de minute.",
   "standards.verificationTitle": "Verificare",
   "standards.verificationText": "Fiecare articol trece printr-un proces de revizuire în mai multe etape. Sursele care acoperă același eveniment sunt grupate. Fiecare articol este verificat în raport cu sursele originale. Afirmațiile nesusținute de nicio sursă sunt semnalate și eliminate. Articolele care nu trec verificarea de două ori nu sunt publicate.",
   "standards.languageTitle": "Calitatea lingvistică",

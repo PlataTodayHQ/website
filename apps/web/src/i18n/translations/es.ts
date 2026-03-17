@@ -52,8 +52,8 @@ export const es = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Bienvenido",
-  "welcome.eyebrow": "35 idiomas · Una misión",
-  "welcome.headline": "Argentina, abierta al mundo",
+  "welcome.eyebrow": "Mercados y política argentina · 35 idiomas",
+  "welcome.headline": "Finanzas y política argentina, abiertas al mundo",
   "welcome.sub": "Cada día escribimos las noticias de forma nativa en 35 idiomas — para que el mundo entero pueda entender lo que pasa en Argentina.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const es = {
   "home.title": "Noticias de Argentina en {lang}",
   "home.heroFallbackTitle": "Bienvenido a Plata Today",
   "home.heroFallbackDesc": "Las noticias de Argentina, escritas de forma nativa en 35 idiomas.",
-  "home.description": "Las noticias más importantes de Argentina hoy en {lang}: política, economía, deportes, cultura. Actualización 24/7, 35 idiomas.",
+  "home.description": "Política, economía y mercados de Argentina en {lang}. Noticias financieras, análisis político, tipo de cambio. Actualización 24/7.",
   "home.topStories": "Principales noticias",
   "home.economyBusiness": "Economía y Negocios",
   "home.moreNews": "Más noticias",
@@ -100,7 +100,7 @@ export const es = {
   "article.byline": "Por",
 
   // Footer
-  "footer.tagline": "Las noticias de Argentina, abiertas al mundo",
+  "footer.tagline": "Mercados y política argentina, abiertos al mundo",
   "footer.about": "Quiénes somos",
   "footer.contact": "Contacto",
   "footer.terms": "Términos de uso",
@@ -547,7 +547,7 @@ export const es = {
   "standards.updated": "Última actualización: 14 de marzo de 2026",
   "standards.lead": "Plata es una plataforma de noticias multilingüe que cubre Argentina en 35 idiomas. En esta página explicamos cómo trabaja nuestra redacción — desde las fuentes hasta la publicación.",
   "standards.sourcingTitle": "Fuentes",
-  "standards.sourcingText": "Monitoreamos más de 13 medios de comunicación argentinos en tres niveles. El nivel 1 incluye los principales medios nacionales como Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista e iProfesional. El nivel 2 cubre fuentes independientes y especializadas como Perfil, Cadena 3 y Olé. El nivel 3 incluye medios regionales como La Gaceta, Misiones Online y El Día. Los artículos se recopilan a través de feeds RSS cada 30 minutos.",
+  "standards.sourcingText": "Monitoreamos más de 13 medios de comunicación argentinos en tres niveles. El nivel 1 incluye los principales medios nacionales como Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista e iProfesional. El nivel 2 cubre fuentes independientes y especializadas como Perfil, Cadena 3. El nivel 3 incluye medios regionales como La Gaceta, Misiones Online y El Día. Los artículos se recopilan a través de feeds RSS cada 30 minutos.",
   "standards.verificationTitle": "Verificación",
   "standards.verificationText": "Cada noticia pasa por un proceso de revisión en múltiples etapas. Las fuentes que cubren el mismo evento se agrupan. Cada artículo se verifica contra sus fuentes originales. Las afirmaciones que ninguna fuente respalda se marcan y se eliminan. Las noticias que no superan la verificación dos veces no se publican.",
   "standards.languageTitle": "Calidad lingüística",
@@ -633,7 +633,7 @@ export const es = {
   "newsroom.tier1Title": "Nivel 1 — Líderes nacionales",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Nivel 2 — Independientes y especializados",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Nivel 3 — Regionales",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Cada artículo enlaza a sus fuentes originales para que siempre puedas verificar y profundizar.",

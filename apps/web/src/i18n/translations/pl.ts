@@ -52,8 +52,8 @@ export const pl = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Witamy",
-  "welcome.eyebrow": "35 języków · Jedna misja",
-  "welcome.headline": "Argentyna, otwarta na świat",
+  "welcome.eyebrow": "Argentyńskie rynki i polityka · 35 języków",
+  "welcome.headline": "Finanse i polityka Argentyny, otwarte na świat",
   "welcome.sub": "Każdego dnia piszemy wiadomości natywnie w 35 językach — aby cały świat mógł zrozumieć, co dzieje się w Argentynie.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const pl = {
   "home.title": "Wiadomości z Argentyny po {lang}",
   "home.heroFallbackTitle": "Witamy w Plata Today",
   "home.heroFallbackDesc": "Wiadomości z Argentyny pisane natywnie w 35 językach.",
-  "home.description": "Najważniejsze wiadomości z Argentyny dziś po {lang}: polityka, gospodarka, sport, kultura. Aktualizacja 24/7, 35 języków.",
+  "home.description": "Polityka, gospodarka i rynki Argentyny po {lang}. Wiadomości finansowe, analiza polityczna, kursy walut. Aktualizacja 24/7.",
   "home.topStories": "Najważniejsze wiadomości",
   "home.economyBusiness": "Gospodarka i biznes",
   "home.moreNews": "Więcej wiadomości",
@@ -100,7 +100,7 @@ export const pl = {
   "article.byline": "Autor",
 
   // Footer
-  "footer.tagline": "Wiadomości z Argentyny, otwarte na świat",
+  "footer.tagline": "Argentyńskie rynki i polityka, otwarte na świat",
   "footer.about": "O nas",
   "footer.contact": "Kontakt",
   "footer.terms": "Warunki korzystania",
@@ -535,7 +535,7 @@ export const pl = {
   "standards.updated": "Ostatnia aktualizacja: 14 marca 2026",
   "standards.lead": "Plata to wielojęzyczna platforma informacyjna relacjonująca wydarzenia w Argentynie w 35 językach. Na tej stronie wyjaśniamy, jak działa nasza redakcja — od pozyskiwania źródeł po publikację.",
   "standards.sourcingTitle": "Źródła",
-  "standards.sourcingText": "Monitorujemy ponad 13 argentyńskich redakcji w trzech kategoriach. Kategoria 1 obejmuje główne media ogólnokrajowe, takie jak Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista i iProfesional. Kategoria 2 to niezależne i wyspecjalizowane źródła, m.in. Perfil, Cadena 3 i Olé. Kategoria 3 obejmuje media regionalne, takie jak La Gaceta, Misiones Online i El Día. Artykuły są pobierane przez kanały RSS co 30 minut.",
+  "standards.sourcingText": "Monitorujemy ponad 13 argentyńskich redakcji w trzech kategoriach. Kategoria 1 obejmuje główne media ogólnokrajowe, takie jak Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista i iProfesional. Kategoria 2 to niezależne i wyspecjalizowane źródła, m.in. Perfil, Cadena 3. Kategoria 3 obejmuje media regionalne, takie jak La Gaceta, Misiones Online i El Día. Artykuły są pobierane przez kanały RSS co 30 minut.",
   "standards.verificationTitle": "Weryfikacja",
   "standards.verificationText": "Każdy materiał przechodzi wieloetapowy proces weryfikacji. Źródła opisujące to samo wydarzenie są grupowane razem. Każdy artykuł jest sprawdzany pod kątem zgodności z oryginalnymi źródłami. Twierdzenia niepoparte żadnym źródłem są oznaczane i usuwane. Materiały, które dwukrotnie nie przejdą weryfikacji, nie są publikowane.",
   "standards.languageTitle": "Jakość językowa",
@@ -621,7 +621,7 @@ export const pl = {
   "newsroom.tier1Title": "Kategoria 1 — Czołowe media ogólnokrajowe",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Kategoria 2 — Niezależne i wyspecjalizowane",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Kategoria 3 — Regionalne",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Każdy artykuł zawiera linki do oryginalnych źródeł, dzięki czemu zawsze możesz zweryfikować informacje i pogłębić wiedzę.",

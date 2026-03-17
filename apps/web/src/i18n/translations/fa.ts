@@ -52,8 +52,8 @@ export const fa = {
 
   // Welcome Hero
   "welcome.ariaLabel": "خوش‌آمدید",
-  "welcome.eyebrow": "۳۵ زبان · یک مأموریت",
-  "welcome.headline": "داستان آرژانتین، باز به روی جهان",
+  "welcome.eyebrow": "بازارها و سیاست آرژانتین · ۳۵ زبان",
+  "welcome.headline": "مالی و سیاست آرژانتین، باز به روی جهان",
   "welcome.sub": "ما هر روز اخبار را به‌صورت بومی به ۳۵ زبان می‌نویسیم — تا همه جهان بتواند رویدادهای آرژانتین را دنبال کند.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const fa = {
   "home.title": "اخبار آرژانتین به {lang}",
   "home.heroFallbackTitle": "به Plata Today خوش آمدید",
   "home.heroFallbackDesc": "اخبار آرژانتین، نوشته‌شده به‌صورت بومی به ۳۵ زبان.",
-  "home.description": "مهم‌ترین اخبار آرژانتین امروز به {lang}: سیاست، اقتصاد، ورزش، فرهنگ. به‌روزرسانی شبانه‌روزی، ۳۵ زبان.",
+  "home.description": "سیاست، اقتصاد و بازارهای آرژانتین به {lang}. اخبار مالی، تحلیل سیاسی، نرخ ارز. به‌روزرسانی شبانه‌روزی.",
   "home.topStories": "مهم‌ترین اخبار",
   "home.economyBusiness": "اقتصاد و کسب‌وکار",
   "home.moreNews": "اخبار بیشتر",
@@ -100,7 +100,7 @@ export const fa = {
   "article.byline": "نوشته",
 
   // Footer
-  "footer.tagline": "اخبار آرژانتین، باز به روی جهان",
+  "footer.tagline": "بازارها و سیاست آرژانتین، باز به روی جهان",
   "footer.about": "درباره ما",
   "footer.contact": "تماس",
   "footer.terms": "شرایط استفاده",
@@ -488,7 +488,7 @@ export const fa = {
   "standards.updated": "آخرین به‌روزرسانی: ۱۴ مارس ۲۰۲۶",
   "standards.lead": "Plata یک پلتفرم خبری چندزبانه است که آرژانتین را به ۳۵ زبان پوشش می‌دهد. این صفحه نحوه کار تحریریه ما — از منبع‌یابی تا انتشار — را توضیح می‌دهد.",
   "standards.sourcingTitle": "منبع‌یابی",
-  "standards.sourcingText": "ما بیش از ۱۳ رسانه خبری آرژانتینی را در سه سطح رصد می‌کنیم. سطح ۱ شامل رسانه‌های بزرگ ملی مانند Infobae، Clarín، La Nación، Ámbito Financiero، El Cronista و iProfesional است. سطح ۲ منابع مستقل و تخصصی مانند Perfil، Cadena 3 و Olé را پوشش می‌دهد. سطح ۳ شامل رسانه‌های منطقه‌ای مانند La Gaceta، Misiones Online و El Día است. مقالات هر ۳۰ دقیقه از طریق فیدهای RSS جمع‌آوری می‌شوند.",
+  "standards.sourcingText": "ما بیش از ۱۳ رسانه خبری آرژانتینی را در سه سطح رصد می‌کنیم. سطح ۱ شامل رسانه‌های بزرگ ملی مانند Infobae، Clarín، La Nación، Ámbito Financiero، El Cronista و iProfesional است. سطح ۲ منابع مستقل و تخصصی مانند Perfil، Cadena 3 را پوشش می‌دهد. سطح ۳ شامل رسانه‌های منطقه‌ای مانند La Gaceta، Misiones Online و El Día است. مقالات هر ۳۰ دقیقه از طریق فیدهای RSS جمع‌آوری می‌شوند.",
   "standards.verificationTitle": "راستی‌آزمایی",
   "standards.verificationText": "هر خبر از یک فرآیند بررسی چندمرحله‌ای عبور می‌کند. منابعی که یک رویداد را پوشش می‌دهند گروه‌بندی می‌شوند. هر مقاله در برابر منابع اصلی خود راستی‌آزمایی می‌شود. ادعاهایی که هیچ منبعی از آن‌ها پشتیبانی نمی‌کند علامت‌گذاری و حذف می‌شوند. خبرهایی که دو بار در راستی‌آزمایی رد شوند منتشر نمی‌شوند.",
   "standards.languageTitle": "کیفیت زبانی",

@@ -52,8 +52,8 @@ export const ja = {
 
   // Welcome Hero
   "welcome.ariaLabel": "ようこそ",
-  "welcome.eyebrow": "35言語 · ひとつの使命",
-  "welcome.headline": "アルゼンチン、世界に開かれて",
+  "welcome.eyebrow": "アルゼンチンの市場と政治 · 35言語",
+  "welcome.headline": "アルゼンチンの金融と政治、世界に開かれて",
   "welcome.sub": "毎日35言語でネイティブにニュースを執筆し、世界中の方々にアルゼンチンの今をお届けします。",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const ja = {
   "home.title": "{lang}で読むアルゼンチンニュース",
   "home.heroFallbackTitle": "Plata Todayへようこそ",
   "home.heroFallbackDesc": "アルゼンチンのニュースを35言語でネイティブにお届けします。",
-  "home.description": "今日のアルゼンチン主要ニュース（{lang}）：政治、経済、スポーツ、文化。24時間更新、35言語対応。",
+  "home.description": "アルゼンチンの政治・経済・市場動向（{lang}）。金融ニュース、政策分析、為替レート。24時間更新。",
   "home.topStories": "トップニュース",
   "home.economyBusiness": "経済・ビジネス",
   "home.moreNews": "もっと読む",
@@ -100,7 +100,7 @@ export const ja = {
   "article.byline": "著者",
 
   // Footer
-  "footer.tagline": "アルゼンチンのニュース、世界に開かれて",
+  "footer.tagline": "アルゼンチンの市場と政治、世界に開かれて",
   "footer.about": "Plataについて",
   "footer.contact": "お問い合わせ",
   "footer.terms": "利用規約",
@@ -535,7 +535,7 @@ export const ja = {
   "standards.updated": "最終更新：2026年3月14日",
   "standards.lead": "Plataは、アルゼンチンのニュースを35言語で伝える多言語ニュースプラットフォームです。このページでは、情報源の収集から記事の公開まで、編集部の仕組みをご説明します。",
   "standards.sourcingTitle": "情報源の収集",
-  "standards.sourcingText": "アルゼンチンの13以上の報道機関を3段階に分けて監視しています。第1層はInfobae、Clarín、La Nación、Ámbito Financiero、El Cronista、iProfesionalなどの主要全国紙。第2層はPerfil、Cadena 3、Oléなどの独立系・専門メディア。第3層はLa Gaceta、Misiones Online、El Díaなどの地方メディアです。記事はRSSフィードを通じて30分ごとに収集されます。",
+  "standards.sourcingText": "アルゼンチンの13以上の報道機関を3段階に分けて監視しています。第1層はInfobae、Clarín、La Nación、Ámbito Financiero、El Cronista、iProfesionalなどの主要全国紙。第2層はPerfil、Cadena 3などの独立系・専門メディア。第3層はLa Gaceta、Misiones Online、El Díaなどの地方メディアです。記事はRSSフィードを通じて30分ごとに収集されます。",
   "standards.verificationTitle": "事実確認",
   "standards.verificationText": "すべての記事は複数段階の審査を経ています。同じ出来事を扱う情報源はグループ化されます。各記事は元の情報源と照合して確認されます。いずれの情報源にも裏付けのない主張は指摘・削除されます。2度の検証に失敗した記事は公開されません。",
   "standards.languageTitle": "言語品質",
@@ -621,7 +621,7 @@ export const ja = {
   "newsroom.tier1Title": "第1層 — 主要全国メディア",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "第2層 — 独立系・専門メディア",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "第3層 — 地方メディア",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "すべての記事に元の情報源へのリンクを掲載しているため、いつでも確認・深掘りが可能です。",

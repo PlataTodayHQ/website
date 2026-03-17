@@ -52,8 +52,8 @@ export const zh = {
 
   // Welcome Hero
   "welcome.ariaLabel": "欢迎",
-  "welcome.eyebrow": "35种语言 · 一个使命",
-  "welcome.headline": "阿根廷，向世界敞开",
+  "welcome.eyebrow": "阿根廷市场与政治 · 35种语言",
+  "welcome.headline": "阿根廷金融与政治，面向世界",
   "welcome.sub": "我们每天用35种语言原生撰写新闻——让全世界都能了解阿根廷正在发生的一切。",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const zh = {
   "home.title": "阿根廷新闻 · {lang}",
   "home.heroFallbackTitle": "欢迎来到 Plata Today",
   "home.heroFallbackDesc": "阿根廷新闻，以 35 种语言原生呈现。",
-  "home.description": "今日阿根廷头条新闻（{lang}）：政治、经济、体育、文化。全天候更新，35 种语言。",
+  "home.description": "阿根廷政治、经济与市场动态（{lang}）。金融资讯、政策分析、汇率行情。全天候更新。",
   "home.topStories": "头条新闻",
   "home.economyBusiness": "经济与商业",
   "home.moreNews": "更多新闻",
@@ -100,7 +100,7 @@ export const zh = {
   "article.byline": "作者",
 
   // Footer
-  "footer.tagline": "阿根廷新闻，向世界敞开",
+  "footer.tagline": "阿根廷市场与政治，面向世界",
   "footer.about": "关于我们",
   "footer.contact": "联系我们",
   "footer.terms": "使用条款",
@@ -535,7 +535,7 @@ export const zh = {
   "standards.updated": "最后更新：2026年3月14日",
   "standards.lead": "Plata 是一个以35种语言报道阿根廷新闻的多语平台。本页介绍我们编辑部的工作流程——从信源采集到文章发布。",
   "standards.sourcingTitle": "信源采集",
-  "standards.sourcingText": "我们监控超过13家阿根廷新闻媒体，分为三个层级。第一层级包括 Infobae、Clarín、La Nación、Ámbito Financiero、El Cronista 和 iProfesional 等主要全国性媒体。第二层级涵盖 Perfil、Cadena 3 和 Olé 等独立及专业媒体。第三层级包括 La Gaceta、Misiones Online 和 El Día 等地方媒体。文章通过 RSS 订阅每30分钟自动采集。",
+  "standards.sourcingText": "我们监控超过13家阿根廷新闻媒体，分为三个层级。第一层级包括 Infobae、Clarín、La Nación、Ámbito Financiero、El Cronista 和 iProfesional 等主要全国性媒体。第二层级涵盖 Perfil、Cadena 3 等独立及专业媒体。第三层级包括 La Gaceta、Misiones Online 和 El Día 等地方媒体。文章通过 RSS 订阅每30分钟自动采集。",
   "standards.verificationTitle": "事实核查",
   "standards.verificationText": "每篇报道都经过多阶段审核流程。报道同一事件的信源会被归类整合。每篇文章都会与原始信源进行核对。没有信源支持的说法会被标记并删除。两次未通过核查的报道不予发布。",
   "standards.languageTitle": "语言质量",
@@ -621,7 +621,7 @@ export const zh = {
   "newsroom.tier1Title": "第一层——全国性主要媒体",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "第二层——独立及专业媒体",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "第三层——地方媒体",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "每篇文章都链接至原始来源，方便您随时核实和深入阅读。",

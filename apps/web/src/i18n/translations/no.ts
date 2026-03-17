@@ -52,8 +52,8 @@ export const no = {
 
   // Welcome Hero
   "welcome.ariaLabel": "Velkommen",
-  "welcome.eyebrow": "35 språk · Én misjon",
-  "welcome.headline": "Argentina, åpent for verden",
+  "welcome.eyebrow": "Argentinske markeder & politikk · 35 språk",
+  "welcome.headline": "Argentinas finans & politikk, åpent for verden",
   "welcome.sub": "Hver dag skriver vi nyhetene på morsmålsnivå på 35 språk — slik at hele verden kan forstå hva som skjer i Argentina.",
 
   // Newsletter
@@ -79,7 +79,7 @@ export const no = {
   "home.title": "Nyheter fra Argentina på {lang}",
   "home.heroFallbackTitle": "Velkommen til Plata Today",
   "home.heroFallbackDesc": "Argentinas nyheter, skrevet direkte på 35 språk.",
-  "home.description": "Dagens viktigste nyheter fra Argentina på {lang}: politikk, økonomi, sport, kultur. Oppdateres døgnet rundt, 35 språk.",
+  "home.description": "Argentinas politikk, økonomi og markeder på {lang}. Finansnyheter, politisk analyse, valutakurser. Oppdateres døgnet rundt.",
   "home.topStories": "Toppsaker",
   "home.economyBusiness": "Økonomi og næringsliv",
   "home.moreNews": "Flere nyheter",
@@ -100,7 +100,7 @@ export const no = {
   "article.byline": "Av",
 
   // Footer
-  "footer.tagline": "Argentinas nyheter, åpne for verden",
+  "footer.tagline": "Argentinske markeder & politikk, åpne for verden",
   "footer.about": "Om oss",
   "footer.contact": "Kontakt",
   "footer.terms": "Bruksvilkår",
@@ -535,7 +535,7 @@ export const no = {
   "standards.updated": "Sist oppdatert: 14. mars 2026",
   "standards.lead": "Plata er en flerspråklig nyhetsplattform som dekker Argentina på 35 språk. Denne siden forklarer hvordan redaksjonen vår arbeider — fra kildebruk til publisering.",
   "standards.sourcingTitle": "Kildebruk",
-  "standards.sourcingText": "Vi overvåker mer enn 13 argentinske nyhetsmedier fordelt på tre nivåer. Nivå 1 omfatter store nasjonale medier som Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista og iProfesional. Nivå 2 dekker uavhengige og spesialiserte kilder som Perfil, Cadena 3 og Olé. Nivå 3 inkluderer regionale medier som La Gaceta, Misiones Online og El Día. Artikler hentes inn via RSS-strømmer hvert 30. minutt.",
+  "standards.sourcingText": "Vi overvåker mer enn 13 argentinske nyhetsmedier fordelt på tre nivåer. Nivå 1 omfatter store nasjonale medier som Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista og iProfesional. Nivå 2 dekker uavhengige og spesialiserte kilder som Perfil, Cadena 3. Nivå 3 inkluderer regionale medier som La Gaceta, Misiones Online og El Día. Artikler hentes inn via RSS-strømmer hvert 30. minutt.",
   "standards.verificationTitle": "Verifisering",
   "standards.verificationText": "Hver sak gjennomgår en flertrinns kvalitetskontroll. Kilder som dekker samme hendelse grupperes sammen. Hver artikkel faktasjekkes mot originalkildene. Påstander uten kildestøtte flagges og fjernes. Saker som ikke består verifisering to ganger, publiseres ikke.",
   "standards.languageTitle": "Språkkvalitet",
@@ -621,7 +621,7 @@ export const no = {
   "newsroom.tier1Title": "Nivå 1 — Nasjonale ledere",
   "newsroom.tier1List": "Infobae, Clarín, La Nación, Ámbito Financiero, El Cronista, iProfesional",
   "newsroom.tier2Title": "Nivå 2 — Uavhengige og spesialiserte",
-  "newsroom.tier2List": "Perfil, Cadena 3, Olé",
+  "newsroom.tier2List": "Perfil, Cadena 3",
   "newsroom.tier3Title": "Nivå 3 — Regionale",
   "newsroom.tier3List": "La Gaceta, Misiones Online, El Día",
   "newsroom.sourcesFooter": "Hver artikkel lenker tilbake til originalkildene, slik at du alltid kan verifisere og lese mer.",
