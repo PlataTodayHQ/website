@@ -554,7 +554,7 @@ const { lang } = Astro.params;
       html += '<td class="scr-td scr-td--star"><button class="wl-star' + (starred ? ' wl-star--active' : '') + '" data-wl-toggle="' + s.symbol + '" aria-label="' + i18nWatchlist + '" title="' + i18nWatchlist + '">' + (starred ? '\u2605' : '\u2606') + '</button></td>';
       // Symbol + Name
       html += '<td class="scr-td scr-td--name">';
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="scr-name-link">';
+      html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(s.symbol) + '" class="scr-name-link">';
       html += logoCell(s.symbol);
       html += '<div class="scr-name-text">';
       html += '<span class="scr-symbol">' + hlText(s.symbol, searchTerm) + '</span>';
@@ -603,12 +603,12 @@ const { lang } = Astro.params;
       row.addEventListener('click', function(e) {
         if (e.target.closest('a') || e.target.closest('[data-wl-toggle]')) return; // let actual links and stars work
         var sym = row.getAttribute('data-symbol');
-        if (sym) window.location.href = '/' + lang + '/markets/stock?s=' + encodeURIComponent(sym);
+        if (sym) window.location.href = '/' + lang + '/markets/stock/' + encodeURIComponent(sym);
       });
       row.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
           var sym = row.getAttribute('data-symbol');
-          if (sym) window.location.href = '/' + lang + '/markets/stock?s=' + encodeURIComponent(sym);
+          if (sym) window.location.href = '/' + lang + '/markets/stock/' + encodeURIComponent(sym);
         }
       });
     });
@@ -626,7 +626,7 @@ const { lang } = Astro.params;
       var cStarred = isInWatchlist(st.symbol);
       cardsHtml += '<div class="stk-card-wrap" style="--stk-accent:' + border + ';animation-delay:' + cardDelay + 'ms">';
       cardsHtml += '<button class="wl-star wl-star--card' + (cStarred ? ' wl-star--active' : '') + '" data-wl-card-toggle="' + st.symbol + '" aria-label="' + i18nWatchlist + '">' + (cStarred ? '\u2605' : '\u2606') + '</button>';
-      cardsHtml += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(st.symbol) + '" class="stk-card" style="--stk-accent:' + border + '" aria-label="' + st.symbol + (st.name ? ' — ' + st.name : '') + '">';
+      cardsHtml += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(st.symbol) + '" class="stk-card" style="--stk-accent:' + border + '" aria-label="' + st.symbol + (st.name ? ' — ' + st.name : '') + '">';
       cardsHtml += '<div class="stk-row1">';
       cardsHtml += logoCell(st.symbol).replace('scr-logo', 'stk-logo');
       cardsHtml += '<div class="stk-id">';
@@ -907,7 +907,7 @@ const { lang } = Astro.params;
       var mcapStr = s.marketCap ? '$' + fmtVol(s.marketCap) : '';
       var volStr = s.volume ? fmtVol(s.volume) : '';
       var pctStr = (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
-      html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex:' + flex + ' 1 0;background:' + colors.bg + ';min-height:' + minH + 'px" data-hm-sym="' + s.symbol + '" data-hm-name="' + (s.name || s.symbol) + '" data-hm-pct="' + pctStr + '" data-hm-price="' + (s.price != null ? 'ARS ' + fmt(s.price) : '') + '" data-hm-mcap="' + mcapStr + '" data-hm-vol="' + volStr + '" data-hm-sector="' + (s.sector ? tSec(s.sector) : '') + '" aria-label="' + s.symbol + ' ' + pctStr + '">';
+      html += '<a href="/' + lang + '/markets/stock/' + encodeURIComponent(s.symbol) + '" class="hm-cell" style="flex:' + flex + ' 1 0;background:' + colors.bg + ';min-height:' + minH + 'px" data-hm-sym="' + s.symbol + '" data-hm-name="' + (s.name || s.symbol) + '" data-hm-pct="' + pctStr + '" data-hm-price="' + (s.price != null ? 'ARS ' + fmt(s.price) : '') + '" data-hm-mcap="' + mcapStr + '" data-hm-vol="' + volStr + '" data-hm-sector="' + (s.sector ? tSec(s.sector) : '') + '" aria-label="' + s.symbol + ' ' + pctStr + '">';
       html += '<span class="hm-sym">' + s.symbol + '</span>';
       html += '<span class="hm-pct" style="color:' + colors.text + '">' + pctStr + '</span>';
       if (s.price != null && weight > 0.03) html += '<span class="hm-price">' + fmt(s.price) + '</span>';

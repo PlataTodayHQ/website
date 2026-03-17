@@ -157,7 +157,7 @@ const { lang = "en" } = Astro.props;
       var s = stocks[i];
       var row = document.createElement('a');
       var langPath = window.location.pathname.split('/')[1] || 'en';
-      row.href = '/' + langPath + '/markets/stock?s=' + encodeURIComponent(s.symbol.replace('.BA', ''));
+      row.href = '/' + langPath + '/markets/stock/' + encodeURIComponent(s.symbol.replace('.BA', ''));
       row.className = 'fd-mover-row';
       var isUp = s.variation >= 0;
       var sign = s.variation > 0 ? '+' : '';
