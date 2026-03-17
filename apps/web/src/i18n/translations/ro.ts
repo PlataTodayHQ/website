@@ -318,7 +318,7 @@ export const ro = {
   "stock.founded": "Fondată",
   "stock.about": "Despre companie",
   "stock.keyProducts": "Produse și servicii principale",
-  "stock.disclaimer": "Date de la Yahoo Finance. Prețurile pot avea o întârziere de până la 15 minute. Doar în scop informativ — nu constituie sfaturi financiare.",
+  "stock.disclaimer": "Prețurile pot avea o întârziere de până la 15 minute. Doar în scop informativ — nu constituie sfaturi financiare.",
   "stock.pageTitle": "Piețele argentiniene",
   "stock.pageDesc": "Prețuri bursiere în timp real, grafice, profiluri de companii și statistici cheie pentru acțiunile argentiniene de pe BYMA.",
 
@@ -458,7 +458,7 @@ export const ro = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Despre indicele Merval",
   "merval.aboutDesc": "Principalul indice bursier din Argentina, cotat la BYMA (Bursa de Valori Buenos Aires). Urmărește cele mai lichide companii locale și servește drept indicator cheie al încrederii investitorilor în economie. Componența indicelui (Panel Líder) este revizuită trimestrial.",
-  "merval.disclaimer": "Date de la BYMA și Yahoo Finance. Prețurile pot avea o întârziere de până la 15 minute. Doar în scop informativ — nu constituie sfaturi financiare.",
+  "merval.disclaimer": "Date de la BYMA. Prețurile pot avea o întârziere de până la 15 minute. Doar în scop informativ — nu constituie sfaturi financiare.",
   "merval.updated": "Actualizat",
   "merval.unableToLoad": "Datele nu au putut fi încărcate",
   "merval.noStockData": "Nu există date despre acțiuni",

@@ -318,7 +318,7 @@ export const ja = {
   "stock.founded": "設立",
   "stock.about": "企業について",
   "stock.keyProducts": "主要な製品・サービス",
-  "stock.disclaimer": "Yahoo Financeのデータ。価格は最大15分遅延する場合があります。情報提供のみを目的としており、投資助言ではありません。",
+  "stock.disclaimer": "価格は最大15分遅延する場合があります。情報提供のみを目的としており、投資助言ではありません。",
   "stock.pageTitle": "アルゼンチン市場",
   "stock.pageDesc": "BYMAアルゼンチン株式のリアルタイム株価、チャート、企業情報、主要指標。",
 
@@ -474,7 +474,7 @@ export const ja = {
   "merval.sectorBreakdown": "セクター構成",
   "merval.aboutTitle": "Merval指数について",
   "merval.aboutDesc": "BYMA（ブエノスアイレス証券取引所）におけるアルゼンチンの主要株価指数。流動性の高い地元企業を追跡し、経済に対する投資家の信頼度を示す主要指標です。指数構成（Panel Líder）は四半期ごとに見直されます。",
-  "merval.disclaimer": "BYMAおよびYahoo Financeのデータ。価格は最大15分遅延する場合があります。情報提供のみ——投資助言ではありません。",
+  "merval.disclaimer": "BYMAのデータ。価格は最大15分遅延する場合があります。情報提供のみ——投資助言ではありません。",
   "merval.updated": "更新済み",
   "merval.unableToLoad": "データを読み込めません",
   "merval.noStockData": "株式データがありません",

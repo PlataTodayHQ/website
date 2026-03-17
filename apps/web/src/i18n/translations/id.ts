@@ -318,7 +318,7 @@ export const id = {
   "stock.founded": "Didirikan",
   "stock.about": "Tentang Perusahaan",
   "stock.keyProducts": "Produk & Layanan Utama",
-  "stock.disclaimer": "Data dari Yahoo Finance. Harga mungkin tertunda hingga 15 menit. Hanya untuk tujuan informasi — bukan nasihat keuangan.",
+  "stock.disclaimer": "Harga mungkin tertunda hingga 15 menit. Hanya untuk tujuan informasi — bukan nasihat keuangan.",
   "stock.pageTitle": "Pasar Argentina",
   "stock.pageDesc": "Harga saham langsung, grafik, profil perusahaan, dan statistik utama untuk ekuitas Argentina di BYMA.",
 
@@ -458,7 +458,7 @@ export const id = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Tentang Indeks Merval",
   "merval.aboutDesc": "Indeks saham utama Argentina di BYMA (Bursa Efek Buenos Aires). Melacak perusahaan lokal paling likuid dan menjadi indikator utama kepercayaan investor terhadap perekonomian. Komposisi indeks (Panel Líder) ditinjau setiap kuartal.",
-  "merval.disclaimer": "Data dari BYMA dan Yahoo Finance. Harga mungkin tertunda hingga 15 menit. Hanya untuk tujuan informasi — bukan nasihat keuangan.",
+  "merval.disclaimer": "Data dari BYMA. Harga mungkin tertunda hingga 15 menit. Hanya untuk tujuan informasi — bukan nasihat keuangan.",
   "merval.updated": "Diperbarui",
   "merval.unableToLoad": "Tidak dapat memuat data",
   "merval.noStockData": "Tidak ada data saham tersedia",

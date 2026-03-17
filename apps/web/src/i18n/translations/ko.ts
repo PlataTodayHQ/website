@@ -318,7 +318,7 @@ export const ko = {
   "stock.founded": "설립",
   "stock.about": "기업 소개",
   "stock.keyProducts": "주요 제품 및 서비스",
-  "stock.disclaimer": "Yahoo Finance 데이터. 가격은 최대 15분 지연될 수 있습니다. 정보 제공 목적으로만 사용되며 투자 조언이 아닙니다.",
+  "stock.disclaimer": "가격은 최대 15분 지연될 수 있습니다. 정보 제공 목적으로만 사용되며 투자 조언이 아닙니다.",
   "stock.pageTitle": "아르헨티나 시장",
   "stock.pageDesc": "BYMA 아르헨티나 주식의 실시간 시세, 차트, 기업 정보 및 주요 지표.",
 
@@ -474,7 +474,7 @@ export const ko = {
   "merval.sectorBreakdown": "섹터 구성",
   "merval.aboutTitle": "Merval 지수 소개",
   "merval.aboutDesc": "BYMA(부에노스아이레스 증권거래소)에서 아르헨티나의 주요 주가 지수. 유동성이 가장 높은 현지 기업을 추적하며 경제에 대한 투자자 신뢰도의 핵심 지표 역할을 합니다. 지수 구성(Panel Líder)은 분기별로 검토됩니다.",
-  "merval.disclaimer": "BYMA 및 Yahoo Finance 데이터. 가격은 최대 15분 지연될 수 있습니다. 정보 제공 목적으로만 사용 — 투자 조언이 아닙니다.",
+  "merval.disclaimer": "BYMA 데이터. 가격은 최대 15분 지연될 수 있습니다. 정보 제공 목적으로만 사용 — 투자 조언이 아닙니다.",
   "merval.updated": "업데이트됨",
   "merval.unableToLoad": "데이터를 불러올 수 없습니다",
   "merval.noStockData": "주식 데이터가 없습니다",

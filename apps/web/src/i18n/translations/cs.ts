@@ -318,7 +318,7 @@ export const cs = {
   "stock.founded": "Založeno",
   "stock.about": "O společnosti",
   "stock.keyProducts": "Hlavní produkty a služby",
-  "stock.disclaimer": "Data z Yahoo Finance. Ceny mohou být zpožděny až o 15 minut. Pouze pro informační účely — nejedná se o finanční poradenství.",
+  "stock.disclaimer": "Ceny mohou být zpožděny až o 15 minut. Pouze pro informační účely — nejedná se o finanční poradenství.",
   "stock.pageTitle": "Argentinské trhy",
   "stock.pageDesc": "Aktuální kurz, graf, profil společnosti a klíčové ukazatele argentinských akcií na BYMA.",
 
@@ -458,7 +458,7 @@ export const cs = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "O indexu Merval",
   "merval.aboutDesc": "Hlavní akciový index Argentiny na BYMA (Burza cenných papírů v Buenos Aires). Sleduje nejlikvidnější domácí společnosti a slouží jako klíčový ukazatel důvěry investorů v ekonomiku. Složení indexu (Panel Líder) se přezkoumává čtvrtletně.",
-  "merval.disclaimer": "Data z BYMA a Yahoo Finance. Ceny mohou být zpožděny až o 15 minut. Pouze pro informační účely — nejedná se o finanční poradenství.",
+  "merval.disclaimer": "Data z BYMA. Ceny mohou být zpožděny až o 15 minut. Pouze pro informační účely — nejedná se o finanční poradenství.",
   "merval.updated": "Aktualizováno",
   "merval.unableToLoad": "Nepodařilo se načíst data",
   "merval.noStockData": "Žádná data o akciích",

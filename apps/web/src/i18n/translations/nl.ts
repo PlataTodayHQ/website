@@ -318,7 +318,7 @@ export const nl = {
   "stock.founded": "Opgericht",
   "stock.about": "Over het bedrijf",
   "stock.keyProducts": "Belangrijke producten en diensten",
-  "stock.disclaimer": "Data van Yahoo Finance. Prijzen kunnen tot 15 minuten vertraagd zijn. Alleen ter informatie — geen financieel advies.",
+  "stock.disclaimer": "Prijzen kunnen tot 15 minuten vertraagd zijn. Alleen ter informatie — geen financieel advies.",
   "stock.pageTitle": "Argentijnse markten",
   "stock.pageDesc": "Realtime koersen, grafieken, bedrijfsprofiel en kerncijfers van Argentijnse aandelen op BYMA.",
 
@@ -474,7 +474,7 @@ export const nl = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Over de Merval-index",
   "merval.aboutDesc": "Argentinië's belangrijkste aandelenindex op de BYMA (Buenos Aires Effectenbeurs). Volgt de meest liquide lokale bedrijven en dient als belangrijke indicator van het beleggersvertrouwen in de economie. De indexsamenstelling (Panel Líder) wordt driemaandelijks herzien.",
-  "merval.disclaimer": "Gegevens van BYMA en Yahoo Finance. Koersen kunnen tot 15 minuten vertraagd zijn. Uitsluitend ter informatie — geen financieel advies.",
+  "merval.disclaimer": "Gegevens van BYMA. Koersen kunnen tot 15 minuten vertraagd zijn. Uitsluitend ter informatie — geen financieel advies.",
   "merval.updated": "Bijgewerkt",
   "merval.unableToLoad": "Gegevens konden niet worden geladen",
   "merval.noStockData": "Geen aandelengegevens beschikbaar",

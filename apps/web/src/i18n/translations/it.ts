@@ -318,7 +318,7 @@ export const it = {
   "stock.founded": "Fondata",
   "stock.about": "Informazioni sull'azienda",
   "stock.keyProducts": "Prodotti e servizi principali",
-  "stock.disclaimer": "Dati da Yahoo Finance. I prezzi possono avere un ritardo fino a 15 minuti. Solo a scopo informativo — non costituisce consulenza finanziaria.",
+  "stock.disclaimer": "I prezzi possono avere un ritardo fino a 15 minuti. Solo a scopo informativo — non costituisce consulenza finanziaria.",
   "stock.pageTitle": "Mercati argentini",
   "stock.pageDesc": "Prezzo in tempo reale, grafico, profilo aziendale e statistiche delle azioni argentine su BYMA.",
 
@@ -478,7 +478,7 @@ export const it = {
   "merval.sectorBreakdown": "Composizione Settoriale",
   "merval.aboutTitle": "Informazioni sull'indice Merval",
   "merval.aboutDesc": "Il principale indice azionario dell'Argentina sulla BYMA (Borsa di Buenos Aires). Segue le aziende locali più liquide e funge da indicatore chiave della fiducia degli investitori nell'economia. La composizione dell'indice (Panel Líder) viene rivista trimestralmente.",
-  "merval.disclaimer": "Dati da BYMA e Yahoo Finance. I prezzi possono avere fino a 15 minuti di ritardo. Solo a scopo informativo — non costituisce consulenza finanziaria.",
+  "merval.disclaimer": "Dati da BYMA. I prezzi possono avere fino a 15 minuti di ritardo. Solo a scopo informativo — non costituisce consulenza finanziaria.",
   "merval.updated": "Aggiornato",
   "merval.unableToLoad": "Impossibile caricare i dati",
   "merval.noStockData": "Nessun dato azionario disponibile",

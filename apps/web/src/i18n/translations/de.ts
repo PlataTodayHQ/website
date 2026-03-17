@@ -318,7 +318,7 @@ export const de = {
   "stock.founded": "Gegründet",
   "stock.about": "Über das Unternehmen",
   "stock.keyProducts": "Wichtige Produkte und Dienstleistungen",
-  "stock.disclaimer": "Daten von Yahoo Finance. Kurse können bis zu 15 Minuten verzögert sein. Nur zu Informationszwecken — keine Finanzberatung.",
+  "stock.disclaimer": "Kurse können bis zu 15 Minuten verzögert sein. Nur zu Informationszwecken — keine Finanzberatung.",
   "stock.pageTitle": "Argentinische Märkte",
   "stock.pageDesc": "Live-Aktienkurse, Charts, Unternehmensprofil und Kennzahlen argentinischer Aktien an der BYMA.",
 
@@ -484,7 +484,7 @@ export const de = {
   "merval.aboutDesc": "Der Merval (Mercado de Valores) ist Argentiniens wichtigster Aktienmarktindex, gehandelt an der BYMA (Bolsas y Mercados Argentinos). Er bildet die meistgehandelten Aktien im Panel Líder ab — Argentiniens Äquivalent zum S&P 500, aber auf die Börse Buenos Aires fokussiert. Die Indexzusammensetzung wird vierteljährlich auf Basis von Handelsvolumen und Marktkapitalisierung überprüft.",
   "merval.whyMatters": "Warum der Merval wichtig ist",
   "merval.whyMattersDesc": "Der Merval ist das wichtigste Barometer für das Anlegervertrauen in Argentiniens Wirtschaft. Zu den Hauptkomponenten gehören YPF (staatliches Energieunternehmen), Grupo Financiero Galicia und Banco Macro (Banken), Pampa Energía (Versorger) und Telecom Argentina. Der Index wird stark von der Peso-Abwertung, Regierungspolitik, Rohstoffpreisen und der globalen Stimmung gegenüber Schwellenländern beeinflusst. Für internationale Investoren sind Merval-Aktien auch über ADRs (American Depositary Receipts) an NYSE und NASDAQ zugänglich.",
-  "merval.disclaimer": "Daten von BYMA und Yahoo Finance. Preise können bis zu 15 Minuten verzögert sein. Nur zu Informationszwecken — keine Finanzberatung.",
+  "merval.disclaimer": "Daten von BYMA. Preise können bis zu 15 Minuten verzögert sein. Nur zu Informationszwecken — keine Finanzberatung.",
   "merval.updated": "Aktualisiert",
   "merval.unableToLoad": "Daten konnten nicht geladen werden",
   "merval.noStockData": "Keine Aktiendaten verfügbar",

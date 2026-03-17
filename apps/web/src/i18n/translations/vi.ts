@@ -318,7 +318,7 @@ export const vi = {
   "stock.founded": "Năm thành lập",
   "stock.about": "Giới thiệu công ty",
   "stock.keyProducts": "Sản phẩm & Dịch vụ chính",
-  "stock.disclaimer": "Dữ liệu từ Yahoo Finance. Giá có thể bị trễ tối đa 15 phút. Chỉ mang tính tham khảo — không phải tư vấn tài chính.",
+  "stock.disclaimer": "Giá có thể bị trễ tối đa 15 phút. Chỉ mang tính tham khảo — không phải tư vấn tài chính.",
   "stock.pageTitle": "Thị trường Argentina",
   "stock.pageDesc": "Giá cổ phiếu trực tiếp, biểu đồ, hồ sơ công ty và chỉ số chính cho cổ phiếu Argentina trên BYMA.",
 
@@ -458,7 +458,7 @@ export const vi = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Về chỉ số Merval",
   "merval.aboutDesc": "Chỉ số chứng khoán chính của Argentina trên BYMA (Sàn chứng khoán Buenos Aires). Theo dõi các công ty niêm yết có tính thanh khoản cao nhất và là chỉ báo quan trọng về niềm tin của nhà đầu tư vào nền kinh tế. Danh mục chỉ số (Panel Líder) được xem xét lại hàng quý.",
-  "merval.disclaimer": "Dữ liệu từ BYMA và Yahoo Finance. Giá có thể bị trễ tối đa 15 phút. Chỉ mang tính tham khảo — không phải tư vấn tài chính.",
+  "merval.disclaimer": "Dữ liệu từ BYMA. Giá có thể bị trễ tối đa 15 phút. Chỉ mang tính tham khảo — không phải tư vấn tài chính.",
   "merval.updated": "Đã cập nhật",
   "merval.unableToLoad": "Không thể tải dữ liệu",
   "merval.noStockData": "Không có dữ liệu cổ phiếu",

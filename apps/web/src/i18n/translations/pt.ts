@@ -318,7 +318,7 @@ export const pt = {
   "stock.founded": "Fundada",
   "stock.about": "Sobre a empresa",
   "stock.keyProducts": "Principais produtos e serviços",
-  "stock.disclaimer": "Dados do Yahoo Finance. Preços podem ter até 15 minutos de atraso. Apenas para fins informativos — não constitui aconselhamento financeiro.",
+  "stock.disclaimer": "Preços podem ter até 15 minutos de atraso. Apenas para fins informativos — não constitui aconselhamento financeiro.",
   "stock.pageTitle": "Mercados argentinos",
   "stock.pageDesc": "Preço ao vivo, gráfico, perfil da empresa e estatísticas de ações argentinas na BYMA.",
 
@@ -484,7 +484,7 @@ export const pt = {
   "merval.aboutDesc": "O Merval (Mercado de Valores) é o principal índice de ações da Argentina, operado na BYMA (Bolsas y Mercados Argentinos). Acompanha as ações mais negociadas do Panel Líder, o equivalente argentino do S&P 500, mas focado na bolsa de Buenos Aires. A composição do índice é revisada trimestralmente com base no volume de negociação e capitalização de mercado.",
   "merval.whyMatters": "Por que o Merval importa",
   "merval.whyMattersDesc": "O Merval é o principal barômetro da confiança dos investidores na economia argentina. Seus principais componentes incluem YPF (empresa estatal de energia), Grupo Financiero Galicia e Banco Macro (bancos), Pampa Energía (utilidades) e Telecom Argentina. O índice é fortemente influenciado pela desvalorização do peso, política governamental, preços de commodities e sentimento global em relação a mercados emergentes. Para investidores internacionais, as ações do Merval também são acessíveis através de ADRs (American Depositary Receipts) listados na NYSE e NASDAQ.",
-  "merval.disclaimer": "Dados de BYMA e Yahoo Finance. Preços podem ter até 15 minutos de atraso. Apenas para fins informativos — não constitui aconselhamento financeiro.",
+  "merval.disclaimer": "Dados de BYMA. Preços podem ter até 15 minutos de atraso. Apenas para fins informativos — não constitui aconselhamento financeiro.",
   "merval.updated": "Atualizado",
   "merval.unableToLoad": "Não foi possível carregar os dados",
   "merval.noStockData": "Dados de ações indisponíveis",

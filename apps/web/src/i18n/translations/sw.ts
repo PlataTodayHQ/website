@@ -318,7 +318,7 @@ export const sw = {
   "stock.founded": "Ilianzishwa",
   "stock.about": "Kuhusu Kampuni",
   "stock.keyProducts": "Bidhaa na Huduma Kuu",
-  "stock.disclaimer": "Data kutoka Yahoo Finance. Bei zinaweza kuchelewa hadi dakika 15. Kwa madhumuni ya habari pekee — si ushauri wa kifedha.",
+  "stock.disclaimer": "Bei zinaweza kuchelewa hadi dakika 15. Kwa madhumuni ya habari pekee — si ushauri wa kifedha.",
   "stock.pageTitle": "Masoko ya Argentina",
   "stock.pageDesc": "Bei ya hisa ya moja kwa moja, chati, wasifu wa kampuni, na takwimu muhimu za hisa za Argentina kwenye BYMA.",
 
@@ -458,7 +458,7 @@ export const sw = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Kuhusu Fahirisi ya Merval",
   "merval.aboutDesc": "Fahirisi kuu ya hisa ya Argentina kwenye BYMA (Soko la Hisa la Buenos Aires). Inafuatilia kampuni za ndani zenye ukwasi zaidi na hutumika kama kiashiria muhimu cha imani ya wawekezaji katika uchumi. Muundo wa fahirisi (Panel Líder) unapitiwa kila robo mwaka.",
-  "merval.disclaimer": "Data kutoka BYMA na Yahoo Finance. Bei zinaweza kuchelewa hadi dakika 15. Kwa madhumuni ya habari pekee — si ushauri wa kifedha.",
+  "merval.disclaimer": "Data kutoka BYMA. Bei zinaweza kuchelewa hadi dakika 15. Kwa madhumuni ya habari pekee — si ushauri wa kifedha.",
   "merval.updated": "Imesasishwa",
   "merval.unableToLoad": "Haiwezi kupakia data",
   "merval.noStockData": "Hakuna data ya hisa inayopatikana",

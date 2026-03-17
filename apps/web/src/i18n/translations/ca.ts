@@ -318,7 +318,7 @@ export const ca = {
   "stock.founded": "Fundació",
   "stock.about": "Sobre l'empresa",
   "stock.keyProducts": "Productes i serveis clau",
-  "stock.disclaimer": "Dades de Yahoo Finance. Els preus poden tenir un retard de fins a 15 minuts. Només amb fins informatius — no constitueix assessorament financer.",
+  "stock.disclaimer": "Els preus poden tenir un retard de fins a 15 minuts. Només amb fins informatius — no constitueix assessorament financer.",
   "stock.pageTitle": "Mercats argentins",
   "stock.pageDesc": "Cotització en directe, gràfic, perfil de l'empresa i estadístiques clau per a les accions argentines a BYMA.",
 
@@ -458,7 +458,7 @@ export const ca = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Sobre l'índex Merval",
   "merval.aboutDesc": "El principal índex borsari de l'Argentina a BYMA (Borsa de Buenos Aires). Segueix les empreses locals més líquides i serveix com a indicador clau de la confiança dels inversors en l'economia. La composició de l'índex (Panel Líder) es revisa trimestralment.",
-  "merval.disclaimer": "Dades de BYMA i Yahoo Finance. Els preus poden tenir un retard de fins a 15 minuts. Només amb fins informatius — no constitueix assessorament financer.",
+  "merval.disclaimer": "Dades de BYMA. Els preus poden tenir un retard de fins a 15 minuts. Només amb fins informatius — no constitueix assessorament financer.",
   "merval.updated": "Actualitzat",
   "merval.unableToLoad": "No s'han pogut carregar les dades",
   "merval.noStockData": "No hi ha dades d'accions disponibles",

@@ -318,7 +318,7 @@ export const zhTw = {
   "stock.founded": "成立年份",
   "stock.about": "關於公司",
   "stock.keyProducts": "主要產品與服務",
-  "stock.disclaimer": "資料來自 Yahoo Finance。價格可能延遲最多 15 分鐘。僅供參考，不構成投資建議。",
+  "stock.disclaimer": "價格可能延遲最多 15 分鐘。僅供參考，不構成投資建議。",
   "stock.pageTitle": "阿根廷市場",
   "stock.pageDesc": "阿根廷 BYMA 上市股票的即時股價、走勢圖、公司簡介及關鍵統計數據。",
 
@@ -458,7 +458,7 @@ export const zhTw = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "關於 Merval 指數",
   "merval.aboutDesc": "阿根廷在 BYMA（布宜諾斯艾利斯證券交易所）的主要股票指數。追蹤流動性最高的本地公司，是投資者對經濟信心的關鍵指標。指數成分（Panel Líder）每季檢視一次。",
-  "merval.disclaimer": "資料來自 BYMA 及 Yahoo Finance。價格可能延遲最多 15 分鐘。僅供參考，不構成投資建議。",
+  "merval.disclaimer": "資料來自 BYMA。價格可能延遲最多 15 分鐘。僅供參考，不構成投資建議。",
   "merval.updated": "已更新",
   "merval.unableToLoad": "無法載入資料",
   "merval.noStockData": "暫無股票資料",

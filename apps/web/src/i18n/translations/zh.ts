@@ -318,7 +318,7 @@ export const zh = {
   "stock.founded": "成立年份",
   "stock.about": "关于公司",
   "stock.keyProducts": "主要产品与服务",
-  "stock.disclaimer": "数据来自Yahoo Finance。价格可能延迟最多15分钟。仅供参考——不构成财务建议。",
+  "stock.disclaimer": "价格可能延迟最多15分钟。仅供参考——不构成财务建议。",
   "stock.pageTitle": "阿根廷市场",
   "stock.pageDesc": "BYMA阿根廷股票实时报价、走势图、公司概况及关键数据。",
 
@@ -474,7 +474,7 @@ export const zh = {
   "merval.sectorBreakdown": "行业构成",
   "merval.aboutTitle": "关于Merval指数",
   "merval.aboutDesc": "阿根廷在BYMA（布宜诺斯艾利斯证券交易所）的主要股票指数。跟踪流动性最高的本地企业，是投资者对经济信心的关键指标。指数成分（Panel Líder）每季度审查一次。",
-  "merval.disclaimer": "数据来自BYMA和Yahoo Finance。价格可能延迟最多15分钟。仅供参考——不构成财务建议。",
+  "merval.disclaimer": "数据来自BYMA。价格可能延迟最多15分钟。仅供参考——不构成财务建议。",
   "merval.updated": "已更新",
   "merval.unableToLoad": "无法加载数据",
   "merval.noStockData": "暂无股票数据",

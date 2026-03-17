@@ -318,7 +318,7 @@ export const tl = {
   "stock.founded": "Itinatag",
   "stock.about": "Tungkol sa Kumpanya",
   "stock.keyProducts": "Mga Pangunahing Produkto at Serbisyo",
-  "stock.disclaimer": "Data mula sa Yahoo Finance. Maaaring ma-delay ang mga presyo nang hanggang 15 minuto. Para sa impormasyon lamang — hindi pinansyal na payo.",
+  "stock.disclaimer": "Maaaring ma-delay ang mga presyo nang hanggang 15 minuto. Para sa impormasyon lamang — hindi pinansyal na payo.",
   "stock.pageTitle": "Merkado ng Argentina",
   "stock.pageDesc": "Live na presyo ng stock, tsart, profile ng kumpanya, at mga pangunahing estadistika para sa mga equities ng Argentina sa BYMA.",
 
@@ -458,7 +458,7 @@ export const tl = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Tungkol sa Merval Index",
   "merval.aboutDesc": "Ang pangunahing stock index ng Argentina sa BYMA (Buenos Aires Stock Exchange). Sinusubaybayan ang mga pinaka-likidong lokal na kumpanya at nagsisilbing pangunahing tagapagpahiwatig ng kumpiyansa ng mga mamumuhunan sa ekonomiya. Ang komposisyon ng index (Panel Líder) ay sinusuri kada quarter.",
-  "merval.disclaimer": "Data mula sa BYMA at Yahoo Finance. Maaaring ma-delay ang mga presyo nang hanggang 15 minuto. Para sa impormasyon lamang — hindi pinansyal na payo.",
+  "merval.disclaimer": "Data mula sa BYMA. Maaaring ma-delay ang mga presyo nang hanggang 15 minuto. Para sa impormasyon lamang — hindi pinansyal na payo.",
   "merval.updated": "Na-update",
   "merval.unableToLoad": "Hindi makapag-load ng datos",
   "merval.noStockData": "Walang stock data na magagamit",

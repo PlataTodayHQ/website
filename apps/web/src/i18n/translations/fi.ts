@@ -318,7 +318,7 @@ export const fi = {
   "stock.founded": "Perustettu",
   "stock.about": "Tietoa yrityksestä",
   "stock.keyProducts": "Keskeiset tuotteet ja palvelut",
-  "stock.disclaimer": "Tiedot Yahoo Financesta. Hinnat voivat olla jopa 15 minuuttia myöhässä. Vain tiedoksi — ei ole taloudellista neuvontaa.",
+  "stock.disclaimer": "Hinnat voivat olla jopa 15 minuuttia myöhässä. Vain tiedoksi — ei ole taloudellista neuvontaa.",
   "stock.pageTitle": "Argentiinan markkinat",
   "stock.pageDesc": "Reaaliaikaiset kurssit, kaaviot, yritysprofiili ja tunnusluvut argentinalaisille osakkeille BYMA-pörssissä.",
 
@@ -474,7 +474,7 @@ export const fi = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Tietoa Merval-indeksistä",
   "merval.aboutDesc": "Argentiinan tärkein osakeindeksi BYMAssa (Buenos Airesin pörssi). Seuraa likvideimpiä paikallisia yrityksiä ja toimii avainmittarina sijoittajien luottamuksesta talouteen. Indeksin kokoonpano (Panel Líder) tarkistetaan neljännesvuosittain.",
-  "merval.disclaimer": "Tiedot BYMAsta ja Yahoo Financesta. Hinnat voivat olla viivästyneet enintään 15 minuuttia. Vain tiedoksi — ei taloudellista neuvontaa.",
+  "merval.disclaimer": "Tiedot BYMAsta. Hinnat voivat olla viivästyneet enintään 15 minuuttia. Vain tiedoksi — ei taloudellista neuvontaa.",
   "merval.updated": "Päivitetty",
   "merval.unableToLoad": "Tietoja ei voitu ladata",
   "merval.noStockData": "Osaketietoja ei saatavilla",

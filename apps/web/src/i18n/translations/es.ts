@@ -318,7 +318,7 @@ export const es = {
   "stock.founded": "Fundada",
   "stock.about": "Sobre la empresa",
   "stock.keyProducts": "Productos y servicios principales",
-  "stock.disclaimer": "Datos de Yahoo Finance. Los precios pueden tener hasta 15 minutos de demora. Solo con fines informativos — no constituye asesoramiento financiero.",
+  "stock.disclaimer": "Los precios pueden tener hasta 15 minutos de demora. Solo con fines informativos — no constituye asesoramiento financiero.",
   "stock.pageTitle": "Mercados argentinos",
   "stock.pageDesc": "Precio en vivo, gráfico, perfil de la empresa y estadísticas clave de acciones argentinas en BYMA.",
 
@@ -484,7 +484,7 @@ export const es = {
   "merval.aboutDesc": "El Merval (Mercado de Valores) es el principal índice bursátil de Argentina, operado en BYMA (Bolsas y Mercados Argentinos). Sigue a las acciones más operadas del Panel Líder, el equivalente argentino del S&P 500 pero enfocado en la bolsa de Buenos Aires. La composición del índice se revisa trimestralmente según volumen de operaciones y capitalización bursátil.",
   "merval.whyMatters": "Por qué importa el Merval",
   "merval.whyMattersDesc": "El Merval es el principal barómetro de la confianza inversora en la economía argentina. Sus principales componentes incluyen YPF (empresa energética estatal), Grupo Financiero Galicia y Banco Macro (banca), Pampa Energía (servicios públicos) y Telecom Argentina. El índice está fuertemente influenciado por la devaluación del peso, la política gubernamental, los precios de commodities y el sentimiento global hacia mercados emergentes. Para inversores internacionales, las acciones del Merval también son accesibles a través de ADRs (American Depositary Receipts) listados en NYSE y NASDAQ.",
-  "merval.disclaimer": "Datos de BYMA y Yahoo Finance. Los precios pueden tener hasta 15 minutos de demora. Solo con fines informativos — no constituye asesoramiento financiero.",
+  "merval.disclaimer": "Datos de BYMA. Los precios pueden tener hasta 15 minutos de demora. Solo con fines informativos — no constituye asesoramiento financiero.",
   "merval.updated": "Actualizado",
   "merval.unableToLoad": "No se pudieron cargar los datos",
   "merval.noStockData": "No hay datos de acciones disponibles",

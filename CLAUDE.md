@@ -87,6 +87,7 @@ Single Node.js process on Hetzner VPS:
 - Pages with `export const prerender = false` are server-rendered (homepage, articles, categories, API routes)
 - Static pages (about, privacy, terms) are prerendered at build time
 - Market pages (currencies, merval) are SSR for fresh data in SEO meta tags
+- **Yahoo Finance is used as a backend data source** but must NEVER be mentioned in user-facing UI (translations, disclaimers, About page, footer). Market data sources visible to users: BYMA, Bluelytics, dolarapi only.
 
 ## Commands
 

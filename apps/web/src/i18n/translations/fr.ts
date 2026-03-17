@@ -318,7 +318,7 @@ export const fr = {
   "stock.founded": "Fondée",
   "stock.about": "À propos de l'entreprise",
   "stock.keyProducts": "Produits et services principaux",
-  "stock.disclaimer": "Données de Yahoo Finance. Les prix peuvent être retardés jusqu'à 15 minutes. À titre informatif uniquement — pas de conseil financier.",
+  "stock.disclaimer": "Les prix peuvent être retardés jusqu'à 15 minutes. À titre informatif uniquement — pas de conseil financier.",
   "stock.pageTitle": "Marchés argentins",
   "stock.pageDesc": "Cours en direct, graphique, profil et statistiques des actions argentines sur BYMA.",
 
@@ -484,7 +484,7 @@ export const fr = {
   "merval.aboutDesc": "Le Merval (Mercado de Valores) est le principal indice boursier d'Argentine, coté sur la BYMA (Bolsas y Mercados Argentinos). Il suit les actions les plus activement négociées du Panel Líder — l'équivalent argentin du S&P 500, mais centré sur la bourse de Buenos Aires. La composition de l'indice est révisée trimestriellement selon le volume de transactions et la capitalisation boursière.",
   "merval.whyMatters": "Pourquoi le Merval est important",
   "merval.whyMattersDesc": "Le Merval est le principal baromètre de la confiance des investisseurs dans l'économie argentine. Ses principales composantes incluent YPF (entreprise énergétique publique), Grupo Financiero Galicia et Banco Macro (banques), Pampa Energía (services publics) et Telecom Argentina. L'indice est fortement influencé par la dévaluation du peso, la politique gouvernementale, les prix des matières premières et le sentiment mondial envers les marchés émergents. Pour les investisseurs internationaux, les actions du Merval sont également accessibles via des ADR (American Depositary Receipts) cotés au NYSE et au NASDAQ.",
-  "merval.disclaimer": "Données de BYMA et Yahoo Finance. Les prix peuvent avoir jusqu'à 15 minutes de retard. À titre informatif uniquement — pas de conseil financier.",
+  "merval.disclaimer": "Données de BYMA. Les prix peuvent avoir jusqu'à 15 minutes de retard. À titre informatif uniquement — pas de conseil financier.",
   "merval.updated": "Mis à jour",
   "merval.unableToLoad": "Impossible de charger les données",
   "merval.noStockData": "Aucune donnée boursière disponible",

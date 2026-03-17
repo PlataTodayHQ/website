@@ -318,7 +318,7 @@ export const tr = {
   "stock.founded": "Kuruluş",
   "stock.about": "Şirket Hakkında",
   "stock.keyProducts": "Temel Ürün ve Hizmetler",
-  "stock.disclaimer": "Veriler Yahoo Finance kaynaklıdır. Fiyatlar 15 dakikaya kadar gecikmiş olabilir. Yalnızca bilgilendirme amaçlıdır — yatırım tavsiyesi değildir.",
+  "stock.disclaimer": "Fiyatlar 15 dakikaya kadar gecikmiş olabilir. Yalnızca bilgilendirme amaçlıdır — yatırım tavsiyesi değildir.",
   "stock.pageTitle": "Arjantin Piyasaları",
   "stock.pageDesc": "BYMA'da işlem gören Arjantin hisse senetleri için canlı fiyat, grafik, şirket profili ve temel istatistikler.",
 
@@ -458,7 +458,7 @@ export const tr = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Merval Endeksi Hakkında",
   "merval.aboutDesc": "BYMA (Buenos Aires Borsası) üzerindeki Arjantin'in ana borsa endeksi. En likit yerli şirketleri takip eder ve ekonomiye yönelik yatırımcı güveninin temel göstergesi olarak hizmet eder. Endeks bileşimi (Panel Líder) üç ayda bir gözden geçirilir.",
-  "merval.disclaimer": "Veriler BYMA ve Yahoo Finance kaynaklıdır. Fiyatlar 15 dakikaya kadar gecikmiş olabilir. Yalnızca bilgilendirme amaçlıdır — yatırım tavsiyesi değildir.",
+  "merval.disclaimer": "Veriler BYMA kaynaklıdır. Fiyatlar 15 dakikaya kadar gecikmiş olabilir. Yalnızca bilgilendirme amaçlıdır — yatırım tavsiyesi değildir.",
   "merval.updated": "Güncellendi",
   "merval.unableToLoad": "Veriler yüklenemedi",
   "merval.noStockData": "Hisse verisi bulunamadı",

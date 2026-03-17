@@ -318,7 +318,7 @@ export const ms = {
   "stock.founded": "Ditubuhkan",
   "stock.about": "Tentang Syarikat",
   "stock.keyProducts": "Produk & Perkhidmatan Utama",
-  "stock.disclaimer": "Data daripada Yahoo Finance. Harga mungkin tertangguh sehingga 15 minit. Untuk tujuan maklumat sahaja — bukan nasihat kewangan.",
+  "stock.disclaimer": "Harga mungkin tertangguh sehingga 15 minit. Untuk tujuan maklumat sahaja — bukan nasihat kewangan.",
   "stock.pageTitle": "Pasaran Argentina",
   "stock.pageDesc": "Harga saham langsung, carta, profil syarikat dan statistik utama untuk ekuiti Argentina di BYMA.",
 
@@ -458,7 +458,7 @@ export const ms = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Tentang Indeks Merval",
   "merval.aboutDesc": "Indeks saham utama Argentina di BYMA (Bursa Saham Buenos Aires). Menjejaki syarikat tempatan yang paling cair dan berfungsi sebagai penunjuk utama keyakinan pelabur terhadap ekonomi. Komposisi indeks (Panel Líder) disemak setiap suku tahun.",
-  "merval.disclaimer": "Data daripada BYMA dan Yahoo Finance. Harga mungkin tertangguh sehingga 15 minit. Untuk tujuan maklumat sahaja — bukan nasihat kewangan.",
+  "merval.disclaimer": "Data daripada BYMA. Harga mungkin tertangguh sehingga 15 minit. Untuk tujuan maklumat sahaja — bukan nasihat kewangan.",
   "merval.updated": "Dikemas kini",
   "merval.unableToLoad": "Tidak dapat memuatkan data",
   "merval.noStockData": "Tiada data saham tersedia",

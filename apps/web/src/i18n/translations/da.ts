@@ -318,7 +318,7 @@ export const da = {
   "stock.founded": "Grundlagt",
   "stock.about": "Om virksomheden",
   "stock.keyProducts": "Vigtigste produkter og tjenester",
-  "stock.disclaimer": "Data fra Yahoo Finance. Priser kan være forsinkede op til 15 minutter. Kun til informationsformål — ikke finansiel rådgivning.",
+  "stock.disclaimer": "Priser kan være forsinkede op til 15 minutter. Kun til informationsformål — ikke finansiel rådgivning.",
   "stock.pageTitle": "Argentinske markeder",
   "stock.pageDesc": "Realtidskurser, diagram, virksomhedsprofil og nøgletal for argentinske aktier på BYMA.",
 
@@ -474,7 +474,7 @@ export const da = {
   "merval.sectorBreakdown": "Sector Breakdown",
   "merval.aboutTitle": "Om Merval-indekset",
   "merval.aboutDesc": "Argentinas vigtigste aktieindeks på BYMA (Buenos Aires Fondsbørs). Følger de mest likvide lokale virksomheder og fungerer som en nøgleindikator for investortillid til økonomien. Indeksets sammensætning (Panel Líder) gennemgås kvartalsvis.",
-  "merval.disclaimer": "Data fra BYMA og Yahoo Finance. Kurser kan være forsinket op til 15 minutter. Kun til information — ikke finansiel rådgivning.",
+  "merval.disclaimer": "Data fra BYMA. Kurser kan være forsinket op til 15 minutter. Kun til information — ikke finansiel rådgivning.",
   "merval.updated": "Opdateret",
   "merval.unableToLoad": "Kunne ikke indlæse data",
   "merval.noStockData": "Ingen aktiedata tilgængelige",

@@ -318,7 +318,7 @@ export const en = {
   "stock.about": "About the Company",
   "stock.similarStocks": "Similar Stocks",
   "stock.keyProducts": "Key Products & Services",
-  "stock.disclaimer": "Data from Yahoo Finance. Prices may be delayed up to 15 minutes. For informational purposes only — not financial advice.",
+  "stock.disclaimer": "Prices may be delayed up to 15 minutes. For informational purposes only — not financial advice.",
   "stock.pageTitle": "Argentine Markets",
   "stock.pageDesc": "Live stock price, chart, company profile, and key statistics for Argentine equities on BYMA.",
 
@@ -559,7 +559,7 @@ export const en = {
   "merval.aboutDesc": "The Merval (Mercado de Valores) is Argentina's flagship stock market index, traded on BYMA (Bolsas y Mercados Argentinos). It tracks the most actively traded stocks in the Panel Líder, Argentina's equivalent of the S&P 500 but focused on the Buenos Aires exchange. The index composition is reviewed quarterly based on trading volume and market capitalization.",
   "merval.whyMatters": "Why the Merval Matters",
   "merval.whyMattersDesc": "The Merval is the primary barometer of investor confidence in Argentina's economy. Major components include YPF (state energy company), Grupo Financiero Galicia and Banco Macro (banking), Pampa Energía (utilities), and Telecom Argentina. The index is heavily influenced by Argentine peso devaluation, government policy, commodity prices, and global emerging market sentiment. For international investors, Merval stocks are also accessible through ADRs (American Depositary Receipts) listed on NYSE and NASDAQ.",
-  "merval.disclaimer": "Data from BYMA and Yahoo Finance. Prices may be delayed up to 15 minutes. For informational purposes only — not financial advice.",
+  "merval.disclaimer": "Data from BYMA. Prices may be delayed up to 15 minutes. For informational purposes only — not financial advice.",
   "merval.updated": "Updated",
   "merval.unableToLoad": "Unable to load data",
   "merval.noStockData": "No stock data available",
