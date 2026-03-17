@@ -353,7 +353,11 @@ const { lang } = Astro.params;
   }
   .wl-group-count { font-weight: 400; color: var(--color-text-meta); font-size: 0.8rem; }
 
-  .wl-table-wrap { overflow-x: auto; margin-bottom: var(--spacing-md, 16px); }
+  .wl-table-wrap {
+    overflow-x: auto; margin-bottom: var(--spacing-md, 16px);
+    background: var(--color-bg); border: 1px solid var(--color-border);
+    border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
   .wl-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
 
   .at-th {
