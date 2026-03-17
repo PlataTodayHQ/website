@@ -8,11 +8,23 @@
 
   var lang = page.getAttribute('data-lang') || 'en';
   var apiUrl = page.getAttribute('data-api');
+  var assetType = page.getAttribute('data-asset-type') || '';
   var stockUrl = page.getAttribute('data-stock-url') || '/' + lang + '/markets/stock';
   var i18nUpdated = page.getAttribute('data-i18n-updated') || 'Updated';
   var i18nError = page.getAttribute('data-i18n-error') || 'Failed to load data';
   var i18nRetry = page.getAttribute('data-i18n-retry') || 'Retry';
   var i18nNoResults = page.getAttribute('data-i18n-no-results') || 'No results found';
+  var i18nPrevClose = page.getAttribute('data-i18n-prev-close') || 'Prev Close';
+  var i18nHigh = page.getAttribute('data-i18n-high') || 'High';
+  var i18nLow = page.getAttribute('data-i18n-low') || 'Low';
+
+  var isBondPage = assetType === 'government_bond' || assetType === 'corporate_bond' || assetType === 'letra';
+
+  // Bond tag i18n (only used on bond pages)
+  var i18nTagLawAR = page.getAttribute('data-i18n-tag-law-ar') || 'Arg. Law';
+  var i18nTagLawNY = page.getAttribute('data-i18n-tag-law-ny') || 'NY Law';
+  var i18nTagCER = page.getAttribute('data-i18n-tag-cer') || 'CER';
+  var i18nTagDual = page.getAttribute('data-i18n-tag-dual') || 'Dual';
 
   var allItems = [];
   var currentSort = { key: 'volume', dir: 'desc' };
@@ -33,6 +45,131 @@
   var countEl = document.querySelector('[data-asset-count]');
   var emptyEl = document.querySelector('[data-asset-empty]');
   var searchInput = document.querySelector('[data-asset-search]');
+
+  // ---------------------------------------------------------------------------
+  // Info panel localStorage dismiss
+  // ---------------------------------------------------------------------------
+  var infoPanel = document.querySelector('[data-fi-info]');
+  if (infoPanel && isBondPage) {
+    var storageKey = 'fi-info-dismissed-' + assetType;
+    if (localStorage.getItem(storageKey) === '1') {
+      infoPanel.removeAttribute('open');
+    }
+    infoPanel.addEventListener('toggle', function() {
+      if (!infoPanel.open) {
+        localStorage.setItem(storageKey, '1');
+      } else {
+        localStorage.removeItem(storageKey);
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Bond metadata parser
+  // ---------------------------------------------------------------------------
+  var GOVT_BOND_PREFIXES = {
+    'AL':  { currency: 'USD', law: 'AR' },
+    'AE':  { currency: 'USD', law: 'AR' },
+    'GD':  { currency: 'USD', law: 'NY' },
+    'GE':  { currency: 'USD', law: 'NY' },
+    'TX':  { currency: 'ARS', law: 'AR', type: 'CER' },
+    'TC':  { currency: 'ARS', law: 'AR', type: 'CER' },
+    'DI':  { currency: 'ARS', law: 'AR', type: 'CER' },
+    'PR':  { currency: 'ARS', law: 'AR' },
+    'BPOA': { currency: 'USD', law: 'AR', type: 'Bopreal' },
+    'BPOB': { currency: 'USD', law: 'AR', type: 'Bopreal' },
+    'BPOC': { currency: 'USD', law: 'AR', type: 'Bopreal' },
+    'BPOD': { currency: 'USD', law: 'AR', type: 'Bopreal' },
+    'TV':  { currency: 'USD', law: 'AR', type: 'DL' },
+    'TZ':  { currency: 'ARS', law: 'AR', type: 'CER' },
+    'T2':  { currency: 'ARS', law: 'AR', type: 'CER' },
+    'T3':  { currency: 'ARS', law: 'AR' },
+    'T4':  { currency: 'ARS', law: 'AR' },
+    'T5':  { currency: 'ARS', law: 'AR' },
+    'T6':  { currency: 'ARS', law: 'AR' },
+    'TO':  { currency: 'ARS', law: 'AR' },
+    'TDA': { currency: 'USD', law: 'AR', type: 'DL' },
+    'TDB': { currency: 'USD', law: 'AR', type: 'DL' },
+  };
+
+  // Letras month letter encoding: the letter before the last digit encodes the month
+  var MONTH_LETTERS = { E: 1, F: 2, M: 3, A: 4, Y: 5, J: 6, L: 7, G: 8, S: 9, O: 10, N: 11, D: 12 };
+  var MONTH_NAMES = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  function parseBondMeta(symbol) {
+    if (!symbol) return null;
+    var sym = symbol.toUpperCase();
+
+    // Letras: pattern like S31O5 (S + date + monthLetter + yearDigit)
+    // or X18F5 etc. They typically start with S, X, L
+    if (assetType === 'letra') {
+      // Try to find month letter and year digit at the end
+      var letraMatch = sym.match(/^([A-Z])(\d{2})([EFMAYLGJSOND])(\d)$/);
+      if (letraMatch) {
+        var monthNum = MONTH_LETTERS[letraMatch[3]];
+        var yearDigit = parseInt(letraMatch[4]);
+        var maturityYear = 2020 + yearDigit;
+        if (maturityYear < 2024) maturityYear += 10;
+        return {
+          currency: 'ARS',
+          maturity: MONTH_NAMES[monthNum] + ' ' + maturityYear,
+          type: letraMatch[1] === 'S' ? 'LECAP' : letraMatch[1] === 'X' ? 'LEDE' : letraMatch[1] === 'L' ? 'LECER' : ''
+        };
+      }
+      // Longer letras like S30S5 etc
+      var letraMatch2 = sym.match(/^([A-Z])(\d+)([EFMAYLGJSOND])(\d)$/);
+      if (letraMatch2) {
+        var monthNum2 = MONTH_LETTERS[letraMatch2[3]];
+        var yearDigit2 = parseInt(letraMatch2[4]);
+        var maturityYear2 = 2020 + yearDigit2;
+        if (maturityYear2 < 2024) maturityYear2 += 10;
+        return {
+          currency: 'ARS',
+          maturity: MONTH_NAMES[monthNum2] + ' ' + maturityYear2,
+          type: letraMatch2[1] === 'S' ? 'LECAP' : letraMatch2[1] === 'X' ? 'LEDE' : letraMatch2[1] === 'L' ? 'LECER' : ''
+        };
+      }
+      return null;
+    }
+
+    // Government bonds: try longest prefix first
+    var meta = null;
+    var prefixes = Object.keys(GOVT_BOND_PREFIXES).sort(function(a, b) { return b.length - a.length; });
+    for (var i = 0; i < prefixes.length; i++) {
+      if (sym.indexOf(prefixes[i]) === 0) {
+        meta = GOVT_BOND_PREFIXES[prefixes[i]];
+        var rest = sym.substring(prefixes[i].length);
+        var yearMatch = rest.match(/^(\d{2})/);
+        if (yearMatch) {
+          var yr = parseInt(yearMatch[1]);
+          var fullYear = yr < 50 ? 2000 + yr : 1900 + yr;
+          return {
+            currency: meta.currency,
+            law: meta.law,
+            type: meta.type || null,
+            maturity: '' + fullYear
+          };
+        }
+        return { currency: meta.currency, law: meta.law, type: meta.type || null, maturity: null };
+      }
+    }
+    return null;
+  }
+
+  function buildBondTag(meta) {
+    if (!meta) return '';
+    var parts = [];
+    if (meta.currency) parts.push(meta.currency);
+    if (meta.maturity) parts.push(meta.maturity);
+    if (meta.law === 'NY') parts.push(i18nTagLawNY);
+    if (meta.type === 'CER') parts.push(i18nTagCER);
+    if (parts.length === 0) return '';
+    return '<span class="at-bond-tag">' + parts.join(' · ') + '</span>';
+  }
+
+  // ---------------------------------------------------------------------------
+  // Formatting helpers
+  // ---------------------------------------------------------------------------
 
   function fmt(n) {
     if (n == null || isNaN(n)) return '\u2014';
@@ -56,6 +193,11 @@
     if (v == null) return '\u2014';
     var sign = v > 0 ? '+' : '';
     return sign + v.toFixed(2) + '%';
+  }
+
+  function escHtml(s) {
+    if (!s) return '';
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   function sortItems(items) {
@@ -104,9 +246,15 @@
       var s = items[i];
       var cc = changeClass(s.variation);
       var prevClose = s.previousClose || s.previousClosingPrice;
-      html += '<tr class="at-row" data-clickable data-symbol="' + s.symbol + '">' +
-        '<td class="at-td at-td--name"><span class="at-sym">' + s.symbol + '</span>' +
-          (s.description ? '<span class="at-desc">' + s.description + '</span>' : '') + '</td>' +
+      var bondTag = isBondPage ? buildBondTag(parseBondMeta(s.symbol)) : '';
+      html += '<tr class="at-row" data-clickable data-symbol="' + escHtml(s.symbol) + '">' +
+        '<td class="at-td at-td--name">' +
+          '<div class="at-name-wrap">' +
+            '<span class="at-sym">' + escHtml(s.symbol) + '</span>' +
+            bondTag +
+          '</div>' +
+          (s.description ? '<span class="at-desc">' + escHtml(s.description) + '</span>' : '') +
+        '</td>' +
         '<td class="at-td at-td--num">' + fmt(s.price) + '</td>' +
         '<td class="at-td at-td--num"><span class="at-change-badge ' + cc + '">' + changeText(s.variation) + '</span></td>' +
         '<td class="at-td at-td--num">' + fmtVol(s.volume) + '</td>';
@@ -128,10 +276,13 @@
       var s = items[i];
       var cc = changeClass(s.variation);
       var prevClose = s.previousClose || s.previousClosingPrice;
-      html += '<div class="at-card" data-clickable data-symbol="' + s.symbol + '">' +
+      var bondTag = isBondPage ? buildBondTag(parseBondMeta(s.symbol)) : '';
+      html += '<div class="at-card" data-clickable data-symbol="' + escHtml(s.symbol) + '">' +
         '<div class="at-card-top">' +
-          '<div><span class="at-card-sym">' + s.symbol + '</span>' +
-            (s.description ? '<span class="at-card-desc">' + s.description + '</span>' : '') + '</div>' +
+          '<div>' +
+            '<div class="at-card-name-wrap"><span class="at-card-sym">' + escHtml(s.symbol) + '</span>' + bondTag + '</div>' +
+            (s.description ? '<span class="at-card-desc">' + escHtml(s.description) + '</span>' : '') +
+          '</div>' +
           '<span class="at-change-badge ' + cc + '">' + changeText(s.variation) + '</span>' +
         '</div>' +
         '<div class="at-card-bottom">' +
@@ -141,11 +292,11 @@
       // Extra row for prev close on bonds/letras
       if (hasPrevClose && prevClose != null) {
         html += '<div class="at-card-extra">' +
-          '<span class="at-card-extra-label">Prev</span>' +
+          '<span class="at-card-extra-label">' + escHtml(i18nPrevClose) + '</span>' +
           '<span class="at-card-extra-val">' + fmt(prevClose) + '</span>' +
-          '<span class="at-card-extra-label">H</span>' +
+          '<span class="at-card-extra-label">' + escHtml(i18nHigh) + '</span>' +
           '<span class="at-card-extra-val">' + fmt(s.high) + '</span>' +
-          '<span class="at-card-extra-label">L</span>' +
+          '<span class="at-card-extra-label">' + escHtml(i18nLow) + '</span>' +
           '<span class="at-card-extra-val">' + fmt(s.low) + '</span>' +
         '</div>';
       }

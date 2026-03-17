@@ -1103,6 +1103,11 @@ export const en = {
   "bonds.infoYield": "Yield & Return",
   "bonds.infoYieldText": "Your total return on a bond comes from two sources: coupon payments (periodic interest) and price appreciation if you buy below par value. The lower the price, the higher the potential yield.",
   "bonds.prevClose": "Prev Close",
+  "bonds.col.price": "Price (% face value)",
+  "bonds.tagLawAR": "Arg. Law",
+  "bonds.tagLawNY": "NY Law",
+  "bonds.tagCER": "CER",
+  "bonds.tagDualCurrency": "Dual",
 
   // Corporate Bonds (Obligaciones Negociables)
   "corporateBonds.title": "Corporate Bonds",
@@ -1119,6 +1124,7 @@ export const en = {
   "corporateBonds.infoRiskVal": "Varies by company — corporate credit risk plus Argentina country risk",
   "corporateBonds.infoAdvantage": "Why Corporate Bonds?",
   "corporateBonds.infoAdvantageText": "Corporate bonds typically offer higher yields than government bonds to compensate for additional credit risk. Dollar-denominated ONs are popular among investors seeking USD-linked returns within the Argentine market.",
+  "corporateBonds.col.price": "Price (% face value)",
 
   // Letras (Short-term Government Bills)
   "letras.title": "Letras",
@@ -1137,6 +1143,7 @@ export const en = {
   "letras.infoDiscountText": "Most letras are zero-coupon: you buy at a discount (e.g., $950) and receive the full face value ($1,000) at maturity. The difference is your return. The deeper the discount, the higher the implicit interest rate.",
   "letras.infoWhoFor": "Who Invests in Letras?",
   "letras.infoWhoForText": "Primarily institutional investors (banks, mutual funds) and retail investors seeking short-term, relatively safe ARS-denominated returns. They are a core tool for managing cash and tracking monetary policy.",
+  "letras.col.price": "Price (% face value)",
 
   // Shared fixed income terms
   "fixedIncome.nav": "Fixed Income",
