@@ -1,5 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -41,6 +42,8 @@ const { lang } = Astro.params;
     data-i18n-abundant={t(lang!, "crypto.abundant" as any)}
     data-i18n-nearath={t(lang!, "crypto.nearAth" as any)}
   >
+    <MarketNav lang={lang!} active="crypto" />
+
     <header class="mkts-header">
       <div>
         <h1 class="mkts-title">{t(lang!, "crypto.title")}</h1>
@@ -94,13 +97,46 @@ const { lang } = Astro.params;
       </div>
       <div class="cr-ov-card cr-ov-card--fg" data-cr-fg-card style="display:none;">
         <span class="cr-ov-label">{t(lang!, "crypto.fearGreed")}</span>
-        <div class="cr-fg">
-          <div class="cr-fg-gauge">
-            <div class="cr-fg-bar">
-              <div class="cr-fg-needle" data-cr-fg-needle></div>
-            </div>
-          </div>
-          <div class="cr-fg-info">
+        <div class="cr-fg" data-cr-fg-gauge>
+          <svg viewBox="0 0 200 120" class="cr-fg-svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="fg-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#ea3943"/>
+                <stop offset="25%" stop-color="#ea8c00"/>
+                <stop offset="50%" stop-color="#c4c400"/>
+                <stop offset="75%" stop-color="#16c784"/>
+                <stop offset="100%" stop-color="#16c784"/>
+              </linearGradient>
+            </defs>
+            <!-- Arc track (background) -->
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--color-border)" stroke-width="12" stroke-linecap="round"/>
+            <!-- Arc colored -->
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#fg-gradient)" stroke-width="12" stroke-linecap="round"/>
+            <!-- Tick marks: center (100,100), r_outer=88, r_inner=74 -->
+            <!-- 0 at 180deg -->
+            <line x1="12" y1="100" x2="26" y2="100" stroke="var(--color-text-meta)" stroke-width="1" opacity="0.5"/>
+            <!-- 25 at 135deg -->
+            <line x1="37.8" y1="37.8" x2="47.7" y2="47.7" stroke="var(--color-text-meta)" stroke-width="1" opacity="0.5"/>
+            <!-- 50 at 90deg -->
+            <line x1="100" y1="12" x2="100" y2="26" stroke="var(--color-text-meta)" stroke-width="1" opacity="0.5"/>
+            <!-- 75 at 45deg -->
+            <line x1="162.2" y1="37.8" x2="152.3" y2="47.7" stroke="var(--color-text-meta)" stroke-width="1" opacity="0.5"/>
+            <!-- 100 at 0deg -->
+            <line x1="188" y1="100" x2="174" y2="100" stroke="var(--color-text-meta)" stroke-width="1" opacity="0.5"/>
+            <!-- Tick labels -->
+            <text x="8" y="113" text-anchor="middle" class="cr-fg-tick">0</text>
+            <text x="32" y="33" text-anchor="middle" class="cr-fg-tick">25</text>
+            <text x="100" y="8" text-anchor="middle" class="cr-fg-tick">50</text>
+            <text x="168" y="33" text-anchor="middle" class="cr-fg-tick">75</text>
+            <text x="192" y="113" text-anchor="middle" class="cr-fg-tick">100</text>
+            <!-- Needle -->
+            <g class="cr-fg-needle-g" data-cr-fg-needle>
+              <line x1="100" y1="100" x2="100" y2="30" stroke="var(--color-text)" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="100" cy="100" r="5" fill="var(--color-text)"/>
+              <circle cx="100" cy="100" r="3" fill="var(--color-bg)"/>
+            </g>
+          </svg>
+          <div class="cr-fg-center">
             <span class="cr-fg-val" data-cr-fg-val>—</span>
             <span class="cr-fg-label" data-cr-fg-label>—</span>
           </div>
@@ -162,6 +198,9 @@ const { lang } = Astro.params;
       </div>
       <span class="cr-count" data-cr-count></span>
     </div>
+
+    <!-- Category filter chips -->
+    <div class="cr-cat-chips" data-cr-cat-chips style="display:none;"></div>
 
     <!-- Loading state with skeleton shimmer -->
     <div class="cr-loading" data-cr-loading>
@@ -250,7 +289,8 @@ const { lang } = Astro.params;
   </div>
 </Base>
 
-<script define:vars={{ lang, i18nUpdated: t(lang!, "stock.updated" as any), i18nCap: t(lang!, "merval.cap" as any), i18nCoins: t(lang!, "crypto.coins" as any), i18nNoCoins: t(lang!, "crypto.noCoins" as any), i18nOthers: t(lang!, "crypto.others" as any), i18nExtremeFear: t(lang!, "crypto.extremeFear" as any), i18nFear: t(lang!, "crypto.fear" as any), i18nNeutral: t(lang!, "crypto.neutral" as any), i18nGreed: t(lang!, "crypto.greed" as any), i18nExtremeGreed: t(lang!, "crypto.extremeGreed" as any) }}>
+<script is:inline src="/js/market-states.js?v=1"></script>
+<script define:vars={{ lang, i18nUpdated: t(lang!, "stock.updated" as any), i18nCap: t(lang!, "merval.cap" as any), i18nCoins: t(lang!, "crypto.coins" as any), i18nNoCoins: t(lang!, "crypto.noCoins" as any), i18nOthers: t(lang!, "crypto.others" as any), i18nExtremeFear: t(lang!, "crypto.extremeFear" as any), i18nFear: t(lang!, "crypto.fear" as any), i18nNeutral: t(lang!, "crypto.neutral" as any), i18nGreed: t(lang!, "crypto.greed" as any), i18nExtremeGreed: t(lang!, "crypto.extremeGreed" as any), i18nError: t(lang!, "markets.failedToLoad" as any), i18nRetry: t(lang!, "common.retry" as any), i18nCheckConn: t(lang!, "common.checkConnection" as any), i18nTryDifferent: t(lang!, "common.tryDifferentSearch" as any) }}>
 (function() {
   'use strict';
 
@@ -267,6 +307,68 @@ const { lang } = Astro.params;
   var searchTerm = '';
   var sortKey = 'rank';
   var sortAsc = true;
+  var currentCat = '';
+
+  var CRYPTO_CATS = {
+    'bitcoin': 'Store of Value', 'ethereum': 'L1', 'solana': 'L1',
+    'cardano': 'L1', 'polkadot': 'L1', 'avalanche-2': 'L1',
+    'near': 'L1', 'internet-computer': 'L1', 'aptos': 'L1', 'sui': 'L1',
+    'cosmos': 'L1', 'algorand': 'L1', 'hedera-hashgraph': 'L1', 'toncoin': 'L1',
+    'binancecoin': 'Exchange', 'okb': 'Exchange', 'crypto-com-chain': 'Exchange',
+    'leo-token': 'Exchange', 'kucoin-shares': 'Exchange',
+    'tether': 'Stablecoin', 'usd-coin': 'Stablecoin', 'dai': 'Stablecoin',
+    'first-digital-usd': 'Stablecoin', 'true-usd': 'Stablecoin', 'ethena-usde': 'Stablecoin',
+    'dogecoin': 'Meme', 'shiba-inu': 'Meme', 'pepe': 'Meme',
+    'dogwifcoin': 'Meme', 'floki': 'Meme', 'bonk': 'Meme', 'brett': 'Meme',
+    'uniswap': 'DeFi', 'aave': 'DeFi', 'maker': 'DeFi', 'jupiter-exchange-solana': 'DeFi',
+    'lido-dao': 'DeFi', 'the-graph': 'DeFi', 'raydium': 'DeFi',
+    'rocket-pool': 'DeFi', 'pancakeswap-token': 'DeFi', 'curve-dao-token': 'DeFi',
+    'chainlink': 'Oracle', 'band-protocol': 'Oracle', 'pyth-network': 'Oracle',
+    'matic-network': 'L2', 'arbitrum': 'L2', 'optimism': 'L2',
+    'starknet': 'L2', 'mantle': 'L2', 'immutable-x': 'L2', 'polygon-ecosystem-token': 'L2',
+    'ripple': 'Payments', 'litecoin': 'Payments', 'stellar': 'Payments', 'kaspa': 'Payments',
+    'bitcoin-cash': 'Payments',
+    'render-token': 'AI', 'fetch-ai': 'AI', 'bittensor': 'AI',
+    'filecoin': 'Storage', 'arweave': 'Storage',
+    'monero': 'Privacy', 'zcash': 'Privacy',
+    'wrapped-bitcoin': 'Wrapped'
+  };
+
+  var CAT_COLORS = {
+    'L1': { bg: 'rgba(99,102,241,0.12)', text: '#6366f1', darkText: '#818cf8' },
+    'L2': { bg: 'rgba(139,92,246,0.12)', text: '#8b5cf6', darkText: '#a78bfa' },
+    'DeFi': { bg: 'rgba(16,185,129,0.12)', text: '#059669', darkText: '#34d399' },
+    'Meme': { bg: 'rgba(251,146,60,0.12)', text: '#d97706', darkText: '#fbbf24' },
+    'Store of Value': { bg: 'rgba(245,158,11,0.12)', text: '#b45309', darkText: '#fbbf24' },
+    'Stablecoin': { bg: 'rgba(34,197,94,0.12)', text: '#16a34a', darkText: '#4ade80' },
+    'Exchange': { bg: 'rgba(59,130,246,0.12)', text: '#2563eb', darkText: '#60a5fa' },
+    'Oracle': { bg: 'rgba(168,85,247,0.12)', text: '#7c3aed', darkText: '#c084fc' },
+    'Payments': { bg: 'rgba(6,182,212,0.12)', text: '#0891b2', darkText: '#22d3ee' },
+    'AI': { bg: 'rgba(236,72,153,0.12)', text: '#db2777', darkText: '#f472b6' },
+    'Storage': { bg: 'rgba(107,114,128,0.12)', text: '#4b5563', darkText: '#9ca3af' },
+    'Privacy': { bg: 'rgba(75,85,99,0.12)', text: '#374151', darkText: '#9ca3af' },
+    'Wrapped': { bg: 'rgba(245,158,11,0.08)', text: '#92400e', darkText: '#fbbf24' }
+  };
+
+  // Look up category by CoinGecko id or by symbol fallback
+  function getCat(coin) {
+    if (!coin) return '';
+    // Try by id (CoinGecko provides this)
+    var id = (coin.id || '').toLowerCase();
+    if (CRYPTO_CATS[id]) return CRYPTO_CATS[id];
+    // Fallback: match by name
+    var name = (coin.name || '').toLowerCase().replace(/\s+/g, '-');
+    if (CRYPTO_CATS[name]) return CRYPTO_CATS[name];
+    return '';
+  }
+
+  function catBadgeHtml(cat) {
+    if (!cat) return '';
+    var c = CAT_COLORS[cat] || { bg: 'rgba(128,128,128,0.1)', text: '#6b7280', darkText: '#9ca3af' };
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var color = isDark ? c.darkText : c.text;
+    return '<span class="cr-cat-badge" style="background:' + c.bg + ';color:' + color + '">' + cat + '</span>';
+  }
 
   function setEl(sel, text) {
     var el = document.querySelector(sel);
@@ -340,8 +442,11 @@ const { lang } = Astro.params;
   function getFiltered() {
     var q = searchTerm.toLowerCase();
     var filtered = allCoins;
+    if (currentCat) {
+      filtered = filtered.filter(function(c) { return getCat(c) === currentCat; });
+    }
     if (q) {
-      filtered = allCoins.filter(function(c) {
+      filtered = filtered.filter(function(c) {
         return c.symbol.toLowerCase().indexOf(q) !== -1 ||
                (c.name && c.name.toLowerCase().indexOf(q) !== -1);
       });
@@ -382,9 +487,10 @@ const { lang } = Astro.params;
       var rDelay = Math.min(i * 15, 400);
       html += '<tr class="cr-row" style="animation-delay:' + rDelay + 'ms" onclick="window.location=\'' + link + '\'" tabindex="0" role="link" onkeydown="if(event.key===\'Enter\')window.location=\'' + link + '\'">';
       html += '<td class="cr-td cr-td--rank">' + c.rank + '</td>';
+      var coinCat = getCat(c);
       html += '<td class="cr-td cr-td--name"><a href="' + link + '" class="cr-name-link">'
         + imgHtml
-        + '<span class="cr-name-text"><strong class="cr-symbol">' + c.symbol + '</strong><span class="cr-company">' + (c.name || '') + '</span></span>'
+        + '<span class="cr-name-text"><strong class="cr-symbol">' + c.symbol + catBadgeHtml(coinCat) + '</strong><span class="cr-company">' + (c.name || '') + '</span></span>'
         + '</a></td>';
       var nearAthLabel = page.getAttribute('data-i18n-nearath') || 'Near ATH';
       var athBadge = (c.athChangePercentage != null && c.athChangePercentage > -10) ? '<span class="cr-ath-badge" title="' + nearAthLabel + ' (' + c.athChangePercentage.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%)">ATH</span>' : '';
@@ -397,7 +503,7 @@ const { lang } = Astro.params;
       html += '<td class="cr-td cr-td--num cr-td--hide-tablet cr-td--spark">' + miniSparkline(c.sparkline, chg >= 0) + '</td>';
       html += '</tr>';
     }
-    if (tbody) tbody.innerHTML = html || '<tr><td colspan="9" class="cr-empty">' + i18nNoCoins + '</td></tr>';
+    if (tbody) tbody.innerHTML = html || '<tr><td colspan="9">' + MktStates.buildEmptyState({ message: i18nNoCoins, query: searchTerm, hint: i18nTryDifferent }) + '</td></tr>';
 
     // Mobile cards
     var cardHtml = '';
@@ -419,7 +525,8 @@ const { lang } = Astro.params;
       cardHtml += '<div class="cr-card-header">';
       cardHtml += '<span class="cr-card-rank">' + co.rank + '</span>';
       cardHtml += imgCard;
-      cardHtml += '<div class="cr-card-name"><strong>' + co.symbol + '</strong><span class="cr-card-fullname">' + (co.name || '') + '</span></div>';
+      var cardCat = getCat(co);
+      cardHtml += '<div class="cr-card-name"><strong>' + co.symbol + catBadgeHtml(cardCat) + '</strong><span class="cr-card-fullname">' + (co.name || '') + '</span></div>';
       cardHtml += '<span class="cr-pct ' + cc + '">' + ar + ' ' + Math.abs(ch).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       cardHtml += '</div>';
       cardHtml += '<div class="cr-card-body">';
@@ -433,7 +540,7 @@ const { lang } = Astro.params;
       cardHtml += '</div>';
       cardHtml += '</a>';
     }
-    if (cards) cards.innerHTML = cardHtml || '<div class="cr-empty">' + i18nNoCoins + '</div>';
+    if (cards) cards.innerHTML = cardHtml || MktStates.buildEmptyState({ message: i18nNoCoins, query: searchTerm, hint: i18nTryDifferent });
   }
 
   // Sorting
@@ -735,7 +842,42 @@ const { lang } = Astro.params;
     renderAthDistance(coins);
     renderSupplyPressure(coins);
     renderTreemap(coins);
+    renderCatChips(coins);
     renderTable();
+  }
+
+  function renderCatChips(coins) {
+    var chipsEl = document.querySelector('[data-cr-cat-chips]');
+    if (!chipsEl) return;
+    var catCounts = {};
+    for (var i = 0; i < coins.length; i++) {
+      var cat = getCat(coins[i]);
+      if (cat) {
+        catCounts[cat] = (catCounts[cat] || 0) + 1;
+      }
+    }
+    var cats = Object.keys(catCounts).sort(function(a, b) { return catCounts[b] - catCounts[a]; });
+    if (cats.length < 2) return;
+    var allActive = !currentCat ? ' cr-cat-chip--active' : '';
+    var html = '<button class="cr-cat-chip' + allActive + '" data-cat-chip="">All</button>';
+    for (var j = 0; j < cats.length; j++) {
+      var c = cats[j];
+      var active = currentCat === c ? ' cr-cat-chip--active' : '';
+      var cc = CAT_COLORS[c] || { bg: 'rgba(128,128,128,0.1)', text: '#6b7280', darkText: '#9ca3af' };
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      var dotColor = isDark ? cc.darkText : cc.text;
+      html += '<button class="cr-cat-chip' + active + '" data-cat-chip="' + c + '"><span class="cr-cat-chip-dot" style="background:' + dotColor + '"></span>' + c + ' <span class="cr-cat-chip-count">' + catCounts[c] + '</span></button>';
+    }
+    chipsEl.innerHTML = html;
+    chipsEl.style.display = '';
+    chipsEl.querySelectorAll('.cr-cat-chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        currentCat = chip.getAttribute('data-cat-chip');
+        chipsEl.querySelectorAll('.cr-cat-chip').forEach(function(c) { c.classList.remove('cr-cat-chip--active'); });
+        chip.classList.add('cr-cat-chip--active');
+        renderTable();
+      });
+    });
   }
 
   // Client-side CoinGecko fallback
@@ -758,6 +900,7 @@ const { lang } = Astro.params;
             athChangePercentage: coin.ath_change_percentage || null,
             image: coin.image,
             sparkline: coin.sparkline_in_7d ? coin.sparkline_in_7d.price : null,
+            id: coin.id || '',
           };
         });
       });
@@ -790,11 +933,19 @@ const { lang } = Astro.params;
 
   // Fear & Greed Index
   function fgLabel(val) {
-    if (val <= 20) return i18nExtremeFear;
-    if (val <= 40) return i18nFear;
-    if (val <= 60) return i18nNeutral;
-    if (val <= 80) return i18nGreed;
+    if (val <= 24) return i18nExtremeFear;
+    if (val <= 44) return i18nFear;
+    if (val <= 55) return i18nNeutral;
+    if (val <= 74) return i18nGreed;
     return i18nExtremeGreed;
+  }
+
+  function fgClass(val) {
+    if (val <= 24) return 'exfear';
+    if (val <= 44) return 'fear';
+    if (val <= 55) return 'neutral';
+    if (val <= 74) return 'greed';
+    return 'exgreed';
   }
 
   function renderFearGreed(val) {
@@ -805,8 +956,10 @@ const { lang } = Astro.params;
     if (!card || !needle || !valEl || !labelEl) return;
     valEl.textContent = val;
     labelEl.textContent = fgLabel(val);
-    labelEl.className = 'cr-fg-label cr-fg-label--' + (val <= 20 ? 'exfear' : val <= 40 ? 'fear' : val <= 60 ? 'neutral' : val <= 80 ? 'greed' : 'exgreed');
-    needle.style.insetInlineStart = val + '%';
+    labelEl.className = 'cr-fg-label cr-fg-label--' + fgClass(val);
+    var angle = -90 + (val / 100) * 180;
+    needle.style.setProperty('--fg-needle-angle', angle + 'deg');
+    needle.classList.add('cr-fg-needle-animate');
     card.style.display = '';
   }
 
@@ -835,7 +988,13 @@ const { lang } = Astro.params;
               var os = document.querySelector('[data-cr-overview-skeleton]');
               if (os) os.style.display = 'none';
               var updEl = document.querySelector('[data-mkts-updated]');
-              if (updEl) updEl.innerHTML = '— <button class="cr-retry-btn" aria-label="Retry" onclick="window.location.reload()">&#x21bb;</button>';
+              if (updEl) updEl.textContent = '—';
+              // Show error card in the table area
+              var tableWrap = document.querySelector('[data-cr-tbody]');
+              if (tableWrap) {
+                tableWrap.closest('table').insertAdjacentHTML('afterend', MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry }));
+                tableWrap.closest('table').style.display = 'none';
+              }
             });
         });
     });
@@ -911,13 +1070,7 @@ const { lang } = Astro.params;
 </script>
 
 <style>
-  .cr-retry-btn {
-    display: inline-block; margin-top: 8px; padding: 4px 12px; font-size: 0.72rem;
-    border: 1px solid var(--color-border); border-radius: 4px;
-    background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-  }
-  .cr-retry-btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+  /* Error cards / retry use shared .mkts-error-card / .mkts-retry-btn from global.css */
 
   /* Section fade-in */
   @keyframes cr-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -947,21 +1100,26 @@ const { lang } = Astro.params;
   .cr-dom-legend :global(.cr-dom-leg) { font-size: 0.65rem; font-weight: 600; color: var(--color-text-meta); display: flex; align-items: center; gap: 4px; }
   .cr-dom-legend :global(.cr-dom-dot) { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-  /* Fear & Greed */
-  .cr-ov-card--fg { }
-  .cr-fg { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
-  .cr-fg-gauge { position: relative; }
-  .cr-fg-bar {
-    height: 8px; border-radius: 4px; position: relative;
-    background: linear-gradient(to right, #ea3943, #ea8c00, #c4c400, #16c784, #16c784);
+  /* Fear & Greed Arc Gauge */
+  .cr-ov-card--fg { align-items: center; }
+  .cr-fg { position: relative; width: 200px; margin: 0 auto; }
+  .cr-fg-svg { width: 100%; height: auto; display: block; }
+  .cr-fg-tick { font-size: 8px; fill: var(--color-text-meta); font-weight: 600; }
+  .cr-fg-needle-g { transform-origin: 100px 100px; transform: rotate(-90deg); }
+  :global(.cr-fg-needle-animate) {
+    animation: fg-needle-sweep 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
-  .cr-fg-bar :global(.cr-fg-needle) {
-    position: absolute; top: -3px; width: 3px; height: 14px; border-radius: 2px;
-    background: var(--color-text); transform: translateX(-50%); transition: inset-inline-start 0.6s ease;
+  @keyframes fg-needle-sweep {
+    from { transform: rotate(-90deg); }
+    to { transform: rotate(var(--fg-needle-angle, -90deg)); }
   }
-  .cr-fg-info { display: flex; align-items: baseline; gap: 8px; }
-  .cr-fg-val { font-size: 1.2rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
-  .cr-fg-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+  .cr-fg-center {
+    position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+    pointer-events: none;
+  }
+  .cr-fg-val { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); line-height: 1; }
+  .cr-fg-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.2; }
   :global(.cr-fg-label--exfear) { color: #ea3943; }
   :global(.cr-fg-label--fear) { color: #ea8c00; }
   :global(.cr-fg-label--neutral) { color: #c4c400; }
@@ -1184,13 +1342,18 @@ const { lang } = Astro.params;
     display: inline-block; font-size: 0.55rem; font-weight: 800; letter-spacing: 0.04em;
     padding: 1px 5px; border-radius: 3px; margin-inline-start: 6px; vertical-align: middle;
     background: rgba(246,180,14,0.15); color: var(--color-gold);
+    animation: ath-glow 2s ease-in-out infinite;
+  }
+  @keyframes ath-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(246,180,14,0); }
+    50% { box-shadow: 0 0 6px 2px rgba(246,180,14,0.25); }
   }
 
   :global(.cr-supply-bar) { width: 100%; height: 4px; background: rgba(128,128,128,0.15); border-radius: 2px; margin-top: 4px; overflow: hidden; }
   :global(.cr-supply-fill) { height: 100%; border-radius: 2px; background: var(--color-gold); transition: width 0.3s; }
   :global(.cr-spark) { display: block; }
   :global(.cr-td--spark) { width: 90px; padding: 6px 8px; }
-  .cr-empty { text-align: center; padding: 2rem; color: var(--color-text-meta); }
+  /* Empty states use shared .mkts-empty-state from global.css */
   .cr-disclaimer {
     text-align: center; font-size: 0.75rem; color: var(--color-text-meta);
     margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); font-style: italic;
@@ -1257,13 +1420,23 @@ const { lang } = Astro.params;
     .cr-table-wrap { display: none; }
     .cr-cards { display: block; }
     .cr-toolbar { max-width: none; }
-    .cr-search-wrap { max-width: none; }
+    .cr-search-wrap { max-width: none; flex: 1; }
     :global(.cr-th--hide-mobile), :global(.cr-td--hide-mobile) { display: none; }
     :global(.cr-p7-row) { grid-template-columns: 70px 1fr 55px; gap: 6px; }
     :global(.cr-p7-sym) { font-size: 0.68rem; }
     .cr-perf7d { padding: 12px; }
     :global(.cr-dom-row) { gap: 6px; }
     .cr-ov-label { font-size: 0.6rem; }
+    /* Tighter card spacing */
+    .cr-ov-card { padding: 10px 12px; }
+    :global(.cr-mv-card) { padding: 10px 12px; }
+    :global(.cr-card) { padding: 10px 12px; }
+    :global(.cr-liq-row), :global(.cr-ath-row), :global(.cr-sp-row) { padding: 4px 0; }
+  }
+  @media (max-width: 640px) {
+    .cr-search-wrap { max-width: none; }
+    .cr-search { padding-inline-start: 36px; padding-inline-end: 12px; }
+    .cr-toolbar { gap: 8px; }
   }
   @media (max-width: 520px) {
     .cr-header { flex-direction: column; align-items: start; gap: 8px; }
@@ -1336,6 +1509,7 @@ const { lang } = Astro.params;
     :global(.cr-dom-seg), :global(.cr-p7-fill), :global(.cr-liq-bar),
     :global(.cr-ath-bar), :global(.cr-sp-bar), :global(.cr-supply-fill),
     :global(.cr-row) { transition: none; animation: none; }
+    :global(.cr-ath-badge) { animation: none; }
     :global(.cr-vola-indicator), :global(.cr-slider-thumb), :global(.cr-dom-marker) { transition: none; }
     :global(.cr-pop-link), :global(.cr-sort-btn), :global(.cr-sort-icon .cr-sort-down) { transition: none; }
     :global(.cr-card), :global(.cr-tm-cell) { transition: none; animation: none; }
@@ -1343,17 +1517,59 @@ const { lang } = Astro.params;
   }
 
   @media print {
+    /* Hide interactive / loading elements */
     .cr-toolbar, .cr-search-wrap { display: none !important; }
     .cr-cards { display: none !important; }
     .cr-loading { display: none !important; }
-    .cr-skeleton-overview { display: none !important; }
+    .cr-skeleton-overview, .cr-skeleton-movers, .cr-skeleton-treemap, .cr-skeleton-table { display: none !important; }
     .cr-treemap-section { display: none !important; }
-    .cr-table-wrap { display: block !important; overflow: visible; }
-    .cr-table { font-size: 0.7rem; }
-    :global(.cr-row) { break-inside: avoid; }
-    :global(.cr-td--spark), :global(.cr-th--spark) { display: none !important; }
-    .cr-disclaimer { break-before: avoid; }
     .scroll-top-btn { display: none !important; }
+
+    /* Force table view visible */
+    .cr-table-wrap { display: block !important; overflow: visible; border-radius: 0; }
+    .cr-table { font-size: 0.7rem; }
+    :global(.cr-row) { break-inside: avoid; page-break-inside: avoid; }
+    :global(.cr-td--spark), :global(.cr-th--spark) { display: none !important; }
+
+    /* Overview cards */
+    .cr-overview { border: none !important; gap: 8px; }
+    .cr-ov-card {
+      break-inside: avoid;
+      border: 1px solid #ccc !important; border-radius: 0 !important;
+    }
+
+    /* Movers */
+    :global(.cr-mv-card) {
+      break-inside: avoid; page-break-inside: avoid;
+      border: 1px solid #ccc !important; border-radius: 0 !important;
+    }
+
+    /* Performance section */
+    .cr-perf7d {
+      break-inside: avoid;
+      border: 1px solid #ccc !important; border-radius: 0 !important;
+    }
+
+    /* Canvas elements */
+    .cr-fg-svg { display: none; }
+
+    /* No transitions */
+    :global(.cr-dom-seg), :global(.cr-p7-fill), :global(.cr-liq-bar),
+    :global(.cr-ath-bar), :global(.cr-sp-bar), :global(.cr-supply-fill) { transition: none; }
+
+    .cr-disclaimer { break-before: avoid; }
+
+    /* Print source footer */
+    .crypto-page::after {
+      content: "Source: plata.today";
+      display: block;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #999 !important;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ccc;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1369,5 +1585,50 @@ const { lang } = Astro.params;
     :global(.cr-ath-badge) { border: 1px solid currentColor; }
     :global(.cr-card) { border-width: 2px; }
     .cr-search { border-width: 2px; }
+  }
+
+  /* Sticky table header */
+  .cr-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
+
+  /* Category badges */
+  :global(.cr-cat-badge) {
+    display: inline-block; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.02em;
+    padding: 1px 6px; border-radius: 9px; margin-inline-start: 5px; vertical-align: middle;
+    white-space: nowrap; line-height: 1.4;
+  }
+
+  /* Category filter chips */
+  .cr-cat-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--spacing-md);
+  }
+  :global(.cr-cat-chip) {
+    padding: 5px 12px; border: 1px solid var(--color-border); border-radius: 20px;
+    background: var(--color-bg-secondary); color: var(--color-text-secondary);
+    font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+    white-space: nowrap; display: inline-flex; align-items: center; gap: 5px;
+  }
+  :global(.cr-cat-chip:hover) { border-color: var(--color-gold); color: var(--color-text); }
+  :global(.cr-cat-chip:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  :global(.cr-cat-chip--active) { background: var(--color-gold); color: #000; border-color: var(--color-gold); font-weight: 700; }
+  :global(.cr-cat-chip--active .cr-cat-chip-dot) { background: #000 !important; }
+  :global(.cr-cat-chip-dot) { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  :global(.cr-cat-chip-count) { font-size: 0.6rem; opacity: 0.7; margin-inline-start: 1px; }
+  @media (max-width: 768px) {
+    .cr-cat-chips { gap: 4px; }
+    :global(.cr-cat-chip) { font-size: 0.65rem; padding: 3px 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.cr-cat-chip) { transition: none; }
+  }
+  @media (prefers-contrast: more) {
+    :global(.cr-cat-chip) { border-width: 2px; }
+    :global(.cr-cat-badge) { border: 1px solid currentColor; }
+  }
+  @media print {
+    .cr-cat-chips { display: none !important; }
   }
 </style>

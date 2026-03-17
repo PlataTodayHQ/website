@@ -1,5 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -143,6 +144,8 @@ const stockI18n = {
   valRich: t(lang, "stock.valRich" as any),
   valExpensive: t(lang, "stock.valExpensive" as any),
   failedLoad: t(lang, "stock.failedLoad" as any),
+  retry: t(lang, "common.retry" as any),
+  checkConn: t(lang, "common.checkConnection" as any),
   funnelRevenue: t(lang, "stock.funnelRevenue" as any),
   funnelGrossProfit: t(lang, "stock.funnelGrossProfit" as any),
   funnelNetIncome: t(lang, "stock.funnelNetIncome" as any),
@@ -315,8 +318,11 @@ const stockI18n = {
   } : undefined}
 >
   <div class="stock-page" data-stock-page data-lang={lang} data-i18n={JSON.stringify(stockI18n)}>
+    <MarketNav lang={lang} />
+
     <!-- Error state (no symbol) -->
     <div class="stock-empty" data-stock-empty style="display:none;">
+      <svg class="stock-empty-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 16l4-4 3 3 4-4"/></svg>
       <h1 class="mkts-title">{t(lang, "stock.noSelected")}</h1>
       <p class="stock-empty-msg">{t(lang, "stock.selectPrompt")}</p>
       <a href={`/${lang}/markets/merval`} class="back-link">&larr; {t(lang, "stock.viewMerval")}</a>
@@ -329,6 +335,7 @@ const stockI18n = {
           <div class="stock-title-row">
             <h1 class="mkts-title" data-stock-symbol>{symbol || "\u2014"}</h1>
             <span class="rc-badge rc-badge--merval">BYMA</span>
+            <button class="wl-detail-star" data-wl-detail-star aria-label="Watchlist" title="Watchlist" data-i18n-added-to-watchlist="Added to watchlist" data-i18n-removed-from-watchlist="Removed from watchlist">&#9734;</button>
             <button class="share-btn" data-share-btn aria-label={t(lang, "stock.share" as any)} title={t(lang, "stock.share" as any)} style="display:none;">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l4-4m0 0H7m3 0v3M13 8v5a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h5"/></svg>
             </button>
@@ -827,6 +834,10 @@ const stockI18n = {
       <a href={`/${lang}/markets/merval`} class="back-link">&larr; {t(lang, "stock.backToMerval")}</a>
     </div>
 
+    <section class="recent-viewed-section" data-recent-viewed style="display:none;"></section>
+
+    <div class="wl-toast" data-wl-toast aria-live="polite" role="status"></div>
+
     <p class="info-disclaimer">{t(lang, "stock.disclaimer")}</p>
     <noscript>
       <p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">
@@ -842,6 +853,7 @@ const stockI18n = {
 </Base>
 
 <script is:inline src="/js/charts.js?v=5"></script>
+<script is:inline src="/js/market-states.js?v=1"></script>
 <script is:inline>
 (function() {
   var C = window.PlataCharts;
@@ -849,6 +861,51 @@ const stockI18n = {
   var lang = page.getAttribute('data-lang') || 'en';
   var i18n = {};
   try { i18n = JSON.parse(page.getAttribute('data-i18n') || '{}'); } catch(e) {}
+
+  // ─── Watchlist ───
+  var WL_KEY = 'plata-watchlist';
+  function getWatchlist() {
+    try { return JSON.parse(localStorage.getItem(WL_KEY) || '[]'); } catch(e) { return []; }
+  }
+  function saveWatchlist(list) {
+    try { localStorage.setItem(WL_KEY, JSON.stringify(list)); } catch(e) {}
+  }
+  var wlToastTimer;
+  function showWlToast(msg) {
+    var el = document.querySelector('[data-wl-toast]');
+    if (!el) return;
+    clearTimeout(wlToastTimer);
+    el.textContent = msg;
+    el.classList.add('wl-toast--visible');
+    wlToastTimer = setTimeout(function() { el.classList.remove('wl-toast--visible'); }, 2000);
+  }
+
+  // Init detail star
+  var detailStar = document.querySelector('[data-wl-detail-star]');
+  if (detailStar) {
+    var rawSym = new URLSearchParams(window.location.search).get('s') || '';
+    var starSym = rawSym.replace(/\.BA$/i, '');
+    var addedMsg = detailStar.getAttribute('data-i18n-added-to-watchlist') || 'Added to watchlist';
+    var removedMsg = detailStar.getAttribute('data-i18n-removed-from-watchlist') || 'Removed from watchlist';
+    function updateDetailStar() {
+      var inWl = getWatchlist().indexOf(starSym) !== -1;
+      detailStar.classList.toggle('wl-detail-star--active', inWl);
+      detailStar.innerHTML = inWl ? '\u2605' : '\u2606';
+    }
+    if (starSym) {
+      updateDetailStar();
+      detailStar.addEventListener('click', function() {
+        var list = getWatchlist();
+        var idx = list.indexOf(starSym);
+        var added;
+        if (idx !== -1) { list.splice(idx, 1); added = false; }
+        else { list.push(starSym); added = true; }
+        saveWatchlist(list);
+        updateDetailStar();
+        showWlToast(added ? addedMsg : removedMsg);
+      });
+    }
+  }
 
   function setEl(sel, text) {
     var el = document.querySelector(sel);
@@ -953,12 +1010,26 @@ const stockI18n = {
   // ── Save to recently viewed (localStorage) ──
   try {
     var RECENT_KEY = 'plata_recent_stocks';
-    var MAX_RECENT = 10;
+    var MAX_RECENT = 8;
     var recent = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
     recent = recent.filter(function(s) { return s !== symbol; });
     recent.unshift(symbol);
     if (recent.length > MAX_RECENT) recent = recent.slice(0, MAX_RECENT);
     localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+    // Render recently viewed section (excluding current stock)
+    var others = recent.filter(function(s) { return s !== symbol; });
+    if (others.length > 0) {
+      var rvSection = document.querySelector('[data-recent-viewed]');
+      if (rvSection) {
+        var html = '<h3 class="recent-title">' + (i18n.recentlyViewed || 'Recently viewed') + '</h3><div class="recent-chips">';
+        for (var ri = 0; ri < others.length; ri++) {
+          html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(others[ri]) + '" class="recent-chip">' + others[ri] + '</a>';
+        }
+        html += '</div>';
+        rvSection.innerHTML = html;
+        rvSection.style.display = '';
+      }
+    }
   } catch(e) {}
 
   var currentChart = null;
@@ -1016,7 +1087,10 @@ const stockI18n = {
     fetch(url).then(function(r) { return r.json(); }).then(function(data) {
       if (data.error) {
         var errEl = document.querySelector('[data-stock-name]');
-        if (errEl) errEl.innerHTML = data.error + ' <button class="stk-retry-btn" aria-label="Retry" onclick="window.location.reload()">↻</button>';
+        if (errEl) errEl.textContent = data.error;
+        // Show error card in chart area
+        var chartArea = document.querySelector('[data-price-card]');
+        if (chartArea) chartArea.innerHTML = MktStates.buildErrorCard({ message: data.error, hint: i18n.checkConn || 'Check your connection and try again', retryLabel: i18n.retry || 'Retry' });
         return;
       }
 
@@ -1096,11 +1170,12 @@ const stockI18n = {
       }
     }).catch(function() {
       var nameEl = document.querySelector('[data-stock-name]');
-      if (nameEl) {
-        nameEl.innerHTML = (i18n.failedLoad || 'Failed to load data') + ' <button class="stk-retry-btn" aria-label="Retry" onclick="window.location.reload()">↻</button>';
-      }
+      if (nameEl) nameEl.textContent = i18n.failedLoad || 'Failed to load data';
       var pc = document.querySelector('[data-price-card]');
-      if (pc) pc.classList.remove('price-card--loading');
+      if (pc) {
+        pc.classList.remove('price-card--loading');
+        pc.innerHTML = MktStates.buildErrorCard({ message: i18n.failedLoad || 'Failed to load data', hint: i18n.checkConn || 'Check your connection and try again', retryLabel: i18n.retry || 'Retry' });
+      }
     });
   }
 
@@ -2627,6 +2702,33 @@ const stockI18n = {
   .mkts-updated { font-size: 0.75rem; color: var(--color-text-meta); white-space: nowrap; }
 
   .stock-title-row { display: flex; align-items: center; gap: var(--spacing-sm); }
+
+  /* Watchlist star on stock detail */
+  .wl-detail-star {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border: none; background: none;
+    cursor: pointer; font-size: 1.2rem; line-height: 1;
+    color: var(--color-text-meta); border-radius: 6px;
+    transition: color 0.15s, transform 0.15s;
+  }
+  .wl-detail-star:hover { color: var(--color-gold); transform: scale(1.15); }
+  .wl-detail-star:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  :global(.wl-detail-star--active) { color: var(--color-gold) !important; }
+
+  /* Toast notification */
+  .wl-toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    z-index: 100; padding: 10px 20px; border-radius: 8px;
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    color: var(--color-text); font-size: 0.82rem; font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  :global(.wl-toast--visible) { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+  :global([data-theme="dark"]) .wl-toast { box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+  @media print { .wl-detail-star, .wl-toast { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .wl-toast, .wl-detail-star { transition: none; } }
   :global(.stock-badges) { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
   :global(.stk-badge) { font-size: 0.62rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.03em; }
   :global(.stk-badge--sector) { background: rgba(246,180,14,0.15); color: var(--color-gold); }
@@ -2644,10 +2746,11 @@ const stockI18n = {
 
   /* Empty state */
   .stock-empty { text-align: center; padding: var(--spacing-2xl) var(--spacing-lg); }
-  .stock-empty::before { content: '📊'; display: block; font-size: 3rem; margin-bottom: var(--spacing-md); opacity: 0.6; }
+  .stock-empty-icon { color: var(--color-text-meta); opacity: 0.4; margin-bottom: var(--spacing-md); }
   .stock-empty-msg { font-size: 1rem; color: var(--color-text-meta); margin: var(--spacing-md) 0 var(--spacing-xl); line-height: 1.6; max-width: 400px; margin-inline: auto; }
 
   /* Recently Viewed Stocks */
+  .recent-viewed-section { margin-top: var(--spacing-xl); padding: var(--spacing-md) 0; text-align: center; }
   :global(.recent-stocks) { margin-top: var(--spacing-xl); }
   :global(.recent-title) { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); margin-bottom: var(--spacing-sm); }
   :global(.recent-chips) { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
@@ -3272,7 +3375,7 @@ const stockI18n = {
 
   /* ─── Print ─── */
   @media print {
-    .section-nav, .range-buttons, .chart-section, .vol-chart-wrap, .about-toggle, .back-link, .share-btn, .scroll-top-btn, :global(.stk-retry-btn) { display: none !important; }
+    .section-nav, .range-buttons, .chart-section, .vol-chart-wrap, .about-toggle, .back-link, .share-btn, .scroll-top-btn, :global(.mkts-retry-btn), :global(.mkts-error-card) { display: none !important; }
     .price-card, .company-hero, .detail-section, .range52-section, .key-insights, .qf-strip {
       break-inside: avoid; box-shadow: none; border: 1px solid #ddd;
     }
@@ -3310,14 +3413,7 @@ const stockI18n = {
     :global(.rd-seg) { border: 1px solid rgba(255,255,255,0.3); }
   }
 
-  /* ─── Retry button ─── */
-  :global(.stk-retry-btn) {
-    display: inline-block; margin-inline-start: 8px; padding: 4px 12px; font-size: 0.72rem;
-    border: 1px solid var(--color-border); border-radius: 4px;
-    background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-  }
-  :global(.stk-retry-btn:hover) { border-color: var(--color-gold); color: var(--color-gold); }
+  /* Retry buttons use shared .mkts-retry-btn from global.css */
 
   /* ─── Section reveal fade ─── */
   @keyframes stk-section-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }

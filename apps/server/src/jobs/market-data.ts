@@ -13,6 +13,7 @@ import { recordJobStart, recordJobEnd } from "./job-tracking.js";
 import { fetchExchangeRates, fetchExchangeRateHistory } from "./market-exchanges.js";
 import { fetchMerval, fetchMervalCandles } from "./market-merval.js";
 import { fetchStocks, fetchStockCandles, fetchStockProfiles } from "./market-stocks.js";
+import { fetchFinancialStatements } from "./market-financials.js";
 import { pruneOldData } from "./market-storage.js";
 
 let running = false;
@@ -39,6 +40,7 @@ export async function fetchMarketData(db: Database.Database): Promise<void> {
     await fetchMervalCandles(db);
     await fetchStockCandles(db);
     await fetchStockProfiles(db);
+    await fetchFinancialStatements(db);
 
     // Prune old market data to prevent unbounded table growth
     pruneOldData(db);

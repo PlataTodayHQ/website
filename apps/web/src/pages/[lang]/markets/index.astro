@@ -1,5 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -42,6 +43,8 @@ const { lang } = Astro.params;
     data-i18n-nstocks={t(lang!, "markets.nStocks" as any)}
     data-i18n-onestock={t(lang!, "markets.oneStock" as any)}
     data-i18n-error={t(lang!, "markets.failedToLoad" as any)}
+    data-i18n-retry={t(lang!, "common.retry" as any)}
+    data-i18n-check-conn={t(lang!, "common.checkConnection" as any)}
     data-i18n-commodities={JSON.stringify({
       'GC=F': t(lang!, "markets.gold" as any),
       'SI=F': t(lang!, "markets.silver" as any),
@@ -63,24 +66,68 @@ const { lang } = Astro.params;
       Other: t(lang!, "markets.sectorOther" as any),
     })}
   >
+    <MarketNav lang={lang!} active="hub" />
+
     <!-- Header -->
     <header class="mkt-header">
       <div>
         <h1 class="mkt-h1">{t(lang!, "markets.title")}</h1>
         <p class="mkt-sub">{t(lang!, "markets.subtitle")}</p>
       </div>
-      <span class="mkt-updated" data-mkt-updated aria-live="polite" role="status"></span>
+      <div class="mkt-header-right">
+        <span class="mkt-updated" data-mkt-updated aria-live="polite" role="status"></span>
+        <div class="mkt-refresh-bar" data-refresh-bar aria-hidden="true"><div class="mkt-refresh-fill" data-refresh-fill></div></div>
+      </div>
     </header>
 
-    <!-- Market Status -->
+    <!-- Market Status Timeline -->
     <div class="mkt-status-bar" data-mkt-status role="status" aria-label={t(lang!, "markets.title")}></div>
 
+    <!-- At-a-glance summary (populated by JS) -->
+    <div class="mkt-glance" data-mkt-glance style="display:none;" role="region" aria-label="Market summary">
+      <div class="mkt-glance-item">
+        <span class="mkt-glance-icon">🇦🇷</span>
+        <div class="mkt-glance-body">
+          <span class="mkt-glance-label">Blue</span>
+          <span class="mkt-glance-val" data-glance-blue>—</span>
+        </div>
+      </div>
+      <div class="mkt-glance-sep"></div>
+      <div class="mkt-glance-item">
+        <span class="mkt-glance-icon">📈</span>
+        <div class="mkt-glance-body">
+          <span class="mkt-glance-label">Merval</span>
+          <span class="mkt-glance-val" data-glance-merval>—</span>
+        </div>
+      </div>
+      <div class="mkt-glance-sep"></div>
+      <div class="mkt-glance-item">
+        <span class="mkt-glance-icon">₿</span>
+        <div class="mkt-glance-body">
+          <span class="mkt-glance-label">BTC</span>
+          <span class="mkt-glance-val" data-glance-btc>—</span>
+        </div>
+      </div>
+      <div class="mkt-glance-sep"></div>
+      <div class="mkt-glance-item">
+        <span class="mkt-glance-icon">🥇</span>
+        <div class="mkt-glance-body">
+          <span class="mkt-glance-label">Gold</span>
+          <span class="mkt-glance-val" data-glance-gold>—</span>
+        </div>
+      </div>
+    </div>
+
     <!-- ═══ FX RATES ROW ═══ -->
-    <section class="mkt-section">
+    <section class="mkt-section mkt-collapsible">
       <div class="mkt-sec-head">
-        <h2 class="mkt-sec-title">{t(lang!, "markets.fxTitle")}</h2>
+        <button class="mkt-sec-toggle" aria-expanded="true">
+          <h2 class="mkt-sec-title">{t(lang!, "markets.fxTitle")}</h2>
+          <svg class="mkt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
         <a href={`/${lang}/markets/currencies`} class="mkt-sec-link">{t(lang!, "finDash.viewAll" as any)} &rarr;</a>
       </div>
+      <div class="mkt-sec-body">
       <div class="mkt-fx-grid" role="region" aria-label={t(lang!, "markets.fxTitle")}>
         <a href={`/${lang}/markets/currencies`} class="mkt-fx-card mkt-fx-card--loading" data-mkt-fx="oficial">
           <div class="mkt-fx-top">
@@ -91,6 +138,7 @@ const { lang } = Astro.params;
             <span class="mkt-fx-price" data-fx-price="oficial">---</span>
             <span class="mkt-fx-chg" data-fx-chg="oficial"></span>
           </div>
+          <div class="mkt-fx-spark" data-fx-spark="oficial"></div>
           <div class="mkt-fx-bs">
             <span>{t(lang!, "currencies.buy")} <b data-fx-buy="oficial">—</b></span>
             <span>{t(lang!, "currencies.sell")} <b data-fx-sell="oficial">—</b></span>
@@ -105,6 +153,7 @@ const { lang } = Astro.params;
             <span class="mkt-fx-price" data-fx-price="blue">---</span>
             <span class="mkt-fx-chg" data-fx-chg="blue"></span>
           </div>
+          <div class="mkt-fx-spark" data-fx-spark="blue"></div>
           <div class="mkt-fx-bs">
             <span>{t(lang!, "currencies.buy")} <b data-fx-buy="blue">—</b></span>
             <span>{t(lang!, "currencies.sell")} <b data-fx-sell="blue">—</b></span>
@@ -122,6 +171,7 @@ const { lang } = Astro.params;
           <div class="mkt-fx-mid">
             <span class="mkt-fx-price" data-fx-price="mep">---</span>
           </div>
+          <div class="mkt-fx-spark" data-fx-spark="mep"></div>
           <div class="mkt-fx-bs">
             <span>{t(lang!, "currencies.buy")} <b data-fx-buy="mep">—</b></span>
             <span>{t(lang!, "currencies.sell")} <b data-fx-sell="mep">—</b></span>
@@ -139,6 +189,7 @@ const { lang } = Astro.params;
           <div class="mkt-fx-mid">
             <span class="mkt-fx-price" data-fx-price="ccl">---</span>
           </div>
+          <div class="mkt-fx-spark" data-fx-spark="ccl"></div>
           <div class="mkt-fx-bs">
             <span>{t(lang!, "currencies.buy")} <b data-fx-buy="ccl">—</b></span>
             <span>{t(lang!, "currencies.sell")} <b data-fx-sell="ccl">—</b></span>
@@ -149,14 +200,19 @@ const { lang } = Astro.params;
           </div>
         </a>
       </div>
+      </div>
     </section>
 
     <!-- ═══ MERVAL + TOP MOVERS ═══ -->
-    <section class="mkt-section">
+    <section class="mkt-section mkt-collapsible">
       <div class="mkt-sec-head">
-        <h2 class="mkt-sec-title">{t(lang!, "markets.mervalTitle")}</h2>
+        <button class="mkt-sec-toggle" aria-expanded="true">
+          <h2 class="mkt-sec-title">{t(lang!, "markets.mervalTitle")}</h2>
+          <svg class="mkt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
         <a href={`/${lang}/markets/merval`} class="mkt-sec-link">{t(lang!, "finDash.viewAll" as any)} &rarr;</a>
       </div>
+      <div class="mkt-sec-body">
       <div class="mkt-merval-row">
         <!-- Merval summary -->
         <a href={`/${lang}/markets/merval`} class="mkt-idx-card mkt-idx-card--loading">
@@ -212,7 +268,7 @@ const { lang } = Astro.params;
       <div class="mkt-breadth" data-mkt-breadth style="display:none;">
         <div class="mkt-breadth-labels">
           <span class="mkt-breadth-lbl rc-up" data-breadth-up></span>
-          <span class="mkt-breadth-lbl" style="color:var(--color-text-meta)" data-breadth-unch></span>
+          <span class="mkt-breadth-lbl mkt-breadth-lbl--pct" data-breadth-pct></span>
           <span class="mkt-breadth-lbl rc-down" data-breadth-down></span>
         </div>
         <div class="mkt-breadth-bar">
@@ -220,6 +276,7 @@ const { lang } = Astro.params;
           <div class="mkt-breadth-seg mkt-breadth-seg--unch" data-breadth-bar-unch></div>
           <div class="mkt-breadth-seg mkt-breadth-seg--down" data-breadth-bar-down></div>
         </div>
+      </div>
       </div>
     </section>
 
@@ -264,14 +321,28 @@ const { lang } = Astro.params;
     </section>
 
     <!-- ═══ GLOBAL INDICES ═══ -->
-    <section class="mkt-section" data-indices-section style="display:none;">
+    <section class="mkt-section" data-indices-section style="display:none;"
+      data-i18n-region-americas={t(lang!, "sub.us-canada" as any)}
+      data-i18n-region-europe={t(lang!, "sub.europe" as any)}
+      data-i18n-region-asia={t(lang!, "sub.asia" as any)}
+    >
       <h2 class="mkt-sec-title">{t(lang!, "markets.globalIndices" as any)}</h2>
       <div class="mkt-indices-grid" data-indices-grid></div>
     </section>
 
     <!-- ═══ COMMODITIES ═══ -->
-    <section class="mkt-section">
-      <h2 class="mkt-sec-title">{t(lang!, "markets.commoditiesTitle")}</h2>
+    <section class="mkt-section mkt-collapsible">
+      <div class="mkt-sec-head">
+        <button class="mkt-sec-toggle" aria-expanded="true">
+          <h2 class="mkt-sec-title">{t(lang!, "markets.commoditiesTitle")}</h2>
+          <svg class="mkt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="mkt-curr-toggle" data-cmd-currency-toggle>
+          <button class="mkt-curr-btn mkt-curr-btn--active" data-cmd-curr="USD">USD</button>
+          <button class="mkt-curr-btn" data-cmd-curr="ARS">ARS</button>
+        </div>
+      </div>
+      <div class="mkt-sec-body">
       <div class="mkt-asset-grid" data-commodities-grid>
         {[...Array(5)].map(() => (
           <div class="mkt-asset-skel">
@@ -287,14 +358,19 @@ const { lang } = Astro.params;
           </div>
         ))}
       </div>
+      </div>
     </section>
 
     <!-- ═══ CRYPTO ═══ -->
-    <section class="mkt-section">
+    <section class="mkt-section mkt-collapsible">
       <div class="mkt-sec-head">
-        <h2 class="mkt-sec-title">{t(lang!, "markets.cryptoTitle")}</h2>
+        <button class="mkt-sec-toggle" aria-expanded="true">
+          <h2 class="mkt-sec-title">{t(lang!, "markets.cryptoTitle")}</h2>
+          <svg class="mkt-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
         <a href={`/${lang}/markets/crypto`} class="mkt-sec-link">{t(lang!, "markets.cryptoViewAll")} &rarr;</a>
       </div>
+      <div class="mkt-sec-body">
       <div class="mkt-asset-grid mkt-asset-grid--crypto" data-crypto-grid>
         {[...Array(6)].map(() => (
           <div class="mkt-asset-skel">
@@ -310,6 +386,7 @@ const { lang } = Astro.params;
           </div>
         ))}
       </div>
+      </div>
     </section>
 
     <p class="mkt-disclaimer">{t(lang!, "markets.disclaimer")}</p>
@@ -321,7 +398,47 @@ const { lang } = Astro.params;
   </div>
 </Base>
 
+<script is:inline>
+// Collapsible sections on mobile with localStorage memory
+(function() {
+  var mq = window.matchMedia('(max-width: 768px)');
+  var STORAGE_KEY = 'plata-mkt-collapsed';
+  function getCollapsed() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+  }
+  function setCollapsed(map) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(map)); } catch(e) {}
+  }
+
+  function initToggle() {
+    var saved = getCollapsed();
+    document.querySelectorAll('.mkt-sec-toggle').forEach(function(btn, idx) {
+      if (btn._collapseBound) return;
+      btn._collapseBound = true;
+      var key = 'sec-' + idx;
+      // Restore saved state on mobile
+      if (mq.matches && saved[key]) {
+        btn.setAttribute('aria-expanded', 'false');
+        var body = btn.closest('.mkt-collapsible').querySelector('.mkt-sec-body');
+        if (body) body.classList.add('mkt-sec-body--collapsed');
+      }
+      btn.addEventListener('click', function() {
+        if (!mq.matches) return;
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        var body = btn.closest('.mkt-collapsible').querySelector('.mkt-sec-body');
+        if (body) body.classList.toggle('mkt-sec-body--collapsed', expanded);
+        var map = getCollapsed();
+        if (expanded) map[key] = true; else delete map[key];
+        setCollapsed(map);
+      });
+    });
+  }
+  initToggle();
+})();
+</script>
 <script is:inline src="/js/charts.js?v=5"></script>
+<script is:inline src="/js/market-states.js?v=1"></script>
 <script is:inline>
 (function() {
   var C = window.PlataCharts || {};
@@ -334,13 +451,98 @@ const { lang } = Astro.params;
   try { sectorNames = JSON.parse(hub.getAttribute('data-i18n-sectors') || '{}'); } catch(e) {}
   var nStocksLabel = hub.getAttribute('data-i18n-nstocks') || '{n} stocks';
   var oneStockLabel = hub.getAttribute('data-i18n-onestock') || '1 stock';
-  var i18nError = hub.getAttribute('data-i18n-error') || '' + i18nError + '';
+  var i18nError = hub.getAttribute('data-i18n-error') || 'Failed to load data';
+  var i18nRetry = hub.getAttribute('data-i18n-retry') || 'Retry';
+  var i18nCheckConn = hub.getAttribute('data-i18n-check-conn') || 'Check your connection and try again';
   var lang = hub ? hub.getAttribute('data-lang') || 'en' : 'en';
+
+  function flashEl(el, newVal, oldVal) {
+    if (!el || newVal === oldVal) return;
+    var cls = parseFloat(newVal) > parseFloat(oldVal) ? 'data-flash-up' : 'data-flash-down';
+    el.classList.remove('data-flash-up', 'data-flash-down');
+    void el.offsetWidth; // force reflow to restart animation
+    el.classList.add(cls);
+    setTimeout(function() { el.classList.remove(cls); }, 400);
+  }
 
   function setEl(sel, text) {
     var el = document.querySelector(sel);
-    if (el) el.textContent = text;
+    if (!el) return;
+    var old = el.textContent;
+    el.textContent = text;
+    flashEl(el, text, old);
   }
+
+  // ─── Animated count-up ───
+  function animateValue(el, end, duration, formatter) {
+    if (!el) return;
+    var start = 0;
+    var startTime = null;
+    duration = duration || 600;
+    formatter = formatter || function(v) { return Math.round(v).toLocaleString(lang); };
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      var current = start + (end - start) * eased;
+      el.textContent = formatter(current);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ─── Mini sparkline SVG generator ───
+  function miniSparkSVG(values, up, w, h) {
+    w = w || 48; h = h || 20;
+    if (!values || values.length < 2) return '';
+    var min = Math.min.apply(null, values);
+    var max = Math.max.apply(null, values);
+    var range = max - min || 1;
+    var pts = [];
+    for (var i = 0; i < values.length; i++) {
+      var x = (i / (values.length - 1)) * w;
+      var y = h - ((values[i] - min) / range) * (h - 2) - 1;
+      pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+    }
+    var color = up ? '#16a34a' : '#dc2626';
+    return '<svg class="mkt-spark" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">' +
+      '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+
+  // ─── Section reveal on scroll ───
+  function initReveal() {
+    if (!('IntersectionObserver' in window)) return;
+    var sections = document.querySelectorAll('.mkt-section');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('mkt-section--visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+    sections.forEach(function(s) { observer.observe(s); });
+  }
+  initReveal();
+
+  // ─── Refresh progress bar ───
+  var REFRESH_INTERVAL = 5 * 60; // 5 minutes
+  var refreshStart = Date.now();
+  var refreshFill = document.querySelector('[data-refresh-fill]');
+
+  function updateRefreshBar() {
+    if (!refreshFill) return;
+    var elapsed = (Date.now() - refreshStart) / 1000;
+    var pct = Math.min(elapsed / REFRESH_INTERVAL * 100, 100);
+    refreshFill.style.width = pct + '%';
+    if (elapsed >= REFRESH_INTERVAL) {
+      window.location.reload();
+      return;
+    }
+    requestAnimationFrame(updateRefreshBar);
+  }
+  requestAnimationFrame(updateRefreshBar);
 
   function formatUSD(val) {
     if (val >= 10000) return Math.round(val).toLocaleString(lang);
@@ -375,17 +577,37 @@ const { lang } = Astro.params;
     for (var i = 0; i < markets.length; i++) {
       var m = markets[i];
       var isOpen = false;
+      var timeNote = '';
       if (m.alwaysOpen) {
         isOpen = true;
+        timeNote = '24/7';
       } else if (day > 0 && day < 6) {
         var localMin = utcMin + m.tz * 60;
         if (localMin < 0) localMin += 1440;
         if (localMin >= 1440) localMin -= 1440;
         isOpen = localMin >= m.open && localMin < m.close;
+        if (isOpen) {
+          var minsLeft = m.close - localMin;
+          var h = Math.floor(minsLeft / 60);
+          var mins = minsLeft % 60;
+          timeNote = h > 0 ? h + 'h ' + mins + 'm' : mins + 'm';
+        } else {
+          var minsToOpen = m.open - localMin;
+          if (minsToOpen < 0) minsToOpen += 1440;
+          if (minsToOpen <= 480) {
+            var oh = Math.floor(minsToOpen / 60);
+            var om = minsToOpen % 60;
+            timeNote = oh > 0 ? oh + 'h ' + om + 'm' : om + 'm';
+          }
+        }
+      } else {
+        timeNote = '';
       }
       var cls = isOpen ? 'mkt-status-open' : 'mkt-status-closed';
       var dot = isOpen ? '<span class="mkt-status-dot mkt-status-dot--open"></span>' : '<span class="mkt-status-dot"></span>';
-      html += '<span class="mkt-status-item ' + cls + '">' + dot + m.emoji + ' ' + m.name + '</span>';
+      html += '<span class="mkt-status-item ' + cls + '">' + dot + m.emoji + ' ' + m.name;
+      if (timeNote) html += '<span class="mkt-status-time">' + timeNote + '</span>';
+      html += '</span>';
     }
     bar.innerHTML = html;
   }
@@ -408,8 +630,11 @@ const { lang } = Astro.params;
       if (gap != null) {
         var gapEl = document.querySelector('[data-fx-gap="' + key + '"]');
         if (gapEl) {
-          gapEl.textContent = (gap >= 0 ? '+' : '') + gap.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+          var oldGap = gapEl.textContent;
+          var newGap = (gap >= 0 ? '+' : '') + gap.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+          gapEl.textContent = newGap;
           gapEl.className = 'mkt-fx-spread-val ' + (gap >= 0 ? 'rc-up' : 'rc-down');
+          flashEl(gapEl, newGap, oldGap);
         }
       }
     }
@@ -418,9 +643,12 @@ const { lang } = Astro.params;
     if (evo && evo[key]) {
       var chEl = document.querySelector('[data-fx-chg="' + key + '"]');
       if (chEl && evo[key].prev) {
+        var oldChgFx = chEl.textContent;
         var pct = ((data.value_sell - evo[key].prev) / evo[key].prev * 100);
-        chEl.textContent = (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+        var newChgFx = (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+        chEl.textContent = newChgFx;
         chEl.className = 'mkt-fx-chg ' + (pct >= 0 ? 'rc-up' : 'rc-down');
+        flashEl(chEl, newChgFx, oldChgFx);
       }
     }
 
@@ -436,11 +664,34 @@ const { lang } = Astro.params;
   }
 
   // ─── MERVAL ───
+  // Smooth count-up for numeric elements
+  function countUp(el, target, duration, formatter) {
+    var start = parseFloat(el._countVal || '0') || 0;
+    if (start === target) return;
+    el._countVal = target;
+    var diff = target - start;
+    var startTime = null;
+    var dur = Math.min(duration || 600, 800);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = formatter(target);
+      return;
+    }
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var p = Math.min((ts - startTime) / dur, 1);
+      var ease = 1 - Math.pow(1 - p, 3); // ease-out cubic
+      el.textContent = formatter(start + diff * ease);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   function fillMerval(data) {
     if (!data || !data.price) return;
     var idxCard = document.querySelector('.mkt-idx-card--loading');
     if (idxCard) idxCard.classList.remove('mkt-idx-card--loading');
-    setEl('[data-idx-price]', fmtM(data.price));
+    var priceEl = document.querySelector('[data-idx-price]');
+    if (priceEl) countUp(priceEl, data.price, 600, fmtM);
     if (data.high) setEl('[data-idx-high]', fmtM(data.high));
     if (data.low) setEl('[data-idx-low]', fmtM(data.low));
     if (data.previousClose) setEl('[data-idx-prev]', fmtM(data.previousClose));
@@ -452,8 +703,11 @@ const { lang } = Astro.params;
     }
     var chEl = document.querySelector('[data-idx-chg]');
     if (chEl && pct != null) {
-      chEl.textContent = (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+      var oldIdx = chEl.textContent;
+      var newIdx = (pct >= 0 ? '+' : '') + pct.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+      chEl.textContent = newIdx;
       chEl.className = 'mkt-idx-chg ' + (pct >= 0 ? 'rc-up' : 'rc-down');
+      flashEl(chEl, newIdx, oldIdx);
     }
   }
 
@@ -514,9 +768,20 @@ const { lang } = Astro.params;
   try { commodityI18n = JSON.parse(hub.getAttribute('data-i18n-commodities') || '{}'); } catch(e) {}
   var COMMODITY_NAMES = { 'GC=F': commodityI18n['GC=F'] || 'Gold', 'SI=F': commodityI18n['SI=F'] || 'Silver', 'CL=F': commodityI18n['CL=F'] || 'Crude Oil', 'NG=F': commodityI18n['NG=F'] || 'Natural Gas', 'HG=F': commodityI18n['HG=F'] || 'Copper' };
 
+  var _cmdData = null;
+  var _cmdCurr = 'USD';
+  var _blueRate = null;
+
   function fillCommodities(data) {
+    _cmdData = data;
+    renderCommodities();
+  }
+
+  function renderCommodities() {
+    var data = _cmdData;
     var grid = document.querySelector('[data-commodities-grid]');
     if (!grid || !data || data.length === 0) return;
+    var isARS = _cmdCurr === 'ARS' && _blueRate > 0;
     var html = '';
     for (var i = 0; i < data.length; i++) {
       var c = data[i];
@@ -525,6 +790,10 @@ const { lang } = Astro.params;
       var arrow = chg >= 0 ? '▲' : '▼';
       var icon = COMMODITY_ICONS[c.symbol] || '📦';
       var name = c.name || COMMODITY_NAMES[c.symbol] || c.symbol;
+      var price = c.price;
+      var prefix = '$';
+      if (isARS) { price = price * _blueRate; prefix = 'ARS '; }
+      var priceStr = isARS ? fmt(price) : formatUSD(price);
       html += '<a href="/' + lang + '/markets/stock?s=' + encodeURIComponent(c.symbol) + '" class="mkt-asset-card">';
       html += '<div class="mkt-asset-icon">' + icon + '</div>';
       html += '<div class="mkt-asset-body">';
@@ -533,7 +802,7 @@ const { lang } = Astro.params;
       html += '</div>';
       html += '<div class="mkt-asset-spark" data-cmd-spark="' + c.symbol + '"></div>';
       html += '<div class="mkt-asset-right">';
-      html += '<span class="mkt-asset-price">$' + formatUSD(c.price) + '</span>';
+      html += '<span class="mkt-asset-price">' + prefix + priceStr + '</span>';
       html += '<span class="mkt-asset-chg ' + cls + '">' + arrow + ' ' + Math.abs(chg).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
       html += '</div>';
       html += '</a>';
@@ -603,7 +872,9 @@ const { lang } = Astro.params;
     if (total === 0) return;
     setEl('[data-breadth-up]', '▲ ' + up);
     setEl('[data-breadth-down]', '▼ ' + down);
-    setEl('[data-breadth-unch]', unch > 0 ? '— ' + unch : '');
+    var upPct = Math.round(up / total * 100);
+    var downPct = Math.round(down / total * 100);
+    setEl('[data-breadth-pct]', upPct + '% / ' + downPct + '%');
     var barUp = document.querySelector('[data-breadth-bar-up]');
     var barUnch = document.querySelector('[data-breadth-bar-unch]');
     var barDown = document.querySelector('[data-breadth-bar-down]');
@@ -695,8 +966,11 @@ const { lang } = Astro.params;
     setEl('[data-pulse-vol]', totalVol > 0 ? fmtVol(totalVol) : '—');
     var avgEl = document.querySelector('[data-pulse-avgchg]');
     if (avgEl) {
-      avgEl.textContent = (avgChg >= 0 ? '+' : '') + avgChg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+      var oldAvgPulse = avgEl.textContent;
+      var newAvgPulse = (avgChg >= 0 ? '+' : '') + avgChg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+      avgEl.textContent = newAvgPulse;
       avgEl.className = 'mkt-pulse-sv ' + (avgChg >= 0 ? 'rc-up' : 'rc-down');
+      flashEl(avgEl, newAvgPulse, oldAvgPulse);
     }
 
     // Gauge
@@ -810,6 +1084,23 @@ const { lang } = Astro.params;
     }).catch(function() { return null; });
   }
 
+  // Commodity currency toggle
+  (function() {
+    var toggle = document.querySelector('[data-cmd-currency-toggle]');
+    if (!toggle) return;
+    toggle.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-cmd-curr]');
+      if (!btn) return;
+      var curr = btn.getAttribute('data-cmd-curr');
+      if (curr === _cmdCurr) return;
+      _cmdCurr = curr;
+      toggle.querySelectorAll('.mkt-curr-btn').forEach(function(b) {
+        b.classList.toggle('mkt-curr-btn--active', b.getAttribute('data-cmd-curr') === curr);
+      });
+      if (_cmdData) renderCommodities();
+    });
+  })();
+
   Promise.all([
     fetchJson('/api/rates'),
     fetchJson('https://api.bluelytics.com.ar/v2/latest'),
@@ -833,12 +1124,15 @@ const { lang } = Astro.params;
     if (hubUpdEl) hubUpdEl.innerHTML = '<span class="live-dot"></span>' + (hub.getAttribute('data-i18n-updated') || 'Updated') + ' ' + new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
 
     // FX rates
+    if (latest && latest.blue && latest.blue.value_sell) {
+      _blueRate = latest.blue.value_sell;
+    }
     if (latest && latest.oficial) {
       fillFxCard('oficial', latest.oficial, evo);
       fillFxCard('blue', latest.blue, evo);
     } else {
       var fxGrid = document.querySelector('.mkt-fx-grid');
-      if (fxGrid) fxGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+      if (fxGrid) fxGrid.innerHTML = MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry, compact: true });
     }
     if (apiRates) {
       if (apiRates.mep) fillFxCard('mep', apiRates.mep, evo);
@@ -848,7 +1142,7 @@ const { lang } = Astro.params;
     // Merval
     if (!merval || !merval.price) {
       var idxCard = document.querySelector('.mkt-idx-card');
-      if (idxCard) idxCard.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+      if (idxCard) idxCard.innerHTML = MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry, compact: true });
     }
     fillMerval(merval);
 
@@ -871,7 +1165,7 @@ const { lang } = Astro.params;
       fillCommodities(commodities);
     } else {
       var cmdGrid = document.querySelector('[data-commodities-grid]');
-      if (cmdGrid) cmdGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+      if (cmdGrid) cmdGrid.innerHTML = MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry, compact: true });
     }
 
     // Crypto
@@ -879,27 +1173,130 @@ const { lang } = Astro.params;
       fillCrypto(crypto);
     } else {
       var cGrid = document.querySelector('[data-crypto-grid]');
-      if (cGrid) cGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+      if (cGrid) cGrid.innerHTML = MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry, compact: true });
+    }
+
+    // ─── AT-A-GLANCE SUMMARY ───
+    var glanceEl = document.querySelector('[data-mkt-glance]');
+    if (glanceEl) {
+      var hasData = false;
+      if (latest && latest.blue) {
+        var gBlue = document.querySelector('[data-glance-blue]');
+        if (gBlue) { var oldBlue = gBlue.textContent; gBlue.textContent = 'ARS ' + fmt(latest.blue.value_sell); gBlue.className = 'mkt-glance-val'; flashEl(gBlue, gBlue.textContent, oldBlue); hasData = true; }
+      }
+      if (merval && merval.price) {
+        var gMerval = document.querySelector('[data-glance-merval]');
+        if (gMerval) {
+          var mPct2 = merval.variation != null ? merval.variation * 100 : null;
+          var mText = fmtM(merval.price);
+          if (mPct2 != null) mText += ' ' + (mPct2 >= 0 ? '▲' : '▼') + Math.abs(mPct2).toFixed(1) + '%';
+          var oldMerval = gMerval.textContent;
+          gMerval.textContent = mText;
+          gMerval.className = 'mkt-glance-val ' + (mPct2 >= 0 ? 'rc-up' : 'rc-down');
+          flashEl(gMerval, mText, oldMerval);
+          hasData = true;
+        }
+      }
+      if (crypto && crypto.length > 0) {
+        var btc = crypto.find(function(c) { return c.symbol === 'BTC'; });
+        if (btc) {
+          var gBtc = document.querySelector('[data-glance-btc]');
+          if (gBtc) {
+            var btcChg = btc.change || 0;
+            var oldBtc = gBtc.textContent;
+            var newBtc = '$' + formatUSD(btc.price) + ' ' + (btcChg >= 0 ? '▲' : '▼') + Math.abs(btcChg).toFixed(1) + '%';
+            gBtc.textContent = newBtc;
+            gBtc.className = 'mkt-glance-val ' + (btcChg >= 0 ? 'rc-up' : 'rc-down');
+            flashEl(gBtc, newBtc, oldBtc);
+            hasData = true;
+          }
+        }
+      }
+      if (commodities && commodities.length > 0) {
+        var gold = commodities.find(function(c) { return c.symbol === 'GC=F'; });
+        if (gold) {
+          var gGold = document.querySelector('[data-glance-gold]');
+          if (gGold) {
+            var gChg = gold.change || 0;
+            var oldGold = gGold.textContent;
+            var newGold = '$' + formatUSD(gold.price) + ' ' + (gChg >= 0 ? '▲' : '▼') + Math.abs(gChg).toFixed(1) + '%';
+            gGold.textContent = newGold;
+            gGold.className = 'mkt-glance-val ' + (gChg >= 0 ? 'rc-up' : 'rc-down');
+            flashEl(gGold, newGold, oldGold);
+            hasData = true;
+          }
+        }
+      }
+      if (hasData) glanceEl.style.display = '';
+    }
+
+    // ─── FX SPARKLINES from evolution data ───
+    var rawEvo = res[2];
+    if (rawEvo && rawEvo.length > 0) {
+      var evoBySource = {};
+      for (var ei = 0; ei < rawEvo.length; ei++) {
+        var eKey = rawEvo[ei].source.toLowerCase();
+        if (!evoBySource[eKey]) evoBySource[eKey] = [];
+        evoBySource[eKey].push(rawEvo[ei]);
+      }
+      ['oficial', 'blue'].forEach(function(src) {
+        var arr = evoBySource[src];
+        if (!arr || arr.length < 3) return;
+        arr.sort(function(a, b) { return a.date < b.date ? -1 : 1; });
+        var vals = arr.map(function(e) { return e.value_sell; }).filter(function(v) { return v > 0; });
+        if (vals.length < 3) return;
+        var sparkEl = document.querySelector('[data-fx-spark="' + src + '"]');
+        if (sparkEl) {
+          var isUp = vals[vals.length - 1] >= vals[0];
+          sparkEl.innerHTML = miniSparkSVG(vals, isUp, 48, 18);
+        }
+      });
     }
   }).catch(function() {
     setEl('[data-mkt-updated]', '—');
     var fxGrid = document.querySelector('.mkt-fx-grid');
-    if (fxGrid) fxGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+    if (fxGrid) fxGrid.innerHTML = MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry, compact: true });
     var cmdGrid = document.querySelector('[data-commodities-grid]');
-    if (cmdGrid) cmdGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+    if (cmdGrid) cmdGrid.innerHTML = MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry, compact: true });
     var cGrid = document.querySelector('[data-crypto-grid]');
-    if (cGrid) cGrid.innerHTML = '<div class="mkt-asset-placeholder">' + i18nError + ' <button class="mkt-retry-btn" aria-label="Retry" onclick="window.location.reload()">\u21bb</button></div>';
+    if (cGrid) cGrid.innerHTML = MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry, compact: true });
   });
 
   // ─── GLOBAL INDICES (separate load) ───
   var INDICES = [
-    { symbol: '%5EGSPC', name: 'S&P 500', flag: '🇺🇸' },
-    { symbol: '%5EDJI', name: 'Dow Jones', flag: '🇺🇸' },
-    { symbol: '%5EIXIC', name: 'NASDAQ', flag: '🇺🇸' },
-    { symbol: '%5EFTSE', name: 'FTSE 100', flag: '🇬🇧' },
-    { symbol: '%5EGDAXI', name: 'DAX', flag: '🇩🇪' },
-    { symbol: '%5EN225', name: 'Nikkei 225', flag: '🇯🇵' }
+    { symbol: '%5EGSPC', name: 'S&P 500', flag: '🇺🇸', region: 'americas', exchange: 'NYSE' },
+    { symbol: '%5EDJI', name: 'Dow Jones', flag: '🇺🇸', region: 'americas', exchange: 'NYSE' },
+    { symbol: '%5EIXIC', name: 'NASDAQ', flag: '🇺🇸', region: 'americas', exchange: 'NASDAQ' },
+    { symbol: '%5EFTSE', name: 'FTSE 100', flag: '🇬🇧', region: 'europe', exchange: 'LSE' },
+    { symbol: '%5EGDAXI', name: 'DAX', flag: '🇩🇪', region: 'europe', exchange: 'XETRA' },
+    { symbol: '%5EN225', name: 'Nikkei 225', flag: '🇯🇵', region: 'asia', exchange: 'TSE' },
+    { symbol: '%5EHSI', name: 'Hang Seng', flag: '🇭🇰', region: 'asia', exchange: 'HKEX' },
+    { symbol: '%5EAXJO', name: 'ASX 200', flag: '🇦🇺', region: 'asia', exchange: 'ASX' }
   ];
+
+  // Market hours by exchange (local time in minutes from midnight)
+  var EXCHANGE_HOURS = {
+    NYSE:   { tz: -4, open: 9*60+30, close: 16*60 },
+    NASDAQ: { tz: -4, open: 9*60+30, close: 16*60 },
+    LSE:    { tz: 1, open: 8*60, close: 16*60+30 },
+    XETRA:  { tz: 2, open: 9*60, close: 17*60+30 },
+    TSE:    { tz: 9, open: 9*60, close: 15*60 },
+    HKEX:   { tz: 8, open: 9*60+30, close: 16*60 },
+    ASX:    { tz: 10, open: 10*60, close: 16*60 }
+  };
+
+  function isMarketOpen(exchange) {
+    var hours = EXCHANGE_HOURS[exchange];
+    if (!hours) return false;
+    var now = new Date();
+    var day = now.getUTCDay();
+    if (day === 0 || day === 6) return false;
+    var utcMin = now.getUTCHours() * 60 + now.getUTCMinutes();
+    var localMin = utcMin + hours.tz * 60;
+    if (localMin < 0) localMin += 1440;
+    if (localMin >= 1440) localMin -= 1440;
+    return localMin >= hours.open && localMin < hours.close;
+  }
 
   function loadIndex(idx) {
     return fetchJson('/api/stock/' + idx.symbol + '?range=5d&interval=1d').then(function(d) {
@@ -911,7 +1308,7 @@ const { lang } = Astro.params;
       var last = closes[closes.length - 1];
       var prev = closes[closes.length - 2];
       var chg = prev > 0 ? ((last - prev) / prev) * 100 : 0;
-      return { name: idx.name, flag: idx.flag, symbol: idx.symbol, price: last, change: chg, closes: closes };
+      return { name: idx.name, flag: idx.flag, symbol: idx.symbol, price: last, change: chg, closes: closes, region: idx.region, exchange: idx.exchange };
     }).catch(function() { return null; });
   }
 
@@ -927,9 +1324,17 @@ const { lang } = Astro.params;
       var y = h - ((closes[i] - min) / range) * (h - 2) - 1;
       pts.push(x.toFixed(1) + ',' + y.toFixed(1));
     }
-    var color = up ? '#16a34a' : '#dc2626';
+    var color = up ? 'var(--color-positive, #16a34a)' : 'var(--color-negative, #dc2626)';
+    // Build gradient fill
+    var fillPts = '0,' + h + ' ' + pts.join(' ') + ' ' + w + ',' + h;
+    var gradId = 'sg' + Math.random().toString(36).substr(2, 5);
     return '<svg class="mkt-spark" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">' +
-      '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<defs><linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0%" stop-color="' + (up ? '#16a34a' : '#dc2626') + '" stop-opacity="0.2"/>' +
+      '<stop offset="100%" stop-color="' + (up ? '#16a34a' : '#dc2626') + '" stop-opacity="0"/>' +
+      '</linearGradient></defs>' +
+      '<polygon points="' + fillPts + '" fill="url(#' + gradId + ')"/>' +
+      '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + (up ? '#16a34a' : '#dc2626') + '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
       '</svg>';
   }
 
@@ -939,24 +1344,59 @@ const { lang } = Astro.params;
     var grid = document.querySelector('[data-indices-grid]');
     var section = document.querySelector('[data-indices-section]');
     if (!grid || !section) return;
-    var html = '';
+
+    // Get i18n region names
+    var regionLabels = {
+      americas: section.getAttribute('data-i18n-region-americas') || 'Americas',
+      europe: section.getAttribute('data-i18n-region-europe') || 'Europe',
+      asia: section.getAttribute('data-i18n-region-asia') || 'Asia'
+    };
+
+    // Group by region
+    var regionOrder = ['americas', 'europe', 'asia'];
+    var grouped = {};
     for (var i = 0; i < valid.length; i++) {
       var r = valid[i];
-      var cls = r.change >= 0 ? 'rc-up' : 'rc-down';
-      var arrow = r.change >= 0 ? '▲' : '▼';
-      var idxLink = '/' + lang + '/markets/stock?s=' + encodeURIComponent(r.symbol);
-      html += '<a href="' + idxLink + '" class="mkt-idx-mini">';
-      html += '<div class="mkt-idx-mini-top">';
-      html += '<span class="mkt-idx-mini-flag">' + r.flag + '</span>';
-      html += '<span class="mkt-idx-mini-name">' + r.name + '</span>';
-      html += '</div>';
-      html += '<div class="mkt-idx-mini-mid">';
-      html += '<span class="mkt-idx-mini-price">' + formatUSD(r.price) + '</span>';
-      html += miniSpark(r.closes, r.change >= 0);
-      html += '</div>';
-      html += '<span class="mkt-idx-mini-chg ' + cls + '">' + arrow + ' ' + Math.abs(r.change).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
-      html += '</a>';
+      if (!grouped[r.region]) grouped[r.region] = [];
+      grouped[r.region].push(r);
     }
+
+    var html = '';
+    for (var ri = 0; ri < regionOrder.length; ri++) {
+      var region = regionOrder[ri];
+      var items = grouped[region];
+      if (!items || items.length === 0) continue;
+
+      html += '<div class="mkt-idx-region">';
+      html += '<h3 class="mkt-idx-region-label">' + regionLabels[region] + '</h3>';
+      html += '<div class="mkt-idx-region-cards">';
+
+      for (var j = 0; j < items.length; j++) {
+        var r = items[j];
+        var isUp = r.change >= 0;
+        var cls = isUp ? 'rc-up' : 'rc-down';
+        var borderCls = isUp ? 'mkt-idx-mini--positive' : 'mkt-idx-mini--negative';
+        var arrow = isUp ? '&#9650;' : '&#9660;';
+        var open = isMarketOpen(r.exchange);
+        var idxLink = '/' + lang + '/markets/stock?s=' + encodeURIComponent(r.symbol);
+
+        html += '<a href="' + idxLink + '" class="mkt-idx-mini ' + borderCls + '">';
+        html += '<div class="mkt-idx-mini-top">';
+        html += '<span class="mkt-idx-mini-flag">' + r.flag + '</span>';
+        html += '<span class="mkt-idx-mini-name">' + r.name + '</span>';
+        if (open) html += '<span class="mkt-idx-mini-pulse" title="Market open"></span>';
+        html += '</div>';
+        html += '<div class="mkt-idx-mini-mid">';
+        html += '<span class="mkt-idx-mini-price">' + formatUSD(r.price) + '</span>';
+        html += '</div>';
+        html += '<div class="mkt-idx-mini-spark">' + miniSpark(r.closes, isUp) + '</div>';
+        html += '<span class="mkt-idx-mini-chg ' + cls + '">' + arrow + ' ' + Math.abs(r.change).toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%</span>';
+        html += '</a>';
+      }
+
+      html += '</div></div>';
+    }
+
     grid.innerHTML = html;
     section.style.display = '';
   });
@@ -997,34 +1437,7 @@ const { lang } = Astro.params;
     });
   }
 
-  // ─── Auto-refresh countdown ───
-  var HUB_REFRESH = 5 * 60;
-  var hubRefreshRemaining = HUB_REFRESH;
-  var hubCountdownEl = null;
-
-  function initHubCountdown() {
-    var updEl = document.querySelector('[data-mkt-updated]');
-    if (!updEl) return;
-    hubCountdownEl = document.createElement('span');
-    hubCountdownEl.className = 'refresh-countdown';
-    updEl.appendChild(hubCountdownEl);
-  }
-
-  function hubTick() {
-    hubRefreshRemaining--;
-    if (hubCountdownEl) {
-      var m = Math.floor(hubRefreshRemaining / 60);
-      var s = hubRefreshRemaining % 60;
-      hubCountdownEl.textContent = '(' + m + ':' + (s < 10 ? '0' : '') + s + ')';
-    }
-    if (hubRefreshRemaining <= 0) {
-      hubRefreshRemaining = HUB_REFRESH;
-      window.location.reload();
-    }
-  }
-
-  initHubCountdown();
-  setInterval(hubTick, 1000);
+  // Refresh is handled by the progress bar animation above
 })();
 </script>
 
@@ -1057,7 +1470,29 @@ const { lang } = Astro.params;
   }
   .mkt-h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
   .mkt-sub { font-size: 0.82rem; color: var(--color-text-meta); margin-top: 4px; }
+  .mkt-header-right { display: flex; flex-direction: column; align-items: end; gap: 4px; min-width: 140px; }
   .mkt-updated { font-size: 0.72rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .mkt-refresh-bar { width: 100%; height: 2px; background: var(--color-border); border-radius: 1px; overflow: hidden; }
+  .mkt-refresh-fill { height: 100%; background: var(--color-gold); border-radius: 1px; width: 0%; transition: width 0.3s linear; }
+
+  /* At-a-glance summary */
+  .mkt-glance {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 10px 16px; margin-bottom: var(--spacing-lg);
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px;
+    animation: mkt-section-fade 0.3s ease-out both;
+  }
+  .mkt-glance-item { display: flex; align-items: center; gap: 8px; }
+  .mkt-glance-icon { font-size: 1rem; flex-shrink: 0; }
+  .mkt-glance-body { display: flex; flex-direction: column; gap: 0px; }
+  .mkt-glance-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+  .mkt-glance-val { font-size: 0.82rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .mkt-glance-sep { width: 1px; height: 28px; background: var(--color-border); flex-shrink: 0; }
+
+  /* Market status time note */
+  .mkt-status-bar :global(.mkt-status-time) {
+    font-size: 0.55rem; font-weight: 600; opacity: 0.7; margin-inline-start: 2px;
+  }
 
   /* Section */
   .mkt-section { margin-bottom: var(--spacing-xl); }
@@ -1066,6 +1501,11 @@ const { lang } = Astro.params;
   .mkt-sec-link { font-size: 0.75rem; font-weight: 700; color: var(--color-text-meta); text-decoration: none; transition: color 0.15s; }
   .mkt-sec-link:hover { color: var(--color-gold); text-decoration: none; }
   .mkt-sec-link:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+  .mkt-curr-toggle { display: inline-flex; border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden; }
+  .mkt-curr-btn { padding: 3px 10px; font-size: 0.7rem; font-weight: 700; background: transparent; border: none; color: var(--color-text-meta); cursor: pointer; transition: background 0.15s, color 0.15s; letter-spacing: 0.03em; }
+  .mkt-curr-btn--active { background: var(--color-gold); color: #fff; }
+  .mkt-curr-btn:hover:not(.mkt-curr-btn--active) { background: rgba(var(--color-gold-rgb, 212,175,55), 0.12); }
 
   /* ═══ FX GRID ═══ */
   .mkt-fx-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
@@ -1106,6 +1546,10 @@ const { lang } = Astro.params;
   .mkt-fx-spread { display: flex; align-items: center; gap: 4px; }
   .mkt-fx-spread-label { font-size: 0.6rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; }
   .mkt-fx-spread-val { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  /* FX sparkline */
+  .mkt-fx-spark { height: 18px; overflow: hidden; opacity: 0.7; }
+  .mkt-fx-spark :global(.mkt-spark) { display: block; }
 
   /* ═══ MERVAL ROW ═══ */
   .mkt-merval-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); }
@@ -1185,26 +1629,81 @@ const { lang } = Astro.params;
 
   /* ═══ GLOBAL INDICES ═══ */
   .mkt-indices-grid {
-    display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px;
-    background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .mkt-indices-grid :global(.mkt-idx-region) {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .mkt-indices-grid :global(.mkt-idx-region-label) {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--color-text-meta); padding: 0 2px; margin: 0;
+  }
+  .mkt-indices-grid :global(.mkt-idx-region-cards) {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;
   }
   .mkt-indices-grid :global(.mkt-idx-mini) {
-    background: var(--color-bg); padding: 12px 14px;
-    display: flex; flex-direction: column; gap: 4px; text-align: center;
-    text-decoration: none; color: inherit; transition: background 0.15s;
+    background: var(--color-bg); padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 6px;
+    text-decoration: none; color: inherit;
+    border: 1px solid var(--color-border); border-radius: 10px;
+    border-left: 3px solid var(--color-border);
+    transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+    position: relative;
   }
-  .mkt-indices-grid :global(.mkt-idx-mini:hover) { background: var(--color-bg-secondary); text-decoration: none; color: inherit; }
+  .mkt-indices-grid :global(.mkt-idx-mini--positive) {
+    border-left-color: var(--color-positive, #16a34a);
+  }
+  .mkt-indices-grid :global(.mkt-idx-mini--negative) {
+    border-left-color: var(--color-negative, #dc2626);
+  }
+  .mkt-indices-grid :global(.mkt-idx-mini:hover) {
+    background: var(--color-bg-secondary); text-decoration: none; color: inherit;
+    transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  :global([data-theme="dark"]) .mkt-indices-grid :global(.mkt-idx-mini:hover) {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
   .mkt-indices-grid :global(.mkt-idx-mini:focus-visible) { outline: 2px solid var(--color-gold); outline-offset: 2px; }
-  .mkt-indices-grid :global(.mkt-idx-mini-top) { display: flex; align-items: center; justify-content: center; gap: 4px; }
-  .mkt-indices-grid :global(.mkt-idx-mini-flag) { font-size: 0.9rem; }
-  .mkt-indices-grid :global(.mkt-idx-mini-name) { font-size: 0.68rem; font-weight: 700; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; }
-  .mkt-indices-grid :global(.mkt-idx-mini-mid) { display: flex; align-items: center; justify-content: center; gap: 6px; }
-  .mkt-indices-grid :global(.mkt-idx-mini-price) { font-size: 1rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text); }
-  .mkt-indices-grid :global(.mkt-spark) { flex-shrink: 0; }
-  .mkt-indices-grid :global(.mkt-idx-mini-chg) { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .mkt-indices-grid :global(.mkt-idx-mini-top) {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .mkt-indices-grid :global(.mkt-idx-mini-flag) { font-size: 1rem; }
+  .mkt-indices-grid :global(.mkt-idx-mini-name) {
+    font-size: 0.72rem; font-weight: 700; color: var(--color-text-meta);
+    text-transform: uppercase; letter-spacing: 0.03em; flex: 1;
+  }
+  /* Pulse indicator for open markets */
+  .mkt-indices-grid :global(.mkt-idx-mini-pulse) {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--color-positive, #16a34a);
+    flex-shrink: 0; position: relative;
+  }
+  .mkt-indices-grid :global(.mkt-idx-mini-pulse::after) {
+    content: ''; position: absolute; inset: -3px;
+    border-radius: 50%; border: 1.5px solid var(--color-positive, #16a34a);
+    animation: idx-pulse 2s ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes idx-pulse {
+    0% { opacity: 0.6; transform: scale(0.8); }
+    50% { opacity: 0; transform: scale(1.6); }
+    100% { opacity: 0; transform: scale(1.6); }
+  }
+  .mkt-indices-grid :global(.mkt-idx-mini-mid) {
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .mkt-indices-grid :global(.mkt-idx-mini-price) {
+    font-size: 1.1rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-text);
+  }
+  .mkt-indices-grid :global(.mkt-idx-mini-spark) {
+    flex-shrink: 0; line-height: 0;
+  }
+  .mkt-indices-grid :global(.mkt-spark) { flex-shrink: 0; display: block; width: 100%; }
+  .mkt-indices-grid :global(.mkt-idx-mini-chg) {
+    font-size: 0.75rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  }
 
-  @media (max-width: 900px) { .mkt-indices-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 520px) { .mkt-indices-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .mkt-indices-grid :global(.mkt-idx-region-cards) { grid-template-columns: repeat(2, 1fr); } }
 
   /* ═══ SECTOR HEATMAP ═══ */
   .mkt-heatmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
@@ -1286,6 +1785,7 @@ const { lang } = Astro.params;
   .mkt-breadth { margin-top: var(--spacing-sm); }
   .mkt-breadth-labels { display: flex; justify-content: space-between; font-size: 0.68rem; font-weight: 700; margin-bottom: 4px; }
   .mkt-breadth-lbl { font-variant-numeric: tabular-nums; }
+  .mkt-breadth-lbl--pct { color: var(--color-text-meta); font-size: 0.62rem; }
   .mkt-breadth-bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; gap: 2px; }
   .mkt-breadth-seg { border-radius: 3px; transition: width 0.5s; }
   .mkt-breadth-seg--up { background: #16a34a; }
@@ -1315,7 +1815,7 @@ const { lang } = Astro.params;
   .mkt-asset-grid :global(.mkt-asset-price) { font-size: 0.88rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
   .mkt-asset-grid :global(.mkt-asset-chg) { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 
-  .mkt-asset-placeholder { padding: 20px; text-align: center; font-size: 0.82rem; color: var(--color-text-meta); background: var(--color-bg); }
+  /* Error cards now use shared .mkts-error-card from global.css */
   .mkt-asset-skel { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--color-bg); }
   .mkt-shimmer { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: mkt-shimmer 1.5s ease-in-out infinite; border-radius: 4px; display: inline-block; }
 
@@ -1349,18 +1849,31 @@ const { lang } = Astro.params;
   :global([data-theme="dark"]) .mkt-fx-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
   :global([data-theme="dark"]) .mkt-idx-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
 
-  /* Section fade-in */
+  /* Section fade-in & reveal */
   @keyframes mkt-section-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .mkt-section-loaded { animation: mkt-section-fade 0.35s ease-out both; }
 
-  /* Retry button */
-  .mkt-retry-btn {
-    display: inline-block; margin-inline-start: 8px; padding: 2px 10px; font-size: 0.72rem;
-    border: 1px solid var(--color-border); border-radius: 4px;
-    background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
+  /* Scroll reveal */
+  .mkt-section {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
   }
-  .mkt-retry-btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+  .mkt-section--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Data load pulse */
+  @keyframes mkt-data-pop {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .mkt-fx-card:not(.mkt-fx-card--loading) {
+    animation: mkt-data-pop 0.3s ease-out both;
+  }
+
+  /* Old retry button kept for any remaining references */
 
   /* Disclaimer */
   .mkt-disclaimer { font-size: 0.7rem; color: var(--color-text-meta); text-align: center; font-style: italic; margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); }
@@ -1390,7 +1903,11 @@ const { lang } = Astro.params;
   }
   @media (max-width: 520px) {
     .mkt-header { flex-direction: column; align-items: start; gap: 4px; }
+    .mkt-header-right { width: 100%; align-items: start; }
     .mkt-h1 { font-size: 1.3rem; }
+    .mkt-glance { gap: 8px; padding: 8px 12px; }
+    .mkt-glance-sep { height: 20px; }
+    .mkt-glance-val { font-size: 0.72rem; }
     .mkt-fx-grid { grid-template-columns: 1fr 1fr; }
     .mkt-fx-card { padding: 12px 10px; }
     .mkt-fx-name { font-size: 0.65rem; }
@@ -1414,15 +1931,52 @@ const { lang } = Astro.params;
     .scroll-top-btn { transition: none; }
     .mkt-shimmer { animation: none; }
     .mkt-section-loaded { animation: none; }
-    .mkt-retry-btn { transition: none; }
+    .mkts-retry-btn { transition: none; }
+    .mkt-section { opacity: 1; transform: none; transition: none; }
+    .mkt-fx-card:not(.mkt-fx-card--loading) { animation: none; }
+    .mkt-glance { animation: none; }
   }
 
   @media print {
-    .mkt-status-bar, .scroll-top-btn { display: none !important; }
-    .mkt-fx-grid, .mkt-merval-row, .mkt-asset-grid, .mkt-asset-grid--crypto { gap: 8px; }
-    .mkt-fx-card, .mkt-merval-card, :global(.mkt-asset-card) { break-inside: avoid; }
-    .mkt-movers-col { break-inside: avoid; }
+    /* Hide interactive / non-printable elements */
+    .mkt-status-bar, .scroll-top-btn, .mkt-refresh-bar { display: none !important; }
+    .mkt-fx-spark, .mkt-idx-chart, .mkt-heatmap { display: none !important; }
+
+    /* Sections visible, no animations */
+    .mkt-section { opacity: 1 !important; transform: none !important; }
+
+    /* Grid layout for print */
+    .mkt-fx-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; border: none !important; }
+    .mkt-merval-row { gap: 8px; }
+    .mkt-asset-grid, .mkt-asset-grid--crypto { gap: 8px; border: none !important; }
+
+    /* Cards: clean borders, no transforms */
+    .mkt-fx-card, .mkt-idx-card, :global(.mkt-asset-card) {
+      break-inside: avoid; page-break-inside: avoid;
+      border: 1px solid #ccc !important; border-radius: 0 !important;
+    }
+    .mkt-fx-card::before { display: none; }
+    .mkt-fx-card::after { display: none !important; }
+    .mkt-movers, .mkt-movers-col { break-inside: avoid; border: 1px solid #ccc !important; }
+
+    /* Rate values as plain text */
+    .mkt-fx-price, .mkt-idx-price { color: #000 !important; }
+    .mkt-fx-chg, .mkt-idx-chg { font-weight: 700; }
+
+    /* No transitions */
     .mkt-breadth-seg { transition: none; }
+
+    /* Print source footer */
+    .mkt::after {
+      content: "Source: plata.today";
+      display: block;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #999 !important;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ccc;
+    }
   }
 
   @media (prefers-contrast: more) {
@@ -1432,5 +1986,58 @@ const { lang } = Astro.params;
     .mkt-status-bar :global(.mkt-status-item) { border-width: 2px; }
     .mkt-fx-badge, .mkt-idx-badge { border: 1px solid currentColor; }
     .mkt-movers-list :global(.mkt-mover-chg) { border: 1px solid currentColor; }
+  }
+
+  /* ═══ COLLAPSIBLE SECTIONS (mobile only) ═══ */
+  .mkt-sec-toggle {
+    display: contents;
+  }
+  .mkt-chevron { display: none; }
+  .mkt-sec-body { }
+
+  @media (max-width: 768px) {
+    .mkt-sec-toggle {
+      display: flex; align-items: center; gap: 6px;
+      background: none; border: none; padding: 0; margin: 0;
+      cursor: pointer; color: inherit; font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mkt-sec-toggle .mkt-sec-title { margin: 0; }
+    .mkt-chevron {
+      display: block; flex-shrink: 0; color: var(--color-text-meta);
+      transition: transform 0.25s ease;
+    }
+    .mkt-sec-toggle[aria-expanded="false"] .mkt-chevron {
+      transform: rotate(-90deg);
+    }
+    .mkt-sec-body {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+    .mkt-sec-body > * {
+      overflow: hidden;
+    }
+    .mkt-sec-body--collapsed {
+      grid-template-rows: 0fr;
+    }
+    .mkt-sec-body--collapsed > * {
+      min-height: 0;
+    }
+    /* Tighter card spacing on mobile */
+    .mkt-fx-card { padding: 10px; }
+    .mkt-asset-grid :global(.mkt-asset-card) { padding: 10px; }
+    .mkt-idx-card { padding: 14px; }
+    .mkt-glance { padding: 8px 10px; gap: 6px; }
+    .mkt-section { margin-bottom: var(--spacing-lg); }
+    .mkt-indices-grid :global(.mkt-idx-mini) { padding: 10px 12px; }
+    .mkt-heatmap :global(.mkt-hm-cell) { padding: 10px 10px; }
+    .mkt-pulse-grid { padding: 12px; }
+    .mkt-pulse-stat { padding: 6px 10px; }
+  }
+
+  @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .mkt-chevron { transition: none; }
+    .mkt-sec-body { transition: none; }
   }
 </style>

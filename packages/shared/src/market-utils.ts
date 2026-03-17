@@ -259,3 +259,114 @@ export function extractProfileData(
       })) || [],
   };
 }
+
+// ---------------------------------------------------------------------------
+// Financial statements extraction (income, balance sheet, cash flow)
+// ---------------------------------------------------------------------------
+
+/** Yahoo quoteSummary modules for financial statements. */
+export const FINANCIAL_STATEMENT_MODULES = [
+  "incomeStatementHistory",
+  "incomeStatementHistoryQuarterly",
+  "balanceSheetHistory",
+  "balanceSheetHistoryQuarterly",
+  "cashflowStatementHistory",
+  "cashflowStatementHistoryQuarterly",
+].join(",");
+
+function parseIncomeStatements(statements: any[]) {
+  return statements.map((s: any) => ({
+    endDate: s.endDate?.fmt ?? null,
+    totalRevenue: numVal(s.totalRevenue),
+    costOfRevenue: numVal(s.costOfRevenue),
+    grossProfit: numVal(s.grossProfit),
+    researchDevelopment: numVal(s.researchDevelopment),
+    sellingGeneralAdministrative: numVal(s.sellingGeneralAdministrative),
+    totalOperatingExpenses: numVal(s.totalOperatingExpenses),
+    operatingIncome: numVal(s.operatingIncome),
+    interestExpense: numVal(s.interestExpense),
+    totalOtherIncomeExpenseNet: numVal(s.totalOtherIncomeExpenseNet),
+    incomeBeforeTax: numVal(s.incomeBeforeTax),
+    incomeTaxExpense: numVal(s.incomeTaxExpense),
+    netIncome: numVal(s.netIncome),
+    netIncomeApplicableToCommonShares: numVal(s.netIncomeApplicableToCommonShares),
+    ebit: numVal(s.ebit),
+  }));
+}
+
+function parseBalanceSheets(statements: any[]) {
+  return statements.map((s: any) => ({
+    endDate: s.endDate?.fmt ?? null,
+    cash: numVal(s.cash),
+    shortTermInvestments: numVal(s.shortTermInvestments),
+    netReceivables: numVal(s.netReceivables),
+    inventory: numVal(s.inventory),
+    otherCurrentAssets: numVal(s.otherCurrentAssets),
+    totalCurrentAssets: numVal(s.totalCurrentAssets),
+    longTermInvestments: numVal(s.longTermInvestments),
+    propertyPlantEquipment: numVal(s.propertyPlantEquipment),
+    goodwill: numVal(s.goodWill),
+    intangibleAssets: numVal(s.intangibleAssets),
+    otherAssets: numVal(s.otherAssets),
+    totalAssets: numVal(s.totalAssets),
+    accountsPayable: numVal(s.accountsPayable),
+    shortLongTermDebt: numVal(s.shortLongTermDebt),
+    otherCurrentLiabilities: numVal(s.otherCurrentLiab),
+    totalCurrentLiabilities: numVal(s.totalCurrentLiabilities),
+    longTermDebt: numVal(s.longTermDebt),
+    otherLiabilities: numVal(s.otherLiab),
+    totalLiabilities: numVal(s.totalLiab),
+    commonStock: numVal(s.commonStock),
+    retainedEarnings: numVal(s.retainedEarnings),
+    treasuryStock: numVal(s.treasuryStock),
+    otherStockholderEquity: numVal(s.otherStockholderEquity),
+    totalStockholderEquity: numVal(s.totalStockholderEquity),
+    netTangibleAssets: numVal(s.netTangibleAssets),
+  }));
+}
+
+function parseCashflowStatements(statements: any[]) {
+  return statements.map((s: any) => {
+    const operating = numVal(s.totalCashFromOperatingActivities);
+    const capex = numVal(s.capitalExpenditures);
+    return {
+      endDate: s.endDate?.fmt ?? null,
+      netIncome: numVal(s.netIncome),
+      depreciation: numVal(s.depreciation),
+      changeToNetIncome: numVal(s.changeToNetincome),
+      changeToAccountReceivables: numVal(s.changeToAccountReceivables),
+      changeToLiabilities: numVal(s.changeToLiabilities),
+      changeToInventory: numVal(s.changeToInventory),
+      changeToOperatingActivities: numVal(s.changeToOperatingActivities),
+      totalCashflowsFromOperating: operating,
+      capitalExpenditures: capex,
+      investments: numVal(s.investments),
+      otherCashflowsFromInvesting: numVal(s.otherCashflowsFromInvestingActivities),
+      totalCashflowsFromInvesting: numVal(s.totalCashflowsFromInvestingActivities),
+      dividendsPaid: numVal(s.dividendsPaid),
+      netBorrowings: numVal(s.netBorrowings),
+      otherCashflowsFromFinancing: numVal(s.otherCashflowsFromFinancingActivities),
+      totalCashflowsFromFinancing: numVal(s.totalCashFromFinancingActivities),
+      changeInCash: numVal(s.changeInCash),
+      freeCashflow: operating != null && capex != null ? operating + capex : null,
+    };
+  });
+}
+
+/** Extract structured financial statements from Yahoo quoteSummary result. */
+export function extractFinancialStatements(result: any) {
+  return {
+    incomeStatements: {
+      annual: parseIncomeStatements(result.incomeStatementHistory?.incomeStatementHistory ?? []),
+      quarterly: parseIncomeStatements(result.incomeStatementHistoryQuarterly?.incomeStatementHistory ?? []),
+    },
+    balanceSheets: {
+      annual: parseBalanceSheets(result.balanceSheetHistory?.balanceSheetStatements ?? []),
+      quarterly: parseBalanceSheets(result.balanceSheetHistoryQuarterly?.balanceSheetStatements ?? []),
+    },
+    cashflowStatements: {
+      annual: parseCashflowStatements(result.cashflowStatementHistory?.cashflowStatements ?? []),
+      quarterly: parseCashflowStatements(result.cashflowStatementHistoryQuarterly?.cashflowStatements ?? []),
+    },
+  };
+}

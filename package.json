@@ -16,7 +16,8 @@
     "db:migrate": "tsx apps/pipeline/src/db/migrate.ts",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "typecheck": "tsc --noEmit -p apps/pipeline/tsconfig.json && tsc --noEmit -p apps/server/tsconfig.json"
+    "typecheck": "tsc --noEmit -p apps/pipeline/tsconfig.json && tsc --noEmit -p apps/server/tsconfig.json",
+    "backfill:financials": "tsx apps/server/src/scripts/backfill-financials.ts"
   },
   "engines": {
     "node": ">=20"

@@ -1,0 +1,132 @@
+---
+import { t } from "@/i18n";
+
+interface Props {
+  lang: string;
+  active?: "hub" | "currencies" | "merval" | "crypto" | "screener";
+}
+
+const { lang, active = "hub" } = Astro.props;
+
+const items = [
+  { key: "hub", href: `/${lang}/markets`, icon: "chart-bar", label: t(lang, "markets.breadcrumb") },
+  { key: "currencies", href: `/${lang}/markets/currencies`, icon: "currency", label: t(lang, "currencies.breadcrumb") },
+  { key: "merval", href: `/${lang}/markets/merval`, icon: "trending", label: "Merval" },
+  { key: "crypto", href: `/${lang}/markets/crypto`, icon: "crypto", label: t(lang, "crypto.title") },
+  { key: "screener", href: `/${lang}/markets/screener`, icon: "filter", label: t(lang, "screener.title") },
+];
+---
+
+<nav class="mnav" aria-label="Markets navigation" data-market-nav>
+  <div class="mnav-inner">
+    {items.map((item) => (
+      <a
+        href={item.href}
+        class:list={["mnav-item", { "mnav-item--active": active === item.key }]}
+        aria-current={active === item.key ? "page" : undefined}
+      >
+        <svg class="mnav-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          {item.icon === "chart-bar" && <Fragment><path d="M3 3v18h18"/><path d="M7 16V8"/><path d="M11 16V4"/><path d="M15 16v-5"/><path d="M19 16v-8"/></Fragment>}
+          {item.icon === "currency" && <Fragment><circle cx="12" cy="12" r="8"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></Fragment>}
+          {item.icon === "trending" && <Fragment><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></Fragment>}
+          {item.icon === "crypto" && <Fragment><path d="M11.767 19.089c4.924.868 6.14-6.025 1.216-6.894m-1.216 6.894L5.86 18.047m5.908 1.042-.347 1.97m1.563-8.864c4.924.869 6.14-6.025 1.215-6.893m-1.215 6.893-3.94-.694m5.155-6.2L8.29 4.26m5.908 1.042.348-1.97M7.48 20.364l3.126-17.727"/></Fragment>}
+          {item.icon === "filter" && <Fragment><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></Fragment>}
+        </svg>
+        <span class="mnav-label">{item.label}</span>
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .mnav {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    margin: 0 calc(-1 * var(--spacing-md));
+    margin-bottom: var(--spacing-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  }
+
+  .mnav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .mnav-inner::-webkit-scrollbar { display: none; }
+
+  .mnav-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-meta);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    position: relative;
+  }
+
+  .mnav-item:hover {
+    color: var(--color-text);
+    background: var(--color-bg-secondary);
+    text-decoration: none;
+  }
+
+  .mnav-item--active {
+    color: var(--color-gold);
+    border-bottom-color: var(--color-gold);
+  }
+  .mnav-item--active:hover {
+    color: var(--color-gold);
+  }
+
+  .mnav-item:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: -2px;
+  }
+
+  .mnav-icon {
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  .mnav-item--active .mnav-icon {
+    opacity: 1;
+  }
+
+  @media (max-width: 520px) {
+    .mnav-item {
+      padding: 8px 10px;
+      font-size: 0.7rem;
+      gap: 4px;
+    }
+    .mnav-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mnav-item { transition: none; }
+  }
+
+  :global([data-theme="dark"]) .mnav {
+    background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+  }
+
+  @media print {
+    .mnav { display: none !important; }
+  }
+</style>

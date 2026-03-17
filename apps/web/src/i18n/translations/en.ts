@@ -588,6 +588,9 @@ export const en = {
   "common.loading": "Loading…",
   "common.loadingData": "Loading data…",
   "common.marketData": "Market data",
+  "common.retry": "Retry",
+  "common.checkConnection": "Check your connection and try again",
+  "common.tryDifferentSearch": "Try different search terms or broaden your filters",
   "common.topStories": "Top stories",
 
   // Article badges & labels
@@ -839,6 +842,8 @@ export const en = {
   "currencies.bestRate": "Best Rate",
   "currencies.swap": "Swap",
   "currencies.swapLabel": "Swap currencies",
+  "currencies.allRates": "Convert Across All Rates",
+  "currencies.perUsd": "/USD",
 
   // Markets hub — missing keys
   "markets.nStocks": "{n} stocks",
@@ -975,6 +980,8 @@ export const en = {
   "stock.tip50dAvg": "Average closing price over last 50 trading days",
   "stock.tip200dAvg": "Average closing price over last 200 trading days",
   "stock.tipBookValue": "Net asset value per share",
+  "stock.tipVolume": "Number of shares traded in the current session",
+  "stock.tip52wRange": "Highest and lowest price over the past 52 weeks",
 
   // Stock page — sectors
   "stock.secTechnology": "Technology",

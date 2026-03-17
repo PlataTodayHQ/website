@@ -1,5 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -58,7 +59,14 @@ const { lang } = Astro.params;
     data-i18n-best-rate={t(lang!, "currencies.bestRate" as any)}
     data-i18n-mep={t(lang!, "currencies.mep" as any)}
     data-i18n-ccl={t(lang!, "currencies.ccl" as any)}
+    data-i18n-all-rates={t(lang!, "currencies.allRates" as any)}
+    data-i18n-per-usd={t(lang!, "currencies.perUsd" as any)}
+    data-i18n-error={t(lang!, "markets.failedToLoad" as any)}
+    data-i18n-retry={t(lang!, "common.retry" as any)}
+    data-i18n-check-conn={t(lang!, "common.checkConnection" as any)}
   >
+    <MarketNav lang={lang!} active="currencies" />
+
     <!-- Header -->
     <header class="fx-header">
       <div class="fx-header-left">
@@ -68,6 +76,7 @@ const { lang } = Astro.params;
     </header>
 
     <!-- Rate Strip -->
+    <div class="fx-strip-wrap">
     <div class="fx-strip" role="region" aria-label={t(lang!, "currencies.title")}>
       <div class="fx-rate fx-rate--loading" id="official">
         <div class="fx-rate-head">
@@ -98,9 +107,13 @@ const { lang } = Astro.params;
           <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.buy")}</span><span class="fx-bs-val" data-rc-buy="blue">—</span></div>
           <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.sell")}</span><span class="fx-bs-val" data-rc-sell="blue">—</span></div>
         </div>
-        <div class="fx-spread-row">
-          <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
-          <span class="fx-spread-val" data-spread-pct="blue">—</span>
+        <div class="fx-gap-row" data-fx-gap-row="blue">
+          <div class="fx-gap-head">
+            <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
+            <span class="fx-spread-val" data-spread-pct="blue">—</span>
+            <span class="fx-gap-arrow" data-gap-arrow="blue"></span>
+          </div>
+          <div class="fx-gap-bar"><div class="fx-gap-fill" data-gap-fill="blue"></div></div>
         </div>
         <div class="fx-spark"><canvas data-spark="blue" height="48" role="img" aria-label={t(lang!, "currencies.usdBlue")}></canvas></div>
       </div>
@@ -117,9 +130,13 @@ const { lang } = Astro.params;
           <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.buy")}</span><span class="fx-bs-val" data-rc-buy="mep">—</span></div>
           <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.sell")}</span><span class="fx-bs-val" data-rc-sell="mep">—</span></div>
         </div>
-        <div class="fx-spread-row">
-          <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
-          <span class="fx-spread-val" data-spread-pct="mep">—</span>
+        <div class="fx-gap-row" data-fx-gap-row="mep">
+          <div class="fx-gap-head">
+            <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
+            <span class="fx-spread-val" data-spread-pct="mep">—</span>
+            <span class="fx-gap-arrow" data-gap-arrow="mep"></span>
+          </div>
+          <div class="fx-gap-bar"><div class="fx-gap-fill" data-gap-fill="mep"></div></div>
         </div>
       </div>
 
@@ -135,11 +152,16 @@ const { lang } = Astro.params;
           <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.buy")}</span><span class="fx-bs-val" data-rc-buy="ccl">—</span></div>
           <div class="fx-bs"><span class="fx-bs-label">{t(lang!, "currencies.sell")}</span><span class="fx-bs-val" data-rc-sell="ccl">—</span></div>
         </div>
-        <div class="fx-spread-row">
-          <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
-          <span class="fx-spread-val" data-spread-pct="ccl">—</span>
+        <div class="fx-gap-row" data-fx-gap-row="ccl">
+          <div class="fx-gap-head">
+            <span class="fx-spread-label">{t(lang!, "currencies.gap")}</span>
+            <span class="fx-spread-val" data-spread-pct="ccl">—</span>
+            <span class="fx-gap-arrow" data-gap-arrow="ccl"></span>
+          </div>
+          <div class="fx-gap-bar"><div class="fx-gap-fill" data-gap-fill="ccl"></div></div>
         </div>
       </div>
+    </div>
     </div>
 
     <!-- Quick Converter -->
@@ -170,6 +192,47 @@ const { lang } = Astro.params;
         <button class="fx-conv-preset" data-preset="500">500</button>
         <button class="fx-conv-preset" data-preset="1000">1,000</button>
         <button class="fx-conv-preset" data-preset="5000">5,000</button>
+      </div>
+    </section>
+
+    <!-- Multi-Rate Converter -->
+    <section class="fx-multiconv" data-fx-multiconv style="display:none;" aria-label={t(lang!, "currencies.converter")}>
+      <h2 class="fx-section-title">{t(lang!, "currencies.allRates" as any)}</h2>
+      <div class="fx-mc-input-row">
+        <label class="fx-mc-label" for="mc-amount">USD</label>
+        <input
+          type="number"
+          id="mc-amount"
+          class="fx-mc-input"
+          data-mc-amount
+          value="100"
+          min="0"
+          step="1"
+          inputmode="decimal"
+          aria-label="Amount in USD"
+        />
+      </div>
+      <div class="fx-mc-grid" data-mc-grid>
+        <div class="fx-mc-card" data-mc-card="oficial" style="border-top-color:#75AADB">
+          <span class="fx-mc-name">{t(lang!, "currencies.usdOfficial")}</span>
+          <span class="fx-mc-result" data-mc-result="oficial">--</span>
+          <span class="fx-mc-rate" data-mc-per="oficial"></span>
+        </div>
+        <div class="fx-mc-card" data-mc-card="blue" style="border-top-color:#F6B40E">
+          <span class="fx-mc-name">{t(lang!, "currencies.usdBlue")}</span>
+          <span class="fx-mc-result" data-mc-result="blue">--</span>
+          <span class="fx-mc-rate" data-mc-per="blue"></span>
+        </div>
+        <div class="fx-mc-card" data-mc-card="mep" style="border-top-color:#22c55e">
+          <span class="fx-mc-name">{t(lang!, "currencies.usdMep")}</span>
+          <span class="fx-mc-result" data-mc-result="mep">--</span>
+          <span class="fx-mc-rate" data-mc-per="mep"></span>
+        </div>
+        <div class="fx-mc-card" data-mc-card="ccl" style="border-top-color:#a855f7">
+          <span class="fx-mc-name">{t(lang!, "currencies.usdCcl")}</span>
+          <span class="fx-mc-result" data-mc-result="ccl">--</span>
+          <span class="fx-mc-rate" data-mc-per="ccl"></span>
+        </div>
       </div>
     </section>
 
@@ -292,27 +355,62 @@ const { lang } = Astro.params;
   </div>
 </Base>
 
+<script is:inline>
+// Scroll indicators for FX rate strip
+(function() {
+  var wrap = document.querySelector('.fx-strip-wrap');
+  var strip = wrap && wrap.querySelector('.fx-strip');
+  if (!strip || !wrap) return;
+  function update() {
+    var sl = strip.scrollLeft, sw = strip.scrollWidth, cw = strip.clientWidth;
+    wrap.classList.toggle('fx-strip-wrap--scrolled', sl > 8);
+    wrap.classList.toggle('fx-strip-wrap--at-end', sl + cw >= sw - 8);
+  }
+  strip.addEventListener('scroll', update, { passive: true });
+  update();
+  new ResizeObserver(update).observe(strip);
+})();
+</script>
 <script is:inline src="/js/charts.js?v=5"></script>
+<script is:inline src="/js/market-states.js?v=1"></script>
 <script is:inline>
 (function() {
   var LATEST = 'https://api.bluelytics.com.ar/v2/latest';
   var EVO = 'https://api.bluelytics.com.ar/v2/evolution.json?days=30';
   var C = window.PlataCharts;
   var pg = document.querySelector('[data-currencies-page]');
+  var i18nError = pg.getAttribute('data-i18n-error') || 'Failed to load data';
+  var i18nRetry = pg.getAttribute('data-i18n-retry') || 'Retry';
+  var i18nCheckConn = pg.getAttribute('data-i18n-check-conn') || 'Check your connection and try again';
   var lang = (pg && pg.getAttribute('data-lang')) || 'en';
   function i18n(key, fallback) { return (pg && pg.getAttribute('data-i18n-' + key)) || fallback; }
 
+  function flashEl(el, newVal, oldVal) {
+    if (!el || newVal === oldVal) return;
+    var cls = parseFloat(newVal) > parseFloat(oldVal) ? 'data-flash-up' : 'data-flash-down';
+    el.classList.remove('data-flash-up', 'data-flash-down');
+    void el.offsetWidth;
+    el.classList.add(cls);
+    setTimeout(function() { el.classList.remove(cls); }, 400);
+  }
+
   function setEl(sel, text) {
     var el = document.querySelector(sel);
-    if (el) el.textContent = text;
+    if (!el) return;
+    var old = el.textContent;
+    el.textContent = text;
+    flashEl(el, text, old);
   }
   function setChange(sel, percent) {
     var el = document.querySelector(sel);
     if (!el) return;
     if (percent == null) { el.textContent = ''; return; }
+    var old = el.textContent;
     var sign = percent >= 0 ? '+' : '';
-    el.textContent = sign + percent.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+    var newVal = sign + percent.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+    el.textContent = newVal;
     el.className = 'fx-change ' + (percent >= 0 ? 'rc-up' : 'rc-down');
+    flashEl(el, newVal, old);
   }
 
   var chartData = null;
@@ -330,11 +428,43 @@ const { lang } = Astro.params;
     setEl('[data-rc-sell="' + key + '"]', C.fmt(data.value_sell));
   }
 
+  var prevGaps = {};
   function fillSpread(key, rateSell, officialSell) {
     var s = calcSpread(rateSell, officialSell);
-    setEl('[data-spread-pct="' + key + '"]', (s.gap >= 0 ? '+' : '') + s.gap.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%');
-    var el = document.querySelector('[data-spread-pct="' + key + '"]');
-    if (el) el.className = 'fx-spread-val ' + (s.gap >= 0 ? 'rc-up' : 'rc-down');
+    var sel = '[data-spread-pct="' + key + '"]';
+    var el = document.querySelector(sel);
+    if (el) {
+      var old = el.textContent;
+      var newText = (s.gap >= 0 ? '+' : '') + s.gap.toLocaleString(lang, {minimumFractionDigits:1,maximumFractionDigits:1}) + '%';
+      el.textContent = newText;
+      el.className = 'fx-spread-val ' + (s.gap >= 0 ? 'rc-up' : 'rc-down');
+      flashEl(el, newText, old);
+    }
+    // Gap bar: scale 0-30% range
+    var fill = document.querySelector('[data-gap-fill="' + key + '"]');
+    if (fill) {
+      var pct = Math.min(Math.abs(s.gap) / 30 * 100, 100);
+      fill.style.width = pct + '%';
+      // Color: green < 5%, yellow 5-10%, orange 10-20%, red > 20%
+      if (Math.abs(s.gap) < 5) fill.style.background = '#16a34a';
+      else if (Math.abs(s.gap) < 10) fill.style.background = '#eab308';
+      else if (Math.abs(s.gap) < 20) fill.style.background = '#f97316';
+      else fill.style.background = '#dc2626';
+    }
+    // Trend arrow
+    var arrow = document.querySelector('[data-gap-arrow="' + key + '"]');
+    if (arrow) {
+      var prevGap = prevGaps[key];
+      if (prevGap != null && Math.abs(s.gap - prevGap) > 0.01) {
+        var widening = s.gap > prevGap;
+        arrow.textContent = widening ? '↑' : '↓';
+        arrow.className = 'fx-gap-arrow ' + (widening ? 'fx-gap-arrow--up' : 'fx-gap-arrow--down');
+        arrow.title = widening ? (i18n('widening', 'Widening')) : (i18n('narrowing', 'Narrowing'));
+      }
+      prevGaps[key] = s.gap;
+    } else {
+      prevGaps[key] = s.gap;
+    }
   }
 
   Promise.all([
@@ -494,7 +624,10 @@ const { lang } = Astro.params;
     }
   }).catch(function() {
     var updEl = document.querySelector('[data-mkts-updated]');
-    if (updEl) updEl.innerHTML = '— <button class="fx-retry-btn" aria-label="Retry" onclick="window.location.reload()">&#x21bb;</button>';
+    if (updEl) updEl.textContent = '—';
+    // Show error card in the rate strip area
+    var rateStrip = document.querySelector('.fx-strip');
+    if (rateStrip) rateStrip.innerHTML = MktStates.buildErrorCard({ message: i18nError, hint: i18nCheckConn, retryLabel: i18nRetry });
   });
 
   function buildPerformance(parsed) {
@@ -509,9 +642,12 @@ const { lang } = Astro.params;
 
       var chgEl = document.querySelector('[data-perf-chg="' + key + '"]');
       if (chgEl) {
+        var oldPerf = chgEl.textContent;
         var sign = chg >= 0 ? '+' : '';
-        chgEl.textContent = sign + chg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+        var newPerf = sign + chg.toLocaleString(lang, {minimumFractionDigits:2,maximumFractionDigits:2}) + '%';
+        chgEl.textContent = newPerf;
         chgEl.className = 'fx-perf-sv ' + (chg >= 0 ? 'rc-up' : 'rc-down');
+        flashEl(chgEl, newPerf, oldPerf);
       }
       setEl('[data-perf-high="' + key + '"]', 'ARS ' + C.fmt(high));
       setEl('[data-perf-low="' + key + '"]', 'ARS ' + C.fmt(low));
@@ -736,6 +872,44 @@ const { lang } = Astro.params;
     presets.forEach(function(b) { b.classList.remove('fx-conv-preset--active'); });
   });
 
+  // ─── Multi-Rate Converter ───
+  var mcAmountEl = document.querySelector('[data-mc-amount]');
+  var mcSection = document.querySelector('[data-fx-multiconv]');
+  var mcKeys = ['oficial', 'blue', 'mep', 'ccl'];
+
+  function updateMultiConv() {
+    var amount = parseFloat(mcAmountEl && mcAmountEl.value) || 0;
+    var anyRate = false;
+    for (var mi = 0; mi < mcKeys.length; mi++) {
+      var mk = mcKeys[mi];
+      var sell = convRates[mk] || 0;
+      var resultEl = document.querySelector('[data-mc-result="' + mk + '"]');
+      var perEl = document.querySelector('[data-mc-per="' + mk + '"]');
+      var cardEl = document.querySelector('[data-mc-card="' + mk + '"]');
+      if (sell > 0) {
+        anyRate = true;
+        if (resultEl) resultEl.textContent = 'ARS ' + C.fmt(Math.round(amount * sell));
+        if (perEl) perEl.textContent = '@ ' + C.fmt(sell) + ' ' + i18n('per-usd', '/USD');
+        if (cardEl) cardEl.style.display = '';
+      } else {
+        if (cardEl) cardEl.style.display = 'none';
+      }
+    }
+    if (anyRate && mcSection) mcSection.style.display = '';
+  }
+
+  // Hook into existing fillRate so multi-conv updates when rates load
+  var origFillRate2 = fillRate;
+  fillRate = function(key, data) {
+    origFillRate2(key, data);
+    updateMultiConv();
+  };
+
+  if (mcAmountEl) {
+    mcAmountEl.addEventListener('input', updateMultiConv);
+    mcAmountEl.addEventListener('focus', function() { this.select(); });
+  }
+
   var rTimer;
   function redrawAllCharts() {
     if (!chartData) return;
@@ -823,17 +997,27 @@ const { lang } = Astro.params;
 
   initFxCountdown();
   setInterval(fxTickCountdown, 1000);
+
+  // ─── Click-to-copy on rate values ───
+  document.querySelectorAll('.fx-bs-val, .fx-price').forEach(function(el) {
+    el.style.cursor = 'pointer';
+    el.title = el.closest('[data-currencies-page]') ? 'Click to copy' : '';
+    el.addEventListener('click', function() {
+      var text = el.textContent.replace(/[^0-9.,]/g, '').trim();
+      if (!text || text === '—') return;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function() {
+          el.classList.add('fx-copied');
+          setTimeout(function() { el.classList.remove('fx-copied'); }, 600);
+        });
+      }
+    });
+  });
 })();
 </script>
 
 <style>
-  .fx-retry-btn {
-    display: inline-block; margin-top: 8px; padding: 4px 12px; font-size: 0.72rem;
-    border: 1px solid var(--color-border); border-radius: 4px;
-    background: var(--color-bg-secondary); color: var(--color-text-meta); cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-  }
-  .fx-retry-btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+  /* Error cards use shared .mkts-error-card from global.css */
 
   /* ═══ FX Page — Yahoo Finance / TradingView inspired ═══ */
 
@@ -845,8 +1029,11 @@ const { lang } = Astro.params;
   .fx-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
   .fx-updated { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
 
+  /* Rate Strip wrapper (for scroll indicators on mobile) */
+  .fx-strip-wrap { position: relative; margin-bottom: var(--spacing-xl); }
+
   /* Rate Strip — 4 cards in a row */
-  .fx-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; margin-bottom: var(--spacing-xl); box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .fx-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
 
   .fx-rate { background: var(--color-bg); padding: 18px 16px; display: flex; flex-direction: column; gap: 10px; transition: background-color 0.15s ease; position: relative; }
   .fx-rate:hover { background: var(--color-bg-secondary); }
@@ -864,11 +1051,22 @@ const { lang } = Astro.params;
   .fx-buysell { display: flex; gap: 16px; }
   .fx-bs { display: flex; align-items: baseline; gap: 4px; }
   .fx-bs-label { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; font-weight: 600; }
-  .fx-bs-val { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .fx-bs-val { font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-text); transition: background 0.15s; border-radius: 3px; }
+  .fx-bs-val:hover { background: rgba(246,180,14,0.1); }
+  .fx-price { transition: background 0.15s; border-radius: 3px; }
+  .fx-price:hover { background: rgba(246,180,14,0.1); }
+  :global(.fx-copied) { animation: fx-copy-flash 0.5s ease-out; }
+  @keyframes fx-copy-flash { 0% { background: rgba(22,163,74,0.3); } 100% { background: transparent; } }
 
-  .fx-spread-row { display: flex; align-items: center; gap: 6px; }
+  .fx-gap-row { display: flex; flex-direction: column; gap: 4px; }
+  .fx-gap-head { display: flex; align-items: center; gap: 6px; }
   .fx-spread-label { font-size: 0.65rem; color: var(--color-text-meta); text-transform: uppercase; letter-spacing: 0.03em; font-weight: 600; }
   .fx-spread-val { font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .fx-gap-arrow { font-size: 0.7rem; font-weight: 700; transition: color 0.2s; }
+  .fx-gap-arrow--up { color: #dc2626; }
+  .fx-gap-arrow--down { color: #16a34a; }
+  .fx-gap-bar { height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; }
+  .fx-gap-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease, background 0.3s; width: 0; }
 
   .fx-spark { margin-top: auto; }
   .fx-spark canvas { width: 100%; display: block; }
@@ -917,6 +1115,51 @@ const { lang } = Astro.params;
   .fx-conv-preset:hover { border-color: var(--color-gold); color: var(--color-gold); }
   .fx-conv-preset--active { background: var(--color-gold); color: #fff; border-color: var(--color-gold); }
   .fx-conv-preset:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+  /* Multi-Rate Converter */
+  .fx-multiconv { margin-bottom: var(--spacing-xl); }
+  .fx-mc-input-row { display: flex; align-items: center; gap: 10px; margin-bottom: var(--spacing-md); }
+  .fx-mc-label {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--color-text-meta);
+  }
+  .fx-mc-input {
+    padding: 8px 14px; border: 1px solid var(--color-border); border-radius: 10px;
+    background: var(--color-bg); color: var(--color-text);
+    font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums;
+    outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    width: 160px; max-width: 100%;
+  }
+  .fx-mc-input:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(246,180,14,0.1); }
+  .fx-mc-input:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .fx-mc-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-sm);
+  }
+  .fx-mc-card {
+    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    border-top: 3px solid; border-radius: 12px; padding: 14px 16px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    text-align: center; transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .fx-mc-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .fx-mc-name {
+    font-size: 0.72rem; font-weight: 700; color: var(--color-text-meta);
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .fx-mc-result {
+    font-size: 1.3rem; font-weight: 800; color: var(--color-text);
+    font-variant-numeric: tabular-nums; line-height: 1.2;
+  }
+  .fx-mc-rate {
+    font-size: 0.68rem; color: var(--color-text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 640px) {
+    .fx-mc-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 380px) {
+    .fx-mc-grid { grid-template-columns: 1fr; }
+  }
 
   /* Chart Section */
   /* Performance Section */
@@ -1108,11 +1351,72 @@ const { lang } = Astro.params;
   @media (max-width: 900px) {
     .fx-strip { grid-template-columns: repeat(2, 1fr); }
   }
+  @media (max-width: 768px) {
+    /* Swipeable FX rate strip */
+    .fx-strip {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 0;
+      border-radius: 12px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+    }
+    .fx-strip::-webkit-scrollbar { display: none; }
+    .fx-rate {
+      min-width: 75%;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      padding: 14px 12px;
+    }
+    /* Fade gradient edges for scroll indicators */
+    .fx-strip-wrap {
+      position: relative;
+    }
+    .fx-strip-wrap::before,
+    .fx-strip-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; width: 24px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .fx-strip-wrap::before {
+      inset-inline-start: 0;
+      background: linear-gradient(to right, var(--color-bg), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .fx-strip-wrap::after {
+      inset-inline-end: 0;
+      background: linear-gradient(to left, var(--color-bg), transparent);
+    }
+    .fx-strip-wrap--scrolled::before { opacity: 1; }
+    .fx-strip-wrap--at-end::after { opacity: 0; }
+
+    /* Tighter card spacing */
+    .fx-rate { gap: 8px; }
+    .fx-converter { padding: 14px 16px; }
+    .fx-mc-card { padding: 10px 12px; }
+    :global(.fx-ppp-card) { padding: 12px; }
+    :global(.fxv-card) { padding: 12px; }
+    .fx-perf-card { padding: 12px; }
+    :global(.fx-sp-card) { padding: 10px; }
+  }
+  @media (max-width: 640px) {
+    /* Full-width search inputs */
+    .fx-conv-input-wrap { min-width: 100%; }
+    .fx-conv-row { gap: 8px; }
+    .fx-mc-input { width: 100%; }
+  }
   @media (max-width: 520px) {
-    .fx-strip { grid-template-columns: 1fr; }
     .fx-title { font-size: 1.25rem; }
     .fx-price { font-size: 1.3rem; }
     .fx-chart-head { flex-direction: column; align-items: start; gap: 4px; }
+    .fx-rate { min-width: 80%; padding: 10px; }
+    .fx-buysell { gap: 10px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1126,11 +1430,46 @@ const { lang } = Astro.params;
   }
 
   @media print {
+    /* Hide interactive elements */
     .fx-converter, .fx-spark, .fx-chart-section, .fx-gap-section, .scroll-top-btn { display: none !important; }
-    .fx-strip { grid-template-columns: repeat(2, 1fr); }
-    .fx-rate { break-inside: avoid; }
-    :global(.fxv-card), .fx-perf-card { break-inside: avoid; }
+    .fx-multiconv { display: none !important; }
+
+    /* Rate strip: print as grid */
+    .fx-strip { grid-template-columns: repeat(2, 1fr); gap: 8px; border: none !important; }
+    .fx-rate {
+      break-inside: avoid; page-break-inside: avoid;
+      border: 1px solid #ccc !important; border-radius: 0 !important;
+    }
+
+    /* Cards: clean for print */
+    :global(.fxv-card), .fx-perf-card, :global(.fx-sp-card), :global(.fx-ppp-card) {
+      break-inside: avoid; page-break-inside: avoid;
+      border: 1px solid #ccc !important; border-radius: 0 !important;
+    }
+
+    /* Rate values as plain text */
+    .fx-price { color: #000 !important; }
+
+    /* Tables: visible & clean */
+    .fx-history-wrap { overflow: visible; border-radius: 0; }
+    .fx-history-table { font-size: 0.7rem; }
+    :global(.fx-ht-row) { break-inside: avoid; }
+
+    /* No transitions */
     :global(.fx-bar-fill), :global(.fxv-bar), .fx-perf-bar-wrap :global(.fx-perf-bar) { transition: none; }
+    .fx-gap-fill { transition: none; }
+
+    /* Print source footer */
+    .fx-page::after {
+      content: "Source: plata.today";
+      display: block;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #999 !important;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ccc;
+    }
   }
 
   @media (prefers-contrast: more) {

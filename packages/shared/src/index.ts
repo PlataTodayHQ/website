@@ -24,6 +24,7 @@ export {
 export {
   toYahooSymbol, parseMervalFromBYMA, parseBYMAStock, fetchBYMA,
   fetchYahooChart, fetchExchangeRatesData, extractProfileData,
+  extractFinancialStatements, FINANCIAL_STATEMENT_MODULES,
 } from "./market-utils.js";
 
 export { log, setLogLevel } from "./logger.js";

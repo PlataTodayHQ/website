@@ -149,6 +149,10 @@ export function pruneOldData(db: Database.Database): void {
     db.prepare("DELETE FROM merval_snapshots WHERE fetched_at < datetime('now', '-30 days')").run();
     db.prepare("DELETE FROM stock_prices WHERE fetched_at < datetime('now', '-30 days')").run();
     db.prepare("DELETE FROM stock_fundamentals WHERE fetched_at < datetime('now', '-90 days')").run();
+    // Financial statements: keep all historical data, only prune very old fetched_at
+    db.prepare("DELETE FROM stock_income_statements WHERE fetched_at < datetime('now', '-365 days')").run();
+    db.prepare("DELETE FROM stock_balance_sheets WHERE fetched_at < datetime('now', '-365 days')").run();
+    db.prepare("DELETE FROM stock_cashflow_statements WHERE fetched_at < datetime('now', '-365 days')").run();
   } catch (err) {
     console.error("[market-data] Prune error:", err);
   }
