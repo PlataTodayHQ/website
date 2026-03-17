@@ -166,9 +166,8 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 **B3 (Brasil, Bolsa, Balcão)**
 - URL: https://www.b3.com.br
 - Data: Stocks, bonds, ETFs, derivatives, commodities, FX, indices (IBOVESPA, etc.)
-- API: Yes — B3 Market Data Platform (Level 1, Level 2, delayed, EOD). Also UMDF protocol for real-time.
-- Pricing: Paid (institutional pricing, expensive for individuals)
-- Historical data available via FTP and UP2DATA
+- API: **B2B only** — not available to individuals. B3 for Developers portal (developers.b3.com.br) for institutional clients/fintechs. UP2DATA for commercial data distribution. UMDF for real-time feeds. EOD via FTP.
+- Pricing: Paid (institutional/commercial only)
 
 **CVM (Securities regulator) — Open Data**
 - URL: https://dados.cvm.gov.br
@@ -178,11 +177,11 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 
 ### Local Financial Data Aggregators / Retail Portals
 
-**brapi.dev** ⭐
-- URL: https://brapi.dev
-- Data: Real-time quotes, OHLCV history, dividends, balance sheets, income statements, cash flow, fundamental indicators (P/L, P/VP, ROE) for 400+ B3 assets. Also currency conversion and inflation.
-- API: Yes — REST API
-- Pricing: **Free tier** + paid plans
+**brapi.dev** ⭐ (best Yahoo Finance alternative for Brazil)
+- URL: https://brapi.dev | GitHub: https://github.com/0peters/brapi
+- Data: Real-time quotes, OHLCV history, dividends, balance sheets (BP), income statements (DRE), cash flow (DFC), DVA — quarterly/annual since 2009. Fundamental indicators (P/L, P/VP, ROE) for 400+ B3 assets. Also currencies, crypto, inflation. Sources: B3, CVM, BCB, IBGE.
+- API: Yes — REST API, JSON. SDKs for TypeScript and Python. Supports MCP for AI integrations.
+- Pricing: **Free tier** (unlimited queries for popular stocks) + paid plans. 99.9% uptime.
 
 **StatusInvest**
 - URL: https://statusinvest.com.br
@@ -229,6 +228,18 @@ Research: local financial data platforms in Argentina, Chile, Brazil, Thailand, 
 ### Open Source
 
 **b3-api-dados-historicos** — https://github.com/cvscarlos/b3-api-dados-historicos — B3 historical data API (self-hosted, free)
+
+**Dados de Mercado**
+- URL: https://www.dadosdemercado.com.br/api/docs
+- Data: Stocks, investment funds, Tesouro Direto, macroeconomic indicators, financial/risk/technical indicators
+- API: Yes — REST API, JSON, requires auth token
+- Pricing: Partial free access
+
+**Fintz**
+- URL: https://fintz.com.br
+- Data: Company data, funds, bonds, stocks
+- API: Yes
+- Pricing: Partial free access
 
 ---
 
