@@ -24,7 +24,7 @@ export {
   getMerval, getRates, getStocks,
   getCedears, getGovernmentBonds, getCorporateBonds, getLetras,
   getDataAge,
-  setEconomicIndicators, getEconomicIndicators, updateEconomicIndicator,
+  setEconomicIndicators, getEconomicIndicators, getEconomicUpdatedAt, updateEconomicIndicator,
 } from "./market-store.js";
 export type { AssetType, MervalSnapshot, ExchangeRates, StockQuote, EconomicIndicators } from "./market-store.js";
 

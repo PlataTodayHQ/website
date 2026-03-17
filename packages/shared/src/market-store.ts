@@ -172,6 +172,11 @@ export function getEconomicIndicators(maxAge?: number): EconomicIndicators | nul
   return getFresh(_economicStore, maxAge ?? 10 * 60 * 1000); // 10 min default for economic data
 }
 
+/** Returns the updatedAt timestamp for economic data (ms since epoch), or null if no data. */
+export function getEconomicUpdatedAt(): number | null {
+  return _economicStore?.updatedAt ?? null;
+}
+
 export function updateEconomicIndicator(key: keyof EconomicIndicators, value: number | null): void {
   if (!_economicStore) {
     _economicStore = {
