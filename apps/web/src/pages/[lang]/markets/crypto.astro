@@ -285,7 +285,7 @@ const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "crypto", route: "crypto"
   /* Error cards / retry use shared .mkts-error-card / .mkts-retry-btn from global.css */
 
   /* Section fade-in */
-  .cr-overview:not(.cr-skeleton-overview), .cr-movers, .cr-perf7d, .cr-treemap-section, .cr-dom-section, .cr-corr-section {
+  .cr-overview:not(.cr-skeleton-overview), .cr-movers, .cr-perf7d, .cr-treemap-section, .cr-dom-section {
     animation: fade-in-up 0.3s ease-out;
   }
 
@@ -638,8 +638,6 @@ const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "crypto", route: "crypto"
     .cr-toolbar { gap: 8px; }
   }
   @media (max-width: 520px) {
-    .cr-header { flex-direction: column; align-items: start; gap: 8px; }
-    .cr-title { font-size: 1.3rem; }
     :global(.cr-card) { padding: 10px; }
     :global(.cr-card-head) { gap: 6px; }
     :global(.cr-card-sym) { font-size: 0.78rem; }
@@ -769,7 +767,7 @@ const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "crypto", route: "crypto"
 
   @media (prefers-reduced-motion: reduce) {
     .scroll-top-btn { transition: none; }
-    .cr-overview:not(.cr-skeleton-overview), .cr-movers, .cr-perf7d, .cr-treemap-section, .cr-dom-section, .cr-corr-section { animation: none; }
+    .cr-overview:not(.cr-skeleton-overview), .cr-movers, .cr-perf7d, .cr-treemap-section, .cr-dom-section { animation: none; }
   }
 
   @media (prefers-contrast: more) {

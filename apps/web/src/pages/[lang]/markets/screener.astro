@@ -454,20 +454,8 @@ const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "screener", route: "scree
     min-height: 200px;
   }
 
-  /* Loading */
-  .scr-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl); font-size: 0.85rem; }
-  .loading-spinner {
-    display: inline-block; width: 18px; height: 18px; margin-inline-end: 8px; vertical-align: middle;
-    border: 2px solid var(--color-border);
-    border-top-color: var(--color-gold);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
   /* Empty state now uses shared .mkts-empty-state from global.css, populated dynamically */
   .scr-empty { padding: 0; }
-
-  .info-disclaimer { margin-top: var(--spacing-xl); }
 
   /* Cards: hidden on desktop */
   .scr-cards { display: none; }
@@ -655,7 +643,6 @@ const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "screener", route: "scree
 
   @media (prefers-reduced-motion: reduce) {
     .skeleton-shimmer { animation: none; }
-    .loading-spinner { animation: none; }
     .scr-breadth-seg, .scr-tab, .scr-search, .scr-sector-filter { transition: none; }
     :global(.stk-card), :global(.scr-detail-card), :global(.scr-detail-link) { transition: none; animation: none; }
     .scr-expand-btn, .scr-sort-btn, .scr-sort-icon, :global(.scr-row) { transition: none; animation: none; }

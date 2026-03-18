@@ -903,8 +903,6 @@ const { lang } = Astro.params;
     animation: mkt-data-pop 0.3s ease-out both;
   }
 
-  /* Old retry button kept for any remaining references */
-
   /* Disclaimer */
   .mkt-disclaimer { font-size: 0.7rem; color: var(--color-text-meta); text-align: center; font-style: italic; margin-top: var(--spacing-md); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); }
 
@@ -937,9 +935,9 @@ const { lang } = Astro.params;
 
   @media (prefers-reduced-motion: reduce) {
     .mkt-status-bar :global(.mkt-status-dot--open) { animation: none; }
-    .mkt-breadth-seg, .mkt-sec-link, .mkt-cat-link, .mkt-jump-link { transition: none; }
-    .mkt-rate-row, .mkt-rate-btn, .mkt-hot-link, .mkt-trending-card { transition: none; }
-    .mkt-trending-stat, .mkt-breadth-up, .mkt-breadth-down { transition: none; }
+    .mkt-breadth-seg, .mkt-sec-link, .mkt-cat-link { transition: none; }
+    .mkt-rate-row, .mkt-rate-btn, .mkt-hot-link { transition: none; }
+    .mkt-breadth-up { transition: none; }
     :global(.mkt-hm-cell), :global(.mkt-asset-card), :global(.mkt-mover-row) { transition: none; }
     .mkt-fx-card { transition: none; }
     .mkt-fx-card--loading .mkt-fx-price, .mkt-fx-card--loading .mkt-fx-bs b,
@@ -947,7 +945,6 @@ const { lang } = Astro.params;
     .scroll-top-btn { transition: none; }
     .mkt-shimmer { animation: none; }
     .mkt-section-loaded { animation: none; }
-    .mkts-retry-btn { transition: none; }
     .mkt-section { opacity: 1; transform: none; transition: none; }
     .mkt-fx-card:not(.mkt-fx-card--loading) { animation: none; }
     .mkt-glance { animation: none; }
