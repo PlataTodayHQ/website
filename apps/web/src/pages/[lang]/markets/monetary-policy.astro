@@ -1,0 +1,609 @@
+---
+import Base from "@/layouts/Base.astro";
+import MarketNav from "@/components/MarketNav.astro";
+import { LANGUAGES, getEconomicIndicators } from "@plata-today/shared";
+import { t } from "@/i18n";
+
+export const prerender = false;
+
+const { lang } = Astro.params;
+if (!lang || !(lang in LANGUAGES)) {
+  return Astro.redirect("/en/", 302);
+}
+
+const indicators = getEconomicIndicators();
+const policyRate = indicators?.bcraRate;
+const seoTitle = policyRate != null
+  ? `BCRA ${policyRate.toFixed(1)}% — ${t(lang, "bcra.title" as any)}`
+  : t(lang, "bcra.title" as any);
+---
+
+<Base
+  title={seoTitle}
+  description={t(lang!, "bcra.subtitle" as any)}
+  lang={lang}
+  ogType="website"
+  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/monetary-policy`]))}
+  breadcrumbs={[
+    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
+    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
+    { name: t(lang!, "bcra.breadcrumb" as any), url: `/${lang}/markets/monetary-policy` },
+  ]}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": t(lang!, "bcra.title" as any),
+    "description": t(lang!, "bcra.subtitle" as any),
+    "url": `https://plata.today/${lang}/markets/monetary-policy`,
+    "inLanguage": lang,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Plata",
+      "url": "https://plata.today"
+    }
+  }}
+>
+  <div class="bcra-page" data-bcra-page data-lang={lang}
+    data-i18n-error={t(lang!, "markets.failedToLoad" as any)}
+    data-i18n-retry={t(lang!, "common.retry" as any)}
+    data-i18n-check-conn={t(lang!, "common.checkConnection" as any)}
+    data-i18n-updated={t(lang!, "stock.updated")}
+  >
+    <MarketNav lang={lang!} active="monetary-policy" />
+
+    <!-- Header -->
+    <header class="bcra-header">
+      <div class="bcra-header-left">
+        <h1 class="bcra-title">{t(lang!, "bcra.title" as any)}</h1>
+        <span class="bcra-updated" data-bcra-updated role="status" aria-live="polite">{t(lang!, "currencies.loading")}</span>
+      </div>
+      <p class="bcra-subtitle">{t(lang!, "bcra.subtitle" as any)}</p>
+    </header>
+
+    <!-- Key Indicators Grid -->
+    <section class="bcra-grid" aria-label={t(lang!, "bcra.title" as any)}>
+      <div class="bcra-card bcra-card--loading" data-bcra-card="rate">
+        <span class="bcra-card-label">{t(lang!, "bcra.policyRate" as any)}</span>
+        <div class="bcra-card-value-row">
+          <span class="bcra-card-value" data-bcra-val="rate">—</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
+        </div>
+      </div>
+
+      <div class="bcra-card bcra-card--loading" data-bcra-card="reserves">
+        <span class="bcra-card-label">{t(lang!, "bcra.reserves" as any)}</span>
+        <div class="bcra-card-value-row">
+          <span class="bcra-card-value" data-bcra-val="reserves">—</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitBillionUsd" as any)}</span>
+        </div>
+      </div>
+
+      <div class="bcra-card bcra-card--loading" data-bcra-card="monetaryBase">
+        <span class="bcra-card-label">{t(lang!, "bcra.monetaryBase" as any)}</span>
+        <div class="bcra-card-value-row">
+          <span class="bcra-card-value" data-bcra-val="monetaryBase">—</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitTrillionArs" as any)}</span>
+        </div>
+      </div>
+
+      <div class="bcra-card bcra-card--loading" data-bcra-card="badlar">
+        <span class="bcra-card-label">{t(lang!, "bcra.badlarRate" as any)}</span>
+        <div class="bcra-card-value-row">
+          <span class="bcra-card-value" data-bcra-val="badlar">—</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
+        </div>
+      </div>
+
+      <div class="bcra-card bcra-card--loading" data-bcra-card="cer">
+        <span class="bcra-card-label">{t(lang!, "bcra.cerIndex" as any)}</span>
+        <div class="bcra-card-value-row">
+          <span class="bcra-card-value" data-bcra-val="cer">—</span>
+        </div>
+      </div>
+
+      <div class="bcra-card bcra-card--loading" data-bcra-card="uva">
+        <span class="bcra-card-label">{t(lang!, "bcra.uvaValue" as any)}</span>
+        <div class="bcra-card-value-row">
+          <span class="bcra-card-value" data-bcra-val="uva">—</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitArs" as any)}</span>
+        </div>
+      </div>
+
+      <div class="bcra-card bcra-card--loading" data-bcra-card="plazoFijoTNA">
+        <span class="bcra-card-label">{t(lang!, "bcra.plazoFijoTNA" as any)}</span>
+        <div class="bcra-card-value-row">
+          <span class="bcra-card-value" data-bcra-val="plazoFijoTNA">—</span>
+          <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Policy Rate Chart -->
+    <section class="bcra-chart-section" data-bcra-chart-section style="display:none;">
+      <div class="bcra-chart-head">
+        <h2 class="bcra-chart-title">{t(lang!, "bcra.chartTitle" as any)}</h2>
+      </div>
+      <div class="bcra-chart-wrap">
+        <svg data-bcra-chart class="bcra-chart-svg" role="img" aria-label={t(lang!, "bcra.chartAriaLabel" as any)} preserveAspectRatio="none"></svg>
+      </div>
+    </section>
+
+    <!-- Educational Panel -->
+    <details class="bcra-info" data-bcra-info open>
+      <summary class="bcra-info-summary">
+        <span class="bcra-info-icon">i</span>
+        {t(lang!, "bcra.infoTitle" as any)}
+      </summary>
+      <div class="bcra-info-content">
+        <div class="bcra-info-grid">
+          <div class="bcra-info-item">
+            <h3 class="bcra-info-term">{t(lang!, "bcra.whatIsBcra" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.whatIsBcraDesc" as any)}</p>
+          </div>
+          <div class="bcra-info-item">
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutRate" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutRateDesc" as any)}</p>
+          </div>
+          <div class="bcra-info-item">
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutReserves" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutReservesDesc" as any)}</p>
+          </div>
+          <div class="bcra-info-item">
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutMonetaryBase" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutMonetaryBaseDesc" as any)}</p>
+          </div>
+          <div class="bcra-info-item">
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutBadlar" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutBadlarDesc" as any)}</p>
+          </div>
+          <div class="bcra-info-item">
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutCer" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutCerDesc" as any)}</p>
+          </div>
+          <div class="bcra-info-item">
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutUva" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutUvaDesc" as any)}</p>
+          </div>
+          <div class="bcra-info-item">
+            <h3 class="bcra-info-term">{t(lang!, "bcra.aboutPlazoFijo" as any)}</h3>
+            <p class="bcra-info-desc">{t(lang!, "bcra.aboutPlazoFijoDesc" as any)}</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Data Source -->
+    <p class="bcra-disclaimer">{t(lang!, "bcra.source" as any)}</p>
+    <noscript><p class="bcra-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+  </div>
+</Base>
+
+<script is:inline>
+(function() {
+  var pg = document.querySelector('[data-bcra-page]');
+  if (!pg) return;
+  var lang = pg.getAttribute('data-lang') || 'en';
+  var i18nError = pg.getAttribute('data-i18n-error') || 'Failed to load data';
+  var i18nRetry = pg.getAttribute('data-i18n-retry') || 'Retry';
+  var i18nUpdated = pg.getAttribute('data-i18n-updated') || 'Updated';
+
+  // ─── Educational panel dismiss ───
+  var infoPanel = pg.querySelector('[data-bcra-info]');
+  if (infoPanel) {
+    var KEY = 'plata_bcra_info_seen';
+    if (localStorage.getItem(KEY) === '1') {
+      infoPanel.removeAttribute('open');
+    }
+    infoPanel.addEventListener('toggle', function() {
+      if (!infoPanel.open) localStorage.setItem(KEY, '1');
+      else localStorage.removeItem(KEY);
+    });
+  }
+
+  // ─── Format helpers ───
+  function fmtRate(v) {
+    if (v == null) return '—';
+    return v.toLocaleString(lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  }
+  function fmtReserves(v) {
+    if (v == null) return '—';
+    // v is in millions, display as billions
+    var billions = v / 1000;
+    return billions.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function fmtMonetaryBase(v) {
+    if (v == null) return '—';
+    // v is in millions, display as trillions
+    var trillions = v / 1000000;
+    return trillions.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function fmtIndex(v) {
+    if (v == null) return '—';
+    return v.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  var formatters = {
+    rate: fmtRate,
+    reserves: fmtReserves,
+    monetaryBase: fmtMonetaryBase,
+    badlar: fmtRate,
+    cer: fmtIndex,
+    uva: fmtIndex,
+    plazoFijoTNA: fmtRate
+  };
+
+  // ─── Fetch BCRA data ───
+  function fetchBcra() {
+    fetch('/api/bcra')
+      .then(function(r) { if (!r.ok) throw new Error(r.statusText); return r.json(); })
+      .then(function(data) {
+        var keys = ['rate', 'reserves', 'monetaryBase', 'badlar', 'cer', 'uva', 'plazoFijoTNA'];
+        for (var i = 0; i < keys.length; i++) {
+          var k = keys[i];
+          var el = pg.querySelector('[data-bcra-val="' + k + '"]');
+          if (el) {
+            var fmt = formatters[k] || fmtIndex;
+            el.textContent = fmt(data[k]);
+          }
+          var card = pg.querySelector('[data-bcra-card="' + k + '"]');
+          if (card) card.classList.remove('bcra-card--loading');
+        }
+        // Update timestamp
+        var updEl = pg.querySelector('[data-bcra-updated]');
+        if (updEl) {
+          var now = new Date();
+          updEl.textContent = i18nUpdated + ' ' + now.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' });
+        }
+      })
+      .catch(function(err) {
+        console.error('BCRA fetch error:', err);
+        var updEl = pg.querySelector('[data-bcra-updated]');
+        if (updEl) updEl.textContent = i18nError;
+      });
+  }
+
+  // ─── SVG Chart ───
+  function fetchAndDrawChart() {
+    fetch('/api/economic-history?indicator=bcra_rate&days=365')
+      .then(function(r) { if (!r.ok) throw new Error(r.statusText); return r.json(); })
+      .then(function(data) {
+        if (!data || !data.length || data.length < 3) return;
+        drawChart(data);
+      })
+      .catch(function(err) {
+        console.error('BCRA chart fetch error:', err);
+      });
+  }
+
+  function drawChart(data) {
+    var section = pg.querySelector('[data-bcra-chart-section]');
+    var svg = pg.querySelector('[data-bcra-chart]');
+    if (!svg || !section) return;
+
+    section.style.display = '';
+
+    var W = svg.parentElement.clientWidth || 800;
+    var H = 280;
+    var PAD_L = 56;
+    var PAD_R = 16;
+    var PAD_T = 16;
+    var PAD_B = 32;
+
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('width', W);
+    svg.setAttribute('height', H);
+
+    var vals = data.map(function(d) { return d.value; });
+    var minV = Math.min.apply(null, vals);
+    var maxV = Math.max.apply(null, vals);
+    var rangeV = maxV - minV || 1;
+
+    // Add 5% padding to y range
+    minV -= rangeV * 0.05;
+    maxV += rangeV * 0.05;
+    rangeV = maxV - minV;
+
+    var plotW = W - PAD_L - PAD_R;
+    var plotH = H - PAD_T - PAD_B;
+
+    function xPos(i) { return PAD_L + (i / (data.length - 1)) * plotW; }
+    function yPos(v) { return PAD_T + plotH - ((v - minV) / rangeV) * plotH; }
+
+    // Build polyline points
+    var points = [];
+    for (var i = 0; i < data.length; i++) {
+      points.push(xPos(i).toFixed(1) + ',' + yPos(data[i].value).toFixed(1));
+    }
+
+    // Fill area
+    var areaPoints = points.slice();
+    areaPoints.push(xPos(data.length - 1).toFixed(1) + ',' + (PAD_T + plotH));
+    areaPoints.push(PAD_L + ',' + (PAD_T + plotH));
+
+    // Y-axis labels (5 ticks)
+    var yLabels = '';
+    var gridLines = '';
+    for (var yi = 0; yi <= 4; yi++) {
+      var val = minV + (rangeV * yi / 4);
+      var y = yPos(val);
+      yLabels += '<text x="' + (PAD_L - 8) + '" y="' + (y + 4) + '" class="bcra-chart-label" text-anchor="end">' + val.toFixed(1) + '%</text>';
+      gridLines += '<line x1="' + PAD_L + '" y1="' + y + '" x2="' + (W - PAD_R) + '" y2="' + y + '" class="bcra-chart-grid"/>';
+    }
+
+    // X-axis labels (6 ticks)
+    var xLabels = '';
+    var xCount = Math.min(6, data.length);
+    for (var xi = 0; xi < xCount; xi++) {
+      var idx = Math.round(xi * (data.length - 1) / (xCount - 1));
+      var d = data[idx];
+      var dateStr = d.date;
+      // Format as MMM 'YY
+      var parts = dateStr.split('-');
+      var mo = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, 1).toLocaleDateString(lang, { month: 'short' });
+      var yr = parts[0] ? "'" + parts[0].slice(2) : '';
+      xLabels += '<text x="' + xPos(idx).toFixed(1) + '" y="' + (H - 6) + '" class="bcra-chart-label" text-anchor="middle">' + mo + ' ' + yr + '</text>';
+    }
+
+    svg.innerHTML =
+      gridLines +
+      '<polygon points="' + areaPoints.join(' ') + '" class="bcra-chart-fill"/>' +
+      '<polyline points="' + points.join(' ') + '" class="bcra-chart-line" fill="none"/>' +
+      yLabels + xLabels;
+  }
+
+  // ─── Init ───
+  fetchBcra();
+  fetchAndDrawChart();
+
+  // Refresh every 5 minutes
+  setInterval(fetchBcra, 5 * 60 * 1000);
+
+  // Redraw chart on resize
+  var resizeTimer;
+  var chartData = null;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      // Re-fetch and redraw
+      fetch('/api/economic-history?indicator=bcra_rate&days=365')
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) { if (d && d.length >= 3) drawChart(d); })
+        .catch(function() {});
+    }, 250);
+  });
+})();
+</script>
+
+<style>
+  /* ═══ BCRA Monetary Policy Page ═══ */
+
+  .bcra-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
+
+  /* Header */
+  .bcra-header { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-sm); border-bottom: 1px solid var(--color-border); }
+  .bcra-header-left { display: flex; align-items: baseline; gap: var(--spacing-md); flex-wrap: wrap; margin-bottom: 4px; }
+  .bcra-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .bcra-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin: 0; line-height: 1.4; }
+  .bcra-updated { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+
+  /* Indicator Grid */
+  .bcra-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .bcra-card {
+    background: var(--color-bg);
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background-color 0.15s ease;
+  }
+  .bcra-card:hover { background: var(--color-bg-secondary); }
+
+  .bcra-card--loading .bcra-card-value {
+    color: var(--color-text-meta);
+    animation: bcra-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes bcra-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .bcra-card-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-meta);
+  }
+
+  .bcra-card-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .bcra-card-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+    line-height: 1.1;
+  }
+
+  .bcra-card-unit {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-meta);
+    letter-spacing: 0.02em;
+  }
+
+  /* Chart */
+  .bcra-chart-section {
+    margin-bottom: var(--spacing-xl);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .bcra-chart-head { margin-bottom: var(--spacing-md); }
+  .bcra-chart-title {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-meta);
+  }
+
+  .bcra-chart-wrap { width: 100%; overflow: hidden; }
+
+  .bcra-chart-svg { width: 100%; display: block; }
+
+  .bcra-chart-svg :global(.bcra-chart-line) {
+    stroke: var(--color-gold);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  .bcra-chart-svg :global(.bcra-chart-fill) {
+    fill: rgba(246, 180, 14, 0.1);
+  }
+
+  .bcra-chart-svg :global(.bcra-chart-grid) {
+    stroke: var(--color-border);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+  }
+
+  .bcra-chart-svg :global(.bcra-chart-label) {
+    font-size: 10px;
+    fill: var(--color-text-meta);
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Educational Panel */
+  .bcra-info {
+    margin-bottom: var(--spacing-xl);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .bcra-info-summary {
+    padding: 14px 22px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .bcra-info-summary::-webkit-details-marker { display: none; }
+  .bcra-info-summary::after {
+    content: '';
+    margin-left: auto;
+    width: 0; height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--color-text-meta);
+    transition: transform 0.2s;
+  }
+  .bcra-info[open] .bcra-info-summary::after {
+    transform: rotate(180deg);
+  }
+  .bcra-info-summary:hover { background: var(--color-bg); }
+
+  .bcra-info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(246, 180, 14, 0.15);
+    color: var(--color-gold);
+    font-size: 0.72rem;
+    font-weight: 800;
+    font-style: italic;
+    flex-shrink: 0;
+  }
+
+  .bcra-info-content {
+    padding: 0 22px 18px;
+  }
+
+  .bcra-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .bcra-info-item { }
+
+  .bcra-info-term {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 4px 0;
+  }
+
+  .bcra-info-desc {
+    font-size: 0.78rem;
+    color: var(--color-text-meta);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Disclaimer */
+  .bcra-disclaimer {
+    font-size: 0.72rem;
+    color: var(--color-text-meta);
+    text-align: center;
+    margin: 0 0 var(--spacing-xl);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* ─── Dark theme ─── */
+  :global([data-theme="dark"]) .bcra-chart-svg :global(.bcra-chart-fill) {
+    fill: rgba(246, 180, 14, 0.08);
+  }
+
+  :global([data-theme="dark"]) .bcra-info-icon {
+    background: rgba(246, 180, 14, 0.12);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 1024px) {
+    .bcra-grid { grid-template-columns: repeat(2, 1fr); }
+    .bcra-info-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .bcra-grid { grid-template-columns: 1fr; }
+    .bcra-info-grid { grid-template-columns: 1fr; }
+    .bcra-title { font-size: 1.25rem; }
+    .bcra-card-value { font-size: 1.35rem; }
+    .bcra-chart-section { padding: 14px 14px; }
+  }
+</style>

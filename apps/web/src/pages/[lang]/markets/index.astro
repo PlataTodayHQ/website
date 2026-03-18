@@ -1525,8 +1525,9 @@ const { lang } = Astro.params;
   /* At-a-glance summary */
   .mkt-glance {
     display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    padding: 10px 16px; margin-bottom: var(--spacing-lg);
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px;
+    padding: 12px 18px; margin-bottom: var(--spacing-lg);
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     animation: mkt-section-fade 0.3s ease-out both;
   }
   .mkt-glance-item { display: flex; align-items: center; gap: 8px; }
@@ -1610,11 +1611,12 @@ const { lang } = Astro.params;
   .mkt-merval-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); }
 
   .mkt-idx-card {
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px;
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px;
     padding: 18px; display: flex; flex-direction: column; gap: 10px;
     text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
-  .mkt-idx-card:hover { border-color: var(--color-text-meta); text-decoration: none; color: inherit; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .mkt-idx-card:hover { border-color: color-mix(in srgb, var(--color-border) 60%, var(--color-gold)); text-decoration: none; color: inherit; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
   .mkt-idx-card:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 
   .mkt-idx-top { display: flex; align-items: center; gap: 8px; }
@@ -1635,8 +1637,9 @@ const { lang } = Astro.params;
 
   /* Top Movers */
   .mkt-movers {
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 12px;
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px;
     display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .mkt-movers-cols { display: grid; grid-template-columns: 1fr 1fr; flex: 1; }
   .mkt-movers-col { display: flex; flex-direction: column; }
@@ -1766,9 +1769,10 @@ const { lang } = Astro.params;
   }
   .mkt-fi-card {
     display: flex; align-items: center; gap: 12px; padding: 14px 16px;
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 10px;
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px;
     text-decoration: none; color: inherit;
     transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .mkt-fi-card:hover {
     border-color: var(--color-gold); text-decoration: none; color: inherit;
@@ -1803,8 +1807,9 @@ const { lang } = Astro.params;
   /* ═══ MARKET PULSE ═══ */
   .mkt-pulse-grid {
     display: grid; grid-template-columns: 140px 1fr 200px; gap: var(--spacing-md);
-    background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+    background: var(--color-bg); border: 1px solid var(--color-border);
     border-radius: 12px; padding: 16px; align-items: start;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .mkt-pulse-gauge {
     display: flex; flex-direction: column; align-items: center; gap: 4px;

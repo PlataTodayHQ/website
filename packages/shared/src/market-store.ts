@@ -145,8 +145,63 @@ export function getLetras(maxAge?: number): StockQuote[] | null {
   return getFresh(store.letras, maxAge);
 }
 
+// ---------------------------------------------------------------------------
+// Economic indicators
+// ---------------------------------------------------------------------------
+
+export interface EconomicIndicators {
+  countryRisk: number | null;          // EMBI+ spread in basis points
+  bcraRate: number | null;             // Policy rate (%)
+  bcraReserves: number | null;         // International reserves (millions USD)
+  bcraMonetaryBase: number | null;     // Monetary base (millions ARS)
+  plazoFijoTNA: number | null;         // 30-day TNA (%)
+  badlar: number | null;               // BADLAR rate (%)
+  cer: number | null;                  // CER index value
+  uva: number | null;                  // UVA value
+  inflationMonthly: number | null;     // Latest monthly CPI (%)
+  inflationAnnual: number | null;      // Latest annual CPI (%)
+}
+
+let _economicStore: StoreEntry<EconomicIndicators> | null = null;
+
+export function setEconomicIndicators(data: EconomicIndicators): void {
+  _economicStore = { data, updatedAt: Date.now() };
+}
+
+export function getEconomicIndicators(maxAge?: number): EconomicIndicators | null {
+  return getFresh(_economicStore, maxAge ?? 10 * 60 * 1000); // 10 min default for economic data
+}
+
+/** Returns the updatedAt timestamp for economic data (ms since epoch), or null if no data. */
+export function getEconomicUpdatedAt(): number | null {
+  return _economicStore?.updatedAt ?? null;
+}
+
+export function updateEconomicIndicator(key: keyof EconomicIndicators, value: number | null): void {
+  if (!_economicStore) {
+    _economicStore = {
+      data: {
+        countryRisk: null, bcraRate: null, bcraReserves: null,
+        bcraMonetaryBase: null, plazoFijoTNA: null, badlar: null,
+        cer: null, uva: null, inflationMonthly: null, inflationAnnual: null,
+      },
+      updatedAt: Date.now(),
+    };
+  }
+  _economicStore.data[key] = value;
+  _economicStore.updatedAt = Date.now();
+}
+
+// ---------------------------------------------------------------------------
+// Data age
+// ---------------------------------------------------------------------------
+
 /** Returns age of data in ms, or null if no data. */
-export function getDataAge(key: "merval" | "rates" | "stocks" | "cedears" | "governmentBonds" | "corporateBonds" | "letras"): number | null {
+export function getDataAge(key: "merval" | "rates" | "stocks" | "cedears" | "governmentBonds" | "corporateBonds" | "letras" | "economic"): number | null {
+  if (key === "economic") {
+    if (!_economicStore) return null;
+    return Date.now() - _economicStore.updatedAt;
+  }
   const entry = store[key];
   if (!entry) return null;
   return Date.now() - entry.updatedAt;

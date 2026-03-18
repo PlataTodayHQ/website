@@ -158,6 +158,55 @@
     }, 400);
   }
 
+  /**
+   * Escape HTML special characters.
+   */
+  function escHtml(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /**
+   * Format a number with locale-aware separators (no currency).
+   * @param {number} value
+   * @param {string} [locale]
+   * @param {object} [opts] — Intl.NumberFormat options
+   */
+  function formatNumber(value, locale, opts) {
+    if (value == null || isNaN(value)) return '—';
+    locale = locale || getLang();
+    try {
+      return new Intl.NumberFormat(locale, opts || {}).format(value);
+    } catch (e) {
+      return String(value);
+    }
+  }
+
+  /**
+   * Format a percentage change with sign (e.g. "+2.50%" or "-1.30%").
+   * @param {number} value — percentage value
+   * @returns {string}
+   */
+  function changeText(value) {
+    if (value == null || isNaN(value)) return '—';
+    var sign = value > 0 ? '+' : '';
+    return sign + value.toFixed(2) + '%';
+  }
+
+  /**
+   * CSS class for up/down/unchanged change.
+   * @param {number|null} value
+   * @returns {string}
+   */
+  function changeClass(value) {
+    if (value == null || value === 0) return 'rc-unch';
+    return value > 0 ? 'rc-up' : 'rc-down';
+  }
+
   // Export
   root.PlataHelpers = {
     getLang: getLang,
@@ -169,6 +218,10 @@
     fetchWithTimeout: fetchWithTimeout,
     showSkeleton: showSkeleton,
     hideSkeleton: hideSkeleton,
-    flashElement: flashElement
+    flashElement: flashElement,
+    escHtml: escHtml,
+    formatNumber: formatNumber,
+    changeText: changeText,
+    changeClass: changeClass
   };
 })();

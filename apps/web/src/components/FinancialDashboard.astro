@@ -69,6 +69,18 @@ const { lang = "en" } = Astro.props;
         <span class="fd-card-meta-val" data-fd="merval-vol">---</span>
       </div>
     </a>
+
+    <a href={`/${lang}/markets/country-risk`} class="fd-card fd-card--risk" data-fd-card="risk">
+      <div class="fd-card-head">
+        <span class="fd-card-name">{t(lang, "countryRisk.breadcrumb" as any)}</span>
+        <span class="fd-card-badge" data-fd-ch="risk"></span>
+      </div>
+      <div class="fd-card-price" data-fd="risk-value">---</div>
+      <div class="fd-card-sub">
+        <span class="fd-card-meta">{t(lang, "countryRisk.bp" as any)}</span>
+        <span class="fd-card-meta-val">EMBI+</span>
+      </div>
+    </a>
   </div>
 
   <!-- Top Movers -->
@@ -199,12 +211,14 @@ const { lang = "en" } = Astro.props;
       fetch('/api/rates').then(function(r) { return r.json(); }).catch(function() { return null; }),
       fetch('/api/merval').then(function(r) { return r.json(); }).catch(function() { return null; }),
       fetch('/api/leading-equity').then(function(r) { return r.json(); }).catch(function() { return null; }),
-      fetch('https://api.bluelytics.com.ar/v2/evolution.json?days=10').then(function(r) { return r.json(); }).catch(function() { return null; })
+      fetch('https://api.bluelytics.com.ar/v2/evolution.json?days=10').then(function(r) { return r.json(); }).catch(function() { return null; }),
+      fetch('/api/country-risk').then(function(r) { return r.json(); }).catch(function() { return null; })
     ]).then(function(results) {
       var rates = results[0];
       var merval = results[1];
       var equity = results[2];
       var evo = results[3];
+      var risk = results[4];
 
       var data = Object.assign({}, cached);
 
@@ -254,6 +268,11 @@ const { lang = "en" } = Astro.props;
         data.mervalPct = merval.variation != null
           ? merval.variation * 100
           : pct(merval.price, merval.previousClose);
+      }
+
+      if (risk && risk.value != null) {
+        data.risk_value = risk.value;
+        setVal('risk-value', Math.round(risk.value).toLocaleString('es-AR'));
       }
 
       if (equity && equity.data && equity.data.length > 0) {
@@ -370,6 +389,10 @@ const { lang = "en" } = Astro.props;
 
   .fd-card--merval .fd-card-name {
     color: #60a5fa;
+  }
+
+  .fd-card--risk .fd-card-name {
+    color: #f59e0b;
   }
 
   .fd-card-badge {

@@ -171,34 +171,19 @@
   // Formatting helpers
   // ---------------------------------------------------------------------------
 
+  var H = window.PlataHelpers || {};
+
   function fmt(n) {
-    if (n == null || isNaN(n)) return '\u2014';
-    return n.toLocaleString(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return H.formatCurrency ? H.formatCurrency(n, lang, null, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (n == null ? '—' : n.toFixed(2));
   }
 
   function fmtVol(v) {
-    if (v == null || isNaN(v)) return '\u2014';
-    if (v >= 1e9) return (v / 1e9).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'B';
-    if (v >= 1e6) return (v / 1e6).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'M';
-    if (v >= 1e3) return (v / 1e3).toLocaleString(lang, { maximumFractionDigits: 1 }) + 'K';
-    return Math.round(v).toLocaleString(lang);
+    return H.formatVolume ? H.formatVolume(v, lang) : (v == null ? '—' : String(v));
   }
 
-  function changeClass(v) {
-    if (v == null || v === 0) return 'rc-unch';
-    return v > 0 ? 'rc-up' : 'rc-down';
-  }
-
-  function changeText(v) {
-    if (v == null) return '\u2014';
-    var sign = v > 0 ? '+' : '';
-    return sign + v.toFixed(2) + '%';
-  }
-
-  function escHtml(s) {
-    if (!s) return '';
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
+  var changeClass = H.changeClass || function(v) { return v == null || v === 0 ? 'rc-unch' : v > 0 ? 'rc-up' : 'rc-down'; };
+  var changeText = H.changeText || function(v) { return v == null ? '—' : (v > 0 ? '+' : '') + v.toFixed(2) + '%'; };
+  var escHtml = H.escHtml || function(s) { return s ? s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') : ''; };
 
   function sortItems(items) {
     var key = currentSort.key;
@@ -247,7 +232,12 @@
       var cc = changeClass(s.variation);
       var prevClose = s.previousClose || s.previousClosingPrice;
       var bondTag = isBondPage ? buildBondTag(parseBondMeta(s.symbol)) : '';
+      var starTd = '';
+      if (window.PlataWatchlist) {
+        starTd = '<td class="at-td at-td--star" data-wl-cell="' + escHtml(s.symbol) + '"></td>';
+      }
       html += '<tr class="at-row" data-clickable data-symbol="' + escHtml(s.symbol) + '">' +
+        starTd +
         '<td class="at-td at-td--name">' +
           '<div class="at-name-wrap">' +
             '<span class="at-sym">' + escHtml(s.symbol) + '</span>' +
@@ -277,10 +267,11 @@
       var cc = changeClass(s.variation);
       var prevClose = s.previousClose || s.previousClosingPrice;
       var bondTag = isBondPage ? buildBondTag(parseBondMeta(s.symbol)) : '';
+      var cardStarPlaceholder = window.PlataWatchlist ? '<span class="at-card-star" data-wl-card="' + escHtml(s.symbol) + '"></span>' : '';
       html += '<div class="at-card" data-clickable data-symbol="' + escHtml(s.symbol) + '">' +
         '<div class="at-card-top">' +
           '<div>' +
-            '<div class="at-card-name-wrap"><span class="at-card-sym">' + escHtml(s.symbol) + '</span>' + bondTag + '</div>' +
+            '<div class="at-card-name-wrap">' + cardStarPlaceholder + '<span class="at-card-sym">' + escHtml(s.symbol) + '</span>' + bondTag + '</div>' +
             (s.description ? '<span class="at-card-desc">' + escHtml(s.description) + '</span>' : '') +
           '</div>' +
           '<span class="at-change-badge ' + cc + '">' + changeText(s.variation) + '</span>' +
@@ -321,16 +312,57 @@
     statsEl.style.display = '';
   }
 
+  // Insert actual star button DOM elements into placeholder cells/spans
+  function injectStarButtons() {
+    if (!window.PlataWatchlist) return;
+    // Table star cells
+    document.querySelectorAll('[data-wl-cell]').forEach(function(td) {
+      var sym = td.getAttribute('data-wl-cell');
+      if (td.children.length === 0) {
+        td.appendChild(window.PlataWatchlist.createStar(sym, assetType, sym));
+      }
+    });
+    // Card star spans
+    document.querySelectorAll('[data-wl-card]').forEach(function(span) {
+      var sym = span.getAttribute('data-wl-card');
+      if (span.children.length === 0) {
+        span.appendChild(window.PlataWatchlist.createStar(sym, assetType, sym));
+      }
+    });
+  }
+
+  // Add star column header to table if watchlist is available
+  function addStarColumnHeader() {
+    if (!window.PlataWatchlist) return;
+    var thead = document.querySelector('[data-asset-table] thead tr');
+    if (thead && !thead.querySelector('.at-th--star')) {
+      var th = document.createElement('th');
+      th.className = 'at-th at-th--star';
+      th.style.width = '28px';
+      th.style.padding = '0 2px';
+      thead.insertBefore(th, thead.firstChild);
+      colCount++;
+    }
+  }
+
+  addStarColumnHeader();
+
   function render() {
     var filtered = filterItems(allItems);
     var sorted = sortItems(filtered);
     renderTable(sorted);
     renderCards(sorted);
+    injectStarButtons();
     updateStats(allItems);
     if (countEl) {
       countEl.textContent = filtered.length + (filtered.length !== allItems.length ? ' / ' + allItems.length : '');
     }
   }
+
+  // Re-render stars when watchlist changes (e.g. from another component)
+  document.addEventListener('watchlist-changed', function() {
+    injectStarButtons();
+  });
 
   // Sort headers
   document.querySelectorAll('[data-sort]').forEach(function(th) {

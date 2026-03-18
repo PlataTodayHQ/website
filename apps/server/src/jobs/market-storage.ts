@@ -151,6 +151,7 @@ export function pruneOldData(db: Database.Database): void {
     db.prepare("DELETE FROM exchange_rate_history WHERE date < date('now', '-180 days')").run();
     db.prepare("DELETE FROM stock_fundamentals WHERE fetched_at < datetime('now', '-90 days')").run();
     db.prepare("DELETE FROM financial_statements WHERE fetched_at < datetime('now', '-365 days')").run();
+    db.prepare("DELETE FROM economic_indicators WHERE date < date('now', '-730 days')").run();
 
     // Log DB size for monitoring
     const sizeRow = db.prepare("SELECT page_count * page_size AS size FROM pragma_page_count(), pragma_page_size()").get() as { size: number } | undefined;

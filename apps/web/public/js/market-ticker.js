@@ -34,19 +34,26 @@
     return p;
   }
 
+  var H = window.PlataHelpers || {};
+
   function formatARS(val) {
-    return Math.round(val).toLocaleString('es-AR');
+    if (H.formatNumber) return H.formatNumber(val, lang, { maximumFractionDigits: 0 });
+    return Math.round(val).toLocaleString(lang);
   }
 
   function formatMerval(val) {
+    if (H.formatVolume) return H.formatVolume(val, lang);
     if (val >= 1000000) return (val / 1000000).toFixed(2) + 'M';
     if (val >= 1000) return (val / 1000).toFixed(0) + 'K';
-    return Math.round(val).toLocaleString('es-AR');
+    return formatARS(val);
   }
 
   function formatUSD(val) {
-    if (val >= 10000) return Math.round(val).toLocaleString('en-US');
-    if (val >= 1000) return val.toFixed(0);
+    if (H.formatNumber) {
+      if (val >= 1) return H.formatNumber(val, 'en', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return H.formatNumber(val, 'en', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+    }
+    if (val >= 10000) return Math.round(val).toLocaleString('en');
     if (val >= 1) return val.toFixed(2);
     return val.toFixed(4);
   }
@@ -204,6 +211,7 @@
   }
 
   function fetchJson(url) {
+    if (H.fetchWithTimeout) return H.fetchWithTimeout(url, 15000);
     return fetch(url).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; });
   }
 
@@ -271,7 +279,7 @@
 
       render(data);
       saveCache(data);
-    }).catch(function() {});
+    }).catch(function(err) { console.warn('[PlataMarketTicker] fetch error:', err); });
   }
 
   // 1. Show cached immediately

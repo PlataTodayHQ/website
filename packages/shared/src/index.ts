@@ -13,6 +13,9 @@ export {
   BYMA_CEDEARS_URL, BYMA_CEDEARS_FALLBACK_URL,
   BYMA_PUBLIC_BONDS_URL, BYMA_CORPORATE_BONDS_URL, BYMA_LETRAS_URL,
   YAHOO_UA,
+  BCRA_API_BASE, BCRA_RATE_URL, BCRA_RESERVES_URL, BCRA_MONETARY_BASE_URL,
+  BCRA_PLAZO_FIJO_URL, BCRA_BADLAR_URL, BCRA_CER_URL, BCRA_UVA_URL,
+  AMBITO_COUNTRY_RISK_URL, bcraSeriesUrl,
 } from "./constants.js";
 export { getYahooCrumb, numVal, strVal } from "./yahoo.js";
 
@@ -22,8 +25,9 @@ export {
   getMerval, getRates, getStocks,
   getCedears, getGovernmentBonds, getCorporateBonds, getLetras,
   getDataAge,
+  setEconomicIndicators, getEconomicIndicators, getEconomicUpdatedAt, updateEconomicIndicator,
 } from "./market-store.js";
-export type { AssetType, MervalSnapshot, ExchangeRates, StockQuote } from "./market-store.js";
+export type { AssetType, MervalSnapshot, ExchangeRates, StockQuote, EconomicIndicators } from "./market-store.js";
 
 export {
   CORS_HEADERS, optionsResponse, jsonResponse, errorResponse,
