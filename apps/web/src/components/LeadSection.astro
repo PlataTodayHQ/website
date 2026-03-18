@@ -5,18 +5,7 @@
  * Used for Politics, Economy sections.
  */
 import SectionHeader from "./SectionHeader.astro";
-
-interface Story {
-  title: string;
-  description?: string;
-  href: string;
-  imageUrl?: string;
-  timeAgo?: string;
-  category?: string;
-  categoryKey?: string;
-  readingTime?: string;
-  sourceLabel?: string;
-}
+import type { Story } from "@/types/story";
 
 interface Props {
   title: string;

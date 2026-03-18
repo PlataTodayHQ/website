@@ -245,12 +245,7 @@ button:focus:not(:focus-visible) {
 .rc-down { color: #dc2626; }
 
 /* ============================== */
-/* SHARED: Data update flash      */
-/* ============================== */
-.data-flash-up { animation: data-flash-up 0.4s ease-out; }
-.data-flash-down { animation: data-flash-down 0.4s ease-out; }
-@keyframes data-flash-up { 0% { background: rgba(22,163,74,0.2); } 100% { background: transparent; } }
-@keyframes data-flash-down { 0% { background: rgba(220,38,38,0.2); } 100% { background: transparent; } }
+/* SHARED: Data update flash (defined below with scroll-top-btn section) */
 
 /* ====================== */
 /* SHARED: Info section   */
@@ -313,9 +308,8 @@ button:focus:not(:focus-visible) {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: var(--spacing-2xl) var(--spacing-lg); text-align: center;
   gap: var(--spacing-sm);
-  animation: mkts-fade-in 0.3s ease-out;
+  animation: fade-in-up 0.3s ease-out;
 }
-@keyframes mkts-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .mkts-empty-state svg { color: var(--color-text-meta); opacity: 0.4; flex-shrink: 0; }
 .mkts-empty-state__query {
   font-size: 0.88rem; font-weight: 600; color: var(--color-text);
