@@ -141,13 +141,6 @@ export function parseSourceNames(json: string): string[] {
   }
 }
 
-export function parseSourceUrls(json: string): string[] {
-  try {
-    return JSON.parse(json);
-  } catch {
-    return [];
-  }
-}
 
 export function getArticlesFeed(
   lang: string,

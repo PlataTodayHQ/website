@@ -41,7 +41,7 @@ const seoTitle = policyRate != null
     }
   }}
 >
-  <div class="bcra-page" data-bcra-page data-lang={lang}
+  <div class="mkts-page bcra-page" data-bcra-page data-lang={lang}
     data-i18n-error={t(lang!, "markets.failedToLoad" as any)}
     data-i18n-retry={t(lang!, "common.retry" as any)}
     data-i18n-check-conn={t(lang!, "common.checkConnection" as any)}
@@ -50,18 +50,18 @@ const seoTitle = policyRate != null
     <MarketNav lang={lang!} active="monetary-policy" />
 
     <!-- Header -->
-    <header class="bcra-header">
-      <div class="bcra-header-left">
-        <h1 class="bcra-title">{t(lang!, "bcra.title" as any)}</h1>
-        <span class="bcra-updated" data-bcra-updated role="status" aria-live="polite">{t(lang!, "currencies.loading")}</span>
+    <header class="mkts-page-header bcra-header">
+      <div class="mkts-page-header-row bcra-header-left">
+        <h1 class="mkts-page-title">{t(lang!, "bcra.title" as any)}</h1>
+        <span class="mkts-page-updated" data-bcra-updated role="status" aria-live="polite">{t(lang!, "currencies.loading")}</span>
       </div>
-      <p class="bcra-subtitle">{t(lang!, "bcra.subtitle" as any)}</p>
+      <p class="mkts-page-subtitle">{t(lang!, "bcra.subtitle" as any)}</p>
     </header>
 
     <!-- Key Indicators Grid -->
-    <section class="bcra-grid" aria-label={t(lang!, "bcra.title" as any)}>
+    <section class="mkts-divided-grid bcra-grid" aria-label={t(lang!, "bcra.title" as any)}>
       <div class="bcra-card bcra-card--loading" data-bcra-card="rate">
-        <span class="bcra-card-label">{t(lang!, "bcra.policyRate" as any)}</span>
+        <span class="mkts-label bcra-card-label">{t(lang!, "bcra.policyRate" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="rate">—</span>
           <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
@@ -69,7 +69,7 @@ const seoTitle = policyRate != null
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="reserves">
-        <span class="bcra-card-label">{t(lang!, "bcra.reserves" as any)}</span>
+        <span class="mkts-label bcra-card-label">{t(lang!, "bcra.reserves" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="reserves">—</span>
           <span class="bcra-card-unit">{t(lang!, "bcra.unitBillionUsd" as any)}</span>
@@ -77,7 +77,7 @@ const seoTitle = policyRate != null
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="monetaryBase">
-        <span class="bcra-card-label">{t(lang!, "bcra.monetaryBase" as any)}</span>
+        <span class="mkts-label bcra-card-label">{t(lang!, "bcra.monetaryBase" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="monetaryBase">—</span>
           <span class="bcra-card-unit">{t(lang!, "bcra.unitTrillionArs" as any)}</span>
@@ -85,7 +85,7 @@ const seoTitle = policyRate != null
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="badlar">
-        <span class="bcra-card-label">{t(lang!, "bcra.badlarRate" as any)}</span>
+        <span class="mkts-label bcra-card-label">{t(lang!, "bcra.badlarRate" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="badlar">—</span>
           <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
@@ -93,14 +93,14 @@ const seoTitle = policyRate != null
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="cer">
-        <span class="bcra-card-label">{t(lang!, "bcra.cerIndex" as any)}</span>
+        <span class="mkts-label bcra-card-label">{t(lang!, "bcra.cerIndex" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="cer">—</span>
         </div>
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="uva">
-        <span class="bcra-card-label">{t(lang!, "bcra.uvaValue" as any)}</span>
+        <span class="mkts-label bcra-card-label">{t(lang!, "bcra.uvaValue" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="uva">—</span>
           <span class="bcra-card-unit">{t(lang!, "bcra.unitArs" as any)}</span>
@@ -108,7 +108,7 @@ const seoTitle = policyRate != null
       </div>
 
       <div class="bcra-card bcra-card--loading" data-bcra-card="plazoFijoTNA">
-        <span class="bcra-card-label">{t(lang!, "bcra.plazoFijoTNA" as any)}</span>
+        <span class="mkts-label bcra-card-label">{t(lang!, "bcra.plazoFijoTNA" as any)}</span>
         <div class="bcra-card-value-row">
           <span class="bcra-card-value" data-bcra-val="plazoFijoTNA">—</span>
           <span class="bcra-card-unit">{t(lang!, "bcra.unitPercent" as any)}</span>
@@ -117,7 +117,7 @@ const seoTitle = policyRate != null
     </section>
 
     <!-- Policy Rate Chart -->
-    <section class="bcra-chart-section" data-bcra-chart-section style="display:none;">
+    <section class="mkts-card bcra-chart-section" data-bcra-chart-section style="display:none;">
       <div class="bcra-chart-head">
         <h2 class="bcra-chart-title">{t(lang!, "bcra.chartTitle" as any)}</h2>
       </div>
@@ -127,7 +127,7 @@ const seoTitle = policyRate != null
     </section>
 
     <!-- Educational Panel -->
-    <details class="bcra-info" data-bcra-info open>
+    <details class="mkts-card bcra-info" data-bcra-info open>
       <summary class="bcra-info-summary">
         <span class="bcra-info-icon">i</span>
         {t(lang!, "bcra.infoTitle" as any)}
@@ -179,55 +179,19 @@ const seoTitle = policyRate != null
 
 <style>
   /* ═══ BCRA Monetary Policy Page ═══ */
+  /* Layout: .mkts-page, .mkts-page-header, .mkts-divided-grid, .mkts-label from global.css */
 
-  .bcra-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
-
-  /* Header */
-  .bcra-header { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-sm); border-bottom: 1px solid var(--color-border); }
-  .bcra-header-left { display: flex; align-items: baseline; gap: var(--spacing-md); flex-wrap: wrap; margin-bottom: 4px; }
-  .bcra-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
-  .bcra-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin: 0; line-height: 1.4; }
-  .bcra-updated { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
-
-  /* Indicator Grid */
-  .bcra-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--color-border);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    margin-bottom: var(--spacing-xl);
-  }
+  .bcra-grid { grid-template-columns: repeat(3, 1fr); }
 
   .bcra-card {
-    background: var(--color-bg);
-    padding: 20px 18px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    transition: background-color 0.15s ease;
   }
-  .bcra-card:hover { background: var(--color-bg-secondary); }
 
   .bcra-card--loading .bcra-card-value {
     color: var(--color-text-meta);
-    animation: bcra-pulse 1.5s ease-in-out infinite;
-  }
-
-  @keyframes bcra-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  .bcra-card-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-text-meta);
+    animation: soft-pulse 1.5s ease-in-out infinite;
   }
 
   .bcra-card-value-row {
@@ -255,11 +219,7 @@ const seoTitle = policyRate != null
   /* Chart */
   .bcra-chart-section {
     margin-bottom: var(--spacing-xl);
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
     padding: 18px 22px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
   .bcra-chart-head { margin-bottom: var(--spacing-md); }
@@ -299,14 +259,10 @@ const seoTitle = policyRate != null
     font-variant-numeric: tabular-nums;
   }
 
-  /* Educational Panel */
+  /* Educational Panel — .mkts-card provides background, border, radius, shadow */
   .bcra-info {
     margin-bottom: var(--spacing-xl);
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
   .bcra-info-summary {
@@ -405,7 +361,6 @@ const seoTitle = policyRate != null
   @media (max-width: 640px) {
     .bcra-grid { grid-template-columns: 1fr; }
     .bcra-info-grid { grid-template-columns: 1fr; }
-    .bcra-title { font-size: 1.25rem; }
     .bcra-card-value { font-size: 1.35rem; }
     .bcra-chart-section { padding: 14px 14px; }
   }

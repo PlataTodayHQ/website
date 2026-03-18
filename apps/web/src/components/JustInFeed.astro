@@ -1,12 +1,6 @@
 ---
 import { t } from "@/i18n";
-
-interface FeedItem {
-  title: string;
-  href: string;
-  timeAgo: string;
-  category?: string;
-}
+import type { FeedItem } from "@/types/story";
 
 interface Props {
   items: FeedItem[];
@@ -57,13 +51,8 @@ const { items, lang = "en" } = Astro.props;
     height: 8px;
     background: #b91c1c;
     border-radius: 50%;
-    animation: just-in-pulse 1.5s ease-in-out infinite;
+    animation: live-pulse 1.5s ease-in-out infinite;
     flex-shrink: 0;
-  }
-
-  @keyframes just-in-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
   }
 
   .just-in-title {

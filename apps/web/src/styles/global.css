@@ -185,15 +185,6 @@ button:focus:not(:focus-visible) {
 /* ========================== */
 .refresh-countdown { font-size: 0.65rem; color: var(--color-text-meta); opacity: 0.6; margin-inline-start: 4px; font-variant-numeric: tabular-nums; }
 
-/* ========================== */
-/* SHARED: Tab navigation     */
-/* ========================== */
-.mkts-tabs { display: flex; gap: 2px; border-bottom: 2px solid var(--color-border); margin-bottom: var(--spacing-xl); overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.mkts-tabs::-webkit-scrollbar { display: none; }
-.mkts-tab { padding: 10px 16px; font-size: 0.78rem; font-weight: 700; color: var(--color-text-meta); border: none; background: none; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color 0.15s, border-color 0.15s; }
-.mkts-tab:hover { color: var(--color-text); }
-.mkts-tab--active { color: var(--color-gold); border-bottom-color: var(--color-gold); }
-.mkts-tab:focus-visible { outline: 2px solid var(--color-gold); outline-offset: -2px; }
 
 /* ========================== */
 /* SHARED: Tooltip utility    */
@@ -245,12 +236,7 @@ button:focus:not(:focus-visible) {
 .rc-down { color: #dc2626; }
 
 /* ============================== */
-/* SHARED: Data update flash      */
-/* ============================== */
-.data-flash-up { animation: data-flash-up 0.4s ease-out; }
-.data-flash-down { animation: data-flash-down 0.4s ease-out; }
-@keyframes data-flash-up { 0% { background: rgba(22,163,74,0.2); } 100% { background: transparent; } }
-@keyframes data-flash-down { 0% { background: rgba(220,38,38,0.2); } 100% { background: transparent; } }
+/* SHARED: Data update flash (defined below with scroll-top-btn section) */
 
 /* ====================== */
 /* SHARED: Info section   */
@@ -313,9 +299,8 @@ button:focus:not(:focus-visible) {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: var(--spacing-2xl) var(--spacing-lg); text-align: center;
   gap: var(--spacing-sm);
-  animation: mkts-fade-in 0.3s ease-out;
+  animation: fade-in-up 0.3s ease-out;
 }
-@keyframes mkts-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .mkts-empty-state svg { color: var(--color-text-meta); opacity: 0.4; flex-shrink: 0; }
 .mkts-empty-state__query {
   font-size: 0.88rem; font-weight: 600; color: var(--color-text);
@@ -885,3 +870,56 @@ details[open] > .fi-info-toggle .fi-info-chevron { transform: rotate(180deg); }
 .mkt-section-header .mkt-section-link:hover {
   text-decoration: underline;
 }
+
+/* ====================================== */
+/* SHARED: Market data page primitives    */
+/* (inflation, bcra, country-risk, etc.)  */
+/* ====================================== */
+
+/* Page container */
+.mkts-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
+
+/* Page header with bottom border */
+.mkts-page-header { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-sm); border-bottom: 1px solid var(--color-border); }
+.mkts-page-header-row { display: flex; align-items: baseline; gap: var(--spacing-md); flex-wrap: wrap; margin-bottom: 4px; }
+.mkts-page-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.mkts-page-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin: 0; line-height: 1.4; }
+.mkts-page-updated { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+
+/* Stat label — uppercase, meta color */
+.mkts-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+
+/* Stat value — large number */
+.mkts-value { font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; color: var(--color-text); line-height: 1.1; }
+.mkts-value--lg { font-size: 1.8rem; }
+.mkts-value--xl { font-size: 3rem; }
+
+/* Bordered card container */
+.mkts-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+
+/* Grid with 1px gap dividers (stat grids) */
+.mkts-divided-grid {
+  display: grid; gap: 1px; background: var(--color-border);
+  border: 1px solid var(--color-border); border-radius: 12px;
+  overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  margin-bottom: var(--spacing-xl);
+}
+.mkts-divided-grid > * { background: var(--color-bg); padding: 20px 18px; transition: background-color 0.15s ease; }
+.mkts-divided-grid > *:hover { background: var(--color-bg-secondary); }
+
+/* Section title — smaller bold header for subsections */
+.mkts-section-title { font-size: 1rem; font-weight: 700; margin-bottom: var(--spacing-sm); }
+
+/* Pill tabs (chart time range, etc.) */
+.mkts-pill {
+  padding: 4px 12px; border-radius: 16px; font-size: 0.72rem; font-weight: 700;
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  color: var(--color-text-meta); cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.mkts-pill:hover { border-color: var(--color-gold); color: var(--color-gold); }
+.mkts-pill--active { background: var(--color-gold); color: #fff; border-color: var(--color-gold); }
+.mkts-pill:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+/* Soft pulse animation (for loading states, 0.4 opacity) */
+@keyframes soft-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }

@@ -46,19 +46,19 @@ const seoDescription = currentValue
     }
   }}
 >
-  <div class="cr-page" data-cr-page data-lang={lang} data-i18n-updated={t(lang!, "countryRisk.updated")} data-i18n-bps={t(lang!, "countryRisk.bps")}>
+  <div class="mkts-page cr-page" data-cr-page data-lang={lang} data-i18n-updated={t(lang!, "countryRisk.updated")} data-i18n-bps={t(lang!, "countryRisk.bps")}>
     <MarketNav lang={lang!} active={"country-risk" as any} />
 
     <!-- Header -->
-    <header class="cr-header">
-      <div class="cr-header-left">
-        <h1 class="cr-title">{t(lang!, "countryRisk.title")} <span class="cr-title-sub">{t(lang!, "countryRisk.titleSub")}</span></h1>
-        <span class="cr-updated" data-cr-updated role="status" aria-live="polite">{t(lang!, "countryRisk.loading")}</span>
+    <header class="mkts-page-header cr-header">
+      <div class="mkts-page-header-row">
+        <h1 class="mkts-page-title">{t(lang!, "countryRisk.title")} <span class="cr-title-sub">{t(lang!, "countryRisk.titleSub")}</span></h1>
+        <span class="mkts-page-updated" data-cr-updated role="status" aria-live="polite">{t(lang!, "countryRisk.loading")}</span>
       </div>
     </header>
 
     <!-- Current Value Card -->
-    <div class="cr-hero">
+    <div class="mkts-card cr-hero">
       <div class="cr-hero-main">
         <span class="cr-hero-value" data-cr-value>{ currentValue ? Math.round(currentValue).toLocaleString() : "—" }</span>
         <span class="cr-hero-unit">{t(lang!, "countryRisk.bps")}</span>
@@ -73,7 +73,7 @@ const seoDescription = currentValue
     <!-- Chart -->
     <section class="cr-chart-section">
       <div class="cr-chart-head">
-        <h2 class="cr-chart-title">{t(lang!, "countryRisk.historicalTrend")}</h2>
+        <h2 class="mkts-section-title">{t(lang!, "countryRisk.historicalTrend")}</h2>
         <div class="cr-chart-tabs" data-cr-tabs>
           <button class="cr-tab" data-cr-tab="90">{t(lang!, "countryRisk.tab90d")}</button>
           <button class="cr-tab cr-tab--active" data-cr-tab="365">{t(lang!, "countryRisk.tab1y")}</button>
@@ -86,31 +86,31 @@ const seoDescription = currentValue
 
     <!-- Stats Grid -->
     <section class="cr-stats-section">
-      <h2 class="cr-section-title">{t(lang!, "countryRisk.keyStatistics")}</h2>
+      <h2 class="mkts-section-title">{t(lang!, "countryRisk.keyStatistics")}</h2>
       <div class="cr-stats-grid">
         <div class="cr-stat-card">
-          <span class="cr-stat-label">{t(lang!, "countryRisk.current")}</span>
+          <span class="mkts-label">{t(lang!, "countryRisk.current")}</span>
           <span class="cr-stat-value" data-cr-stat="current">—</span>
         </div>
         <div class="cr-stat-card">
-          <span class="cr-stat-label">{t(lang!, "countryRisk.avg30d")}</span>
+          <span class="mkts-label">{t(lang!, "countryRisk.avg30d")}</span>
           <span class="cr-stat-value" data-cr-stat="avg30">—</span>
         </div>
         <div class="cr-stat-card">
-          <span class="cr-stat-label">{t(lang!, "countryRisk.high52w")}</span>
+          <span class="mkts-label">{t(lang!, "countryRisk.high52w")}</span>
           <span class="cr-stat-value cr-stat-value--danger" data-cr-stat="high52">—</span>
         </div>
         <div class="cr-stat-card">
-          <span class="cr-stat-label">{t(lang!, "countryRisk.low52w")}</span>
+          <span class="mkts-label">{t(lang!, "countryRisk.low52w")}</span>
           <span class="cr-stat-value cr-stat-value--success" data-cr-stat="low52">—</span>
         </div>
       </div>
     </section>
 
     <!-- Educational Panel -->
-    <section class="cr-edu-section" data-cr-edu>
+    <section class="mkts-card cr-edu-section" data-cr-edu>
       <div class="cr-edu-head">
-        <h2 class="cr-section-title">{t(lang!, "countryRisk.whatIsCountryRisk")}</h2>
+        <h2 class="mkts-section-title">{t(lang!, "countryRisk.whatIsCountryRisk")}</h2>
         <button class="cr-edu-dismiss" data-cr-edu-dismiss aria-label={t(lang!, "countryRisk.dismissLabel")}>&times;</button>
       </div>
       <div class="cr-edu-body">
@@ -151,21 +151,13 @@ const seoDescription = currentValue
 
 <style>
   /* ═══ Country Risk Page ═══ */
+  /* Layout: .mkts-page, .mkts-page-header, .mkts-card, .mkts-label, .mkts-section-title from global.css */
 
-  .cr-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
-
-  /* Header */
-  .cr-header { display: flex; align-items: baseline; gap: var(--spacing-md); margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-sm); border-bottom: 1px solid var(--color-border); }
-  .cr-header-left { display: flex; align-items: baseline; gap: var(--spacing-md); flex-wrap: wrap; }
-  .cr-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
   .cr-title-sub { font-size: 0.85rem; font-weight: 600; color: var(--color-text-meta); margin-inline-start: 6px; }
-  .cr-updated { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
 
-  /* Hero value card */
+  /* Hero value card — .mkts-card provides bg, border, radius, shadow */
   .cr-hero {
-    background: var(--color-bg); border: 1px solid var(--color-border);
-    border-radius: 12px; padding: 24px 28px; margin-bottom: var(--spacing-xl);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    padding: 24px 28px; margin-bottom: var(--spacing-xl);
     border-top: 3px solid var(--color-gold);
   }
   .cr-hero-main { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
@@ -176,16 +168,12 @@ const seoDescription = currentValue
   .cr-hero-unit { font-size: 1.1rem; font-weight: 700; color: var(--color-text-meta); }
   .cr-hero-change { font-size: 0.9rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-inline-start: 8px; }
   .cr-hero-meta { display: flex; gap: var(--spacing-lg); align-items: center; }
-  .cr-hero-label {
-    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.04em; color: var(--color-text-meta);
-  }
+  .cr-hero-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
   .cr-hero-source { font-size: 0.68rem; color: var(--color-text-meta); }
 
   /* Chart section */
   .cr-chart-section { margin-bottom: var(--spacing-xl); }
   .cr-chart-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-sm); }
-  .cr-chart-title { font-size: 1rem; font-weight: 700; }
   .cr-chart-tabs { display: flex; gap: 4px; }
   .cr-tab {
     padding: 4px 12px; border-radius: 16px; font-size: 0.72rem; font-weight: 700;
@@ -199,7 +187,7 @@ const seoDescription = currentValue
   .cr-chart-wrap {
     background: var(--color-bg); border: 1px solid var(--color-border);
     border-radius: 12px; padding: var(--spacing-sm) var(--spacing-md);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04); overflow: hidden;
+    overflow: hidden;
   }
   .cr-chart-svg { width: 100%; display: block; }
 
@@ -212,22 +200,16 @@ const seoDescription = currentValue
   :global(.cr-tt-text) { font-size: 11px; fill: var(--color-text); font-family: inherit; font-weight: 600; }
   :global(.cr-hover-rect) { cursor: crosshair; }
 
-  /* Stats Grid */
+  /* Stats Grid — .mkts-label from global.css */
   .cr-stats-section { margin-bottom: var(--spacing-xl); }
-  .cr-section-title { font-size: 1rem; font-weight: 700; margin-bottom: var(--spacing-sm); }
   .cr-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-sm); }
   .cr-stat-card {
     background: var(--color-bg); border: 1px solid var(--color-border);
     border-radius: 12px; padding: 16px; display: flex; flex-direction: column;
     gap: 4px; text-align: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .cr-stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-  .cr-stat-label {
-    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.04em; color: var(--color-text-meta);
-  }
   .cr-stat-value {
     font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums;
     color: var(--color-text); line-height: 1.2;
@@ -235,12 +217,9 @@ const seoDescription = currentValue
   .cr-stat-value--danger { color: #dc2626; }
   .cr-stat-value--success { color: #16a34a; }
 
-  /* Educational panel */
+  /* Educational panel — .mkts-card provides bg, border, radius, shadow */
   .cr-edu-section {
-    margin-bottom: var(--spacing-xl);
-    background: var(--color-bg); border: 1px solid var(--color-border);
-    border-radius: 12px; padding: 20px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    margin-bottom: var(--spacing-xl); padding: 20px 24px;
     border-inline-start: 3px solid var(--color-gold);
   }
   .cr-edu-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-md); }
