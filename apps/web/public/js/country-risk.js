@@ -250,22 +250,6 @@
     });
   }
 
-  // ─── Scroll to top ───
-  var scrollBtn = document.querySelector('[data-scroll-top]');
-  if (scrollBtn) {
-    var scrollVisible = false;
-    window.addEventListener('scroll', function() {
-      var show = window.scrollY > 600;
-      if (show !== scrollVisible) {
-        scrollVisible = show;
-        scrollBtn.classList.toggle('scroll-top-btn--visible', show);
-      }
-    }, { passive: true });
-    scrollBtn.addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
   // ─── Init ───
   fetchCurrent();
   fetchHistory(activeDays);

@@ -561,6 +561,16 @@ button:focus:not(:focus-visible) {
   .data-flash-up, .data-flash-down { animation: none; }
 }
 
+/* Shared entry animation for sections/cards */
+@keyframes fade-in-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .fade-in-up, [class*="-fade"] { animation: none !important; } }
+
+/* Rate-change color utilities (shared across market pages) */
+.rc-up { color: #16a34a; }
+.rc-down { color: #dc2626; }
+[data-theme="dark"] .rc-up { color: #4ade80; }
+[data-theme="dark"] .rc-down { color: #f87171; }
+
 /* ====================================== */
 /* SHARED: Asset listing pages            */
 /* (bonds, cedears, letras, corp. bonds)  */

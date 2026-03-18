@@ -3,6 +3,7 @@ import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import MarketHeader from "@/components/MarketHeader.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
+import ScrollTopButton from "@/components/ScrollTopButton.astro";
 import { getLocalizedStaticPaths } from "@/lib/static-paths";
 import { buildMarketPageSEO } from "@/lib/seo";
 import { t } from "@/i18n";
@@ -272,9 +273,7 @@ const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "crypto", route: "crypto"
 
     <DisclaimerFooter text={t(lang!, "crypto.disclaimer" as any)} jsRequiredText={t(lang!, "common.jsRequired" as any)} className="cr-disclaimer" />
 
-    <button class="scroll-top-btn" data-scroll-top aria-label="↑" title="↑">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
-    </button>
+    <ScrollTopButton />
   </div>
 </Base>
 
@@ -286,9 +285,8 @@ const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "crypto", route: "crypto"
   /* Error cards / retry use shared .mkts-error-card / .mkts-retry-btn from global.css */
 
   /* Section fade-in */
-  @keyframes cr-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .cr-overview:not(.cr-skeleton-overview), .cr-movers, .cr-perf7d, .cr-treemap-section, .cr-dom-section, .cr-corr-section {
-    animation: cr-fade-in 0.3s ease-out;
+    animation: fade-in-up 0.3s ease-out;
   }
 
   /* Overview */
@@ -579,14 +577,13 @@ const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "crypto", route: "crypto"
   /* Mobile cards */
   .cr-cards { display: none; }
 
-  @keyframes cr-card-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
   :global(.cr-card) {
     display: block; padding: 14px 16px; margin-bottom: 8px;
     background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px;
     border-inline-start: 3px solid var(--color-border); text-decoration: none; color: inherit;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     transition: transform 0.1s, box-shadow 0.15s;
-    animation: cr-card-fade 0.25s ease-out both;
+    animation: fade-in-up 0.25s ease-out both;
   }
   :global(.cr-card:hover) { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
   :global(.cr-card:active) { transform: scale(0.98); }

@@ -80,9 +80,8 @@ const { lang } = Astro.params;
   .wl-loading-spinner {
     width: 20px; height: 20px; border: 2px solid var(--color-border);
     border-top-color: var(--color-gold); border-radius: 50%;
-    animation: wl-spin 0.7s linear infinite;
+    animation: spin 0.7s linear infinite;
   }
-  @keyframes wl-spin { to { transform: rotate(360deg); } }
 
   .wl-empty {
     text-align: center; padding: 3rem 1rem;

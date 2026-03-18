@@ -230,15 +230,4 @@
       var chartEl = pg.querySelector('[data-inf-chart]');
       if (chartEl) chartEl.innerHTML = '<p class="inf-chart-empty">' + i18n('chart-error', 'Failed to load chart data') + '</p>';
     });
-
-  // Scroll to top button
-  var scrollBtn = pg.querySelector('[data-scroll-top]');
-  if (scrollBtn) {
-    window.addEventListener('scroll', function() {
-      scrollBtn.classList.toggle('scroll-top-btn--visible', window.scrollY > 400);
-    }, { passive: true });
-    scrollBtn.addEventListener('click', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
 })();

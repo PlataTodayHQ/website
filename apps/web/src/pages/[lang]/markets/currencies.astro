@@ -2,6 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
+import ScrollTopButton from "@/components/ScrollTopButton.astro";
 import MarketChartScripts from "@/components/MarketChartScripts.astro";
 import { LANGUAGES, getRates } from "@plata-today/shared";
 import { buildAlternateUrls, buildMarketBreadcrumbs } from "@/lib/seo";
@@ -377,9 +378,7 @@ const seoTitle = blueRate
 
     <DisclaimerFooter text={t(lang!, "currencies.disclaimer")} jsRequiredText={t(lang!, "common.jsRequired" as any)} className="fx-disclaimer" />
 
-    <button class="scroll-top-btn" data-scroll-top aria-label="↑" title="↑">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
-    </button>
+    <ScrollTopButton />
   </div>
 </Base>
 
@@ -644,17 +643,15 @@ const seoTitle = blueRate
   .fx-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl) !important; }
 
   /* Section fade-in */
-  @keyframes fx-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .fx-spread-section, .fx-ppp-section, .fx-bars-section, .fx-vol-section, .fx-perf-section, .fx-gap-section {
-    animation: fx-fade-in 0.3s ease-out;
+    animation: fade-in-up 0.3s ease-out;
   }
 
   /* Shimmer loading */
-  @keyframes fx-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-  .fx-shimmer { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: fx-shimmer 1.5s ease-in-out infinite; border-radius: 4px; color: transparent !important; }
+  .fx-shimmer { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: shimmer 1.5s ease-in-out infinite; border-radius: 4px; color: transparent !important; }
   .fx-rate--loading .fx-price,
   .fx-rate--loading .fx-bs-val,
-  .fx-rate--loading .fx-spread-val { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: fx-shimmer 1.5s ease-in-out infinite; border-radius: 4px; color: transparent !important; min-width: 80px; display: inline-block; }
+  .fx-rate--loading .fx-spread-val { background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%); background-size: 200% 100%; animation: shimmer 1.5s ease-in-out infinite; border-radius: 4px; color: transparent !important; min-width: 80px; display: inline-block; }
 
   /* Rate History Table */
   .fx-history-section { margin-top: var(--spacing-lg); }

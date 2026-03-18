@@ -3,6 +3,7 @@ import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import MarketHeader from "@/components/MarketHeader.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
+import ScrollTopButton from "@/components/ScrollTopButton.astro";
 import MarketChartScripts from "@/components/MarketChartScripts.astro";
 import { LANGUAGES, getMerval } from "@plata-today/shared";
 import { buildAlternateUrls, buildMarketBreadcrumbs } from "@/lib/seo";
@@ -380,9 +381,7 @@ const seoTitle = mervalPrice
       </div>
     </section>
 
-    <button class="scroll-top-btn" data-scroll-top aria-label="↑" title="↑">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
-    </button>
+    <ScrollTopButton />
 
     <DisclaimerFooter text={t(lang!, "merval.disclaimer")} jsRequiredText={t(lang!, "common.jsRequired" as any)} />
   </div>
@@ -458,7 +457,7 @@ const seoTitle = mervalPrice
   .mkt-badge--closed .mkt-badge-dot { background: var(--color-text-meta); }
   :global([data-theme="dark"]) .mkt-badge--open { color: #4ade80; }
   :global([data-theme="dark"]) .mkt-badge--open .mkt-badge-dot { background: #4ade80; }
-  @keyframes live-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
 
   /* Market Summary */
   .mkt-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); margin-bottom: var(--spacing-xl); }
@@ -725,7 +724,7 @@ const seoTitle = mervalPrice
 
   /* stocks-loading kept for backward compat but error cards now use global styles */
   .stocks-loading { text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl); font-size: 0.85rem; }
-  @keyframes fade-in-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
   :global(.stk-card) { animation: fade-in-up 0.25s ease-out both; }
 
   .mkt-summary, .movers-section, .sector-section, .mcap-conc-section, .sector-perf-section, .vol-dist-section, .vol-leaders-section {
