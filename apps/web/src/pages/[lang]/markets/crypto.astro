@@ -3,41 +3,17 @@ import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import MarketHeader from "@/components/MarketHeader.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
-import { LANGUAGES } from "@plata-today/shared";
+import { getLocalizedStaticPaths } from "@/lib/static-paths";
+import { buildMarketPageSEO } from "@/lib/seo";
 import { t } from "@/i18n";
 
-export function getStaticPaths() {
-  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = getLocalizedStaticPaths;
 
 const { lang } = Astro.params;
+const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "crypto", route: "crypto", breadcrumbKey: "crypto.title" });
 ---
 
-<Base
-  title={t(lang!, "crypto.seoTitle")}
-  description={t(lang!, "crypto.seoDescription")}
-  lang={lang}
-  ogType="website"
-  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/crypto`]))}
-  breadcrumbs={[
-    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: t(lang!, "crypto.title"), url: `/${lang}/markets/crypto` },
-  ]}
-  jsonLd={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": t(lang!, "crypto.title"),
-    "description": t(lang!, "crypto.subtitle"),
-    "url": `https://plata.today/${lang}/markets/crypto`,
-    "inLanguage": lang,
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Plata",
-      "url": "https://plata.today"
-    }
-  }}
->
+<Base {...seo}>
   <div class="crypto-page" data-crypto-page data-lang={lang}
     data-i18n-scarce={t(lang!, "crypto.scarce" as any)}
     data-i18n-moderate={t(lang!, "crypto.moderate" as any)}

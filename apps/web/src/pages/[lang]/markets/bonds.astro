@@ -10,37 +10,17 @@ import AssetCards from "@/components/AssetCards.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
 import AssetListingScripts from "@/components/AssetListingScripts.astro";
 import AssetPageWrapper from "@/components/AssetPageWrapper.astro";
-import { LANGUAGES } from "@plata-today/shared";
+import { getLocalizedStaticPaths } from "@/lib/static-paths";
+import { buildMarketPageSEO } from "@/lib/seo";
 import { t } from "@/i18n";
 
-export function getStaticPaths() {
-  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = getLocalizedStaticPaths;
 
 const { lang } = Astro.params;
+const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "bonds", route: "bonds" });
 ---
 
-<Base
-  title={t(lang!, "bonds.seoTitle")}
-  description={t(lang!, "bonds.seoDescription")}
-  lang={lang}
-  ogType="website"
-  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/bonds`]))}
-  breadcrumbs={[
-    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: t(lang!, "bonds.breadcrumb"), url: `/${lang}/markets/bonds` },
-  ]}
-  jsonLd={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": t(lang!, "bonds.title"),
-    "description": t(lang!, "bonds.seoDescription"),
-    "url": `https://plata.today/${lang}/markets/bonds`,
-    "inLanguage": lang,
-    "isPartOf": { "@type": "WebSite", "name": "Plata", "url": "https://plata.today" }
-  }}
->
+<Base {...seo}>
   <AssetPageWrapper
     lang={lang!}
     api="/api/bonds"

@@ -3,6 +3,7 @@ import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
 import { LANGUAGES, getEconomicIndicators } from "@plata-today/shared";
+import { buildAlternateUrls, buildMarketBreadcrumbs } from "@/lib/seo";
 import { t } from "@/i18n";
 
 export const prerender = false;
@@ -25,12 +26,8 @@ const seoTitle = monthlyRate != null
   description={t(lang!, "inflation.seoDescription" as any)}
   lang={lang}
   ogType="website"
-  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/inflation`]))}
-  breadcrumbs={[
-    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: t(lang!, "inflation.breadcrumb" as any), url: `/${lang}/markets/inflation` },
-  ]}
+  alternateUrls={buildAlternateUrls("inflation")}
+  breadcrumbs={buildMarketBreadcrumbs(lang!, "inflation.breadcrumb" as any, "inflation")}
   jsonLd={{
     "@context": "https://schema.org",
     "@type": "WebPage",

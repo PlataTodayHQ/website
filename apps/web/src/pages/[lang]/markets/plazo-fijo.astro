@@ -3,6 +3,7 @@ import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
 import { LANGUAGES, getEconomicIndicators } from "@plata-today/shared";
+import { buildAlternateUrls, buildMarketBreadcrumbs } from "@/lib/seo";
 import { t } from "@/i18n";
 
 export const prerender = false;
@@ -25,12 +26,8 @@ const seoTitle = tna
   description={t(lang!, "plazoFijo.subtitle" as any)}
   lang={lang}
   ogType="website"
-  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/plazo-fijo`]))}
-  breadcrumbs={[
-    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: t(lang!, "plazoFijo.breadcrumb" as any), url: `/${lang}/markets/plazo-fijo` },
-  ]}
+  alternateUrls={buildAlternateUrls("plazo-fijo")}
+  breadcrumbs={buildMarketBreadcrumbs(lang!, "plazoFijo.breadcrumb" as any, "plazo-fijo")}
   jsonLd={{
     "@context": "https://schema.org",
     "@type": "WebPage",

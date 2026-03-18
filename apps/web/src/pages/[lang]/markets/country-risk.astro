@@ -3,6 +3,7 @@ import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
 import { LANGUAGES, getEconomicIndicators } from "@plata-today/shared";
+import { buildAlternateUrls, buildMarketBreadcrumbs } from "@/lib/seo";
 import { t } from "@/i18n";
 
 export const prerender = false;
@@ -28,12 +29,8 @@ const seoDescription = currentValue
   description={seoDescription}
   lang={lang}
   ogType="website"
-  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/country-risk`]))}
-  breadcrumbs={[
-    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: t(lang!, "countryRisk.breadcrumb"), url: `/${lang}/markets/country-risk` },
-  ]}
+  alternateUrls={buildAlternateUrls("country-risk")}
+  breadcrumbs={buildMarketBreadcrumbs(lang!, "countryRisk.breadcrumb", "country-risk")}
   jsonLd={{
     "@context": "https://schema.org",
     "@type": "WebPage",
