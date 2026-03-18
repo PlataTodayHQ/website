@@ -7,6 +7,7 @@ import AssetStats from "@/components/AssetStats.astro";
 import AssetSearch from "@/components/AssetSearch.astro";
 import AssetTable from "@/components/AssetTable.astro";
 import AssetCards from "@/components/AssetCards.astro";
+import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -94,8 +95,7 @@ const { lang } = Astro.params;
 
     <div class="asset-empty" data-asset-empty style="display:none;"></div>
 
-    <p class="info-disclaimer">{t(lang!, "stock.disclaimer")}</p>
-    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+    <DisclaimerFooter text={t(lang!, "stock.disclaimer")} jsRequiredText={t(lang!, "common.jsRequired" as any)} />
   </div>
 </Base>
 

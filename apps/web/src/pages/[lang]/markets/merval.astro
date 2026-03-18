@@ -2,6 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import MarketHeader from "@/components/MarketHeader.astro";
+import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
 import { LANGUAGES, getMerval } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -385,8 +386,7 @@ const seoTitle = mervalPrice
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
     </button>
 
-    <p class="info-disclaimer">{t(lang!, "merval.disclaimer")}</p>
-    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+    <DisclaimerFooter text={t(lang!, "merval.disclaimer")} jsRequiredText={t(lang!, "common.jsRequired" as any)} />
   </div>
 </Base>
 

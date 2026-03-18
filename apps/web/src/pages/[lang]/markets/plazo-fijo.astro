@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
+import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
 import { LANGUAGES, getEconomicIndicators } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -185,8 +186,7 @@ const seoTitle = tna
     </section>
 
     <!-- Data Source -->
-    <p class="pf-disclaimer">{t(lang!, "plazoFijo.source" as any)}</p>
-    <noscript><p class="pf-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+    <DisclaimerFooter text={t(lang!, "plazoFijo.source" as any)} jsRequiredText={t(lang!, "common.jsRequired" as any)} className="pf-disclaimer" />
   </div>
 </Base>
 
