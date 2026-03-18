@@ -870,3 +870,56 @@ details[open] > .fi-info-toggle .fi-info-chevron { transform: rotate(180deg); }
 .mkt-section-header .mkt-section-link:hover {
   text-decoration: underline;
 }
+
+/* ====================================== */
+/* SHARED: Market data page primitives    */
+/* (inflation, bcra, country-risk, etc.)  */
+/* ====================================== */
+
+/* Page container */
+.mkts-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
+
+/* Page header with bottom border */
+.mkts-page-header { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-sm); border-bottom: 1px solid var(--color-border); }
+.mkts-page-header-row { display: flex; align-items: baseline; gap: var(--spacing-md); flex-wrap: wrap; margin-bottom: 4px; }
+.mkts-page-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.mkts-page-subtitle { font-size: 0.85rem; color: var(--color-text-meta); margin: 0; line-height: 1.4; }
+.mkts-page-updated { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
+
+/* Stat label — uppercase, meta color */
+.mkts-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-meta); }
+
+/* Stat value — large number */
+.mkts-value { font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; color: var(--color-text); line-height: 1.1; }
+.mkts-value--lg { font-size: 1.8rem; }
+.mkts-value--xl { font-size: 3rem; }
+
+/* Bordered card container */
+.mkts-card { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+
+/* Grid with 1px gap dividers (stat grids) */
+.mkts-divided-grid {
+  display: grid; gap: 1px; background: var(--color-border);
+  border: 1px solid var(--color-border); border-radius: 12px;
+  overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  margin-bottom: var(--spacing-xl);
+}
+.mkts-divided-grid > * { background: var(--color-bg); padding: 20px 18px; transition: background-color 0.15s ease; }
+.mkts-divided-grid > *:hover { background: var(--color-bg-secondary); }
+
+/* Section title — smaller bold header for subsections */
+.mkts-section-title { font-size: 1rem; font-weight: 700; margin-bottom: var(--spacing-sm); }
+
+/* Pill tabs (chart time range, etc.) */
+.mkts-pill {
+  padding: 4px 12px; border-radius: 16px; font-size: 0.72rem; font-weight: 700;
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  color: var(--color-text-meta); cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.mkts-pill:hover { border-color: var(--color-gold); color: var(--color-gold); }
+.mkts-pill--active { background: var(--color-gold); color: #fff; border-color: var(--color-gold); }
+.mkts-pill:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+/* Soft pulse animation (for loading states, 0.4 opacity) */
+@keyframes soft-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }

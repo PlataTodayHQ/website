@@ -43,7 +43,7 @@ const seoTitle = monthlyRate != null
     }
   }}
 >
-  <div class="inf-page" data-inflation-page data-lang={lang}
+  <div class="mkts-page inf-page" data-inflation-page data-lang={lang}
     data-i18n-updated={t(lang!, "inflation.updated" as any)}
     data-i18n-calc-note-losing={t(lang!, "inflation.calcNoteLosing" as any)}
     data-i18n-calc-note-gaining={t(lang!, "inflation.calcNoteGaining" as any)}
@@ -55,28 +55,28 @@ const seoTitle = monthlyRate != null
     <MarketNav lang={lang!} active={"inflation" as any} />
 
     <!-- Header -->
-    <header class="inf-header">
-      <div class="inf-header-left">
-        <h1 class="inf-title">{t(lang!, "inflation.title" as any)}</h1>
-        <span class="inf-updated" data-inf-updated role="status" aria-live="polite">{t(lang!, "currencies.loading")}</span>
+    <header class="mkts-page-header">
+      <div class="mkts-page-header-row">
+        <h1 class="mkts-page-title">{t(lang!, "inflation.title" as any)}</h1>
+        <span class="mkts-page-updated" data-inf-updated role="status" aria-live="polite">{t(lang!, "currencies.loading")}</span>
       </div>
-      <p class="inf-subtitle">{t(lang!, "inflation.subtitle" as any)}</p>
+      <p class="mkts-page-subtitle">{t(lang!, "inflation.subtitle" as any)}</p>
     </header>
 
     <!-- Hero Stats -->
-    <div class="inf-hero">
+    <div class="mkts-divided-grid inf-hero">
       <div class="inf-stat-card inf-stat-card--loading" data-inf-card="monthly">
-        <span class="inf-stat-label">{t(lang!, "inflation.monthlyCpi" as any)}</span>
+        <span class="mkts-label inf-stat-label">{t(lang!, "inflation.monthlyCpi" as any)}</span>
         <span class="inf-stat-value" data-inf-monthly>--</span>
         <span class="inf-stat-desc">{t(lang!, "inflation.monthlyDesc" as any)}</span>
       </div>
       <div class="inf-stat-card inf-stat-card--loading" data-inf-card="annual">
-        <span class="inf-stat-label">{t(lang!, "inflation.annualCpi" as any)}</span>
+        <span class="mkts-label inf-stat-label">{t(lang!, "inflation.annualCpi" as any)}</span>
         <span class="inf-stat-value" data-inf-annual>--</span>
         <span class="inf-stat-desc">{t(lang!, "inflation.annualDesc" as any)}</span>
       </div>
       <div class="inf-stat-card inf-stat-card--loading" data-inf-card="cer">
-        <span class="inf-stat-label">{t(lang!, "inflation.cerIndex" as any)}</span>
+        <span class="mkts-label inf-stat-label">{t(lang!, "inflation.cerIndex" as any)}</span>
         <span class="inf-stat-value" data-inf-cer>--</span>
         <span class="inf-stat-desc">{t(lang!, "inflation.cerDesc" as any)}</span>
       </div>
@@ -85,7 +85,7 @@ const seoTitle = monthlyRate != null
     <!-- Chart Section -->
     <section class="inf-chart-section">
       <div class="inf-chart-head">
-        <h2 class="inf-chart-title">{t(lang!, "inflation.chartTitle" as any)}</h2>
+        <h2 class="mkts-section-title inf-chart-title">{t(lang!, "inflation.chartTitle" as any)}</h2>
       </div>
       <div class="inf-chart-wrap">
         <div class="inf-chart" data-inf-chart role="img" aria-label={t(lang!, "inflation.chartTitle" as any)}>
@@ -95,7 +95,7 @@ const seoTitle = monthlyRate != null
     </section>
 
     <!-- Real Return Calculator -->
-    <section class="inf-calculator">
+    <section class="mkts-card inf-calculator">
       <h2 class="inf-calc-title">{t(lang!, "inflation.calcTitle" as any)}</h2>
       <div class="inf-calc-row">
         <div class="inf-calc-input-wrap">
@@ -116,7 +116,7 @@ const seoTitle = monthlyRate != null
     </section>
 
     <!-- Educational Panel -->
-    <details class="inf-edu" open data-inf-edu>
+    <details class="mkts-card inf-edu" open data-inf-edu>
       <summary class="inf-edu-summary">{t(lang!, "inflation.learnMore" as any)}</summary>
       <div class="inf-edu-content">
         <div class="inf-edu-item">
@@ -154,32 +154,12 @@ const seoTitle = monthlyRate != null
 
 <style>
   /* ═══ Inflation Page ═══ */
+  /* Layout: .mkts-page, .mkts-page-header, .mkts-divided-grid, .mkts-label, .mkts-card, .mkts-section-title from global.css */
 
-  .inf-page { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--spacing-md); }
-
-  /* Header */
-  .inf-header { margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-sm); border-bottom: 1px solid var(--color-border); }
-  .inf-header-left { display: flex; align-items: baseline; gap: var(--spacing-md); flex-wrap: wrap; margin-bottom: 4px; }
-  .inf-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
-  .inf-subtitle { font-size: 0.82rem; color: var(--color-text-meta); margin: 0; }
-  .inf-updated { font-size: 0.75rem; color: var(--color-text-meta); font-variant-numeric: tabular-nums; }
-
-  /* Hero Stats — 3 cards */
-  .inf-hero {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-    background: var(--color-border); border: 1px solid var(--color-border);
-    border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    margin-bottom: var(--spacing-xl);
-  }
+  /* Hero Stats — .mkts-divided-grid provides grid structure */
+  .inf-hero { grid-template-columns: repeat(3, 1fr); }
   .inf-stat-card {
-    background: var(--color-bg); padding: 20px 18px;
     display: flex; flex-direction: column; gap: 6px;
-    transition: background-color 0.15s ease;
-  }
-  .inf-stat-card:hover { background: var(--color-bg-secondary); }
-  .inf-stat-label {
-    font-size: 0.72rem; font-weight: 700; color: var(--color-text-meta);
-    text-transform: uppercase; letter-spacing: 0.04em;
   }
   .inf-stat-value {
     font-size: 1.8rem; font-weight: 800; font-variant-numeric: tabular-nums;
@@ -199,23 +179,18 @@ const seoTitle = monthlyRate != null
   /* Chart Section */
   .inf-chart-section { margin-bottom: var(--spacing-xl); }
   .inf-chart-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-sm); }
-  .inf-chart-title { font-size: 1rem; font-weight: 700; }
   .inf-chart-wrap {
     background: var(--color-bg); border: 1px solid var(--color-border);
     border-radius: 12px; padding: var(--spacing-md);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
   .inf-chart-loading, .inf-chart-empty {
     text-align: center; color: var(--color-text-meta); padding: var(--spacing-xl);
     font-size: 0.82rem;
   }
 
-  /* Calculator */
+  /* Calculator — .mkts-card provides bg, border, radius, shadow */
   .inf-calculator {
-    margin-bottom: var(--spacing-xl);
-    background: var(--color-bg); border: 1px solid var(--color-border);
-    border-radius: 12px; padding: 20px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    margin-bottom: var(--spacing-xl); padding: 20px 24px;
   }
   .inf-calc-title {
     font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
@@ -256,12 +231,9 @@ const seoTitle = monthlyRate != null
     font-size: 0.75rem; color: var(--color-text-meta); margin-top: 8px;
   }
 
-  /* Educational Panel */
+  /* Educational Panel — .mkts-card provides bg, border, radius, shadow */
   .inf-edu {
-    margin-bottom: var(--spacing-xl);
-    background: var(--color-bg); border: 1px solid var(--color-border);
-    border-radius: 12px; overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    margin-bottom: var(--spacing-xl); overflow: hidden;
   }
   .inf-edu-summary {
     padding: 16px 20px; cursor: pointer;
