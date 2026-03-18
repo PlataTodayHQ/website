@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
+import MarketHeader from "@/components/MarketHeader.astro";
 import { LANGUAGES, getMerval } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -92,13 +93,11 @@ const seoTitle = mervalPrice
   >
     <MarketNav lang={lang!} active="merval" />
 
-    <header class="mkts-header">
-      <div>
-        <h1 class="mkts-title">{t(lang!, "merval.title")}</h1>
-        <p class="mkts-subtitle">{t(lang!, "merval.subtitle")}</p>
-      </div>
-      <p class="mkts-updated" data-mkts-updated role="status" aria-live="polite">{t(lang!, "merval.loading")}</p>
-    </header>
+    <MarketHeader
+      title={t(lang!, "merval.title")}
+      subtitle={t(lang!, "merval.subtitle")}
+      loadingText={t(lang!, "merval.loading")}
+    />
 
     <!-- Index Summary Card -->
     <div class="index-card">

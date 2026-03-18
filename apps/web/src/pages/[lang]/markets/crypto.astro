@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
+import MarketHeader from "@/components/MarketHeader.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -44,13 +45,11 @@ const { lang } = Astro.params;
   >
     <MarketNav lang={lang!} active="crypto" />
 
-    <header class="mkts-header">
-      <div>
-        <h1 class="mkts-title">{t(lang!, "crypto.title")}</h1>
-        <p class="mkts-subtitle">{t(lang!, "crypto.subtitle")}</p>
-      </div>
-      <p class="mkts-updated" data-mkts-updated aria-live="polite" role="status">{t(lang!, "common.loading")}</p>
-    </header>
+    <MarketHeader
+      title={t(lang!, "crypto.title")}
+      subtitle={t(lang!, "crypto.subtitle")}
+      loadingText={t(lang!, "common.loading")}
+    />
 
     <!-- Market Overview Skeleton -->
     <div class="cr-overview cr-skeleton-overview" data-cr-overview-skeleton>

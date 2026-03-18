@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  loadingText?: string;
+  /** data attribute name for the updated timestamp element (default: "data-mkts-updated") */
+  updatedAttr?: string;
+}
+
+const {
+  title,
+  subtitle,
+  loadingText,
+  updatedAttr = "data-mkts-updated",
+} = Astro.props;
+---
+
+<header class="mkts-header">
+  <div>
+    <h1 class="mkts-title">{title}</h1>
+    {subtitle && <p class="mkts-subtitle">{subtitle}</p>}
+  </div>
+  {loadingText !== undefined && (
+    <p class="mkts-updated" {...{ [updatedAttr]: "" }} aria-live="polite" role="status">
+      {loadingText}
+    </p>
+  )}
+</header>
