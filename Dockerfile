@@ -1,5 +1,5 @@
 # ---- Build stage ----
-FROM node:20-slim AS build
+FROM node:22-slim AS build
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ ENV PUBLIC_GA_ID=$PUBLIC_GA_ID
 RUN npm run build
 
 # ---- Runtime stage ----
-FROM node:20-slim
+FROM node:22-slim
 
 WORKDIR /app
 
