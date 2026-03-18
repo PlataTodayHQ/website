@@ -185,11 +185,18 @@ const icons: Record<string, string> = {
     const dropdown = group.querySelector('[data-mnav-dropdown]');
     if (!trigger || !dropdown) return;
 
+    function positionDropdown() {
+      const rect = trigger.getBoundingClientRect();
+      dropdown.style.top = rect.bottom + 'px';
+      dropdown.style.left = rect.left + 'px';
+    }
+
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
       const isOpen = trigger.getAttribute('aria-expanded') === 'true';
       closeAll(isOpen ? null : group);
       trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      if (!isOpen) positionDropdown();
       dropdown.classList.toggle('mnav-dropdown--open', !isOpen);
     });
   });
@@ -316,9 +323,7 @@ const icons: Record<string, string> = {
 
   .mnav-dropdown {
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: fixed;
     min-width: 200px;
     background: var(--color-bg);
     border: 1px solid var(--color-border);
@@ -376,7 +381,6 @@ const icons: Record<string, string> = {
     }
     .mnav-dropdown {
       min-width: 180px;
-      left: -10px;
     }
   }
 
