@@ -5,6 +5,8 @@ import MarketHeader from "@/components/MarketHeader.astro";
 import EducationPanel from "@/components/EducationPanel.astro";
 import AssetStats from "@/components/AssetStats.astro";
 import AssetSearch from "@/components/AssetSearch.astro";
+import AssetTable from "@/components/AssetTable.astro";
+import AssetCards from "@/components/AssetCards.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -75,52 +77,20 @@ const { lang } = Astro.params;
 
     <AssetSearch placeholder={t(lang!, "screener.search")} />
 
-    <div class="asset-table-wrap" role="region" aria-label={t(lang!, "letras.title")}>
-      <table class="asset-table" data-asset-table>
-        <thead>
-          <tr>
-            <th class="at-th at-th--name" data-sort="symbol">{t(lang!, "screener.col.symbol")} <span class="at-arrow" data-arrow="symbol"></span></th>
-            <th class="at-th at-th--num" data-sort="price">{t(lang!, "letras.col.price" as any)} <span class="at-arrow" data-arrow="price"></span></th>
-            <th class="at-th at-th--num" data-sort="change">{t(lang!, "screener.col.change")} <span class="at-arrow" data-arrow="change"></span></th>
-            <th class="at-th at-th--num at-th--active" data-sort="volume">{t(lang!, "screener.col.volume")} <span class="at-arrow" data-arrow="volume">▼</span></th>
-            <th class="at-th at-th--num at-th--hide-mobile" data-sort="previousClose">{t(lang!, "bonds.prevClose" as any)}</th>
-            <th class="at-th at-th--num at-th--hide-mobile" data-sort="high">{t(lang!, "stock.high" as any)}</th>
-            <th class="at-th at-th--num at-th--hide-mobile" data-sort="low">{t(lang!, "stock.low" as any)}</th>
-          </tr>
-        </thead>
-        <tbody data-asset-tbody>
-          {[...Array(10)].map(() => (
-            <tr class="at-skeleton-row">
-              <td class="at-td at-td--name"><span class="skeleton-shimmer" style="width:80px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:70px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:64px;height:22px;display:inline-block;border-radius:4px;"></span></td>
-              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:50px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <AssetTable
+      ariaLabel={t(lang!, "letras.title")}
+      columns={[
+        { label: t(lang!, "screener.col.symbol"), sortKey: "symbol", align: "name" },
+        { label: t(lang!, "letras.col.price" as any), sortKey: "price" },
+        { label: t(lang!, "screener.col.change"), sortKey: "change" },
+        { label: t(lang!, "screener.col.volume"), sortKey: "volume", active: true, defaultArrow: "▼" },
+        { label: t(lang!, "bonds.prevClose" as any), sortKey: "previousClose", hideMobile: true },
+        { label: t(lang!, "stock.high" as any), sortKey: "high", hideMobile: true },
+        { label: t(lang!, "stock.low" as any), sortKey: "low", hideMobile: true },
+      ]}
+    />
 
-    <div class="asset-cards" data-asset-cards>
-      {[...Array(6)].map(() => (
-        <div class="at-skeleton-card">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-            <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
-              <span class="skeleton-shimmer" style="width:56px;height:12px;"></span>
-              <span class="skeleton-shimmer" style="width:90px;height:10px;"></span>
-            </div>
-            <span class="skeleton-shimmer" style="width:60px;height:16px;border-radius:4px;"></span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span class="skeleton-shimmer" style="width:80px;height:14px;"></span>
-            <span class="skeleton-shimmer" style="width:50px;height:10px;"></span>
-          </div>
-        </div>
-      ))}
-    </div>
+    <AssetCards />
 
     <div class="asset-empty" data-asset-empty style="display:none;"></div>
 

@@ -1,0 +1,68 @@
+---
+interface Column {
+  label: string;
+  sortKey: string;
+  /** "name" for left-aligned text, "num" for right-aligned numbers */
+  align?: "name" | "num";
+  /** Hide on mobile viewports */
+  hideMobile?: boolean;
+  /** Mark as the default active sort column */
+  active?: boolean;
+  /** Default sort arrow indicator (e.g. "▼") */
+  defaultArrow?: string;
+}
+
+interface Props {
+  columns: Column[];
+  ariaLabel: string;
+  /** Number of skeleton placeholder rows (default: 10) */
+  skeletonRows?: number;
+}
+
+const { columns, ariaLabel, skeletonRows = 10 } = Astro.props;
+---
+
+<div class="asset-table-wrap" role="region" aria-label={ariaLabel}>
+  <table class="asset-table" data-asset-table>
+    <thead>
+      <tr>
+        {columns.map(col => (
+          <th
+            class:list={[
+              "at-th",
+              col.align === "name" ? "at-th--name" : "at-th--num",
+              { "at-th--active": col.active },
+              { "at-th--hide-mobile": col.hideMobile },
+            ]}
+            data-sort={col.sortKey}
+          >
+            {col.label}
+            {!col.hideMobile && (
+              <span class="at-arrow" {...{ [`data-arrow`]: col.sortKey }}>
+                {col.defaultArrow ?? ""}
+              </span>
+            )}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody data-asset-tbody>
+      {[...Array(skeletonRows)].map(() => (
+        <tr class="at-skeleton-row">
+          {columns.map(col => (
+            <td class:list={[
+              "at-td",
+              col.align === "name" ? "at-td--name" : "at-td--num",
+              { "at-td--hide-mobile": col.hideMobile },
+            ]}>
+              <span
+                class="skeleton-shimmer"
+                style={`width:${col.align === "name" ? "80px" : col.sortKey === "change" ? "64px" : "60px"};height:${col.sortKey === "change" ? "22px" : "14px"};display:inline-block;${col.sortKey === "change" ? "border-radius:4px;" : ""}`}
+              />
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
