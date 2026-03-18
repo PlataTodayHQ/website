@@ -3,6 +3,7 @@ import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import MarketHeader from "@/components/MarketHeader.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
+import MarketChartScripts from "@/components/MarketChartScripts.astro";
 import { LANGUAGES, getMerval } from "@plata-today/shared";
 import { buildAlternateUrls, buildMarketBreadcrumbs } from "@/lib/seo";
 import { t } from "@/i18n";
@@ -388,9 +389,7 @@ const seoTitle = mervalPrice
 </Base>
 
 
-<script is:inline src="/js/charts.js?v=5"></script>
-<script is:inline src="/js/market-states.js?v=1"></script>
-<script is:inline src="/js/market-helpers.js?v=1"></script>
+<MarketChartScripts />
 <script is:inline src="/js/merval.js?v=1"></script>
 
 
