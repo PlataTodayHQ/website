@@ -1,7 +1,9 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
+import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
 import { LANGUAGES, getEconomicIndicators } from "@plata-today/shared";
+import { buildAlternateUrls, buildMarketBreadcrumbs } from "@/lib/seo";
 import { t } from "@/i18n";
 
 export const prerender = false;
@@ -23,12 +25,8 @@ const seoTitle = policyRate != null
   description={t(lang!, "bcra.subtitle" as any)}
   lang={lang}
   ogType="website"
-  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/monetary-policy`]))}
-  breadcrumbs={[
-    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: t(lang!, "bcra.breadcrumb" as any), url: `/${lang}/markets/monetary-policy` },
-  ]}
+  alternateUrls={buildAlternateUrls("monetary-policy")}
+  breadcrumbs={buildMarketBreadcrumbs(lang!, "bcra.breadcrumb" as any, "monetary-policy")}
   jsonLd={{
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -173,8 +171,7 @@ const seoTitle = policyRate != null
     </details>
 
     <!-- Data Source -->
-    <p class="bcra-disclaimer">{t(lang!, "bcra.source" as any)}</p>
-    <noscript><p class="bcra-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+    <DisclaimerFooter text={t(lang!, "bcra.source" as any)} jsRequiredText={t(lang!, "common.jsRequired" as any)} className="bcra-disclaimer" />
   </div>
 </Base>
 

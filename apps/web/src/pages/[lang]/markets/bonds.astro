@@ -1,165 +1,93 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
-import { LANGUAGES } from "@plata-today/shared";
+import MarketHeader from "@/components/MarketHeader.astro";
+import EducationPanel from "@/components/EducationPanel.astro";
+import AssetStats from "@/components/AssetStats.astro";
+import AssetSearch from "@/components/AssetSearch.astro";
+import AssetTable from "@/components/AssetTable.astro";
+import AssetCards from "@/components/AssetCards.astro";
+import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
+import AssetListingScripts from "@/components/AssetListingScripts.astro";
+import AssetPageWrapper from "@/components/AssetPageWrapper.astro";
+import { getLocalizedStaticPaths } from "@/lib/static-paths";
+import { buildMarketPageSEO } from "@/lib/seo";
 import { t } from "@/i18n";
 
-export function getStaticPaths() {
-  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = getLocalizedStaticPaths;
 
 const { lang } = Astro.params;
+const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "bonds", route: "bonds" });
 ---
 
-<Base
-  title={t(lang!, "bonds.seoTitle")}
-  description={t(lang!, "bonds.seoDescription")}
-  lang={lang}
-  ogType="website"
-  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/bonds`]))}
-  breadcrumbs={[
-    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: t(lang!, "bonds.breadcrumb"), url: `/${lang}/markets/bonds` },
-  ]}
-  jsonLd={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": t(lang!, "bonds.title"),
-    "description": t(lang!, "bonds.seoDescription"),
-    "url": `https://plata.today/${lang}/markets/bonds`,
-    "inLanguage": lang,
-    "isPartOf": { "@type": "WebSite", "name": "Plata", "url": "https://plata.today" }
-  }}
->
-  <div class="asset-page" data-asset-page data-lang={lang} data-api="/api/bonds" data-asset-type="government_bond"
-    data-i18n-updated={t(lang!, "stock.updated")}
-    data-i18n-retry={t(lang!, "common.retry" as any)}
-    data-i18n-error={t(lang!, "bonds.loadError" as any)}
-    data-i18n-no-results={t(lang!, "screener.noResults")}
-    data-i18n-prev-close={t(lang!, "bonds.prevClose" as any)}
-    data-i18n-high={t(lang!, "stock.high" as any)}
-    data-i18n-low={t(lang!, "stock.low" as any)}
-    data-i18n-tag-law-ar={t(lang!, "bonds.tagLawAR" as any)}
-    data-i18n-tag-law-ny={t(lang!, "bonds.tagLawNY" as any)}
-    data-i18n-tag-cer={t(lang!, "bonds.tagCER" as any)}
-    data-i18n-tag-dual={t(lang!, "bonds.tagDualCurrency" as any)}
-    data-stock-url={`/${lang}/markets/stock`}
+<Base {...seo}>
+  <AssetPageWrapper
+    lang={lang!}
+    api="/api/bonds"
+    assetType="government_bond"
+    i18nUpdated={t(lang!, "stock.updated")}
+    i18nRetry={t(lang!, "common.retry" as any)}
+    i18nError={t(lang!, "bonds.loadError" as any)}
+    i18nNoResults={t(lang!, "screener.noResults")}
+    stockUrl={`/${lang}/markets/stock`}
+    extraData={{
+      "prev-close": t(lang!, "bonds.prevClose" as any),
+      "high": t(lang!, "stock.high" as any),
+      "low": t(lang!, "stock.low" as any),
+      "tag-law-ar": t(lang!, "bonds.tagLawAR" as any),
+      "tag-law-ny": t(lang!, "bonds.tagLawNY" as any),
+      "tag-cer": t(lang!, "bonds.tagCER" as any),
+      "tag-dual": t(lang!, "bonds.tagDualCurrency" as any),
+    }}
   >
     <MarketNav lang={lang!} active="bonds" />
 
-    <header class="mkts-header">
-      <div>
-        <h1 class="mkts-title">{t(lang!, "bonds.title")}</h1>
-        <p class="mkts-subtitle">{t(lang!, "bonds.subtitle" as any)}</p>
-      </div>
-      <p class="mkts-updated" data-mkts-updated aria-live="polite" role="status">{t(lang!, "common.loading")}</p>
-    </header>
+    <MarketHeader
+      title={t(lang!, "bonds.title")}
+      subtitle={t(lang!, "bonds.subtitle" as any)}
+      loadingText={t(lang!, "common.loading")}
+    />
 
-    <!-- Educational Info Panel -->
-    <details class="fi-info-panel" data-fi-info open>
-      <summary class="fi-info-toggle">
-        <svg class="fi-info-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-        <span>{t(lang!, "bonds.infoTitle" as any)}</span>
-        <svg class="fi-info-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-      </summary>
-      <div class="fi-info-content">
-        <p class="fi-info-text">{t(lang!, "bonds.infoText" as any)}</p>
-        <div class="fi-info-grid">
-          <div class="fi-info-card">
-            <div class="fi-info-card-label">{t(lang!, "bonds.infoIssuer" as any)}</div>
-            <div class="fi-info-card-val">{t(lang!, "bonds.infoIssuerVal" as any)}</div>
-          </div>
-          <div class="fi-info-card">
-            <div class="fi-info-card-label">{t(lang!, "bonds.infoRisk" as any)}</div>
-            <div class="fi-info-card-val">{t(lang!, "bonds.infoRiskVal" as any)}</div>
-          </div>
-          <div class="fi-info-card fi-info-card--wide">
-            <div class="fi-info-card-label">{t(lang!, "bonds.infoHow" as any)}</div>
-            <div class="fi-info-card-val">{t(lang!, "bonds.infoHowText" as any)}</div>
-          </div>
-          <div class="fi-info-card">
-            <div class="fi-info-card-label">{t(lang!, "bonds.infoPriceNote" as any)}</div>
-            <div class="fi-info-card-val">{t(lang!, "bonds.infoPriceNoteText" as any)}</div>
-          </div>
-          <div class="fi-info-card">
-            <div class="fi-info-card-label">{t(lang!, "bonds.infoYield" as any)}</div>
-            <div class="fi-info-card-val">{t(lang!, "bonds.infoYieldText" as any)}</div>
-          </div>
-        </div>
-      </div>
-    </details>
+    <EducationPanel
+      title={t(lang!, "bonds.infoTitle" as any)}
+      text={t(lang!, "bonds.infoText" as any)}
+      open
+      cards={[
+        { label: t(lang!, "bonds.infoIssuer" as any), value: t(lang!, "bonds.infoIssuerVal" as any) },
+        { label: t(lang!, "bonds.infoRisk" as any), value: t(lang!, "bonds.infoRiskVal" as any) },
+        { label: t(lang!, "bonds.infoHow" as any), value: t(lang!, "bonds.infoHowText" as any), wide: true },
+        { label: t(lang!, "bonds.infoPriceNote" as any), value: t(lang!, "bonds.infoPriceNoteText" as any) },
+        { label: t(lang!, "bonds.infoYield" as any), value: t(lang!, "bonds.infoYieldText" as any) },
+      ]}
+    />
 
-    <div class="asset-stats" data-asset-stats style="display:none;">
-      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "bonds.instruments" as any)}</span> <span class="asset-stat-val" data-stat-count>0</span></div>
-      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.gainers" as any)}</span> <span class="asset-stat-val rc-up" data-stat-gainers>0</span></div>
-      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.losers" as any)}</span> <span class="asset-stat-val rc-down" data-stat-losers>0</span></div>
-      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.totalVolume" as any)}</span> <span class="asset-stat-val" data-stat-volume>—</span></div>
-    </div>
+    <AssetStats stats={[
+      { label: t(lang!, "bonds.instruments" as any), dataKey: "count" },
+      { label: t(lang!, "screener.gainers" as any), dataKey: "gainers", colorClass: "rc-up" },
+      { label: t(lang!, "screener.losers" as any), dataKey: "losers", colorClass: "rc-down" },
+      { label: t(lang!, "screener.totalVolume" as any), dataKey: "volume", defaultValue: "—" },
+    ]} />
 
-    <div class="asset-toolbar">
-      <div class="asset-search-wrap">
-        <svg class="asset-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="text" class="asset-search" data-asset-search placeholder={t(lang!, "screener.search")} aria-label={t(lang!, "screener.search")} autocomplete="off" />
-      </div>
-      <span class="asset-count" data-asset-count></span>
-    </div>
+    <AssetSearch placeholder={t(lang!, "screener.search")} />
 
-    <div class="asset-table-wrap" role="region" aria-label={t(lang!, "bonds.title")}>
-      <table class="asset-table" data-asset-table>
-        <thead>
-          <tr>
-            <th class="at-th at-th--name" data-sort="symbol">{t(lang!, "screener.col.symbol")} <span class="at-arrow" data-arrow="symbol"></span></th>
-            <th class="at-th at-th--num" data-sort="price">{t(lang!, "bonds.col.price" as any)} <span class="at-arrow" data-arrow="price"></span></th>
-            <th class="at-th at-th--num" data-sort="change">{t(lang!, "screener.col.change")} <span class="at-arrow" data-arrow="change"></span></th>
-            <th class="at-th at-th--num at-th--active" data-sort="volume">{t(lang!, "screener.col.volume")} <span class="at-arrow" data-arrow="volume">▼</span></th>
-            <th class="at-th at-th--num at-th--hide-mobile" data-sort="previousClose">{t(lang!, "bonds.prevClose" as any)}</th>
-            <th class="at-th at-th--num at-th--hide-mobile" data-sort="high">{t(lang!, "stock.high" as any)}</th>
-            <th class="at-th at-th--num at-th--hide-mobile" data-sort="low">{t(lang!, "stock.low" as any)}</th>
-          </tr>
-        </thead>
-        <tbody data-asset-tbody>
-          {[...Array(10)].map(() => (
-            <tr class="at-skeleton-row">
-              <td class="at-td at-td--name"><span class="skeleton-shimmer" style="width:80px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:70px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:64px;height:22px;display:inline-block;border-radius:4px;"></span></td>
-              <td class="at-td at-td--num"><span class="skeleton-shimmer" style="width:50px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
-              <td class="at-td at-td--num at-td--hide-mobile"><span class="skeleton-shimmer" style="width:60px;height:14px;display:inline-block;"></span></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <AssetTable
+      ariaLabel={t(lang!, "bonds.title")}
+      columns={[
+        { label: t(lang!, "screener.col.symbol"), sortKey: "symbol", align: "name" },
+        { label: t(lang!, "bonds.col.price" as any), sortKey: "price" },
+        { label: t(lang!, "screener.col.change"), sortKey: "change" },
+        { label: t(lang!, "screener.col.volume"), sortKey: "volume", active: true, defaultArrow: "▼" },
+        { label: t(lang!, "bonds.prevClose" as any), sortKey: "previousClose", hideMobile: true },
+        { label: t(lang!, "stock.high" as any), sortKey: "high", hideMobile: true },
+        { label: t(lang!, "stock.low" as any), sortKey: "low", hideMobile: true },
+      ]}
+    />
 
-    <div class="asset-cards" data-asset-cards>
-      {[...Array(6)].map(() => (
-        <div class="at-skeleton-card">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-            <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
-              <span class="skeleton-shimmer" style="width:56px;height:12px;"></span>
-              <span class="skeleton-shimmer" style="width:90px;height:10px;"></span>
-            </div>
-            <span class="skeleton-shimmer" style="width:60px;height:16px;border-radius:4px;"></span>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span class="skeleton-shimmer" style="width:80px;height:14px;"></span>
-            <span class="skeleton-shimmer" style="width:50px;height:10px;"></span>
-          </div>
-        </div>
-      ))}
-    </div>
+    <AssetCards />
 
-    <div class="asset-empty" data-asset-empty style="display:none;"></div>
-
-    <p class="info-disclaimer">{t(lang!, "stock.disclaimer")}</p>
-    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
-  </div>
+    <DisclaimerFooter text={t(lang!, "stock.disclaimer")} jsRequiredText={t(lang!, "common.jsRequired" as any)} />
+  </AssetPageWrapper>
 </Base>
 
-<script is:inline src="/js/market-helpers.js?v=2"></script>
-<script is:inline src="/js/watchlist.js?v=1"></script>
-<script is:inline src="/js/asset-listing.js?v=4"></script>
+<AssetListingScripts />
 

@@ -1,0 +1,15 @@
+---
+interface Props {
+  text: string;
+  jsRequiredText: string;
+  /** CSS class name (default: "info-disclaimer") */
+  className?: string;
+  /** Extra HTML attributes for the disclaimer paragraph */
+  extraAttrs?: Record<string, string>;
+}
+
+const { text, jsRequiredText, className = "info-disclaimer", extraAttrs = {} } = Astro.props;
+---
+
+<p class={className} {...extraAttrs}>{text}</p>
+<noscript><p class={className} style="text-align:center;padding:2rem;font-weight:600;">{jsRequiredText}</p></noscript>

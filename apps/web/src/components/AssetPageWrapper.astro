@@ -1,0 +1,38 @@
+---
+interface Props {
+  lang: string;
+  api: string;
+  assetType: string;
+  i18nUpdated: string;
+  i18nRetry: string;
+  i18nError: string;
+  i18nNoResults: string;
+  stockUrl: string;
+  /** Additional data-i18n-* attributes specific to each page */
+  extraData?: Record<string, string>;
+}
+
+const { lang, api, assetType, i18nUpdated, i18nRetry, i18nError, i18nNoResults, stockUrl, extraData = {} } = Astro.props;
+
+const extraDataAttrs = Object.fromEntries(
+  Object.entries(extraData).map(([k, v]) => [`data-i18n-${k}`, v])
+);
+---
+
+<div
+  class="asset-page"
+  data-asset-page
+  data-lang={lang}
+  data-api={api}
+  data-asset-type={assetType}
+  data-i18n-updated={i18nUpdated}
+  data-i18n-retry={i18nRetry}
+  data-i18n-error={i18nError}
+  data-i18n-no-results={i18nNoResults}
+  data-stock-url={stockUrl}
+  {...extraDataAttrs}
+>
+  <slot />
+
+  <div class="asset-empty" data-asset-empty style="display:none;"></div>
+</div>

@@ -1,41 +1,19 @@
 ---
 import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
-import { LANGUAGES } from "@plata-today/shared";
+import MarketHeader from "@/components/MarketHeader.astro";
+import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
+import { getLocalizedStaticPaths } from "@/lib/static-paths";
+import { buildMarketPageSEO } from "@/lib/seo";
 import { t } from "@/i18n";
 
-export function getStaticPaths() {
-  return Object.keys(LANGUAGES).map((lang) => ({ params: { lang } }));
-}
+export const getStaticPaths = getLocalizedStaticPaths;
 
 const { lang } = Astro.params;
+const seo = buildMarketPageSEO({ lang: lang!, i18nKey: "screener", route: "screener", breadcrumbKey: "screener.title" });
 ---
 
-<Base
-  title={t(lang!, "screener.seoTitle")}
-  description={t(lang!, "screener.seoDescription")}
-  lang={lang}
-  ogType="website"
-  alternateUrls={Object.fromEntries(Object.keys(LANGUAGES).map(code => [code, `https://plata.today/${code}/markets/screener`]))}
-  breadcrumbs={[
-    { name: t(lang!, "common.breadcrumbHome"), url: `/${lang}/` },
-    { name: t(lang!, "markets.breadcrumb"), url: `/${lang}/markets` },
-    { name: t(lang!, "screener.title"), url: `/${lang}/markets/screener` },
-  ]}
-  jsonLd={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": t(lang!, "screener.title"),
-    "description": t(lang!, "screener.subtitle"),
-    "url": `https://plata.today/${lang}/markets/screener`,
-    "inLanguage": lang,
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Plata",
-      "url": "https://plata.today"
-    }
-  }}
->
+<Base {...seo}>
   <div class="screener-page" data-screener-page data-lang={lang} data-i18n-error={t(lang!, "screener.loadError" as any)} data-i18n-updated={t(lang!, "stock.updated")} data-i18n-stocks={t(lang!, "screener.stocks")} data-i18n-cap={t(lang!, "stock.marketCap")} data-i18n-vol={t(lang!, "stock.volume")} data-i18n-watchlist="Watchlist" data-i18n-added-to-watchlist="Added to watchlist" data-i18n-removed-from-watchlist="Removed from watchlist" data-i18n-retry={t(lang!, "common.retry" as any)} data-i18n-check-conn={t(lang!, "common.checkConnection" as any)} data-i18n-try-different={t(lang!, "common.tryDifferentSearch" as any)} data-i18n-secmap={JSON.stringify({
     "Technology": t(lang!, "stock.secTechnology" as any),
     "Healthcare": t(lang!, "stock.secHealthcare" as any),
@@ -51,13 +29,11 @@ const { lang } = Astro.params;
   })}>
     <MarketNav lang={lang!} active="screener" />
 
-    <header class="mkts-header">
-      <div>
-        <h1 class="mkts-title">{t(lang!, "screener.title")}</h1>
-        <p class="mkts-subtitle">{t(lang!, "screener.subtitle" as any)}</p>
-      </div>
-      <p class="mkts-updated" data-mkts-updated aria-live="polite" role="status">{t(lang!, "common.loading")}</p>
-    </header>
+    <MarketHeader
+      title={t(lang!, "screener.title")}
+      subtitle={t(lang!, "screener.subtitle" as any)}
+      loadingText={t(lang!, "common.loading")}
+    />
 
     <!-- Panel Tabs -->
     <div class="scr-tabs" data-scr-tabs>
@@ -256,8 +232,7 @@ const { lang } = Astro.params;
 
     <div class="wl-toast" data-wl-toast aria-live="polite" role="status"></div>
 
-    <p class="info-disclaimer">{t(lang!, "stock.disclaimer")}</p>
-    <noscript><p class="info-disclaimer" style="text-align:center;padding:2rem;font-weight:600;">{t(lang!, "common.jsRequired" as any)}</p></noscript>
+    <DisclaimerFooter text={t(lang!, "stock.disclaimer")} jsRequiredText={t(lang!, "common.jsRequired" as any)} />
   </div>
 </Base>
 
