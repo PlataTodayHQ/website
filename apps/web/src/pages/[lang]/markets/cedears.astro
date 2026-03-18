@@ -3,6 +3,8 @@ import Base from "@/layouts/Base.astro";
 import MarketNav from "@/components/MarketNav.astro";
 import MarketHeader from "@/components/MarketHeader.astro";
 import EducationPanel from "@/components/EducationPanel.astro";
+import AssetStats from "@/components/AssetStats.astro";
+import AssetSearch from "@/components/AssetSearch.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -58,22 +60,14 @@ const { lang } = Astro.params;
       ]}
     />
 
-    <!-- Summary Stats -->
-    <div class="asset-stats" data-asset-stats style="display:none;">
-      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.stocks")}</span> <span class="asset-stat-val" data-stat-count>0</span></div>
-      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.gainers" as any)}</span> <span class="asset-stat-val rc-up" data-stat-gainers>0</span></div>
-      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.losers" as any)}</span> <span class="asset-stat-val rc-down" data-stat-losers>0</span></div>
-      <div class="asset-stat"><span class="asset-stat-label">{t(lang!, "screener.totalVolume" as any)}</span> <span class="asset-stat-val" data-stat-volume>—</span></div>
-    </div>
+    <AssetStats stats={[
+      { label: t(lang!, "screener.stocks"), dataKey: "count" },
+      { label: t(lang!, "screener.gainers" as any), dataKey: "gainers", colorClass: "rc-up" },
+      { label: t(lang!, "screener.losers" as any), dataKey: "losers", colorClass: "rc-down" },
+      { label: t(lang!, "screener.totalVolume" as any), dataKey: "volume", defaultValue: "—" },
+    ]} />
 
-    <!-- Toolbar -->
-    <div class="asset-toolbar">
-      <div class="asset-search-wrap">
-        <svg class="asset-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="text" class="asset-search" data-asset-search placeholder={t(lang!, "screener.search")} aria-label={t(lang!, "screener.search")} autocomplete="off" />
-      </div>
-      <span class="asset-count" data-asset-count></span>
-    </div>
+    <AssetSearch placeholder={t(lang!, "screener.search")} />
 
     <!-- Table -->
     <div class="asset-table-wrap" role="region" aria-label={t(lang!, "cedears.title")}>

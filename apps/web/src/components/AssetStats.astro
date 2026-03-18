@@ -1,0 +1,28 @@
+---
+interface StatItem {
+  label: string;
+  dataKey: string;
+  colorClass?: string;
+  defaultValue?: string;
+}
+
+interface Props {
+  stats: StatItem[];
+}
+
+const { stats } = Astro.props;
+---
+
+<div class="asset-stats" data-asset-stats style="display:none;">
+  {stats.map(stat => (
+    <div class="asset-stat">
+      <span class="asset-stat-label">{stat.label}</span>
+      <span
+        class:list={["asset-stat-val", stat.colorClass]}
+        {...{ [`data-stat-${stat.dataKey}`]: "" }}
+      >
+        {stat.defaultValue ?? "0"}
+      </span>
+    </div>
+  ))}
+</div>
