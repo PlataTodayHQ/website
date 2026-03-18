@@ -518,10 +518,39 @@ button:focus:not(:focus-visible) {
 /* Dark mode: market components refinements */
 [data-theme="dark"] .rc-up { color: #4ade80; }
 [data-theme="dark"] .rc-down { color: #f87171; }
+/* Skeleton shimmer loading animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-shimmer {
+  background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-border) 50%, var(--color-bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
 [data-theme="dark"] .skeleton-shimmer {
   background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
   background-size: 200% 100%;
 }
+
+/* Scroll-to-top floating button (shared across market pages) */
+.scroll-top-btn {
+  position: fixed; bottom: 24px; inset-inline-end: 24px; z-index: 90;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--color-bg-secondary); border: 1px solid var(--color-border);
+  color: var(--color-text-meta); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.15s, color 0.15s;
+  transform: translateY(8px);
+}
+.scroll-top-btn--visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.scroll-top-btn:hover { color: var(--color-gold); border-color: var(--color-gold); }
+.scroll-top-btn:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+@media print { .scroll-top-btn { display: none !important; } }
+@media (prefers-reduced-motion: reduce) { .scroll-top-btn { transition: none; } }
 
 /* Data flash animations for value updates */
 @keyframes data-flash-up { 0% { background: rgba(22,163,74,0.15); } 100% { background: transparent; } }
@@ -531,6 +560,16 @@ button:focus:not(:focus-visible) {
 @media (prefers-reduced-motion: reduce) {
   .data-flash-up, .data-flash-down { animation: none; }
 }
+
+/* Shared entry animation for sections/cards */
+@keyframes fade-in-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .fade-in-up, [class*="-fade"] { animation: none !important; } }
+
+/* Rate-change color utilities (shared across market pages) */
+.rc-up { color: #16a34a; }
+.rc-down { color: #dc2626; }
+[data-theme="dark"] .rc-up { color: #4ade80; }
+[data-theme="dark"] .rc-down { color: #f87171; }
 
 /* ====================================== */
 /* SHARED: Asset listing pages            */
