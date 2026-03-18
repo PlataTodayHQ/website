@@ -1,17 +1,9 @@
 ---
 import { t } from "@/i18n";
+import type { Story } from "@/types/story";
 
-interface Props {
-  title: string;
-  description?: string;
-  href: string;
-  imageUrl?: string;
-  timeAgo?: string;
-  category?: string;
-  categoryKey?: string;
-  readingTime?: string;
+interface Props extends Story {
   isNew?: boolean;
-  sourceLabel?: string;
   variant?: "default" | "hero" | "sidebar" | "compact" | "list";
   lang?: string;
 }
