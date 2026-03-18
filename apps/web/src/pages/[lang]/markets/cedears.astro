@@ -8,6 +8,8 @@ import AssetSearch from "@/components/AssetSearch.astro";
 import AssetTable from "@/components/AssetTable.astro";
 import AssetCards from "@/components/AssetCards.astro";
 import DisclaimerFooter from "@/components/DisclaimerFooter.astro";
+import AssetListingScripts from "@/components/AssetListingScripts.astro";
+import AssetPageWrapper from "@/components/AssetPageWrapper.astro";
 import { LANGUAGES } from "@plata-today/shared";
 import { t } from "@/i18n";
 
@@ -39,12 +41,15 @@ const { lang } = Astro.params;
     "isPartOf": { "@type": "WebSite", "name": "Plata", "url": "https://plata.today" }
   }}
 >
-  <div class="asset-page" data-asset-page data-lang={lang} data-api="/api/cedears" data-asset-type="cedear"
-    data-i18n-updated={t(lang!, "stock.updated")}
-    data-i18n-retry={t(lang!, "common.retry" as any)}
-    data-i18n-error={t(lang!, "cedears.loadError" as any)}
-    data-i18n-no-results={t(lang!, "screener.noResults")}
-    data-stock-url={`/${lang}/markets/stock`}
+  <AssetPageWrapper
+    lang={lang!}
+    api="/api/cedears"
+    assetType="cedear"
+    i18nUpdated={t(lang!, "stock.updated")}
+    i18nRetry={t(lang!, "common.retry" as any)}
+    i18nError={t(lang!, "cedears.loadError" as any)}
+    i18nNoResults={t(lang!, "screener.noResults")}
+    stockUrl={`/${lang}/markets/stock`}
   >
     <MarketNav lang={lang!} active="cedears" />
 
@@ -86,14 +91,9 @@ const { lang } = Astro.params;
 
     <AssetCards />
 
-    <!-- No results -->
-    <div class="asset-empty" data-asset-empty style="display:none;"></div>
-
     <DisclaimerFooter text={t(lang!, "stock.disclaimer")} jsRequiredText={t(lang!, "common.jsRequired" as any)} />
-  </div>
+  </AssetPageWrapper>
 </Base>
 
-<script is:inline src="/js/market-helpers.js?v=2"></script>
-<script is:inline src="/js/watchlist.js?v=1"></script>
-<script is:inline src="/js/asset-listing.js?v=4"></script>
+<AssetListingScripts />
 
